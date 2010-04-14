@@ -2,13 +2,17 @@
 #define XAL_OGG_SOUND_H
 
 #include "Sound.h"
+#include "xalExport.h"
 
-class OggSound : public Sound
+namespace xal
 {
-public:
-	OggSound(std::string filename);
-	~OggSound();
-};
 
+	class xalExport OggSound : public Sound
+	{
+	public:
+		OggSound(std::string filename);
+		~OggSound();
+	};
 
+}
 #endif

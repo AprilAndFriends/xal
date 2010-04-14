@@ -4,48 +4,53 @@
 #include <string>
 #include <map>
 #include <list>
+#include "xalExport.h"
 #include "Sound.h"
 
 
 #define XAL_MAX_SOURCES 16
 
-struct Source
+namespace xal
 {
-	unsigned int id;
-	bool locked; // usually a sound locks a source when it pauses
-};
 
-class SoundManager
-{
-	Source mSources[XAL_MAX_SOURCES];
-	std::string mDeviceName;
-	std::map<std::string,float> mCategoryGains;
-	std::list<Sound*> mSounds;
-public:
-	SoundManager(std::string device_name);
-	~SoundManager();
+	struct xalExport Source
+	{
+		unsigned int id;
+		bool locked; // usually a sound locks a source when it pauses
+	};
 
-	unsigned int allocateSource(Sound* new_owner);
+	class xalExport SoundManager
+	{
+		Source mSources[XAL_MAX_SOURCES];
+		std::string mDeviceName;
+		std::map<std::string,float> mCategoryGains;
+		std::list<Sound*> mSounds;
+	public:
+		SoundManager(std::string device_name);
+		~SoundManager();
 
-	Sound* createSound(std::string filename,std::string category="sound");
-	void destroySound(Sound* s);
-	void update(float k);
+		unsigned int allocateSource(Sound* new_owner);
 
-	void stopSourcesWithBuffer(unsigned int buffer);
+		Sound* createSound(std::string filename,std::string category="sound");
+		void destroySound(Sound* s);
+		void update(float k);
 
-	void setListenerPosition(float x,float y,float z);
-	ALposition getListenerPosition();
+		void stopSourcesWithBuffer(unsigned int buffer);
 
-	std::string getDeviceName();
+		void setListenerPosition(float x,float y,float z);
+		ALposition getListenerPosition();
 
-	void lockSource(unsigned source_id,bool lock);
-	void setCategoryGain(std::string category,float gain);
-	float getCategoryGain(std::string category);
+		std::string getDeviceName();
 
-	static SoundManager* _singleton_ptr;
-	static SoundManager* getSingleton();
-};
+		void logMessage(const std::string& message);
 
-void setLogPrefix(std::string prefix);
+		void lockSource(unsigned source_id,bool lock);
+		void setCategoryGain(std::string category,float gain);
+		float getCategoryGain(std::string category);
+
+		static SoundManager* _singleton_ptr;
+		static SoundManager* getSingleton();
+	};
+}
 
 #endif
