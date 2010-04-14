@@ -4,7 +4,7 @@
 #include <string>
 #include "xalExport.h"
 
-struct ALposition
+struct XALposition
 {
 	float x,y,z;
 };
@@ -19,7 +19,7 @@ namespace xal
 	class xalExport Sound
 	{
 	private:
-		ALposition mPosition;
+		XALposition mPosition;
 		float mGain;
 		bool mLoop;
 		unsigned int mSource;
@@ -53,7 +53,7 @@ namespace xal
 		float getDuration() { return mDuration; }
 
 		void setPosition(float x,float y,float z);
-		ALposition getPosition();
+		XALposition getPosition();
 
 		void update(float k);
 

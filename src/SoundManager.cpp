@@ -66,7 +66,7 @@ namespace xal
 		}
 		mCategoryGains["sound"]=1.0;
 		mCategoryGains["music"]=1.0;
-		
+
 		return;
 	Fail:
 		gDevice=NULL;
@@ -156,9 +156,9 @@ namespace xal
 		alListener3f(AL_POSITION,x,y,z);
 	}
 
-	ALposition SoundManager::getListenerPosition()
+	XALposition SoundManager::getListenerPosition()
 	{
-		ALposition pos;
+		XALposition pos;
 		alGetListener3f(AL_POSITION,&pos.x,&pos.y,&pos.z);
 		return pos;
 	}
@@ -210,6 +210,7 @@ namespace xal
 
 	float SoundManager::getCategoryGain(std::string category)
 	{
+		if (mCategoryGains.find(category) == mCategoryGains.end()) return 1;
 		return mCategoryGains[category];
 	}
 
