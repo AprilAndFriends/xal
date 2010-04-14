@@ -9,195 +9,194 @@
 	#include <OpenAL/al.h>
 #endif
 
-using namespace std;
-void writelog(std::string text);
-
-
-
-Sound::Sound(string name)
+namespace xal
 {
-	mLoop=false;
-	mName=name;
-	mSource=0;
-	mPaused=0;
-	mGain=1.0f;
-	mCategory="sound";
-	mPosition.x=mPosition.y=mPosition.z=0.0f;
-	mFadeTimer=mFadeSpeed=-1.0f;
-	mFadeAction=FADE_NOTHING;
-}
-
-Sound::~Sound()
-{
-	writelog("destroying sound: "+mName);
-	stop();
-	alDeleteBuffers(1,&mBuffer);
-	mBuffer=0;
-	mSource=0;
-}
-
-unsigned int Sound::getSource()
-{
-	return mSource;
-}
-
-void Sound::update(float k)
-{
-	if (mFadeTimer >= 0)
+	void writelog(std::string text);
+	Sound::Sound(std::string name)
 	{
-		mFadeTimer+=mFadeSpeed*k;
-		if (mFadeSpeed > 0 && mFadeTimer > 1)
+		mLoop=false;
+		mName=name;
+		mSource=0;
+		mPaused=0;
+		mGain=1.0f;
+		mCategory="sound";
+		mPosition.x=mPosition.y=mPosition.z=0.0f;
+		mFadeTimer=mFadeSpeed=-1.0f;
+		mFadeAction=XAL_FADE_NOTHING;
+	}
+
+	Sound::~Sound()
+	{
+		writelog("destroying sound: "+mName);
+		stop();
+		alDeleteBuffers(1,&mBuffer);
+		mBuffer=0;
+		mSource=0;
+	}
+
+	unsigned int Sound::getSource()
+	{
+		return mSource;
+	}
+
+	void Sound::update(float k)
+	{
+		if (mFadeTimer >= 0)
 		{
-			alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
-			mFadeTimer=mFadeSpeed=-1.0f;
-			mFadeAction=FADE_NOTHING;
-		}
-		else if (mFadeSpeed < 0 && mFadeTimer < 0)
-		{
-			if (mFadeAction == FADE_STOP)
+			mFadeTimer+=mFadeSpeed*k;
+			if (mFadeSpeed > 0 && mFadeTimer > 1)
 			{
-				alSourceStop(mSource);
-				mSource=0;
+				alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
+				mFadeTimer=mFadeSpeed=-1.0f;
+				mFadeAction=XAL_FADE_NOTHING;
+			}
+			else if (mFadeSpeed < 0 && mFadeTimer < 0)
+			{
+				if (mFadeAction == XAL_FADE_STOP)
+				{
+					alSourceStop(mSource);
+					mSource=0;
+				}
+				else
+				{
+					pause();
+				}
+				mFadeTimer=mFadeSpeed=-1.0f;
+				mFadeAction=XAL_FADE_NOTHING;
 			}
 			else
 			{
-				pause();
+				alSourcef(mSource,AL_GAIN,mFadeTimer*mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
 			}
-			mFadeTimer=mFadeSpeed=-1.0f;
-			mFadeAction=FADE_NOTHING;
+		}
+
+		if (!mPaused && mSource != 0)
+		{
+			int state;
+			alGetSourcei(mSource, AL_SOURCE_STATE, &state);
+			if (state != AL_PLAYING) mSource=0;
+		}
+	}
+
+	bool Sound::isPlaying()
+	{
+			int state;
+			if (!mSource) return false;
+			alGetSourcei(mSource, AL_SOURCE_STATE, &state);
+			return (state == AL_PLAYING);
+	}
+
+	void Sound::play(float fade_in_time,float x,float y,float z)
+	{
+		if (mPaused)
+		{
+			SoundManager::getSingleton()->lockSource(mSource,0);
+			mPaused=0;
 		}
 		else
 		{
-			alSourcef(mSource,AL_GAIN,mFadeTimer*mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
+			mSource=SoundManager::getSingleton()->allocateSource(this);
+			alSourcei(mSource,AL_BUFFER,mBuffer);
 		}
-	}
+		alSourcei(mSource,AL_LOOPING,mLoop);
+		if (!(x == -1 && y == -1 && z == -1))
+		{
+			mPosition.x=x; mPosition.y=y; mPosition.z=z;
+		}
+		alSource3f(mSource,AL_POSITION,mPosition.x,mPosition.y,mPosition.z);
+		alSourcei(mSource,AL_SOURCE_RELATIVE,(mPosition.x == 0 && mPosition.y == 0 && mPosition.z == 0));
 
-	if (!mPaused && mSource != 0)
-	{
-		int state;
-		alGetSourcei(mSource, AL_SOURCE_STATE, &state);
-		if (state != AL_PLAYING) mSource=0;
-	}
-}
-
-bool Sound::isPlaying()
-{
-		int state;
-		if (!mSource) return false;
-		alGetSourcei(mSource, AL_SOURCE_STATE, &state);
-		return (state == AL_PLAYING);
-}
-
-void Sound::play(float fade_in_time,float x,float y,float z)
-{
-	if (mPaused)
-	{
-		SoundManager::getSingleton()->lockSource(mSource,0);
-		mPaused=0;
-	}
-	else
-	{
-		mSource=SoundManager::getSingleton()->allocateSource(this);
-		alSourcei(mSource,AL_BUFFER,mBuffer);
-	}
-	alSourcei(mSource,AL_LOOPING,mLoop);
-	if (!(x == -1 && y == -1 && z == -1))
-	{
-		mPosition.x=x; mPosition.y=y; mPosition.z=z;
-	}
-	alSource3f(mSource,AL_POSITION,mPosition.x,mPosition.y,mPosition.z);
-	alSourcei(mSource,AL_SOURCE_RELATIVE,(mPosition.x == 0 && mPosition.y == 0 && mPosition.z == 0));
-
-	if (fade_in_time > 0)
-	{
-		alSourcef(mSource,AL_GAIN,0);
-		mFadeTimer=0;
-		mFadeSpeed=1.0f/fade_in_time;
-		mFadeAction=FADE_NOTHING;
-	}
-	else
-		alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
+		if (fade_in_time > 0)
+		{
+			alSourcef(mSource,AL_GAIN,0);
+			mFadeTimer=0;
+			mFadeSpeed=1.0f/fade_in_time;
+			mFadeAction=XAL_FADE_NOTHING;
+		}
+		else
+			alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
 
 
-	alSourcePlay(mSource);
-	
-}
-
-void Sound::stop(float fade_out_time)
-{
-	if (fade_out_time > 0)
-	{
-		mFadeTimer=1;
-		mFadeSpeed=-1.0f/fade_out_time;
-		mFadeAction=FADE_STOP;
+		alSourcePlay(mSource);
+		
 	}
-	else
-	{
-		SoundManager::getSingleton()->stopSourcesWithBuffer(mBuffer);
-		mSource=0;
-	}
-	mPaused=0;
-}
 
-void Sound::pause(float fade_out_time)
-{
-	if (mSource)
+	void Sound::stop(float fade_out_time)
 	{
 		if (fade_out_time > 0)
 		{
 			mFadeTimer=1;
 			mFadeSpeed=-1.0f/fade_out_time;
-			mFadeAction=FADE_PAUSE;
+			mFadeAction=XAL_FADE_STOP;
 		}
 		else
 		{
-			alSourcePause(mSource);
-			SoundManager::getSingleton()->lockSource(mSource,1);
-			mPaused=1;
+			SoundManager::getSingleton()->stopSourcesWithBuffer(mBuffer);
+			mSource=0;
+		}
+		mPaused=0;
+	}
+
+	void Sound::pause(float fade_out_time)
+	{
+		if (mSource)
+		{
+			if (fade_out_time > 0)
+			{
+				mFadeTimer=1;
+				mFadeSpeed=-1.0f/fade_out_time;
+				mFadeAction=XAL_FADE_PAUSE;
+			}
+			else
+			{
+				alSourcePause(mSource);
+				SoundManager::getSingleton()->lockSource(mSource,1);
+				mPaused=1;
+			}
 		}
 	}
-}
 
-void Sound::setPosition(float x,float y,float z)
-{
-	mPosition.x=x; mPosition.y=y; mPosition.z=z;
-	if (mSource != 0) alSource3f(mSource,AL_POSITION,x,y,z);
-}
-
-ALposition Sound::getPosition()
-{
-	return mPosition;
-}
-
-float Sound::getSampleOffset()
-{
-	float value;
-	alGetSourcef(mSource,AL_SEC_OFFSET,&value);
-	return value;
-}
-
-void Sound::setGain(float gain)
-{
-	mGain=gain;
-	// this only makes sense for those sounds who have only one instance playing (eg. music)
-	if (mSource != 0)
+	void Sound::setPosition(float x,float y,float z)
 	{
-		float cgain=SoundManager::getSingleton()->getCategoryGain(mCategory);
-		alSourcef(mSource,AL_GAIN,mGain*cgain);
+		mPosition.x=x; mPosition.y=y; mPosition.z=z;
+		if (mSource != 0) alSource3f(mSource,AL_POSITION,x,y,z);
 	}
-}
 
-float Sound::getGain()
-{
-	return mGain;
-}
+	ALposition Sound::getPosition()
+	{
+		return mPosition;
+	}
 
-void Sound::setLoop(bool loop)
-{
-	mLoop=loop;
-}
+	float Sound::getSampleOffset()
+	{
+		float value;
+		alGetSourcef(mSource,AL_SEC_OFFSET,&value);
+		return value;
+	}
 
-bool Sound::getLoop()
-{
-	return mLoop;
+	void Sound::setGain(float gain)
+	{
+		mGain=gain;
+		// this only makes sense for those sounds who have only one instance playing (eg. music)
+		if (mSource != 0)
+		{
+			float cgain=SoundManager::getSingleton()->getCategoryGain(mCategory);
+			alSourcef(mSource,AL_GAIN,mGain*cgain);
+		}
+	}
+
+	float Sound::getGain()
+	{
+		return mGain;
+	}
+
+	void Sound::setLoop(bool loop)
+	{
+		mLoop=loop;
+	}
+
+	bool Sound::getLoop()
+	{
+		return mLoop;
+	}
 }

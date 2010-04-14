@@ -51,11 +51,11 @@
       </Compiler>
       <Linker Options="-O0" Required="yes">
         <LibraryPath Value="."/>
-        <LibraryPath Value="bin/Linux_Debug"/>
+        <LibraryPath Value="../../bin/Linux_Debug"/>
         <Library Value="libxal"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="" IntermediateDirectory="./bin/Linux_Debug" Command="" CommandArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/Linux_Debug" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -108,7 +108,7 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="."/>
-        <IncludePath Value="include"/>
+        <IncludePath Value="../../include"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
