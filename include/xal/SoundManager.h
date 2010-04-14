@@ -43,13 +43,14 @@ namespace xal
 		std::string getDeviceName();
 
 		void logMessage(const std::string& message);
+		void setLogFunction(void (*fnptr)(const std::string&));
 
 		void lockSource(unsigned source_id,bool lock);
 		void setCategoryGain(std::string category,float gain);
 		float getCategoryGain(std::string category);
 
-		static SoundManager* _singleton_ptr;
-		static SoundManager* getSingleton();
+		static SoundManager& getSingleton();
+		static SoundManager* getSingletonPtr();
 	};
 }
 
