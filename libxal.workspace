@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Workspace Name="libxal" Database="./libxal.tags">
-  <Project Name="xal" Path="xal.project" Active="No"/>
+  <Project Name="libxal" Path="libxal.project" Active="No"/>
   <Project Name="demo_simple" Path="demos/demo_simple/demo_simple.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
-      <Project Name="xal" ConfigName="Debug"/>
+      <Project Name="libxal" ConfigName="Debug"/>
       <Project Name="demo_simple" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="no">
-      <Project Name="xal" ConfigName="Release"/>
+      <Project Name="libxal" ConfigName="Release"/>
       <Project Name="demo_simple" ConfigName="Release"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Linux_Debug" Selected="yes">
