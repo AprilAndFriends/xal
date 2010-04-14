@@ -19,11 +19,10 @@ namespace xal
 {
 
 	using namespace std;
-	void writelog(std::string text);
 
 	OggSound::OggSound(string filename) : Sound(filename)
 	{
-		writelog("loading ogg sound: "+filename);
+		SoundManager::getSingleton().logMessage("loading ogg sound: "+filename);
 
 		alGenBuffers(1,&mBuffer);
 
@@ -33,7 +32,7 @@ namespace xal
 
 		if (ov_fopen((char*) filename.c_str(), &oggFile) != 0)
 		{
-			writelog("OggSound: Error opening file!");
+			SoundManager::getSingleton().logMessage("OggSound: Error opening file!");
 			return;
 		}
 		info = ov_info(&oggFile, -1);
@@ -70,7 +69,7 @@ namespace xal
 			delete [] data;
 		}
 		else
-			writelog("OggSound: couldn't allocate ogg buffer");
+			SoundManager::getSingleton().logMessage("OggSound: couldn't allocate ogg buffer");
 
 		ov_clear(&oggFile);
 
@@ -81,7 +80,7 @@ namespace xal
 
 	OggSound::~OggSound()
 	{
-		writelog("destroying ogg sound: "+mName);
+		SoundManager::getSingleton().logMessage("destroying ogg sound: "+mName);
 		alDeleteBuffers(1,&mBuffer);
 	}
 }

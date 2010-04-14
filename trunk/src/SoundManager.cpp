@@ -18,62 +18,39 @@ using namespace std;
 
 namespace xal
 {
+	void xal_writelog(const std::string& text)
+	{
+		printf("%s\n",text.c_str());
+	}
+	
+	void (*g_logFunction)(const std::string&)=xal_writelog;
 	
 	ALCdevice* gDevice=0;
 	ALCcontext* gContext=0;
+	
+	SoundManager* g_sm_singleton_ptr;
 
-	std::string g_logPrefix(".");
-
-	static bool s_noLogFile=false;
-
-	void setLogPrefix(std::string prefix)
+	SoundManager& SoundManager::getSingleton()
 	{
-		g_logPrefix=prefix;
+		return *g_sm_singleton_ptr;
 	}
 
-	void writelog(std::string text)
+	SoundManager* SoundManager::getSingletonPtr()
 	{
-		std::string s=g_logPrefix+"/audio.log";
-		cout << "[xal] " << text << '\n';
-
-		if(!s_noLogFile)
-		{
-			FILE* f=fopen(s.c_str(),"a");
-			if(f) 
-				fprintf(f,"%s\n",text.c_str());
-			fclose(f);
-		}
-	}
-
-	SoundManager* SoundManager::_singleton_ptr;
-
-	SoundManager* SoundManager::getSingleton()
-	{
-		return _singleton_ptr;
+		return g_sm_singleton_ptr;
 	}
 
 	SoundManager::SoundManager(string device_name)
 	{
-		// clear log file
-		std::string s=g_logPrefix+"/audio.log";
-		FILE* f=fopen(s.c_str(),"w");
-		if(!f)
-		{
-			s_noLogFile=true;
-		}
-		else
-		{
-			fclose(f);
-		}
 		// singleton
-		SoundManager::_singleton_ptr=this;
+		g_sm_singleton_ptr=this;
 		// init OpenAL
-		writelog("Initializing OpenAL");	
+		SoundManager::getSingleton().logMessage("Initializing OpenAL");	
 
 		gDevice = alcOpenDevice(device_name.c_str());
 		if (alcGetError(gDevice) != ALC_NO_ERROR) goto Fail;
 		mDeviceName=alcGetString(gDevice,ALC_DEVICE_SPECIFIER);
-		writelog("Choose device: "+mDeviceName);
+		SoundManager::getSingleton().logMessage("Choose device: "+mDeviceName);
 		
 		gContext = alcCreateContext(gDevice, NULL);
 		if (alcGetError(gDevice) != ALC_NO_ERROR) goto Fail;
@@ -99,15 +76,26 @@ namespace xal
 
 	SoundManager::~SoundManager()
 	{
-		writelog("Destroying OpenAL");
+		SoundManager::getSingleton().logMessage("Destroying OpenAL");
 		if (gDevice)
 		{
+			for (int i=0;i<XAL_MAX_SOURCES;i++)
+				alDeleteSources(1,&mSources[i].id);
+
+			std::list<Sound*>::iterator it=mSounds.begin();
+			for (;it != mSounds.end();it++)
+				delete *it;
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(gContext);
 			alcCloseDevice(gDevice);
 		}
 	}
-
+	
+	void SoundManager::logMessage(const std::string& message)
+	{
+		g_logFunction(message);
+	}
+	
 	std::string SoundManager::getDeviceName()
 	{
 		return mDeviceName;
@@ -139,7 +127,7 @@ namespace xal
 			if (!mSources[n].locked) return mSources[n].id;
 		}
 
-		writelog("SoundManager: unable to allocate audio source!");
+		SoundManager::getSingleton().logMessage("SoundManager: unable to allocate audio source!");
 		return 0;
 	}
 

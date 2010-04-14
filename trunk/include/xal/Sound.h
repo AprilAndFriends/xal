@@ -35,7 +35,7 @@ namespace xal
 		unsigned int mBuffer;
 
 		Sound(std::string name);
-		~Sound();
+		virtual ~Sound();
 
 		void play(float fade_in_time=0.0f,float x=0,float y=0,float z=0);
 		void stop(float fade_out_time=0.0f);

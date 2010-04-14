@@ -11,7 +11,6 @@
 
 namespace xal
 {
-	void writelog(std::string text);
 	Sound::Sound(std::string name)
 	{
 		mLoop=false;
@@ -27,7 +26,7 @@ namespace xal
 
 	Sound::~Sound()
 	{
-		writelog("destroying sound: "+mName);
+		SoundManager::getSingleton().logMessage("destroying sound: "+mName);
 		stop();
 		alDeleteBuffers(1,&mBuffer);
 		mBuffer=0;
@@ -46,7 +45,7 @@ namespace xal
 			mFadeTimer+=mFadeSpeed*k;
 			if (mFadeSpeed > 0 && mFadeTimer > 1)
 			{
-				alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
+				alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton().getCategoryGain(mCategory));
 				mFadeTimer=mFadeSpeed=-1.0f;
 				mFadeAction=XAL_FADE_NOTHING;
 			}
@@ -66,7 +65,7 @@ namespace xal
 			}
 			else
 			{
-				alSourcef(mSource,AL_GAIN,mFadeTimer*mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
+				alSourcef(mSource,AL_GAIN,mFadeTimer*mGain*SoundManager::getSingleton().getCategoryGain(mCategory));
 			}
 		}
 
@@ -90,12 +89,12 @@ namespace xal
 	{
 		if (mPaused)
 		{
-			SoundManager::getSingleton()->lockSource(mSource,0);
+			SoundManager::getSingleton().lockSource(mSource,0);
 			mPaused=0;
 		}
 		else
 		{
-			mSource=SoundManager::getSingleton()->allocateSource(this);
+			mSource=SoundManager::getSingleton().allocateSource(this);
 			alSourcei(mSource,AL_BUFFER,mBuffer);
 		}
 		alSourcei(mSource,AL_LOOPING,mLoop);
@@ -114,7 +113,7 @@ namespace xal
 			mFadeAction=XAL_FADE_NOTHING;
 		}
 		else
-			alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton()->getCategoryGain(mCategory));
+			alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton().getCategoryGain(mCategory));
 
 
 		alSourcePlay(mSource);
@@ -131,7 +130,7 @@ namespace xal
 		}
 		else
 		{
-			SoundManager::getSingleton()->stopSourcesWithBuffer(mBuffer);
+			SoundManager::getSingleton().stopSourcesWithBuffer(mBuffer);
 			mSource=0;
 		}
 		mPaused=0;
@@ -150,7 +149,7 @@ namespace xal
 			else
 			{
 				alSourcePause(mSource);
-				SoundManager::getSingleton()->lockSource(mSource,1);
+				SoundManager::getSingleton().lockSource(mSource,1);
 				mPaused=1;
 			}
 		}
@@ -180,7 +179,7 @@ namespace xal
 		// this only makes sense for those sounds who have only one instance playing (eg. music)
 		if (mSource != 0)
 		{
-			float cgain=SoundManager::getSingleton()->getCategoryGain(mCategory);
+			float cgain=SoundManager::getSingleton().getCategoryGain(mCategory);
 			alSourcef(mSource,AL_GAIN,mGain*cgain);
 		}
 	}
