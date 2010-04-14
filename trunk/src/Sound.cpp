@@ -161,7 +161,7 @@ namespace xal
 		if (mSource != 0) alSource3f(mSource,AL_POSITION,x,y,z);
 	}
 
-	ALposition Sound::getPosition()
+	XALposition Sound::getPosition()
 	{
 		return mPosition;
 	}

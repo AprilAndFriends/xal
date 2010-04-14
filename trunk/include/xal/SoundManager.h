@@ -38,7 +38,7 @@ namespace xal
 		void stopSourcesWithBuffer(unsigned int buffer);
 
 		void setListenerPosition(float x,float y,float z);
-		ALposition getListenerPosition();
+		XALposition getListenerPosition();
 
 		std::string getDeviceName();
 
