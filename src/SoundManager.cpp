@@ -27,7 +27,8 @@ namespace xal
 	
 	ALCdevice* gDevice=0;
 	ALCcontext* gContext=0;
-	
+	bool g_destroying=0;
+
 	SoundManager* g_sm_singleton_ptr;
 
 	SoundManager& SoundManager::getSingleton()
@@ -44,14 +45,20 @@ namespace xal
 	{
 		// singleton
 		g_sm_singleton_ptr=this;
+		
+		if (device_name == "Dummy")
+		{
+			mDeviceName="Dummy";
+			return;
+		}
 		// init OpenAL
 		SoundManager::getSingleton().logMessage("Initializing OpenAL");	
 
 		gDevice = alcOpenDevice(device_name.c_str());
 		if (alcGetError(gDevice) != ALC_NO_ERROR) goto Fail;
 		mDeviceName=alcGetString(gDevice,ALC_DEVICE_SPECIFIER);
-		SoundManager::getSingleton().logMessage("Choose device: "+mDeviceName);
-		
+		SoundManager::getSingleton().logMessage("Audio device: "+mDeviceName);
+
 		gContext = alcCreateContext(gDevice, NULL);
 		if (alcGetError(gDevice) != ALC_NO_ERROR) goto Fail;
 		alcMakeContextCurrent(gContext);
@@ -69,22 +76,23 @@ namespace xal
 
 		return;
 	Fail:
-		gDevice=NULL;
-		gContext=NULL;
+		gDevice=0;
+		gContext=0;
 		mDeviceName="";
 	}
 
 	SoundManager::~SoundManager()
 	{
 		SoundManager::getSingleton().logMessage("Destroying OpenAL");
+		g_destroying=1;
 		if (gDevice)
 		{
 			for (int i=0;i<XAL_MAX_SOURCES;i++)
 				alDeleteSources(1,&mSources[i].id);
 
-			std::list<Sound*>::iterator it=mSounds.begin();
+			std::map<std::string,Sound*>::iterator it=mSounds.begin();
 			for (;it != mSounds.end();it++)
-				delete *it;
+				delete it->second;
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(gContext);
 			alcCloseDevice(gDevice);
@@ -96,15 +104,14 @@ namespace xal
 		g_logFunction(message);
 	}
 	
+	void SoundManager::setLogFunction(void (*fnptr)(const std::string&))
+	{
+		g_logFunction=fnptr;
+	}
+	
 	std::string SoundManager::getDeviceName()
 	{
 		return mDeviceName;
-	}
-
-	void SoundManager::destroySound(Sound* s)
-	{
-		mSounds.remove(s);
-		delete s;
 	}
 
 	unsigned int SoundManager::allocateSource(Sound* new_owner)
@@ -147,8 +154,9 @@ namespace xal
 
 	void SoundManager::update(float k)
 	{
-		for (list<Sound*>::iterator i=mSounds.begin();i!=mSounds.end();i++)
-			(*i)->update(k);
+		std::map<std::string,Sound*>::iterator it=mSounds.begin();
+		for (;it != mSounds.end();it++)
+			it->second->update(k);
 	}
 
 	void SoundManager::setListenerPosition(float x,float y,float z)
@@ -166,16 +174,33 @@ namespace xal
 	Sound* SoundManager::createSound(std::string filename,std::string category)
 	{
 		int ogg=filename.find(".ogg");
-		int speex=filename.find(".spx");
-		
+	
 		Sound* s=NULL;
 		if (ogg != string::npos)
 			s=new OggSound(filename);
 		if (!s)	return NULL;
 
-		s->mCategory=category;
-		mSounds.push_back(s);
+		s->setCategory(category);
+		mSounds[s->getName()]=s;
 		return s;
+	}
+
+	Sound* SoundManager::getSound(const std::string& name)
+	{
+		if (mSounds.find(name) == mSounds.end()) return 0;
+		else return mSounds[name];
+	}
+	
+	void SoundManager::_unregisterSound(Sound* ptr)
+	{
+		if (g_destroying) return;
+		std::map<std::string,Sound*>::iterator it=mSounds.begin();
+		for (;it != mSounds.end();it++)
+			if (it->second == ptr)
+			{
+				mSounds.erase(it);
+				break;
+			}
 	}
 
 	void SoundManager::lockSource(unsigned int source_id,bool lock)
@@ -195,14 +220,15 @@ namespace xal
 		int src;
 		mCategoryGains[category]=gain;
 
-		for (list<Sound*>::iterator i=mSounds.begin();i!=mSounds.end();i++)
+		std::map<std::string,Sound*>::iterator it=mSounds.begin();
+		for (;it != mSounds.end();it++)
 		{
-			if ((*i)->mCategory == category)
+			if (it->second->getCategory() == category)
 			{
-				src=(*i)->getSource();
+				src=it->second->getSource();
 				if (src)
 				{
-					alSourcef(src,AL_GAIN,(*i)->getGain()*gain);
+					alSourcef(src,AL_GAIN,it->second->getGain()*gain);
 				}
 			}
 		}

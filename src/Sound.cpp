@@ -13,8 +13,11 @@ namespace xal
 {
 	Sound::Sound(std::string name)
 	{
+		int slash=name.rfind("/"),backslash=name.rfind("\\");
+		name=name.substr((slash > backslash) ? slash+1 : backslash+1);
+		
 		mLoop=false;
-		mName=name;
+		mName=name.substr(0,name.size()-4);
 		mSource=0;
 		mPaused=0;
 		mGain=1.0f;
@@ -22,15 +25,17 @@ namespace xal
 		mPosition.x=mPosition.y=mPosition.z=0.0f;
 		mFadeTimer=mFadeSpeed=-1.0f;
 		mFadeAction=XAL_FADE_NOTHING;
+		mBuffer=0;
 	}
 
 	Sound::~Sound()
 	{
 		SoundManager::getSingleton().logMessage("destroying sound: "+mName);
 		stop();
-		alDeleteBuffers(1,&mBuffer);
+		if (mBuffer) alDeleteBuffers(1,&mBuffer);
 		mBuffer=0;
 		mSource=0;
+		SoundManager::getSingleton()._unregisterSound(this);
 	}
 
 	unsigned int Sound::getSource()
