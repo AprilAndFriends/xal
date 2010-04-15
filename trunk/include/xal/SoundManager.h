@@ -3,7 +3,6 @@
 
 #include <string>
 #include <map>
-#include <list>
 #include "xalExport.h"
 #include "Sound.h"
 
@@ -24,16 +23,20 @@ namespace xal
 		Source mSources[XAL_MAX_SOURCES];
 		std::string mDeviceName;
 		std::map<std::string,float> mCategoryGains;
-		std::list<Sound*> mSounds;
+		std::map<std::string,Sound*> mSounds;
 	public:
 		SoundManager(std::string device_name);
 		~SoundManager();
 
+		void _unregisterSound(Sound* ptr);
+
 		unsigned int allocateSource(Sound* new_owner);
 
 		Sound* createSound(std::string filename,std::string category="sound");
-		void destroySound(Sound* s);
 		void update(float k);
+		
+		Sound* getSound(const std::string& name);
+		
 
 		void stopSourcesWithBuffer(unsigned int buffer);
 
@@ -43,7 +46,7 @@ namespace xal
 		std::string getDeviceName();
 
 		void logMessage(const std::string& message);
-		void setLogFunction(void (*fnptr)(const std::string&));
+		static void setLogFunction(void (*fnptr)(const std::string&));
 
 		void lockSource(unsigned source_id,bool lock);
 		void setCategoryGain(std::string category,float gain);

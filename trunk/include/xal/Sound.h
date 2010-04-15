@@ -18,7 +18,7 @@ namespace xal
 {
 	class xalExport Sound
 	{
-	private:
+	protected:
 		XALposition mPosition;
 		float mGain;
 		bool mLoop;
@@ -27,12 +27,12 @@ namespace xal
 		float mFadeSpeed;
 		int mFadeAction;
 		bool mPaused;
-	protected:
 		float mDuration;
-	public:
 		std::string mName;
 		std::string mCategory;
 		unsigned int mBuffer;
+	public:
+
 
 		Sound(std::string name);
 		virtual ~Sound();
@@ -45,6 +45,11 @@ namespace xal
 
 		void setGain(float gain);
 		float getGain();
+		
+		void setCategory(const std::string& category) { mCategory=category; }
+		const std::string& getCategory() { return mCategory; }
+		
+		const std::string& getName() { return mName; }
 
 		float getSampleOffset();
 
