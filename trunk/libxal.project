@@ -25,9 +25,14 @@
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="" Required="yes">
+        <Library Value="libOpenAL32"/>
+        <Library Value="libogg"/>
+        <Library Value="libvorbis"/>
+        <Library Value="libvorbisfile"/>
+      </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).so" IntermediateDirectory="./bin/Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)_d.dll" IntermediateDirectory="./bin/Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -113,10 +118,12 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="include/xal"/>
+        <IncludePath Value="../include"/>
         <Preprocessor Value="XAL_EXPORTS"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
+        <LibraryPath Value="../lib"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
