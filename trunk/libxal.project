@@ -19,7 +19,6 @@
     <File Name="include/xal/OggSound.h"/>
     <File Name="include/xal/xalExport.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Linux_Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -129,4 +128,5 @@
     </GlobalSettings>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Linux_Debug"/>
 </CodeLite_Project>
