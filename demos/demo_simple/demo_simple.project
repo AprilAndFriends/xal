@@ -53,6 +53,10 @@
         <LibraryPath Value="."/>
         <LibraryPath Value="../../bin/Linux_Debug"/>
         <Library Value="libxal_d"/>
+        <Library Value="libopenal"/>
+        <Library Value="libogg"/>
+        <Library Value="libvorbis"/>
+        <Library Value="libvorbisfile"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/Linux_Debug" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
