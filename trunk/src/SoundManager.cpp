@@ -14,7 +14,8 @@
 #include "SoundManager.h"
 #include "Sound.h"
 #include "OggSound.h"
-using namespace std;
+#include "DummySound.h"
+
 
 namespace xal
 {
@@ -41,7 +42,7 @@ namespace xal
 		return g_sm_singleton_ptr;
 	}
 
-	SoundManager::SoundManager(string device_name)
+	SoundManager::SoundManager(std::string device_name)
 	{
 		// singleton
 		g_sm_singleton_ptr=this;
@@ -176,7 +177,8 @@ namespace xal
 		int ogg=filename.find(".ogg");
 	
 		Sound* s=NULL;
-		if (ogg != string::npos)
+		if (!gDevice) s=new DummySound(filename);
+		else if (ogg != std::string::npos)
 			s=new OggSound(filename);
 		if (!s)	return NULL;
 

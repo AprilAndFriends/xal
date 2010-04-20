@@ -12,12 +12,14 @@
     <File Name="src/OggSound.cpp"/>
     <File Name="src/Sound.cpp"/>
     <File Name="src/SoundManager.cpp"/>
+    <File Name="src/DummySound.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/SoundManager.h"/>
     <File Name="include/xal/Sound.h"/>
     <File Name="include/xal/OggSound.h"/>
     <File Name="include/xal/xalExport.h"/>
+    <File Name="include/xal/DummySound.h"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">

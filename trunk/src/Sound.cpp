@@ -45,6 +45,7 @@ namespace xal
 
 	void Sound::update(float k)
 	{
+		if (!mBuffer) return;
 		if (mFadeTimer >= 0)
 		{
 			mFadeTimer+=mFadeSpeed*k;
@@ -84,14 +85,15 @@ namespace xal
 
 	bool Sound::isPlaying()
 	{
-			int state;
-			if (!mSource) return false;
-			alGetSourcei(mSource, AL_SOURCE_STATE, &state);
-			return (state == AL_PLAYING);
+		int state;
+		if (!mSource) return false;
+		alGetSourcei(mSource, AL_SOURCE_STATE, &state);
+		return (state == AL_PLAYING);
 	}
 
 	void Sound::play(float fade_in_time,float x,float y,float z)
 	{
+		if (!mBuffer) return;
 		if (mPaused)
 		{
 			SoundManager::getSingleton().lockSource(mSource,0);
@@ -127,6 +129,7 @@ namespace xal
 
 	void Sound::stop(float fade_out_time)
 	{
+		if (!mBuffer) return;
 		if (fade_out_time > 0)
 		{
 			mFadeTimer=1;
@@ -173,6 +176,7 @@ namespace xal
 
 	float Sound::getSampleOffset()
 	{
+		if (!mBuffer) return 0;
 		float value;
 		alGetSourcef(mSource,AL_SEC_OFFSET,&value);
 		return value;
