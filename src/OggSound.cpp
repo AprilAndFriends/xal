@@ -17,10 +17,7 @@
 
 namespace xal
 {
-
-	using namespace std;
-
-	OggSound::OggSound(string filename) : Sound(filename)
+	OggSound::OggSound(std::string filename) : Sound(filename)
 	{
 		SoundManager::getSingleton().logMessage("loading ogg sound: "+filename);
 
@@ -80,7 +77,6 @@ namespace xal
 
 	OggSound::~OggSound()
 	{
-		SoundManager::getSingleton().logMessage("destroying ogg sound: "+mName);
-		alDeleteBuffers(1,&mBuffer);
+
 	}
 }
