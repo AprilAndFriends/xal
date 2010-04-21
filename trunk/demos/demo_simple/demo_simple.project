@@ -13,9 +13,6 @@
   <Dependencies Name="Debug">
     <Project Name="xal"/>
   </Dependencies>
-  <Dependencies Name="Linux_Debug">
-    <Project Name="libxal"/>
-  </Dependencies>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -120,4 +117,7 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libxal"/>
+  </Dependencies>
 </CodeLite_Project>
