@@ -8,7 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <iostream>
-#include <string>
+#include <hltypes/hstring.h>
 #include "Sound.h"
 #include "SoundManager.h"
 
@@ -20,13 +20,13 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 
 namespace xal
 {
-	Sound::Sound(std::string name)
+	Sound::Sound(chstr name)
 	{
 		int slash=name.rfind("/"),backslash=name.rfind("\\");
-		name=name.substr((slash > backslash) ? slash+1 : backslash+1);
+		hstr new_name=name((slash > backslash) ? slash+1 : backslash+1);
 		
 		mLoop=false;
-		mName=name.substr(0,name.size()-4);
+		mName=new_name(0,new_name.size()-4);
 		mSource=0;
 		mPaused=0;
 		mGain=1.0f;

@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #ifndef XAL_DUMMY_SOUND_H
 #define XAL_DUMMY_SOUND_H
 
+#include <hltypes/hstring.h>
 #include "Sound.h"
 #include "xalExport.h"
 
@@ -19,7 +20,7 @@ namespace xal
 	class xalExport DummySound : public Sound
 	{
 	public:
-		DummySound(std::string filename);
+		DummySound(chstr filename);
 		~DummySound();
 	};
 

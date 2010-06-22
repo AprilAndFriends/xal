@@ -8,7 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <iostream>
-#include <string>
+#include <hltypes/hstring.h>
 #include "OggSound.h"
 #include "SoundManager.h"
 #include "Endianess.h"
@@ -26,7 +26,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 
 namespace xal
 {
-	OggSound::OggSound(std::string filename) : Sound(filename)
+	OggSound::OggSound(chstr filename) : Sound(filename)
 	{
 		SoundManager::getSingleton().logMessage("loading ogg sound: "+filename);
 

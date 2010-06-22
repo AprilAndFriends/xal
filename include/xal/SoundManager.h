@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #ifndef XAL_SOUND_MANAGER_H
 #define XAL_SOUND_MANAGER_H
 
-#include <string>
+#include <hltypes/hstring.h>
 #include <map>
 #include "xalExport.h"
 #include "Sound.h"
@@ -30,21 +30,21 @@ namespace xal
 	class xalExport SoundManager
 	{
 		Source mSources[XAL_MAX_SOURCES];
-		std::string mDeviceName;
-		std::map<std::string,float> mCategoryGains;
-		std::map<std::string,Sound*> mSounds;
+		hstr mDeviceName;
+		std::map<hstr,float> mCategoryGains;
+		std::map<hstr,Sound*> mSounds;
 	public:
-		SoundManager(std::string device_name);
+		SoundManager(chstr device_name);
 		~SoundManager();
 
 		void _unregisterSound(Sound* ptr);
 
 		unsigned int allocateSource(Sound* new_owner);
 
-		Sound* createSound(std::string filename,std::string category="sound");
+		Sound* createSound(chstr filename,chstr category="sound");
 		void update(float k);
 		
-		Sound* getSound(const std::string& name);
+		Sound* getSound(chstr name);
 		
 
 		void stopSourcesWithBuffer(unsigned int buffer);
@@ -52,14 +52,14 @@ namespace xal
 		void setListenerPosition(float x,float y,float z);
 		XALposition getListenerPosition();
 
-		std::string getDeviceName();
+		hstr getDeviceName();
 
-		void logMessage(const std::string& message);
-		static void setLogFunction(void (*fnptr)(const std::string&));
+		void logMessage(chstr message);
+		static void setLogFunction(void (*fnptr)(chstr));
 
 		void lockSource(unsigned source_id,bool lock);
-		void setCategoryGain(std::string category,float gain);
-		float getCategoryGain(std::string category);
+		void setCategoryGain(chstr category,float gain);
+		float getCategoryGain(chstr category);
 
 		static SoundManager& getSingleton();
 		static SoundManager* getSingletonPtr();
