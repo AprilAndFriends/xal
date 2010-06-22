@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #ifndef XAL_SOUND_H
 #define XAL_SOUND_H
 
-#include <string>
+#include <hltypes/hstring.h>
 #include "xalExport.h"
 
 struct XALposition
@@ -37,13 +37,13 @@ namespace xal
 		int mFadeAction;
 		bool mPaused;
 		float mDuration;
-		std::string mName;
-		std::string mCategory;
+		hstr mName;
+		hstr mCategory;
 		unsigned int mBuffer;
 	public:
 
 
-		Sound(std::string name);
+		Sound(chstr name);
 		virtual ~Sound();
 
 		void play(float fade_in_time=0.0f,float x=0,float y=0,float z=0);
@@ -55,10 +55,10 @@ namespace xal
 		void setGain(float gain);
 		float getGain();
 		
-		void setCategory(const std::string& category) { mCategory=category; }
-		const std::string& getCategory() { return mCategory; }
+		void setCategory(chstr category) { mCategory=category; }
+		chstr getCategory() { return mCategory; }
 		
-		const std::string& getName() { return mName; }
+		chstr getName() { return mName; }
 
 		float getSampleOffset();
 

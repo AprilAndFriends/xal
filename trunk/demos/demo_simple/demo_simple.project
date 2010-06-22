@@ -2,7 +2,7 @@
 <CodeLite_Project Name="demo_simple" InternalType="Console">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00020001N0005Debug0000000000000001N0011Linux_Debug000000000000]]>
+      <![CDATA[00030001N0005Debug0000000000000001N0011Linux_Debug0000000000000001N0013Release_Win32000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -10,23 +10,26 @@
   <VirtualDirectory Name="src">
     <File Name="demo_simple.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug">
-    <Project Name="xal"/>
-  </Dependencies>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
-        <IncludePath Value="."/>
+        <Preprocessor Value="_WIN32"/>
+        <Preprocessor Value="_DEBUG"/>
       </Compiler>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="" Required="yes">
+        <Library Value="libhltypes_d"/>
+        <Library Value="libxal_d"/>
+      </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./bin/Debug" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -44,25 +47,24 @@
     </Configuration>
     <Configuration Name="Linux_Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
-        <IncludePath Value="."/>
+        <Preprocessor Value="_UNIX"/>
+        <Preprocessor Value="_DEBUG"/>
       </Compiler>
       <Linker Options="-O0" Required="yes">
-        <LibraryPath Value="."/>
-        <LibraryPath Value="../../bin/Linux_Debug"/>
+        <Library Value="libhltypes_d"/>
         <Library Value="libxal_d"/>
         <Library Value="libopenal"/>
-        <Library Value="libogg"/>
-        <Library Value="libvorbis"/>
-        <Library Value="libvorbisfile"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/Linux_Debug" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.so ..\..\bin\$(ConfigurationName)</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -78,19 +80,24 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
-    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release_Win32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" Required="yes" PreCompiledHeader="">
-        <IncludePath Value="."/>
+        <Preprocessor Value="_WIN32"/>
       </Compiler>
-      <Linker Options="-O2" Required="yes"/>
+      <Linker Options="-O2" Required="yes">
+        <Library Value="libhltypes"/>
+        <Library Value="libxal"/>
+      </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -110,14 +117,30 @@
       <Compiler Options="">
         <IncludePath Value="."/>
         <IncludePath Value="../../include"/>
+        <IncludePath Value="../../../hltypes/include"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
+        <LibraryPath Value="../../../lib"/>
+        <LibraryPath Value="../../bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../../hltypes/bin/$(ConfigurationName)"/>
+        <Library Value="libogg"/>
+        <Library Value="libvorbis"/>
+        <Library Value="libvorbisfile"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
   <Dependencies Name="Linux_Debug">
+    <Project Name="libhltypes"/>
+    <Project Name="libxal"/>
+  </Dependencies>
+  <Dependencies Name="Release_Win32">
+    <Project Name="libhltypes"/>
+    <Project Name="libxal"/>
+  </Dependencies>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
     <Project Name="libxal"/>
   </Dependencies>
 </CodeLite_Project>

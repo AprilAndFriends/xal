@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <hltypes/hstring.h>
 #include <iostream>
-#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,12 +28,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 
 namespace xal
 {
-	void xal_writelog(const std::string& text)
+	void xal_writelog(chstr text)
 	{
 		printf("%s\n",text.c_str());
 	}
 	
-	void (*g_logFunction)(const std::string&)=xal_writelog;
+	void (*g_logFunction)(chstr)=xal_writelog;
 	
 	ALCdevice* gDevice=0;
 	ALCcontext* gContext=0;
@@ -51,7 +51,7 @@ namespace xal
 		return g_sm_singleton_ptr;
 	}
 
-	SoundManager::SoundManager(std::string device_name)
+	SoundManager::SoundManager(chstr device_name)
 	{
 		// singleton
 		g_sm_singleton_ptr=this;
@@ -100,7 +100,7 @@ namespace xal
 			for (int i=0;i<XAL_MAX_SOURCES;i++)
 				alDeleteSources(1,&mSources[i].id);
 
-			std::map<std::string,Sound*>::iterator it=mSounds.begin();
+			std::map<hstr,Sound*>::iterator it=mSounds.begin();
 			for (;it != mSounds.end();it++)
 				delete it->second;
 			alcMakeContextCurrent(NULL);
@@ -109,17 +109,17 @@ namespace xal
 		}
 	}
 	
-	void SoundManager::logMessage(const std::string& message)
+	void SoundManager::logMessage(chstr message)
 	{
 		g_logFunction(message);
 	}
 	
-	void SoundManager::setLogFunction(void (*fnptr)(const std::string&))
+	void SoundManager::setLogFunction(void (*fnptr)(chstr))
 	{
 		g_logFunction=fnptr;
 	}
 	
-	std::string SoundManager::getDeviceName()
+	hstr SoundManager::getDeviceName()
 	{
 		return mDeviceName;
 	}
@@ -164,7 +164,7 @@ namespace xal
 
 	void SoundManager::update(float k)
 	{
-		std::map<std::string,Sound*>::iterator it=mSounds.begin();
+		std::map<hstr,Sound*>::iterator it=mSounds.begin();
 		for (;it != mSounds.end();it++)
 			it->second->update(k);
 	}
@@ -181,13 +181,13 @@ namespace xal
 		return pos;
 	}
 
-	Sound* SoundManager::createSound(std::string filename,std::string category)
+	Sound* SoundManager::createSound(chstr filename,chstr category)
 	{
 		int ogg=filename.find(".ogg");
 	
 		Sound* s=NULL;
 		if (!gDevice) s=new DummySound(filename);
-		else if (ogg != std::string::npos)
+		else if (ogg != hstr::npos)
 			s=new OggSound(filename);
 		if (!s)	return NULL;
 
@@ -196,7 +196,7 @@ namespace xal
 		return s;
 	}
 
-	Sound* SoundManager::getSound(const std::string& name)
+	Sound* SoundManager::getSound(chstr name)
 	{
 		if (mSounds.find(name) == mSounds.end()) return 0;
 		else return mSounds[name];
@@ -205,7 +205,7 @@ namespace xal
 	void SoundManager::_unregisterSound(Sound* ptr)
 	{
 		if (g_destroying) return;
-		std::map<std::string,Sound*>::iterator it=mSounds.begin();
+		std::map<hstr,Sound*>::iterator it=mSounds.begin();
 		for (;it != mSounds.end();it++)
 			if (it->second == ptr)
 			{
@@ -226,12 +226,12 @@ namespace xal
 		}
 	}
 
-	void SoundManager::setCategoryGain(std::string category,float gain)
+	void SoundManager::setCategoryGain(chstr category,float gain)
 	{
 		int src;
 		mCategoryGains[category]=gain;
 
-		std::map<std::string,Sound*>::iterator it=mSounds.begin();
+		std::map<hstr,Sound*>::iterator it=mSounds.begin();
 		for (;it != mSounds.end();it++)
 		{
 			if (it->second->getCategory() == category)
@@ -245,7 +245,7 @@ namespace xal
 		}
 	}
 
-	float SoundManager::getCategoryGain(std::string category)
+	float SoundManager::getCategoryGain(chstr category)
 	{
 		if (mCategoryGains.find(category) == mCategoryGains.end()) return 1;
 		return mCategoryGains[category];
