@@ -24,7 +24,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "Category.h"
 #include "Sound.h"
 #include "Source.h"
-#include "DummySound.h"
+#include "Util.h"
 
 
 /*
@@ -32,7 +32,7 @@ metoda za loadanje zvukova koja vraca harray loadanih zvukova
 prefixi loadanih zvukova za keyeve u mapi
 */
 
-xal::AudioManager* audioMgr;
+xal::AudioManager* audiomgr;
 
 namespace xal
 {
@@ -185,6 +185,8 @@ namespace xal
 
 	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
 	{
+		return getDirFiles(path);
+		
 		//2DO - implement
 		/*
 		harray<hstr> result;
@@ -228,12 +230,12 @@ namespace xal
 	
 	void init(chstr deviceName)
 	{
-		audioMgr = new AudioManager(deviceName);
+		audiomgr = new AudioManager(deviceName);
 	}
 	
 	void destroy()
 	{
-		delete audioMgr;
+		delete audiomgr;
 	}
 		
 }

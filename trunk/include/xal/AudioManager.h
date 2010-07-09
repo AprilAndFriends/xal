@@ -54,6 +54,6 @@ namespace xal
 	xalFnExport void setLogFunction(void (*function)(chstr));
 	
 }
-xalFnExport extern xal::AudioManager* audioMgr;
+xalFnExport extern xal::AudioManager* audiomgr;
 
 #endif
