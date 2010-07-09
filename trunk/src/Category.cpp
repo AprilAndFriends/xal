@@ -7,22 +7,18 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_DUMMY_SOUND_H
-#define XAL_DUMMY_SOUND_H
-
 #include <hltypes/hstring.h>
-#include "Sound.h"
-#include "xalExport.h"
+#include "Category.h"
 
 namespace xal
 {
-
-	class xalExport DummySound : public Sound
+	Category::Category(chstr name) : gain(1.0f)
 	{
-	public:
-		DummySound(chstr filename);
-		~DummySound();
-	};
+		this->name = name;
+	}
+
+	Category::~Category()
+	{
+	}
 
 }
-#endif

@@ -8,35 +8,19 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <stdio.h>
-#include <xal/SoundManager.h>
+#include <xal/AudioManager.h>
 
 int main(int argc, char **argv)
 {
-	xal::SoundManager* mgr=new xal::SoundManager("");
-	
-	xal::Sound* s=mgr->createSound("../media/bark.ogg");
-	
+	xal::init();
+	xal::Sound* s = audioMgr->createSound("../media/bark.ogg", "music");
 	s->play();
-	
-	while (s->isPlaying())
-	{
-		
-	}
-	
+	while (s->isPlaying()) { }
 	s->play();
-	
-	while (s->isPlaying())
-	{
-		
-	}
-	
+	while (s->isPlaying()) { }
 	s->play();
+	while (s->isPlaying()) { }
 	
-	while (s->isPlaying())
-	{
-		
-	}
-	
-	delete mgr;
+	xal::destroy();
 	return 0;
 }
