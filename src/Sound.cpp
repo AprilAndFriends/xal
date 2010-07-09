@@ -2,218 +2,277 @@
 This source file is part of the KS(X) audio library                                  *
 For latest info, see http://libatres.sourceforge.net/                                *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                                  *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <iostream>
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+
+#include <iostream>
+#include <ogg/ogg.h>
+#include <vorbis/codec.h>
+#include <vorbis/vorbisfile.h>
+
+#include "Endianess.h"
 #include "Sound.h"
-#include "SoundManager.h"
+#include "Source.h"
+#include "AudioManager.h"
 
 #ifndef __APPLE__
-	#include <AL/al.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #else
-	#include <OpenAL/al.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 #endif
 
 namespace xal
 {
-	Sound::Sound(chstr name)
+/******* CONSTRUCT / DESTRUCT ******************************************/
+	Sound::Sound(chstr filename, chstr category) : duration(0.0f), buffer(0), sources(harray<xal::Source*>())
 	{
-		int slash=name.rfind("/"),backslash=name.rfind("\\");
-		hstr new_name=name((slash > backslash) ? slash+1 : backslash+1);
-		
-		mLoop=false;
-		mName=new_name(0,new_name.size()-4);
-		mSource=0;
-		mPaused=0;
-		mGain=1.0f;
-		mCategory="sound";
-		mPosition.x=mPosition.y=mPosition.z=0.0f;
-		mFadeTimer=mFadeSpeed=-1.0f;
-		mFadeAction=XAL_FADE_NOTHING;
-		mBuffer=0;
+		this->filename = filename;
+		this->name = filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
+		this->category = category;
 	}
 
 	Sound::~Sound()
 	{
-		SoundManager::getSingleton().logMessage("destroying sound: "+mName);
-		stop();
-		if (mBuffer) alDeleteBuffers(1,&mBuffer);
-		mBuffer=0;
-		mSource=0;
-		SoundManager::getSingleton()._unregisterSound(this);
-	}
-
-	unsigned int Sound::getSource()
-	{
-		return mSource;
-	}
-
-	void Sound::update(float k)
-	{
-		if (!mBuffer) return;
-		if (mFadeTimer >= 0)
+		this->stopAll();
+		audioMgr->logMessage("destroying sound: " + this->name);
+		if (this->buffer != 0)
 		{
-			mFadeTimer+=mFadeSpeed*k;
-			if (mFadeSpeed > 0 && mFadeTimer > 1)
+			alDeleteBuffers(1, &this->buffer);
+		}
+	}
+	
+/******* METHODS *******************************************************/
+	
+	bool Sound::load()
+	{
+		if (this->filename.contains(".ogg"))
+		{
+			return this->_loadOgg();
+		}
+		return false;
+	}
+
+	bool Sound::_loadOgg()
+	{
+		audioMgr->logMessage("loading ogg sound: " + this->filename);
+		alGenBuffers(1, &this->buffer);
+		vorbis_info *info;
+		OggVorbis_File oggFile;
+		if (ov_fopen((char*) filename.c_str(), &oggFile) != 0)
+		{
+			audioMgr->logMessage("OggSound: Error opening file!");
+			return false;
+		}
+		info = ov_info(&oggFile, -1);
+		unsigned long len = ov_pcm_total(&oggFile, -1) * info->channels * 2; // always 16 bit data
+		unsigned char *data = new unsigned char[len];
+		bool result = false;
+		if (data != NULL)
+		{
+			int bs = -1;
+			unsigned long todo = len;
+			unsigned char *bufpt = data;
+			while (todo > 0)
 			{
-				alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton().getCategoryGain(mCategory));
-				mFadeTimer=mFadeSpeed=-1.0f;
-				mFadeAction=XAL_FADE_NOTHING;
-			}
-			else if (mFadeSpeed < 0 && mFadeTimer < 0)
-			{
-				if (mFadeAction == XAL_FADE_STOP)
+				int read = ov_read(&oggFile, (char*)bufpt, todo, 0, 2, 1, &bs);
+				if (!read)
 				{
-					alSourceStop(mSource);
-					mSource=0;
+					len -= todo;
+					break;
 				}
-				else
-				{
-					pause();
-				}
-				mFadeTimer=mFadeSpeed=-1.0f;
-				mFadeAction=XAL_FADE_NOTHING;
+				todo -= read;
+				bufpt += read;
 			}
-			else
+
+#ifdef __BIG_ENDIAN__
+			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < bufpt; p++)
 			{
-				alSourcef(mSource,AL_GAIN,mFadeTimer*mGain*SoundManager::getSingleton().getCategoryGain(mCategory));
+				NORMALIZE_ENDIAN(*p);
 			}
-		}
-
-		if (!mPaused && mSource != 0)
-		{
-			int state;
-			alGetSourcei(mSource, AL_SOURCE_STATE, &state);
-			if (state != AL_PLAYING) mSource=0;
-		}
-	}
-
-	bool Sound::isPlaying()
-	{
-		int state;
-		if (!mSource) return false;
-		alGetSourcei(mSource, AL_SOURCE_STATE, &state);
-		return (state == AL_PLAYING);
-	}
-
-	void Sound::play(float fade_in_time,float x,float y,float z)
-	{
-		if (!mBuffer) return;
-		if (mPaused)
-		{
-			SoundManager::getSingleton().lockSource(mSource,0);
-			mPaused=0;
+#endif	
+			alBufferData(this->buffer, (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data, len, info->rate);
+			this->duration = ((float)len) / (info->rate * info->channels * 2);
+			delete [] data;
+			result = true;
 		}
 		else
 		{
-			mSource=SoundManager::getSingleton().allocateSource(this);
-			alSourcei(mSource,AL_BUFFER,mBuffer);
+			audioMgr->logMessage("OggSound: could not allocate ogg buffer");
 		}
-		alSourcei(mSource,AL_LOOPING,mLoop);
-		if (!(x == -1 && y == -1 && z == -1))
-		{
-			mPosition.x=x; mPosition.y=y; mPosition.z=z;
-		}
-		alSource3f(mSource,AL_POSITION,mPosition.x,mPosition.y,mPosition.z);
-		alSourcei(mSource,AL_SOURCE_RELATIVE,(mPosition.x == 0 && mPosition.y == 0 && mPosition.z == 0));
-
-		if (fade_in_time > 0)
-		{
-			alSourcef(mSource,AL_GAIN,0);
-			mFadeTimer=0;
-			mFadeSpeed=1.0f/fade_in_time;
-			mFadeAction=XAL_FADE_NOTHING;
-		}
-		else
-			alSourcef(mSource,AL_GAIN,mGain*SoundManager::getSingleton().getCategoryGain(mCategory));
-
-
-		alSourcePlay(mSource);
-		
+		ov_clear(&oggFile);
+		return result;
 	}
 
-	void Sound::stop(float fade_out_time)
+	void Sound::bindSource(Source* source)
 	{
-		if (!mBuffer) return;
-		if (fade_out_time > 0)
-		{
-			mFadeTimer=1;
-			mFadeSpeed=-1.0f/fade_out_time;
-			mFadeAction=XAL_FADE_STOP;
-		}
-		else
-		{
-			SoundManager::getSingleton().stopSourcesWithBuffer(mBuffer);
-			mSource=0;
-		}
-		mPaused=0;
+		source->setSound(this);
+		this->sources += source;
 	}
-
-	void Sound::pause(float fade_out_time)
+	
+	void Sound::unbindSource(Source* source)
 	{
-		if (mSource)
-		{
-			if (fade_out_time > 0)
-			{
-				mFadeTimer=1;
-				mFadeSpeed=-1.0f/fade_out_time;
-				mFadeAction=XAL_FADE_PAUSE;
-			}
-			else
-			{
-				alSourcePause(mSource);
-				SoundManager::getSingleton().lockSource(mSource,1);
-				mPaused=1;
-			}
-		}
+		source->setSound(NULL);
+		this->sources -= source;
 	}
-
-	void Sound::setPosition(float x,float y,float z)
-	{
-		mPosition.x=x; mPosition.y=y; mPosition.z=z;
-		if (mSource != 0) alSource3f(mSource,AL_POSITION,x,y,z);
-	}
-
-	XALposition Sound::getPosition()
-	{
-		return mPosition;
-	}
-
+	
 	float Sound::getSampleOffset()
 	{
-		if (!mBuffer) return 0;
-		float value;
-		alGetSourcef(mSource,AL_SEC_OFFSET,&value);
-		return value;
+		if (this->buffer == 0)
+		{
+			return 0;
+		}
+		if (this->sources.size() == 0)
+		{
+			return 0;
+		}
+		return this->sources[0]->getSampleOffset();
 	}
 
 	void Sound::setGain(float gain)
 	{
-		mGain=gain;
-		// this only makes sense for those sounds who have only one instance playing (eg. music)
-		if (mSource != 0)
+		if (this->buffer == 0)
 		{
-			float cgain=SoundManager::getSingleton().getCategoryGain(mCategory);
-			alSourcef(mSource,AL_GAIN,mGain*cgain);
+			return;
 		}
+		if (this->sources.size() == 0)
+		{
+			return;
+		}
+		this->sources[0]->setGain(gain);
 	}
 
 	float Sound::getGain()
 	{
-		return mGain;
+		if (this->buffer == 0)
+		{
+			return 1;
+		}
+		if (this->sources.size() == 0)
+		{
+			return 1;
+		}
+		return this->sources[0]->getGain();
 	}
 
-	void Sound::setLoop(bool loop)
+	bool Sound::isPlaying()
 	{
-		mLoop=loop;
+		if (this->sources.size() == 0)
+		{
+			return false;
+		}
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+		{
+			if ((*it)->isPlaying())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
-	bool Sound::getLoop()
+	bool Sound::isLooping()
 	{
-		return mLoop;
+		if (this->sources.size() == 0)
+		{
+			return false;
+		}
+		return this->sources[0]->isLooping();
 	}
+
+/******* PLAY CONTROLS *************************************************/
+
+	Source* Sound::play(float fadeTime, bool looping)
+	{
+		if (this->buffer == 0)
+		{
+			return NULL;
+		}
+		Source* source = NULL;
+		if (this->sources.size() == 0 || this->sources[0]->isPlaying())
+		{
+			source = audioMgr->allocateSource();
+			if (source == NULL)
+			{
+				return NULL;
+			}
+			this->bindSource(source);
+		}
+		else
+		{
+			source = this->sources[0];
+		}
+		source->play(fadeTime, looping);
+		return source;
+	}
+
+	Source* Sound::replay(float fadeTime, bool looping)
+	{
+		if (this->buffer == 0)
+		{
+			return NULL;
+		}
+		Source* source = NULL;
+		if (this->sources.size() == 0)
+		{
+			source = audioMgr->allocateSource();
+			if (source == NULL)
+			{
+				return NULL;
+			}
+			this->bindSource(source);
+		}
+		else
+		{
+			source = this->sources[0];
+			source->stop();
+		}
+		source->replay(fadeTime, looping);
+		return source;
+	}
+
+	void Sound::stop(float fadeTime)
+	{
+		if (this->buffer == 0)
+		{
+			return;
+		}
+		if (this->sources.size() == 0)
+		{
+			return;
+		}
+		this->sources[0]->stop(fadeTime);
+	}
+
+	void Sound::stopAll(float fadeTime)
+	{
+		if (this->buffer == 0)
+		{
+			return;
+		}
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+		{
+			(*it)->stop(fadeTime);
+		}
+	}
+	
+	void Sound::pause(float fadeTime)
+	{
+		if (this->buffer == 0)
+		{
+			return;
+		}
+		if (this->sources.size() == 0)
+		{
+			return;
+		}
+		this->sources[0]->pause(fadeTime);
+	}
+
 }

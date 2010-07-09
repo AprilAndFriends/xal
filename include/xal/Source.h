@@ -7,57 +7,51 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_SOUND_H
-#define XAL_SOUND_H
+#ifndef XAL_SOURCE_H
+#define XAL_SOURCE_H
 
-#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include "xalExport.h"
+#include "Sound.h"
 
 namespace xal
 {
-	class Source;
+	class Sound;
 	
-	class xalExport Sound
+	class xalExport Source
 	{
 	public:
-		Sound(chstr name, chstr category);
-		virtual ~Sound();
+		Source(unsigned int id);
+		virtual ~Source();
 
-		bool load();
-		void bindSource(Source* source);
-		void unbindSource(Source* source);
+		void update(float k);
 		
-		float getSampleOffset();
-		unsigned int getBuffer() { return this->buffer; }
-		chstr getName() { return this->name; }
-		float getDuration() { return this->duration; }
-		chstr getCategory() { return this->category; }
-		void setCategory(chstr value) { this->category = value; }
-		float getGain();
-		void setGain(float value);
-		bool isLooping();
-		bool isPlaying();
-		bool isPaused();
-		
-		Source* play(float fadeTime = 0.0f, bool looping = false);
-		Source* replay(float fadeTime = 0.0f, bool looping = false);
+		void play(float fadeTime = 0.0f, bool looping = false);
+		void replay(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
-		void stopAll(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
 		
-	protected:
-		hstr name;
-		hstr filename;
-		float duration;
-		hstr category;
-		harray<Source*> sources;
-		unsigned int buffer;
+		unsigned int getId() { return this->id; }
+		float getSampleOffset();
+		Sound* getSound() { return this->sound; }
+		bool hasSound();
+		void setSound(Sound* value) { this->sound = value; }
+		float getGain() { return this->gain; }
+		void setGain(float value);
+		bool isLooping() { return this->looping; }
+		bool isPlaying();
+		bool isPaused() { return this->paused; }
 		
-		bool _loadOgg();
+	protected:
+		unsigned int id;
+		float gain;
+		bool looping;
+		bool paused;
+		float fadeSpeed;
+		float fadeTime;
+		Sound* sound;
 		
 	};
 
 }
-
 #endif
