@@ -185,6 +185,8 @@ namespace xal
 
 	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
 	{
+		//2DO - implement
+		/*
 		harray<hstr> result;
 		if (!gDevice)
 		{
@@ -200,6 +202,7 @@ namespace xal
 		}
 		this->sounds[sound->getName()] = sound;
 		return result;
+		*/
 	}
 
 	void AudioManager::unloadSound(Sound* sound)
