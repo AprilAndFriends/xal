@@ -15,26 +15,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 int main(int argc, char **argv)
 {
 	xal::init();
-	//xal::Sound* s = audiomgr->loadSound("../media/bark.ogg", "music");
-	
-	//audiomgr->loadCategoryPath("../media", "test.");
-	//xal::Sound* s = audiomgr->getSound("test.bark", "media");
-	
-	//audiomgr->loadCategoryPath("../media");
-	//xal::Sound* s = audiomgr->getSound("bark", "media");
-	
-	printf("\n");
-	harray<hstr> files = audiomgr->loadPath("..");
-	for (hstr* it = files.iterate(); it; it = files.next())
-	{
-		hstr file = "../" + (*it);
-		printf("%s\n", (*it).c_str());
-		//printf("%s\n", (*it).c_str());
-	}
-	printf("\n");
-	
 	xal::Sound* s = audiomgr->loadSound("../media/bark.ogg", "media");
-	//xal::Sound* s = audiomgr->getSound("bark", "media");
 	
 	s->play();
 	while (s->isPlaying()) { }
