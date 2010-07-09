@@ -51,9 +51,9 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 	AudioManager::AudioManager(chstr deviceName)
 	{
-		if (deviceName == "Dummy")
+		if (deviceName == "nosound")
 		{
-			this->deviceName = "Dummy";
+			this->deviceName = "nosound";
 			return;
 		}
 		// init OpenAL
@@ -170,14 +170,10 @@ namespace xal
 	
 	Sound* AudioManager::loadSound(chstr filename, chstr category, chstr prefix)
 	{
-		if (!gDevice)
-		{
-			return NULL;
-		}
 		Sound* sound = new Sound(filename, category);
-		if (!sound->load())
+		if (gDevice)
 		{
-			return NULL;
+			sound->load();
 		}
 		this->sounds[prefix + sound->getName()] = sound;
 		return sound;
@@ -185,7 +181,23 @@ namespace xal
 
 	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
 	{
-		return getDirFiles(path);
+		harray<hstr>();
+		/*
+		harray<hstr> dirs = getPathDirectories(path);
+		harray<hstr> files;
+		for (hstr* it = dirs.iterate(); it; it = dirs.next())
+		{
+			files += getPathFilesRecursive(*it);
+		}
+		Sound* sound;
+		harray<hstr> result;
+		for (hstr* it = files.iterate(); it; it = files.next())
+		{
+			sound = this->loadSound()
+			files += getPathFilesRecursive(*it);
+		}
+		*/
+		
 		
 		//2DO - implement
 		/*

@@ -15,26 +15,56 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 //2DO - add #ifdef _WIN32 ?
 #include <_dirent_win32.h>
-
+#include <stdio.h>
 namespace xal
 {
-	harray<hstr> getDirFiles(hstr path)
+	harray<hstr> getPathFiles(hstr path)
 	{
 		harray<hstr> result;
-		if (isFolder(path))
+		if (isDirectory(path))
 		{
 			DIR* dir = opendir(path.c_str());
 			struct dirent* entry;
 			while ((entry = readdir(dir)) != NULL)
 			{
-				result += hstr(entry->d_name);
+				if (isFile(hsprintf("%s/%s", path.c_str(), entry->d_name)))
+				{
+					result += hstr(entry->d_name);
+				}
 			}
 			closedir(dir);
 		}
 		return result;
 	}
 	
-	bool isFolder(hstr path)
+	harray<hstr> getPathFolders(hstr path)
+	{
+		harray<hstr> result;
+		if (isDirectory(path))
+		{
+			DIR* dir = opendir(path.c_str());
+			struct dirent* entry;
+			while ((entry = readdir(dir)) != NULL)
+			{
+				if (isDirectory(hsprintf("%s/%s", path.c_str(), entry->d_name)))
+				{
+					result += hstr(entry->d_name);
+				}
+			}
+			closedir(dir);
+		}
+		return result;
+	}
+	
+	harray<hstr> getPathFilesRecursive(hstr path)
+	{
+	}
+	
+	harray<hstr> getPathDirectoriesRecursive(hstr path)
+	{
+	}
+	
+	bool isDirectory(hstr path)
 	{
 		DIR* dir;
 		if ((dir = opendir(path.c_str())) != NULL)
@@ -43,6 +73,11 @@ namespace xal
 			return true;
 		}
 		return false;
+	}
+
+	bool isFile(hstr path)
+	{
+		return (!isDirectory(path));
 	}
 
 }
