@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 int main(int argc, char **argv)
 {
 	xal::init();
-	xal::Sound* s = audioMgr->createSound("../media/bark.ogg", "music");
+	xal::Sound* s = audioMgr->loadSound("../media/bark.ogg", "music");
 	s->play();
 	while (s->isPlaying()) { }
 	s->play();

@@ -13,6 +13,7 @@
     <File Name="src/Source.cpp"/>
     <File Name="src/Category.cpp"/>
     <File Name="src/AudioManager.cpp"/>
+    <File Name="src/_dirent_win32.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/Sound.h"/>
