@@ -32,12 +32,14 @@ namespace xal
 		hstr getDeviceName() { return this->deviceName; }
 		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
+		bool isEnabled();
 		
 		void update(float k);
 		
 		Source* allocateSource();
 		Sound* loadSound(chstr filename, chstr category, chstr prefix = "");
 		harray<hstr> loadPath(chstr path, chstr prefix = "");
+		harray<hstr> loadPathCategory(chstr path, chstr category, chstr prefix = "");
 		void unloadSound(Sound* sound);
 		Sound* getSound(chstr name);
 		

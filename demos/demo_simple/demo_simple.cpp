@@ -15,7 +15,13 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 int main(int argc, char **argv)
 {
 	xal::init();
-	xal::Sound* s = audiomgr->loadSound("../media/bark.ogg", "media");
+	
+	harray<hstr> files = audiomgr->loadPathCategory("../media", "cat");
+	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test");
+	//harray<hstr> files = audiomgr->loadPath("..", "test");
+	//harray<hstr> files = audiomgr->loadPath("..");
+	
+	xal::Sound* s = audiomgr->getSound("bark");
 	
 	s->play();
 	while (s->isPlaying()) { }

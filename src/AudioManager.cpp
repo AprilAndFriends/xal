@@ -45,19 +45,21 @@ namespace xal
 	
 	void (*gLogFunction)(chstr) = xal_writelog;
 	
-	ALCdevice* gDevice = NULL;
-	ALCcontext* gContext = NULL;
+	ALCdevice* gDevice;
+	ALCcontext* gContext;
 
 /******* CONSTRUCT / DESTRUCT ******************************************/
 	AudioManager::AudioManager(chstr deviceName)
 	{
+		this->logMessage("Initializing XAL");
 		if (deviceName == "nosound")
 		{
 			this->deviceName = "nosound";
+			this->logMessage("- Audio is disabled");
 			return;
 		}
 		// init OpenAL
-		this->logMessage("Initializing OpenAL");	
+		this->logMessage("Initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
@@ -138,6 +140,11 @@ namespace xal
 		}
 	}
 
+	bool AudioManager::isEnabled()
+	{
+		return (gDevice != NULL);
+	}
+
 	void AudioManager::update(float k)
 	{
 		for (int i = 0; i < XAL_MAX_SOURCES; i++)
@@ -170,53 +177,42 @@ namespace xal
 	
 	Sound* AudioManager::loadSound(chstr filename, chstr category, chstr prefix)
 	{
-		Sound* sound = new Sound(filename, category);
-		if (gDevice)
-		{
-			sound->load();
-		}
-		this->sounds[prefix + sound->getName()] = sound;
-		return sound;
-	}
-
-	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
-	{
-		harray<hstr>();
-		/*
-		harray<hstr> dirs = getPathDirectories(path);
-		harray<hstr> files;
-		for (hstr* it = dirs.iterate(); it; it = dirs.next())
-		{
-			files += getPathFilesRecursive(*it);
-		}
-		Sound* sound;
-		harray<hstr> result;
-		for (hstr* it = files.iterate(); it; it = files.next())
-		{
-			sound = this->loadSound()
-			files += getPathFilesRecursive(*it);
-		}
-		*/
-		
-		
-		//2DO - implement
-		/*
-		harray<hstr> result;
-		if (!gDevice)
-		{
-			return result;
-		}
-		
-		
-		
-		Sound* sound = new Sound(filename, category);
+		Sound* sound = new Sound(filename, category, prefix);
 		if (!sound->load())
 		{
 			return NULL;
 		}
 		this->sounds[sound->getName()] = sound;
+		return sound;
+	}
+
+	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
+	{
+		harray<hstr> result;
+		hstr category;
+		harray<hstr> dirs = getPathDirectories(path);
+		for (hstr* it = dirs.iterate(); it; it = dirs.next())
+		{
+			category = (*it).rsplit("/").pop_back();
+			result += loadPathCategory(*it, category, prefix);
+		}
 		return result;
-		*/
+	}
+
+	harray<hstr> AudioManager::loadPathCategory(chstr path, chstr category, chstr prefix)
+	{
+		harray<hstr> result;
+		harray<hstr> files = getPathFilesRecursive(path);
+		Sound* sound;
+		for (hstr* it = files.iterate(); it; it = files.next())
+		{
+			sound = this->loadSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
+			if (sound != NULL)
+			{
+				result += sound->getName();
+			}
+		}
+		return result;
 	}
 
 	void AudioManager::unloadSound(Sound* sound)

@@ -31,10 +31,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
-	Sound::Sound(chstr filename, chstr category) : duration(0.0f), buffer(0), sources(harray<xal::Source*>())
+	Sound::Sound(chstr filename, chstr category, chstr prefix) : duration(0.0f), buffer(0), sources(harray<xal::Source*>())
 	{
 		this->filename = filename;
-		this->name = filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
+		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 		this->category = category;
 	}
 
@@ -61,11 +61,15 @@ namespace xal
 
 	bool Sound::_loadOgg()
 	{
+		if (!audiomgr->isEnabled())
+		{
+			return true;
+		}
 		audiomgr->logMessage("loading ogg sound: " + this->filename);
 		alGenBuffers(1, &this->buffer);
 		vorbis_info *info;
 		OggVorbis_File oggFile;
-		if (ov_fopen((char*) filename.c_str(), &oggFile) != 0)
+		if (ov_fopen((char*)this->filename.c_str(), &oggFile) != 0)
 		{
 			audiomgr->logMessage("OggSound: Error opening file!");
 			return false;
