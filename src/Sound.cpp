@@ -41,7 +41,7 @@ namespace xal
 	Sound::~Sound()
 	{
 		this->stopAll();
-		audioMgr->logMessage("destroying sound: " + this->name);
+		audiomgr->logMessage("destroying sound: " + this->name);
 		if (this->buffer != 0)
 		{
 			alDeleteBuffers(1, &this->buffer);
@@ -61,13 +61,13 @@ namespace xal
 
 	bool Sound::_loadOgg()
 	{
-		audioMgr->logMessage("loading ogg sound: " + this->filename);
+		audiomgr->logMessage("loading ogg sound: " + this->filename);
 		alGenBuffers(1, &this->buffer);
 		vorbis_info *info;
 		OggVorbis_File oggFile;
 		if (ov_fopen((char*) filename.c_str(), &oggFile) != 0)
 		{
-			audioMgr->logMessage("OggSound: Error opening file!");
+			audiomgr->logMessage("OggSound: Error opening file!");
 			return false;
 		}
 		info = ov_info(&oggFile, -1);
@@ -104,7 +104,7 @@ namespace xal
 		}
 		else
 		{
-			audioMgr->logMessage("OggSound: could not allocate ogg buffer");
+			audiomgr->logMessage("OggSound: could not allocate ogg buffer");
 		}
 		ov_clear(&oggFile);
 		return result;
@@ -197,7 +197,7 @@ namespace xal
 		Source* source = NULL;
 		if (this->sources.size() == 0 || this->sources[0]->isPlaying())
 		{
-			source = audioMgr->allocateSource();
+			source = audiomgr->allocateSource();
 			if (source == NULL)
 			{
 				return NULL;
@@ -221,7 +221,7 @@ namespace xal
 		Source* source = NULL;
 		if (this->sources.size() == 0)
 		{
-			source = audioMgr->allocateSource();
+			source = audiomgr->allocateSource();
 			if (source == NULL)
 			{
 				return NULL;

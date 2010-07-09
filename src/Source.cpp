@@ -49,7 +49,7 @@ namespace xal
 				if (this->fadeSpeed > 0.0f)
 				{
 					alSourcef(this->id, AL_GAIN, this->gain *
-						audioMgr->getCategoryGain(this->sound->getCategory()));
+						audiomgr->getCategoryGain(this->sound->getCategory()));
 				}
 				else if (this->fadeSpeed < 0.0f && !this->paused)
 				{
@@ -61,7 +61,7 @@ namespace xal
 			else
 			{
 				alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain *
-					audioMgr->getCategoryGain(this->sound->getCategory()));
+					audiomgr->getCategoryGain(this->sound->getCategory()));
 			}
 		}
 		if (!this->paused && !this->isPlaying())
@@ -92,7 +92,7 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		alSourcef(this->id, AL_GAIN, audioMgr->getCategoryGain(
+		alSourcef(this->id, AL_GAIN, audiomgr->getCategoryGain(
 			this->sound->getCategory()) * this->fadeTime * this->gain);
 		alSourcePlay(this->id);
 	}
@@ -166,7 +166,7 @@ namespace xal
 		this->gain = gain;
 		if (this->id != 0)
 		{
-			alSourcef(this->id, AL_GAIN, audioMgr->getCategoryGain(
+			alSourcef(this->id, AL_GAIN, audiomgr->getCategoryGain(
 				this->sound->getCategory()) * this->gain);
 		}
 	}
