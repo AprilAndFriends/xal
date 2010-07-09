@@ -159,7 +159,16 @@ namespace xal
 		return NULL;
 	}
 
-	Sound* AudioManager::createSound(chstr filename, chstr category)
+	Sound* AudioManager::getSound(chstr name)
+	{
+		if (this->sounds.find(name) == this->sounds.end())
+		{
+			return NULL;
+		}
+		return this->sounds[name];
+	}
+	
+	Sound* AudioManager::loadSound(chstr filename, chstr category, chstr prefix)
 	{
 		if (!gDevice)
 		{
@@ -170,17 +179,30 @@ namespace xal
 		{
 			return NULL;
 		}
-		this->sounds[sound->getName()] = sound;
+		this->sounds[prefix + sound->getName()] = sound;
 		return sound;
 	}
 
-	Sound* AudioManager::getSound(chstr name)
+	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
 	{
-		if (this->sounds.find(name) == this->sounds.end()) return NULL;
-		else return this->sounds[name];
+		harray<hstr> result;
+		if (!gDevice)
+		{
+			return result;
+		}
+		
+		
+		
+		Sound* sound = new Sound(filename, category);
+		if (!sound->load())
+		{
+			return NULL;
+		}
+		this->sounds[sound->getName()] = sound;
+		return result;
 	}
-	
-	void AudioManager::destroySound(Sound* sound)
+
+	void AudioManager::unloadSound(Sound* sound)
 	{
 		std::map<hstr,Sound*>::iterator it = this->sounds.begin();
 		for (;it != this->sounds.end(); it++)

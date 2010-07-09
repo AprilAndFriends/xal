@@ -36,8 +36,9 @@ namespace xal
 		void update(float k);
 		
 		Source* allocateSource();
-		Sound* createSound(chstr filename, chstr category);
-		void destroySound(Sound* sound);
+		Sound* loadSound(chstr filename, chstr category, chstr prefix = "");
+		harray<hstr> loadPath(chstr path, chstr prefix = "");
+		void unloadSound(Sound* sound);
 		Sound* getSound(chstr name);
 		
 	protected:
