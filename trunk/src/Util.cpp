@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <stdio.h>
 namespace xal
 {
-	harray<hstr> getPathFiles(hstr path)
+	harray<hstr> getPathFiles(chstr path)
 	{
 		harray<hstr> result;
 		if (isDirectory(path))
@@ -37,18 +37,20 @@ namespace xal
 		return result;
 	}
 	
-	harray<hstr> getPathFolders(hstr path)
+	harray<hstr> getPathDirectories(chstr path)
 	{
 		harray<hstr> result;
 		if (isDirectory(path))
 		{
 			DIR* dir = opendir(path.c_str());
 			struct dirent* entry;
+			hstr name;
 			while ((entry = readdir(dir)) != NULL)
 			{
-				if (isDirectory(hsprintf("%s/%s", path.c_str(), entry->d_name)))
+				name = entry->d_name;
+				if (isDirectory(hsprintf("%s/%s", path.c_str(), entry->d_name)) && name != "." && name != "..")
 				{
-					result += hstr(entry->d_name);
+					result += name;
 				}
 			}
 			closedir(dir);
@@ -56,15 +58,36 @@ namespace xal
 		return result;
 	}
 	
-	harray<hstr> getPathFilesRecursive(hstr path)
+	harray<hstr> getPathFilesRecursive(chstr path)
 	{
+		harray<hstr> dirs = getPathDirectoriesRecursive(path);
+		dirs += path;
+		harray<hstr> files;
+		for (hstr* it = dirs.iterate(); it; it = dirs.next())
+		{
+			files += getPathFiles(*it);
+		}
+		return files;
 	}
 	
-	harray<hstr> getPathDirectoriesRecursive(hstr path)
+	harray<hstr> getPathDirectoriesRecursive(chstr path)
 	{
+		harray<hstr> pending;
+		pending += path;
+		harray<hstr> dirs;
+		harray<hstr> current;
+		hstr dir;
+		while (pending.size() > 0)
+		{
+			dir = pending.pop_front();
+			current = getPathDirectories(dir);
+			pending += current;
+			dirs += current;
+		}
+		return dirs;
 	}
 	
-	bool isDirectory(hstr path)
+	bool isDirectory(chstr path)
 	{
 		DIR* dir;
 		if ((dir = opendir(path.c_str())) != NULL)
@@ -75,7 +98,7 @@ namespace xal
 		return false;
 	}
 
-	bool isFile(hstr path)
+	bool isFile(chstr path)
 	{
 		return (!isDirectory(path));
 	}

@@ -15,12 +15,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace xal
 {
-	harray<hstr> getPathFiles(hstr path);
-	harray<hstr> getPathDirectories(hstr path);
-	harray<hstr> getPathFilesRecursive(hstr path);
-	harray<hstr> getPathDirectoriesRecursive(hstr path);
-	bool isDirectory(hstr path);
-	bool isFile(hstr path);
+	harray<hstr> getPathFiles(chstr path);
+	harray<hstr> getPathDirectories(chstr path);
+	harray<hstr> getPathFilesRecursive(chstr path);
+	harray<hstr> getPathDirectoriesRecursive(chstr path);
+	bool isDirectory(chstr path);
+	bool isFile(chstr path);
 
 }
 

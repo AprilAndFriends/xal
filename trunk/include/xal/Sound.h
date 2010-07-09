@@ -21,7 +21,7 @@ namespace xal
 	class xalExport Sound
 	{
 	public:
-		Sound(chstr name, chstr category);
+		Sound(chstr name, chstr category, chstr prefix = "");
 		virtual ~Sound();
 
 		bool load();
