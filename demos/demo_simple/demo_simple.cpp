@@ -17,11 +17,16 @@ int main(int argc, char **argv)
 	xal::init();
 	
 	harray<hstr> files = audiomgr->loadPathCategory("../media", "cat");
-	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test");
-	//harray<hstr> files = audiomgr->loadPath("..", "test");
-	//harray<hstr> files = audiomgr->loadPath("..");
-	
 	xal::Sound* s = audiomgr->getSound("bark");
+	
+	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test");
+	//xal::Sound* s = audiomgr->getSound("test.bark");
+	
+	//harray<hstr> files = audiomgr->loadPath("..");
+	//xal::Sound* s = audiomgr->getSound("bark");
+	
+	//harray<hstr> files = audiomgr->loadPath("..", "test");
+	//xal::Sound* s = audiomgr->getSound("testbark");
 	
 	s->play();
 	while (s->isPlaying()) { }

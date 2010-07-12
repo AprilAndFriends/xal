@@ -194,7 +194,7 @@ namespace xal
 		for (hstr* it = dirs.iterate(); it; it = dirs.next())
 		{
 			category = (*it).rsplit("/").pop_back();
-			result += loadPathCategory(*it, category, prefix);
+			result += loadPathCategory(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
 		}
 		return result;
 	}
