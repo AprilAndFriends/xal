@@ -33,6 +33,7 @@ namespace xal
 		
 		unsigned int getId() { return this->id; }
 		float getSampleOffset();
+		virtual unsigned int getBuffer();
 		Sound* getSound() { return this->sound; }
 		bool hasSound();
 		void setSound(Sound* value) { this->sound = value; }

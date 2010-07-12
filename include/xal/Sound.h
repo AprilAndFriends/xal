@@ -16,6 +16,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace xal
 {
+	class Category;
 	class Source;
 	
 	class xalExport Sound
@@ -32,8 +33,8 @@ namespace xal
 		unsigned int getBuffer() { return this->buffer; }
 		chstr getName() { return this->name; }
 		float getDuration() { return this->duration; }
-		chstr getCategory() { return this->category; }
-		void setCategory(chstr value) { this->category = value; }
+		Category* getCategory() { return this->category; }
+		void setCategory(Category* value) { this->category = value; }
 		float getGain();
 		void setGain(float value);
 		bool isLooping();
@@ -50,7 +51,7 @@ namespace xal
 		hstr name;
 		hstr filename;
 		float duration;
-		hstr category;
+		Category* category;
 		harray<Source*> sources;
 		unsigned int buffer;
 		

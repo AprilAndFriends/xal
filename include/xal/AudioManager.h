@@ -30,9 +30,10 @@ namespace xal
 		
 		void logMessage(chstr message);
 		hstr getDeviceName() { return this->deviceName; }
-		float getCategoryGain(chstr category);
-		void setCategoryGain(chstr category, float gain);
 		bool isEnabled();
+		Category* getCategoryByName(chstr name);
+		void createCategory(chstr name);
+		void setCategoryGain(chstr category, float gain);
 		
 		void update(float k);
 		
