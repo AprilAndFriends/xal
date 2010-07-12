@@ -18,15 +18,17 @@ namespace xal
 	class xalExport Category
 	{
 	public:
-		Category(chstr name);
+		Category(chstr name, bool streamed = false);
 		~Category();
 		
 		hstr getName() { return this->name; }
+		bool isStreamed() { return this->streamed; }
 		float getGain() { return this->gain; }
 		void setGain(float value) { this->gain = value; }
 		
 	protected:
 		hstr name;
+		bool streamed;
 		float gain;
 		
 	};

@@ -128,11 +128,7 @@ namespace xal
 	
 	float Sound::getSampleOffset()
 	{
-		if (this->buffer == 0)
-		{
-			return 0;
-		}
-		if (this->sources.size() == 0)
+		if (this->buffer == 0 || this->sources.size() == 0)
 		{
 			return 0;
 		}
@@ -141,24 +137,15 @@ namespace xal
 
 	void Sound::setGain(float gain)
 	{
-		if (this->buffer == 0)
+		if (this->buffer != 0 && this->sources.size() > 0)
 		{
-			return;
+			this->sources[0]->setGain(gain);
 		}
-		if (this->sources.size() == 0)
-		{
-			return;
-		}
-		this->sources[0]->setGain(gain);
 	}
 
 	float Sound::getGain()
 	{
-		if (this->buffer == 0)
-		{
-			return 1;
-		}
-		if (this->sources.size() == 0)
+		if (this->buffer == 0 || this->sources.size() == 0)
 		{
 			return 1;
 		}
@@ -167,10 +154,6 @@ namespace xal
 
 	bool Sound::isPlaying()
 	{
-		if (this->sources.size() == 0)
-		{
-			return false;
-		}
 		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 		{
 			if ((*it)->isPlaying())
@@ -181,13 +164,24 @@ namespace xal
 		return false;
 	}
 
+	bool Sound::isFading()
+	{
+		return (this->sources.size() > 0 && this->sources[0]->isFading());
+	}
+
+	bool Sound::isFadingIn()
+	{
+		return (this->sources.size() > 0 && this->sources[0]->isFadingIn());
+	}
+
+	bool Sound::isFadingOut()
+	{
+		return (this->sources.size() > 0 && this->sources[0]->isFadingOut());
+	}
+
 	bool Sound::isLooping()
 	{
-		if (this->sources.size() == 0)
-		{
-			return false;
-		}
-		return this->sources[0]->isLooping();
+		return (this->sources.size() > 0 && this->sources[0]->isLooping());
 	}
 
 /******* PLAY CONTROLS *************************************************/
@@ -243,40 +237,29 @@ namespace xal
 
 	void Sound::stop(float fadeTime)
 	{
-		if (this->buffer == 0)
+		if (this->buffer != 0 && this->sources.size() > 0)
 		{
-			return;
+			this->sources[0]->stop(fadeTime);
 		}
-		if (this->sources.size() == 0)
-		{
-			return;
-		}
-		this->sources[0]->stop(fadeTime);
 	}
 
 	void Sound::stopAll(float fadeTime)
 	{
-		if (this->buffer == 0)
+		if (this->buffer != 0)
 		{
-			return;
-		}
-		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
-		{
-			(*it)->stop(fadeTime);
+			for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+			{
+				(*it)->stop(fadeTime);
+			}
 		}
 	}
 	
 	void Sound::pause(float fadeTime)
 	{
-		if (this->buffer == 0)
+		if (this->buffer != 0 && this->sources.size() > 0)
 		{
-			return;
+			this->sources[0]->pause(fadeTime);
 		}
-		if (this->sources.size() == 0)
-		{
-			return;
-		}
-		this->sources[0]->pause(fadeTime);
 	}
 
 }

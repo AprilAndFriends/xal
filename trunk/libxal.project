@@ -16,6 +16,8 @@
     <File Name="src/_dirent_win32.h"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/Util.h"/>
+    <File Name="src/SimpleSound.cpp"/>
+    <File Name="src/StreamSound.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/Sound.h"/>
@@ -23,6 +25,8 @@
     <File Name="include/xal/Source.h"/>
     <File Name="include/xal/Category.h"/>
     <File Name="include/xal/AudioManager.h"/>
+    <File Name="include/xal/SimpleSound.h"/>
+    <File Name="include/xal/StreamSound.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Dynamic Library">
