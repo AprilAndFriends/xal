@@ -41,7 +41,8 @@ namespace xal
 		Sound* loadSound(chstr filename, chstr categoryName, chstr prefix = "");
 		harray<hstr> loadPath(chstr path, chstr prefix = "");
 		harray<hstr> loadPathCategory(chstr path, chstr category, chstr prefix = "");
-		void unloadSound(Sound* sound);
+		void destroySound(Sound* sound);
+		void destroySoundsWithPrefix(chstr prefix);
 		Sound* getSound(chstr name);
 		
 	protected:
