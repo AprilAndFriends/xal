@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include"
+				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include;src/"
 				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include"
+				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include;src/"
 				PreprocessorDefinitions="_WIN32;XAL_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -179,7 +179,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\DummySound.cpp"
+				RelativePath=".\src\_dirent_win32.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\AudioManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Category.cpp"
 				>
 			</File>
 			<File
@@ -187,7 +195,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\OggSound.cpp"
+				RelativePath=".\src\SimpleSound.cpp"
 				>
 			</File>
 			<File
@@ -195,7 +203,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\SoundManager.cpp"
+				RelativePath=".\src\Source.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\StreamSound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Util.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Util.h"
 				>
 			</File>
 		</Filter>
@@ -205,11 +225,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\xal\DummySound.h"
+				RelativePath=".\include\xal\AudioManager.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\OggSound.h"
+				RelativePath=".\include\xal\Category.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xal\SimpleSound.h"
 				>
 			</File>
 			<File
@@ -217,7 +241,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\SoundManager.h"
+				RelativePath=".\include\xal\Source.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xal\StreamSound.h"
 				>
 			</File>
 			<File
