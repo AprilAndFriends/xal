@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	harray<hstr> files = audiomgr->loadPathCategory("../media", "cat");
 	xal::Sound* s = audiomgr->getSound("bark");
 	
-	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test");
+	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test.");
 	//xal::Sound* s = audiomgr->getSound("test.bark");
 	
 	//harray<hstr> files = audiomgr->loadPath("..");
