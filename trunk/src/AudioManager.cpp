@@ -131,9 +131,12 @@ namespace xal
 
 	void AudioManager::update(float k)
 	{
-		for (int i = 0; i < XAL_MAX_SOURCES; i++)
+		if (this->deviceName != "nosound")
 		{
-			this->sources[i]->update(k);
+			for (int i = 0; i < XAL_MAX_SOURCES; i++)
+			{
+				this->sources[i]->update(k);
+			}
 		}
 	}
 
@@ -209,7 +212,7 @@ namespace xal
 		return result;
 	}
 
-	void AudioManager::unloadSound(Sound* sound)
+	void AudioManager::destroySound(Sound* sound)
 	{
 		std::map<hstr,Sound*>::iterator it = this->sounds.begin();
 		for (;it != this->sounds.end(); it++)
@@ -221,6 +224,22 @@ namespace xal
 				break;
 			}
 		}
+	}
+	
+	void AudioManager::destroySoundsWithPrefix(chstr prefix)
+	{
+		harray<hstr> delete_list;
+		std::map<hstr,Sound*>::iterator it = this->sounds.begin();
+		for (;it != this->sounds.end(); it++)
+		{
+			if (it->first.starts_with(prefix))
+			{
+				delete it->second;
+				delete_list.push_back(it->first);
+			}
+		}
+		for (hstr* i=delete_list.iterate();i != 0;i=delete_list.next())
+			this->sounds.erase(*i);
 	}
 
 	void AudioManager::createCategory(chstr name)
