@@ -101,14 +101,17 @@ namespace xal
 				alDeleteSources(1, &id);
 				delete this->sources[i];
 			}
-			std::map<hstr, Sound*>::iterator it = this->sounds.begin();
-			for (;it != this->sounds.end(); it++)
-			{
-				delete it->second;
-			}
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(gContext);
 			alcCloseDevice(gDevice);
+		}
+		for (std::map<hstr, Sound*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
+		{
+			delete it->second;
+		}
+		for (std::map<hstr, Category*>::iterator it = this->categories.begin(); it != this->categories.end(); it++)
+		{
+			delete it->second;
 		}
 	}
 	
@@ -119,27 +122,6 @@ namespace xal
 		gLogFunction(message);
 	}
 	
-	float AudioManager::getCategoryGain(chstr name)
-	{
-		if (this->categories.find(name) == this->categories.end())
-		{
-			return 1.0f;
-		}
-		return this->categories[name]->getGain();
-	}
-
-	void AudioManager::setCategoryGain(chstr name, float gain)
-	{
-		this->categories[name]->setGain(gain);
-		for (int i = 0; i < XAL_MAX_SOURCES; i++)
-		{
-			if (this->sources[i]->getSound() != NULL)
-			{
-				alSourcef(this->sources[i]->getId(), AL_GAIN, this->sources[i]->getGain() * gain);
-			}
-		}
-	}
-
 	bool AudioManager::isEnabled()
 	{
 		return (gDevice != NULL);
@@ -162,7 +144,7 @@ namespace xal
 				return this->sources[i];
 			}
 		}
-		this->logMessage("AudioManager: unable to allocate audio source!");
+		this->logMessage("AudioManager: Unable to allocate audio source!");
 		return NULL;
 	}
 
@@ -201,6 +183,7 @@ namespace xal
 
 	harray<hstr> AudioManager::loadPathCategory(chstr path, chstr category, chstr prefix)
 	{
+		this->createCategory(category);
 		harray<hstr> result;
 		harray<hstr> files = getPathFilesRecursive(path);
 		Sound* sound;
@@ -225,6 +208,35 @@ namespace xal
 				this->sounds.erase(it);
 				delete it->second;
 				break;
+			}
+		}
+	}
+
+	void AudioManager::createCategory(chstr name)
+	{
+		if (this->categories.find(name) == this->categories.end())
+		{
+			this->categories[name] = new Category(name);
+		}
+	}
+
+	Category* AudioManager::getCategoryByName(chstr name)
+	{
+		if (this->categories.find(name) == this->categories.end())
+		{
+			throw ("AudioManager: Category '" + name + "' does not exist!").c_str();
+		}
+		return this->categories[name];
+	}
+
+	void AudioManager::setCategoryGain(chstr name, float gain)
+	{
+		this->getCategoryByName(name)->setGain(gain);
+		for (int i = 0; i < XAL_MAX_SOURCES; i++)
+		{
+			if (this->sources[i]->hasSound())
+			{
+				alSourcef(this->sources[i]->getId(), AL_GAIN, gain * this->sources[i]->getGain());
 			}
 		}
 	}

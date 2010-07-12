@@ -30,8 +30,10 @@ int main(int argc, char **argv)
 	
 	s->play();
 	while (s->isPlaying()) { }
+	audiomgr->setCategoryGain("cat", 0.5f);
 	s->play();
 	while (s->isPlaying()) { }
+	audiomgr->setCategoryGain("cat", 1.0f);
 	s->play();
 	while (s->isPlaying()) { }
 	

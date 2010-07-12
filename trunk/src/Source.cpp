@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <hltypes/hstring.h>
+#include "Category.h"
 #include "Source.h"
 #include "AudioManager.h"
 
@@ -34,7 +35,7 @@ namespace xal
 		}
 	}
 
-/******* CONSTRUCT / DESTRUCT ******************************************/
+/******* METHODS *******************************************************/
 	void Source::update(float k)
 	{
 		if (this->id == 0 || this->sound == NULL)
@@ -48,8 +49,7 @@ namespace xal
 			{
 				if (this->fadeSpeed > 0.0f)
 				{
-					alSourcef(this->id, AL_GAIN, this->gain *
-						audiomgr->getCategoryGain(this->sound->getCategory()));
+					alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
 				}
 				else if (this->fadeSpeed < 0.0f && !this->paused)
 				{
@@ -60,8 +60,7 @@ namespace xal
 			}
 			else
 			{
-				alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain *
-					audiomgr->getCategoryGain(this->sound->getCategory()));
+				alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
 			}
 		}
 		if (!this->paused && !this->isPlaying())
@@ -78,7 +77,7 @@ namespace xal
 		}
 		if (!this->paused)
 		{
-			alSourcei(this->id, AL_BUFFER, this->sound->getBuffer());
+			alSourcei(this->id, AL_BUFFER, this->getBuffer());
 		}
 		this->paused = false;
 		this->looping = looping;
@@ -92,8 +91,7 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		alSourcef(this->id, AL_GAIN, audiomgr->getCategoryGain(
-			this->sound->getCategory()) * this->fadeTime * this->gain);
+		alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
 		alSourcePlay(this->id);
 	}
 
@@ -150,6 +148,7 @@ namespace xal
 		}
 	}
 
+/******* PROPERTIES ****************************************************/
 	float Source::getSampleOffset()
 	{
 		if (this->id == 0 || this->sound == NULL)
@@ -166,14 +165,18 @@ namespace xal
 		this->gain = gain;
 		if (this->id != 0)
 		{
-			alSourcef(this->id, AL_GAIN, audiomgr->getCategoryGain(
-				this->sound->getCategory()) * this->gain);
+			alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
 		}
 	}
 
 	bool Source::hasSound()
 	{
 		return (this->sound != NULL);
+	}
+	
+	unsigned int Source::getBuffer()
+	{
+		return this->sound->getBuffer();
 	}
 	
 	bool Source::isPlaying()

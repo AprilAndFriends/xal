@@ -35,7 +35,7 @@ namespace xal
 	{
 		this->filename = filename;
 		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
-		this->category = category;
+		this->category = audiomgr->getCategoryByName(category);
 	}
 
 	Sound::~Sound()
