@@ -8,18 +8,17 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <hltypes/hstring.h>
-#include "Category.h"
+
+#include "SimpleSound.h"
 
 namespace xal
 {
-	Category::Category(chstr name, bool streamed) : gain(1.0f)
-	{
-		this->name = name;
-		this->streamed = streamed;
-	}
-
-	Category::~Category()
+	SimpleSound::SimpleSound(chstr filename, chstr category, chstr prefix) : Sound(filename, category, prefix)
 	{
 	}
 
+	SimpleSound::~SimpleSound()
+	{
+	}
+	
 }

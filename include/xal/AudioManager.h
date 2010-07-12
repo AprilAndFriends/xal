@@ -38,7 +38,7 @@ namespace xal
 		void update(float k);
 		
 		Source* allocateSource();
-		Sound* loadSound(chstr filename, chstr category, chstr prefix = "");
+		Sound* loadSound(chstr filename, chstr categoryName, chstr prefix = "");
 		harray<hstr> loadPath(chstr path, chstr prefix = "");
 		harray<hstr> loadPathCategory(chstr path, chstr category, chstr prefix = "");
 		void unloadSound(Sound* sound);

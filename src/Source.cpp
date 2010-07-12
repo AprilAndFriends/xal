@@ -42,19 +42,18 @@ namespace xal
 		{
 			return;
 		}
-		if (this->fadeSpeed != 0)
+		if (this->isPlaying() && this->isFading())
 		{
 			this->fadeTime += this->fadeSpeed * k;
-			if (this->fadeTime >= 1.0f)
+			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 			{
-				if (this->fadeSpeed > 0.0f)
-				{
-					alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
-				}
-				else if (this->fadeSpeed < 0.0f && !this->paused)
-				{
-					this->stop();
-				}
+				alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
+				this->fadeTime = 0.0f;
+				this->fadeSpeed = 0.0f;
+			}
+			else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f && !this->paused)
+			{
+				this->stop();
 				this->fadeTime = 0.0f;
 				this->fadeSpeed = 0.0f;
 			}
@@ -63,7 +62,7 @@ namespace xal
 				alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
 			}
 		}
-		if (!this->paused && !this->isPlaying())
+		else if (!this->paused && !this->isPlaying())
 		{
 			this->sound->unbindSource(this);
 		}
@@ -114,6 +113,7 @@ namespace xal
 		{
 			return;
 		}
+		this->paused = false;
 		if (fadeTime > 0)
 		{
 			this->fadeSpeed = -1.0f / fadeTime;
@@ -123,9 +123,8 @@ namespace xal
 			this->fadeTime = 0.0f;
 			this->fadeSpeed = 0.0f;
 			alSourceStop(this->id);
+			this->sound->unbindSource(this);
 		}
-		this->paused = false;
-		this->sound->unbindSource(this);
 	}
 
 	void Source::pause(float fadeTime)
@@ -188,6 +187,21 @@ namespace xal
 		int state;
 		alGetSourcei(this->id, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
+	}
+
+	bool Source::isFading()
+	{
+		return (this->fadeSpeed != 0);
+	}
+
+	bool Source::isFadingIn()
+	{
+		return (this->fadeSpeed < 0);
+	}
+
+	bool Source::isFadingOut()
+	{
+		return (this->fadeSpeed < 0);
 	}
 
 }

@@ -23,6 +23,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "AudioManager.h"
 #include "Category.h"
 #include "Sound.h"
+#include "SimpleSound.h"
+#include "StreamSound.h"
 #include "Source.h"
 #include "Util.h"
 
@@ -157,9 +159,18 @@ namespace xal
 		return this->sounds[name];
 	}
 	
-	Sound* AudioManager::loadSound(chstr filename, chstr category, chstr prefix)
+	Sound* AudioManager::loadSound(chstr filename, chstr categoryName, chstr prefix)
 	{
-		Sound* sound = new Sound(filename, category, prefix);
+		Category* category = this->getCategoryByName(categoryName);
+		Sound* sound;
+		if (category->isStreamed())
+		{
+			sound = new StreamSound(filename, categoryName, prefix);
+		}
+		else
+		{
+			sound = new SimpleSound(filename, categoryName, prefix);
+		}
 		if (!sound->load())
 		{
 			return NULL;

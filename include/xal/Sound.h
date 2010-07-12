@@ -25,12 +25,12 @@ namespace xal
 		Sound(chstr name, chstr category, chstr prefix = "");
 		virtual ~Sound();
 
-		bool load();
+		virtual bool load();
 		void bindSource(Source* source);
 		void unbindSource(Source* source);
 		
 		float getSampleOffset();
-		unsigned int getBuffer() { return this->buffer; }
+		virtual unsigned int getBuffer() { return this->buffer; }
 		chstr getName() { return this->name; }
 		float getDuration() { return this->duration; }
 		Category* getCategory() { return this->category; }
@@ -39,6 +39,9 @@ namespace xal
 		void setGain(float value);
 		bool isLooping();
 		bool isPlaying();
+		bool isFading();
+		bool isFadingIn();
+		bool isFadingOut();
 		bool isPaused();
 		
 		Source* play(float fadeTime = 0.0f, bool looping = false);
