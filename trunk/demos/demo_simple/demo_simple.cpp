@@ -25,64 +25,64 @@ int main(int argc, char **argv)
 	xal::init();
 	xal::Sound* s;
 #ifdef _TEST_STREAM
-	audiomgr->createCategory("cat", true);
+	xal::mgr->createCategory("cat", true);
 #endif
-	harray<hstr> files = audiomgr->createSoundsFromPath("../media", "cat", "");
-	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test.");
-	//harray<hstr> files = audiomgr->loadPath("..");
-	//harray<hstr> files = audiomgr->loadPath("..", "test");
+	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "cat", "");
+	//harray<hstr> files = xal::mgr->loadPathCategory("../media", "cat", "test.");
+	//harray<hstr> files = xal::mgr->loadPath("..");
+	//harray<hstr> files = xal::mgr->loadPath("..", "test");
 #ifdef _TEST_SOUND
-	s = audiomgr->getSound("bark");
-	//s = audiomgr->getSound("test.bark");
-	//s = audiomgr->getSound("bark");
-	//s = audiomgr->getSound("testbark");
+	s = xal::mgr->getSound("bark");
+	//s = xal::mgr->getSound("test.bark");
+	//s = xal::mgr->getSound("bark");
+	//s = xal::mgr->getSound("testbark");
 	
 	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
-	audiomgr->setCategoryGain("cat", 0.33f);
+	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	xal::mgr->setCategoryGain("cat", 0.33f);
 	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
-	audiomgr->setCategoryGain("cat", 1.0f);
+	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	xal::mgr->setCategoryGain("cat", 1.0f);
 #ifdef _TEST_SOURCE_HANDLING
 	for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		s->play();
-	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
-	s = audiomgr->getSound("wind");
+	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	s = xal::mgr->getSound("wind");
 	s->play();
-	for (int i = 0; i < 20; i++) { Sleep(100.0f); audiomgr->update(0.1f); }
+	for (int i = 0; i < 20; i++) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	s->stop();
-	audiomgr->update(0.01f);
+	xal::mgr->update(0.01f);
 	Sleep(1000.0f);
 #else
 	s->play();
 	Sleep(100.0f);
 	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
+	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 #endif
 	
 #endif
 
 #ifdef _TEST_FADE_IN
-	s = audiomgr->getSound("wind");
+	s = xal::mgr->getSound("wind");
 	s->play(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-		audiomgr->update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	s->stop();
 #endif
 
 #ifdef _TEST_FADE_OUT
-	s = audiomgr->getSound("wind");
+	s = xal::mgr->getSound("wind");
 	s->play();
 	s->stop(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-		audiomgr->update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 #endif
 	

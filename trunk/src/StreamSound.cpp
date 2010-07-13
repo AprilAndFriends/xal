@@ -97,7 +97,7 @@ namespace xal
  
     bool StreamSound::load()
 	{
-		if (!audiomgr->isEnabled())
+		if (!xal::mgr->isEnabled())
 		{
 			return true;
 		}
@@ -110,10 +110,10 @@ namespace xal
 
 	bool StreamSound::_loadOgg()
 	{
-		audiomgr->logMessage("Audio Manager: Loading ogg stream sound: " + this->filename);
+		xal::mgr->logMessage("Audio Manager: Loading ogg stream sound: " + this->filename);
 		if (ov_fopen((char*)this->filename.c_str(), &this->oggStream) != 0)
 		{
-			audiomgr->logMessage("OggSound: Error opening file!");
+			xal::mgr->logMessage("OggSound: Error opening file!");
 			return false;
 		}
 		alGenBuffers(BUFFER_COUNT, this->buffers);
@@ -152,7 +152,7 @@ namespace xal
 		}
 		else
 		{
-			audiomgr->logMessage("OggSound: Could not allocate ogg buffer!");
+			xal::mgr->logMessage("OggSound: Could not allocate ogg buffer!");
 		}
 		return result;
 	}

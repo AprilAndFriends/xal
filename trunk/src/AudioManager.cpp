@@ -28,22 +28,22 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "Source.h"
 #include "Util.h"
 
-xal::AudioManager* audiomgr;
-
 namespace xal
 {
 /******* GLOBAL ********************************************************/
 	
+	AudioManager* mgr;
+
 	void init(chstr deviceName)
 	{
-		audiomgr = new AudioManager(deviceName);
+		mgr = new AudioManager(deviceName);
 	}
 	
 	void destroy()
 	{
-		delete audiomgr;
+		delete mgr;
 	}
-		
+	
 	void xal_writelog(chstr text)
 	{
 		printf("%s\n", text.c_str());
