@@ -47,7 +47,7 @@ namespace xal
 
 	bool SimpleSound::load()
 	{
-		if (!audiomgr->isEnabled())
+		if (!xal::mgr->isEnabled())
 		{
 			return true;
 		}
@@ -60,12 +60,12 @@ namespace xal
 
 	bool SimpleSound::_loadOgg()
 	{
-		audiomgr->logMessage("Audio Manager: Loading ogg sound: " + this->filename);
+		xal::mgr->logMessage("Audio Manager: Loading ogg sound: " + this->filename);
 		vorbis_info *info;
 		OggVorbis_File oggFile;
 		if (ov_fopen((char*)this->filename.c_str(), &oggFile) != 0)
 		{
-			audiomgr->logMessage("OggSound: Error opening file!");
+			xal::mgr->logMessage("OggSound: Error opening file!");
 			return false;
 		}
 		alGenBuffers(1, &this->buffer);
@@ -103,7 +103,7 @@ namespace xal
 		}
 		else
 		{
-			audiomgr->logMessage("OggSound: could not allocate ogg buffer");
+			xal::mgr->logMessage("OggSound: could not allocate ogg buffer");
 		}
 		ov_clear(&oggFile);
 		return result;

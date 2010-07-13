@@ -30,12 +30,12 @@ namespace xal
 	{
 		this->filename = filename;
 		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
-		this->category = audiomgr->getCategoryByName(category);
+		this->category = xal::mgr->getCategoryByName(category);
 	}
 
 	Sound::~Sound()
 	{
-		audiomgr->logMessage("Audio Manager: Destroying sound: " + this->name);
+		xal::mgr->logMessage("Audio Manager: Destroying sound: " + this->name);
 	}
 	
 /******* METHODS *******************************************************/
@@ -121,7 +121,7 @@ namespace xal
 		Source* source = NULL;
 		if (this->sources.size() == 0 || this->sources[0]->isPlaying())
 		{
-			source = audiomgr->allocateSource();
+			source = xal::mgr->allocateSource();
 			if (source == NULL)
 			{
 				return NULL;
@@ -145,7 +145,7 @@ namespace xal
 		Source* source = NULL;
 		if (this->sources.size() == 0)
 		{
-			source = audiomgr->allocateSource();
+			source = xal::mgr->allocateSource();
 			if (source == NULL)
 			{
 				return NULL;
