@@ -30,9 +30,9 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	StreamSound::StreamSound(chstr filename, chstr category, chstr prefix) :
-		Sound(filename, category, prefix)
+		bufferIndex(0), Sound(filename, category, prefix)
 	{
-		for (int i = 0; i < BUFFER_COUNT; i++)
+		for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 		{
 			this->buffers[i] = 0;
 		}
@@ -43,56 +43,163 @@ namespace xal
 		this->stopAll();
 		if (this->buffers[0] != 0)
 		{
-			alDeleteBuffers(2, this->buffers);
+			alDeleteBuffers(STREAM_BUFFER_COUNT, this->buffers);
 		}
-		ov_clear(&this->oggStream);
+		if (xal::mgr->isEnabled())
+		{
+			if (this->filename.contains(".ogg"))
+			{
+				ov_clear(&this->oggStream);
+			}
+		}
 	}
 	
 /******* METHODS *******************************************************/
 
 	unsigned int StreamSound::getBuffer()
 	{
-		return this->buffers[0];
+		return this->buffers[this->bufferIndex];
 	}
 
 	void StreamSound::update(unsigned int sourceId)
 	{
-		int processed;
-		alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &processed);
-		unsigned int buffer;
-		while (processed > 0)
+		int queued;
+		alGetSourcei(sourceId, AL_BUFFERS_QUEUED, &queued);
+		printf("QUEUED: %d\n", queued);
+		if (queued == 0)
 		{
-			alSourceUnqueueBuffers(sourceId, 1, &buffer);
-			this->_updateStream(buffer);
-			alSourceQueueBuffers(sourceId, 1, &buffer);
-			processed--;
+			printf("EOF\n");
+			this->stop();
+			this->_resetStream();
+			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
+			{
+				this->_fillBuffer(this->buffers[(this->bufferIndex + i) % STREAM_BUFFER_COUNT]);
+			}
+			this->bufferIndex = 0;
+			return;
+		}
+		int count;
+		alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &count);
+		printf("PROC: %d\n", count);
+		//unsigned int buffer;
+		int bytes = 0;
+		int result;
+		if (count == 0)
+		{
+			return;
+		}
+		this->unqueueBuffers(sourceId, count);
+		int i = 0;
+		for (; i < count; i++)
+		{
+			result = this->_fillBuffer(this->buffers[(this->bufferIndex + i) % STREAM_BUFFER_COUNT]);
+			if (result == 0)
+			{
+				break;
+			}
+			bytes += result;
+		}
+		if (bytes > 0)
+		{
+			this->queueBuffers(sourceId, i);
+			if (count < STREAM_BUFFER_COUNT)
+			{
+				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
+			}
+			else // underrun happened, sound was stopped
+			{
+				this->pause();
+				this->play();
+			}
+		}
+		else
+		{
+			printf("UC!\n");
+			//this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
+			//this->unqueueBuffers(sourceId, queued);
+			//this->bufferIndex = 0;
 		}
 	}
 	
-	void StreamSound::_updateStream(unsigned int buffer)
+	int StreamSound::_readStream(char* buffer, int size)
 	{
-		char data[BUFFER_SIZE];
-		int  size = 0;
-		int  section;
-		int  result;
-	 
-		while(size < BUFFER_SIZE)
+		if (this->filename.contains(".ogg"))
 		{
-			result = ov_read(&this->oggStream, data + size, BUFFER_SIZE - size, 0, 2, 1, &section);
-		
-			if (result > 0)
-				size += result;
-			else if(result == 0)
-				break;
-			//else
-			//	throw oggString(result);
+			int section;
+			return ov_read(&this->oggStream, buffer, size, 0, 2, 1, &section);
 		}
-		
-		if (size == 0)
-			return;
-	 
-		alBufferData(buffer, (this->vorbisInfo->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
-			data, size, this->vorbisInfo->rate);
+		return 0;
+	}
+	
+	void StreamSound::_resetStream()
+	{
+		if (this->filename.contains(".ogg"))
+		{
+			ov_raw_seek(&this->oggStream, 0);
+		}
+	}
+	
+	int StreamSound::_fillBuffer(unsigned int buffer)
+	{
+		char data[STREAM_BUFFER_SIZE] = {0};
+		int size = 0;
+		int section;
+		int result;
+		while (size < STREAM_BUFFER_SIZE)
+		{
+			result = this->_readStream(&data[size], STREAM_BUFFER_SIZE - size);
+			if (result > 0)
+			{
+				size += result;
+			}
+			else if (result == 0)
+			{
+				if (!this->isLooping())
+				{
+					break;
+				}
+				this->_resetStream();
+			}
+			else
+			{
+				xal::mgr->logMessage("XAL: Error while filling buffer for " + this->name);
+			}
+		}
+		printf("size: %d\n", size);
+		if (size > 0)
+		{
+			alBufferData(buffer, (this->vorbisInfo->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
+				data, size, this->vorbisInfo->rate);
+		}
+		return size;
+	}
+	
+	void StreamSound::queueBuffers(unsigned int sourceId, int count)
+	{
+		printf("QUEUE: %d, %d\n", bufferIndex, count); //#
+		if (this->bufferIndex + count <= STREAM_BUFFER_COUNT)
+		{
+			alSourceQueueBuffers(sourceId, count, &this->buffers[this->bufferIndex]);
+		}
+		else
+		{
+			alSourceQueueBuffers(sourceId, STREAM_BUFFER_COUNT - this->bufferIndex, &this->buffers[this->bufferIndex]);
+			alSourceQueueBuffers(sourceId, count + this->bufferIndex - STREAM_BUFFER_COUNT, this->buffers);
+		}
+	}
+ 
+	void StreamSound::unqueueBuffers(unsigned int sourceId, int count)
+	{
+		printf("UNQUEUE: %d, %d\n", bufferIndex, count); //#
+		if (this->bufferIndex + count <= STREAM_BUFFER_COUNT)
+		{
+			alSourceUnqueueBuffers(sourceId, count, &this->buffers[this->bufferIndex]);
+		}
+		else
+		{
+			alSourceUnqueueBuffers(sourceId, STREAM_BUFFER_COUNT - this->bufferIndex, &this->buffers[this->bufferIndex]);
+			alSourceUnqueueBuffers(sourceId, count + this->bufferIndex - STREAM_BUFFER_COUNT, this->buffers);
+		}
 	}
  
     bool StreamSound::load()
@@ -110,51 +217,29 @@ namespace xal
 
 	bool StreamSound::_loadOgg()
 	{
-		xal::mgr->logMessage("Audio Manager: Loading ogg stream sound: " + this->filename);
+		xal::mgr->logMessage("XAL: Loading ogg stream sound " + this->filename);
 		if (ov_fopen((char*)this->filename.c_str(), &this->oggStream) != 0)
 		{
-			xal::mgr->logMessage("OggSound: Error opening file!");
+			xal::mgr->logMessage("Ogg: Error opening file!");
 			return false;
 		}
-		alGenBuffers(BUFFER_COUNT, this->buffers);
+		alGenBuffers(STREAM_BUFFER_COUNT, this->buffers);
 		this->vorbisInfo = ov_info(&this->oggStream, -1);
 		unsigned long len = ov_pcm_total(&this->oggStream, -1) * this->vorbisInfo->channels * 2; // always 16 bit data
-		unsigned char *data = new unsigned char[len];
-		bool result = false;
-		if (data != NULL)
+		this->duration = ((float)len) / (this->vorbisInfo->rate * this->vorbisInfo->channels * 2);
+		int bytes;
+		for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 		{
-			/*
-			int bs = -1;
-			unsigned long todo = len;
-			unsigned char *bufpt = data;
-			while (todo > 0)
+			bytes = this->_fillBuffer(this->buffers[i]);
+			if (bytes == 0)
 			{
-				int read = ov_read(&oggFile, (char*)bufpt, todo, 0, 2, 1, &bs);
-				if (!read)
-				{
-					len -= todo;
-					break;
-				}
-				todo -= read;
-				bufpt += read;
+				alDeleteBuffers(STREAM_BUFFER_COUNT, this->buffers);
+				this->buffers[0] = 0;
+				xal::mgr->logMessage("XAL: Sound " + this->filename + " is too small to be streamed.");
+				break;
 			}
-
-#ifdef __BIG_ENDIAN__
-			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < bufpt; p++)
-			{
-				NORMALIZE_ENDIAN(*p);
-			}
-#endif	
-			this->duration = ((float)len) / (info->rate * info->channels * 2);
-			*/
-			delete [] data;
-			result = true;
 		}
-		else
-		{
-			xal::mgr->logMessage("OggSound: Could not allocate ogg buffer!");
-		}
-		return result;
+		return true;
 	}
 
 }

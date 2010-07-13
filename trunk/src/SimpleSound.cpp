@@ -60,12 +60,12 @@ namespace xal
 
 	bool SimpleSound::_loadOgg()
 	{
-		xal::mgr->logMessage("Audio Manager: Loading ogg sound: " + this->filename);
+		xal::mgr->logMessage("XAL: Loading ogg sound: " + this->filename);
 		vorbis_info *info;
 		OggVorbis_File oggFile;
 		if (ov_fopen((char*)this->filename.c_str(), &oggFile) != 0)
 		{
-			xal::mgr->logMessage("OggSound: Error opening file!");
+			xal::mgr->logMessage("Ogg: Error opening file!");
 			return false;
 		}
 		alGenBuffers(1, &this->buffer);

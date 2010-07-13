@@ -10,6 +10,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include "Category.h"
 #include "Source.h"
+#include "Sound.h"
+#include "StreamSound.h"
 #include "AudioManager.h"
 
 #ifndef __APPLE__
@@ -37,7 +39,7 @@ namespace xal
 	}
 
 /******* METHODS *******************************************************/
-
+#include <stdio.h> //#
 	void Source::update(float k)
 	{
 		if (this->id == 0 || this->sound == NULL)
@@ -56,9 +58,9 @@ namespace xal
 					this->fadeTime = 0.0f;
 					this->fadeSpeed = 0.0f;
 				}
-				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f && !this->paused)
+				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
 				{
-					this->stop();
+					this->paused ? this->pause() : this->stop();
 					this->fadeTime = 0.0f;
 					this->fadeSpeed = 0.0f;
 				}
@@ -68,7 +70,7 @@ namespace xal
 				}
 			}
 		}
-		else if (!this->paused)
+		if (!this->isPlaying() && !this->isPaused() && this->sound != NULL)
 		{
 			this->sound->unbindSource(this);
 		}
@@ -80,13 +82,23 @@ namespace xal
 		{
 			return;
 		}
-		if (!this->paused)
+		if (this->sound->getCategory()->isStreamed())
 		{
-			alSourcei(this->id, AL_BUFFER, this->getBuffer());
+			if (!this->isPaused())
+			{
+				((StreamSound*)this->sound)->queueBuffers(this->id);
+			}
+			alSourcei(this->id, AL_LOOPING, false);
+		}
+		else
+		{
+			if (!this->isPaused())
+			{
+				alSourcei(this->id, AL_BUFFER, this->getBuffer());
+			}
+			alSourcei(this->id, AL_LOOPING, this->looping);
 		}
 		this->paused = false;
-		this->looping = looping;
-		alSourcei(this->id, AL_LOOPING, this->looping);
 		if (fadeTime > 0)
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
@@ -141,7 +153,6 @@ namespace xal
 		}
 		if (fadeTime > 0)
 		{
-			this->fadeTime = (this->fadeSpeed == 0 ? 0.0f : 1.0f - this->fadeTime);
 			this->fadeSpeed = -1.0f / fadeTime;
 		}
 		else
@@ -149,8 +160,8 @@ namespace xal
 			this->fadeTime = 0.0f;
 			this->fadeSpeed = 0.0f;
 			alSourcePause(this->id);
-			this->paused = true;
 		}
+		this->paused = true;
 	}
 
 /******* PROPERTIES ****************************************************/
@@ -191,11 +202,20 @@ namespace xal
 		{
 			return false;
 		}
+		if (this->sound->getCategory()->isStreamed())
+		{
+			return (!this->isPaused());
+		}
 		int state;
 		alGetSourcei(this->id, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
 	}
 
+	bool Source::isPaused()
+	{
+		return (this->paused && !this->isFading());
+	}
+	
 	bool Source::isFading()
 	{
 		return (this->fadeSpeed != 0);
