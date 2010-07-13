@@ -21,7 +21,16 @@ namespace xal
 	public:
 		SimpleSound(chstr name, chstr category, chstr prefix = "");
 		~SimpleSound();
-
+		
+		bool load();
+		
+		unsigned int getBuffer() { return this->buffer; }
+		
+	protected:
+		unsigned int buffer;
+		
+		bool _loadOgg();
+		
 	};
 
 }

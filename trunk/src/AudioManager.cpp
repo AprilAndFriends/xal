@@ -28,29 +28,38 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "Source.h"
 #include "Util.h"
 
-
-/*
-metoda za loadanje zvukova koja vraca harray loadanih zvukova
-prefixi loadanih zvukova za keyeve u mapi
-*/
-
 xal::AudioManager* audiomgr;
 
 namespace xal
 {
 /******* GLOBAL ********************************************************/
 	
+	void init(chstr deviceName)
+	{
+		audiomgr = new AudioManager(deviceName);
+	}
+	
+	void destroy()
+	{
+		delete audiomgr;
+	}
+		
 	void xal_writelog(chstr text)
 	{
 		printf("%s\n", text.c_str());
 	}
 	
 	void (*gLogFunction)(chstr) = xal_writelog;
-	
 	ALCdevice* gDevice;
 	ALCcontext* gContext;
 
+	void setLogFunction(void (*function)(chstr))
+	{
+		gLogFunction = function;
+	}
+	
 /******* CONSTRUCT / DESTRUCT ******************************************/
+
 	AudioManager::AudioManager(chstr deviceName)
 	{
 		this->logMessage("Initializing XAL");
@@ -79,11 +88,11 @@ namespace xal
 		{
 			return;
 		}
-		ALuint sources[XAL_MAX_SOURCES];
-		alGenSources(XAL_MAX_SOURCES, sources);
+		ALuint sourceIds[XAL_MAX_SOURCES];
+		alGenSources(XAL_MAX_SOURCES, sourceIds);
 		for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		{
-			this->sources[i] = new xal::Source(sources[i]);
+			this->sources[i] = new xal::Source(sourceIds[i]);
 		}
 		gDevice = currentDevice;
 		gContext = currentContext;
@@ -117,7 +126,7 @@ namespace xal
 		}
 	}
 	
-/******* CONSTRUCT / DESTRUCT ******************************************/
+/******* PROPERTIES ****************************************************/
 
 	void AudioManager::logMessage(chstr message)
 	{
@@ -242,11 +251,11 @@ namespace xal
 			this->sounds.erase(*i);
 	}
 
-	void AudioManager::createCategory(chstr name)
+	void AudioManager::createCategory(chstr name, bool streamed)
 	{
 		if (this->categories.find(name) == this->categories.end())
 		{
-			this->categories[name] = new Category(name);
+			this->categories[name] = new Category(name, streamed);
 		}
 	}
 
@@ -271,21 +280,4 @@ namespace xal
 		}
 	}
 
-/******* GLOBAL ********************************************************/
-
-	void setLogFunction(void (*function)(chstr))
-	{
-		gLogFunction = function;
-	}
-	
-	void init(chstr deviceName)
-	{
-		audiomgr = new AudioManager(deviceName);
-	}
-	
-	void destroy()
-	{
-		delete audiomgr;
-	}
-		
 }
