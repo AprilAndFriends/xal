@@ -101,6 +101,14 @@ namespace xal
 
 	AudioManager::~AudioManager()
 	{
+		for (std::map<hstr, Sound*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
+		{
+			delete it->second;
+		}
+		for (std::map<hstr, Category*>::iterator it = this->categories.begin(); it != this->categories.end(); it++)
+		{
+			delete it->second;
+		}
 		this->logMessage("Destroying OpenAL");
 		if (gDevice)
 		{
@@ -115,14 +123,6 @@ namespace xal
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(gContext);
 			alcCloseDevice(gDevice);
-		}
-		for (std::map<hstr, Sound*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
-		{
-			delete it->second;
-		}
-		for (std::map<hstr, Category*>::iterator it = this->categories.begin(); it != this->categories.end(); it++)
-		{
-			delete it->second;
 		}
 	}
 	

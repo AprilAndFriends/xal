@@ -17,9 +17,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "xalExport.h"
 #include "Sound.h"
 
-
-#define BUFFER_COUNT 2
-#define BUFFER_SIZE 32768
+#define STREAM_BUFFER_COUNT 3
+#define STREAM_BUFFER_SIZE 32768//(32768 * 4)
 
 namespace xal
 {
@@ -32,14 +31,20 @@ namespace xal
 		bool load();
 		void update(unsigned int sourceId);
 		
+		void queueBuffers(unsigned int sourceId, int count = STREAM_BUFFER_COUNT);
+		void unqueueBuffers(unsigned int sourceId, int count = STREAM_BUFFER_COUNT);
+		
 		unsigned int getBuffer();
 		
 	protected:
-		unsigned int buffers[BUFFER_COUNT];
+		unsigned int buffers[STREAM_BUFFER_COUNT];
+		int bufferIndex;
 		OggVorbis_File oggStream;
 		vorbis_info* vorbisInfo;
 		
-		void _updateStream(unsigned int buffer);
+		int _readStream(char* buffer, int size);
+		void _resetStream();
+		int _fillBuffer(unsigned int buffer);
 		bool _loadOgg();
 
 	};

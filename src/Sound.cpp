@@ -28,14 +28,14 @@ namespace xal
 	Sound::Sound(chstr filename, chstr category, chstr prefix) : duration(0.0f),
 		sources(harray<xal::Source*>())
 	{
-		this->filename = filename;
-		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
+		this->filename = hstr(filename);
+		this->name = prefix + hstr(filename).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 		this->category = xal::mgr->getCategoryByName(category);
 	}
 
 	Sound::~Sound()
 	{
-		xal::mgr->logMessage("Audio Manager: Destroying sound: " + this->name);
+		xal::mgr->logMessage("XAL: Destroying sound " + this->name);
 	}
 	
 /******* METHODS *******************************************************/
@@ -90,6 +90,11 @@ namespace xal
 		return false;
 	}
 
+	bool Sound::isPaused()
+	{
+		return (this->sources.size() > 0 && this->sources[0]->isPaused());
+	}
+
 	bool Sound::isFading()
 	{
 		return (this->sources.size() > 0 && this->sources[0]->isFading());
@@ -111,7 +116,7 @@ namespace xal
 	}
 
 /******* PLAY CONTROLS *************************************************/
-
+	
 	Source* Sound::play(float fadeTime, bool looping)
 	{
 		if (this->getBuffer() == 0)

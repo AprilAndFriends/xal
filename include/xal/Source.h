@@ -33,7 +33,7 @@ namespace xal
 		
 		unsigned int getId() { return this->id; }
 		float getSampleOffset();
-		virtual unsigned int getBuffer();
+		unsigned int getBuffer();
 		Sound* getSound() { return this->sound; }
 		bool hasSound();
 		void setSound(Sound* value) { this->sound = value; }
@@ -44,7 +44,7 @@ namespace xal
 		bool isFading();
 		bool isFadingIn();
 		bool isFadingOut();
-		bool isPaused() { return this->paused; }
+		bool isPaused();
 		
 	protected:
 		unsigned int id;

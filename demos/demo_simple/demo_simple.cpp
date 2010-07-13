@@ -33,32 +33,31 @@ int main(int argc, char **argv)
 	//harray<hstr> files = xal::mgr->loadPath("..", "test");
 #ifdef _TEST_SOUND
 	s = xal::mgr->getSound("bark");
+	//s = xal::mgr->getSound("wind");
 	//s = xal::mgr->getSound("test.bark");
 	//s = xal::mgr->getSound("bark");
 	//s = xal::mgr->getSound("testbark");
 	
 	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
-	xal::mgr->setCategoryGain("cat", 0.33f);
-	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
-	xal::mgr->setCategoryGain("cat", 1.0f);
+	xal::mgr->update(0.01f);
 #ifdef _TEST_SOURCE_HANDLING
 	for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	xal::mgr->update(0.01f);
 	s = xal::mgr->getSound("wind");
 	s->play();
 	for (int i = 0; i < 20; i++) { Sleep(100.0f); xal::mgr->update(0.1f); }
-	s->stop();
 	xal::mgr->update(0.01f);
-	Sleep(1000.0f);
+	s->stop();
 #else
 	s->play();
 	Sleep(100.0f);
 	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 #endif
+	system("pause");
 	
 #endif
 
