@@ -171,7 +171,7 @@ namespace xal
 		return this->sounds[name];
 	}
 	
-	Sound* AudioManager::loadSound(chstr filename, chstr categoryName, chstr prefix)
+	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
 		Category* category = this->getCategoryByName(categoryName);
 		Sound* sound;
@@ -191,7 +191,7 @@ namespace xal
 		return sound;
 	}
 
-	harray<hstr> AudioManager::loadPath(chstr path, chstr prefix)
+	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
 	{
 		harray<hstr> result;
 		hstr category;
@@ -199,12 +199,12 @@ namespace xal
 		for (hstr* it = dirs.iterate(); it; it = dirs.next())
 		{
 			category = (*it).rsplit("/").pop_back();
-			result += loadPathCategory(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
+			result += this->createSoundsFromPath(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
 		}
 		return result;
 	}
 
-	harray<hstr> AudioManager::loadPathCategory(chstr path, chstr category, chstr prefix)
+	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr category, chstr prefix)
 	{
 		this->createCategory(category);
 		harray<hstr> result;
@@ -212,7 +212,7 @@ namespace xal
 		Sound* sound;
 		for (hstr* it = files.iterate(); it; it = files.next())
 		{
-			sound = this->loadSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
+			sound = this->createSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();
@@ -223,7 +223,7 @@ namespace xal
 
 	void AudioManager::destroySound(Sound* sound)
 	{
-		std::map<hstr,Sound*>::iterator it = this->sounds.begin();
+		std::map<hstr, Sound*>::iterator it = this->sounds.begin();
 		for (;it != this->sounds.end(); it++)
 		{
 			if (it->second == sound)
@@ -237,18 +237,20 @@ namespace xal
 	
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
-		harray<hstr> delete_list;
-		std::map<hstr,Sound*>::iterator it = this->sounds.begin();
+		harray<hstr> deleteList;
+		std::map<hstr, Sound*>::iterator it = this->sounds.begin();
 		for (;it != this->sounds.end(); it++)
 		{
 			if (it->first.starts_with(prefix))
 			{
 				delete it->second;
-				delete_list.push_back(it->first);
+				deleteList.push_back(it->first);
 			}
 		}
-		for (hstr* i=delete_list.iterate();i != 0;i=delete_list.next())
-			this->sounds.erase(*i);
+		for (hstr* it = deleteList.iterate(); it ; it = deleteList.next())
+		{
+			this->sounds.erase(*it);
+		}
 	}
 
 	void AudioManager::createCategory(chstr name, bool streamed)
