@@ -13,8 +13,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "AudioManager.h"
 #include "Util.h"
 
-//2DO - add #ifdef _WIN32 ?
-#include <_dirent_win32.h>
+#ifdef _WIN32
+#include "_dirent_win32.h"
+#endif
+
+#ifdef __APPLE__
+#include <dirent.h>
+#endif
+
 #include <stdio.h>
 namespace xal
 {
