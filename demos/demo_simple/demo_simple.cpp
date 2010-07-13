@@ -12,18 +12,20 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
-//#define _TEST_SOUND
+#define _TEST_SOUND
+//#define _TEST_STREAM
 //#define _TEST_FADE_IN
-#define _TEST_FADE_OUT
+//#define _TEST_FADE_OUT
 
-#if defined _TEST_FADE_IN || defined _TEST_FADE_OUT
 #include <windows.h>
-#endif
 
 int main(int argc, char **argv)
 {
 	xal::init();
 	xal::Sound* s;
+#ifdef _TEST_STREAM
+	audiomgr->createCategory("cat", true);
+#endif
 	harray<hstr> files = audiomgr->loadPathCategory("../media", "cat");
 	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test.");
 	//harray<hstr> files = audiomgr->loadPath("..");
@@ -33,18 +35,31 @@ int main(int argc, char **argv)
 	//s = audiomgr->getSound("test.bark");
 	//s = audiomgr->getSound("bark");
 	//s = audiomgr->getSound("testbark");
+	
 	s->play();
-	while (s->isPlaying()) { }
+	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
 	audiomgr->setCategoryGain("cat", 0.33f);
 	s->play();
-	while (s->isPlaying()) { }
+	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
 	audiomgr->setCategoryGain("cat", 1.0f);
+	/*
+	s->play();
+	Sleep(100.0f);
 	s->play();
 	while (s->isPlaying()) { }
+	*/
+	for (int i = 0; i < XAL_MAX_SOURCES; i++)
+		s->play();
+	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
+	s = audiomgr->getSound("wind");
+	s->play();
+	for (int i = 0; i < 20; i++) { Sleep(100.0f); audiomgr->update(0.1f); }
+	s->stop();
+	audiomgr->update(0.01f);
+	Sleep(1000.0f);
 	
-	//s->play(1.0f);
-	//while (s->isPlaying()) { Sleep(0.01f); audiomgr->update(0.01f); }
 #endif
+
 #ifdef _TEST_FADE_IN
 	s = audiomgr->getSound("wind");
 	s->play(1.0f);
@@ -56,6 +71,7 @@ int main(int argc, char **argv)
 	}
 	s->stop();
 #endif
+
 #ifdef _TEST_FADE_OUT
 	s = audiomgr->getSound("wind");
 	s->play();

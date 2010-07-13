@@ -10,11 +10,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
-#include <iostream>
-#include <ogg/ogg.h>
-#include <vorbis/codec.h>
-#include <vorbis/vorbisfile.h>
-
 #include "Endianess.h"
 #include "Sound.h"
 #include "Source.h"
@@ -22,16 +17,16 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #ifndef __APPLE__
 #include <AL/al.h>
-#include <AL/alc.h>
 #else
 #include <OpenAL/al.h>
-#include <OpenAL/alc.h>
 #endif
 
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
-	Sound::Sound(chstr filename, chstr category, chstr prefix) : duration(0.0f), buffer(0), sources(harray<xal::Source*>())
+
+	Sound::Sound(chstr filename, chstr category, chstr prefix) : duration(0.0f),
+		sources(harray<xal::Source*>())
 	{
 		this->filename = filename;
 		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
@@ -40,80 +35,11 @@ namespace xal
 
 	Sound::~Sound()
 	{
-		this->stopAll();
-		audiomgr->logMessage("destroying sound: " + this->name);
-		if (this->buffer != 0)
-		{
-			alDeleteBuffers(1, &this->buffer);
-		}
+		audiomgr->logMessage("Audio Manager: Destroying sound: " + this->name);
 	}
 	
 /******* METHODS *******************************************************/
 	
-	bool Sound::load()
-	{
-		if (this->filename.contains(".ogg"))
-		{
-			return this->_loadOgg();
-		}
-		return false;
-	}
-
-	bool Sound::_loadOgg()
-	{
-		if (!audiomgr->isEnabled())
-		{
-			return true;
-		}
-		audiomgr->logMessage("loading ogg sound: " + this->filename);
-		alGenBuffers(1, &this->buffer);
-		vorbis_info *info;
-		OggVorbis_File oggFile;
-		if (ov_fopen((char*)this->filename.c_str(), &oggFile) != 0)
-		{
-			audiomgr->logMessage("OggSound: Error opening file!");
-			return false;
-		}
-		info = ov_info(&oggFile, -1);
-		unsigned long len = ov_pcm_total(&oggFile, -1) * info->channels * 2; // always 16 bit data
-		unsigned char *data = new unsigned char[len];
-		bool result = false;
-		if (data != NULL)
-		{
-			int bs = -1;
-			unsigned long todo = len;
-			unsigned char *bufpt = data;
-			while (todo > 0)
-			{
-				int read = ov_read(&oggFile, (char*)bufpt, todo, 0, 2, 1, &bs);
-				if (!read)
-				{
-					len -= todo;
-					break;
-				}
-				todo -= read;
-				bufpt += read;
-			}
-
-#ifdef __BIG_ENDIAN__
-			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < bufpt; p++)
-			{
-				NORMALIZE_ENDIAN(*p);
-			}
-#endif	
-			alBufferData(this->buffer, (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data, len, info->rate);
-			this->duration = ((float)len) / (info->rate * info->channels * 2);
-			delete [] data;
-			result = true;
-		}
-		else
-		{
-			audiomgr->logMessage("OggSound: could not allocate ogg buffer");
-		}
-		ov_clear(&oggFile);
-		return result;
-	}
-
 	void Sound::bindSource(Source* source)
 	{
 		source->setSound(this);
@@ -128,7 +54,7 @@ namespace xal
 	
 	float Sound::getSampleOffset()
 	{
-		if (this->buffer == 0 || this->sources.size() == 0)
+		if (this->getBuffer() == 0 || this->sources.size() == 0)
 		{
 			return 0;
 		}
@@ -137,7 +63,7 @@ namespace xal
 
 	void Sound::setGain(float gain)
 	{
-		if (this->buffer != 0 && this->sources.size() > 0)
+		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->setGain(gain);
 		}
@@ -145,7 +71,7 @@ namespace xal
 
 	float Sound::getGain()
 	{
-		if (this->buffer == 0 || this->sources.size() == 0)
+		if (this->getBuffer() == 0 || this->sources.size() == 0)
 		{
 			return 1;
 		}
@@ -188,7 +114,7 @@ namespace xal
 
 	Source* Sound::play(float fadeTime, bool looping)
 	{
-		if (this->buffer == 0)
+		if (this->getBuffer() == 0)
 		{
 			return NULL;
 		}
@@ -212,7 +138,7 @@ namespace xal
 
 	Source* Sound::replay(float fadeTime, bool looping)
 	{
-		if (this->buffer == 0)
+		if (this->getBuffer() == 0)
 		{
 			return NULL;
 		}
@@ -237,7 +163,7 @@ namespace xal
 
 	void Sound::stop(float fadeTime)
 	{
-		if (this->buffer != 0 && this->sources.size() > 0)
+		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->stop(fadeTime);
 		}
@@ -245,7 +171,7 @@ namespace xal
 
 	void Sound::stopAll(float fadeTime)
 	{
-		if (this->buffer != 0)
+		if (this->getBuffer() != 0)
 		{
 			for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 			{
@@ -256,7 +182,7 @@ namespace xal
 	
 	void Sound::pause(float fadeTime)
 	{
-		if (this->buffer != 0 && this->sources.size() > 0)
+		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->pause(fadeTime);
 		}

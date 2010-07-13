@@ -21,6 +21,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
+
 	Source::Source(unsigned int id) : gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
 		fadeSpeed(0.0f), sound(NULL)
 	{
@@ -36,33 +37,38 @@ namespace xal
 	}
 
 /******* METHODS *******************************************************/
+
 	void Source::update(float k)
 	{
 		if (this->id == 0 || this->sound == NULL)
 		{
 			return;
 		}
-		if (this->isPlaying() && this->isFading())
+		this->sound->update(this->id);
+		if (this->isPlaying())
 		{
-			this->fadeTime += this->fadeSpeed * k;
-			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
+			if (this->isFading())
 			{
-				alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
-				this->fadeTime = 0.0f;
-				this->fadeSpeed = 0.0f;
-			}
-			else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f && !this->paused)
-			{
-				this->stop();
-				this->fadeTime = 0.0f;
-				this->fadeSpeed = 0.0f;
-			}
-			else
-			{
-				alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
+				this->fadeTime += this->fadeSpeed * k;
+				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
+				{
+					alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
+					this->fadeTime = 0.0f;
+					this->fadeSpeed = 0.0f;
+				}
+				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f && !this->paused)
+				{
+					this->stop();
+					this->fadeTime = 0.0f;
+					this->fadeSpeed = 0.0f;
+				}
+				else
+				{
+					alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
+				}
 			}
 		}
-		else if (!this->paused && !this->isPlaying())
+		else if (!this->paused)
 		{
 			this->sound->unbindSource(this);
 		}
@@ -148,6 +154,7 @@ namespace xal
 	}
 
 /******* PROPERTIES ****************************************************/
+
 	float Source::getSampleOffset()
 	{
 		if (this->id == 0 || this->sound == NULL)

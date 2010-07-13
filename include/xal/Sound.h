@@ -25,12 +25,13 @@ namespace xal
 		Sound(chstr name, chstr category, chstr prefix = "");
 		virtual ~Sound();
 
-		virtual bool load();
+		virtual bool load() = 0;
 		void bindSource(Source* source);
 		void unbindSource(Source* source);
+		virtual void update(unsigned int sourceId) { }
 		
 		float getSampleOffset();
-		virtual unsigned int getBuffer() { return this->buffer; }
+		virtual unsigned int getBuffer() = 0;
 		chstr getName() { return this->name; }
 		float getDuration() { return this->duration; }
 		Category* getCategory() { return this->category; }
@@ -56,9 +57,6 @@ namespace xal
 		float duration;
 		Category* category;
 		harray<Source*> sources;
-		unsigned int buffer;
-		
-		bool _loadOgg();
 		
 	};
 

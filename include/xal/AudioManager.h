@@ -32,7 +32,7 @@ namespace xal
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
 		Category* getCategoryByName(chstr name);
-		void createCategory(chstr name);
+		void createCategory(chstr name, bool streamed = false);
 		void setCategoryGain(chstr category, float gain);
 		
 		void update(float k);

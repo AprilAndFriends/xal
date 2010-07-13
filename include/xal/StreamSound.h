@@ -10,9 +10,16 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef XAL_STREAMSOUND_H
 #define XAL_STREAMSOUND_H
 
+#include <vorbis/vorbisfile.h>
+
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include "xalExport.h"
 #include "Sound.h"
+
+
+#define BUFFER_COUNT 2
+#define BUFFER_SIZE 32768
 
 namespace xal
 {
@@ -21,6 +28,19 @@ namespace xal
 	public:
 		StreamSound(chstr name, chstr category, chstr prefix = "");
 		~StreamSound();
+		
+		bool load();
+		void update(unsigned int sourceId);
+		
+		unsigned int getBuffer();
+		
+	protected:
+		unsigned int buffers[BUFFER_COUNT];
+		OggVorbis_File oggStream;
+		vorbis_info* vorbisInfo;
+		
+		void _updateStream(unsigned int buffer);
+		bool _loadOgg();
 
 	};
 
