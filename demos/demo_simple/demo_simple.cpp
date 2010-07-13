@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include <hltypes/hstring.h>
 
 #define _TEST_SOUND
+//#define _TEST_SOURCE_HANDLING
 //#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
 #ifdef _TEST_STREAM
 	audiomgr->createCategory("cat", true);
 #endif
-	harray<hstr> files = audiomgr->loadPathCategory("../media", "cat");
+	harray<hstr> files = audiomgr->createSoundsFromPath("../media", "cat", "");
 	//harray<hstr> files = audiomgr->loadPathCategory("../media", "cat", "test.");
 	//harray<hstr> files = audiomgr->loadPath("..");
 	//harray<hstr> files = audiomgr->loadPath("..", "test");
@@ -42,12 +43,7 @@ int main(int argc, char **argv)
 	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
 	audiomgr->setCategoryGain("cat", 1.0f);
-	/*
-	s->play();
-	Sleep(100.0f);
-	s->play();
-	while (s->isPlaying()) { }
-	*/
+#ifdef _TEST_SOURCE_HANDLING
 	for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		s->play();
 	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
@@ -57,6 +53,12 @@ int main(int argc, char **argv)
 	s->stop();
 	audiomgr->update(0.01f);
 	Sleep(1000.0f);
+#else
+	s->play();
+	Sleep(100.0f);
+	s->play();
+	while (s->isPlaying()) { Sleep(100.0f); audiomgr->update(0.1f); }
+#endif
 	
 #endif
 
