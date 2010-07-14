@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\SoundBuffer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Source.cpp"
 				>
 			</File>
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\include\xal\Sound.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xal\SoundBuffer.h"
 				>
 			</File>
 			<File
