@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include "Category.h"
 #include "Source.h"
-#include "Sound.h"
+#include "SoundBuffer.h"
 #include "StreamSound.h"
 #include "AudioManager.h"
 
@@ -25,7 +25,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	Source::Source(unsigned int id) : gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
-		fadeSpeed(0.0f), sound(NULL)
+		fadeSpeed(0.0f), sound(NULL), Sound()
 	{
 		this->id = id;
 	}
@@ -72,15 +72,15 @@ namespace xal
 		}
 		if (!this->isPlaying() && !this->isPaused() && this->sound != NULL)
 		{
-			this->sound->unbindSource(this);
+			this->unbind();
 		}
 	}
 
-	void Source::play(float fadeTime, bool looping)
+	Sound* Source::play(float fadeTime, bool looping)
 	{
 		if (this->id == 0 || this->sound == NULL)
 		{
-			return;
+			return this;
 		}
 		if (!this->paused)
 		{
@@ -114,19 +114,20 @@ namespace xal
 		}
 		alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
 		alSourcePlay(this->id);
+		return this;
 	}
 
-	void Source::replay(float fadeTime, bool looping)
+	Sound* Source::replay(float fadeTime, bool looping)
 	{
 		if (this->id == 0 || this->sound == NULL)
 		{
-			return;
+			return this;
 		}
 		if (this->isPlaying())
 		{
 			this->stop();
 		}
-		this->play(fadeTime, looping);
+		return this->play(fadeTime, looping);
 	}
 
 	void Source::stop(float fadeTime)
@@ -145,7 +146,7 @@ namespace xal
 			this->fadeTime = 0.0f;
 			this->fadeSpeed = 0.0f;
 			alSourceStop(this->id);
-			this->sound->unbindSource(this);
+			this->unbind();
 		}
 	}
 
@@ -168,6 +169,14 @@ namespace xal
 		this->paused = true;
 	}
 
+	void Source::unbind()
+	{
+		if (!this->isLocked())
+		{
+			this->sound->unbindSource(this);
+		}
+	}
+	
 /******* PROPERTIES ****************************************************/
 
 	float Source::getSampleOffset()
@@ -190,7 +199,7 @@ namespace xal
 		}
 	}
 
-	bool Source::hasSound()
+	bool Source::isBound()
 	{
 		return (this->sound != NULL);
 	}

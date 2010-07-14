@@ -22,7 +22,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "AudioManager.h"
 #include "Category.h"
-#include "Sound.h"
+#include "SoundBuffer.h"
 #include "SimpleSound.h"
 #include "StreamSound.h"
 #include "Source.h"
@@ -101,7 +101,7 @@ namespace xal
 
 	AudioManager::~AudioManager()
 	{
-		for (std::map<hstr, Sound*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
+		for (std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
 		{
 			delete it->second;
 		}
@@ -115,6 +115,7 @@ namespace xal
 			ALuint id;
 			for (int i = 0; i < XAL_MAX_SOURCES; i++)
 			{
+				this->sources[i]->unlock();
 				this->sources[i]->stop();
 				id = this->sources[i]->getId();
 				alDeleteSources(1, &id);
@@ -153,7 +154,7 @@ namespace xal
 	{
 		for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		{
-			if (!this->sources[i]->hasSound())
+			if (!this->sources[i]->isBound())
 			{
 				return this->sources[i];
 			}
@@ -174,7 +175,7 @@ namespace xal
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
 		Category* category = this->getCategoryByName(categoryName);
-		Sound* sound;
+		SoundBuffer* sound;
 		if (category->isStreamed())
 		{
 			sound = new StreamSound(filename, categoryName, prefix);
@@ -209,10 +210,10 @@ namespace xal
 		this->createCategory(category);
 		harray<hstr> result;
 		harray<hstr> files = getPathFilesRecursive(path);
-		Sound* sound;
+		SoundBuffer* sound;
 		for (hstr* it = files.iterate(); it; it = files.next())
 		{
-			sound = this->createSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
+			sound = (SoundBuffer*)this->createSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();
@@ -221,9 +222,9 @@ namespace xal
 		return result;
 	}
 
-	void AudioManager::destroySound(Sound* sound)
+	void AudioManager::destroySound(SoundBuffer* sound)
 	{
-		std::map<hstr, Sound*>::iterator it = this->sounds.begin();
+		std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin();
 		for (;it != this->sounds.end(); it++)
 		{
 			if (it->second == sound)
@@ -238,7 +239,7 @@ namespace xal
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		harray<hstr> deleteList;
-		std::map<hstr, Sound*>::iterator it = this->sounds.begin();
+		std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin();
 		for (;it != this->sounds.end(); it++)
 		{
 			if (it->first.starts_with(prefix))
@@ -275,7 +276,7 @@ namespace xal
 		this->getCategoryByName(name)->setGain(gain);
 		for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		{
-			if (this->sources[i]->hasSound())
+			if (this->sources[i]->isBound())
 			{
 				alSourcef(this->sources[i]->getId(), AL_GAIN, gain * this->sources[i]->getGain());
 			}

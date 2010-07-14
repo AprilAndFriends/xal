@@ -30,7 +30,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	SimpleSound::SimpleSound(chstr filename, chstr category, chstr prefix) :
-		buffer(0), Sound(filename, category, prefix)
+		buffer(0), SoundBuffer(filename, category, prefix)
 	{
 	}
 
@@ -60,7 +60,7 @@ namespace xal
 
 	bool SimpleSound::_loadOgg()
 	{
-		xal::mgr->logMessage("XAL: Loading ogg sound: " + this->filename);
+		xal::mgr->logMessage("XAL: Loading ogg sound " + this->filename);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
 		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
@@ -104,7 +104,7 @@ namespace xal
 		}
 		else
 		{
-			xal::mgr->logMessage("OggSound: could not allocate ogg buffer");
+			xal::mgr->logMessage("Ogg: Could not allocate ogg buffer.");
 		}
 		ov_clear(&oggStream);
 		return result;

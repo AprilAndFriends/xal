@@ -16,48 +16,32 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace xal
 {
-	class Category;
-	class Source;
-	
 	class xalExport Sound
 	{
 	public:
-		Sound(chstr name, chstr category, chstr prefix = "");
+		Sound();
 		virtual ~Sound();
 
-		virtual bool load() = 0;
-		void bindSource(Source* source);
-		void unbindSource(Source* source);
-		virtual void update(unsigned int sourceId) { }
+		virtual float getGain() = 0;
+		virtual void setGain(float value) = 0;
+		virtual bool isLooping() = 0;
+		virtual bool isPlaying() = 0;
+		virtual bool isFading() = 0;
+		virtual bool isFadingIn() = 0;
+		virtual bool isFadingOut() = 0;
+		virtual bool isPaused() = 0;
 		
-		float getSampleOffset();
-		virtual unsigned int getBuffer() = 0;
-		chstr getName() { return this->name; }
-		float getDuration() { return this->duration; }
-		Category* getCategory() { return this->category; }
-		void setCategory(Category* value) { this->category = value; }
-		float getGain();
-		void setGain(float value);
-		bool isLooping();
-		bool isPlaying();
-		bool isFading();
-		bool isFadingIn();
-		bool isFadingOut();
-		bool isPaused();
-		bool isOgg();
+		virtual Sound* play(float fadeTime = 0.0f, bool looping = false) = 0;
+		virtual Sound* replay(float fadeTime = 0.0f, bool looping = false) = 0;
+		virtual void stop(float fadeTime = 0.0f) = 0;
+		virtual void pause(float fadeTime = 0.0f) = 0;
 		
-		Source* play(float fadeTime = 0.0f, bool looping = false);
-		Source* replay(float fadeTime = 0.0f, bool looping = false);
-		void stop(float fadeTime = 0.0f);
-		void stopAll(float fadeTime = 0.0f);
-		void pause(float fadeTime = 0.0f);
+		void lock() { this->locked = true; }
+		void unlock() { this->locked = false; }
+		bool isLocked() { return this->locked; }
 		
 	protected:
-		hstr name;
-		hstr filename;
-		float duration;
-		Category* category;
-		harray<Source*> sources;
+		bool locked;
 		
 	};
 

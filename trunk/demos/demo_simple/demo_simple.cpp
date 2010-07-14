@@ -9,13 +9,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 \************************************************************************************/
 #include <stdio.h>
 #include <xal/AudioManager.h>
+#include <xal/Sound.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLE_PLAY
-#define _TEST_STREAM
+//#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 
@@ -39,6 +40,7 @@ int main(int argc, char **argv)
 	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	xal::mgr->update(0.01f);
+	
 #ifdef _TEST_MULTIPLE_PLAY
 	s->play();
 	Sleep(100.0f);
@@ -58,8 +60,6 @@ int main(int argc, char **argv)
 	xal::mgr->update(0.01f);
 	s->stop();
 #endif
-	system("pause");
-	
 #endif
 
 #ifdef _TEST_FADE_IN
@@ -87,5 +87,6 @@ int main(int argc, char **argv)
 #endif
 	
 	xal::destroy();
+	system("pause");
 	return 0;
 }
