@@ -92,7 +92,10 @@ namespace xal
 			{
 				((StreamSound*)this->sound)->queueBuffers(this->id);
 			}
-			alSourcei(this->id, AL_LOOPING, false);
+			if (!this->paused)
+			{
+				alSourcei(this->id, AL_LOOPING, false);
+			}
 		}
 		else
 		{
@@ -100,9 +103,11 @@ namespace xal
 			{
 				alSourcei(this->id, AL_BUFFER, this->getBuffer());
 			}
-			alSourcei(this->id, AL_LOOPING, this->looping);
+			if (!this->paused)
+			{
+				alSourcei(this->id, AL_LOOPING, this->looping);
+			}
 		}
-		this->paused = false;
 		if (fadeTime > 0)
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
@@ -114,6 +119,11 @@ namespace xal
 		}
 		alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
 		alSourcePlay(this->id);
+		if (!this->isFading())
+		{
+			alSourcePlay(this->id);
+		}
+		this->paused = false;
 		return this;
 	}
 
