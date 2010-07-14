@@ -62,42 +62,43 @@ namespace xal
 	{
 		xal::mgr->logMessage("XAL: Loading ogg sound: " + this->filename);
 		vorbis_info *info;
-		OggVorbis_File oggFile;
-		if (ov_fopen((char*)this->filename.c_str(), &oggFile) != 0)
+		OggVorbis_File oggStream;
+		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
 		{
 			xal::mgr->logMessage("Ogg: Error opening file!");
 			return false;
 		}
 		alGenBuffers(1, &this->buffer);
-		info = ov_info(&oggFile, -1);
-		unsigned long len = ov_pcm_total(&oggFile, -1) * info->channels * 2; // always 16 bit data
-		unsigned char *data = new unsigned char[len];
+		info = ov_info(&oggStream, -1);
+		unsigned long length = ov_pcm_total(&oggStream, -1) * info->channels * 2; // always 16 bit data
+		unsigned char *data = new unsigned char[length];
 		bool result = false;
 		if (data != NULL)
 		{
-			int bs = -1;
-			unsigned long todo = len;
-			unsigned char *bufpt = data;
-			while (todo > 0)
+			int section;
+			unsigned long size = length;
+			unsigned char *buffer = data;
+			int read;
+			while (size > 0)
 			{
-				int read = ov_read(&oggFile, (char*)bufpt, todo, 0, 2, 1, &bs);
-				if (!read)
+				int read = ov_read(&oggStream, (char*)buffer, size, 0, 2, 1, &section);
+				if (read == 0)
 				{
-					len -= todo;
+					length -= size;
 					break;
 				}
-				todo -= read;
-				bufpt += read;
+				size -= read;
+				buffer += read;
 			}
 
 #ifdef __BIG_ENDIAN__
-			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < bufpt; p++)
+			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < buffer; p++)
 			{
 				NORMALIZE_ENDIAN(*p);
 			}
 #endif	
-			alBufferData(this->buffer, (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data, len, info->rate);
-			this->duration = ((float)len) / (info->rate * info->channels * 2);
+			alBufferData(this->buffer, (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data, length, info->rate);
+			this->duration = ((float)length) / (info->rate * info->channels * 2);
 			delete [] data;
 			result = true;
 		}
@@ -105,7 +106,7 @@ namespace xal
 		{
 			xal::mgr->logMessage("OggSound: could not allocate ogg buffer");
 		}
-		ov_clear(&oggFile);
+		ov_clear(&oggStream);
 		return result;
 	}
 

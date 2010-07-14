@@ -80,14 +80,7 @@ namespace xal
 
 	bool Sound::isPlaying()
 	{
-		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
-		{
-			if ((*it)->isPlaying())
-			{
-				return true;
-			}
-		}
-		return false;
+		return (this->sources.size() > 0 && this->sources[0]->isPlaying());
 	}
 
 	bool Sound::isPaused()

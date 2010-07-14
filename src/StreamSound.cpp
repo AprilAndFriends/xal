@@ -65,10 +65,8 @@ namespace xal
 	{
 		int queued;
 		alGetSourcei(sourceId, AL_BUFFERS_QUEUED, &queued);
-		printf("QUEUED: %d\n", queued);
 		if (queued == 0)
 		{
-			printf("EOF\n");
 			this->stop();
 			this->_resetStream();
 			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
@@ -80,7 +78,6 @@ namespace xal
 		}
 		int count;
 		alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &count);
-		printf("PROC: %d\n", count);
 		int bytes = 0;
 		int result;
 		if (count == 0)
@@ -146,7 +143,6 @@ namespace xal
 			}
 			else if (result == 0)
 			{
-				printf("              looping: %s\n", hstr(this->isLooping()).c_str());
 				if (!this->isLooping())
 				{
 					break;
@@ -158,9 +154,14 @@ namespace xal
 				xal::mgr->logMessage("XAL: Error while filling buffer for " + this->name);
 			}
 		}
-		printf("size: %d\n", size);
 		if (size > 0)
 		{
+#ifdef __BIG_ENDIAN__
+			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < data + size; p++)
+			{
+				NORMALIZE_ENDIAN(*p);
+			}
+#endif	
 			alBufferData(buffer, (this->vorbisInfo->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
 				data, size, this->vorbisInfo->rate);
 		}
@@ -169,7 +170,6 @@ namespace xal
 	
 	void StreamSound::queueBuffers(unsigned int sourceId, int index, int count)
 	{
-		printf("QUEUE: %d, %d\n", index, count); //#
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceQueueBuffers(sourceId, count, &this->buffers[index]);
@@ -183,7 +183,6 @@ namespace xal
  
 	void StreamSound::unqueueBuffers(unsigned int sourceId, int index, int count)
 	{
-		printf("UNQUEUE: %d, %d\n", index, count); //#
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(sourceId, count, &this->buffers[index]);
