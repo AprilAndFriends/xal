@@ -17,8 +17,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "xalExport.h"
 #include "Sound.h"
 
-#define STREAM_BUFFER_COUNT 3
-#define STREAM_BUFFER_SIZE 32768//(32768 * 4)
+#define STREAM_BUFFER_COUNT 2
+#define STREAM_BUFFER_SIZE 98304//32768
 
 namespace xal
 {
@@ -31,8 +31,8 @@ namespace xal
 		bool load();
 		void update(unsigned int sourceId);
 		
-		void queueBuffers(unsigned int sourceId, int count = STREAM_BUFFER_COUNT);
-		void unqueueBuffers(unsigned int sourceId, int count = STREAM_BUFFER_COUNT);
+		void queueBuffers(unsigned int sourceId, int index = 0, int count = STREAM_BUFFER_COUNT);
+		void unqueueBuffers(unsigned int sourceId, int index = 0, int count = STREAM_BUFFER_COUNT);
 		
 		unsigned int getBuffer();
 		

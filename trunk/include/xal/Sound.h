@@ -44,6 +44,7 @@ namespace xal
 		bool isFadingIn();
 		bool isFadingOut();
 		bool isPaused();
+		bool isOgg();
 		
 		Source* play(float fadeTime = 0.0f, bool looping = false);
 		Source* replay(float fadeTime = 0.0f, bool looping = false);

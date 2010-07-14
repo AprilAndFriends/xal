@@ -47,7 +47,7 @@ namespace xal
 		}
 		if (xal::mgr->isEnabled())
 		{
-			if (this->filename.contains(".ogg"))
+			if (this->isOgg())
 			{
 				ov_clear(&this->oggStream);
 			}
@@ -73,7 +73,7 @@ namespace xal
 			this->_resetStream();
 			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 			{
-				this->_fillBuffer(this->buffers[(this->bufferIndex + i) % STREAM_BUFFER_COUNT]);
+				this->_fillBuffer(this->buffers[i]);
 			}
 			this->bufferIndex = 0;
 			return;
@@ -81,14 +81,13 @@ namespace xal
 		int count;
 		alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &count);
 		printf("PROC: %d\n", count);
-		//unsigned int buffer;
 		int bytes = 0;
 		int result;
 		if (count == 0)
 		{
 			return;
 		}
-		this->unqueueBuffers(sourceId, count);
+		this->unqueueBuffers(sourceId, (this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
 		int i = 0;
 		for (; i < count; i++)
 		{
@@ -101,7 +100,7 @@ namespace xal
 		}
 		if (bytes > 0)
 		{
-			this->queueBuffers(sourceId, i);
+			this->queueBuffers(sourceId, this->bufferIndex, i);
 			if (count < STREAM_BUFFER_COUNT)
 			{
 				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
@@ -112,18 +111,11 @@ namespace xal
 				this->play();
 			}
 		}
-		else
-		{
-			printf("UC!\n");
-			//this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
-			//this->unqueueBuffers(sourceId, queued);
-			//this->bufferIndex = 0;
-		}
 	}
 	
 	int StreamSound::_readStream(char* buffer, int size)
 	{
-		if (this->filename.contains(".ogg"))
+		if (this->isOgg())
 		{
 			int section;
 			return ov_read(&this->oggStream, buffer, size, 0, 2, 1, &section);
@@ -133,7 +125,7 @@ namespace xal
 	
 	void StreamSound::_resetStream()
 	{
-		if (this->filename.contains(".ogg"))
+		if (this->isOgg())
 		{
 			ov_raw_seek(&this->oggStream, 0);
 		}
@@ -154,6 +146,7 @@ namespace xal
 			}
 			else if (result == 0)
 			{
+				printf("              looping: %s\n", hstr(this->isLooping()).c_str());
 				if (!this->isLooping())
 				{
 					break;
@@ -174,31 +167,31 @@ namespace xal
 		return size;
 	}
 	
-	void StreamSound::queueBuffers(unsigned int sourceId, int count)
+	void StreamSound::queueBuffers(unsigned int sourceId, int index, int count)
 	{
-		printf("QUEUE: %d, %d\n", bufferIndex, count); //#
-		if (this->bufferIndex + count <= STREAM_BUFFER_COUNT)
+		printf("QUEUE: %d, %d\n", index, count); //#
+		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-			alSourceQueueBuffers(sourceId, count, &this->buffers[this->bufferIndex]);
+			alSourceQueueBuffers(sourceId, count, &this->buffers[index]);
 		}
 		else
 		{
-			alSourceQueueBuffers(sourceId, STREAM_BUFFER_COUNT - this->bufferIndex, &this->buffers[this->bufferIndex]);
-			alSourceQueueBuffers(sourceId, count + this->bufferIndex - STREAM_BUFFER_COUNT, this->buffers);
+			alSourceQueueBuffers(sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
+			alSourceQueueBuffers(sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
 		}
 	}
  
-	void StreamSound::unqueueBuffers(unsigned int sourceId, int count)
+	void StreamSound::unqueueBuffers(unsigned int sourceId, int index, int count)
 	{
-		printf("UNQUEUE: %d, %d\n", bufferIndex, count); //#
-		if (this->bufferIndex + count <= STREAM_BUFFER_COUNT)
+		printf("UNQUEUE: %d, %d\n", index, count); //#
+		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-			alSourceUnqueueBuffers(sourceId, count, &this->buffers[this->bufferIndex]);
+			alSourceUnqueueBuffers(sourceId, count, &this->buffers[index]);
 		}
 		else
 		{
-			alSourceUnqueueBuffers(sourceId, STREAM_BUFFER_COUNT - this->bufferIndex, &this->buffers[this->bufferIndex]);
-			alSourceUnqueueBuffers(sourceId, count + this->bufferIndex - STREAM_BUFFER_COUNT, this->buffers);
+			alSourceUnqueueBuffers(sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
+			alSourceUnqueueBuffers(sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
 		}
 	}
  
@@ -208,7 +201,7 @@ namespace xal
 		{
 			return true;
 		}
-		if (this->filename.contains(".ogg"))
+		if (this->isOgg())
 		{
 			return this->_loadOgg();
 		}
@@ -241,5 +234,5 @@ namespace xal
 		}
 		return true;
 	}
-
+	
 }

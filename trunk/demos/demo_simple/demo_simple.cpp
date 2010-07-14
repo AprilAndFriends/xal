@@ -14,7 +14,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 
 #define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
-//#define _TEST_STREAM
+//#define _TEST_MULTIPLE_PLAY
+#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 
@@ -38,10 +39,15 @@ int main(int argc, char **argv)
 	//s = xal::mgr->getSound("bark");
 	//s = xal::mgr->getSound("testbark");
 	
-	s->play();
+	s->play(0, true);
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	xal::mgr->update(0.01f);
-#ifdef _TEST_SOURCE_HANDLING
+#ifdef _TEST_MULTIPLE_PLAY
+	s->play();
+	Sleep(100.0f);
+	s->play();
+	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+#elif _TEST_SOURCE_HANDLING
 	for (int i = 0; i < XAL_MAX_SOURCES; i++)
 		s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
@@ -51,11 +57,6 @@ int main(int argc, char **argv)
 	for (int i = 0; i < 20; i++) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	xal::mgr->update(0.01f);
 	s->stop();
-#else
-	s->play();
-	Sleep(100.0f);
-	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 #endif
 	system("pause");
 	

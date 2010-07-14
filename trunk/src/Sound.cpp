@@ -115,6 +115,11 @@ namespace xal
 		return (this->sources.size() > 0 && this->sources[0]->isLooping());
 	}
 
+	bool Sound::isOgg()
+	{
+		return this->filename.contains(".ogg");
+	}
+
 /******* PLAY CONTROLS *************************************************/
 	
 	Source* Sound::play(float fadeTime, bool looping)
