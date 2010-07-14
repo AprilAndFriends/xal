@@ -39,7 +39,7 @@ namespace xal
 	}
 
 /******* METHODS *******************************************************/
-#include <stdio.h> //#
+	
 	void Source::update(float k)
 	{
 		if (this->id == 0 || this->sound == NULL)

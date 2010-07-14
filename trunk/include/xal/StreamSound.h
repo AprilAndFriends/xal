@@ -17,8 +17,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "xalExport.h"
 #include "Sound.h"
 
-#define STREAM_BUFFER_COUNT 2
-#define STREAM_BUFFER_SIZE 98304//32768
+#define STREAM_BUFFER_COUNT 8
+#define STREAM_BUFFER_SIZE 8192
 
 namespace xal
 {

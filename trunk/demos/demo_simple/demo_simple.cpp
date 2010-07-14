@@ -29,17 +29,14 @@ int main(int argc, char **argv)
 	xal::mgr->createCategory("cat", true);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "cat", "");
-	//harray<hstr> files = xal::mgr->loadPathCategory("../media", "cat", "test.");
-	//harray<hstr> files = xal::mgr->loadPath("..");
-	//harray<hstr> files = xal::mgr->loadPath("..", "test");
 #ifdef _TEST_SOUND
+#ifdef _TEST_STREAM
+	s = xal::mgr->getSound("wind");
+#else
 	s = xal::mgr->getSound("bark");
-	//s = xal::mgr->getSound("wind");
-	//s = xal::mgr->getSound("test.bark");
-	//s = xal::mgr->getSound("bark");
-	//s = xal::mgr->getSound("testbark");
+#endif
 	
-	s->play(0, true);
+	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	xal::mgr->update(0.01f);
 #ifdef _TEST_MULTIPLE_PLAY
@@ -47,9 +44,12 @@ int main(int argc, char **argv)
 	Sleep(100.0f);
 	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
-#elif _TEST_SOURCE_HANDLING
+#elif defined _TEST_SOURCE_HANDLING
 	for (int i = 0; i < XAL_MAX_SOURCES; i++)
+	{
+		Sleep(20.0f);
 		s->play();
+	}
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	xal::mgr->update(0.01f);
 	s = xal::mgr->getSound("wind");
