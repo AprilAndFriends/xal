@@ -82,6 +82,10 @@ namespace xal
 		{
 			return;
 		}
+		if (!this->paused)
+		{
+			this->looping = looping;
+		}
 		if (this->sound->getCategory()->isStreamed())
 		{
 			if (!this->isPaused())

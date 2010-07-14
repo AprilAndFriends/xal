@@ -51,7 +51,7 @@ namespace xal
 		{
 			return true;
 		}
-		if (this->filename.contains(".ogg"))
+		if (this->isOgg())
 		{
 			return this->_loadOgg();
 		}
