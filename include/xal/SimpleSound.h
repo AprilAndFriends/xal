@@ -12,11 +12,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include <hltypes/hstring.h>
 #include "xalExport.h"
-#include "Sound.h"
+#include "SoundBuffer.h"
 
 namespace xal
 {
-	class xalExport SimpleSound : public Sound
+	class xalExport SimpleSound : public SoundBuffer
 	{
 	public:
 		SimpleSound(chstr name, chstr category, chstr prefix = "");

@@ -7,19 +7,21 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_SOUND_MANAGER_H
-#define XAL_SOUND_MANAGER_H
+#ifndef XAL_AUDIOMANAGER_H
+#define XAL_AUDIOMANAGER_H
 
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <map>
 #include "xalExport.h"
-#include "Sound.h"
 
 #define XAL_MAX_SOURCES 16
 
 namespace xal
 {
 	class Category;
+	class Sound;
+	class SoundBuffer;
 	class Source;
 
 	class xalExport AudioManager
@@ -41,7 +43,7 @@ namespace xal
 		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
 		harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
 		harray<hstr> createSoundsFromPath(chstr path, chstr category, chstr prefix);
-		void destroySound(Sound* sound);
+		void destroySound(SoundBuffer* sound);
 		void destroySoundsWithPrefix(chstr prefix);
 		Sound* getSound(chstr name);
 		
@@ -49,7 +51,7 @@ namespace xal
 		Source* sources[XAL_MAX_SOURCES];
 		hstr deviceName;
 		std::map<hstr, Category*> categories;
-		std::map<hstr, Sound*> sounds;
+		std::map<hstr, SoundBuffer*> sounds;
 		
 	};
 	
@@ -57,7 +59,6 @@ namespace xal
 	xalFnExport void destroy();
 	xalFnExport void setLogFunction(void (*function)(chstr));
 	xalFnExport extern xal::AudioManager* mgr;
-	
 }
 
 #endif

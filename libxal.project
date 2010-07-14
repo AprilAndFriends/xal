@@ -9,7 +9,6 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="src/Endianess.h"/>
-    <File Name="src/Sound.cpp"/>
     <File Name="src/Source.cpp"/>
     <File Name="src/Category.cpp"/>
     <File Name="src/AudioManager.cpp"/>
@@ -18,15 +17,18 @@
     <File Name="src/Util.h"/>
     <File Name="src/SimpleSound.cpp"/>
     <File Name="src/StreamSound.cpp"/>
+    <File Name="src/SoundBuffer.cpp"/>
+    <File Name="src/Sound.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="include/xal/Sound.h"/>
     <File Name="include/xal/xalExport.h"/>
     <File Name="include/xal/Source.h"/>
     <File Name="include/xal/Category.h"/>
     <File Name="include/xal/AudioManager.h"/>
     <File Name="include/xal/SimpleSound.h"/>
     <File Name="include/xal/StreamSound.h"/>
+    <File Name="include/xal/SoundBuffer.h"/>
+    <File Name="include/xal/Sound.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Dynamic Library">

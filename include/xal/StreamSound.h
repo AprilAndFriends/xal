@@ -15,14 +15,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include "xalExport.h"
-#include "Sound.h"
+#include "SoundBuffer.h"
 
 #define STREAM_BUFFER_COUNT 8
 #define STREAM_BUFFER_SIZE 8192
 
 namespace xal
 {
-	class xalExport StreamSound : public Sound
+	class xalExport StreamSound : public SoundBuffer
 	{
 	public:
 		StreamSound(chstr name, chstr category, chstr prefix = "");

@@ -10,15 +10,15 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef XAL_SOURCE_H
 #define XAL_SOURCE_H
 
-#include <hltypes/hstring.h>
 #include "xalExport.h"
+
 #include "Sound.h"
 
 namespace xal
 {
-	class Sound;
+	class SoundBuffer;
 	
-	class xalExport Source
+	class xalExport Source : public Sound
 	{
 	public:
 		Source(unsigned int id);
@@ -26,17 +26,19 @@ namespace xal
 
 		void update(float k);
 		
-		void play(float fadeTime = 0.0f, bool looping = false);
-		void replay(float fadeTime = 0.0f, bool looping = false);
+		Sound* play(float fadeTime = 0.0f, bool looping = false);
+		Sound* replay(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
+		
+		void unbind();
 		
 		unsigned int getId() { return this->id; }
 		float getSampleOffset();
 		unsigned int getBuffer();
-		Sound* getSound() { return this->sound; }
-		bool hasSound();
-		void setSound(Sound* value) { this->sound = value; }
+		SoundBuffer* getSound() { return this->sound; }
+		void setSound(SoundBuffer* value) { this->sound = value; }
+		bool isBound();
 		float getGain() { return this->gain; }
 		void setGain(float value);
 		bool isLooping() { return this->looping; }
@@ -53,7 +55,7 @@ namespace xal
 		bool paused;
 		float fadeSpeed;
 		float fadeTime;
-		Sound* sound;
+		SoundBuffer* sound;
 		
 	};
 

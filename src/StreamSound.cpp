@@ -30,7 +30,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	StreamSound::StreamSound(chstr filename, chstr category, chstr prefix) :
-		bufferIndex(0), Sound(filename, category, prefix)
+		bufferIndex(0), SoundBuffer(filename, category, prefix)
 	{
 		for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 		{
