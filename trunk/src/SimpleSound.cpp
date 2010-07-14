@@ -45,19 +45,6 @@ namespace xal
 	
 /******* METHODS *******************************************************/
 
-	bool SimpleSound::load()
-	{
-		if (!xal::mgr->isEnabled())
-		{
-			return true;
-		}
-		if (this->isOgg())
-		{
-			return this->_loadOgg();
-		}
-		return false;
-	}
-
 	bool SimpleSound::_loadOgg()
 	{
 		xal::mgr->logMessage("XAL: Loading ogg sound " + this->filename);

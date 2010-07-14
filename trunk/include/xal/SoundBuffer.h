@@ -27,8 +27,7 @@ namespace xal
 		SoundBuffer(chstr name, chstr category, chstr prefix = "");
 		virtual ~SoundBuffer();
 
-		virtual bool load() = 0;
-		virtual void update(unsigned int sourceId) { }
+		bool load();
 		
 		void bindSource(Source* source);
 		void unbindSource(Source* source);
@@ -38,6 +37,7 @@ namespace xal
 		
 		float getSampleOffset();
 		virtual unsigned int getBuffer() = 0;
+		void setSourceId(unsigned int value) { this->sourceId = value; }
 		chstr getName() { return this->name; }
 		float getDuration() { return this->duration; }
 		Category* getCategory() { return this->category; }
@@ -53,7 +53,6 @@ namespace xal
 		bool isOgg();
 		
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
-		Sound* replay(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void stopAll(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
@@ -62,8 +61,11 @@ namespace xal
 		hstr name;
 		hstr filename;
 		float duration;
+		unsigned int sourceId;
 		Category* category;
 		harray<Source*> sources;
+		
+		virtual bool _loadOgg() = 0;
 		
 	};
 

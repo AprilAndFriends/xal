@@ -28,11 +28,10 @@ namespace xal
 		StreamSound(chstr name, chstr category, chstr prefix = "");
 		~StreamSound();
 		
-		bool load();
-		void update(unsigned int sourceId);
+		void update(float k);
 		
-		void queueBuffers(unsigned int sourceId, int index = 0, int count = STREAM_BUFFER_COUNT);
-		void unqueueBuffers(unsigned int sourceId, int index = 0, int count = STREAM_BUFFER_COUNT);
+		void queueBuffers(int index = 0, int count = STREAM_BUFFER_COUNT);
+		void unqueueBuffers(int index = 0, int count = STREAM_BUFFER_COUNT);
 		
 		unsigned int getBuffer();
 		

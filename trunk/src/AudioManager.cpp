@@ -60,7 +60,10 @@ namespace xal
 	
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	AudioManager::AudioManager(chstr deviceName)
+	AudioManager::AudioManager(chstr deviceName) :
+		sources(harray<Source*>()),
+		categories(std::map<hstr, Category*>()),
+		sounds(std::map<hstr, SoundBuffer*>())
 	{
 		this->logMessage("Initializing XAL");
 		if (deviceName == "nosound")
@@ -88,12 +91,7 @@ namespace xal
 		{
 			return;
 		}
-		ALuint sourceIds[XAL_MAX_SOURCES];
-		alGenSources(XAL_MAX_SOURCES, sourceIds);
-		for (int i = 0; i < XAL_MAX_SOURCES; i++)
-		{
-			this->sources[i] = new xal::Source(sourceIds[i]);
-		}
+		alGenSources(XAL_MAX_SOURCES, this->sourceIds);
 		gDevice = currentDevice;
 		gContext = currentContext;
 		this->deviceName = deviceName;
@@ -112,15 +110,13 @@ namespace xal
 		this->logMessage("Destroying OpenAL");
 		if (gDevice)
 		{
-			ALuint id;
-			for (int i = 0; i < XAL_MAX_SOURCES; i++)
+			while (this->sources.size() > 0)
 			{
-				this->sources[i]->unlock();
-				this->sources[i]->stop();
-				id = this->sources[i]->getId();
-				alDeleteSources(1, &id);
-				delete this->sources[i];
+				this->sources[0]->unlock();
+				this->sources[0]->stop();
+				this->destroySource(this->sources[0]);
 			}
+			alDeleteSources(XAL_MAX_SOURCES, this->sourceIds);
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(gContext);
 			alcCloseDevice(gDevice);
@@ -143,24 +139,49 @@ namespace xal
 	{
 		if (this->deviceName != "nosound")
 		{
-			for (int i = 0; i < XAL_MAX_SOURCES; i++)
+			for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 			{
-				this->sources[i]->update(k);
+				(*it)->update(k);
+			}
+			harray<Source*> sources(this->sources); // because update can destroy Sources
+			for (Source** it = sources.iterate(); it; it = sources.next())
+			{
+				if (!(*it)->isBound())
+				{
+					(*it)->getSound()->unbindSource(*it);
+				}
 			}
 		}
 	}
 
-	Source* AudioManager::allocateSource()
+	unsigned int AudioManager::allocateSourceId()
 	{
-		for (int i = 0; i < XAL_MAX_SOURCES; i++)
+		harray<unsigned int> allocated;
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 		{
-			if (!this->sources[i]->isBound())
-			{
-				return this->sources[i];
-			}
+			allocated += (*it)->getSourceId();
+		}
+		harray<unsigned int> unallocated(this->sourceIds, XAL_MAX_SOURCES);
+		unallocated -= allocated;
+		if (unallocated.size() > 0)
+		{
+			return unallocated[0];
 		}
 		this->logMessage("AudioManager: Unable to allocate audio source!");
-		return NULL;
+		return 0;
+	}
+
+	Source* AudioManager::createSource(SoundBuffer* sound)
+	{
+		Source* source = new Source(sound);
+		this->sources += source;
+		return source;
+	}
+	
+	void AudioManager::destroySource(Source* source)
+	{
+		this->sources -= source;
+		delete source;
 	}
 
 	Sound* AudioManager::getSound(chstr name)
@@ -274,11 +295,11 @@ namespace xal
 	void AudioManager::setCategoryGain(chstr name, float gain)
 	{
 		this->getCategoryByName(name)->setGain(gain);
-		for (int i = 0; i < XAL_MAX_SOURCES; i++)
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 		{
-			if (this->sources[i]->isBound())
+			if ((*it)->getSound()->getCategory()->getName() == name)
 			{
-				alSourcef(this->sources[i]->getId(), AL_GAIN, gain * this->sources[i]->getGain());
+				alSourcef((*it)->getSourceId(), AL_GAIN, gain * (*it)->getGain());
 			}
 		}
 	}

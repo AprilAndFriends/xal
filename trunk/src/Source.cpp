@@ -24,29 +24,28 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	Source::Source(unsigned int id) : gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
-		fadeSpeed(0.0f), sound(NULL), Sound()
+	Source::Source(SoundBuffer* sound) : sourceId(0), gain(1.0f),
+		looping(false), paused(false), fadeTime(0.0f), fadeSpeed(0.0f),
+		bound(true), Sound()
 	{
-		this->id = id;
+		this->sound = sound;
 	}
 
 	Source::~Source()
 	{
-		if (this->sound != NULL)
-		{
-			this->stop();
-		}
+		this->stop();
 	}
 
 /******* METHODS *******************************************************/
 	
 	void Source::update(float k)
 	{
-		if (this->id == 0 || this->sound == NULL)
+		if (this->sourceId == 0)
 		{
 			return;
 		}
-		this->sound->update(this->id);
+		this->sound->setSourceId(this->sourceId);
+		this->sound->update(k);
 		if (this->isPlaying())
 		{
 			if (this->isFading())
@@ -54,7 +53,7 @@ namespace xal
 				this->fadeTime += this->fadeSpeed * k;
 				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 				{
-					alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
+					alSourcef(this->sourceId, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
 					this->fadeTime = 0.0f;
 					this->fadeSpeed = 0.0f;
 				}
@@ -66,11 +65,11 @@ namespace xal
 				}
 				else
 				{
-					alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
+					alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
 				}
 			}
 		}
-		if (!this->isPlaying() && !this->isPaused() && this->sound != NULL)
+		if (!this->isPlaying() && !this->isPaused())
 		{
 			this->unbind();
 		}
@@ -78,9 +77,17 @@ namespace xal
 
 	Sound* Source::play(float fadeTime, bool looping)
 	{
-		if (this->id == 0 || this->sound == NULL)
+		if (this->sourceId == 0)
 		{
-			return this;
+			this->sourceId = xal::mgr->allocateSourceId();
+			if (this->sourceId == 0)
+			{
+				return NULL;
+			}
+		}
+		if (!this->isPaused())
+		{
+			//2DO - get remembered sample offset and set source to buffer position
 		}
 		if (!this->paused)
 		{
@@ -90,24 +97,17 @@ namespace xal
 		{
 			if (!this->isPaused())
 			{
-				((StreamSound*)this->sound)->queueBuffers(this->id);
-			}
-			if (!this->paused)
-			{
-				alSourcei(this->id, AL_LOOPING, false);
+				this->sound->setSourceId(this->sourceId);
+				((StreamSound*)this->sound)->queueBuffers();
+				alSourcei(this->sourceId, AL_LOOPING, false);
 			}
 		}
-		else
+		else if (!this->isPaused())
 		{
-			if (!this->isPaused())
-			{
-				alSourcei(this->id, AL_BUFFER, this->getBuffer());
-			}
-			if (!this->paused)
-			{
-				alSourcei(this->id, AL_LOOPING, this->looping);
-			}
+			alSourcei(this->sourceId, AL_BUFFER, this->getBuffer());
+			alSourcei(this->sourceId, AL_LOOPING, this->looping);
 		}
+		bool alreadyFading = this->isFading();
 		if (fadeTime > 0)
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
@@ -117,32 +117,18 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		alSourcef(this->id, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
-		alSourcePlay(this->id);
-		if (!this->isFading())
+		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
+		if (!alreadyFading)
 		{
-			alSourcePlay(this->id);
+			alSourcePlay(this->sourceId);
 		}
 		this->paused = false;
 		return this;
 	}
 
-	Sound* Source::replay(float fadeTime, bool looping)
-	{
-		if (this->id == 0 || this->sound == NULL)
-		{
-			return this;
-		}
-		if (this->isPlaying())
-		{
-			this->stop();
-		}
-		return this->play(fadeTime, looping);
-	}
-
 	void Source::stop(float fadeTime)
 	{
-		if (this->id == 0 || this->sound == NULL)
+		if (this->sourceId == 0)
 		{
 			return;
 		}
@@ -155,14 +141,14 @@ namespace xal
 		{
 			this->fadeTime = 0.0f;
 			this->fadeSpeed = 0.0f;
-			alSourceStop(this->id);
+			alSourceStop(this->sourceId);
 			this->unbind();
 		}
 	}
 
 	void Source::pause(float fadeTime)
 	{
-		if (this->id == 0 || this->sound == NULL)
+		if (this->sourceId == 0)
 		{
 			return;
 		}
@@ -174,7 +160,9 @@ namespace xal
 		{
 			this->fadeTime = 0.0f;
 			this->fadeSpeed = 0.0f;
-			alSourcePause(this->id);
+			alSourcePause(this->sourceId);
+			//2DO - uncomment, remember sample offset
+			//this->unbind();
 		}
 		this->paused = true;
 	}
@@ -183,7 +171,8 @@ namespace xal
 	{
 		if (!this->isLocked())
 		{
-			this->sound->unbindSource(this);
+			this->sourceId = 0;
+			this->bound = false;
 		}
 	}
 	
@@ -191,29 +180,25 @@ namespace xal
 
 	float Source::getSampleOffset()
 	{
-		if (this->id == 0 || this->sound == NULL)
+		//2DO - change implementation
+		if (this->sourceId == 0)
 		{
 			return 0.0f;
 		}
 		float value;
-		alGetSourcef(this->id, AL_SEC_OFFSET, &value);
+		alGetSourcef(this->sourceId, AL_SEC_OFFSET, &value);
 		return value;
 	}
 
 	void Source::setGain(float gain)
 	{
 		this->gain = gain;
-		if (this->id != 0)
+		if (this->sourceId != 0)
 		{
-			alSourcef(this->id, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
+			alSourcef(this->sourceId, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
 		}
 	}
 
-	bool Source::isBound()
-	{
-		return (this->sound != NULL);
-	}
-	
 	unsigned int Source::getBuffer()
 	{
 		return this->sound->getBuffer();
@@ -221,7 +206,7 @@ namespace xal
 	
 	bool Source::isPlaying()
 	{
-		if (this->id == 0 || this->sound == NULL)
+		if (this->sourceId == 0)
 		{
 			return false;
 		}
@@ -230,7 +215,7 @@ namespace xal
 			return (!this->isPaused());
 		}
 		int state;
-		alGetSourcei(this->id, AL_SOURCE_STATE, &state);
+		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
 	}
 
