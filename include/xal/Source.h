@@ -21,24 +21,23 @@ namespace xal
 	class xalExport Source : public Sound
 	{
 	public:
-		Source(unsigned int id);
-		virtual ~Source();
+		Source(SoundBuffer* sound);
+		~Source();
 
 		void update(float k);
 		
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
-		Sound* replay(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
 		
 		void unbind();
 		
-		unsigned int getId() { return this->id; }
+		unsigned int getSourceId() { return this->sourceId; }
+		void setSourceId(unsigned int value) { this->sourceId = value; }
 		float getSampleOffset();
 		unsigned int getBuffer();
 		SoundBuffer* getSound() { return this->sound; }
-		void setSound(SoundBuffer* value) { this->sound = value; }
-		bool isBound();
+		bool isBound() { return this->bound; }
 		float getGain() { return this->gain; }
 		void setGain(float value);
 		bool isLooping() { return this->looping; }
@@ -49,12 +48,13 @@ namespace xal
 		bool isPaused();
 		
 	protected:
-		unsigned int id;
+		unsigned int sourceId;
 		float gain;
 		bool looping;
 		bool paused;
 		float fadeSpeed;
 		float fadeTime;
+		bool bound;
 		SoundBuffer* sound;
 		
 	};

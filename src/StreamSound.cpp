@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "AudioManager.h"
 #include "StreamSound.h"
+#include "Source.h"
 
 #include <iostream>
 #include <ogg/ogg.h>
@@ -61,10 +62,10 @@ namespace xal
 		return this->buffers[this->bufferIndex];
 	}
 
-	void StreamSound::update(unsigned int sourceId)
+	void StreamSound::update(float k)
 	{
 		int queued;
-		alGetSourcei(sourceId, AL_BUFFERS_QUEUED, &queued);
+		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
 		if (queued == 0)
 		{
 			this->stop();
@@ -77,14 +78,14 @@ namespace xal
 			return;
 		}
 		int count;
-		alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &count);
+		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
 		int bytes = 0;
 		int result;
 		if (count == 0)
 		{
 			return;
 		}
-		this->unqueueBuffers(sourceId, (this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
+		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
 		int i = 0;
 		for (; i < count; i++)
 		{
@@ -97,7 +98,7 @@ namespace xal
 		}
 		if (bytes > 0)
 		{
-			this->queueBuffers(sourceId, this->bufferIndex, i);
+			this->queueBuffers(this->bufferIndex, i);
 			if (count < STREAM_BUFFER_COUNT)
 			{
 				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
@@ -168,45 +169,32 @@ namespace xal
 		return size;
 	}
 	
-	void StreamSound::queueBuffers(unsigned int sourceId, int index, int count)
+	void StreamSound::queueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-			alSourceQueueBuffers(sourceId, count, &this->buffers[index]);
+			alSourceQueueBuffers(this->sourceId, count, &this->buffers[index]);
 		}
 		else
 		{
-			alSourceQueueBuffers(sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
-			alSourceQueueBuffers(sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
+			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
+			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
 		}
 	}
  
-	void StreamSound::unqueueBuffers(unsigned int sourceId, int index, int count)
+	void StreamSound::unqueueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-			alSourceUnqueueBuffers(sourceId, count, &this->buffers[index]);
+			alSourceUnqueueBuffers(this->sourceId, count, &this->buffers[index]);
 		}
 		else
 		{
-			alSourceUnqueueBuffers(sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
-			alSourceUnqueueBuffers(sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
+			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
+			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
 		}
 	}
  
-    bool StreamSound::load()
-	{
-		if (!xal::mgr->isEnabled())
-		{
-			return true;
-		}
-		if (this->isOgg())
-		{
-			return this->_loadOgg();
-		}
-		return false;
-	}
-
 	bool StreamSound::_loadOgg()
 	{
 		xal::mgr->logMessage("XAL: Loading ogg stream sound " + this->filename);

@@ -40,16 +40,28 @@ namespace xal
 	
 /******* METHODS *******************************************************/
 	
+	bool SoundBuffer::load()
+	{
+		if (!xal::mgr->isEnabled())
+		{
+			return this->isOgg();
+		}
+		if (this->isOgg())
+		{
+			return this->_loadOgg();
+		}
+		return false;
+	}
+
 	void SoundBuffer::bindSource(Source* source)
 	{
-		source->setSound(this);
 		this->sources += source;
 	}
 	
 	void SoundBuffer::unbindSource(Source* source)
 	{
-		source->setSound(NULL);
 		this->sources -= source;
+		xal::mgr->destroySource(source);
 	}
 	
 	void SoundBuffer::lock()
@@ -149,43 +161,20 @@ namespace xal
 		Source* source = NULL;
 		if (this->sources.size() == 0 || this->sources[0]->isPlaying())
 		{
-			source = xal::mgr->allocateSource();
-			if (source == NULL)
+			unsigned int sourceId = xal::mgr->allocateSourceId();
+			if (sourceId == 0)
 			{
 				return NULL;
 			}
+			source = xal::mgr->createSource(this);
 			this->bindSource(source);
+			source->setSourceId(sourceId);
 		}
 		else
 		{
 			source = this->sources[0];
 		}
 		source->play(fadeTime, looping);
-		return source;
-	}
-
-	Sound* SoundBuffer::replay(float fadeTime, bool looping)
-	{
-		if (this->getBuffer() == 0)
-		{
-			return NULL;
-		}
-		Source* source = NULL;
-		if (this->sources.size() == 0)
-		{
-			source = xal::mgr->allocateSource();
-			if (source == NULL)
-			{
-				return NULL;
-			}
-			this->bindSource(source);
-		}
-		else
-		{
-			source = this->sources[0];
-			source->stop();
-		}
-		source->replay(fadeTime, looping);
 		return source;
 	}
 
