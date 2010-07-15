@@ -7,11 +7,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef NORMALIZE_ENDIAN
+#ifndef XAL_NORMALIZE_ENDIAN
 
 #ifdef __BIG_ENDIAN__
         // ppc & friends need convert from littleendian to their bigendian
-        #define NORMALIZE_ENDIAN(variable) \
+        #define XAL_NORMALIZE_ENDIAN(variable) \
                 /*printf("normalizing " #variable "(%d) - %d\n", sizeof(variable),
  variable);*/ \
                 variable=(sizeof(variable)==1 ? \
@@ -27,17 +27,17 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
                         \
                         throw("Unsupported sizeof(" #variable ")\n") \
                 );
-        #define NORMALIZE_FLOAT_ENDIAN(variable) \
+        #define XAL_NORMALIZE_FLOAT_ENDIAN(variable) \
         { \
                 uint32_t _var = *(uint32_t*)&variable; \
-                NORMALIZE_ENDIAN(_var); \
+                XAL_NORMALIZE_ENDIAN(_var); \
                 variable = *(float*)&_var; \
         }       
                 
 #else
         // i386 & friends do a noop
-        #define NORMALIZE_ENDIAN(variable)      
-        #define NORMALIZE_FLOAT_ENDIAN(variable)
+        #define XAL_NORMALIZE_ENDIAN(variable)      
+        #define XAL_NORMALIZE_FLOAT_ENDIAN(variable)
 #endif
 
 #endif

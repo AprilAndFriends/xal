@@ -26,6 +26,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <OpenAL/alc.h>
 #endif
 
+#include "Endianess.h"
+
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
@@ -158,9 +160,9 @@ namespace xal
 		if (size > 0)
 		{
 #ifdef __BIG_ENDIAN__
-			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < data + size; p++)
+			for (uint16_t* p = (uint16_t*)data; (char*)p < data + size; p++)
 			{
-				NORMALIZE_ENDIAN(*p);
+				XAL_NORMALIZE_ENDIAN(*p);
 			}
 #endif	
 			alBufferData(buffer, (this->vorbisInfo->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,

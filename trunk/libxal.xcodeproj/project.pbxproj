@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F4ADF6011EF29C50016821F /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4ADF5D11EF29C50016821F /* Mutex.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7F4ADF6111EF29C50016821F /* SoundBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4ADF5E11EF29C50016821F /* SoundBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4ADF6211EF29C50016821F /* Thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4ADF5F11EF29C50016821F /* Thread.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7F4ADF6611EF29D20016821F /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4ADF6311EF29D20016821F /* Mutex.cpp */; };
+		7F4ADF6711EF29D20016821F /* SoundBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4ADF6411EF29D20016821F /* SoundBuffer.cpp */; };
+		7F4ADF6811EF29D20016821F /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4ADF6511EF29D20016821F /* Thread.cpp */; };
 		7FC8064111EC943B00851062 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063A11EC943B00851062 /* AudioManager.cpp */; };
 		7FC8064211EC943B00851062 /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063B11EC943B00851062 /* Category.cpp */; };
 		7FC8064311EC943B00851062 /* SimpleSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063C11EC943B00851062 /* SimpleSound.cpp */; };
@@ -14,8 +20,8 @@
 		7FC8064511EC943B00851062 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063E11EC943B00851062 /* Source.cpp */; };
 		7FC8064611EC943B00851062 /* StreamSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063F11EC943B00851062 /* StreamSound.cpp */; };
 		7FC8064711EC943B00851062 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8064011EC943B00851062 /* Util.cpp */; };
-		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; };
-		7FC8064F11EC944C00851062 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064C11EC944C00851062 /* Util.h */; };
+		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FC8064F11EC944C00851062 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064C11EC944C00851062 /* Util.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8065711EC945900851062 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065011EC945900851062 /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8065811EC945900851062 /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065111EC945900851062 /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8065911EC945900851062 /* SimpleSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065211EC945900851062 /* SimpleSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +37,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F4ADF5D11EF29C50016821F /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mutex.h; path = include/xal/Mutex.h; sourceTree = "<group>"; };
+		7F4ADF5E11EF29C50016821F /* SoundBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundBuffer.h; path = include/xal/SoundBuffer.h; sourceTree = "<group>"; };
+		7F4ADF5F11EF29C50016821F /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thread.h; path = include/xal/Thread.h; sourceTree = "<group>"; };
+		7F4ADF6311EF29D20016821F /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mutex.cpp; path = src/Mutex.cpp; sourceTree = "<group>"; };
+		7F4ADF6411EF29D20016821F /* SoundBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundBuffer.cpp; path = src/SoundBuffer.cpp; sourceTree = "<group>"; };
+		7F4ADF6511EF29D20016821F /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Thread.cpp; path = src/Thread.cpp; sourceTree = "<group>"; };
 		7FC8063A11EC943B00851062 /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioManager.cpp; path = src/AudioManager.cpp; sourceTree = "<group>"; };
 		7FC8063B11EC943B00851062 /* Category.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Category.cpp; path = src/Category.cpp; sourceTree = "<group>"; };
 		7FC8063C11EC943B00851062 /* SimpleSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleSound.cpp; path = src/SimpleSound.cpp; sourceTree = "<group>"; };
@@ -132,6 +144,9 @@
 		7FC8063811EC941D00851062 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7F4ADF6311EF29D20016821F /* Mutex.cpp */,
+				7F4ADF6411EF29D20016821F /* SoundBuffer.cpp */,
+				7F4ADF6511EF29D20016821F /* Thread.cpp */,
 				7FC8063A11EC943B00851062 /* AudioManager.cpp */,
 				7FC8063B11EC943B00851062 /* Category.cpp */,
 				7FC8063C11EC943B00851062 /* SimpleSound.cpp */,
@@ -146,6 +161,9 @@
 		7FC8063911EC942100851062 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				7F4ADF5D11EF29C50016821F /* Mutex.h */,
+				7F4ADF5E11EF29C50016821F /* SoundBuffer.h */,
+				7F4ADF5F11EF29C50016821F /* Thread.h */,
 				7FC8065011EC945900851062 /* AudioManager.h */,
 				7FC8065111EC945900851062 /* Category.h */,
 				7FC8065211EC945900851062 /* SimpleSound.h */,
@@ -182,6 +200,9 @@
 				7FC8065B11EC945900851062 /* Source.h in Headers */,
 				7FC8065C11EC945900851062 /* StreamSound.h in Headers */,
 				7FC8065D11EC945900851062 /* xalExport.h in Headers */,
+				7F4ADF6011EF29C50016821F /* Mutex.h in Headers */,
+				7F4ADF6111EF29C50016821F /* SoundBuffer.h in Headers */,
+				7F4ADF6211EF29C50016821F /* Thread.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +268,9 @@
 				7FC8064511EC943B00851062 /* Source.cpp in Sources */,
 				7FC8064611EC943B00851062 /* StreamSound.cpp in Sources */,
 				7FC8064711EC943B00851062 /* Util.cpp in Sources */,
+				7F4ADF6611EF29D20016821F /* Mutex.cpp in Sources */,
+				7F4ADF6711EF29D20016821F /* SoundBuffer.cpp in Sources */,
+				7F4ADF6811EF29D20016821F /* Thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +290,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = xal;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -277,13 +300,15 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = xal;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
