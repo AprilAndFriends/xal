@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define XAL_MUTEX_H
 
 #ifndef _WIN32
-//#include <pthread.h>
+#include <pthread.h>
 #endif
 
 namespace xal

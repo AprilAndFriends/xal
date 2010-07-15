@@ -79,7 +79,6 @@ namespace xal
 			this->logMessage("- Audio is disabled");
 			return;
 		}
-		// init OpenAL
 		this->logMessage("Initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)

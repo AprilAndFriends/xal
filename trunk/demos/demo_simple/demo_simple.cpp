@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include <stdio.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
+#include <xal/Sound.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
@@ -20,6 +21,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 //#define _TEST_THREADED
+//#define _TEST_COMPLEX_HANDLER
 
 #include <windows.h>
 
@@ -41,7 +43,7 @@ int main(int argc, char **argv)
 #else
 	s = xal::mgr->getSound("bark");
 #endif
-	
+#ifndef _TEST_COMPLEX_HANDLER
 	s->play();
 	while (s->isPlaying())
 	{
@@ -52,6 +54,7 @@ int main(int argc, char **argv)
 	}
 #ifndef _TEST_THREADED
 	xal::mgr->update(0.01f);
+#endif
 #endif
 	
 #ifdef _TEST_MULTIPLE_PLAY
@@ -80,6 +83,7 @@ int main(int argc, char **argv)
 	}
 	xal::mgr->update(0.01f);
 	s = xal::mgr->getSound("wind");
+
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{
@@ -124,6 +128,36 @@ int main(int argc, char **argv)
 #ifndef _TEST_THREADED
 		xal::mgr->update(0.1f);
 #endif
+	}
+#endif
+
+#ifdef _TEST_COMPLEX_HANDLER
+	xal::Sound* temp;
+	xal::Sound* s1 = xal::mgr->getSound("wind")->play();
+	xal::Sound* s2 = xal::mgr->getSound("wind_copy")->play();
+	xal::Sound* t1 = s1;
+	xal::Sound* t2 = s2;
+	s2->pause();
+	for (int i = 0; i < 50; i++)
+	{
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+		s2->play();
+		s1->pause();
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+		s2->pause();
+		s1->play();
+		if (i % 3 == 0)
+		{
+			temp = s1;
+			s1 = s2;
+			s2 = temp;
+		}
 	}
 #endif
 	

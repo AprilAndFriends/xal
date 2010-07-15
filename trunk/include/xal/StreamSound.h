@@ -30,8 +30,10 @@ namespace xal
 		
 		void update(float k);
 		
-		void queueBuffers(int index = 0, int count = STREAM_BUFFER_COUNT);
-		void unqueueBuffers(int index = 0, int count = STREAM_BUFFER_COUNT);
+		void queueBuffers(int index, int count);
+		void queueBuffers();
+		void unqueueBuffers(int index, int count);
+		void unqueueBuffers();
 		
 		unsigned int getBuffer();
 		

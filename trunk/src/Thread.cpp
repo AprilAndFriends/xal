@@ -74,7 +74,6 @@ namespace xal
 			xal::mgr->update();
 			xal::mgr->getMutex()->unlock();
 			this->sleep(time * 1000);
-			xal::mgr->logMessage(hsprintf("XAL: UPDATE %f", time));
 		}
 	}
 

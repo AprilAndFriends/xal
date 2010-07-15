@@ -195,6 +195,20 @@ namespace xal
 		}
 	}
  
+	void StreamSound::queueBuffers()
+	{
+		int queued;
+		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		this->queueBuffers(this->bufferIndex, STREAM_BUFFER_COUNT - queued);
+	}
+ 
+	void StreamSound::unqueueBuffers()
+	{
+		int queued;
+		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
+	}
+ 
 	bool StreamSound::_loadOgg()
 	{
 		xal::mgr->logMessage("XAL: Loading ogg stream sound " + this->filename);
