@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Mutex.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\SimpleSound.cpp"
 				>
 			</File>
@@ -212,6 +216,10 @@
 			</File>
 			<File
 				RelativePath=".\src\StreamSound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Thread.cpp"
 				>
 			</File>
 			<File
@@ -237,6 +245,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\xal\Mutex.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\xal\SimpleSound.h"
 				>
 			</File>
@@ -254,6 +266,10 @@
 			</File>
 			<File
 				RelativePath=".\include\xal\StreamSound.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xal\Thread.h"
 				>
 			</File>
 			<File
