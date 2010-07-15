@@ -22,12 +22,10 @@ namespace xal
 		Thread();
 		virtual ~Thread();
 	
-		//! Creates the thread object and runs it
-		void startThread();
-		//! The main thread loop function
-		virtual void executeThread() = 0;
-		//! sets running to false and waits for the thread to complete the last cycle
-		void waitforThread();
+		void start();
+		virtual void execute();
+		void join();
+		void sleep(int milliseconds);
 
 	protected:
 #ifdef _WIN32
@@ -35,7 +33,6 @@ namespace xal
 #else
 		pthread_t handle;
 #endif
-		//! Indicates whether the thread is running. As long as this is true, the thread runs in a loop
 		volatile bool running;
 		
 	};

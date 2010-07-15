@@ -8,6 +8,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <stdio.h>
+
+#include "AudioManager.h"
+#include "Mutex.h"
 #include "Thread.h"
 
 #ifdef _WIN32
@@ -17,14 +20,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace xal
 {
 #ifdef _WIN32
-	unsigned long WINAPI async_Call(void* param)
+	unsigned long WINAPI asyncCall(void* param)
 	{
 #else
-	void *async_Call(void* param)
+	void *asyncCall(void* param)
 	{
 #endif
 		Thread* t = (Thread*)param;
-		t->executeThread();
+		t->execute();
 #ifndef _WIN32
 		pthread_exit(NULL);
 #endif
@@ -47,21 +50,35 @@ namespace xal
 #endif
 	}
 
-	void Thread::startThread()
+	void Thread::start()
 	{
 		this->running = true;
 #ifdef _WIN32
-		this->handle = CreateThread(0, 0, &async_Call, this, 0, 0);
+		this->handle = CreateThread(0, 0, &asyncCall, this, 0, 0);
 #else
-		int ret = pthread_create(&this->handle, NULL, &async_Call, this);
+		int ret = pthread_create(&this->handle, NULL, &asyncCall, this);
 		if (ret != 0)
 		{
-			xal::mgr->logMessasge("XAL: Unable to create thread!");
+			xal::mgr->logMessage("XAL: Unable to create thread!");
 		}
 #endif
 	}
+	
+	void Thread::execute()
+	{
+		this->running = true;
+		float time = xal::mgr->getUpdateTime();
+		while (this->running)
+		{
+			xal::mgr->getMutex()->lock();
+			xal::mgr->update();
+			xal::mgr->getMutex()->unlock();
+			this->sleep(time * 1000);
+			xal::mgr->logMessage(hsprintf("XAL: UPDATE %f", time));
+		}
+	}
 
-	void Thread::waitforThread()
+	void Thread::join()
 	{
 		this->running = false;
 #ifdef _WIN32
@@ -76,4 +93,12 @@ namespace xal
 #endif
 	}
 	
+	void Thread::sleep(int milliseconds)
+	{
+#ifndef _WIN32
+		usleep(milliseconds * 1000);
+#else
+		Sleep(milliseconds);
+#endif
+	}
 }
