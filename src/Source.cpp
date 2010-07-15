@@ -87,27 +87,24 @@ namespace xal
 				return NULL;
 			}
 		}
-		if (!this->isPaused())
-		{
-			//2DO - get remembered sample offset and set source to buffer position
-		}
 		if (!this->paused)
 		{
 			this->looping = looping;
 		}
 		if (this->sound->getCategory()->isStreamed())
 		{
-			if (!this->isPaused())
-			{
-				this->sound->setSourceId(this->sourceId);
-				((StreamSound*)this->sound)->queueBuffers();
-				alSourcei(this->sourceId, AL_LOOPING, false);
-			}
+			this->sound->setSourceId(this->sourceId);
+			((StreamSound*)this->sound)->queueBuffers();
+			alSourcei(this->sourceId, AL_LOOPING, false);
 		}
 		else if (!this->isPaused())
 		{
 			alSourcei(this->sourceId, AL_BUFFER, this->getBuffer());
 			alSourcei(this->sourceId, AL_LOOPING, this->looping);
+		}
+		if (this->isPaused())
+		{
+			alSourcef(this->sourceId, AL_SEC_OFFSET, this->sampleOffset);
 		}
 		bool alreadyFading = this->isFading();
 		if (fadeTime > 0)
@@ -131,25 +128,15 @@ namespace xal
 
 	void Source::stop(float fadeTime)
 	{
-		if (this->sourceId == 0)
-		{
-			return;
-		}
-		if (fadeTime > 0)
-		{
-			this->fadeSpeed = -1.0f / fadeTime;
-		}
-		else
-		{
-			this->fadeTime = 0.0f;
-			this->fadeSpeed = 0.0f;
-			alSourceStop(this->sourceId);
-			this->unbind();
-		}
-		this->paused = false;
+		this->_stop(fadeTime);
 	}
 
 	void Source::pause(float fadeTime)
+	{
+		this->_stop(fadeTime, true);
+	}
+
+	void Source::_stop(float fadeTime, bool pause)
 	{
 		if (this->sourceId == 0)
 		{
@@ -163,11 +150,28 @@ namespace xal
 		{
 			this->fadeTime = 0.0f;
 			this->fadeSpeed = 0.0f;
-			alSourcePause(this->sourceId);
-			//2DO - uncomment, remember sample offset
-			//this->unbind();
+			if (pause)
+			{
+				alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
+				if (this->sound->getCategory()->isStreamed())
+				{
+					this->sound->setSourceId(this->sourceId);
+					((StreamSound*)this->sound)->unqueueBuffers();
+					alSourcePause(this->sourceId);
+				}
+				else
+				{
+					alSourceStop(this->sourceId);
+				}
+				this->sourceId = 0;
+			}
+			else
+			{
+				alSourceStop(this->sourceId);
+				this->unbind();
+			}
 		}
-		this->paused = true;
+		this->paused = pause;
 	}
 
 	void Source::unbind()
@@ -180,18 +184,6 @@ namespace xal
 	}
 	
 /******* PROPERTIES ****************************************************/
-
-	float Source::getSampleOffset()
-	{
-		//2DO - change implementation
-		if (this->sourceId == 0)
-		{
-			return 0.0f;
-		}
-		float value;
-		alGetSourcef(this->sourceId, AL_SEC_OFFSET, &value);
-		return value;
-	}
 
 	void Source::setGain(float gain)
 	{

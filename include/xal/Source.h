@@ -34,7 +34,7 @@ namespace xal
 		
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
-		float getSampleOffset();
+		float getSampleOffset() { return this->sampleOffset; }
 		unsigned int getBuffer();
 		SoundBuffer* getSound() { return this->sound; }
 		bool isBound() { return this->bound; }
@@ -54,8 +54,11 @@ namespace xal
 		bool paused;
 		float fadeSpeed;
 		float fadeTime;
+		float sampleOffset;
 		bool bound;
 		SoundBuffer* sound;
+		
+		void _stop(float fadeTime, bool pause = false);
 		
 	};
 
