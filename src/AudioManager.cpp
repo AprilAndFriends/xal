@@ -157,9 +157,14 @@ namespace xal
 	unsigned int AudioManager::allocateSourceId()
 	{
 		harray<unsigned int> allocated;
+		unsigned int id = 0;
 		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 		{
-			allocated += (*it)->getSourceId();
+			id = (*it)->getSourceId();
+			if (id != 0)
+			{
+				allocated += id;
+			}
 		}
 		harray<unsigned int> unallocated(this->sourceIds, XAL_MAX_SOURCES);
 		unallocated -= allocated;

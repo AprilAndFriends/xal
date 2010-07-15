@@ -42,7 +42,7 @@ namespace xal
 #ifdef _WIN32
 		if (!this->handle)
 		{
-			this->handle=CreateMutex(0, 0, 0);
+			this->handle = CreateMutex(0, 0, 0);
 		}
 		WaitForSingleObject(this->handle, INFINITE);
 #else
