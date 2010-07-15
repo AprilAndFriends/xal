@@ -33,6 +33,8 @@ namespace xal
 		void logMessage(chstr message);
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
+		float getGlobalGain() { return this->gain; }
+		void setGlobalGain(float value) { this->gain = value; }
 		Category* getCategoryByName(chstr name);
 		void createCategory(chstr name, bool streamed = false);
 		void setCategoryGain(chstr category, float gain);
@@ -53,6 +55,7 @@ namespace xal
 		unsigned int sourceIds[XAL_MAX_SOURCES];
 		harray<Source*> sources;
 		hstr deviceName;
+		float gain;
 		std::map<hstr, Category*> categories;
 		std::map<hstr, SoundBuffer*> sounds;
 		
