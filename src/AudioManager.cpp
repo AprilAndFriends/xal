@@ -22,10 +22,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "AudioManager.h"
 #include "Category.h"
-#include "SoundBuffer.h"
+#include "Mutex.h"
 #include "SimpleSound.h"
-#include "StreamSound.h"
+#include "SoundBuffer.h"
 #include "Source.h"
+#include "StreamSound.h"
+#include "Thread.h"
 #include "Util.h"
 
 namespace xal
@@ -34,9 +36,10 @@ namespace xal
 	
 	AudioManager* mgr;
 
-	void init(chstr deviceName)
+	void init(chstr deviceName, bool threaded, float updateTime)
 	{
-		mgr = new AudioManager(deviceName);
+		mgr = new AudioManager();
+		mgr->init(deviceName, threaded, updateTime);
 	}
 	
 	void destroy()
@@ -60,10 +63,14 @@ namespace xal
 	
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	AudioManager::AudioManager(chstr deviceName) :
-		gain(1.0f), sources(harray<Source*>()),
+	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
+		sources(harray<Source*>()), gain(1.0f),
 		categories(std::map<hstr, Category*>()),
-		sounds(std::map<hstr, SoundBuffer*>())
+		sounds(std::map<hstr, SoundBuffer*>()), thread(NULL), mutex(NULL)
+	{
+	}
+	
+	void AudioManager::init(chstr deviceName, bool threaded, float updateTime)
 	{
 		this->logMessage("Initializing XAL");
 		if (deviceName == "nosound")
@@ -95,10 +102,26 @@ namespace xal
 		gDevice = currentDevice;
 		gContext = currentContext;
 		this->deviceName = deviceName;
+		if (threaded)
+		{
+			this->logMessage("Starting Thread Management");
+			this->updateTime = updateTime;
+			this->mutex = new Mutex();
+			this->thread = new Thread();
+			this->thread->start();
+		}
 	}
 
 	AudioManager::~AudioManager()
 	{
+		if (this->mutex != NULL)
+		{
+			this->mutex->lock();
+			this->thread->join();
+			this->mutex->unlock();
+			delete this->thread;
+			delete this->mutex;
+		}
 		for (std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
 		{
 			delete it->second;
@@ -135,6 +158,11 @@ namespace xal
 		return (gDevice != NULL);
 	}
 
+	void AudioManager::update()
+	{
+		this->update(this->updateTime);
+	}
+	
 	void AudioManager::update(float k)
 	{
 		if (this->deviceName != "nosound")

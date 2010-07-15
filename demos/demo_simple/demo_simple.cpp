@@ -14,18 +14,22 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include <hltypes/hstring.h>
 
 #define _TEST_SOUND
-#define _TEST_SOURCE_HANDLING
-#define _TEST_PARALLEL_SOURCES
+//#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
+//#define _TEST_THREADED
 
 #include <windows.h>
 
 int main(int argc, char **argv)
 {
-	xal::init();
+#ifndef _TEST_THREADED
+	xal::init("", false);
+#else
+	xal::init("", true, 0.2f);
+#endif
 	xal::Sound* s;
 #ifdef _TEST_STREAM
 	xal::mgr->createCategory("cat", true);
@@ -39,31 +43,55 @@ int main(int argc, char **argv)
 #endif
 	
 	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	while (s->isPlaying())
+	{
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
+#ifndef _TEST_THREADED
 	xal::mgr->update(0.01f);
+#endif
 	
 #ifdef _TEST_MULTIPLE_PLAY
 	s->play();
 	Sleep(100.0f);
 	s->play();
-	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	while (s->isPlaying())
+	{
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
 #elif defined _TEST_SOURCE_HANDLING
 	for (int i = 0; i < XAL_MAX_SOURCES + 1; i++)
 	{
 		Sleep(20.0f);
 		s->play();
 	}
-	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
+	while (s->isPlaying())
+	{
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
 	xal::mgr->update(0.01f);
 	s = xal::mgr->getSound("wind");
 	s->play();
-	for (int i = 0; i < 20; i++) { Sleep(100.0f); xal::mgr->update(0.1f); }
-	xal::mgr->update(0.01f);
+	for (int i = 0; i < 20; i++)
+	{
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
+#ifndef _TEST_THREADED
+	xal::mgr->update(0.1f);
+#endif
 	s->stop();
-#ifdef _TEST_PARALLEL_SOURCES
-	s = xal::mgr->getSound("wind");
-	s->play();
-#endif	
 	
 #endif
 #endif
@@ -75,9 +103,14 @@ int main(int argc, char **argv)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+#ifndef _TEST_THREADED
 		xal::mgr->update(0.1f);
+#endif
 	}
 	s->stop();
+#ifndef _TEST_THREADED
+	xal::mgr->update(0.01f);
+#endif
 #endif
 
 #ifdef _TEST_FADE_OUT
@@ -88,7 +121,9 @@ int main(int argc, char **argv)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+#ifndef _TEST_THREADED
 		xal::mgr->update(0.1f);
+#endif
 	}
 #endif
 	

@@ -135,7 +135,6 @@ namespace xal
 		{
 			return;
 		}
-		this->paused = false;
 		if (fadeTime > 0)
 		{
 			this->fadeSpeed = -1.0f / fadeTime;
@@ -147,6 +146,7 @@ namespace xal
 			alSourceStop(this->sourceId);
 			this->unbind();
 		}
+		this->paused = false;
 	}
 
 	void Source::pause(float fadeTime)

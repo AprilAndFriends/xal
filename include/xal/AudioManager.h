@@ -20,25 +20,32 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace xal
 {
 	class Category;
+	class Mutex;
 	class Sound;
 	class SoundBuffer;
 	class Source;
+	class Thread;
 
 	class xalExport AudioManager
 	{
 	public:
-		AudioManager(chstr deviceName = "");
+		AudioManager();
 		~AudioManager();
+		
+		void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
 		
 		void logMessage(chstr message);
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
+		float getUpdateTime() { return this->updateTime; }
+		Mutex* getMutex() { return this->mutex; }
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value) { this->gain = value; }
 		Category* getCategoryByName(chstr name);
 		void createCategory(chstr name, bool streamed = false);
 		void setCategoryGain(chstr category, float gain);
 		
+		void update();
 		void update(float k);
 		
 		Source* createSource(SoundBuffer* sound);
@@ -58,10 +65,13 @@ namespace xal
 		float gain;
 		std::map<hstr, Category*> categories;
 		std::map<hstr, SoundBuffer*> sounds;
+		Mutex* mutex;
+		Thread* thread;
+		float updateTime;
 		
 	};
 	
-	xalFnExport void init(chstr deviceName = "");
+	xalFnExport void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
 	xalFnExport void destroy();
 	xalFnExport void setLogFunction(void (*function)(chstr));
 	xalFnExport extern xal::AudioManager* mgr;
