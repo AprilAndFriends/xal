@@ -14,7 +14,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include <hltypes/hstring.h>
 
 #define _TEST_SOUND
-//#define _TEST_SOURCE_HANDLING
+#define _TEST_SOURCE_HANDLING
+#define _TEST_PARALLEL_SOURCES
 //#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
 //#define _TEST_FADE_IN
@@ -47,7 +48,7 @@ int main(int argc, char **argv)
 	s->play();
 	while (s->isPlaying()) { Sleep(100.0f); xal::mgr->update(0.1f); }
 #elif defined _TEST_SOURCE_HANDLING
-	for (int i = 0; i < XAL_MAX_SOURCES; i++)
+	for (int i = 0; i < XAL_MAX_SOURCES + 1; i++)
 	{
 		Sleep(20.0f);
 		s->play();
@@ -59,6 +60,11 @@ int main(int argc, char **argv)
 	for (int i = 0; i < 20; i++) { Sleep(100.0f); xal::mgr->update(0.1f); }
 	xal::mgr->update(0.01f);
 	s->stop();
+#ifdef _TEST_PARALLEL_SOURCES
+	s = xal::mgr->getSound("wind");
+	s->play();
+#endif	
+	
 #endif
 #endif
 

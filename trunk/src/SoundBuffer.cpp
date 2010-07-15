@@ -35,6 +35,12 @@ namespace xal
 
 	SoundBuffer::~SoundBuffer()
 	{
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+		{
+			(*it)->unlock();
+			(*it)->unbind();
+			xal::mgr->destroySource(*it);
+		}
 		xal::mgr->logMessage("XAL: Destroying sound " + this->name);
 	}
 	
@@ -61,7 +67,6 @@ namespace xal
 	void SoundBuffer::unbindSource(Source* source)
 	{
 		this->sources -= source;
-		xal::mgr->destroySource(source);
 	}
 	
 	void SoundBuffer::lock()

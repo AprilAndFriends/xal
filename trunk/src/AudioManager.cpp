@@ -143,12 +143,13 @@ namespace xal
 			{
 				(*it)->update(k);
 			}
-			harray<Source*> sources(this->sources); // because update can destroy Sources
+			harray<Source*> sources(this->sources);
 			for (Source** it = sources.iterate(); it; it = sources.next())
 			{
 				if (!(*it)->isBound())
 				{
 					(*it)->getSound()->unbindSource(*it);
+					this->destroySource(*it);
 				}
 			}
 		}
@@ -172,7 +173,7 @@ namespace xal
 		{
 			return unallocated[0];
 		}
-		this->logMessage("AudioManager: Unable to allocate audio source!");
+		this->logMessage("Audio Manager: Unable to allocate audio source!");
 		return 0;
 	}
 
@@ -292,7 +293,7 @@ namespace xal
 	{
 		if (this->categories.find(name) == this->categories.end())
 		{
-			throw ("AudioManager: Category '" + name + "' does not exist!").c_str();
+			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
 		}
 		return this->categories[name];
 	}
