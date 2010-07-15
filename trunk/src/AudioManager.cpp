@@ -61,7 +61,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	AudioManager::AudioManager(chstr deviceName) :
-		sources(harray<Source*>()),
+		gain(1.0f), sources(harray<Source*>()),
 		categories(std::map<hstr, Category*>()),
 		sounds(std::map<hstr, SoundBuffer*>())
 	{
@@ -299,7 +299,7 @@ namespace xal
 		{
 			if ((*it)->getSound()->getCategory()->getName() == name)
 			{
-				alSourcef((*it)->getSourceId(), AL_GAIN, gain * (*it)->getGain());
+				alSourcef((*it)->getSourceId(), AL_GAIN, gain * (*it)->getGain() * this->gain);
 			}
 		}
 	}

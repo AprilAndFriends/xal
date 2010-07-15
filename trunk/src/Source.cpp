@@ -53,7 +53,8 @@ namespace xal
 				this->fadeTime += this->fadeSpeed * k;
 				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 				{
-					alSourcef(this->sourceId, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
+					alSourcef(this->sourceId, AL_GAIN, this->gain *
+						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
 					this->fadeTime = 0.0f;
 					this->fadeSpeed = 0.0f;
 				}
@@ -65,7 +66,8 @@ namespace xal
 				}
 				else
 				{
-					alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
+					alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
+						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
 				}
 			}
 		}
@@ -117,7 +119,8 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain * this->sound->getCategory()->getGain());
+		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
+			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
 		if (!alreadyFading)
 		{
 			alSourcePlay(this->sourceId);
@@ -195,7 +198,8 @@ namespace xal
 		this->gain = gain;
 		if (this->sourceId != 0)
 		{
-			alSourcef(this->sourceId, AL_GAIN, this->gain * this->sound->getCategory()->getGain());
+			alSourcef(this->sourceId, AL_GAIN, this->gain *
+				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
 		}
 	}
 

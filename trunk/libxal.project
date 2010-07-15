@@ -19,6 +19,8 @@
     <File Name="src/StreamSound.cpp"/>
     <File Name="src/SoundBuffer.cpp"/>
     <File Name="src/Sound.cpp"/>
+    <File Name="src/Mutex.cpp"/>
+    <File Name="src/Thread.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/xalExport.h"/>
@@ -29,6 +31,8 @@
     <File Name="include/xal/StreamSound.h"/>
     <File Name="include/xal/SoundBuffer.h"/>
     <File Name="include/xal/Sound.h"/>
+    <File Name="include/xal/Mutex.h"/>
+    <File Name="include/xal/Thread.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Dynamic Library">
