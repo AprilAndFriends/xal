@@ -56,7 +56,7 @@ namespace xal
 		int ret = pthread_create(&this->handle, NULL, &async_Call, this);
 		if (ret != 0)
 		{
-			printf("ERROR: Unable to create thread!\n");
+			xal::mgr->logMessasge("XAL: Unable to create thread!");
 		}
 #endif
 	}
