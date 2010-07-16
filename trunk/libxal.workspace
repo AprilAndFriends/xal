@@ -3,18 +3,20 @@
   <Project Name="libxal" Path="libxal.project" Active="No"/>
   <Project Name="demo_simple" Path="demos/demo_simple/demo_simple.project" Active="Yes"/>
   <Project Name="libhltypes" Path="../hltypes/libhltypes.project" Active="No"/>
+  <Project Name="libxalutil" Path="xalutil/libxalutil.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="libxalutil" ConfigName="Debug"/>
       <Project Name="libxal" ConfigName="Debug"/>
-      <Project Name="demo_simple" ConfigName="Debug"/>
       <Project Name="libhltypes" ConfigName="Debug"/>
+      <Project Name="demo_simple" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Linux_Debug" Selected="no">
+    <WorkspaceConfiguration Name="Linux_Debug" Selected="yes">
       <Project Name="libxal" ConfigName="Linux_Debug"/>
-      <Project Name="demo_simple" ConfigName="Linux_Debug"/>
       <Project Name="libhltypes" ConfigName="Linux_Debug"/>
+      <Project Name="demo_simple" ConfigName="Linux_Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release_Win32" Selected="no">
+    <WorkspaceConfiguration Name="Release_Win32" Selected="yes">
       <Project Name="libxal" ConfigName="Release_Win32"/>
       <Project Name="libhltypes" ConfigName="Release_Win32"/>
       <Project Name="demo_simple" ConfigName="Release_Win32"/>

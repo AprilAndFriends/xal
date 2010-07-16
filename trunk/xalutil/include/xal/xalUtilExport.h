@@ -7,30 +7,26 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_SIMPLESOUND_H
-#define XAL_SIMPLESOUND_H
+#ifndef XALUTIL_EXPORT_H
+#define XALUTIL_EXPORT_H
 
-#include <hltypes/hstring.h>
-#include "xalExport.h"
-#include "SoundBuffer.h"
-
-namespace xal
-{
-	class xalExport SimpleSound : public SoundBuffer
-	{
-	public:
-		SimpleSound(chstr name, chstr category, chstr prefix = "");
-		~SimpleSound();
-		
-		unsigned int getBuffer() { return this->buffer; }
-		
-	protected:
-		unsigned int buffer;
-		
-		bool _loadOgg();
-		
-	};
-
-}
+	#ifdef _STATICLIB
+		#define xalUtilExport
+		#define xalUtilFnExport
+	#else
+		#ifdef _WIN32
+			#ifdef XALUTIL_EXPORTS
+				#define xalUtilExport __declspec(dllexport)
+				#define xalUtilFnExport __declspec(dllexport)
+			#else
+				#define xalUtilExport __declspec(dllimport)
+				#define xalUtilFnExport __declspec(dllimport)
+			#endif
+		#else
+			#define xalUtilExport __attribute__ ((visibility("default")))
+			#define xalUtilFnExport
+		#endif
+	#endif
 
 #endif
+

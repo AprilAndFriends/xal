@@ -7,30 +7,26 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_SIMPLESOUND_H
-#define XAL_SIMPLESOUND_H
+#ifndef XAL_PLAYLISTMANAGER_H
+#define XAL_PLAYLISTMANAGER_H
 
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
-#include "xalExport.h"
-#include "SoundBuffer.h"
+#include "xalUtilExport.h"
 
 namespace xal
 {
-	class xalExport SimpleSound : public SoundBuffer
+	class xalUtilExport PlaylistManager
 	{
 	public:
-		SimpleSound(chstr name, chstr category, chstr prefix = "");
-		~SimpleSound();
-		
-		unsigned int getBuffer() { return this->buffer; }
+		PlaylistManager();
+		~PlaylistManager();
 		
 	protected:
-		unsigned int buffer;
-		
-		bool _loadOgg();
-		
+		harray<hstr> sounds;
+	
 	};
-
+	
 }
 
 #endif
