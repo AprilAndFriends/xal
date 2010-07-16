@@ -131,15 +131,15 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+    <Project Name="libxal"/>
+  </Dependencies>
   <Dependencies Name="Linux_Debug">
     <Project Name="libhltypes"/>
     <Project Name="libxal"/>
   </Dependencies>
   <Dependencies Name="Release_Win32">
-    <Project Name="libhltypes"/>
-    <Project Name="libxal"/>
-  </Dependencies>
-  <Dependencies Name="Debug">
     <Project Name="libhltypes"/>
     <Project Name="libxal"/>
   </Dependencies>

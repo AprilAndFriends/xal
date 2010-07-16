@@ -1,6 +1,6 @@
 /************************************************************************************\
 This source file is part of the KS(X) audio library                                  *
-For latest info, see http://libatres.sourceforge.net/                                *
+For latest info, see http://code.google.com/p/libxal/                                *
 **************************************************************************************
 Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
