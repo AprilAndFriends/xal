@@ -337,4 +337,28 @@ namespace xal
 		}
 	}
 
+	void AudioManager::stopAll()
+	{
+		while (this->sources.size() > 0)
+		{
+			this->sources[0]->unlock();
+			this->sources[0]->stop();
+			this->destroySource(this->sources[0]);
+		}
+	}
+	
+	void AudioManager::stopCategory(chstr category)
+	{
+		harray<Source*> sources(this->sources);
+		for (Source** it = sources.iterate(); it; it = sources.next())
+		{
+			if ((*it)->getSound()->getCategory()->getName() == category)
+			{
+				(*it)->unlock();
+				(*it)->stop();
+				this->destroySource(*it);
+			}
+		}
+	}
+	
 }

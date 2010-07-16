@@ -19,10 +19,20 @@ namespace xal
 	class xalUtilExport ParallelSoundManager
 	{
 	public:
-		ParallelSoundManager();
+		ParallelSoundManager(float fadeTime = 0.0f);
 		~ParallelSoundManager();
 		
+		float getFadeTime() { return this->fadeTime; }
+		void setFadeTime(float value) { this->fadeTime = value; }
+		
+		void play(harray<hstr> names);
+		void playAll();
+		void pauseAll();
+		void stopAll();
+		void clear();
+		
 	protected:
+		float fadeTime;
 		harray<hstr> sounds;
 	
 	};

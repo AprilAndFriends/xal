@@ -101,7 +101,7 @@ namespace xal
 		this->index = -1;
 	}
 	
-	void Playlist::queueSound(hstr name)
+	void Playlist::queueSound(chstr name)
 	{
 		this->sounds += name;
 		if (this->index < 0)
