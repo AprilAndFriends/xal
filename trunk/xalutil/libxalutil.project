@@ -9,17 +9,13 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="src/ParallelSoundManager.cpp"/>
-    <File Name="src/PlaylistManager.cpp"/>
+    <File Name="src/Playlist.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/ParallelSoundManager.h"/>
-    <File Name="include/xal/PlaylistManager.h"/>
     <File Name="include/xal/xalUtilExport.h"/>
+    <File Name="include/xal/Playlist.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug">
-    <Project Name="libhltypes"/>
-    <Project Name="libxal"/>
-  </Dependencies>
   <Dependencies Name="Linux_Debug">
     <Project Name="libhltypes"/>
     <Project Name="libxal"/>
@@ -115,4 +111,8 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+    <Project Name="libxal"/>
+  </Dependencies>
 </CodeLite_Project>

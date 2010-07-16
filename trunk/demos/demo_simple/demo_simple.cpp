@@ -10,18 +10,22 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <stdio.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
-#include <xal/Sound.h>
+#include <xal/ParallelSoundManager.h>
+#include <xal/Playlist.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
-#define _TEST_SOUND
+//#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
-//#define _TEST_THREADED
+#define _TEST_THREADED
 //#define _TEST_COMPLEX_HANDLER
+
+//#define _TEST_PLAYLIST
+//#define _TEST_PARALLEL_SOUNDS
 
 #include <windows.h>
 
@@ -159,6 +163,16 @@ int main(int argc, char **argv)
 			s2 = temp;
 		}
 	}
+#endif
+
+#ifdef _TEST_PLAYLIST
+	xal::Playlist list(false);
+	list.queueSound("bark");
+	list.queueSound("bark");
+	list.queueSound("wind");
+	list.queueSound("bark");
+	list.play();
+	while (list.isPlaying()) { list.update(); }
 #endif
 	
 	xal::destroy();
