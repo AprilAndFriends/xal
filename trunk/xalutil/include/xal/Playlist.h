@@ -29,7 +29,7 @@ namespace xal
 		void pause(float fadeTime = 0.0f);
 		
 		void clear();
-		void queueSound(hstr name);
+		void queueSound(chstr name);
 		void queueSounds(harray<hstr> names);
 		
 		bool isPlaying() { return this->playing; }

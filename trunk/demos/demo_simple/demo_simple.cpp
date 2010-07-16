@@ -175,6 +175,16 @@ int main(int argc, char **argv)
 	while (list.isPlaying()) { list.update(); }
 #endif
 	
+#ifdef _TEST_PARALLEL_SOUNDS
+	xal::ParallelSoundsManager mgr();
+	mgr.addSound("bark");
+	mgr.removeSound("bark");
+	list.queueSound("wind");
+	list.queueSound("bark");
+	list.play();
+	while (list.isPlaying()) { list.update(); }
+#endif
+	
 	xal::destroy();
 	system("pause");
 	return 0;

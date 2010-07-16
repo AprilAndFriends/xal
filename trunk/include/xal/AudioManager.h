@@ -58,6 +58,9 @@ namespace xal
 		void destroySoundsWithPrefix(chstr prefix);
 		Sound* getSound(chstr name);
 		
+		void stopAll();
+		void stopCategory(chstr category);
+		
 	protected:
 		unsigned int sourceIds[XAL_MAX_SOURCES];
 		harray<Source*> sources;
