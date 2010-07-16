@@ -7,21 +7,43 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#ifndef XAL_PLAYLISTMANAGER_H
+#define XAL_PLAYLISTMANAGER_H
+
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
-
-#include "PlaylistManager.h"
+#include "xalUtilExport.h"
 
 namespace xal
 {
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
-	PlaylistManager::PlaylistManager() : sounds(harray<hstr>())
+	class xalUtilExport Playlist
 	{
-	}
+	public:
+		Playlist(bool repeatAll = true);
+		~Playlist();
+		
+		void update();
+		
+		void play(float fadeTime = 0.0f);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
+		
+		void clear();
+		void queueSound(hstr name);
+		void queueSounds(harray<hstr> names);
+		
+		bool isPlaying() { return this->playing; }
+		bool isRepeatAll() { return this->repeatAll; }
+		void setRepeatAll(bool value) { this->repeatAll = value; }
+		
+	protected:
+		bool playing;
+		bool repeatAll;
+		int index;
+		harray<hstr> sounds;
 	
-	PlaylistManager::~PlaylistManager()
-	{
-	}
+	};
 	
 }
+
+#endif
