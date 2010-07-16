@@ -12,9 +12,9 @@
     <File Name="src/Playlist.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="include/xal/ParallelSoundManager.h"/>
-    <File Name="include/xal/xalUtilExport.h"/>
-    <File Name="include/xal/Playlist.h"/>
+    <File Name="include/xalutil/ParallelSoundManager.h"/>
+    <File Name="include/xalutil/Playlist.h"/>
+    <File Name="include/xalutil/xalUtilExport.h"/>
   </VirtualDirectory>
   <Dependencies Name="Linux_Debug">
     <Project Name="libhltypes"/>
@@ -98,7 +98,7 @@
       <Compiler Options="">
         <IncludePath Value="."/>
         <IncludePath Value="./include"/>
-        <IncludePath Value="./include/xal"/>
+        <IncludePath Value="./include/xalutil"/>
         <IncludePath Value="../include"/>
         <IncludePath Value="../../hltypes/include"/>
         <Preprocessor Value="XALUTIL_EXPORTS"/>

@@ -10,12 +10,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <stdio.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
-#include <xal/ParallelSoundManager.h>
-#include <xal/Playlist.h>
+#include <xalutil/ParallelSoundManager.h>
+#include <xalutil/Playlist.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
-//#define _TEST_SOUND
+#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
