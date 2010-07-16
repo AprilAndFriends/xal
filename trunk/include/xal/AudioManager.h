@@ -58,8 +58,8 @@ namespace xal
 		void destroySoundsWithPrefix(chstr prefix);
 		Sound* getSound(chstr name);
 		
-		void stopAll();
-		void stopCategory(chstr category);
+		void stopAll(float fadeTime = 0.0f);
+		void stopCategory(chstr category, float fadeTime = 0.0f);
 		
 	protected:
 		unsigned int sourceIds[XAL_MAX_SOURCES];
