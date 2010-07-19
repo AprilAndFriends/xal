@@ -339,24 +339,21 @@ namespace xal
 
 	void AudioManager::stopAll(float fadeTime)
 	{
-		while (this->sources.size() > 0)
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 		{
-			this->sources[0]->unlock();
-			this->sources[0]->stop(fadeTime);
-			this->destroySource(this->sources[0]);
+			(*it)->unlock();
+			(*it)->stop(fadeTime);
 		}
 	}
 	
 	void AudioManager::stopCategory(chstr category, float fadeTime)
 	{
-		harray<Source*> sources(this->sources);
-		for (Source** it = sources.iterate(); it; it = sources.next())
+		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
 		{
 			if ((*it)->getSound()->getCategory()->getName() == category)
 			{
 				(*it)->unlock();
 				(*it)->stop(fadeTime);
-				this->destroySource(*it);
 			}
 		}
 	}
