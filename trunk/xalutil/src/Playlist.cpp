@@ -18,7 +18,7 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	Playlist::Playlist(bool repeatAll) : playing(false), index(0),
+	Playlist::Playlist(bool repeatAll) : playing(false), index(-1),
 		sounds(harray<hstr>())
 	{
 		this->repeatAll = repeatAll;
@@ -32,7 +32,7 @@ namespace xal
 
 	void Playlist::update()
 	{
-		if (this->index < 0)
+		if (this->sounds.size() == 0 || this->index < 0)
 		{
 			return;
 		}
@@ -68,6 +68,10 @@ namespace xal
 	
 	void Playlist::play(float fadeTime)
 	{
+		if (this->sounds.size() == 0)
+		{
+			return;
+		}
 		if (this->index >= this->sounds.size())
 		{
 			this->index = 0;
@@ -81,8 +85,8 @@ namespace xal
 		if (this->playing)
 		{
 			xal::mgr->getSound(this->sounds[this->index])->stop(fadeTime);
-			this->playing = false;
 		}
+		this->playing = false;
 	}
 	
 	void Playlist::pause(float fadeTime)
@@ -90,8 +94,8 @@ namespace xal
 		if (this->playing)
 		{
 			xal::mgr->getSound(this->sounds[this->index])->pause(fadeTime);
-			this->playing = false;
 		}
+		this->playing = false;
 	}
 	
 	void Playlist::clear()
