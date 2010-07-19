@@ -39,6 +39,7 @@ namespace xal
 		virtual unsigned int getBuffer() = 0;
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 		chstr getName() { return this->name; }
+		chstr getFileName() { return this->filename; }
 		float getDuration() { return this->duration; }
 		Category* getCategory() { return this->category; }
 		void setCategory(Category* value) { this->category = value; }
