@@ -28,9 +28,18 @@ namespace xal
 	{
 	}
 	
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
-	void ParallelSoundManager::play(harray<hstr> names)
+	void ParallelSoundManager::addSound(chstr name)
+	{
+		this->build_list.push_back(name);
+	}
+	
+	void ParallelSoundManager::updateList()
+	{
+		this->updateList(this->build_list);
+		this->build_list.clear();
+	}
+		
+	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
 		harray<hstr> paused = this->sounds / names;
 		for (hstr* it = paused.iterate(); it; it = paused.next())
@@ -67,6 +76,7 @@ namespace xal
 		{
 			xal::mgr->getSound(*it)->stop(this->fadeTime);
 		}
+		this->clear();
 	}
 	
 	void ParallelSoundManager::clear()

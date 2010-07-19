@@ -158,5 +158,6 @@
   </Dependencies>
   <Dependencies Name="Debug">
     <Project Name="libhltypes"/>
+    <Project Name="libxalutil"/>
   </Dependencies>
 </CodeLite_Project>
