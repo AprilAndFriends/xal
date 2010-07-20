@@ -68,7 +68,7 @@ namespace xal
 	
 	void Playlist::play(float fadeTime)
 	{
-		if (this->sounds.size() == 0)
+		if (this->sounds.size() == 0 || this->playing)
 		{
 			return;
 		}

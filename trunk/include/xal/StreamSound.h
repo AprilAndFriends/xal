@@ -34,6 +34,7 @@ namespace xal
 		void queueBuffers();
 		void unqueueBuffers(int index, int count);
 		void unqueueBuffers();
+		void rewindStream();
 		
 		unsigned int getBuffer();
 		
@@ -46,6 +47,7 @@ namespace xal
 		int _readStream(char* buffer, int size);
 		void _resetStream();
 		int _fillBuffer(unsigned int buffer);
+		void _fillStartBuffers();
 		bool _loadOgg();
 
 	};

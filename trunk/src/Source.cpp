@@ -155,19 +155,27 @@ namespace xal
 				alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
 				if (this->sound->getCategory()->isStreamed())
 				{
+					alSourcePause(this->sourceId);
 					this->sound->setSourceId(this->sourceId);
 					((StreamSound*)this->sound)->unqueueBuffers();
-					alSourcePause(this->sourceId);
 				}
 				else
 				{
 					alSourceStop(this->sourceId);
 				}
-				this->sourceId = 0;
+				if (!this->isLocked())
+				{
+					this->sourceId = 0;
+				}
 			}
 			else
 			{
 				alSourceStop(this->sourceId);
+				if (this->sound->getCategory()->isStreamed())
+				{
+					this->sound->setSourceId(this->sourceId);
+					((StreamSound*)this->sound)->rewindStream();
+				}
 				this->unbind();
 			}
 		}

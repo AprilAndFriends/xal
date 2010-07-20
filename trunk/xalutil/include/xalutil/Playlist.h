@@ -35,6 +35,7 @@ namespace xal
 		bool isPlaying() { return this->playing; }
 		bool isRepeatAll() { return this->repeatAll; }
 		void setRepeatAll(bool value) { this->repeatAll = value; }
+		harray<hstr> getSounds() { return this->sounds; }
 		
 	protected:
 		bool playing;
