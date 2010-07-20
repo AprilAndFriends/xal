@@ -63,7 +63,7 @@ namespace xal
 	{
 		return this->buffers[this->bufferIndex];
 	}
-
+	
 	void StreamSound::update(float k)
 	{
 		int queued;
@@ -71,12 +71,7 @@ namespace xal
 		if (queued == 0)
 		{
 			this->stop();
-			this->_resetStream();
-			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
-			{
-				this->_fillBuffer(this->buffers[i]);
-			}
-			this->bufferIndex = 0;
+			this->_fillStartBuffers();
 			return;
 		}
 		int count;
@@ -171,6 +166,22 @@ namespace xal
 		return size;
 	}
 	
+	void StreamSound::rewindStream()
+	{
+		this->unqueueBuffers();
+		this->_fillStartBuffers();
+	}
+
+	void StreamSound::_fillStartBuffers()
+	{
+		this->_resetStream();
+		for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
+		{
+			this->_fillBuffer(this->buffers[i]);
+		}
+		this->bufferIndex = 0;
+	}
+
 	void StreamSound::queueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
