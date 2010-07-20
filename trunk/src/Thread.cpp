@@ -92,12 +92,12 @@ namespace xal
 #endif
 	}
 	
-	void Thread::sleep(int milliseconds)
+	void Thread::sleep(int miliseconds)
 	{
 #ifndef _WIN32
-		usleep(milliseconds * 1000);
+		usleep(miliseconds * 1000);
 #else
-		Sleep(milliseconds);
+		Sleep(miliseconds);
 #endif
 	}
 }
