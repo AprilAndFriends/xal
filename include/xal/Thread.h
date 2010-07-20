@@ -25,7 +25,7 @@ namespace xal
 		void start();
 		virtual void execute();
 		void join();
-		void sleep(int milliseconds);
+		void sleep(int miliseconds);
 
 	protected:
 #ifdef _WIN32
