@@ -56,7 +56,7 @@ namespace xal
 				name = entry->d_name;
 				if (isDirectory(hsprintf("%s/%s", path.c_str(), entry->d_name)) && name != "." && name != "..")
 				{
-					result += name;
+					if ((name) != ".svn") result += name;
 				}
 			}
 			closedir(dir);
