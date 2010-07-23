@@ -222,10 +222,10 @@ namespace xal
 		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
 	}
  
-	bool StreamSound::_loadOgg(chstr filename)
+	bool StreamSound::_loadOgg()
 	{
-		xal::mgr->logMessage("XAL: Loading ogg stream sound " + this->filename);
-		if (ov_fopen((char*)filename.c_str(), &this->oggStream) != 0)
+		xal::mgr->logMessage("XAL: Loading ogg stream sound " + this->fileName);
+		if (ov_fopen((char*)this->virtualFileName.c_str(), &this->oggStream) != 0)
 		{
 			xal::mgr->logMessage("Ogg: Error opening file!");
 			return false;
@@ -242,7 +242,7 @@ namespace xal
 			{
 				alDeleteBuffers(STREAM_BUFFER_COUNT, this->buffers);
 				this->buffers[0] = 0;
-				xal::mgr->logMessage("XAL: Sound " + filename + " is too small to be streamed.");
+				xal::mgr->logMessage("XAL: Sound " + this->virtualFileName + " is too small to be streamed.");
 				break;
 			}
 		}

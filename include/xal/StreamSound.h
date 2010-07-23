@@ -48,7 +48,7 @@ namespace xal
 		void _resetStream();
 		int _fillBuffer(unsigned int buffer);
 		void _fillStartBuffers();
-		bool _loadOgg(chstr filename);
+		bool _loadOgg();
 
 	};
 
