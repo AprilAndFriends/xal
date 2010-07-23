@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <fstream>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
@@ -50,13 +51,31 @@ namespace xal
 	{
 		if (!xal::mgr->isEnabled())
 		{
-			return this->isOgg();
+			return (this->isLink() || this->isOgg());
 		}
-		if (this->isOgg())
+		hstr filename = this->filename;
+		if (this->isLink())
 		{
-			return this->_loadOgg();
+			filename = this->_findLinkedFile();
+		}
+		if (this->isOgg(filename))
+		{
+			return this->_loadOgg(filename);
 		}
 		return false;
+	}
+	
+	hstr SoundBuffer::_findLinkedFile()
+	{
+		char buffer[1024];
+		std::ifstream file(this->filename.c_str());
+		if (file.is_open())
+		{
+			file.getline(buffer, 1024);
+			file.close();
+			return buffer;
+		}
+		return this->filename;
 	}
 
 	void SoundBuffer::bindSource(Source* source)
@@ -150,9 +169,19 @@ namespace xal
 		return (this->sources.size() > 0 && this->sources[0]->isLooping());
 	}
 
+	bool SoundBuffer::isLink()
+	{
+		return this->filename.ends_with(".xln");
+	}
+
 	bool SoundBuffer::isOgg()
 	{
-		return this->filename.contains(".ogg");
+		return this->filename.ends_with(".ogg");
+	}
+
+	bool SoundBuffer::isOgg(chstr filename)
+	{
+		return filename.ends_with(".ogg");
 	}
 
 /******* PLAY CONTROLS *************************************************/
