@@ -47,12 +47,12 @@ namespace xal
 	
 /******* METHODS *******************************************************/
 
-	bool SimpleSound::_loadOgg()
+	bool SimpleSound::_loadOgg(chstr filename)
 	{
 		xal::mgr->logMessage("XAL: Loading ogg sound " + this->filename);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
-		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
+		if (ov_fopen((char*)filename.c_str(), &oggStream) != 0)
 		{
 			xal::mgr->logMessage("Ogg: Error opening file!");
 			return false;
