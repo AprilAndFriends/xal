@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <fstream>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #include "Endianess.h"
 #include "SoundBuffer.h"
@@ -26,11 +27,12 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	SoundBuffer::SoundBuffer(chstr filename, chstr category, chstr prefix) : duration(0.0f),
+	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : duration(0.0f),
 		sources(harray<xal::Source*>()), Sound()
 	{
-		this->filename = hstr(filename);
-		this->name = prefix + hstr(filename).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
+		this->fileName = hstr(fileName);
+		this->virtualFileName = this->fileName;
+		this->name = prefix + hstr(fileName).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 		this->category = xal::mgr->getCategoryByName(category);
 	}
 
@@ -46,21 +48,20 @@ namespace xal
 	}
 	
 /******* METHODS *******************************************************/
-	
+
 	bool SoundBuffer::load()
 	{
-		if (!xal::mgr->isEnabled())
-		{
-			return (this->isLink() || this->isOgg());
-		}
-		hstr filename = this->filename;
 		if (this->isLink())
 		{
-			filename = this->filename.rsplit("/", 1).pop_front() + "/" + this->_findLinkedFile();
+			this->virtualFileName = this->_findLinkedFile();
 		}
-		if (this->isOgg(filename))
+		if (!xal::mgr->isEnabled())
 		{
-			return this->_loadOgg(filename);
+			return (this->isOgg());
+		}
+		if (this->isOgg())
+		{
+			return this->_loadOgg();
 		}
 		return false;
 	}
@@ -68,14 +69,29 @@ namespace xal
 	hstr SoundBuffer::_findLinkedFile()
 	{
 		char buffer[1024];
-		std::ifstream file(this->filename.c_str());
-		if (file.is_open())
+		std::ifstream file(this->fileName.c_str());
+		if (!file.is_open())
 		{
-			file.getline(buffer, 1024);
-			file.close();
-			return buffer;
+			return this->fileName;
 		}
-		return this->filename;
+		file.getline(buffer, 1024);
+		file.close();
+		harray<hstr> newFolders = hstr(buffer).split("/");
+		harray<hstr> folders = this->fileName.split("/");
+		folders.pop_back();
+		foreach (hstr, it, newFolders)
+		{
+			if ((*it) != "..")
+			{
+				folders += (*it);
+			}
+			else
+			{
+				folders.pop_back();
+			}
+		}
+		xal::mgr->logMessage(folders.join("/"));
+		return folders.join("/");
 	}
 
 	void SoundBuffer::bindSource(Source* source)
@@ -171,17 +187,12 @@ namespace xal
 
 	bool SoundBuffer::isLink()
 	{
-		return this->filename.ends_with(".xln");
+		return this->fileName.ends_with(".xln");
 	}
 
 	bool SoundBuffer::isOgg()
 	{
-		return this->filename.ends_with(".ogg");
-	}
-
-	bool SoundBuffer::isOgg(chstr filename)
-	{
-		return filename.ends_with(".ogg");
+		return this->virtualFileName.ends_with(".ogg");
 	}
 
 /******* PLAY CONTROLS *************************************************/

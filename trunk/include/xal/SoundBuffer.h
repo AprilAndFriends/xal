@@ -39,7 +39,8 @@ namespace xal
 		virtual unsigned int getBuffer() = 0;
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 		chstr getName() { return this->name; }
-		chstr getFileName() { return this->filename; }
+		chstr getFileName() { return this->fileName; }
+		chstr getVirtualFileName() { return this->virtualFileName; }
 		float getDuration() { return this->duration; }
 		Category* getCategory() { return this->category; }
 		void setCategory(Category* value) { this->category = value; }
@@ -54,7 +55,6 @@ namespace xal
 		
 		bool isLink();
 		bool isOgg();
-		bool isOgg(chstr filename);
 		
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
@@ -63,13 +63,14 @@ namespace xal
 		
 	protected:
 		hstr name;
-		hstr filename;
+		hstr fileName;
+		hstr virtualFileName;
 		float duration;
 		unsigned int sourceId;
 		Category* category;
 		harray<Source*> sources;
 		
-		virtual bool _loadOgg(chstr filename) = 0;
+		virtual bool _loadOgg() = 0;
 		hstr _findLinkedFile();
 		
 	};

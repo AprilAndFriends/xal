@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #define _TEST_SOUND
-#define _TEST_LINKS
+//#define _TEST_LINKS
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "cat", "");
 #else
-	xal::mgr->createCategory("cat", false);
+	xal::mgr->createCategory("cat", true);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
 #ifdef _TEST_SOUND

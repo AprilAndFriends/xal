@@ -31,8 +31,8 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	SimpleSound::SimpleSound(chstr filename, chstr category, chstr prefix) :
-		buffer(0), SoundBuffer(filename, category, prefix)
+	SimpleSound::SimpleSound(chstr fileName, chstr category, chstr prefix) :
+		buffer(0), SoundBuffer(fileName, category, prefix)
 	{
 	}
 
@@ -47,12 +47,12 @@ namespace xal
 	
 /******* METHODS *******************************************************/
 
-	bool SimpleSound::_loadOgg(chstr filename)
+	bool SimpleSound::_loadOgg()
 	{
-		xal::mgr->logMessage("XAL: Loading ogg sound " + this->filename);
+		xal::mgr->logMessage("XAL: Loading ogg sound " + this->fileName);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
-		if (ov_fopen((char*)filename.c_str(), &oggStream) != 0)
+		if (ov_fopen((char*)this->virtualFileName.c_str(), &oggStream) != 0)
 		{
 			xal::mgr->logMessage("Ogg: Error opening file!");
 			return false;

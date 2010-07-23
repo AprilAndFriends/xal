@@ -27,7 +27,7 @@ namespace xal
 	protected:
 		unsigned int buffer;
 		
-		bool _loadOgg(chstr filename);
+		bool _loadOgg();
 		
 	};
 
