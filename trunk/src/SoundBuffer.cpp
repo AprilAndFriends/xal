@@ -56,7 +56,7 @@ namespace xal
 		hstr filename = this->filename;
 		if (this->isLink())
 		{
-			filename = this->_findLinkedFile();
+			filename = this->filename.rsplit("/", 1).pop_front() + "/" + this->_findLinkedFile();
 		}
 		if (this->isOgg(filename))
 		{
