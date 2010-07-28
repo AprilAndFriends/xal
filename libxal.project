@@ -153,11 +153,11 @@
   <Dependencies Name="Linux_Debug">
     <Project Name="libhltypes"/>
   </Dependencies>
-  <Dependencies Name="Release_Win32">
-    <Project Name="libhltypes"/>
-  </Dependencies>
   <Dependencies Name="Debug">
     <Project Name="libhltypes"/>
     <Project Name="libxalutil"/>
+  </Dependencies>
+  <Dependencies Name="Release_Win32">
+    <Project Name="libhltypes"/>
   </Dependencies>
 </CodeLite_Project>

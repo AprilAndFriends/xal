@@ -20,6 +20,10 @@
     <Project Name="libhltypes"/>
     <Project Name="libxal"/>
   </Dependencies>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+    <Project Name="libxal"/>
+  </Dependencies>
   <Dependencies Name="Release_Win32">
     <Project Name="libhltypes"/>
     <Project Name="libxal"/>
@@ -72,7 +76,7 @@
         <Library Value="libxal"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).dll" IntermediateDirectory="./bin/$(ConfigurationName)" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).dll" IntermediateDirectory="../bin/xalUtil/$(ConfigurationName)" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -111,8 +115,4 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="libhltypes"/>
-    <Project Name="libxal"/>
-  </Dependencies>
 </CodeLite_Project>
