@@ -24,9 +24,9 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	Source::Source(SoundBuffer* sound) : sourceId(0), gain(1.0f),
-		looping(false), paused(false), fadeTime(0.0f), fadeSpeed(0.0f),
-		bound(true), Sound()
+	Source::Source(SoundBuffer* sound) : Sound(), sourceId(0),
+		gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
+		fadeSpeed(0.0f), bound(true)
 	{
 		this->sound = sound;
 	}

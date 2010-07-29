@@ -32,7 +32,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	SimpleSound::SimpleSound(chstr fileName, chstr category, chstr prefix) :
-		buffer(0), SoundBuffer(fileName, category, prefix)
+		SoundBuffer(fileName, category, prefix), buffer(0)
 	{
 	}
 
@@ -70,7 +70,7 @@ namespace xal
 			int read;
 			while (size > 0)
 			{
-				int read = ov_read(&oggStream, (char*)buffer, size, 0, 2, 1, &section);
+				read = ov_read(&oggStream, (char*)buffer, size, 0, 2, 1, &section);
 				if (read == 0)
 				{
 					length -= size;
