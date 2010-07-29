@@ -27,8 +27,8 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : duration(0.0f),
-		sources(harray<xal::Source*>()), Sound()
+	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : Sound(),
+		duration(0.0f), sources(harray<xal::Source*>())
 	{
 		this->fileName = hstr(fileName);
 		this->virtualFileName = this->fileName;
