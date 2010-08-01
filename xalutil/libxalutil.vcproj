@@ -89,8 +89,8 @@
 		</Configuration>
 		<Configuration
 			Name="win32_Release|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="..\bin\xalutil\$(ConfigurationName)"
+			IntermediateDirectory="..\bin\xalutil\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
