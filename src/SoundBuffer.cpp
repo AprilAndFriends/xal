@@ -38,7 +38,7 @@ namespace xal
 
 	SoundBuffer::~SoundBuffer()
 	{
-		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+		foreach (Source*, it, this->sources)
 		{
 			(*it)->unlock();
 			(*it)->unbind();
@@ -235,7 +235,7 @@ namespace xal
 	{
 		if (this->getBuffer() != 0)
 		{
-			for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+			foreach (Source*, it, this->sources)
 			{
 				(*it)->stop(fadeTime);
 			}

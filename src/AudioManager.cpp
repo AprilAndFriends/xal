@@ -7,10 +7,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <hltypes/hstring.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -121,11 +123,11 @@ namespace xal
 			delete this->thread;
 			delete this->mutex;
 		}
-		for (std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin(); it != this->sounds.end(); it++)
+		foreach_in_map (SoundBuffer*, it, this->sounds)
 		{
 			delete it->second;
 		}
-		for (std::map<hstr, Category*>::iterator it = this->categories.begin(); it != this->categories.end(); it++)
+		foreach_in_map (Category*, it, this->categories)
 		{
 			delete it->second;
 		}
@@ -166,12 +168,12 @@ namespace xal
 	{
 		if (this->deviceName != "nosound")
 		{
-			for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+			foreach (Source*, it, this->sources)
 			{
 				(*it)->update(k);
 			}
 			harray<Source*> sources(this->sources);
-			for (Source** it = sources.iterate(); it; it = sources.next())
+			foreach (Source*, it, sources)
 			{
 				if (!(*it)->isBound())
 				{
@@ -186,7 +188,7 @@ namespace xal
 	{
 		harray<unsigned int> allocated;
 		unsigned int id = 0;
-		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+		foreach (Source*, it, this->sources)
 		{
 			id = (*it)->getSourceId();
 			if (id != 0)
@@ -251,7 +253,7 @@ namespace xal
 		harray<hstr> result;
 		hstr category;
 		harray<hstr> dirs = getPathDirectories(path);
-		for (hstr* it = dirs.iterate(); it; it = dirs.next())
+		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/").pop_back();
 			result += this->createSoundsFromPath(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
@@ -265,7 +267,7 @@ namespace xal
 		harray<hstr> result;
 		harray<hstr> files = getPathFilesRecursive(path);
 		SoundBuffer* sound;
-		for (hstr* it = files.iterate(); it; it = files.next())
+		foreach (hstr, it, files)
 		{
 			sound = (SoundBuffer*)this->createSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
 			if (sound != NULL)
@@ -278,8 +280,7 @@ namespace xal
 
 	void AudioManager::destroySound(SoundBuffer* sound)
 	{
-		std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin();
-		for (;it != this->sounds.end(); it++)
+		foreach_in_map (SoundBuffer*, it, this->sounds)
 		{
 			if (it->second == sound)
 			{
@@ -293,8 +294,7 @@ namespace xal
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		harray<hstr> deleteList;
-		std::map<hstr, SoundBuffer*>::iterator it = this->sounds.begin();
-		for (;it != this->sounds.end(); it++)
+		foreach_in_map (SoundBuffer*, it, this->sounds)
 		{
 			if (it->first.starts_with(prefix))
 			{
@@ -302,7 +302,7 @@ namespace xal
 				deleteList.push_back(it->first);
 			}
 		}
-		for (hstr* it = deleteList.iterate(); it ; it = deleteList.next())
+		foreach (hstr, it, deleteList)
 		{
 			this->sounds.erase(*it);
 		}
@@ -316,6 +316,16 @@ namespace xal
 		}
 	}
 
+	void AudioManager::setGlobalGain(float value)
+	{
+		this->gain = gain;
+		foreach (Source*, it, this->sources)
+		{
+			alSourcef((*it)->getSourceId(), AL_GAIN, (*it)->getSound()->getCategory()->getGain() *
+				(*it)->getGain() * this->gain);
+		}
+	}
+
 	Category* AudioManager::getCategoryByName(chstr name)
 	{
 		if (this->categories.find(name) == this->categories.end())
@@ -325,10 +335,19 @@ namespace xal
 		return this->categories[name];
 	}
 
+	float AudioManager::getCategoryGain(chstr name)
+	{
+		if (this->categories.find(name) == this->categories.end())
+		{
+			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+		}
+		return this->categories[name]->getGain();
+	}
+
 	void AudioManager::setCategoryGain(chstr name, float gain)
 	{
 		this->getCategoryByName(name)->setGain(gain);
-		for (Source** it = this->sources.iterate(); it; it = this->sources.next())
+		foreach (Source*, it, this->sources)
 		{
 			if ((*it)->getSound()->getCategory()->getName() == name)
 			{
@@ -340,7 +359,7 @@ namespace xal
 	void AudioManager::stopAll(float fadeTime)
 	{
 		harray<Source*> sources(this->sources);
-		for (Source** it = sources.iterate(); it; it = sources.next())
+		foreach (Source*, it, sources)
 		{
 			(*it)->unlock();
 			(*it)->stop(fadeTime);
@@ -350,7 +369,7 @@ namespace xal
 	void AudioManager::stopCategory(chstr category, float fadeTime)
 	{
 		harray<Source*> sources(this->sources);
-		for (Source** it = sources.iterate(); it; it = sources.next())
+		foreach (Source*, it, sources)
 		{
 			if ((*it)->getSound()->getCategory()->getName() == category)
 			{
