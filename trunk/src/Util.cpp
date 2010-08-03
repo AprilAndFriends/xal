@@ -9,6 +9,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
+
 #include "Source.h"
 #include "AudioManager.h"
 #include "Util.h"
@@ -69,7 +71,7 @@ namespace xal
 		harray<hstr> dirs = getPathDirectoriesRecursive(path);
 		dirs += path;
 		harray<hstr> files;
-		for (hstr* it = dirs.iterate(); it; it = dirs.next())
+		foreach (hstr, it, dirs)
 		{
 			files += getPathFiles(*it);
 		}

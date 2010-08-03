@@ -40,9 +40,10 @@ namespace xal
 		float getUpdateTime() { return this->updateTime; }
 		Mutex* getMutex() { return this->mutex; }
 		float getGlobalGain() { return this->gain; }
-		void setGlobalGain(float value) { this->gain = value; }
+		void setGlobalGain(float value);
 		Category* getCategoryByName(chstr name);
 		void createCategory(chstr name, bool streamed = false);
+		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
 		
 		void update();
