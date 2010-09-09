@@ -52,7 +52,7 @@ namespace xal
 		harray<hstr> started = names / this->sounds;
 		foreach (hstr, it, started)
 		{
-			xal::mgr->getSound(*it)->play(this->fadeTime);
+			xal::mgr->getSound(*it)->play(this->fadeTime,true);
 		}
 		this->sounds = names;
 	}
@@ -61,7 +61,7 @@ namespace xal
 	{
 		foreach (hstr, it, this->sounds)
 		{
-			xal::mgr->getSound(*it)->play(this->fadeTime);
+			xal::mgr->getSound(*it)->play(this->fadeTime,true);
 		}
 	}
 	
