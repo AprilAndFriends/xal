@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
 
@@ -108,19 +109,13 @@ namespace xal
 	void Playlist::queueSound(chstr name)
 	{
 		this->sounds += name;
-		if (this->index < 0)
-		{
-			this->index = 0;
-		}
+		this->index = hmax(this->index, 0);
 	}
 	
 	void Playlist::queueSounds(harray<hstr> names)
 	{
 		this->sounds += names;
-		if (this->index < 0)
-		{
-			this->index = 0;
-		}
+		this->index = hmax(this->index, 0);
 	}
 	
 }
