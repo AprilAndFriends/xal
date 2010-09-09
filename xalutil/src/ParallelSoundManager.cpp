@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
 
@@ -28,26 +29,28 @@ namespace xal
 	{
 	}
 	
+/******* METHODS *******************************************************/
+
 	void ParallelSoundManager::addSound(chstr name)
 	{
-		this->build_list.push_back(name);
+		this->buildList += name;
 	}
 	
 	void ParallelSoundManager::updateList()
 	{
-		this->updateList(this->build_list);
-		this->build_list.clear();
+		this->updateList(this->buildList);
+		this->buildList.clear();
 	}
 		
 	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
 		harray<hstr> paused = this->sounds / names;
-		for (hstr* it = paused.iterate(); it; it = paused.next())
+		foreach (hstr, it, paused)
 		{
 			xal::mgr->getSound(*it)->pause(this->fadeTime);
 		}
 		harray<hstr> started = names / this->sounds;
-		for (hstr* it = started.iterate(); it; it = started.next())
+		foreach (hstr, it, started)
 		{
 			xal::mgr->getSound(*it)->play(this->fadeTime);
 		}
@@ -56,7 +59,7 @@ namespace xal
 	
 	void ParallelSoundManager::playAll()
 	{
-		for (hstr* it = this->sounds.iterate(); it; it = this->sounds.next())
+		foreach (hstr, it, this->sounds)
 		{
 			xal::mgr->getSound(*it)->play(this->fadeTime);
 		}
@@ -64,7 +67,7 @@ namespace xal
 	
 	void ParallelSoundManager::pauseAll()
 	{
-		for (hstr* it = this->sounds.iterate(); it; it = this->sounds.next())
+		foreach (hstr, it, this->sounds)
 		{
 			xal::mgr->getSound(*it)->pause(this->fadeTime);
 		}
@@ -72,7 +75,7 @@ namespace xal
 	
 	void ParallelSoundManager::stopAll()
 	{
-		for (hstr* it = this->sounds.iterate(); it; it = this->sounds.next())
+		foreach (hstr, it, this->sounds)
 		{
 			xal::mgr->getSound(*it)->stop(this->fadeTime);
 		}

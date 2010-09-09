@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+
 #include "xalUtilExport.h"
 
 namespace xal
@@ -36,8 +37,7 @@ namespace xal
 	protected:
 		float fadeTime;
 		harray<hstr> sounds;
-		
-		harray<hstr> build_list;
+		harray<hstr> buildList;
 	
 	};
 	
