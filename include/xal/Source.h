@@ -21,7 +21,7 @@ namespace xal
 	class xalExport Source : public Sound
 	{
 	public:
-		Source(SoundBuffer* sound);
+		Source(SoundBuffer* sound, unsigned int sourceId);
 		~Source();
 
 		void update(float k);
