@@ -149,9 +149,9 @@ namespace xal
 	
 /******* PROPERTIES ****************************************************/
 
-	void AudioManager::logMessage(chstr message)
+	void AudioManager::logMessage(chstr message, chstr prefix)
 	{
-		gLogFunction(message);
+		gLogFunction(prefix + message);
 	}
 	
 	bool AudioManager::isEnabled()
