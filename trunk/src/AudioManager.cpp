@@ -55,8 +55,8 @@ namespace xal
 	}
 	
 	void (*gLogFunction)(chstr) = xal_writelog;
-	ALCdevice* gDevice;
-	ALCcontext* gContext;
+	ALCdevice* gDevice = NULL;
+	ALCcontext* gContext = NULL;
 
 	void setLogFunction(void (*function)(chstr))
 	{
@@ -166,7 +166,7 @@ namespace xal
 	
 	void AudioManager::update(float k)
 	{
-		if (this->deviceName != "nosound")
+		if (this->isEnabled())
 		{
 			foreach (Source*, it, this->sources)
 			{
@@ -206,9 +206,9 @@ namespace xal
 		return 0;
 	}
 
-	Source* AudioManager::createSource(SoundBuffer* sound)
+	Source* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
 	{
-		Source* source = new Source(sound);
+		Source* source = new Source(sound, sourceId);
 		this->sources += source;
 		return source;
 	}

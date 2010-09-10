@@ -49,7 +49,7 @@ namespace xal
 		void update();
 		void update(float k);
 		
-		Source* createSource(SoundBuffer* sound);
+		Source* createSource(SoundBuffer* sound, unsigned int sourceId);
 		void destroySource(Source* source);
 		unsigned int allocateSourceId();
 		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");

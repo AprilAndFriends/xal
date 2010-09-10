@@ -44,7 +44,7 @@ namespace xal
 			(*it)->unbind();
 			xal::mgr->destroySource(*it);
 		}
-		xal::mgr->logMessage("XAL: Destroying sound " + this->name);
+		xal::mgr->logMessage("Destroying sound " + this->name);
 	}
 	
 /******* METHODS *******************************************************/
@@ -96,11 +96,15 @@ namespace xal
 
 	void SoundBuffer::bindSource(Source* source)
 	{
+#ifdef _DEBUG
+		xal::mgr->logMessage(hsprintf("Binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
+#endif
 		this->sources += source;
 	}
 	
 	void SoundBuffer::unbindSource(Source* source)
 	{
+		xal::mgr->logMessage(hsprintf("Unbinding source from sound %s", this->virtualFileName.c_str()));
 		this->sources -= source;
 	}
 	
@@ -211,12 +215,17 @@ namespace xal
 			{
 				return NULL;
 			}
-			source = xal::mgr->createSource(this);
+#ifdef _DEBUG
+			xal::mgr->logMessage(hsprintf("Allocated new source %d", sourceId));
+#endif
+			source = xal::mgr->createSource(this, sourceId);
 			this->bindSource(source);
-			source->setSourceId(sourceId);
 		}
 		else
 		{
+#ifdef _DEBUG
+			xal::mgr->logMessage("Using allocated source");
+#endif
 			source = this->sources[0];
 		}
 		source->play(fadeTime, looping);
@@ -235,6 +244,9 @@ namespace xal
 	{
 		if (this->getBuffer() != 0)
 		{
+#ifdef _DEBUG
+			xal::mgr->logMessage("Stop all");
+#endif
 			foreach (Source*, it, this->sources)
 			{
 				(*it)->stop(fadeTime);

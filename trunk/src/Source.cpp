@@ -24,11 +24,12 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	Source::Source(SoundBuffer* sound) : Sound(), sourceId(0),
+	Source::Source(SoundBuffer* sound, unsigned int sourceId) : Sound(),
 		gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
 		fadeSpeed(0.0f), bound(true)
 	{
 		this->sound = sound;
+		this->sourceId = sourceId;
 	}
 
 	Source::~Source()
@@ -86,13 +87,20 @@ namespace xal
 			{
 				return NULL;
 			}
+#ifdef _DEBUG
+			xal::mgr->logMessage(hsprintf("Allocated source ID %d", this->sourceId));
+#endif
 		}
+#ifdef _DEBUG
+		xal::mgr->logMessage("Play sound " + this->getSound()->getVirtualFileName());
+#endif
 		if (!this->paused)
 		{
 			this->looping = looping;
 		}
 		if (this->sound->getCategory()->isStreamed())
 		{
+			alSourcei(this->sourceId, AL_BUFFER, 0);
 			this->sound->setSourceId(this->sourceId);
 			((StreamSound*)this->sound)->queueBuffers();
 			alSourcei(this->sourceId, AL_LOOPING, false);
@@ -144,40 +152,40 @@ namespace xal
 		}
 		if (fadeTime > 0)
 		{
+#ifdef _DEBUG
+			xal::mgr->logMessage("Fading out sound " + this->getSound()->getVirtualFileName());
+#endif
 			this->fadeSpeed = -1.0f / fadeTime;
 		}
 		else
 		{
-			this->fadeTime = 0.0f;
-			this->fadeSpeed = 0.0f;
+#ifdef _DEBUG
 			if (pause)
 			{
-				alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
-				if (this->sound->getCategory()->isStreamed())
+				xal::mgr->logMessage("Pause sound " + this->getSound()->getVirtualFileName());
+			}
+			else
+			{
+				xal::mgr->logMessage("Stop sound " + this->getSound()->getVirtualFileName());
+			}
+#endif
+			this->fadeTime = 0.0f;
+			this->fadeSpeed = 0.0f;
+			alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
+			alSourceStop(this->sourceId);
+			if (this->sound->getCategory()->isStreamed())
+			{
+				this->sound->setSourceId(this->sourceId);
+				if (pause)
 				{
-					alSourcePause(this->sourceId);
-					this->sound->setSourceId(this->sourceId);
 					((StreamSound*)this->sound)->unqueueBuffers();
 				}
 				else
 				{
-					alSourceStop(this->sourceId);
-				}
-				if (!this->isLocked())
-				{
-					this->sourceId = 0;
-				}
-			}
-			else
-			{
-				alSourceStop(this->sourceId);
-				if (this->sound->getCategory()->isStreamed())
-				{
-					this->sound->setSourceId(this->sourceId);
 					((StreamSound*)this->sound)->rewindStream();
 				}
-				this->unbind();
 			}
+			this->unbind();
 		}
 		this->paused = pause;
 	}

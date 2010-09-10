@@ -49,7 +49,7 @@ namespace xal
 
 	bool SimpleSound::_loadOgg()
 	{
-		xal::mgr->logMessage("XAL: Loading ogg sound " + this->fileName);
+		xal::mgr->logMessage("Loading ogg sound " + this->fileName);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
 		if (ov_fopen((char*)this->virtualFileName.c_str(), &oggStream) != 0)
