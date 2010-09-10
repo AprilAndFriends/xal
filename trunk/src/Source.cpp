@@ -55,7 +55,7 @@ namespace xal
 				{
 					alSourcef(this->sourceId, AL_GAIN, this->gain *
 						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-					this->fadeTime = 0.0f;
+					this->fadeTime = 1.0f;
 					this->fadeSpeed = 0.0f;
 				}
 				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
