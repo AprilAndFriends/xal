@@ -34,7 +34,7 @@ namespace xal
 		
 		void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
 		
-		void logMessage(chstr message);
+		void logMessage(chstr message, chstr prefix = "[xal] ");
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
 		float getUpdateTime() { return this->updateTime; }
