@@ -30,7 +30,7 @@ namespace xal
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
 		
-		void unbind();
+		void unbind(bool pause = false);
 		
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
