@@ -322,7 +322,7 @@ namespace xal
 		foreach (Source*, it, this->sources)
 		{
 			alSourcef((*it)->getSourceId(), AL_GAIN, (*it)->getSound()->getCategory()->getGain() *
-				(*it)->getGain() * this->gain);
+				(*it)->getGain() * value);
 		}
 	}
 
