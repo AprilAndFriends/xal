@@ -318,11 +318,11 @@ namespace xal
 
 	void AudioManager::setGlobalGain(float value)
 	{
-		this->gain = gain;
+		this->gain = value;
 		foreach (Source*, it, this->sources)
 		{
 			alSourcef((*it)->getSourceId(), AL_GAIN, (*it)->getSound()->getCategory()->getGain() *
-				(*it)->getGain() * value);
+				(*it)->getGain() * this->gain);
 		}
 	}
 
