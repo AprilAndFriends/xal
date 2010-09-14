@@ -22,7 +22,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
-#define _TEST_THREADED
+//#define _TEST_THREADED
 //#define _TEST_COMPLEX_HANDLER
 
 //#define _TEST_PLAYLIST
@@ -59,12 +59,18 @@ int main(int argc, char **argv)
 #endif
 #ifndef _TEST_COMPLEX_HANDLER
 	s->play();
-	while (s->isPlaying())
+	for (int i = 0; i < 20; i++)
 	{
 		Sleep(100.0f);
 #ifndef _TEST_THREADED
 		xal::mgr->update(0.1f);
 #endif
+		s->pause();
+		Sleep(100.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+		s->play();
 	}
 #ifndef _TEST_THREADED
 	xal::mgr->update(0.01f);

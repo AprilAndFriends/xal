@@ -185,17 +185,20 @@ namespace xal
 					((StreamSound*)this->sound)->rewindStream();
 				}
 			}
-			this->unbind();
+			this->unbind(pause);
 		}
 		this->paused = pause;
 	}
 
-	void Source::unbind()
+	void Source::unbind(bool pause)
 	{
 		if (!this->isLocked())
 		{
 			this->sourceId = 0;
-			this->bound = false;
+			if (!pause)
+			{
+				this->bound = false;
+			}
 		}
 	}
 	
