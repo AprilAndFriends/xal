@@ -11,8 +11,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define XAL_AUDIOMANAGER_H
 
 #include <hltypes/harray.h>
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
-#include <map>
+
 #include "xalExport.h"
 
 #define XAL_MAX_SOURCES 16
@@ -67,8 +68,8 @@ namespace xal
 		harray<Source*> sources;
 		hstr deviceName;
 		float gain;
-		std::map<hstr, Category*> categories;
-		std::map<hstr, SoundBuffer*> sounds;
+		hmap<hstr, Category*> categories;
+		hmap<hstr, SoundBuffer*> sounds;
 		Mutex* mutex;
 		Thread* thread;
 		float updateTime;
