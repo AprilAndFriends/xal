@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -67,8 +68,8 @@ namespace xal
 
 	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
 		sources(harray<Source*>()), gain(1.0f),
-		categories(std::map<hstr, Category*>()),
-		sounds(std::map<hstr, SoundBuffer*>()), thread(NULL), mutex(NULL)
+		categories(hmap<hstr, Category*>()),
+		sounds(hmap<hstr, SoundBuffer*>()), thread(NULL), mutex(NULL)
 	{
 	}
 	
@@ -123,11 +124,11 @@ namespace xal
 			delete this->thread;
 			delete this->mutex;
 		}
-		foreach_in_map (SoundBuffer*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			delete it->second;
 		}
-		foreach_in_map (Category*, it, this->categories)
+		foreach_m (Category*, it, this->categories)
 		{
 			delete it->second;
 		}
@@ -280,7 +281,7 @@ namespace xal
 
 	void AudioManager::destroySound(SoundBuffer* sound)
 	{
-		foreach_in_map (SoundBuffer*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			if (it->second == sound)
 			{
@@ -294,7 +295,7 @@ namespace xal
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		harray<hstr> deleteList;
-		foreach_in_map (SoundBuffer*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			if (it->first.starts_with(prefix))
 			{
