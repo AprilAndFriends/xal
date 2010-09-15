@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "SoundBuffer.h"
 
 #define STREAM_BUFFER_COUNT 8
-#define STREAM_BUFFER_SIZE 8192
+#define STREAM_BUFFER_SIZE 32768
 
 namespace xal
 {

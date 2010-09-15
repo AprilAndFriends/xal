@@ -124,11 +124,11 @@ namespace xal
 			delete this->thread;
 			delete this->mutex;
 		}
-		foreach_m (SoundBuffer*, it, this->sounds)
+		foreach_m(SoundBuffer*, it, this->sounds)
 		{
 			delete it->second;
 		}
-		foreach_m (Category*, it, this->categories)
+		foreach_m(Category*, it, this->categories)
 		{
 			delete it->second;
 		}
@@ -281,7 +281,7 @@ namespace xal
 
 	void AudioManager::destroySound(SoundBuffer* sound)
 	{
-		foreach_m (SoundBuffer*, it, this->sounds)
+		foreach_m(SoundBuffer*, it, this->sounds)
 		{
 			if (it->second == sound)
 			{
@@ -295,7 +295,7 @@ namespace xal
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		harray<hstr> deleteList;
-		foreach_m (SoundBuffer*, it, this->sounds)
+		foreach_m(SoundBuffer*, it, this->sounds)
 		{
 			if (it->first.starts_with(prefix))
 			{
