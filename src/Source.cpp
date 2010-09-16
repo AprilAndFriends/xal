@@ -108,10 +108,7 @@ namespace xal
 		else
 		{
 			alSourcei(this->sourceId, AL_BUFFER, this->getBuffer());
-			if (!this->isPaused())
-			{
-				alSourcei(this->sourceId, AL_LOOPING, this->looping);
-			}
+			alSourcei(this->sourceId, AL_LOOPING, this->looping);
 		}
 		if (this->isPaused())
 		{
