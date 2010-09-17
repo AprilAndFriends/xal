@@ -31,9 +31,9 @@
 		7FC8065D11EC945900851062 /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065611EC945900851062 /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068711EC970600851062 /* OpenAL.framework */; };
-		7FC8069211EC972C00851062 /* libogg.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8069111EC972C00851062 /* libogg.dylib */; };
-		7FC8069611EC973E00851062 /* libvorbisfile.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8069511EC973E00851062 /* libvorbisfile.dylib */; };
-		7FC8069C11EC975A00851062 /* libvorbis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8069B11EC975A00851062 /* libvorbis.dylib */; };
+		C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9B1243853A006BFE4D /* Ogg.framework */; };
+		C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9D1243853A006BFE4D /* Vorbis.framework */; };
+		C9906DA412438579006BFE4D /* libvorbisfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906DA312438579006BFE4D /* libvorbisfile.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,11 +61,11 @@
 		7FC8065611EC945900851062 /* xalExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xalExport.h; path = include/xal/xalExport.h; sourceTree = "<group>"; };
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		7FC8068711EC970600851062 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		7FC8069111EC972C00851062 /* libogg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libogg.dylib; path = usr/local/lib/libogg.dylib; sourceTree = SDKROOT; };
-		7FC8069511EC973E00851062 /* libvorbisfile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvorbisfile.dylib; path = usr/local/lib/libvorbisfile.dylib; sourceTree = SDKROOT; };
-		7FC8069B11EC975A00851062 /* libvorbis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvorbis.dylib; path = usr/local/lib/libvorbis.dylib; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9906D9B1243853A006BFE4D /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = Library/Frameworks/Ogg.framework; sourceTree = SDKROOT; };
+		C9906D9D1243853A006BFE4D /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = Library/Frameworks/Vorbis.framework; sourceTree = SDKROOT; };
+		C9906DA312438579006BFE4D /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = ../lib/macosx/libvorbisfile.a; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +75,9 @@
 			files = (
 				7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */,
 				7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */,
-				7FC8069211EC972C00851062 /* libogg.dylib in Frameworks */,
-				7FC8069611EC973E00851062 /* libvorbisfile.dylib in Frameworks */,
-				7FC8069C11EC975A00851062 /* libvorbis.dylib in Frameworks */,
+				C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */,
+				C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */,
+				C9906DA412438579006BFE4D /* libvorbisfile.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +95,7 @@
 		0867D691FE84028FC02AAC07 /* libxal */ = {
 			isa = PBXGroup;
 			children = (
+				C9906DA312438579006BFE4D /* libvorbisfile.a */,
 				7FC8064911EC943E00851062 /* Private Includes */,
 				7FC8063911EC942100851062 /* Includes */,
 				7FC8063811EC941D00851062 /* Sources */,
@@ -103,9 +104,8 @@
 				034768DFFF38A50411DB9C8B /* Products */,
 				7FC8068011EC96EF00851062 /* hltypes.framework */,
 				7FC8068711EC970600851062 /* OpenAL.framework */,
-				7FC8069111EC972C00851062 /* libogg.dylib */,
-				7FC8069511EC973E00851062 /* libvorbisfile.dylib */,
-				7FC8069B11EC975A00851062 /* libvorbis.dylib */,
+				C9906D9B1243853A006BFE4D /* Ogg.framework */,
+				C9906D9D1243853A006BFE4D /* Vorbis.framework */,
 			);
 			name = libxal;
 			sourceTree = "<group>";
@@ -290,6 +290,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/macosx\"",
+				);
 				PRODUCT_NAME = xal;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -307,6 +311,10 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/macosx\"",
+				);
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
