@@ -17,14 +17,18 @@
 \b Debug
 \b0 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
-\cf0 This configuration is set to build only the native architecture of your machine. It does not install the library anywhere, and it's your duty to set it up prior to use in other programs or libraries. Recommended destination is /Library/Frameworks.\
+\cf0 This configuration is set to build only the native architecture of your machine. \
+IMPORTANT: This configuration will automaticaly install the produced .framework into /Library/Frameworks, and it will overwrite any previous version installed there.\
 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
 
-\b Release\
+\b \cf0 Release\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
 
-\b0 This configuration is set to build optimized universal binary; at the moment of writing, on a 64bit Mac included architectures are i386, ppc and x86_64. IMPORTANT: This configuration will automaticaly install the produced .framework into /Library/Frameworks, and it will overwrite any previous version installed there.\
+\b0 \cf0 This configuration is set to build optimized universal binary; at the moment of writing, on a 64bit Mac included architectures are i386, ppc and x86_64.\
+IMPORTANT: This configuration will automaticaly install the produced .framework into /Library/Frameworks, and it will overwrite any previous version installed there.\
 \
-Reasoning: Release is the most interesting target for people wishing to just build this library as a dependency for other software and be done with it. Hence it serves them well if it automatically installed itself. Also, Release is what will be used when releasing, which means the library is tested and as bug-free as possible prior to release, therefore it's probably safe to overwrite previous version.\
+Reasoning: We wish to make development and installation as easy as possible. Hence, upon compiling, we deploy the result in the appropriate destination.\
 \
--- ivan@vucica.net, Jul 15th 2010\
+-- ivan@vucica.net, Jul 15th 2010, updated Sep 28th 2010\
 }
