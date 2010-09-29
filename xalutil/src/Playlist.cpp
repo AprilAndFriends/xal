@@ -47,7 +47,6 @@ namespace xal
 		}
 		else if (this->index < this->sounds.size())
 		{
-			xal::mgr->logMessage(this->index);
 			if (!xal::mgr->getSound(this->sounds[this->index])->isPlaying())
 			{
 				this->index++;
