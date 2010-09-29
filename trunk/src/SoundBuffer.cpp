@@ -104,7 +104,9 @@ namespace xal
 	
 	void SoundBuffer::unbindSource(Source* source)
 	{
+#ifdef _DEBUG
 		xal::mgr->logMessage(hsprintf("Unbinding source from sound %s", this->virtualFileName.c_str()));
+#endif
 		this->sources -= source;
 	}
 	
