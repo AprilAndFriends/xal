@@ -152,9 +152,11 @@
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/iOS/$(PLATFORM_NAME).sdk/SDKSettings.plist",
 			);
 			name = "Add SDKSettings";
 			outputPaths = (
+				"$(DSTROOT)/SDKSettings.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -162,15 +164,17 @@
 		};
 		7F3ADFDA1255FFC6009DFEC8 /* Deploy to HOME-Library-SDKs */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
+				"$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk",
 			);
 			name = "Deploy to HOME-Library-SDKs";
 			outputPaths = (
+				"$(USER_LIBRARY_DIR)/SDKs/$(PRODUCT_NAME)SDK/",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "mkdir -p \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\nrm -rf \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\"\n\necho \"Deploying to ${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n\ncp -R \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\" \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n";
 		};
