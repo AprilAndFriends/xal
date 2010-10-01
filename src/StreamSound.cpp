@@ -141,7 +141,6 @@ namespace xal
 	{
 		char data[STREAM_BUFFER_SIZE] = {0};
 		int size = 0;
-		int section;
 		int result;
 		while (size < STREAM_BUFFER_SIZE)
 		{
