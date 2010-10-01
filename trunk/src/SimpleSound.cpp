@@ -13,9 +13,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "SimpleSound.h"
 
 #include <iostream>
+
+#if HAVE_OGG
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
+#endif
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -49,6 +52,7 @@ namespace xal
 
 	bool SimpleSound::_loadOgg()
 	{
+#if HAVE_OGG
 		xal::mgr->logMessage("Loading ogg sound " + this->fileName);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
@@ -97,6 +101,11 @@ namespace xal
 		}
 		ov_clear(&oggStream);
 		return result;
+#else
+#warning HAVE_OGG is not defined to 1. No Ogg support.
+		xal::mgr->logMessage("No ogg support built in, cannot load " + this->fileName);
+		return false;
+#endif
 	}
 
 }

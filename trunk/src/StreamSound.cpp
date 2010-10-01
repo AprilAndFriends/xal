@@ -14,9 +14,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "Source.h"
 
 #include <iostream>
+#if HAVE_OGG
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
+#endif
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -53,10 +55,12 @@ namespace xal
 		}
 		if (xal::mgr->isEnabled())
 		{
+#if HAVE_OGG
 			if (this->isOgg())
 			{
 				ov_clear(&this->oggStream);
 			}
+#endif
 		}
 	}
 	
@@ -113,20 +117,24 @@ namespace xal
 	
 	int StreamSound::_readStream(char* buffer, int size)
 	{
+#if HAVE_OGG
 		if (this->isOgg())
 		{
 			int section;
 			return ov_read(&this->oggStream, buffer, size, 0, 2, 1, &section);
 		}
+#endif
 		return 0;
 	}
 	
 	void StreamSound::_resetStream()
 	{
+#if HAVE_OGG
 		if (this->isOgg())
 		{
 			ov_raw_seek(&this->oggStream, 0);
 		}
+#endif
 	}
 	
 	int StreamSound::_fillBuffer(unsigned int buffer)
@@ -163,8 +171,13 @@ namespace xal
 				XAL_NORMALIZE_ENDIAN(*p);
 			}
 #endif	
+			
+#if HAVE_OGG
+			// FIXME what if we're not using Ogg/Vorbis?
+			// then vorbisInfo does not exist.
 			alBufferData(buffer, (this->vorbisInfo->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
 				data, size, this->vorbisInfo->rate);
+#endif
 		}
 		return size;
 	}
@@ -227,6 +240,7 @@ namespace xal
  
 	bool StreamSound::_loadOgg()
 	{
+#if HAVE_OGG
 		xal::mgr->logMessage("Loading ogg stream sound " + this->fileName);
 		if (ov_fopen((char*)this->virtualFileName.c_str(), &this->oggStream) != 0)
 		{
@@ -250,6 +264,12 @@ namespace xal
 			}
 		}
 		return true;
+#else
+#warning HAVE_OGG is not defined to 1. No Ogg support.
+		xal::mgr->logMessage("No ogg support built in, cannot load stream sound " + this->fileName);
+		return false;
+#endif
+		
 	}
 	
 }

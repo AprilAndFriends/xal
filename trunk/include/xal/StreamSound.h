@@ -10,7 +10,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef XAL_STREAMSOUND_H
 #define XAL_STREAMSOUND_H
 
+#if HAVE_OGG
 #include <vorbis/vorbisfile.h>
+#endif
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
@@ -41,8 +43,10 @@ namespace xal
 	protected:
 		unsigned int buffers[STREAM_BUFFER_COUNT];
 		int bufferIndex;
+#if HAVE_OGG
 		OggVorbis_File oggStream;
 		vorbis_info* vorbisInfo;
+#endif
 		
 		int _readStream(char* buffer, int size);
 		void _resetStream();
