@@ -98,26 +98,32 @@ namespace xal
 		{
 			this->looping = looping;
 		}
-		if (this->sound->getCategory()->isStreamed())
-		{
-			alSourcei(this->sourceId, AL_BUFFER, 0);
-			this->sound->setSourceId(this->sourceId);
-			((StreamSound*)this->sound)->queueBuffers();
-			alSourcei(this->sourceId, AL_LOOPING, false);
-		}
-		else
-		{
-			alSourcei(this->sourceId, AL_BUFFER, this->getBuffer());
-			alSourcei(this->sourceId, AL_LOOPING, this->looping);
-		}
-		if (this->isPaused())
-		{
-			alSourcef(this->sourceId, AL_SEC_OFFSET, this->sampleOffset);
-		}
 		bool alreadyFading = this->isFading();
+		if (!alreadyFading)
+		{
+			if (this->sound->getCategory()->isStreamed())
+			{
+				alSourcei(this->sourceId, AL_BUFFER, 0);
+				this->sound->setSourceId(this->sourceId);
+				((StreamSound*)this->sound)->queueBuffers();
+				alSourcei(this->sourceId, AL_LOOPING, false);
+			}
+			else
+			{
+				alSourcei(this->sourceId, AL_BUFFER, this->getBuffer());
+				alSourcei(this->sourceId, AL_LOOPING, this->looping);
+			}
+			if (this->isPaused())
+			{
+				alSourcef(this->sourceId, AL_SEC_OFFSET, this->sampleOffset);
+			}
+		}
 		if (fadeTime > 0)
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
+#ifdef _DEBUG
+			xal::mgr->logMessage("Fading in sound " + this->getSound()->getVirtualFileName());
+#endif
 		}
 		else
 		{
