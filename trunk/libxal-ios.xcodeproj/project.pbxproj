@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F4C09E61255F3B60004EBF6 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */; };
+		7F4C09E71255F3B60004EBF6 /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DD1255F3B60004EBF6 /* Category.cpp */; };
+		7F4C09E81255F3B60004EBF6 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DE1255F3B60004EBF6 /* Mutex.cpp */; };
+		7F4C09E91255F3B60004EBF6 /* SimpleSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */; };
+		7F4C09EA1255F3B60004EBF6 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E01255F3B60004EBF6 /* Sound.cpp */; };
+		7F4C09EB1255F3B60004EBF6 /* SoundBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E11255F3B60004EBF6 /* SoundBuffer.cpp */; };
+		7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E21255F3B60004EBF6 /* Source.cpp */; };
+		7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */; };
+		7F4C09EE1255F3B60004EBF6 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E41255F3B60004EBF6 /* Thread.cpp */; };
+		7F4C09EF1255F3B60004EBF6 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E51255F3B60004EBF6 /* Util.cpp */; };
+		7F4C09F41255F3CC0004EBF6 /* _dirent_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F11255F3CC0004EBF6 /* _dirent_win32.h */; };
+		7F4C09F51255F3CC0004EBF6 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F21255F3CC0004EBF6 /* Endianess.h */; };
+		7F4C09F61255F3CC0004EBF6 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F31255F3CC0004EBF6 /* Util.h */; };
+		7F4C0A021255F3D90004EBF6 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F81255F3D90004EBF6 /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A031255F3D90004EBF6 /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F91255F3D90004EBF6 /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A041255F3D90004EBF6 /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FA1255F3D90004EBF6 /* Mutex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A051255F3D90004EBF6 /* SimpleSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FB1255F3D90004EBF6 /* SimpleSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A061255F3D90004EBF6 /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FC1255F3D90004EBF6 /* Sound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A071255F3D90004EBF6 /* SoundBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A081255F3D90004EBF6 /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FE1255F3D90004EBF6 /* Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A091255F3D90004EBF6 /* StreamSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FF1255F3D90004EBF6 /* StreamSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A0A1255F3D90004EBF6 /* Thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C0A001255F3D90004EBF6 /* Thread.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F4C0A0B1255F3D90004EBF6 /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C0A011255F3D90004EBF6 /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManager.cpp; sourceTree = "<group>"; };
+		7F4C09DD1255F3B60004EBF6 /* Category.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Category.cpp; sourceTree = "<group>"; };
+		7F4C09DE1255F3B60004EBF6 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
+		7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleSound.cpp; sourceTree = "<group>"; };
+		7F4C09E01255F3B60004EBF6 /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sound.cpp; sourceTree = "<group>"; };
+		7F4C09E11255F3B60004EBF6 /* SoundBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundBuffer.cpp; sourceTree = "<group>"; };
+		7F4C09E21255F3B60004EBF6 /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Source.cpp; sourceTree = "<group>"; };
+		7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StreamSound.cpp; sourceTree = "<group>"; };
+		7F4C09E41255F3B60004EBF6 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
+		7F4C09E51255F3B60004EBF6 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
+		7F4C09F11255F3CC0004EBF6 /* _dirent_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _dirent_win32.h; sourceTree = "<group>"; };
+		7F4C09F21255F3CC0004EBF6 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Endianess.h; sourceTree = "<group>"; };
+		7F4C09F31255F3CC0004EBF6 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		7F4C09F81255F3D90004EBF6 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = include/xal/AudioManager.h; sourceTree = "<group>"; };
+		7F4C09F91255F3D90004EBF6 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = include/xal/Category.h; sourceTree = "<group>"; };
+		7F4C09FA1255F3D90004EBF6 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mutex.h; path = include/xal/Mutex.h; sourceTree = "<group>"; };
+		7F4C09FB1255F3D90004EBF6 /* SimpleSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleSound.h; path = include/xal/SimpleSound.h; sourceTree = "<group>"; };
+		7F4C09FC1255F3D90004EBF6 /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sound.h; path = include/xal/Sound.h; sourceTree = "<group>"; };
+		7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundBuffer.h; path = include/xal/SoundBuffer.h; sourceTree = "<group>"; };
+		7F4C09FE1255F3D90004EBF6 /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Source.h; path = include/xal/Source.h; sourceTree = "<group>"; };
+		7F4C09FF1255F3D90004EBF6 /* StreamSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamSound.h; path = include/xal/StreamSound.h; sourceTree = "<group>"; };
+		7F4C0A001255F3D90004EBF6 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thread.h; path = include/xal/Thread.h; sourceTree = "<group>"; };
+		7F4C0A011255F3D90004EBF6 /* xalExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xalExport.h; path = include/xal/xalExport.h; sourceTree = "<group>"; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libxal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* libxal-ios */ = {
+			isa = PBXGroup;
+			children = (
+				7F4C09F71255F3CF0004EBF6 /* Includes */,
+				7F4C09F01255F3B80004EBF6 /* Private Includes */,
+				7F4C09DB1255F38D0004EBF6 /* Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = "libxal-ios";
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F4C09DB1255F38D0004EBF6 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */,
+				7F4C09DD1255F3B60004EBF6 /* Category.cpp */,
+				7F4C09DE1255F3B60004EBF6 /* Mutex.cpp */,
+				7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */,
+				7F4C09E01255F3B60004EBF6 /* Sound.cpp */,
+				7F4C09E11255F3B60004EBF6 /* SoundBuffer.cpp */,
+				7F4C09E21255F3B60004EBF6 /* Source.cpp */,
+				7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */,
+				7F4C09E41255F3B60004EBF6 /* Thread.cpp */,
+				7F4C09E51255F3B60004EBF6 /* Util.cpp */,
+			);
+			name = Sources;
+			path = src;
+			sourceTree = "<group>";
+		};
+		7F4C09F01255F3B80004EBF6 /* Private Includes */ = {
+			isa = PBXGroup;
+			children = (
+				7F4C09F11255F3CC0004EBF6 /* _dirent_win32.h */,
+				7F4C09F21255F3CC0004EBF6 /* Endianess.h */,
+				7F4C09F31255F3CC0004EBF6 /* Util.h */,
+			);
+			name = "Private Includes";
+			path = src;
+			sourceTree = "<group>";
+		};
+		7F4C09F71255F3CF0004EBF6 /* Includes */ = {
+			isa = PBXGroup;
+			children = (
+				7F4C09F81255F3D90004EBF6 /* AudioManager.h */,
+				7F4C09F91255F3D90004EBF6 /* Category.h */,
+				7F4C09FA1255F3D90004EBF6 /* Mutex.h */,
+				7F4C09FB1255F3D90004EBF6 /* SimpleSound.h */,
+				7F4C09FC1255F3D90004EBF6 /* Sound.h */,
+				7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */,
+				7F4C09FE1255F3D90004EBF6 /* Source.h */,
+				7F4C09FF1255F3D90004EBF6 /* StreamSound.h */,
+				7F4C0A001255F3D90004EBF6 /* Thread.h */,
+				7F4C0A011255F3D90004EBF6 /* xalExport.h */,
+			);
+			name = Includes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F4C09F41255F3CC0004EBF6 /* _dirent_win32.h in Headers */,
+				7F4C09F51255F3CC0004EBF6 /* Endianess.h in Headers */,
+				7F4C09F61255F3CC0004EBF6 /* Util.h in Headers */,
+				7F4C0A021255F3D90004EBF6 /* AudioManager.h in Headers */,
+				7F4C0A031255F3D90004EBF6 /* Category.h in Headers */,
+				7F4C0A041255F3D90004EBF6 /* Mutex.h in Headers */,
+				7F4C0A051255F3D90004EBF6 /* SimpleSound.h in Headers */,
+				7F4C0A061255F3D90004EBF6 /* Sound.h in Headers */,
+				7F4C0A071255F3D90004EBF6 /* SoundBuffer.h in Headers */,
+				7F4C0A081255F3D90004EBF6 /* Source.h in Headers */,
+				7F4C0A091255F3D90004EBF6 /* StreamSound.h in Headers */,
+				7F4C0A0A1255F3D90004EBF6 /* Thread.h in Headers */,
+				7F4C0A0B1255F3D90004EBF6 /* xalExport.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* libxal-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "libxal-ios" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+				7F21B4011255F79E00331A01 /* Add SDKSettings */,
+				7F21B4031255F7AA00331A01 /* Deploy to HOME-Library-SDKs */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libxal-ios";
+			productName = "libxal-ios";
+			productReference = D2AAC07E0554694100DB518D /* libxal.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libxal-ios" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* libxal-ios */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* libxal-ios */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7F21B4011255F79E00331A01 /* Add SDKSettings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Add SDKSettings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#echo IN:     $SRCROOT/iOS/${PLATFORM_NAME}.sdk/SDKSettings.plist\n#echo OUT:    $DSTROOT/SDKSettings.plist\n\nsed -e \"s/%PROJECT%/$PROJECT/g\" \\\n    -e \"s/%VERS%/$VERS/g\" \\\n    -e \"s/%IPHONE_SDK%/$IPHONE_SDK/g\" \\\n    $SRCROOT/iOS/${PLATFORM_NAME}.sdk/SDKSettings.plist > $DSTROOT/SDKSettings.plist || exit 1    \n";
+		};
+		7F21B4031255F7AA00331A01 /* Deploy to HOME-Library-SDKs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Deploy to HOME-Library-SDKs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\nrm -rf \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\"\n\necho \"Deploying to ${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n\ncp -R \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\" \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F4C09E61255F3B60004EBF6 /* AudioManager.cpp in Sources */,
+				7F4C09E71255F3B60004EBF6 /* Category.cpp in Sources */,
+				7F4C09E81255F3B60004EBF6 /* Mutex.cpp in Sources */,
+				7F4C09E91255F3B60004EBF6 /* SimpleSound.cpp in Sources */,
+				7F4C09EA1255F3B60004EBF6 /* Sound.cpp in Sources */,
+				7F4C09EB1255F3B60004EBF6 /* SoundBuffer.cpp in Sources */,
+				7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */,
+				7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */,
+				7F4C09EE1255F3B60004EBF6 /* Thread.cpp in Sources */,
+				7F4C09EF1255F3B60004EBF6 /* Util.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/xal;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/xal;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "$(USER_LIBRARY_DIR)/SDKs/hltypesSDK/$(PLATFORM_NAME).sdk";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "$(USER_LIBRARY_DIR)/SDKs/hltypesSDK/$(PLATFORM_NAME).sdk";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "libxal-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libxal-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
