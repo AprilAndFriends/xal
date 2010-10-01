@@ -236,19 +236,17 @@
 		};
 		7F21B4031255F7AA00331A01 /* Deploy to HOME-Library-SDKs */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
-				"$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk",
 			);
 			name = "Deploy to HOME-Library-SDKs";
 			outputPaths = (
-				"$(USER_LIBRARY_DIR)/SDKs/$(PRODUCT_NAME)SDK/",
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\nrm -rf \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\"\n\necho \"Deploying to ${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n\ncp -R \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\" \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n";
+			shellScript = "ORIGINALEXE=${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk/usr/local/lib/$EXECUTABLE_NAME\nDEPLOYEDEXE=${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk/usr/local/lib/$EXECUTABLE_NAME\nif [ `md5 < \"$ORIGINALEXE\"` == `md5 < \"$DEPLOYEDEXE\"` ] ; then\n  echo Skipping deploy, binaries are identical\n  exit 0\nfi \n\nmkdir -p \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\nrm -rf \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\"\n\necho \"Deploying to ${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n\ncp -Ra \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}SDK/${PLATFORM_NAME}.sdk\" \"${USER_LIBRARY_DIR}/SDKs/${PRODUCT_NAME}SDK/\"\n\necho ${EXECUTABLE_PATH}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
