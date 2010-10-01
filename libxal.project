@@ -40,6 +40,7 @@
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="_DEBUG"/>
+	<Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <Library Value="libhltypes_d"/>
@@ -71,6 +72,7 @@
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_UNIX"/>
         <Preprocessor Value="_DEBUG"/>
+	<Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <Library Value="libhltypes_d"/>
@@ -102,6 +104,7 @@
     <Configuration Name="Release_Win32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
+	<Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
         <Library Value="libhltypes"/>
