@@ -22,6 +22,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
+#define _TEST_FADE_IN_OUT
 //#define _TEST_THREADED
 //#define _TEST_COMPLEX_HANDLER
 
@@ -149,6 +150,50 @@ int main(int argc, char **argv)
 		xal::mgr->update(0.1f);
 #endif
 	}
+#endif
+
+#ifdef _TEST_FADE_IN_OUT
+	s = xal::mgr->getSound("wind");
+	s->play(1.0f);
+	for (int i = 0; i < 8; i++)
+	{
+		Sleep(100.0f);
+		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
+	s->pause(1.0f);
+	for (int i = 0; i < 6; i++)
+	{
+		Sleep(100.0f);
+		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
+	s->play(1.0f);
+	for (int i = 0; i < 5; i++)
+	{
+		Sleep(100.0f);
+		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
+	printf("- 10 more updates\n");
+	for (int i = 0; i < 10; i++)
+	{
+		Sleep(100.0f);
+		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+#ifndef _TEST_THREADED
+		xal::mgr->update(0.1f);
+#endif
+	}
+	s->stop();
+#ifndef _TEST_THREADED
+	xal::mgr->update(0.01f);
+#endif
 #endif
 
 #ifdef _TEST_COMPLEX_HANDLER
