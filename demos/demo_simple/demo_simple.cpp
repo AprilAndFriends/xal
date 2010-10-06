@@ -20,9 +20,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
+//#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
-#define _TEST_FADE_IN_OUT
+//#define _TEST_FADE_IN_OUT
 //#define _TEST_THREADED
 //#define _TEST_COMPLEX_HANDLER
 
@@ -76,6 +77,34 @@ int main(int argc, char **argv)
 #ifndef _TEST_THREADED
 	xal::mgr->update(0.01f);
 #endif
+#ifdef _TEST_MULTIPLE_STREAM
+	s->stop();
+	xal::mgr->update(0.01f);
+	printf("- start multiple stream...\n");
+	for (int i = 0; i < 5; i++)
+	{
+		s->play();
+		Sleep(1000.0f);
+#ifndef _TEST_THREADED
+		xal::mgr->update(1.0f);
+#endif
+		if (i == 2)
+		{
+			s->pause(1.5f);
+			for (int j = 0; j < 10; j++)
+			{
+				Sleep(100.0f);
+#ifndef _TEST_THREADED
+				xal::mgr->update(0.1f);
+#endif
+			}
+		}
+	}
+	s->stop();
+#ifndef _TEST_THREADED
+	xal::mgr->update(1.0f);
+#endif
+#endif
 #endif
 	
 #ifdef _TEST_MULTIPLE_PLAY
@@ -104,7 +133,6 @@ int main(int argc, char **argv)
 	}
 	xal::mgr->update(0.01f);
 	s = xal::mgr->getSound("wind");
-
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{

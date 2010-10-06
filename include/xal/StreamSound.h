@@ -38,6 +38,8 @@ namespace xal
 		void unqueueBuffers();
 		void rewindStream();
 		
+		Sound* play(float fadeTime = 0.0f, bool looping = false);
+		
 		unsigned int getBuffer();
 		
 	protected:
