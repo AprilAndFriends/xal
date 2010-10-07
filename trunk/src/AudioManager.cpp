@@ -14,6 +14,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
+#include <hltypes/exception.h>
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -223,9 +224,7 @@ namespace xal
 	Sound* AudioManager::getSound(chstr name)
 	{
 		if (this->sounds.find(name) == this->sounds.end())
-		{
-			return NULL;
-		}
+			throw key_error(name,"Sounds");
 		return this->sounds[name];
 	}
 	
