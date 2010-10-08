@@ -19,9 +19,7 @@
 		7FC8064411EC943B00851062 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063D11EC943B00851062 /* Sound.cpp */; };
 		7FC8064511EC943B00851062 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063E11EC943B00851062 /* Source.cpp */; };
 		7FC8064611EC943B00851062 /* StreamSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8063F11EC943B00851062 /* StreamSound.cpp */; };
-		7FC8064711EC943B00851062 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8064011EC943B00851062 /* Util.cpp */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		7FC8064F11EC944C00851062 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064C11EC944C00851062 /* Util.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8065711EC945900851062 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065011EC945900851062 /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8065811EC945900851062 /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065111EC945900851062 /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8065911EC945900851062 /* SimpleSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8065211EC945900851062 /* SimpleSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,9 +47,7 @@
 		7FC8063D11EC943B00851062 /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sound.cpp; path = src/Sound.cpp; sourceTree = "<group>"; };
 		7FC8063E11EC943B00851062 /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Source.cpp; path = src/Source.cpp; sourceTree = "<group>"; };
 		7FC8063F11EC943B00851062 /* StreamSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StreamSound.cpp; path = src/StreamSound.cpp; sourceTree = "<group>"; };
-		7FC8064011EC943B00851062 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = src/Util.cpp; sourceTree = "<group>"; };
 		7FC8064B11EC944C00851062 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Endianess.h; path = src/Endianess.h; sourceTree = "<group>"; };
-		7FC8064C11EC944C00851062 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = src/Util.h; sourceTree = "<group>"; };
 		7FC8065011EC945900851062 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = include/xal/AudioManager.h; sourceTree = "<group>"; };
 		7FC8065111EC945900851062 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = include/xal/Category.h; sourceTree = "<group>"; };
 		7FC8065211EC945900851062 /* SimpleSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleSound.h; path = include/xal/SimpleSound.h; sourceTree = "<group>"; };
@@ -153,7 +149,6 @@
 				7FC8063D11EC943B00851062 /* Sound.cpp */,
 				7FC8063E11EC943B00851062 /* Source.cpp */,
 				7FC8063F11EC943B00851062 /* StreamSound.cpp */,
-				7FC8064011EC943B00851062 /* Util.cpp */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -179,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				7FC8064B11EC944C00851062 /* Endianess.h */,
-				7FC8064C11EC944C00851062 /* Util.h */,
 			);
 			name = "Private Includes";
 			sourceTree = "<group>";
@@ -192,7 +186,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FC8064E11EC944C00851062 /* Endianess.h in Headers */,
-				7FC8064F11EC944C00851062 /* Util.h in Headers */,
 				7FC8065711EC945900851062 /* AudioManager.h in Headers */,
 				7FC8065811EC945900851062 /* Category.h in Headers */,
 				7FC8065911EC945900851062 /* SimpleSound.h in Headers */,
@@ -274,7 +267,6 @@
 				7FC8064411EC943B00851062 /* Sound.cpp in Sources */,
 				7FC8064511EC943B00851062 /* Source.cpp in Sources */,
 				7FC8064611EC943B00851062 /* StreamSound.cpp in Sources */,
-				7FC8064711EC943B00851062 /* Util.cpp in Sources */,
 				7F4ADF6611EF29D20016821F /* Mutex.cpp in Sources */,
 				7F4ADF6711EF29D20016821F /* SoundBuffer.cpp in Sources */,
 				7F4ADF6811EF29D20016821F /* Thread.cpp in Sources */,
