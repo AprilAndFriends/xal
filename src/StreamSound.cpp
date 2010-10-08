@@ -45,7 +45,7 @@ namespace xal
 
 	StreamSound::~StreamSound()
 	{
-		this->stopAll();
+		this->destroySources();
 		for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 		{
 			if (this->buffers[i] != 0)

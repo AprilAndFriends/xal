@@ -41,7 +41,7 @@ namespace xal
 
 	SimpleSound::~SimpleSound()
 	{
-		this->stopAll();
+		this->destroySources();
 		if (this->buffer != 0)
 		{
 			alDeleteBuffers(1, &this->buffer);

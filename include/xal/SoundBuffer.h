@@ -26,6 +26,7 @@ namespace xal
 	public:
 		SoundBuffer(chstr name, chstr category, chstr prefix = "");
 		virtual ~SoundBuffer();
+		void destroySources();
 
 		bool load();
 		
