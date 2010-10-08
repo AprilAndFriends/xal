@@ -82,47 +82,6 @@ namespace xal
 			this->pause(fadeTime);
 		}
 		return SoundBuffer::play(fadeTime, looping);
-		/*
-		bool playing = false;
-		foreach (Source*, it, this->sources)
-		{
-			if ((*it)->isPlaying())
-		}
-		
-		bool playable = true;
-		bool playing = (this->sources.size() > 0 && this->sources[0]->isPlaying());
-		if (playing && this->getCategory()->isStreamed())
-		{
-			if (!this->sources[0]->isFading())
-			{
-				return this->sources[0];
-			}
-			playable = false;
-		}
-		//this->sources.size() == 0 || this->sources[0]->isPlaying() && !this->sources[0]->isFading())
-		if (!playing (this->sources.size() == 0 || this->sources[0]->isPlaying() && !this->sources[0]->isFading()))
-		{
-			unsigned int sourceId = xal::mgr->allocateSourceId();
-			if (sourceId == 0)
-			{
-				return NULL;
-			}
-#ifdef _DEBUG
-			xal::mgr->logMessage(hsprintf("Allocated new source %d", sourceId));
-#endif
-			source = xal::mgr->createSource(this, sourceId);
-			this->bindSource(source);
-		}
-		else
-		{
-#ifdef _DEBUG
-			xal::mgr->logMessage("Using allocated source");
-#endif
-			source = this->sources[0];
-		}
-		source->play(fadeTime, looping);
-		return source;
-		*/
 	}
 	
 	unsigned int StreamSound::getBuffer()

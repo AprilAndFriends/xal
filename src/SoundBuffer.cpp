@@ -45,6 +45,7 @@ namespace xal
 	{
 		foreach (Source*, it, this->sources)
 		{
+			(*it)->stop();
 			(*it)->unlock();
 			(*it)->unbind();
 			xal::mgr->destroySource(*it);
