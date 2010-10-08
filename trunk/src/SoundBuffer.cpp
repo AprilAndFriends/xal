@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <fstream>
 #include <hltypes/harray.h>
+#include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -38,16 +38,15 @@ namespace xal
 
 	SoundBuffer::~SoundBuffer()
 	{
-		xal::mgr->logMessage("Destroying sound " + this->name);
+		xal::mgr->logMessage("destroying sound " + this->name);
 	}
 	
 	void SoundBuffer::destroySources()
 	{
 		foreach (Source*, it, this->sources)
 		{
-			(*it)->stop();
 			(*it)->unlock();
-			(*it)->unbind();
+			(*it)->stop();
 			xal::mgr->destroySource(*it);
 		}
 	}
@@ -74,14 +73,11 @@ namespace xal
 	hstr SoundBuffer::_findLinkedFile()
 	{
 		char buffer[1024];
-		std::ifstream file(this->fileName.c_str());
-		if (!file.is_open())
+		if (!hfile::exists(this->fileName))
 		{
 			return this->fileName;
 		}
-		file.getline(buffer, 1024);
-		file.close();
-		harray<hstr> newFolders = hstr(buffer).split("/");
+		harray<hstr> newFolders = hfile::hread(this->fileName).split("/");
 		harray<hstr> folders = this->fileName.split("/");
 		folders.pop_back();
 		foreach (hstr, it, newFolders)
@@ -95,14 +91,13 @@ namespace xal
 				folders.pop_back();
 			}
 		}
-		xal::mgr->logMessage(folders.join("/"));
 		return folders.join("/");
 	}
 
 	void SoundBuffer::bindSource(Source* source)
 	{
 #ifdef _DEBUG
-		xal::mgr->logMessage(hsprintf("Binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
+		xal::mgr->logMessage(hsprintf("binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
 #endif
 		this->sources += source;
 	}
@@ -110,7 +105,7 @@ namespace xal
 	void SoundBuffer::unbindSource(Source* source)
 	{
 #ifdef _DEBUG
-		xal::mgr->logMessage(hsprintf("Unbinding source from sound %s", this->virtualFileName.c_str()));
+		xal::mgr->logMessage(hsprintf("unbinding source from sound %s", this->virtualFileName.c_str()));
 #endif
 		this->sources -= source;
 	}
@@ -223,7 +218,7 @@ namespace xal
 				return NULL;
 			}
 #ifdef _DEBUG
-			xal::mgr->logMessage(hsprintf("Allocated new source %d", sourceId));
+			xal::mgr->logMessage(hsprintf("allocated new source %d", sourceId));
 #endif
 			source = xal::mgr->createSource(this, sourceId);
 			this->bindSource(source);
@@ -231,7 +226,7 @@ namespace xal
 		else
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("Using allocated source");
+			xal::mgr->logMessage("using allocated source");
 #endif
 			source = this->sources[0];
 		}
@@ -252,7 +247,7 @@ namespace xal
 		if (this->getBuffer() != 0)
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("Stop all");
+			xal::mgr->logMessage("stop all");
 #endif
 			foreach (Source*, it, this->sources)
 			{

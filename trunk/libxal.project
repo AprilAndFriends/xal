@@ -12,9 +12,6 @@
     <File Name="src/Source.cpp"/>
     <File Name="src/Category.cpp"/>
     <File Name="src/AudioManager.cpp"/>
-    <File Name="src/_dirent_win32.h"/>
-    <File Name="src/Util.cpp"/>
-    <File Name="src/Util.h"/>
     <File Name="src/SimpleSound.cpp"/>
     <File Name="src/StreamSound.cpp"/>
     <File Name="src/SoundBuffer.cpp"/>
@@ -40,7 +37,7 @@
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="_DEBUG"/>
-	<Preprocessor Value="HAVE_OGG=1"/>
+        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <Library Value="libhltypes_d"/>
@@ -72,7 +69,7 @@
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_UNIX"/>
         <Preprocessor Value="_DEBUG"/>
-	<Preprocessor Value="HAVE_OGG=1"/>
+        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <Library Value="libhltypes_d"/>
@@ -104,7 +101,7 @@
     <Configuration Name="Release_Win32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
-	<Preprocessor Value="HAVE_OGG=1"/>
+        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
         <Library Value="libhltypes"/>

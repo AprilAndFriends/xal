@@ -88,11 +88,11 @@ namespace xal
 				return NULL;
 			}
 #ifdef _DEBUG
-			xal::mgr->logMessage(hsprintf("Allocated source ID %d", this->sourceId));
+			xal::mgr->logMessage(hsprintf("allocated source ID %d", this->sourceId));
 #endif
 		}
 #ifdef _DEBUG
-		xal::mgr->logMessage("Play sound " + this->getSound()->getVirtualFileName());
+		xal::mgr->logMessage("play sound " + this->getSound()->getVirtualFileName());
 #endif
 		if (!this->paused)
 		{
@@ -122,7 +122,7 @@ namespace xal
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
 #ifdef _DEBUG
-			xal::mgr->logMessage("Fading in sound " + this->getSound()->getVirtualFileName());
+			xal::mgr->logMessage("fading in sound " + this->getSound()->getVirtualFileName());
 #endif
 		}
 		else
@@ -159,7 +159,7 @@ namespace xal
 		if (fadeTime > 0)
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("Fading out sound " + this->getSound()->getVirtualFileName());
+			xal::mgr->logMessage("fading out sound " + this->getSound()->getVirtualFileName());
 #endif
 			this->fadeSpeed = -1.0f / fadeTime;
 		}
@@ -168,11 +168,11 @@ namespace xal
 #ifdef _DEBUG
 			if (pause)
 			{
-				xal::mgr->logMessage("Pause sound " + this->getSound()->getVirtualFileName());
+				xal::mgr->logMessage("pause sound " + this->getSound()->getVirtualFileName());
 			}
 			else
 			{
-				xal::mgr->logMessage("Stop sound " + this->getSound()->getVirtualFileName());
+				xal::mgr->logMessage("stop sound " + this->getSound()->getVirtualFileName());
 			}
 #endif
 			this->fadeTime = 0.0f;

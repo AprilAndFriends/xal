@@ -11,10 +11,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <hltypes/exception.h>
+#include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
-#include <hltypes/exception.h>
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -32,7 +33,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "Source.h"
 #include "StreamSound.h"
 #include "Thread.h"
-#include "Util.h"
 
 namespace xal
 {
@@ -76,21 +76,21 @@ namespace xal
 	
 	void AudioManager::init(chstr deviceName, bool threaded, float updateTime)
 	{
-		this->logMessage("Initializing XAL");
+		this->logMessage("initializing XAL");
 		if (deviceName == "nosound")
 		{
-			this->deviceName = "nosound";
-			this->logMessage("- Audio is disabled");
+			this->deviceName = deviceName;
+			this->logMessage("audio is disabled");
 			return;
 		}
-		this->logMessage("Initializing OpenAL");
+		this->logMessage("initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		this->logMessage("Audio device: " + this->deviceName);
+		this->logMessage("audio device: " + this->deviceName);
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
@@ -107,7 +107,7 @@ namespace xal
 		this->deviceName = deviceName;
 		if (threaded)
 		{
-			this->logMessage("Starting Thread Management");
+			this->logMessage("starting thread management");
 			this->updateTime = updateTime;
 			this->mutex = new Mutex();
 			this->thread = new Thread();
@@ -133,7 +133,7 @@ namespace xal
 		{
 			delete it->second;
 		}
-		this->logMessage("Destroying OpenAL");
+		this->logMessage("destroying OpenAL");
 		if (gDevice)
 		{
 			while (this->sources.size() > 0)
@@ -204,7 +204,7 @@ namespace xal
 		{
 			return unallocated[0];
 		}
-		this->logMessage("Audio Manager: Unable to allocate audio source!");
+		this->logMessage("unable to allocate audio source!");
 		return 0;
 	}
 
@@ -252,7 +252,7 @@ namespace xal
 	{
 		harray<hstr> result;
 		hstr category;
-		harray<hstr> dirs = getPathDirectories(path);
+		harray<hstr> dirs = hdir::directories(path);
 		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/").pop_back();
@@ -265,7 +265,7 @@ namespace xal
 	{
 		this->createCategory(category);
 		harray<hstr> result;
-		harray<hstr> files = getPathFilesRecursive(path);
+		harray<hstr> files = hdir::files(path);
 		SoundBuffer* sound;
 		foreach (hstr, it, files)
 		{
