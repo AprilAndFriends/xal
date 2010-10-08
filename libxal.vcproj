@@ -179,10 +179,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\_dirent_win32.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\AudioManager.cpp"
 				>
 			</File>
@@ -220,14 +216,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Thread.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Util.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Util.h"
 				>
 			</File>
 		</Filter>
