@@ -38,13 +38,17 @@ namespace xal
 
 	SoundBuffer::~SoundBuffer()
 	{
+		xal::mgr->logMessage("Destroying sound " + this->name);
+	}
+	
+	void SoundBuffer::destroySources()
+	{
 		foreach (Source*, it, this->sources)
 		{
 			(*it)->unlock();
 			(*it)->unbind();
 			xal::mgr->destroySource(*it);
 		}
-		xal::mgr->logMessage("Destroying sound " + this->name);
 	}
 	
 /******* METHODS *******************************************************/
