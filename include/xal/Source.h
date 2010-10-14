@@ -29,6 +29,7 @@ namespace xal
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 		
 		void unbind(bool pause = false);
 		
@@ -57,8 +58,6 @@ namespace xal
 		float sampleOffset;
 		bool bound;
 		SoundBuffer* sound;
-		
-		void _stop(float fadeTime, bool pause = false);
 		
 	};
 

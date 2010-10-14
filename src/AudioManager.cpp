@@ -125,22 +125,24 @@ namespace xal
 			delete this->thread;
 			delete this->mutex;
 		}
-		foreach_m(SoundBuffer*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			delete it->second;
 		}
-		foreach_m(Category*, it, this->categories)
+		foreach_m (Category*, it, this->categories)
 		{
 			delete it->second;
 		}
 		this->logMessage("destroying OpenAL");
 		if (gDevice)
 		{
+			Source* source;
 			while (this->sources.size() > 0)
 			{
-				this->sources[0]->unlock();
-				this->sources[0]->stop();
-				this->destroySource(this->sources[0]);
+				source = this->sources.pop_front();
+				source->unlock();
+				source->stop();
+				delete source;
 			}
 			alDeleteSources(XAL_MAX_SOURCES, this->sourceIds);
 			alcMakeContextCurrent(NULL);
@@ -170,18 +172,10 @@ namespace xal
 	{
 		if (this->isEnabled())
 		{
-			foreach (Source*, it, this->sources)
-			{
-				(*it)->update(k);
-			}
 			harray<Source*> sources(this->sources);
 			foreach (Source*, it, sources)
 			{
-				if (!(*it)->isBound())
-				{
-					(*it)->getSound()->unbindSource(*it);
-					this->destroySource(*it);
-				}
+				(*it)->update(k);
 			}
 		}
 	}
@@ -202,7 +196,7 @@ namespace xal
 		unallocated -= allocated;
 		if (unallocated.size() > 0)
 		{
-			return unallocated[0];
+			return unallocated.front();
 		}
 		this->logMessage("unable to allocate audio source!");
 		return 0;
@@ -280,7 +274,7 @@ namespace xal
 
 	void AudioManager::destroySound(SoundBuffer* sound)
 	{
-		foreach_m(SoundBuffer*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			if (it->second == sound)
 			{
@@ -294,7 +288,7 @@ namespace xal
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		harray<hstr> deleteList;
-		foreach_m(SoundBuffer*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			if (it->first.starts_with(prefix))
 			{
