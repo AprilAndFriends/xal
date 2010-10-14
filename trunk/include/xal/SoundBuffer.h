@@ -54,6 +54,7 @@ namespace xal
 		bool isFadingOut();
 		bool isPaused();
 		
+		bool isLoaded() { return this->loaded; }
 		bool isLink();
 		bool isOgg();
 		
@@ -68,6 +69,7 @@ namespace xal
 		hstr virtualFileName;
 		float duration;
 		unsigned int sourceId;
+		bool loaded;
 		Category* category;
 		harray<Source*> sources;
 		

@@ -18,17 +18,19 @@ namespace xal
 	class xalExport Category
 	{
 	public:
-		Category(chstr name, bool streamed = false);
+		Category(chstr name, bool streamed = false, bool dynamicLoad = false);
 		~Category();
 		
 		hstr getName() { return this->name; }
 		bool isStreamed() { return this->streamed; }
+		bool isDynamicLoad() { return this->dynamicLoad; }
 		float getGain() { return this->gain; }
 		void setGain(float value) { this->gain = value; }
 		
 	protected:
 		hstr name;
 		bool streamed;
+		bool dynamicLoad;
 		float gain;
 		
 	};

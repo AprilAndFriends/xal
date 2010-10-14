@@ -12,10 +12,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace xal
 {
-	Category::Category(chstr name, bool streamed) : gain(1.0f)
+	Category::Category(chstr name, bool streamed, bool dynamicLoad) : gain(1.0f)
 	{
 		this->name = name;
 		this->streamed = streamed;
+		this->dynamicLoad = dynamicLoad;
 	}
 
 	Category::~Category()

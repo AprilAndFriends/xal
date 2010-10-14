@@ -7,6 +7,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#ifndef __APPLE__
+#include <AL/al.h>
+#else
+#include <OpenAL/al.h>
+#endif
+
 #include <hltypes/harray.h>
 #include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
@@ -17,18 +23,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "Source.h"
 #include "AudioManager.h"
 
-#ifndef __APPLE__
-#include <AL/al.h>
-#else
-#include <OpenAL/al.h>
-#endif
-
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : Sound(),
-		duration(0.0f), sources(harray<xal::Source*>())
+		duration(0.0f), sources(harray<xal::Source*>()), loaded(false)
 	{
 		this->fileName = hstr(fileName);
 		this->virtualFileName = this->fileName;
@@ -47,8 +47,8 @@ namespace xal
 		while (this->sources.size() > 0)
 		{
 			source = this->sources.front();
-			source->stopSoft();
 			source->unlock();
+			source->stopSoft();
 			source->unbind();
 		}
 	}
@@ -57,19 +57,24 @@ namespace xal
 
 	bool SoundBuffer::load()
 	{
+		bool result = false;
 		if (this->isLink())
 		{
 			this->virtualFileName = this->_findLinkedFile();
 		}
 		if (!xal::mgr->isEnabled())
 		{
-			return (this->isOgg());
+			result = this->isOgg();
 		}
 		if (this->isOgg())
 		{
-			return this->_loadOgg();
+			result = this->_loadOgg();
 		}
-		return false;
+		if (result)
+		{
+			this->loaded = result;
+		}
+		return result;
 	}
 	
 	hstr SoundBuffer::_findLinkedFile()
@@ -207,6 +212,10 @@ namespace xal
 	
 	Sound* SoundBuffer::play(float fadeTime, bool looping)
 	{
+		if (!this->loaded)
+		{
+			this->load();
+		}
 		if (this->getBuffer() == 0)
 		{
 			return NULL;

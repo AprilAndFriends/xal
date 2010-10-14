@@ -217,8 +217,10 @@ namespace xal
 
 	Sound* AudioManager::getSound(chstr name)
 	{
-		if (this->sounds.find(name) == this->sounds.end())
-			throw key_error(name,"Sounds");
+		if (!this->sounds.has_key(name))
+		{
+			throw key_error(name, "Sounds");
+		}
 		return this->sounds[name];
 	}
 	
@@ -234,7 +236,11 @@ namespace xal
 		{
 			sound = new SimpleSound(filename, categoryName, prefix);
 		}
-		if (!sound->load())
+		if (category->isDynamicLoad())
+		{
+			this->logMessage("creating dynamic sound " + filename);
+		}
+		else if (!sound->load())
 		{
 			return NULL;
 		}
@@ -246,11 +252,11 @@ namespace xal
 	{
 		harray<hstr> result;
 		hstr category;
-		harray<hstr> dirs = hdir::directories(path);
+		harray<hstr> dirs = hdir::directories(path, true);
 		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/").pop_back();
-			result += this->createSoundsFromPath(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
+			result += this->createSoundsFromPath((*it).c_str(), category, prefix);
 		}
 		return result;
 	}
@@ -259,11 +265,11 @@ namespace xal
 	{
 		this->createCategory(category);
 		harray<hstr> result;
-		harray<hstr> files = hdir::files(path);
+		harray<hstr> files = hdir::files(path, true);
 		SoundBuffer* sound;
 		foreach (hstr, it, files)
 		{
-			sound = (SoundBuffer*)this->createSound(hsprintf("%s/%s", path.c_str(), (*it).c_str()), category, prefix);
+			sound = (SoundBuffer*)this->createSound((*it).c_str(), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();
@@ -302,11 +308,11 @@ namespace xal
 		}
 	}
 
-	void AudioManager::createCategory(chstr name, bool streamed)
+	void AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
 	{
-		if (this->categories.find(name) == this->categories.end())
+		if (!this->categories.has_key(name))
 		{
-			this->categories[name] = new Category(name, streamed);
+			this->categories[name] = new Category(name, streamed, dynamicLoad);
 		}
 	}
 
@@ -322,7 +328,7 @@ namespace xal
 
 	Category* AudioManager::getCategoryByName(chstr name)
 	{
-		if (this->categories.find(name) == this->categories.end())
+		if (!this->categories.has_key(name))
 		{
 			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
 		}
@@ -331,7 +337,7 @@ namespace xal
 
 	float AudioManager::getCategoryGain(chstr name)
 	{
-		if (this->categories.find(name) == this->categories.end())
+		if (!this->categories.has_key(name))
 		{
 			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
 		}
