@@ -71,6 +71,8 @@ namespace xal
 		Category* category;
 		harray<Source*> sources;
 		
+		void _stopSoft(float fadeTime = 0.0f);
+		
 		virtual bool _loadOgg() = 0;
 		hstr _findLinkedFile();
 		

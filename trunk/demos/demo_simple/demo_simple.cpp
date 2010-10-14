@@ -8,117 +8,98 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <stdio.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+#include <hltypes/harray.h>
+#include <hltypes/hstring.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
-#include <hltypes/harray.h>
-#include <hltypes/hstring.h>
 
-#define _TEST_SOUND
-//#define _TEST_LINKS
-//#define _TEST_SOURCE_HANDLING
-//#define _TEST_MULTIPLE_PLAY
 //#define _TEST_STREAM
+//#define _TEST_LINKS
+//#define _TEST_THREADED
+
+//#define _TEST_SOUND
+//#define _TEST_SOURCE_HANDLING
+//#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
-//#define _TEST_THREADED
 //#define _TEST_COMPLEX_HANDLER
 
-//#define _TEST_PLAYLIST
-//#define _TEST_PARALLEL_SOUNDS
+//#define _TEST_UTIL_PLAYLIST
+//#define _TEST_UTIL_PARALLEL_SOUNDS
 
-#include <windows.h>
 
-int main(int argc, char **argv)
-{
 #ifndef _TEST_THREADED
-	xal::init("", false);
+#define _update(time) xal::mgr->update(time)
 #else
-	xal::init("", true, 0.2f);
+#define _update(time)
 #endif
-	xal::Sound* s;
-#ifndef _TEST_LINKS
-#ifdef _TEST_STREAM
-	xal::mgr->createCategory("cat", true);
-#endif
-	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "cat", "");
-#else
-	xal::mgr->createCategory("cat", true);
-	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
-#endif
-#ifdef _TEST_SOUND
-#ifndef _TEST_LINKS
-#ifdef _TEST_STREAM
-	s = xal::mgr->getSound("wind");
-#else
-	s = xal::mgr->getSound("bark");
-#endif
-#else
-	s = xal::mgr->getSound("linked_sound");
-#endif
-#ifndef _TEST_COMPLEX_HANDLER
+xal::Sound* s;
+
+void _test_sound()
+{
+	printf("  - start test sound...\n");
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 		s->pause();
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 		s->play();
 	}
-#ifndef _TEST_THREADED
-	xal::mgr->update(0.01f);
-#endif
-#ifdef _TEST_MULTIPLE_STREAM
+	_update(1.0f);
 	s->stop();
-	xal::mgr->update(0.01f);
-	printf("- start multiple stream...\n");
+}
+
+void _test_multistream()
+{
+	printf("  - start test multiple stream...\n");
 	for (int i = 0; i < 5; i++)
 	{
 		s->play();
 		Sleep(1000.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(1.0f);
-#endif
+		_update(1.0f);
 		if (i == 2)
 		{
 			s->pause(1.5f);
 			for (int j = 0; j < 10; j++)
 			{
 				Sleep(100.0f);
-#ifndef _TEST_THREADED
-				xal::mgr->update(0.1f);
-#endif
+				_update(0.1f);
 			}
 		}
 	}
 	s->stop();
-#ifndef _TEST_THREADED
-	xal::mgr->update(1.0f);
-#endif
-#endif
-#endif
-	
-#ifdef _TEST_MULTIPLE_PLAY
+	_update(0.1f);
+}
+
+void _test_multiplay()
+{
+	printf("  - start test multiple play...\n");
 	s->play();
 	Sleep(100.0f);
 	s->play();
 	while (s->isPlaying())
 	{
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
-#elif defined _TEST_SOURCE_HANDLING
+	s->stop();
+}
+
+void _test_sources()
+{
+	printf("  - start test sources...\n");
+	s->play();
 	for (int i = 0; i < XAL_MAX_SOURCES + 1; i++)
 	{
 		Sleep(20.0f);
@@ -127,9 +108,7 @@ int main(int argc, char **argv)
 	while (s->isPlaying())
 	{
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
 	xal::mgr->update(0.01f);
 	s = xal::mgr->getSound("wind");
@@ -137,36 +116,30 @@ int main(int argc, char **argv)
 	for (int i = 0; i < 20; i++)
 	{
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
-#ifndef _TEST_THREADED
-	xal::mgr->update(0.1f);
-#endif
+	_update(0.1f);
 	s->stop();
-	
-#endif
-#endif
+}
 
-#ifdef _TEST_FADE_IN
+void _test_fadein()
+{
+	printf("  - start test fade in...\n");
 	s = xal::mgr->getSound("wind");
 	s->play(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
 	s->stop();
-#ifndef _TEST_THREADED
-	xal::mgr->update(0.01f);
-#endif
-#endif
+	_update(1.0f);
+}
 
-#ifdef _TEST_FADE_OUT
+void _test_fadeout()
+{
+	printf("  - start test fade out...\n");
 	s = xal::mgr->getSound("wind");
 	s->play();
 	s->stop(1.0f);
@@ -174,75 +147,63 @@ int main(int argc, char **argv)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
-#endif
+}
 
-#ifdef _TEST_FADE_IN_OUT
+void _test_fadeinout()
+{
+	printf("  - start test fade in and out...\n");
 	s = xal::mgr->getSound("wind");
 	s->play(1.0f);
 	for (int i = 0; i < 8; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
 	s->pause(1.0f);
 	for (int i = 0; i < 6; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
 	s->play(1.0f);
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
 	printf("- 10 more updates\n");
 	for (int i = 0; i < 10; i++)
 	{
 		Sleep(100.0f);
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 	}
 	s->stop();
-#ifndef _TEST_THREADED
-	xal::mgr->update(0.01f);
-#endif
-#endif
+	_update(1.0f);
+}
 
-#ifdef _TEST_COMPLEX_HANDLER
+void _test_complex_handler()
+{
+	printf("  - start test complex handler...\n");
 	xal::Sound* temp;
-	xal::Sound* s1 = xal::mgr->getSound("wind")->play();
-	xal::Sound* s2 = xal::mgr->getSound("wind_copy")->play();
-	xal::Sound* t1 = s1;
-	xal::Sound* t2 = s2;
+	xal::Sound* s1 = xal::mgr->getSound("wind");
+	xal::Sound* s2 = xal::mgr->getSound("wind_copy");
+	xal::Sound* t1 = s1->play();
+	xal::Sound* t2 = s2->play();
 	s2->pause();
 	for (int i = 0; i < 50; i++)
 	{
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 		s2->play();
 		s1->pause();
 		Sleep(100.0f);
-#ifndef _TEST_THREADED
-		xal::mgr->update(0.1f);
-#endif
+		_update(0.1f);
 		s2->pause();
 		s1->play();
 		if (i % 3 == 0)
@@ -252,9 +213,13 @@ int main(int argc, char **argv)
 			s2 = temp;
 		}
 	}
-#endif
+	s1->stop();
+	s2->stop();
+}
 
-#ifdef _TEST_PLAYLIST
+void _test_util_playlist()
+{
+	printf("  - start test util playlist...\n");
 	xal::Playlist list(false);
 	list.queueSound("bark");
 	list.queueSound("bark");
@@ -262,18 +227,80 @@ int main(int argc, char **argv)
 	list.queueSound("bark");
 	list.play();
 	while (list.isPlaying()) { list.update(); }
+}
+
+void _test_util_parallel_sounds()
+{
+	printf("  - start test util parallel sounds...\n");
+	harray<hstr> names;
+	names += "bark";
+	xal::ParallelSoundManager pmgr;
+	pmgr.updateList(names);
+	Sleep(1.0f);
+	_update(1.0f);
+	names.clear();
+	pmgr.updateList(names);
+	Sleep(1.0f);
+	_update(1.0f);
+}
+
+int main(int argc, char **argv)
+{
+#ifndef _TEST_THREADED
+	xal::init("", false);
+#else
+	xal::init("", true, 0.2f);
 #endif
-	
-#ifdef _TEST_PARALLEL_SOUNDS
-	xal::ParallelSoundsManager mgr();
-	mgr.addSound("bark");
-	mgr.removeSound("bark");
-	list.queueSound("wind");
-	list.queueSound("bark");
-	list.play();
-	while (list.isPlaying()) { list.update(); }
+#ifndef _TEST_LINKS
+#ifdef _TEST_STREAM
+	xal::mgr->createCategory("cat", true);
 #endif
-	
+	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "cat", "");
+#else
+	xal::mgr->createCategory("cat", true);
+	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
+#endif
+#ifndef _TEST_LINKS
+#ifdef _TEST_STREAM
+	s = xal::mgr->getSound("wind");
+#else
+	s = xal::mgr->getSound("bark");
+#endif
+#else
+	s = xal::mgr->getSound("linked_sound");
+#endif
+
+#ifdef _TEST_SOUND
+	_test_sound();
+#endif
+#ifdef _TEST_MULTIPLE_STREAM
+	_test_multistream();
+#endif
+#ifdef _TEST_MULTIPLAY
+	_test_multiplay();
+#endif
+#ifdef _TEST_SOURCE_HANDLING
+	_test_sources();
+#endif
+#ifdef _TEST_FADE_IN
+	_test_fadein();
+#endif
+#ifdef _TEST_FADE_OUT
+	_test_fadeout();
+#endif
+#ifdef _TEST_FADE_IN_OUT
+	_test_fadeinout();
+#endif
+#ifdef _TEST_COMPLEX_HANDLER
+	_test_complex_handler();
+#endif
+#ifdef _TEST_UTIL_PLAYLIST
+	_test_util_playlist();
+#endif
+#ifdef _TEST_UTIL_PARALLEL_SOUNDS
+	_test_util_parallel_sounds();
+#endif
+	printf("  - done\n");
 	xal::destroy();
 	system("pause");
 	return 0;

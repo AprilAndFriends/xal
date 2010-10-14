@@ -34,7 +34,6 @@ namespace xal
 
 	Source::~Source()
 	{
-		this->stop();
 	}
 
 /******* METHODS *******************************************************/
@@ -61,9 +60,14 @@ namespace xal
 				}
 				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
 				{
-					this->paused ? this->pause() : this->stop();
 					this->fadeTime = 0.0f;
 					this->fadeSpeed = 0.0f;
+					if (!this->paused)
+					{
+						this->stop();
+						return;
+					}
+					this->pause();
 				}
 				else
 				{
@@ -92,7 +96,7 @@ namespace xal
 #endif
 		}
 #ifdef _DEBUG
-		xal::mgr->logMessage("play sound " + this->getSound()->getVirtualFileName());
+		xal::mgr->logMessage("play sound " + this->sound->getVirtualFileName());
 #endif
 		if (!this->paused)
 		{
@@ -118,11 +122,11 @@ namespace xal
 				alSourcef(this->sourceId, AL_SEC_OFFSET, this->sampleOffset);
 			}
 		}
-		if (fadeTime > 0)
+		if (fadeTime > 0.0f)
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
 #ifdef _DEBUG
-			xal::mgr->logMessage("fading in sound " + this->getSound()->getVirtualFileName());
+			xal::mgr->logMessage("fading in sound " + this->sound->getVirtualFileName());
 #endif
 		}
 		else
@@ -142,58 +146,56 @@ namespace xal
 
 	void Source::stop(float fadeTime)
 	{
-		this->_stop(fadeTime);
+		this->stopSoft(fadeTime);
+		if (this->sourceId != 0 && fadeTime <= 0.0f)
+		{
+			this->unbind(this->paused);
+		}
 	}
 
 	void Source::pause(float fadeTime)
 	{
-		this->_stop(fadeTime, true);
+		this->stopSoft(fadeTime, true);
+		if (this->sourceId != 0 && fadeTime <= 0.0f)
+		{
+			this->unbind(this->paused);
+		}
 	}
 
-	void Source::_stop(float fadeTime, bool pause)
+	void Source::stopSoft(float fadeTime, bool pause)
 	{
 		if (this->sourceId == 0)
 		{
 			return;
 		}
-		if (fadeTime > 0)
+		this->paused = pause;
+		if (fadeTime > 0.0f)
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("fading out sound " + this->getSound()->getVirtualFileName());
+			xal::mgr->logMessage("fading out sound " + this->sound->getVirtualFileName());
 #endif
 			this->fadeSpeed = -1.0f / fadeTime;
+			return;
 		}
-		else
-		{
 #ifdef _DEBUG
-			if (pause)
+		xal::mgr->logMessage(hstr(this->paused ? "pause" : "stop") + " sound " + this->sound->getVirtualFileName());
+#endif
+		this->fadeTime = 0.0f;
+		this->fadeSpeed = 0.0f;
+		alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
+		alSourceStop(this->sourceId);
+		if (this->sound->getCategory()->isStreamed())
+		{
+			this->sound->setSourceId(this->sourceId);
+			if (this->paused)
 			{
-				xal::mgr->logMessage("pause sound " + this->getSound()->getVirtualFileName());
+				((StreamSound*)this->sound)->unqueueBuffers();
 			}
 			else
 			{
-				xal::mgr->logMessage("stop sound " + this->getSound()->getVirtualFileName());
+				((StreamSound*)this->sound)->rewindStream();
 			}
-#endif
-			this->fadeTime = 0.0f;
-			this->fadeSpeed = 0.0f;
-			alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
-			alSourceStop(this->sourceId);
-			if (this->sound->getCategory()->isStreamed())
-			{
-				this->sound->setSourceId(this->sourceId);
-				if (pause)
-				{
-					((StreamSound*)this->sound)->unqueueBuffers();
-				}
-				else
-				{
-					((StreamSound*)this->sound)->rewindStream();
-				}
-			}
-			this->unbind(pause);
 		}
-		this->paused = pause;
 	}
 
 	void Source::unbind(bool pause)
@@ -203,7 +205,8 @@ namespace xal
 			this->sourceId = 0;
 			if (!pause)
 			{
-				this->bound = false;
+				this->sound->unbindSource(this);
+				xal::mgr->destroySource(this);
 			}
 		}
 	}
@@ -247,17 +250,17 @@ namespace xal
 	
 	bool Source::isFading()
 	{
-		return (this->fadeSpeed != 0);
+		return (this->fadeSpeed != 0.0f);
 	}
 
 	bool Source::isFadingIn()
 	{
-		return (this->fadeSpeed < 0);
+		return (this->fadeSpeed < 0.0f);
 	}
 
 	bool Source::isFadingOut()
 	{
-		return (this->fadeSpeed < 0);
+		return (this->fadeSpeed < 0.0f);
 	}
 
 }

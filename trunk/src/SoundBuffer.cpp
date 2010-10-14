@@ -43,11 +43,13 @@ namespace xal
 	
 	void SoundBuffer::destroySources()
 	{
-		foreach (Source*, it, this->sources)
+		Source* source;
+		while (this->sources.size() > 0)
 		{
-			(*it)->unlock();
-			(*it)->stop();
-			xal::mgr->destroySource(*it);
+			source = this->sources.front();
+			source->stopSoft();
+			source->unlock();
+			source->unbind();
 		}
 	}
 	
@@ -239,6 +241,14 @@ namespace xal
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->stop(fadeTime);
+		}
+	}
+
+	void SoundBuffer::_stopSoft(float fadeTime)
+	{
+		if (this->getBuffer() != 0 && this->sources.size() > 0)
+		{
+			this->sources[0]->stopSoft(fadeTime);
 		}
 	}
 

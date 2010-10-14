@@ -95,7 +95,7 @@ namespace xal
 		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
 		if (queued == 0)
 		{
-			this->stop();
+			this->_stopSoft();
 			this->_fillStartBuffers();
 			return;
 		}
