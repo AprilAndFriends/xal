@@ -23,7 +23,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-//#define _TEST_SOUND
+#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
@@ -94,6 +94,7 @@ void _test_multiplay()
 		_update(0.1f);
 	}
 	s->stop();
+	_update(0.1f);
 }
 
 void _test_sources()
@@ -118,8 +119,8 @@ void _test_sources()
 		Sleep(100.0f);
 		_update(0.1f);
 	}
-	_update(0.1f);
 	s->stop();
+	_update(0.1f);
 }
 
 void _test_fadein()
@@ -149,6 +150,8 @@ void _test_fadeout()
 		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
 		_update(0.1f);
 	}
+	s->stop();
+	_update(0.1f);
 }
 
 void _test_fadeinout()
@@ -215,6 +218,7 @@ void _test_complex_handler()
 	}
 	s1->stop();
 	s2->stop();
+	_update(0.1f);
 }
 
 void _test_util_playlist()
