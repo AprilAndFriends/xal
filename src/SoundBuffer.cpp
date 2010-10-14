@@ -79,7 +79,6 @@ namespace xal
 	
 	hstr SoundBuffer::_findLinkedFile()
 	{
-		char buffer[1024];
 		if (!hfile::exists(this->fileName))
 		{
 			return this->fileName;
