@@ -66,7 +66,7 @@ namespace xal
 		{
 			result = this->isOgg();
 		}
-		if (this->isOgg())
+		else if (this->isOgg())
 		{
 			result = this->_loadOgg();
 		}
