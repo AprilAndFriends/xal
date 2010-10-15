@@ -19,11 +19,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-//#define _TEST_STREAM
+#define _TEST_STREAM
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-#define _TEST_SOUND
+//#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
@@ -32,7 +32,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
-//#define _TEST_UTIL_PLAYLIST
+#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS
 
 
@@ -49,10 +49,10 @@ void _test_sound()
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 		s->pause();
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 		s->play();
 	}
@@ -66,14 +66,14 @@ void _test_multistream()
 	for (int i = 0; i < 5; i++)
 	{
 		s->play();
-		Sleep(1000.0f);
+		Sleep(1000);
 		_update(1.0f);
 		if (i == 2)
 		{
 			s->pause(1.5f);
 			for (int j = 0; j < 10; j++)
 			{
-				Sleep(100.0f);
+				Sleep(100);
 				_update(0.1f);
 			}
 		}
@@ -86,11 +86,11 @@ void _test_multiplay()
 {
 	printf("  - start test multiple play...\n");
 	s->play();
-	Sleep(100.0f);
+	Sleep(100);
 	s->play();
 	while (s->isPlaying())
 	{
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 	}
 	s->stop();
@@ -103,12 +103,12 @@ void _test_sources()
 	s->play();
 	for (int i = 0; i < XAL_MAX_SOURCES + 1; i++)
 	{
-		Sleep(20.0f);
+		Sleep(20);
 		s->play();
 	}
 	while (s->isPlaying())
 	{
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 	}
 	xal::mgr->update(0.01f);
@@ -116,7 +116,7 @@ void _test_sources()
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 	}
 	s->stop();
@@ -130,8 +130,8 @@ void _test_fadein()
 	s->play(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
-		Sleep(100.0f);
-		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+		Sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	s->stop();
@@ -146,8 +146,8 @@ void _test_fadeout()
 	s->stop(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
-		Sleep(100.0f);
-		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+		Sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	s->stop();
@@ -161,29 +161,29 @@ void _test_fadeinout()
 	s->play(1.0f);
 	for (int i = 0; i < 8; i++)
 	{
-		Sleep(100.0f);
-		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+		Sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	s->pause(1.0f);
 	for (int i = 0; i < 6; i++)
 	{
-		Sleep(100.0f);
-		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+		Sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	s->play(1.0f);
 	for (int i = 0; i < 3; i++)
 	{
-		Sleep(100.0f);
-		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+		Sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	printf("- 10 more updates\n");
 	for (int i = 0; i < 10; i++)
 	{
-		Sleep(100.0f);
-		printf("T:%d P:%s F:%s\n", i, hstr(s->isPlaying()).c_str(), hstr(s->isFading()).c_str());
+		Sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	s->stop();
@@ -201,11 +201,11 @@ void _test_complex_handler()
 	s2->pause();
 	for (int i = 0; i < 50; i++)
 	{
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 		s2->play();
 		s1->pause();
-		Sleep(100.0f);
+		Sleep(100);
 		_update(0.1f);
 		s2->pause();
 		s1->play();
@@ -228,9 +228,15 @@ void _test_util_playlist()
 	list.queueSound("bark");
 	list.queueSound("bark");
 	list.queueSound("wind");
+	list.queueSound("wind_copy");
 	list.queueSound("bark");
 	list.play();
-	while (list.isPlaying()) { list.update(); }
+	while (list.isPlaying())
+	{
+		Sleep(100);
+		_update(0.1f);
+		list.update();
+	}
 }
 
 void _test_util_parallel_sounds()
@@ -240,11 +246,11 @@ void _test_util_parallel_sounds()
 	names += "bark";
 	xal::ParallelSoundManager pmgr;
 	pmgr.updateList(names);
-	Sleep(1.0f);
+	Sleep(1000);
 	_update(1.0f);
 	names.clear();
 	pmgr.updateList(names);
-	Sleep(1.0f);
+	Sleep(1000);
 	_update(1.0f);
 }
 
@@ -257,12 +263,13 @@ int main(int argc, char **argv)
 #endif
 #ifndef _TEST_LINKS
 #ifdef _TEST_STREAM
-	xal::mgr->createCategory("cat", true);
+	xal::mgr->createCategory("streamable", true);
 #endif
-	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "cat", "");
+	harray<hstr> files = xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
+	files += xal::mgr->createSoundsFromPath("../media", "sound", "");
 #else
 	xal::mgr->createCategory("cat", true);
-	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
+	xal::mgr->createSound("../media/linked/linked_sound.xln", "streamable");
 #endif
 #ifndef _TEST_LINKS
 #ifdef _TEST_STREAM

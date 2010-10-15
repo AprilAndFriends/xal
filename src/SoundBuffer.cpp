@@ -32,6 +32,7 @@ namespace xal
 	{
 		this->fileName = hstr(fileName);
 		this->virtualFileName = this->fileName;
+		// extracting filename without extension and prepending the prefix
 		this->name = prefix + hstr(fileName).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 		this->category = xal::mgr->getCategoryByName(category);
 	}
@@ -134,20 +135,12 @@ namespace xal
 
 	bool SoundBuffer::isLocked()
 	{
-		if (this->sources.size() == 0)
-		{
-			return false;
-		}
-		return this->sources[0]->isLocked();
+		return (this->sources.size() > 0 && this->sources[0]->isLocked());
 	}
 
 	float SoundBuffer::getSampleOffset()
 	{
-		if (this->getBuffer() == 0 || this->sources.size() == 0)
-		{
-			return 0;
-		}
-		return this->sources[0]->getSampleOffset();
+		return (this->getBuffer() != 0 && this->sources.size() > 0 ? this->sources[0]->getSampleOffset() : 0.0f);
 	}
 
 	void SoundBuffer::setGain(float gain)
@@ -160,11 +153,7 @@ namespace xal
 
 	float SoundBuffer::getGain()
 	{
-		if (this->getBuffer() == 0 || this->sources.size() == 0)
-		{
-			return 1;
-		}
-		return this->sources[0]->getGain();
+		return (this->getBuffer() != 0 && this->sources.size() > 0 ? this->sources[0]->getGain() : 1.0f);
 	}
 
 	bool SoundBuffer::isPlaying()
