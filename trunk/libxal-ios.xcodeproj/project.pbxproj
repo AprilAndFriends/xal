@@ -16,10 +16,7 @@
 		7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E21255F3B60004EBF6 /* Source.cpp */; };
 		7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */; };
 		7F4C09EE1255F3B60004EBF6 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E41255F3B60004EBF6 /* Thread.cpp */; };
-		7F4C09EF1255F3B60004EBF6 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E51255F3B60004EBF6 /* Util.cpp */; };
-		7F4C09F41255F3CC0004EBF6 /* _dirent_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F11255F3CC0004EBF6 /* _dirent_win32.h */; };
 		7F4C09F51255F3CC0004EBF6 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F21255F3CC0004EBF6 /* Endianess.h */; };
-		7F4C09F61255F3CC0004EBF6 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F31255F3CC0004EBF6 /* Util.h */; };
 		7F4C0A021255F3D90004EBF6 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F81255F3D90004EBF6 /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A031255F3D90004EBF6 /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F91255F3D90004EBF6 /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A041255F3D90004EBF6 /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FA1255F3D90004EBF6 /* Mutex.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,10 +40,7 @@
 		7F4C09E21255F3B60004EBF6 /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Source.cpp; sourceTree = "<group>"; };
 		7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StreamSound.cpp; sourceTree = "<group>"; };
 		7F4C09E41255F3B60004EBF6 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
-		7F4C09E51255F3B60004EBF6 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
-		7F4C09F11255F3CC0004EBF6 /* _dirent_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _dirent_win32.h; sourceTree = "<group>"; };
 		7F4C09F21255F3CC0004EBF6 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Endianess.h; sourceTree = "<group>"; };
-		7F4C09F31255F3CC0004EBF6 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		7F4C09F81255F3D90004EBF6 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = include/xal/AudioManager.h; sourceTree = "<group>"; };
 		7F4C09F91255F3D90004EBF6 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = include/xal/Category.h; sourceTree = "<group>"; };
 		7F4C09FA1255F3D90004EBF6 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mutex.h; path = include/xal/Mutex.h; sourceTree = "<group>"; };
@@ -113,7 +107,6 @@
 				7F4C09E21255F3B60004EBF6 /* Source.cpp */,
 				7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */,
 				7F4C09E41255F3B60004EBF6 /* Thread.cpp */,
-				7F4C09E51255F3B60004EBF6 /* Util.cpp */,
 			);
 			name = Sources;
 			path = src;
@@ -122,9 +115,7 @@
 		7F4C09F01255F3B80004EBF6 /* Private Includes */ = {
 			isa = PBXGroup;
 			children = (
-				7F4C09F11255F3CC0004EBF6 /* _dirent_win32.h */,
 				7F4C09F21255F3CC0004EBF6 /* Endianess.h */,
-				7F4C09F31255F3CC0004EBF6 /* Util.h */,
 			);
 			name = "Private Includes";
 			path = src;
@@ -154,9 +145,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F4C09F41255F3CC0004EBF6 /* _dirent_win32.h in Headers */,
 				7F4C09F51255F3CC0004EBF6 /* Endianess.h in Headers */,
-				7F4C09F61255F3CC0004EBF6 /* Util.h in Headers */,
 				7F4C0A021255F3D90004EBF6 /* AudioManager.h in Headers */,
 				7F4C0A031255F3D90004EBF6 /* Category.h in Headers */,
 				7F4C0A041255F3D90004EBF6 /* Mutex.h in Headers */,
@@ -264,7 +253,6 @@
 				7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */,
 				7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */,
 				7F4C09EE1255F3B60004EBF6 /* Thread.cpp in Sources */,
-				7F4C09EF1255F3B60004EBF6 /* Util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
