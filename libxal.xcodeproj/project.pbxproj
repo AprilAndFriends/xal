@@ -31,7 +31,6 @@
 		7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068711EC970600851062 /* OpenAL.framework */; };
 		C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9B1243853A006BFE4D /* Ogg.framework */; };
 		C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9D1243853A006BFE4D /* Vorbis.framework */; };
-		C9906DA412438579006BFE4D /* libvorbisfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906DA312438579006BFE4D /* libvorbisfile.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +60,6 @@
 		8DC2EF5B0486A6940098B216 /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9906D9B1243853A006BFE4D /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = Library/Frameworks/Ogg.framework; sourceTree = SDKROOT; };
 		C9906D9D1243853A006BFE4D /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = Library/Frameworks/Vorbis.framework; sourceTree = SDKROOT; };
-		C9906DA312438579006BFE4D /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = ../lib/macosx/libvorbisfile.a; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,6 @@
 				7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */,
 				C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */,
 				C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */,
-				C9906DA412438579006BFE4D /* libvorbisfile.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +88,6 @@
 		0867D691FE84028FC02AAC07 /* libxal */ = {
 			isa = PBXGroup;
 			children = (
-				C9906DA312438579006BFE4D /* libvorbisfile.a */,
 				7FC8064911EC943E00851062 /* Private Includes */,
 				7FC8063911EC942100851062 /* Includes */,
 				7FC8063811EC941D00851062 /* Sources */,
