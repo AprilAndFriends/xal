@@ -236,7 +236,11 @@ namespace xal
 		}
 		if (this->sound->getCategory()->isStreamed())
 		{
-			return (!this->isPaused());
+			int queued;
+			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+			int count;
+			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
+			return (queued != 0 || count != 0);
 		}
 		int state;
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
@@ -255,7 +259,7 @@ namespace xal
 
 	bool Source::isFadingIn()
 	{
-		return (this->fadeSpeed < 0.0f);
+		return (this->fadeSpeed > 0.0f);
 	}
 
 	bool Source::isFadingOut()

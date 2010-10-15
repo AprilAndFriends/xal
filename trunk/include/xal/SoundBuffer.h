@@ -49,10 +49,10 @@ namespace xal
 		void setGain(float value);
 		bool isLooping();
 		bool isPlaying();
+		bool isPaused();
 		bool isFading();
 		bool isFadingIn();
 		bool isFadingOut();
-		bool isPaused();
 		
 		bool isLoaded() { return this->loaded; }
 		bool isLink();

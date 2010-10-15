@@ -26,6 +26,25 @@
     <Project Name="libxalutil"/>
   </Dependencies>
   <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../include"/>
+        <IncludePath Value="../../xalutil/include"/>
+        <IncludePath Value="../../../hltypes/include"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+        <LibraryPath Value="../../../lib"/>
+        <LibraryPath Value="../../bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../bin/xalutil/$(ConfigurationName)"/>
+        <LibraryPath Value="../../../hltypes/bin/$(ConfigurationName)"/>
+        <Library Value="libogg"/>
+        <Library Value="libvorbis"/>
+        <Library Value="libvorbisfile"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
@@ -132,24 +151,5 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="."/>
-        <IncludePath Value="../../include"/>
-        <IncludePath Value="../../xalutil/include"/>
-        <IncludePath Value="../../../hltypes/include"/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="."/>
-        <LibraryPath Value="../../../lib"/>
-        <LibraryPath Value="../../bin/$(ConfigurationName)"/>
-        <LibraryPath Value="../../bin/xalutil/$(ConfigurationName)"/>
-        <LibraryPath Value="../../../hltypes/bin/$(ConfigurationName)"/>
-        <Library Value="libogg"/>
-        <Library Value="libvorbis"/>
-        <Library Value="libvorbisfile"/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
   </Settings>
 </CodeLite_Project>
