@@ -1,0 +1,34 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\info
+{\author Ivan Vu\uc0\u269 ica}
+{\*\copyright (c) 2010 Ivan Vu\uc0\u269 ica}}\paperw11900\paperh16840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 README for Mac\
+
+\b0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
+\cf0 This library is prepared to be built with Xcode. It builds a dynamically loaded .framework. Xcode project contains a single .framework target with two configurations: Debug and Release. \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 \
+
+\b Debug
+\b0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
+\cf0 This configuration is set to build only the native architecture of your machine. \
+IMPORTANT: This configuration will automaticaly install the produced .framework into /Library/Frameworks, and it will overwrite any previous version installed there.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
+
+\b \cf0 Release\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qj\pardirnatural
+
+\b0 \cf0 This configuration is set to build optimized universal binary; at the moment of writing, on a 64bit Mac included architectures are i386, ppc and x86_64.\
+IMPORTANT: This configuration will automaticaly install the produced .framework into /Library/Frameworks, and it will overwrite any previous version installed there.\
+\
+Reasoning: We wish to make development and installation as easy as possible. Hence, upon compiling, we deploy the result in the appropriate destination.\
+\
+-- ivan@vucica.net, Jul 15th 2010, updated Sep 28th 2010\
+}
