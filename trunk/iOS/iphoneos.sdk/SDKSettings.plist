@@ -30,7 +30,7 @@
 		<string>iphoneos</string>
 	</dict>
 	<key>DisplayName</key>
-	<string>Device - iPhone OS %IPHONE_SDK%</string>
+	<string>%PROJECT% %VERS% - Device - iPhone OS %IPHONE_SDK%</string>
 	<key>DocSetFeedName</key>
 	<string>Apple iPhone OS %IPHONE_SDK%</string>
 	<key>DocSetFeedURL</key>
