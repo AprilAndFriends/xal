@@ -14,7 +14,7 @@
 		<string>iphonesimulator</string>
 	</dict>
 	<key>DisplayName</key>
-	<string>Simulator - iPhone OS %IPHONE_SDK%</string>
+	<string>%PROJECT% %VERS% - Simulator - iPhone OS %IPHONE_SDK%</string>
 	<key>DocSetFeedName</key>
 	<string>Apple iPhone OS</string>
 	<key>DocSetFeedURL</key>
