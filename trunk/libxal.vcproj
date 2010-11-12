@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Mutex.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\SimpleSound.cpp"
 				>
 			</File>
@@ -214,10 +210,6 @@
 				RelativePath=".\src\StreamSound.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\src\Thread.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -230,10 +222,6 @@
 			</File>
 			<File
 				RelativePath=".\include\xal\Category.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\xal\Mutex.h"
 				>
 			</File>
 			<File
@@ -254,10 +242,6 @@
 			</File>
 			<File
 				RelativePath=".\include\xal\StreamSound.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\xal\Thread.h"
 				>
 			</File>
 			<File

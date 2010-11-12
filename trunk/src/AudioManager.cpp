@@ -15,6 +15,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hthread.h>
 #include <hltypes/util.h>
 
 #ifndef __APPLE__
@@ -27,12 +28,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "AudioManager.h"
 #include "Category.h"
-#include "Mutex.h"
 #include "SimpleSound.h"
 #include "SoundBuffer.h"
 #include "Source.h"
 #include "StreamSound.h"
-#include "Thread.h"
 
 namespace xal
 {
@@ -68,9 +67,9 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
-		sources(harray<Source*>()), gain(1.0f),
+		sources(harray<Source*>()), gain(1.0f), updating(false),
 		categories(hmap<hstr, Category*>()),
-		sounds(hmap<hstr, SoundBuffer*>()), thread(NULL), mutex(NULL)
+		sounds(hmap<hstr, SoundBuffer*>()), thread(NULL)
 	{
 	}
 	
@@ -109,21 +108,21 @@ namespace xal
 		{
 			this->logMessage("starting thread management");
 			this->updateTime = updateTime;
-			this->mutex = new Mutex();
-			this->thread = new Thread();
+			this->updating = true;
+			this->thread = new hthread(&AudioManager::update);
 			this->thread->start();
+			this->updating = false;
 		}
 	}
 
 	AudioManager::~AudioManager()
 	{
-		if (this->mutex != NULL)
+		if (this->thread != NULL)
 		{
-			this->mutex->lock();
-			this->thread->join();
-			this->mutex->unlock();
+			while (this->updating);
+			this->updating = false;
+			this->thread->stop();
 			delete this->thread;
-			delete this->mutex;
 		}
 		foreach_m (SoundBuffer*, it, this->sounds)
 		{
@@ -165,7 +164,14 @@ namespace xal
 
 	void AudioManager::update()
 	{
-		this->update(this->updateTime);
+		while (true)
+		{
+			while (xal::mgr->updating);
+			xal::mgr->updating = true;
+			xal::mgr->update(xal::mgr->updateTime);
+			xal::mgr->updating = false;
+			hthread::sleep(xal::mgr->updateTime * 1000);
+		}
 	}
 	
 	void AudioManager::update(float k)
@@ -358,12 +364,15 @@ namespace xal
 
 	void AudioManager::stopAll(float fadeTime)
 	{
+		while (this->updating);
+		this->updating = true;
 		harray<Source*> sources(this->sources);
 		foreach (Source*, it, sources)
 		{
 			(*it)->unlock();
 			(*it)->stop(fadeTime);
 		}
+		this->updating = false;
 	}
 	
 	void AudioManager::stopCategory(chstr category, float fadeTime)

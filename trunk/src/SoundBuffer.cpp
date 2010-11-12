@@ -200,6 +200,8 @@ namespace xal
 	
 	Sound* SoundBuffer::play(float fadeTime, bool looping)
 	{
+		while (xal::mgr->isUpdating());
+		xal::mgr->setUpdating(true);
 		if (!this->loaded)
 		{
 			this->load();
@@ -230,23 +232,30 @@ namespace xal
 			source = this->sources[0];
 		}
 		source->play(fadeTime, looping);
+		xal::mgr->setUpdating(false);
 		return source;
 	}
 
 	void SoundBuffer::stop(float fadeTime)
 	{
+		while (xal::mgr->isUpdating());
+		xal::mgr->setUpdating(true);
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->stop(fadeTime);
 		}
+		xal::mgr->setUpdating(false);
 	}
 
 	void SoundBuffer::_stopSoft(float fadeTime)
 	{
+		while (xal::mgr->isUpdating());
+		xal::mgr->setUpdating(true);
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->stopSoft(fadeTime);
 		}
+		xal::mgr->setUpdating(false);
 	}
 
 	void SoundBuffer::stopAll(float fadeTime)
@@ -265,10 +274,13 @@ namespace xal
 	
 	void SoundBuffer::pause(float fadeTime)
 	{
+		while (xal::mgr->isUpdating());
+		xal::mgr->setUpdating(true);
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->pause(fadeTime);
 		}
+		xal::mgr->setUpdating(false);
 	}
 
 }
