@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hthread.h>
 
 #include "xalExport.h"
 
@@ -21,11 +22,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace xal
 {
 	class Category;
-	class Mutex;
 	class Sound;
 	class SoundBuffer;
 	class Source;
-	class Thread;
 
 	class xalExport AudioManager
 	{
@@ -38,8 +37,9 @@ namespace xal
 		void logMessage(chstr message, chstr prefix = "[xal] ");
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
+		bool isUpdating() { return this->updating; }
+		void setUpdating(bool value) { this->updating = value; }
 		float getUpdateTime() { return this->updateTime; }
-		Mutex* getMutex() { return this->mutex; }
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value);
 		Category* getCategoryByName(chstr name);
@@ -47,7 +47,7 @@ namespace xal
 		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
 		
-		void update();
+		static void update();
 		void update(float k);
 		
 		Source* createSource(SoundBuffer* sound, unsigned int sourceId);
@@ -70,9 +70,9 @@ namespace xal
 		float gain;
 		hmap<hstr, Category*> categories;
 		hmap<hstr, SoundBuffer*> sounds;
-		Mutex* mutex;
-		Thread* thread;
 		float updateTime;
+		hthread* thread;
+		bool updating;
 		
 	};
 	
