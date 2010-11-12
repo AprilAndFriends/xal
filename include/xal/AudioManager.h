@@ -78,6 +78,7 @@ namespace xal
 	
 	xalFnExport void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
 	xalFnExport void destroy();
+	xalFnExport bool isLoaded();
 	xalFnExport void setLogFunction(void (*function)(chstr));
 	xalFnExport extern xal::AudioManager* mgr;
 }

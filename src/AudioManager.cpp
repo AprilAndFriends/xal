@@ -37,7 +37,7 @@ namespace xal
 {
 /******* GLOBAL ********************************************************/
 	
-	AudioManager* mgr;
+	AudioManager* mgr = NULL;
 
 	void init(chstr deviceName, bool threaded, float updateTime)
 	{
@@ -48,6 +48,12 @@ namespace xal
 	void destroy()
 	{
 		delete mgr;
+		mgr = NULL;
+	}
+	
+	bool isLoaded()
+	{
+		return (mgr != NULL);
 	}
 	
 	void xal_writelog(chstr text)
