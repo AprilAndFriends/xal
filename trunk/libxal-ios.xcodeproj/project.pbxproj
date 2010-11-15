@@ -9,23 +9,19 @@
 /* Begin PBXBuildFile section */
 		7F4C09E61255F3B60004EBF6 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */; };
 		7F4C09E71255F3B60004EBF6 /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DD1255F3B60004EBF6 /* Category.cpp */; };
-		7F4C09E81255F3B60004EBF6 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DE1255F3B60004EBF6 /* Mutex.cpp */; };
 		7F4C09E91255F3B60004EBF6 /* SimpleSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */; };
 		7F4C09EA1255F3B60004EBF6 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E01255F3B60004EBF6 /* Sound.cpp */; };
 		7F4C09EB1255F3B60004EBF6 /* SoundBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E11255F3B60004EBF6 /* SoundBuffer.cpp */; };
 		7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E21255F3B60004EBF6 /* Source.cpp */; };
 		7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */; };
-		7F4C09EE1255F3B60004EBF6 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C09E41255F3B60004EBF6 /* Thread.cpp */; };
 		7F4C09F51255F3CC0004EBF6 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F21255F3CC0004EBF6 /* Endianess.h */; };
 		7F4C0A021255F3D90004EBF6 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F81255F3D90004EBF6 /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A031255F3D90004EBF6 /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09F91255F3D90004EBF6 /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F4C0A041255F3D90004EBF6 /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FA1255F3D90004EBF6 /* Mutex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A051255F3D90004EBF6 /* SimpleSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FB1255F3D90004EBF6 /* SimpleSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A061255F3D90004EBF6 /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FC1255F3D90004EBF6 /* Sound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A071255F3D90004EBF6 /* SoundBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A081255F3D90004EBF6 /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FE1255F3D90004EBF6 /* Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A091255F3D90004EBF6 /* StreamSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FF1255F3D90004EBF6 /* StreamSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F4C0A0A1255F3D90004EBF6 /* Thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C0A001255F3D90004EBF6 /* Thread.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A0B1255F3D90004EBF6 /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C0A011255F3D90004EBF6 /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -33,23 +29,19 @@
 /* Begin PBXFileReference section */
 		7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManager.cpp; sourceTree = "<group>"; };
 		7F4C09DD1255F3B60004EBF6 /* Category.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Category.cpp; sourceTree = "<group>"; };
-		7F4C09DE1255F3B60004EBF6 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
 		7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleSound.cpp; sourceTree = "<group>"; };
 		7F4C09E01255F3B60004EBF6 /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sound.cpp; sourceTree = "<group>"; };
 		7F4C09E11255F3B60004EBF6 /* SoundBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundBuffer.cpp; sourceTree = "<group>"; };
 		7F4C09E21255F3B60004EBF6 /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Source.cpp; sourceTree = "<group>"; };
 		7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StreamSound.cpp; sourceTree = "<group>"; };
-		7F4C09E41255F3B60004EBF6 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
 		7F4C09F21255F3CC0004EBF6 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Endianess.h; sourceTree = "<group>"; };
 		7F4C09F81255F3D90004EBF6 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = include/xal/AudioManager.h; sourceTree = "<group>"; };
 		7F4C09F91255F3D90004EBF6 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = include/xal/Category.h; sourceTree = "<group>"; };
-		7F4C09FA1255F3D90004EBF6 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mutex.h; path = include/xal/Mutex.h; sourceTree = "<group>"; };
 		7F4C09FB1255F3D90004EBF6 /* SimpleSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleSound.h; path = include/xal/SimpleSound.h; sourceTree = "<group>"; };
 		7F4C09FC1255F3D90004EBF6 /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sound.h; path = include/xal/Sound.h; sourceTree = "<group>"; };
 		7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundBuffer.h; path = include/xal/SoundBuffer.h; sourceTree = "<group>"; };
 		7F4C09FE1255F3D90004EBF6 /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Source.h; path = include/xal/Source.h; sourceTree = "<group>"; };
 		7F4C09FF1255F3D90004EBF6 /* StreamSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamSound.h; path = include/xal/StreamSound.h; sourceTree = "<group>"; };
-		7F4C0A001255F3D90004EBF6 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thread.h; path = include/xal/Thread.h; sourceTree = "<group>"; };
 		7F4C0A011255F3D90004EBF6 /* xalExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xalExport.h; path = include/xal/xalExport.h; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,13 +92,11 @@
 			children = (
 				7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */,
 				7F4C09DD1255F3B60004EBF6 /* Category.cpp */,
-				7F4C09DE1255F3B60004EBF6 /* Mutex.cpp */,
 				7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */,
 				7F4C09E01255F3B60004EBF6 /* Sound.cpp */,
 				7F4C09E11255F3B60004EBF6 /* SoundBuffer.cpp */,
 				7F4C09E21255F3B60004EBF6 /* Source.cpp */,
 				7F4C09E31255F3B60004EBF6 /* StreamSound.cpp */,
-				7F4C09E41255F3B60004EBF6 /* Thread.cpp */,
 			);
 			name = Sources;
 			path = src;
@@ -126,13 +116,11 @@
 			children = (
 				7F4C09F81255F3D90004EBF6 /* AudioManager.h */,
 				7F4C09F91255F3D90004EBF6 /* Category.h */,
-				7F4C09FA1255F3D90004EBF6 /* Mutex.h */,
 				7F4C09FB1255F3D90004EBF6 /* SimpleSound.h */,
 				7F4C09FC1255F3D90004EBF6 /* Sound.h */,
 				7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */,
 				7F4C09FE1255F3D90004EBF6 /* Source.h */,
 				7F4C09FF1255F3D90004EBF6 /* StreamSound.h */,
-				7F4C0A001255F3D90004EBF6 /* Thread.h */,
 				7F4C0A011255F3D90004EBF6 /* xalExport.h */,
 			);
 			name = Includes;
@@ -148,13 +136,11 @@
 				7F4C09F51255F3CC0004EBF6 /* Endianess.h in Headers */,
 				7F4C0A021255F3D90004EBF6 /* AudioManager.h in Headers */,
 				7F4C0A031255F3D90004EBF6 /* Category.h in Headers */,
-				7F4C0A041255F3D90004EBF6 /* Mutex.h in Headers */,
 				7F4C0A051255F3D90004EBF6 /* SimpleSound.h in Headers */,
 				7F4C0A061255F3D90004EBF6 /* Sound.h in Headers */,
 				7F4C0A071255F3D90004EBF6 /* SoundBuffer.h in Headers */,
 				7F4C0A081255F3D90004EBF6 /* Source.h in Headers */,
 				7F4C0A091255F3D90004EBF6 /* StreamSound.h in Headers */,
-				7F4C0A0A1255F3D90004EBF6 /* Thread.h in Headers */,
 				7F4C0A0B1255F3D90004EBF6 /* xalExport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +174,7 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libxal-ios" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -245,13 +232,11 @@
 			files = (
 				7F4C09E61255F3B60004EBF6 /* AudioManager.cpp in Sources */,
 				7F4C09E71255F3B60004EBF6 /* Category.cpp in Sources */,
-				7F4C09E81255F3B60004EBF6 /* Mutex.cpp in Sources */,
 				7F4C09E91255F3B60004EBF6 /* SimpleSound.cpp in Sources */,
 				7F4C09EA1255F3B60004EBF6 /* Sound.cpp in Sources */,
 				7F4C09EB1255F3B60004EBF6 /* SoundBuffer.cpp in Sources */,
 				7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */,
 				7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */,
-				7F4C09EE1255F3B60004EBF6 /* Thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
