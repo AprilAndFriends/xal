@@ -32,7 +32,7 @@ namespace xal
 		AudioManager();
 		~AudioManager();
 		
-		void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
+		void init(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		
 		void logMessage(chstr message, chstr prefix = "[xal] ");
 		hstr getDeviceName() { return this->deviceName; }
