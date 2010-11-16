@@ -208,6 +208,7 @@ namespace xal
 		}
 		if (this->getBuffer() == 0)
 		{
+			xal::mgr->setUpdating(false);
 			return NULL;
 		}
 		Source* source = NULL;
@@ -216,6 +217,7 @@ namespace xal
 			unsigned int sourceId = xal::mgr->allocateSourceId();
 			if (sourceId == 0)
 			{
+				xal::mgr->setUpdating(false);
 				return NULL;
 			}
 #ifdef _DEBUG
