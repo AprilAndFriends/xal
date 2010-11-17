@@ -30,8 +30,8 @@ namespace xal
 
 		bool load();
 		
-		void bindSource(Source* source);
-		void unbindSource(Source* source);
+		void bindSource(Sound* source);
+		void unbindSource(Sound* source);
 		void lock();
 		void unlock();
 		bool isLocked();
@@ -57,6 +57,7 @@ namespace xal
 		bool isLoaded() { return this->loaded; }
 		bool isLink();
 		bool isOgg();
+		bool isAac();
 		
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
@@ -71,9 +72,9 @@ namespace xal
 		unsigned int sourceId;
 		bool loaded;
 		Category* category;
-		harray<Source*> sources;
+		harray<Sound*> sources;
 		
-		void _stopSoft(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false); // pause argument is ignored
 		
 		virtual bool _loadOgg() = 0;
 		hstr _findLinkedFile();

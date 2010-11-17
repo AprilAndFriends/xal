@@ -24,6 +24,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #else
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+#include <TargetConditionals.h>
 #endif
 
 #include "AudioManager.h"
@@ -32,6 +33,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "SoundBuffer.h"
 #include "Source.h"
 #include "StreamSound.h"
+
+#if TARGET_OS_IPHONE
+#include "SourceApple.h"
+#endif
 
 namespace xal
 {
@@ -67,7 +72,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
-		sources(harray<Source*>()), gain(1.0f), updating(false),
+		sources(harray<Sound*>()), gain(1.0f), updating(false),
 		categories(hmap<hstr, Category*>()),
 		sounds(hmap<hstr, SoundBuffer*>()), thread(NULL)
 	{
@@ -135,7 +140,7 @@ namespace xal
 		this->logMessage("destroying OpenAL");
 		if (gDevice)
 		{
-			Source* source;
+			Sound* source;
 			while (this->sources.size() > 0)
 			{
 				source = this->sources.pop_front();
@@ -178,8 +183,12 @@ namespace xal
 	{
 		if (this->isEnabled())
 		{
-			harray<Source*> sources(this->sources);
-			foreach (Source*, it, sources)
+			// variable copied because (*it)->update can access
+			// xal::mgr and erase a source from this->sources.
+			// we don't want to break the iterator validity!
+			
+			harray<Sound*> sources(this->sources);
+			foreach (Sound*, it, sources)
 			{
 				(*it)->update(k);
 			}
@@ -190,9 +199,12 @@ namespace xal
 	{
 		harray<unsigned int> allocated;
 		unsigned int id = 0;
-		foreach (Source*, it, this->sources)
+		foreach (Sound*, it, this->sources)
 		{
-			id = (*it)->getSourceId();
+			Source* source = dynamic_cast<Source*> (*it);
+			if(!source)
+				continue;
+			id = source->getSourceId();
 			if (id != 0)
 			{
 				allocated += id;
@@ -208,14 +220,25 @@ namespace xal
 		return 0;
 	}
 
-	Source* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
+	Sound* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
 	{
 		Source* source = new Source(sound, sourceId);
 		this->sources += source;
 		return source;
 	}
 	
-	void AudioManager::destroySource(Source* source)
+	Sound* AudioManager::createSourceApple(SoundBuffer* sound, unsigned int sourceId)
+	{
+#if TARGET_OS_IPHONE
+		SourceApple* source = new SourceApple(sound, sourceId);
+		this->sources += source;
+		return source;
+#else
+		return NULL;
+#endif
+	}
+	
+	void AudioManager::destroySource(Sound* source)
 	{
 		this->sources -= source;
 		delete source;
@@ -325,10 +348,9 @@ namespace xal
 	void AudioManager::setGlobalGain(float value)
 	{
 		this->gain = value;
-		foreach (Source*, it, this->sources)
+		foreach (Sound*, it, this->sources)
 		{
-			alSourcef((*it)->getSourceId(), AL_GAIN, (*it)->getSound()->getCategory()->getGain() *
-				(*it)->getGain() * this->gain);
+			(*it)->setGain((*it)->getGain());
 		}
 	}
 
@@ -353,12 +375,9 @@ namespace xal
 	void AudioManager::setCategoryGain(chstr name, float gain)
 	{
 		this->getCategoryByName(name)->setGain(gain);
-		foreach (Source*, it, this->sources)
+		foreach (Sound*, it, this->sources)
 		{
-			if ((*it)->getSound()->getCategory()->getName() == name)
-			{
-				alSourcef((*it)->getSourceId(), AL_GAIN, gain * (*it)->getGain() * this->gain);
-			}
+			(*it)->setGain((*it)->getGain());
 		}
 	}
 
@@ -366,8 +385,8 @@ namespace xal
 	{
 		while (this->updating);
 		this->updating = true;
-		harray<Source*> sources(this->sources);
-		foreach (Source*, it, sources)
+		harray<Sound*> sources(this->sources);
+		foreach (Sound*, it, sources)
 		{
 			(*it)->unlock();
 			(*it)->stop(fadeTime);
@@ -375,12 +394,13 @@ namespace xal
 		this->updating = false;
 	}
 	
-	void AudioManager::stopCategory(chstr category, float fadeTime)
+	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
 	{
-		harray<Source*> sources(this->sources);
-		foreach (Source*, it, sources)
+		Category* category = this->categories[categoryName];
+		harray<Sound*> sources(this->sources);
+		foreach (Sound*, it, sources)
 		{
-			if ((*it)->getSound()->getCategory()->getName() == category)
+			if ((*it)->getCategory() == category)
 			{
 				(*it)->unlock();
 				(*it)->stop(fadeTime);

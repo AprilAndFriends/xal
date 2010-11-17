@@ -50,8 +50,9 @@ namespace xal
 		static void update();
 		void update(float k);
 		
-		Source* createSource(SoundBuffer* sound, unsigned int sourceId);
-		void destroySource(Source* source);
+		Sound* createSource(SoundBuffer* sound, unsigned int sourceId);
+		Sound* createSourceApple(SoundBuffer* sound, unsigned int sourceId);
+		void destroySource(Sound* source);
 		unsigned int allocateSourceId();
 		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
 		harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
@@ -65,7 +66,7 @@ namespace xal
 		
 	protected:
 		unsigned int sourceIds[XAL_MAX_SOURCES];
-		harray<Source*> sources;
+		harray<Sound*> sources;
 		hstr deviceName;
 		float gain;
 		hmap<hstr, Category*> categories;
