@@ -2,13 +2,14 @@
 This source file is part of the KS(X) audio library                                  *
 For latest info, see http://code.google.com/p/libxal/                                *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic,                    *
+				   Ivan Vucica (ivan@vucica.net)                                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_SOURCE_H
-#define XAL_SOURCE_H
+#ifndef XAL_SOURCEAPPLE_H
+#define XAL_SOURCEAPPLE_H
 
 #include "xalExport.h"
 
@@ -17,18 +18,17 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace xal
 {
 	class SoundBuffer;
-	
-	class xalExport Source : public Sound
+	class xalExport SourceApple : public Sound
 	{
 	public:
-		Source(SoundBuffer* sound, unsigned int sourceId);
-		~Source();
+		SourceApple(SoundBuffer* sound, unsigned int sourceId);
+		~SourceApple();
 
+
+		
+		
 		void update(float k);
 		
-		Sound* play(float fadeTime = 0.0f, bool looping = false);
-		void stop(float fadeTime = 0.0f);
-		void pause(float fadeTime = 0.0f);
 		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 		
 		void unbind(bool pause = false);
@@ -39,6 +39,8 @@ namespace xal
 		unsigned int getBuffer();
 		SoundBuffer* getSound() { return this->sound; }
 		bool isBound() { return this->bound; }
+		
+		// minimum required implementation
 		float getGain() { return this->gain; }
 		void setGain(float value);
 		bool isLooping() { return this->looping; }
@@ -47,8 +49,9 @@ namespace xal
 		bool isFading();
 		bool isFadingIn();
 		bool isFadingOut();
-		
-		Category *getCategory();
+		Sound* play(float fadeTime = 0.0f, bool looping = false);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
 		
 	protected:
 		unsigned int sourceId;
@@ -60,6 +63,8 @@ namespace xal
 		float sampleOffset;
 		bool bound;
 		SoundBuffer* sound;
+		
+		void *avAudioPlayer_Void;
 		
 	};
 

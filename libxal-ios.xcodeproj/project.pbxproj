@@ -23,6 +23,8 @@
 		7F4C0A081255F3D90004EBF6 /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FE1255F3D90004EBF6 /* Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A091255F3D90004EBF6 /* StreamSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C09FF1255F3D90004EBF6 /* StreamSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F4C0A0B1255F3D90004EBF6 /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4C0A011255F3D90004EBF6 /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FCD2E401293FCD6003B6B9D /* SourceApple.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD2E3F1293FCD6003B6B9D /* SourceApple.h */; };
+		7FCD307612941518003B6B9D /* SourceApple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD307512941518003B6B9D /* SourceApple.mm */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,8 @@
 		7F4C09FE1255F3D90004EBF6 /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Source.h; path = include/xal/Source.h; sourceTree = "<group>"; };
 		7F4C09FF1255F3D90004EBF6 /* StreamSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamSound.h; path = include/xal/StreamSound.h; sourceTree = "<group>"; };
 		7F4C0A011255F3D90004EBF6 /* xalExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xalExport.h; path = include/xal/xalExport.h; sourceTree = "<group>"; };
+		7FCD2E3F1293FCD6003B6B9D /* SourceApple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceApple.h; path = include/xal/SourceApple.h; sourceTree = "<group>"; };
+		7FCD307512941518003B6B9D /* SourceApple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SourceApple.mm; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -90,6 +94,7 @@
 		7F4C09DB1255F38D0004EBF6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7FCD307512941518003B6B9D /* SourceApple.mm */,
 				7F4C09DC1255F3B60004EBF6 /* AudioManager.cpp */,
 				7F4C09DD1255F3B60004EBF6 /* Category.cpp */,
 				7F4C09DF1255F3B60004EBF6 /* SimpleSound.cpp */,
@@ -120,6 +125,7 @@
 				7F4C09FC1255F3D90004EBF6 /* Sound.h */,
 				7F4C09FD1255F3D90004EBF6 /* SoundBuffer.h */,
 				7F4C09FE1255F3D90004EBF6 /* Source.h */,
+				7FCD2E3F1293FCD6003B6B9D /* SourceApple.h */,
 				7F4C09FF1255F3D90004EBF6 /* StreamSound.h */,
 				7F4C0A011255F3D90004EBF6 /* xalExport.h */,
 			);
@@ -142,6 +148,7 @@
 				7F4C0A081255F3D90004EBF6 /* Source.h in Headers */,
 				7F4C0A091255F3D90004EBF6 /* StreamSound.h in Headers */,
 				7F4C0A0B1255F3D90004EBF6 /* xalExport.h in Headers */,
+				7FCD2E401293FCD6003B6B9D /* SourceApple.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +244,7 @@
 				7F4C09EB1255F3B60004EBF6 /* SoundBuffer.cpp in Sources */,
 				7F4C09EC1255F3B60004EBF6 /* Source.cpp in Sources */,
 				7F4C09ED1255F3B60004EBF6 /* StreamSound.cpp in Sources */,
+				7FCD307612941518003B6B9D /* SourceApple.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,7 +262,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_OGG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					deps/,
@@ -272,7 +283,10 @@
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk";
 				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_OGG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					deps/,

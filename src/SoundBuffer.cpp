@@ -28,7 +28,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : Sound(),
-		duration(0.0f), sources(harray<xal::Source*>()), loaded(false)
+		duration(0.0f), sources(harray<xal::Sound*>()), loaded(false)
 	{
 		this->fileName = hstr(fileName);
 		this->virtualFileName = this->fileName;
@@ -44,11 +44,16 @@ namespace xal
 	
 	void SoundBuffer::destroySources()
 	{
+		Sound* sound;
 		Source* source;
 		while (this->sources.size() > 0)
 		{
-			source = this->sources.front();
-			source->unlock();
+			sound = this->sources.front();
+			sound->unlock();
+			
+			source = dynamic_cast<Source*> (sound);
+			if(!source)
+				continue;
 			source->stopSoft();
 			source->unbind();
 		}
@@ -101,7 +106,7 @@ namespace xal
 		return folders.join("/");
 	}
 
-	void SoundBuffer::bindSource(Source* source)
+	void SoundBuffer::bindSource(Sound* source)
 	{
 #ifdef _DEBUG
 		xal::mgr->logMessage(hsprintf("binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
@@ -109,7 +114,7 @@ namespace xal
 		this->sources += source;
 	}
 	
-	void SoundBuffer::unbindSource(Source* source)
+	void SoundBuffer::unbindSource(Sound* source)
 	{
 #ifdef _DEBUG
 		xal::mgr->logMessage(hsprintf("unbinding source from sound %s", this->virtualFileName.c_str()));
@@ -195,6 +200,11 @@ namespace xal
 	{
 		return this->virtualFileName.ends_with(".ogg");
 	}
+	
+	bool SoundBuffer::isAac()
+	{
+		return this->virtualFileName.ends_with(".aac");
+	}
 
 /******* PLAY CONTROLS *************************************************/
 	
@@ -211,7 +221,7 @@ namespace xal
 			xal::mgr->setUpdating(false);
 			return NULL;
 		}
-		Source* source = NULL;
+		Sound* source = NULL;
 		if (this->sources.size() == 0 || this->sources[0]->isPlaying() && !this->sources[0]->isFading())
 		{
 			unsigned int sourceId = xal::mgr->allocateSourceId();
@@ -249,13 +259,13 @@ namespace xal
 		xal::mgr->setUpdating(false);
 	}
 
-	void SoundBuffer::_stopSoft(float fadeTime)
-	{
+	void SoundBuffer::stopSoft(float fadeTime, bool pause)
+	{		
 		while (xal::mgr->isUpdating());
 		xal::mgr->setUpdating(true);
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
-			this->sources[0]->stopSoft(fadeTime);
+			this->sources[0]->stopSoft(fadeTime, pause);
 		}
 		xal::mgr->setUpdating(false);
 	}
@@ -267,7 +277,7 @@ namespace xal
 #ifdef _DEBUG
 			xal::mgr->logMessage("stop all");
 #endif
-			foreach (Source*, it, this->sources)
+			foreach (Sound*, it, this->sources)
 			{
 				(*it)->stop(fadeTime);
 			}

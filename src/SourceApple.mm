@@ -2,14 +2,15 @@
 This source file is part of the KS(X) audio library                                  *
 For latest info, see http://code.google.com/p/libxal/                                *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic,                    *
+			       Ivan Vucica (ivan@vucica.net)                                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <hltypes/hstring.h>
 #include "Category.h"
-#include "Source.h"
+#include "SourceApple.h"
 #include "SoundBuffer.h"
 #include "StreamSound.h"
 #include "AudioManager.h"
@@ -20,32 +21,41 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 	#include <OpenAL/al.h>
 #endif
 
+#import <AVFoundation/AVFoundation.h>
+
+#define avAudioPlayer ((AVAudioPlayer*)this->avAudioPlayer_Void)
+
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	Source::Source(SoundBuffer* sound, unsigned int sourceId) : Sound(),
+	SourceApple::SourceApple(SoundBuffer* sound, unsigned int sourceId) : Sound(),
 		gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
 		fadeSpeed(0.0f), bound(true), sampleOffset(0.0f)
 	{
 		this->sound = sound;
 		this->sourceId = sourceId;
+		
+		
+		NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:sound->getVirtualFileName().c_str()]];
+		this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url 
+																		  error:nil];
 	}
 
-	Source::~Source()
+	SourceApple::~SourceApple()
 	{
+		[avAudioPlayer release];
 	}
 
 /******* METHODS *******************************************************/
 	
-	void Source::update(float k)
+	void SourceApple::update(float k)
 	{
 		if (this->sourceId == 0)
 		{
 			return;
 		}
-		this->sound->setSourceId(this->sourceId);
-		this->sound->update(k);
+		
 		if (this->isPlaying())
 		{
 			if (this->isFading())
@@ -53,8 +63,8 @@ namespace xal
 				this->fadeTime += this->fadeSpeed * k;
 				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 				{
-					alSourcef(this->sourceId, AL_GAIN, this->gain *
-						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+					avAudioPlayer.volume = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+					
 					this->fadeTime = 1.0f;
 					this->fadeSpeed = 0.0f;
 				}
@@ -71,8 +81,8 @@ namespace xal
 				}
 				else
 				{
-					alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
-						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+					avAudioPlayer.volume = this->fadeTime * this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+					
 				}
 			}
 		}
@@ -82,7 +92,7 @@ namespace xal
 		}
 	}
 
-	Sound* Source::play(float fadeTime, bool looping)
+	Sound* SourceApple::play(float fadeTime, bool looping)
 	{
 		if (this->sourceId == 0)
 		{
@@ -105,21 +115,12 @@ namespace xal
 		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
-			if (this->sound->getCategory()->isStreamed())
-			{
-				alSourcei(this->sourceId, AL_BUFFER, 0);
-				this->sound->setSourceId(this->sourceId);
-				((StreamSound*)this->sound)->queueBuffers();
-				alSourcei(this->sourceId, AL_LOOPING, false);
-			}
-			else
-			{
-				alSourcei(this->sourceId, AL_BUFFER, this->getBuffer());
-				alSourcei(this->sourceId, AL_LOOPING, this->looping);
-			}
+			// if set to -1, we will loop indefinitely. if set to 0, no repeats.
+			avAudioPlayer.numberOfLoops = (this->looping ? 0 : -1); 
+			
 			if (this->isPaused())
 			{
-				alSourcef(this->sourceId, AL_SEC_OFFSET, this->sampleOffset);
+				avAudioPlayer.currentTime = this->sampleOffset;
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -134,17 +135,18 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
-			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+		avAudioPlayer.volume = this->fadeTime * this->gain *
+			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 		if (!alreadyFading)
 		{
-			alSourcePlay(this->sourceId);
+			//alSourcePlay(this->sourceId);
+			[avAudioPlayer play];
 		}
 		this->paused = false;
 		return this;
 	}
 
-	void Source::stop(float fadeTime)
+	void SourceApple::stop(float fadeTime)
 	{
 		this->stopSoft(fadeTime);
 		if (this->sourceId != 0 && fadeTime <= 0.0f)
@@ -153,7 +155,7 @@ namespace xal
 		}
 	}
 
-	void Source::pause(float fadeTime)
+	void SourceApple::pause(float fadeTime)
 	{
 		this->stopSoft(fadeTime, true);
 		if (this->sourceId != 0 && fadeTime <= 0.0f)
@@ -162,7 +164,7 @@ namespace xal
 		}
 	}
 
-	void Source::stopSoft(float fadeTime, bool pause)
+	void SourceApple::stopSoft(float fadeTime, bool pause)
 	{
 		if (this->sourceId == 0)
 		{
@@ -182,8 +184,10 @@ namespace xal
 #endif
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-		alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
-		alSourceStop(this->sourceId);
+		//alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
+		//alSourceStop(this->sourceId);
+		this->sampleOffset = avAudioPlayer.currentTime;
+		[avAudioPlayer stop];
 		if (this->sound->getCategory()->isStreamed())
 		{
 			this->sound->setSourceId(this->sourceId);
@@ -198,7 +202,7 @@ namespace xal
 		}
 	}
 
-	void Source::unbind(bool pause)
+	void SourceApple::unbind(bool pause)
 	{
 		if (!this->isLocked())
 		{
@@ -213,27 +217,31 @@ namespace xal
 	
 /******* PROPERTIES ****************************************************/
 
-	void Source::setGain(float gain)
+	void SourceApple::setGain(float gain)
 	{
 		this->gain = gain;
 		if (this->sourceId != 0)
 		{
-			alSourcef(this->sourceId, AL_GAIN, this->gain *
-				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+			avAudioPlayer.volume = this->gain *
+				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 		}
 	}
 
-	unsigned int Source::getBuffer()
+	unsigned int SourceApple::getBuffer()
 	{
 		return this->sound->getBuffer();
 	}
 	
-	bool Source::isPlaying()
+	bool SourceApple::isPlaying()
 	{
+		return avAudioPlayer.playing;
+		
+		/////////////////////////
 		if (this->sourceId == 0)
 		{
 			return false;
 		}
+		
 		if (this->sound->getCategory()->isStreamed())
 		{
 			int queued;
@@ -247,29 +255,24 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 
-	bool Source::isPaused()
+	bool SourceApple::isPaused()
 	{
 		return (this->paused && !this->isFading());
 	}
 	
-	bool Source::isFading()
+	bool SourceApple::isFading()
 	{
 		return (this->fadeSpeed != 0.0f);
 	}
 
-	bool Source::isFadingIn()
+	bool SourceApple::isFadingIn()
 	{
 		return (this->fadeSpeed > 0.0f);
 	}
 
-	bool Source::isFadingOut()
+	bool SourceApple::isFadingOut()
 	{
 		return (this->fadeSpeed < 0.0f);
-	}
-	
-	Category *Source::getCategory()
-	{
-		return (this->sound->getCategory());
 	}
 
 }

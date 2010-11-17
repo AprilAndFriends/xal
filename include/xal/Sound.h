@@ -16,6 +16,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace xal
 {
+	class Category;
 	class xalExport Sound
 	{
 	public:
@@ -24,6 +25,7 @@ namespace xal
 		
 		virtual void update(float k) { }
 
+		// pure virtual
 		virtual float getGain() = 0;
 		virtual void setGain(float value) = 0;
 		virtual bool isLooping() = 0;
@@ -36,10 +38,15 @@ namespace xal
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false) = 0;
 		virtual void stop(float fadeTime = 0.0f) = 0;
 		virtual void pause(float fadeTime = 0.0f) = 0;
+		virtual void stopSoft(float fadeTime = 0.0f, bool pause = false) = 0;
 		
-		void lock() { this->locked = true; }
-		void unlock() { this->locked = false; }
-		bool isLocked() { return this->locked; }
+		// with default impl
+		virtual void lock() { this->locked = true; }
+		virtual void unlock() { this->locked = false; }
+		virtual bool isLocked() { return this->locked; }
+		
+		virtual Category* getCategory() { return NULL; }
+		virtual float getSampleOffset() { return 0.f; }
 		
 	protected:
 		bool locked;
