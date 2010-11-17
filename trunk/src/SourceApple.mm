@@ -40,11 +40,14 @@ namespace xal
 		NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:sound->getVirtualFileName().c_str()]];
 		this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url 
 																		  error:nil];
+		
 	}
 
 	SourceApple::~SourceApple()
 	{
+		
 		[avAudioPlayer release];
+	
 	}
 
 /******* METHODS *******************************************************/
