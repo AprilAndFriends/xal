@@ -76,6 +76,13 @@ namespace xal
 		{
 			result = this->_loadOgg();
 		}
+#if TARGET_OS_IPHONE
+		else if (this->isAac())
+		{
+			// no need to load aac.
+			//result = this->_loadAac();
+		}
+#endif
 		if (result)
 		{
 			this->loaded = result;
@@ -233,7 +240,16 @@ namespace xal
 #ifdef _DEBUG
 			xal::mgr->logMessage(hsprintf("allocated new source %d", sourceId));
 #endif
-			source = xal::mgr->createSource(this, sourceId);
+			if(this->isOgg())
+			{
+				source = xal::mgr->createSource(this, sourceId);
+			}
+#if TARGET_OS_IPHONE
+			else if(this->isAac())
+			{
+				source = xal::mgr->createSourceApple(this, sourceId);
+			}
+#endif
 			this->bindSource(source);
 		}
 		else
