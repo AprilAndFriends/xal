@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <AL/al.h>
 #else
 #include <OpenAL/al.h>
+#include <TargetConditionals.h>
 #endif
 
 #include <hltypes/harray.h>
@@ -71,16 +72,20 @@ namespace xal
 		if (!xal::mgr->isEnabled())
 		{
 			result = this->isOgg();
+#if TARGET_OS_IPHONE
+			result |= this->isM4a();
+#endif
 		}
 		else if (this->isOgg())
 		{
 			result = this->_loadOgg();
 		}
 #if TARGET_OS_IPHONE
-		else if (this->isAac())
+		else if (this->isM4a())
 		{
-			// no need to load aac.
-			//result = this->_loadAac();
+			// no need to load m4a aac.
+			//result = this->_loadM4a();
+			result = true;
 		}
 #endif
 		if (result)
@@ -208,9 +213,9 @@ namespace xal
 		return this->virtualFileName.ends_with(".ogg");
 	}
 	
-	bool SoundBuffer::isAac()
+	bool SoundBuffer::isM4a()
 	{
-		return this->virtualFileName.ends_with(".aac");
+		return this->virtualFileName.ends_with(".m4a");
 	}
 
 /******* PLAY CONTROLS *************************************************/
@@ -223,7 +228,7 @@ namespace xal
 		{
 			this->load();
 		}
-		if (this->getBuffer() == 0)
+		if (!this->isM4a() && this->getBuffer() == 0)
 		{
 			xal::mgr->setUpdating(false);
 			return NULL;
@@ -245,11 +250,12 @@ namespace xal
 				source = xal::mgr->createSource(this, sourceId);
 			}
 #if TARGET_OS_IPHONE
-			else if(this->isAac())
+			else if(this->isM4a())
 			{
 				source = xal::mgr->createSourceApple(this, sourceId);
 			}
 #endif
+
 			this->bindSource(source);
 		}
 		else
