@@ -47,6 +47,7 @@ namespace xal
 		
 		virtual Category* getCategory() { return NULL; }
 		virtual float getSampleOffset() { return 0.f; }
+		virtual unsigned int getSourceId() { return 0; }
 		
 	protected:
 		bool locked;
