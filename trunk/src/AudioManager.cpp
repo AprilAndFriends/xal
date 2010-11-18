@@ -259,20 +259,30 @@ namespace xal
 		SoundBuffer* sound;
 		if (category->isStreamed())
 		{
+#ifdef _DEBUG
+			this->logMessage("creating stream sound " + filename);
+#endif
 			sound = new StreamSound(filename, categoryName, prefix);
 		}
 		else
 		{
+#ifdef _DEBUG
+			this->logMessage("creating simple sound " + filename);
+#endif
 			sound = new SimpleSound(filename, categoryName, prefix);
 		}
 		if (category->isDynamicLoad())
 		{
-			this->logMessage("creating dynamic sound " + filename);
+			this->logMessage("created a dynamic sound: " + filename);
 		}
 		else if (!sound->load())
 		{
+			this->logMessage("failed to load sound " + filename);
 			return NULL;
 		}
+#ifdef _DEBUG
+		this->logMessage("sound " + filename + " initialized");
+#endif
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}

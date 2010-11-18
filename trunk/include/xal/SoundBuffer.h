@@ -57,7 +57,7 @@ namespace xal
 		bool isLoaded() { return this->loaded; }
 		bool isLink();
 		bool isOgg();
-		bool isAac();
+		bool isM4a();
 		
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);

@@ -41,6 +41,7 @@ namespace xal
 		this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url 
 																		  error:nil];
 		
+		
 	}
 
 	SourceApple::~SourceApple()
