@@ -155,9 +155,9 @@ namespace xal
 		return (this->sources.size() > 0 && this->sources[0]->isLocked());
 	}
 
-	float SoundBuffer::getSampleOffset()
+	int SoundBuffer::getSampleOffset()
 	{
-		return (this->getBuffer() != 0 && this->sources.size() > 0 ? this->sources[0]->getSampleOffset() : 0.0f);
+		return (this->getBuffer() != 0 && this->sources.size() > 0 ? this->sources[0]->getSampleOffset() : 0);
 	}
 
 	void SoundBuffer::setGain(float gain)

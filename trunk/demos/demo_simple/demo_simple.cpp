@@ -20,17 +20,17 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-//#define _TEST_STREAM
+#define _TEST_STREAM
 //#define _TEST_LINKS
-#define _TEST_THREADED
+//#define _TEST_THREADED
 
 //#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
-//#define _TEST_MULTIPLE_STREAM
+#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
-#define _TEST_FADE_IN_OUT
+//#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
 //#define _TEST_UTIL_PLAYLIST
@@ -69,9 +69,18 @@ void _test_multistream()
 		s->play();
 		hthread::sleep(1000);
 		_update(1.0f);
-		if (i == 2)
+		if (i == 1)
 		{
 			s->pause(1.5f);
+			for (int j = 0; j < 10; j++)
+			{
+				hthread::sleep(100);
+				_update(0.1f);
+			}
+		}
+		else if (i == 3)
+		{
+			s->pause();
 			for (int j = 0; j < 10; j++)
 			{
 				hthread::sleep(100);
