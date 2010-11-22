@@ -36,7 +36,7 @@ namespace xal
 		void unlock();
 		bool isLocked();
 		
-		float getSampleOffset();
+		int getSampleOffset();
 		virtual unsigned int getBuffer() = 0;
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 		chstr getName() { return this->name; }

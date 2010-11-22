@@ -101,12 +101,12 @@ namespace xal
 		}
 		int count;
 		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
-		int bytes = 0;
-		int result;
 		if (count == 0)
 		{
 			return;
 		}
+		int bytes = 0;
+		int result;
 		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
 		int i = 0;
 		for (; i < count; i++)
