@@ -285,7 +285,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -299,7 +298,6 @@
 					"\"$(SRCROOT)/../lib/macosx\"",
 				);
 				PRODUCT_NAME = xal;
-				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -337,7 +335,7 @@
 			};
 			name = Release;
 		};
-		7FC8A8EF1296C7B8003D3931 /* App Store */ = {
+		7F7A5574129D425800E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = i386;
@@ -352,11 +350,10 @@
 			};
 			name = "App Store";
 		};
-		7FC8A8F01296C7B8003D3931 /* App Store */ = {
+		7F7A5575129D425800E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -370,7 +367,6 @@
 					"\"$(SRCROOT)/../lib/macosx\"",
 				);
 				PRODUCT_NAME = xal;
-				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -384,7 +380,7 @@
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
 				1DEB91AF08733DA50010E9CD /* Release */,
-				7FC8A8F01296C7B8003D3931 /* App Store */,
+				7F7A5575129D425800E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -394,7 +390,7 @@
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
 				1DEB91B308733DA50010E9CD /* Release */,
-				7FC8A8EF1296C7B8003D3931 /* App Store */,
+				7F7A5574129D425800E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
