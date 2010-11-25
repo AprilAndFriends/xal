@@ -266,7 +266,7 @@ namespace xal
 		}
 		alGenBuffers(STREAM_BUFFER_COUNT, this->buffers);
 		this->vorbisInfo = ov_info(&this->oggStream, -1);
-		unsigned long len = ov_pcm_total(&this->oggStream, -1) * this->vorbisInfo->channels * 2; // always 16 bit data
+		unsigned long len = (unsigned long)ov_pcm_total(&this->oggStream, -1) * this->vorbisInfo->channels * 2; // always 16 bit data
 		this->duration = ((float)len) / (this->vorbisInfo->rate * this->vorbisInfo->channels * 2);
 		int bytes;
 		for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
