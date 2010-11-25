@@ -63,7 +63,7 @@ namespace xal
 		}
 		alGenBuffers(1, &this->buffer);
 		info = ov_info(&oggStream, -1);
-		unsigned long length = ov_pcm_total(&oggStream, -1) * info->channels * 2; // always 16 bit data
+		unsigned long length = (unsigned long)ov_pcm_total(&oggStream, -1) * info->channels * 2; // always 16 bit data
 		unsigned char *data = new unsigned char[length];
 		bool result = false;
 		if (data != NULL)
