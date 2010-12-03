@@ -26,7 +26,7 @@ namespace xal
 
 	Source::Source(SoundBuffer* sound, unsigned int sourceId) : Sound(),
 		gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
-		fadeSpeed(0.0f), bound(true), sampleOffset(0)
+		fadeSpeed(0.0f), bound(true), sampleOffset(0.0f)
 	{
 		this->sound = sound;
 		this->sourceId = sourceId;
@@ -119,7 +119,7 @@ namespace xal
 			}
 			if (this->isPaused())
 			{
-				alSourcei(this->sourceId, AL_SAMPLE_OFFSET, this->sampleOffset);
+				alSourcef(this->sourceId, AL_SAMPLE_OFFSET, this->sampleOffset);
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -182,12 +182,11 @@ namespace xal
 #endif
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-		alGetSourcei(this->sourceId, AL_SAMPLE_OFFSET, &this->sampleOffset);
+		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &this->sampleOffset);
 		alSourceStop(this->sourceId);
 		if (this->sound->getCategory()->isStreamed())
 		{
 			this->sound->setSourceId(this->sourceId);
-			((StreamSound*)this->sound)->unqueueBuffers();
 			if (!this->paused)
 			{
 				((StreamSound*)this->sound)->rewindStream();
