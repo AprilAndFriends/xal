@@ -63,6 +63,7 @@ namespace xal
 		void stop(float fadeTime = 0.0f);
 		void stopAll(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false); // pause argument is ignored
 		
 	protected:
 		hstr name;
@@ -74,7 +75,6 @@ namespace xal
 		Category* category;
 		harray<Sound*> sources;
 		
-		void stopSoft(float fadeTime = 0.0f, bool pause = false); // pause argument is ignored
 		
 		virtual bool _loadOgg() = 0;
 		hstr _findLinkedFile();
