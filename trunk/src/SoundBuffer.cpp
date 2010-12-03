@@ -155,7 +155,7 @@ namespace xal
 		return (this->sources.size() > 0 && this->sources[0]->isLocked());
 	}
 
-	int SoundBuffer::getSampleOffset()
+	float SoundBuffer::getSampleOffset()
 	{
 		return (this->getBuffer() != 0 && this->sources.size() > 0 ? this->sources[0]->getSampleOffset() : 0);
 	}
