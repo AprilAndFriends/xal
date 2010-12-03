@@ -245,7 +245,7 @@ namespace xal
 #ifdef _DEBUG
 			xal::mgr->logMessage(hsprintf("allocated new source %d", sourceId));
 #endif
-			if(this->isOgg())
+			if (this->isOgg())
 			{
 				source = xal::mgr->createSource(this, sourceId);
 			}
@@ -255,7 +255,6 @@ namespace xal
 				source = xal::mgr->createSourceApple(this, sourceId);
 			}
 #endif
-
 			this->bindSource(source);
 		}
 		else
