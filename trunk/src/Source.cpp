@@ -108,9 +108,9 @@ namespace xal
 			if (this->sound->getCategory()->isStreamed())
 			{
 				alSourcei(this->sourceId, AL_BUFFER, 0);
+				alSourcei(this->sourceId, AL_LOOPING, false);
 				this->sound->setSourceId(this->sourceId);
 				((StreamSound*)this->sound)->queueBuffers();
-				alSourcei(this->sourceId, AL_LOOPING, false);
 			}
 			else
 			{
