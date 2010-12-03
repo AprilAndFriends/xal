@@ -57,7 +57,7 @@ namespace xal
 		bool paused;
 		float fadeSpeed;
 		float fadeTime;
-		int sampleOffset;
+		float sampleOffset;
 		bool bound;
 		SoundBuffer* sound;
 		
