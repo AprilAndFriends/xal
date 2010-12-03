@@ -96,7 +96,6 @@ namespace xal
 		if (queued == 0)
 		{
 			this->stopSoft();
-			this->_fillStartBuffers();
 			return;
 		}
 		int count;
@@ -105,9 +104,9 @@ namespace xal
 		{
 			return;
 		}
+		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
 		int bytes = 0;
 		int result;
-		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
 		int i = 0;
 		for (; i < count; i++)
 		{

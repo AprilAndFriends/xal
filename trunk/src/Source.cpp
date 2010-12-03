@@ -187,7 +187,11 @@ namespace xal
 		if (this->sound->getCategory()->isStreamed())
 		{
 			this->sound->setSourceId(this->sourceId);
-			if (!this->paused)
+			if (this->paused)
+			{
+				((StreamSound*)this->sound)->unqueueBuffers();
+			}
+			else
 			{
 				((StreamSound*)this->sound)->rewindStream();
 			}
