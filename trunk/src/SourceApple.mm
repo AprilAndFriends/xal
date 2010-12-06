@@ -144,7 +144,8 @@ namespace xal
 		if (!alreadyFading)
 		{
 			//alSourcePlay(this->sourceId);
-			[avAudioPlayer play];
+			if(![avAudioPlayer isPlaying])
+				[avAudioPlayer play];
 		}
 		this->paused = false;
 		return this;
