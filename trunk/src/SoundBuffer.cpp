@@ -222,15 +222,14 @@ namespace xal
 	
 	Sound* SoundBuffer::play(float fadeTime, bool looping)
 	{
-		while (xal::mgr->isUpdating());
-		xal::mgr->setUpdating(true);
+		xal::mgr->lockUpdate();
 		if (!this->loaded)
 		{
 			this->load();
 		}
 		if (!this->isM4a() && this->getBuffer() == 0)
 		{
-			xal::mgr->setUpdating(false);
+			xal::mgr->unlockUpdate();
 			return NULL;
 		}
 		Sound* source = NULL;
@@ -239,7 +238,7 @@ namespace xal
 			unsigned int sourceId = xal::mgr->allocateSourceId();
 			if (sourceId == 0)
 			{
-				xal::mgr->setUpdating(false);
+				xal::mgr->unlockUpdate();
 				return NULL;
 			}
 #ifdef _DEBUG
@@ -265,30 +264,28 @@ namespace xal
 			source = this->sources[0];
 		}
 		source->play(fadeTime, looping);
-		xal::mgr->setUpdating(false);
+		xal::mgr->unlockUpdate();
 		return source;
 	}
 
 	void SoundBuffer::stop(float fadeTime)
 	{
-		while (xal::mgr->isUpdating());
-		xal::mgr->setUpdating(true);
+		xal::mgr->lockUpdate();
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->stop(fadeTime);
 		}
-		xal::mgr->setUpdating(false);
+		xal::mgr->unlockUpdate();
 	}
 
 	void SoundBuffer::stopSoft(float fadeTime, bool pause)
 	{		
-		while (xal::mgr->isUpdating());
-		xal::mgr->setUpdating(true);
+		xal::mgr->lockUpdate();
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->stopSoft(fadeTime, pause);
 		}
-		xal::mgr->setUpdating(false);
+		xal::mgr->unlockUpdate();
 	}
 
 	void SoundBuffer::stopAll(float fadeTime)
@@ -307,13 +304,12 @@ namespace xal
 	
 	void SoundBuffer::pause(float fadeTime)
 	{
-		while (xal::mgr->isUpdating());
-		xal::mgr->setUpdating(true);
+		xal::mgr->lockUpdate();
 		if (this->getBuffer() != 0 && this->sources.size() > 0)
 		{
 			this->sources[0]->pause(fadeTime);
 		}
-		xal::mgr->setUpdating(false);
+		xal::mgr->unlockUpdate();
 	}
 
 }
