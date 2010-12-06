@@ -125,7 +125,6 @@ namespace xal
 		if (this->thread != NULL)
 		{
 			while (this->updating);
-			this->updating = false;
 			this->thread->stop();
 			delete this->thread;
 		}
@@ -393,15 +392,25 @@ namespace xal
 
 	void AudioManager::stopAll(float fadeTime)
 	{
-		while (this->updating);
-		this->updating = true;
+		this->lockUpdate();
 		harray<Sound*> sources(this->sources);
 		foreach (Sound*, it, sources)
 		{
 			(*it)->unlock();
 			(*it)->stop(fadeTime);
 		}
-		this->updating = false;
+		this->unlockUpdate();
+	}
+	
+	void AudioManager::pauseAll(float fadeTime)
+	{
+		this->lockUpdate();
+		harray<Sound*> sources(this->sources);
+		foreach (Sound*, it, sources)
+		{
+			(*it)->pause(fadeTime);
+		}
+		this->unlockUpdate();
 	}
 	
 	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
@@ -416,6 +425,17 @@ namespace xal
 				(*it)->stop(fadeTime);
 			}
 		}
+	}
+	
+	void AudioManager::lockUpdate()
+	{
+		while (this->updating);
+		this->updating = true;
+	}
+	
+	void AudioManager::unlockUpdate()
+	{
+		this->updating = false;
 	}
 	
 }

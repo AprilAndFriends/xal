@@ -37,8 +37,6 @@ namespace xal
 		void logMessage(chstr message, chstr prefix = "[xal] ");
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
-		bool isUpdating() { return this->updating; }
-		void setUpdating(bool value) { this->updating = value; }
 		float getUpdateTime() { return this->updateTime; }
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value);
@@ -62,7 +60,11 @@ namespace xal
 		Sound* getSound(chstr name);
 		
 		void stopAll(float fadeTime = 0.0f);
+		void pauseAll(float fadeTime = 0.0f);
 		void stopCategory(chstr category, float fadeTime = 0.0f);
+		
+		void lockUpdate();
+		void unlockUpdate();
 		
 	protected:
 		unsigned int sourceIds[XAL_MAX_SOURCES];
