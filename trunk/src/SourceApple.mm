@@ -24,6 +24,64 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic,               
 #import <AVFoundation/AVFoundation.h>
 
 #define avAudioPlayer ((AVAudioPlayer*)this->avAudioPlayer_Void)
+#define avAudioPlayerDelegate ((XAL_AVAudioPlayer_Delegate*)this->avAudioPlayerDelegate_Void)
+
+@interface XAL_AVAudioPlayer_Delegate : NSObject <AVAudioPlayerDelegate>
+{
+	xal::SourceApple *sourceApple;
+	BOOL playing;
+}
+
+- (void)markAsPlaying;
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
+@property (readonly, getter=isPlaying) BOOL playing;
+@end
+
+@implementation XAL_AVAudioPlayer_Delegate
+@synthesize playing;
+
+- (id)initWithOwner:(xal::SourceApple*)_sourceApple
+{
+	if(self=[super init])
+	{
+		sourceApple = _sourceApple;
+	}
+	return self;
+}
+
+- (void)markAsPlaying
+{
+	NSLog(@"markasplaying");
+	playing = YES;
+}
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+	NSLog(@"didfinishplaying");
+	playing = NO;
+}
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error;
+{
+	int code = [error code];
+	NSLog(@"decode error at time %g with code %d: %@", player.currentTime, code, error);
+	NSLog(@"user dict: %@ recovery suggestion: %@", [error userInfo], [error localizedRecoverySuggestion]);
+	if (code == -50) {
+		NSLog(@"skipping player to appropriate time");
+		
+		AVAudioPlayer* avp = (AVAudioPlayer*)sourceApple->_rebuildPlayer();
+		[avp prepareToPlay];
+		[avp play];
+	}
+	else
+	{
+		NSLog(@"code is not -50");
+		playing = NO;
+	}
+}
+
+@end
+
+
+
 
 namespace xal
 {
@@ -36,22 +94,54 @@ namespace xal
 		this->sound = sound;
 		this->sourceId = sourceId;
 		
-		
 		NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:sound->getVirtualFileName().c_str()]];
+		NSLog(@"Alloc of new source");
 		this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url 
 																		  error:nil];
+		this->avAudioPlayerDelegate_Void = [[XAL_AVAudioPlayer_Delegate alloc] initWithOwner:this];
 		
+		avAudioPlayer.delegate = avAudioPlayerDelegate;
 		
 	}
 
 	SourceApple::~SourceApple()
 	{
-		
+		NSLog(@"Sound killed");
 		[avAudioPlayer release];
+		[avAudioPlayerDelegate release];
 	
 	}
 
 /******* METHODS *******************************************************/
+	
+	void* SourceApple::_rebuildPlayer()
+	{
+		if (avAudioPlayer) {
+			
+			float volume = avAudioPlayer.volume;
+			int numberOfLoops = avAudioPlayer.numberOfLoops;
+			float currentTime = avAudioPlayer.currentTime;
+			id delegate = avAudioPlayer.delegate;
+			
+			[avAudioPlayer stop];
+			[avAudioPlayer release];
+			
+			NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:sound->getVirtualFileName().c_str()]];
+			this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+			avAudioPlayer.volume = volume;
+			avAudioPlayer.numberOfLoops = numberOfLoops;
+			avAudioPlayer.currentTime = currentTime;
+			avAudioPlayer.delegate = delegate;
+			
+			this->stopSoft(1, false);
+			
+		}
+		return avAudioPlayer;
+	}
+	void* SourceApple::_getPlayerAsVoidPtr() const
+	{
+		return this->avAudioPlayer_Void;
+	}
 	
 	void SourceApple::update(float k)
 	{
@@ -67,6 +157,7 @@ namespace xal
 				this->fadeTime += this->fadeSpeed * k;
 				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 				{
+					NSLog(@"Updated volume 1");
 					avAudioPlayer.volume = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 					
 					this->fadeTime = 1.0f;
@@ -85,6 +176,7 @@ namespace xal
 				}
 				else
 				{
+					NSLog(@"Updated volume 2");
 					avAudioPlayer.volume = this->fadeTime * this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 					
 				}
@@ -98,6 +190,7 @@ namespace xal
 
 	Sound* SourceApple::play(float fadeTime, bool looping)
 	{
+		NSLog(@"PLAY!");
 		if (this->sourceId == 0)
 		{
 			this->sourceId = xal::mgr->allocateSourceId();
@@ -120,11 +213,13 @@ namespace xal
 		if (!alreadyFading)
 		{
 			// if set to -1, we will loop indefinitely. if set to 0, no repeats.
-			avAudioPlayer.numberOfLoops = (this->looping ? 0 : -1); 
+			avAudioPlayer.numberOfLoops = (this->looping ? -1 : 0); 
+			NSLog(@"Set numberofloops to %d", this->looping ? -1 : 0);
 			
 			if (this->isPaused())
 			{
 				avAudioPlayer.currentTime = this->sampleOffset;
+				NSLog(@"Resumed to sample offset %g", this->sampleOffset);
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -141,11 +236,16 @@ namespace xal
 		}
 		avAudioPlayer.volume = this->fadeTime * this->gain *
 			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+		NSLog(@"set up sound volume");
 		if (!alreadyFading)
 		{
 			//alSourcePlay(this->sourceId);
-			if(![avAudioPlayer isPlaying])
+			if(!this->isPlaying())
+			{
+				NSLog(@"play");
 				[avAudioPlayer play];
+				[avAudioPlayerDelegate markAsPlaying];
+			}
 		}
 		this->paused = false;
 		return this;
@@ -192,7 +292,9 @@ namespace xal
 		//alGetSourcef(this->sourceId, AL_SEC_OFFSET, &this->sampleOffset);
 		//alSourceStop(this->sourceId);
 		this->sampleOffset = avAudioPlayer.currentTime;
+		NSLog(@"stop at %g", this->sampleOffset);
 		[avAudioPlayer stop];
+		this->_rebuildPlayer();
 		if (this->sound->getCategory()->isStreamed())
 		{
 			this->sound->setSourceId(this->sourceId);
@@ -227,6 +329,7 @@ namespace xal
 		this->gain = gain;
 		if (this->sourceId != 0)
 		{
+			NSLog(@"Setgain");
 			avAudioPlayer.volume = this->gain *
 				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 		}
@@ -239,7 +342,8 @@ namespace xal
 	
 	bool SourceApple::isPlaying()
 	{
-		return avAudioPlayer.playing;
+		//NSLog(@"isplaying %@", avAudioPlayerDelegate.playing ? @"da" : @"ne");
+		return avAudioPlayerDelegate.playing;
 		
 		/////////////////////////
 		if (this->sourceId == 0)
