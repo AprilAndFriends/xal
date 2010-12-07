@@ -53,6 +53,9 @@ namespace xal
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
 		
+		void* _rebuildPlayer(); // if we get -50 status error in SourceApple, player needs rebuilding. returns AVAudioPlayer* as void*
+		void* _getPlayerAsVoidPtr() const;
+		
 	protected:
 		unsigned int sourceId;
 		float gain;
@@ -65,6 +68,7 @@ namespace xal
 		SoundBuffer* sound;
 		
 		void *avAudioPlayer_Void;
+		void *avAudioPlayerDelegate_Void;
 		
 	};
 
