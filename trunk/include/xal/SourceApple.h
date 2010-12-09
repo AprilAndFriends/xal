@@ -22,7 +22,7 @@ namespace xal
 	{
 	public:
 		SourceApple(SoundBuffer* sound, unsigned int sourceId);
-		~SourceApple();
+		virtual ~SourceApple();
 
 
 		
