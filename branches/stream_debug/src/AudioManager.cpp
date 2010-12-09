@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
@@ -50,6 +51,11 @@ namespace xal
 		mgr->init(deviceName, threaded, updateTime);
 	}
 	
+	void dlog(chstr message)
+	{
+		hfile::happend("log.txt", message + "\r\n");
+	}
+	
 	void destroy()
 	{
 		delete mgr;
@@ -80,6 +86,7 @@ namespace xal
 	
 	void AudioManager::init(chstr deviceName, bool threaded, float updateTime)
 	{
+		hfile::create_new("log.txt");
 		this->logMessage("initializing XAL");
 		if (deviceName == "nosound")
 		{

@@ -104,10 +104,12 @@ namespace xal
 		{
 			return;
 		}
+		xal::dlog(hsprintf("Q: %02d   P: %02d   I: %02d", queued, count, this->bufferIndex));
 		this->unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, count);
 		int bytes = 0;
 		int result;
 		int i = 0;
+		harray<int> indices;
 		for (; i < count; i++)
 		{
 			result = this->_fillBuffer(this->buffers[(this->bufferIndex + i) % STREAM_BUFFER_COUNT]);
@@ -115,11 +117,14 @@ namespace xal
 			{
 				break;
 			}
+			indices += (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
 			bytes += result;
 		}
+		xal::dlog("Filled: " + indices.cast<hstr>().join(", "));
 		if (bytes > 0)
 		{
 			this->queueBuffers(this->bufferIndex, i);
+			xal::dlog("Queued: " + hstr(this->bufferIndex));
 			if (count < STREAM_BUFFER_COUNT)
 			{
 				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
@@ -161,6 +166,7 @@ namespace xal
 	
 	int StreamSound::_fillBuffer(unsigned int buffer)
 	{
+		xal::dlog("Filling buffer: " + hstr(buffer));
 		char data[STREAM_BUFFER_SIZE] = {0};
 		int size = 0;
 		int result;
@@ -223,11 +229,14 @@ namespace xal
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
+			xal::dlog(hsprintf("Queuing: I:%02d C:%02d", index, count));
 			alSourceQueueBuffers(this->sourceId, count, &this->buffers[index]);
 		}
 		else
 		{
+			xal::dlog(hsprintf("Queuing 2: I:%02d C:%02d", index, STREAM_BUFFER_COUNT - index));
 			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
+			xal::dlog(hsprintf("Queuing 2: I:00 C:%02d", count + index - STREAM_BUFFER_COUNT));
 			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
 		}
 	}
@@ -236,11 +245,14 @@ namespace xal
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
+			xal::dlog(hsprintf("Unqueuing: I:%02d C:%02d", index, count));
 			alSourceUnqueueBuffers(this->sourceId, count, &this->buffers[index]);
 		}
 		else
 		{
+			xal::dlog(hsprintf("Unqueuing 2: I:%02d C:%02d", index, STREAM_BUFFER_COUNT - index));
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
+			xal::dlog(hsprintf("Unqueuing 2: I:00 C:%02d", count + index - STREAM_BUFFER_COUNT));
 			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
 		}
 	}

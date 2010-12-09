@@ -25,7 +25,7 @@ namespace xal
 	class Sound;
 	class SoundBuffer;
 	class Source;
-
+	
 	class xalExport AudioManager
 	{
 	public:
@@ -82,6 +82,7 @@ namespace xal
 	xalFnExport void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
 	xalFnExport void destroy();
 	xalFnExport void setLogFunction(void (*function)(chstr));
+	xalFnExport void dlog(chstr message);
 	xalFnExport extern xal::AudioManager* mgr;
 }
 
