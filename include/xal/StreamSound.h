@@ -41,6 +41,7 @@ namespace xal
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
 		
 		unsigned int getBuffer();
+		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 		
 	protected:
 		unsigned int buffers[STREAM_BUFFER_COUNT];

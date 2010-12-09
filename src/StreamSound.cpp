@@ -89,6 +89,19 @@ namespace xal
 		return this->buffers[this->bufferIndex];
 	}
 	
+	void StreamSound::stopSoft(float fadeTime, bool pause)
+	{
+		xal::dlog("STOPPING SOUND");
+		xal::dlog("");
+		xal::dlog("");
+		xal::dlog("");
+		xal::dlog("");
+		xal::dlog("");
+		xal::dlog("");
+		xal::dlog("");
+		SoundBuffer::stopSoft(fadeTime, pause);
+	}
+	
 	void StreamSound::update(float k)
 	{
 		int queued;
@@ -166,7 +179,6 @@ namespace xal
 	
 	int StreamSound::_fillBuffer(unsigned int buffer)
 	{
-		xal::dlog("Filling buffer: " + hstr(buffer));
 		char data[STREAM_BUFFER_SIZE] = {0};
 		int size = 0;
 		int result;
