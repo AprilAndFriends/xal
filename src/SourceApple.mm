@@ -124,6 +124,14 @@ namespace xal
 			
 			[avAudioPlayer stop];
 			[avAudioPlayer release];
+
+			// run one mainloop step
+			SInt32 result;
+			do {
+				result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE);
+			} while(result == kCFRunLoopRunHandledSource);
+			
+			
 			
 			NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:sound->getVirtualFileName().c_str()]];
 			this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
@@ -294,18 +302,6 @@ namespace xal
 		NSLog(@"stop at %g", this->sampleOffset);
 		[avAudioPlayer stop];
 		//this->_rebuildPlayer();
-		if (this->sound->getCategory()->isStreamed())
-		{
-			this->sound->setSourceId(this->sourceId);
-			if (this->paused)
-			{
-				((StreamSound*)this->sound)->unqueueBuffers();
-			}
-			else
-			{
-				((StreamSound*)this->sound)->rewindStream();
-			}
-		}
 	}
 
 	void SourceApple::unbind(bool pause)
@@ -343,24 +339,6 @@ namespace xal
 	{
 		//NSLog(@"isplaying %@", avAudioPlayerDelegate.playing ? @"da" : @"ne");
 		return avAudioPlayerDelegate.playing;
-		
-		/////////////////////////
-		if (this->sourceId == 0)
-		{
-			return false;
-		}
-		
-		if (this->sound->getCategory()->isStreamed())
-		{
-			int queued;
-			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-			int count;
-			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
-			return (queued > 0 || count > 0);
-		}
-		int state;
-		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
-		return (state == AL_PLAYING);
 	}
 
 	bool SourceApple::isPaused()
