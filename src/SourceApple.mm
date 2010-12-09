@@ -68,7 +68,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic,               
 		NSLog(@"skipping player to appropriate time");
 		
 		AVAudioPlayer* avp = (AVAudioPlayer*)sourceApple->_rebuildPlayer();
-		[avp prepareToPlay];
 		[avp play];
 	}
 	else
@@ -133,7 +132,7 @@ namespace xal
 			avAudioPlayer.currentTime = currentTime;
 			avAudioPlayer.delegate = delegate;
 			
-			this->stopSoft(1, false);
+			//this->stopSoft(1, false);
 			
 		}
 		return avAudioPlayer;
@@ -294,7 +293,7 @@ namespace xal
 		this->sampleOffset = avAudioPlayer.currentTime;
 		NSLog(@"stop at %g", this->sampleOffset);
 		[avAudioPlayer stop];
-		this->_rebuildPlayer();
+		//this->_rebuildPlayer();
 		if (this->sound->getCategory()->isStreamed())
 		{
 			this->sound->setSourceId(this->sourceId);
