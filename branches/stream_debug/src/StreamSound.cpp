@@ -108,6 +108,7 @@ namespace xal
 		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
 		if (queued == 0)
 		{
+			xal::dlog("STOPPING");
 			this->stopSoft();
 			return;
 		}
@@ -137,7 +138,7 @@ namespace xal
 		if (bytes > 0)
 		{
 			this->queueBuffers(this->bufferIndex, i);
-			xal::dlog("Queued: " + hstr(this->bufferIndex));
+			int old = this->bufferIndex;
 			if (count < STREAM_BUFFER_COUNT)
 			{
 				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
@@ -147,11 +148,13 @@ namespace xal
 				this->pause();
 				this->play();
 			}
+			xal::dlog(hsprintf("Queue: %02d %02d", old, this->bufferIndex));
 		}
 		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
 		if (queued == 0)
 		{
 			this->stopSoft();
+			xal::dlog("STOPPING");
 		}
 	}
 	
@@ -193,6 +196,7 @@ namespace xal
 			{
 				if (!this->isLooping())
 				{
+					xal::dlog("- read " + hstr(result) + " bytes");
 					break;
 				}
 				this->_resetStream();
@@ -201,7 +205,9 @@ namespace xal
 			{
 				xal::mgr->logMessage("error while filling buffer for " + this->name);
 			}
+			xal::dlog("- read " + hstr(result) + " bytes");
 		}
+		xal::dlog("- read all " + hstr(size) + " bytes");
 		if (size > 0)
 		{
 #ifdef __BIG_ENDIAN__
@@ -210,7 +216,6 @@ namespace xal
 				XAL_NORMALIZE_ENDIAN(*p);
 			}
 #endif	
-			
 #if HAVE_OGG
 			// FIXME what if we're not using Ogg/Vorbis?
 			// then vorbisInfo does not exist.
