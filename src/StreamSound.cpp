@@ -196,7 +196,6 @@ namespace xal
 			{
 				if (!this->isLooping())
 				{
-					xal::dlog("- read " + hstr(result) + " bytes");
 					break;
 				}
 				this->_resetStream();
@@ -205,9 +204,7 @@ namespace xal
 			{
 				xal::mgr->logMessage("error while filling buffer for " + this->name);
 			}
-			xal::dlog("- read " + hstr(result) + " bytes");
 		}
-		xal::dlog("- read all " + hstr(size) + " bytes");
 		if (size > 0)
 		{
 #ifdef __BIG_ENDIAN__
