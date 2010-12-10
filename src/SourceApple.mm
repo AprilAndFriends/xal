@@ -30,21 +30,24 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic,               
 {
 	xal::SourceApple *sourceApple;
 	BOOL playing;
+	BOOL usingSymlink;
 }
 
 - (void)markAsPlaying;
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
 @property (readonly, getter=isPlaying) BOOL playing;
+@property (assign, getter=isUsingSymlink) BOOL usingSymlink;
 @end
 
 @implementation XAL_AVAudioPlayer_Delegate
 @synthesize playing;
-
+@synthesize usingSymlink;
 - (id)initWithOwner:(xal::SourceApple*)_sourceApple
 {
 	if(self=[super init])
 	{
 		sourceApple = _sourceApple;
+		usingSymlink = NO;
 	}
 	return self;
 }
@@ -120,7 +123,7 @@ namespace xal
 			float volume = avAudioPlayer.volume;
 			int numberOfLoops = avAudioPlayer.numberOfLoops;
 			float currentTime = avAudioPlayer.currentTime;
-			id delegate = avAudioPlayer.delegate;
+			XAL_AVAudioPlayer_Delegate* delegate = avAudioPlayer.delegate;
 			
 			[avAudioPlayer stop];
 			[avAudioPlayer release];
@@ -132,8 +135,20 @@ namespace xal
 			} while(result == kCFRunLoopRunHandledSource);
 			
 			
+			delegate.usingSymlink = !delegate.usingSymlink;
+			NSString *path = [NSString stringWithUTF8String:sound->getVirtualFileName().c_str()];
 			
-			NSURL *url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:sound->getVirtualFileName().c_str()]];
+			if(delegate.usingSymlink)
+			{
+				NSString *ext = [path pathExtension];
+				NSString *extless = [path substringToIndex:path.length - ext.length];
+				path = [extless stringByAppendingString:@"2.m4a"];
+			}
+			
+			
+			
+			
+			NSURL *url = [NSURL fileURLWithPath:path];
 			this->avAudioPlayer_Void = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
 			avAudioPlayer.volume = volume;
 			avAudioPlayer.numberOfLoops = numberOfLoops;
