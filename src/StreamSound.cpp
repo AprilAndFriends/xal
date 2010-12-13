@@ -192,7 +192,6 @@ namespace xal
 				XAL_NORMALIZE_ENDIAN(*p);
 			}
 #endif	
-			
 #if HAVE_OGG
 			// FIXME what if we're not using Ogg/Vorbis?
 			// then vorbisInfo does not exist.
