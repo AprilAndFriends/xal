@@ -43,7 +43,15 @@ namespace xal
 /******* GLOBAL ********************************************************/
 	
 	AudioManager* mgr;
+	ALCdevice* gDevice = NULL;
+	ALCcontext* gContext = NULL;
 
+	void xal_writelog(chstr text)
+	{
+		printf("%s\n", text.c_str());
+	}
+	void (*gLogFunction)(chstr) = xal_writelog;
+	
 	void init(chstr deviceName, bool threaded, float updateTime)
 	{
 		mgr = new AudioManager();
@@ -55,15 +63,11 @@ namespace xal
 		delete mgr;
 	}
 	
-	void xal_writelog(chstr text)
+	void log(chstr message, chstr prefix)
 	{
-		printf("%s\n", text.c_str());
+		gLogFunction(prefix + message);
 	}
 	
-	void (*gLogFunction)(chstr) = xal_writelog;
-	ALCdevice* gDevice = NULL;
-	ALCcontext* gContext = NULL;
-
 	void setLogFunction(void (*function)(chstr))
 	{
 		gLogFunction = function;
@@ -80,21 +84,21 @@ namespace xal
 	
 	void AudioManager::init(chstr deviceName, bool threaded, float updateTime)
 	{
-		this->logMessage("initializing XAL");
+		xal::log("initializing XAL");
 		if (deviceName == "nosound")
 		{
 			this->deviceName = deviceName;
-			this->logMessage("audio is disabled");
+			xal::log("audio is disabled");
 			return;
 		}
-		this->logMessage("initializing OpenAL");
+		xal::log("initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		this->logMessage("audio device: " + this->deviceName);
+		xal::log("audio device: " + this->deviceName);
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
@@ -111,7 +115,7 @@ namespace xal
 		this->deviceName = deviceName;
 		if (threaded)
 		{
-			this->logMessage("starting thread management");
+			xal::log("starting thread management");
 			this->updateTime = updateTime;
 			this->updating = true;
 			this->thread = new hthread(&AudioManager::update);
@@ -136,7 +140,7 @@ namespace xal
 		{
 			delete it->second;
 		}
-		this->logMessage("destroying OpenAL");
+		xal::log("destroying OpenAL");
 		if (gDevice)
 		{
 			Sound* source;
@@ -156,11 +160,6 @@ namespace xal
 	
 /******* PROPERTIES ****************************************************/
 
-	void AudioManager::logMessage(chstr message, chstr prefix)
-	{
-		gLogFunction(prefix + message);
-	}
-	
 	bool AudioManager::isEnabled()
 	{
 		return (gDevice != NULL);
@@ -201,12 +200,13 @@ namespace xal
 		foreach (Sound*, it, this->sources)
 		{
 			Source* source = dynamic_cast<Source*> (*it);
-			if(!source)
-				continue;
-			id = source->getSourceId();
-			if (id != 0)
+			if (source != NULL)
 			{
-				allocated += id;
+				id = source->getSourceId();
+				if (id != 0)
+				{
+					allocated += id;
+				}
 			}
 		}
 		harray<unsigned int> unallocated(this->sourceIds, XAL_MAX_SOURCES);
@@ -215,7 +215,7 @@ namespace xal
 		{
 			return unallocated.front();
 		}
-		this->logMessage("unable to allocate audio source!");
+		xal::log("unable to allocate audio source!");
 		return 0;
 	}
 
@@ -259,28 +259,28 @@ namespace xal
 		if (category->isStreamed())
 		{
 #ifdef _DEBUG
-			this->logMessage("creating stream sound " + filename);
+			xal::log("creating stream sound " + filename);
 #endif
 			sound = new StreamSound(filename, categoryName, prefix);
 		}
 		else
 		{
 #ifdef _DEBUG
-			this->logMessage("creating simple sound " + filename);
+			xal::log("creating simple sound " + filename);
 #endif
 			sound = new SimpleSound(filename, categoryName, prefix);
 		}
 		if (category->isDynamicLoad())
 		{
-			this->logMessage("created a dynamic sound: " + filename);
+			xal::log("created a dynamic sound: " + filename);
 		}
 		else if (!sound->load())
 		{
-			this->logMessage("failed to load sound " + filename);
+			xal::log("failed to load sound " + filename);
 			return NULL;
 		}
 #ifdef _DEBUG
-		this->logMessage("sound " + filename + " initialized");
+		xal::log("sound " + filename + " initialized");
 #endif
 		this->sounds[sound->getName()] = sound;
 		return sound;

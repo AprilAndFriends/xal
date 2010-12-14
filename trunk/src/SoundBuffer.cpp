@@ -40,7 +40,7 @@ namespace xal
 
 	SoundBuffer::~SoundBuffer()
 	{
-		xal::mgr->logMessage("destroying sound " + this->name);
+		xal::log("destroying sound " + this->name);
 	}
 	
 	void SoundBuffer::destroySources()
@@ -121,7 +121,7 @@ namespace xal
 	void SoundBuffer::bindSource(Sound* source)
 	{
 #ifdef _DEBUG
-		xal::mgr->logMessage(hsprintf("binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
+		xal::log(hsprintf("binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
 #endif
 		this->sources += source;
 	}
@@ -129,7 +129,7 @@ namespace xal
 	void SoundBuffer::unbindSource(Sound* source)
 	{
 #ifdef _DEBUG
-		xal::mgr->logMessage(hsprintf("unbinding source from sound %s", this->virtualFileName.c_str()));
+		xal::log(hsprintf("unbinding source from sound %s", this->virtualFileName.c_str()));
 #endif
 		this->sources -= source;
 	}
@@ -242,7 +242,7 @@ namespace xal
 				return NULL;
 			}
 #ifdef _DEBUG
-			xal::mgr->logMessage(hsprintf("allocated new source %d", sourceId));
+			xal::log(hsprintf("allocated new source %d", sourceId));
 #endif
 			if (this->isOgg())
 			{
@@ -259,7 +259,7 @@ namespace xal
 		else
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("using allocated source");
+			xal::log("using allocated source");
 #endif
 			source = this->sources[0];
 		}
@@ -293,7 +293,7 @@ namespace xal
 		if (this->getBuffer() != 0)
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("stop all");
+			xal::log("stop all");
 #endif
 			foreach (Sound*, it, this->sources)
 			{
