@@ -53,12 +53,12 @@ namespace xal
 	bool SimpleSound::_loadOgg()
 	{
 #if HAVE_OGG
-		xal::mgr->logMessage("loading ogg sound " + this->fileName);
+		xal::log("loading ogg sound " + this->fileName);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
 		if (ov_fopen((char*)this->virtualFileName.c_str(), &oggStream) != 0)
 		{
-			xal::mgr->logMessage("ogg: error opening file!");
+			xal::log("ogg: error opening file!");
 			return false;
 		}
 		alGenBuffers(1, &this->buffer);
@@ -97,13 +97,13 @@ namespace xal
 		}
 		else
 		{
-			xal::mgr->logMessage("ogg: could not allocate ogg buffer.");
+			xal::log("ogg: could not allocate ogg buffer.");
 		}
 		ov_clear(&oggStream);
 		return result;
 #else
 #warning HAVE_OGG is not defined to 1. No Ogg support.
-		xal::mgr->logMessage("no ogg support built in, cannot load " + this->fileName);
+		xal::log("no ogg support built in, cannot load " + this->fileName);
 		return false;
 #endif
 	}

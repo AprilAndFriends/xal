@@ -34,7 +34,6 @@ namespace xal
 		
 		void init(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		
-		void logMessage(chstr message, chstr prefix = "[xal] ");
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
 		float getUpdateTime() { return this->updateTime; }
@@ -82,6 +81,7 @@ namespace xal
 	xalFnExport void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
 	xalFnExport void destroy();
 	xalFnExport void setLogFunction(void (*function)(chstr));
+	xalFnExport void log(chstr message, chstr prefix = "[xal] ");
 	xalFnExport extern xal::AudioManager* mgr;
 }
 
