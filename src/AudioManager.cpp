@@ -68,6 +68,14 @@ namespace xal
 		gLogFunction(prefix + message);
 	}
 	
+	void logf(chstr message, ...)
+	{
+		va_list vl;
+		va_start(vl, message);
+		xal::log(hvsprintf(message.c_str(), vl));;
+		va_end(vl);
+	}
+	
 	void setLogFunction(void (*function)(chstr))
 	{
 		gLogFunction = function;
