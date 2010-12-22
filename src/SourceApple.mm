@@ -221,11 +221,11 @@ namespace xal
 				return NULL;
 			}
 #ifdef _DEBUG
-			xal::mgr->logMessage(hsprintf("allocated source ID %d", this->sourceId));
+			xal::log(hsprintf("allocated source ID %d", this->sourceId));
 #endif
 		}
 #ifdef _DEBUG
-		xal::mgr->logMessage("play sound " + this->sound->getVirtualFileName());
+		xal::log("play sound " + this->sound->getVirtualFileName());
 #endif
 		if (!this->paused)
 		{
@@ -248,7 +248,7 @@ namespace xal
 		{
 			this->fadeSpeed = 1.0f / fadeTime;
 #ifdef _DEBUG
-			xal::mgr->logMessage("fading in sound " + this->sound->getVirtualFileName());
+			xal::log("fading in sound " + this->sound->getVirtualFileName());
 #endif
 		}
 		else
@@ -275,9 +275,14 @@ namespace xal
 
 	void SourceApple::stop(float fadeTime)
 	{
+		NSLog(@"SourceApple::Stop");
 		this->stopSoft(fadeTime);
 		if (this->sourceId != 0 && fadeTime <= 0.0f)
 		{
+			NSLog(@"SourceApple::Stop internal");
+			
+			[avAudioPlayer stop];
+
 			this->unbind(this->paused);
 		}
 	}
@@ -287,12 +292,16 @@ namespace xal
 		this->stopSoft(fadeTime, true);
 		if (this->sourceId != 0 && fadeTime <= 0.0f)
 		{
+			[avAudioPlayer pause];
+
 			this->unbind(this->paused);
 		}
 	}
 
 	void SourceApple::stopSoft(float fadeTime, bool pause)
 	{
+		NSLog(@"SourceApple::stopSoft");
+
 		if (this->sourceId == 0)
 		{
 			return;
@@ -301,13 +310,13 @@ namespace xal
 		if (fadeTime > 0.0f)
 		{
 #ifdef _DEBUG
-			xal::mgr->logMessage("fading out sound " + this->sound->getVirtualFileName());
+			xal::log("fading out sound " + this->sound->getVirtualFileName());
 #endif
 			this->fadeSpeed = -1.0f / fadeTime;
 			return;
 		}
 #ifdef _DEBUG
-		xal::mgr->logMessage(hstr(this->paused ? "pause" : "stop") + " sound " + this->sound->getVirtualFileName());
+		xal::log(hstr(this->paused ? "pause" : "stop") + " sound " + this->sound->getVirtualFileName());
 #endif
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
@@ -326,8 +335,14 @@ namespace xal
 			this->sourceId = 0;
 			if (!pause)
 			{
+				NSLog(@"SourceApple::unbind stop");
+				[avAudioPlayer stop];
 				this->sound->unbindSource(this);
 				xal::mgr->destroySource(this);
+			}
+			else
+			{
+				[avAudioPlayer pause];
 			}
 		}
 	}
@@ -345,9 +360,10 @@ namespace xal
 		}
 	}
 
-	unsigned int SourceApple::getBuffer()
+	unsigned int SourceApple::getBuffer() const
 	{
-		return this->sound->getBuffer();
+		//return this->sound->getBuffer();
+		return (int)avAudioPlayer;
 	}
 	
 	bool SourceApple::isPlaying()

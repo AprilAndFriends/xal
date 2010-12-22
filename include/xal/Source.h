@@ -36,7 +36,7 @@ namespace xal
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 		float getSampleOffset() { return this->sampleOffset; }
-		unsigned int getBuffer();
+		unsigned int getBuffer() const;
 		SoundBuffer* getSound() { return this->sound; }
 		bool isBound() { return this->bound; }
 		float getGain() { return this->gain; }

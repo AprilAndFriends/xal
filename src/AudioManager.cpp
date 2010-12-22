@@ -207,7 +207,7 @@ namespace xal
 		unsigned int id = 0;
 		foreach (Sound*, it, this->sources)
 		{
-			Source* source = dynamic_cast<Source*> (*it);
+			Source* source = dynamic_cast<Source*> (*it); // FIXME what about SourceApple?
 			if (source != NULL)
 			{
 				id = source->getSourceId();
@@ -401,6 +401,9 @@ namespace xal
 	void AudioManager::stopAll(float fadeTime)
 	{
 		this->lockUpdate();
+#ifdef _DEBUG
+		xal::log(hsprintf("Sending stop to %d sources", this->sources.size()));
+#endif
 		harray<Sound*> sources(this->sources);
 		foreach (Sound*, it, sources)
 		{

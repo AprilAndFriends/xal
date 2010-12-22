@@ -24,6 +24,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include "Source.h"
 #include "AudioManager.h"
 
+#if TARGET_OS_IPHONE
+#include "SourceApple.h"
+#endif
+
 namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
@@ -53,10 +57,23 @@ namespace xal
 			sound->unlock();
 			
 			source = dynamic_cast<Source*> (sound);
-			if(!source)
+
+			if(source)
+			{
+				source->stopSoft();
+				source->unbind();
 				continue;
-			source->stopSoft();
-			source->unbind();
+			}
+			
+#if TARGET_OS_IPHONE
+			SourceApple *sourceApple = dynamic_cast<SourceApple*> (sound);
+			if(sourceApple)
+			{
+				sourceApple->stopSoft();
+				sourceApple->unbind();
+				continue;
+			}
+#endif
 		}
 	}
 	
@@ -227,7 +244,7 @@ namespace xal
 		{
 			this->load();
 		}
-		if (!this->isM4a() && this->getBuffer() == 0)
+		if (!this->isM4a() && !this->isValidBuffer()) // TODO check if this should still perhaps say "if(!this->isM4a() && this->getBuffer() == 0)"
 		{
 			xal::mgr->unlockUpdate();
 			return NULL;
@@ -270,10 +287,17 @@ namespace xal
 
 	void SoundBuffer::stop(float fadeTime)
 	{
+#ifdef _DEBUG
+		xal::log(hsprintf("SoundBuffer::stop(%g) for ", fadeTime) + fileName);
+		xal::log(hsprintf("SoundBuffer killing its %d sources; buffer %d", this->sources.size(), this->getBuffer()));
+#endif
 		xal::mgr->lockUpdate();
-		if (this->getBuffer() != 0 && this->sources.size() > 0)
+		if (this->sources.size() > 0)
 		{
-			this->sources[0]->stop(fadeTime);
+			if (this->isValidBuffer()) {
+				this->sources[0]->stop(fadeTime);
+			}
+			
 		}
 		xal::mgr->unlockUpdate();
 	}
@@ -281,7 +305,7 @@ namespace xal
 	void SoundBuffer::stopSoft(float fadeTime, bool pause)
 	{		
 		xal::mgr->lockUpdate();
-		if (this->getBuffer() != 0 && this->sources.size() > 0)
+		if (this->isValidBuffer() && this->sources.size() > 0)
 		{
 			this->sources[0]->stopSoft(fadeTime, pause);
 		}
@@ -290,7 +314,7 @@ namespace xal
 
 	void SoundBuffer::stopAll(float fadeTime)
 	{
-		if (this->getBuffer() != 0)
+		if (this->isValidBuffer())
 		{
 #ifdef _DEBUG
 			xal::log("stop all");
@@ -305,11 +329,36 @@ namespace xal
 	void SoundBuffer::pause(float fadeTime)
 	{
 		xal::mgr->lockUpdate();
-		if (this->getBuffer() != 0 && this->sources.size() > 0)
+		if (this->isValidBuffer() && this->sources.size() > 0)
 		{
 			this->sources[0]->pause(fadeTime);
 		}
 		xal::mgr->unlockUpdate();
 	}
+	
+	bool SoundBuffer::isValidBuffer() const 
+	{
+		// helper method for checking if buffer is valid
+		// replaces previous check "if (this->getBuffer() != 0)"
+		
+		// TODO check if this could be replaceable with SoundBuffer::isLoaded()!
+		
+		if(this->getBuffer() != 0)
+		{
+			return true;
+		}
+#if TARGET_OS_IPHONE
+		if(this->sources.size())
+		{
+			SourceApple* sourceApple = dynamic_cast<SourceApple*> (this->sources[0]);
+			if (sourceApple && sourceApple->getBuffer() != 0)
+			{
+				return true;
+			}
+		}
+#endif
+		return false;
+	}
+	
 
 }

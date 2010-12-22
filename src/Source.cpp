@@ -223,8 +223,11 @@ namespace xal
 		}
 	}
 
-	unsigned int Source::getBuffer()
+	unsigned int Source::getBuffer() const
 	{
+#if _DEBUG
+		printf("Source::getBuffer()");
+#endif
 		return this->sound->getBuffer();
 	}
 	

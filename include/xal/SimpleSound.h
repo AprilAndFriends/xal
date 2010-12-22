@@ -22,7 +22,7 @@ namespace xal
 		SimpleSound(chstr name, chstr category, chstr prefix = "");
 		~SimpleSound();
 		
-		unsigned int getBuffer() { return this->buffer; }
+		unsigned int getBuffer() const { return this->buffer; }
 		
 	protected:
 		unsigned int buffer;

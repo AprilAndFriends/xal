@@ -84,7 +84,7 @@ namespace xal
 		return SoundBuffer::play(fadeTime, looping);
 	}
 	
-	unsigned int StreamSound::getBuffer()
+	unsigned int StreamSound::getBuffer() const
 	{
 		return this->buffers[this->bufferIndex];
 	}
