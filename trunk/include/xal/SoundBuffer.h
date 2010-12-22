@@ -37,7 +37,7 @@ namespace xal
 		bool isLocked();
 		
 		float getSampleOffset();
-		virtual unsigned int getBuffer() = 0;
+		virtual unsigned int getBuffer() const = 0;
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 		chstr getName() { return this->name; }
 		chstr getFileName() { return this->fileName; }
@@ -55,6 +55,7 @@ namespace xal
 		bool isFadingOut();
 		
 		bool isLoaded() { return this->loaded; }
+		bool isValidBuffer() const;
 		bool isLink();
 		bool isOgg();
 		bool isM4a();
@@ -65,6 +66,7 @@ namespace xal
 		void pause(float fadeTime = 0.0f);
 		void stopSoft(float fadeTime = 0.0f, bool pause = false); // pause argument is ignored
 		
+
 	protected:
 		hstr name;
 		hstr fileName;

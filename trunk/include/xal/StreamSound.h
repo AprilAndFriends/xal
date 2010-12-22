@@ -40,7 +40,7 @@ namespace xal
 		
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
 		
-		unsigned int getBuffer();
+		unsigned int getBuffer() const;
 		
 	protected:
 		unsigned int buffers[STREAM_BUFFER_COUNT];
