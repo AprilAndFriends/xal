@@ -167,10 +167,10 @@ namespace xal
 	
 	void SourceApple::update(float k)
 	{
-		if (this->sourceId == 0)
-		{
-			return;
-		}
+		//if (this->sourceId == 0)
+		//{
+		//	return;
+		//}
 		
 		if (this->isPlaying())
 		{
@@ -195,6 +195,7 @@ namespace xal
 						return;
 					}
 					this->pause();
+					return;
 				}
 				else
 				{
@@ -206,18 +207,19 @@ namespace xal
 		}
 		if (!this->isPlaying() && !this->isPaused())
 		{
-			this->unbind();
+			this->unbind(false);
 		}
 	}
 
 	Sound* SourceApple::play(float fadeTime, bool looping)
 	{
-		NSLog(@"PLAY!");
+		NSLog(@"PLAY! Current source id: %d", this->sourceId);
 		if (this->sourceId == 0)
 		{
 			this->sourceId = xal::mgr->allocateSourceId();
 			if (this->sourceId == 0)
 			{
+				NSLog(@"Allocation of source failed");
 				return NULL;
 			}
 #ifdef _DEBUG
@@ -275,9 +277,9 @@ namespace xal
 
 	void SourceApple::stop(float fadeTime)
 	{
-		NSLog(@"SourceApple::Stop");
+		NSLog(@"SourceApple::Stop (sourceid %d fadetime %g)", this->sourceId, fadeTime);
 		this->stopSoft(fadeTime);
-		if (this->sourceId != 0 && fadeTime <= 0.0f)
+		if (/*this->sourceId != 0 && */fadeTime <= 0.0f)
 		{
 			NSLog(@"SourceApple::Stop internal");
 			
@@ -290,9 +292,9 @@ namespace xal
 	void SourceApple::pause(float fadeTime)
 	{
 		this->stopSoft(fadeTime, true);
-		if (this->sourceId != 0 && fadeTime <= 0.0f)
+		if (/*this->sourceId != 0 && */fadeTime <= 0.0f)
 		{
-			[avAudioPlayer pause];
+			[avAudioPlayer stop];
 
 			this->unbind(this->paused);
 		}
@@ -302,10 +304,11 @@ namespace xal
 	{
 		NSLog(@"SourceApple::stopSoft");
 
-		if (this->sourceId == 0)
+		/*if (this->sourceId == 0)
 		{
+			NSLog(@"Bailing out of stopSoft; sourceId is 0");
 			return;
-		}
+		}*/
 		this->paused = pause;
 		if (fadeTime > 0.0f)
 		{
@@ -342,7 +345,16 @@ namespace xal
 			}
 			else
 			{
-				[avAudioPlayer pause];
+				NSLog(@"SourceApple::unbind pause");
+				// FIXME WAAH we are not just pausing here
+				// however, we must call destroySource, else when
+				// in SoundBuffer this->sources[0] is accessed
+				// it'll still call functions of the "old", paused
+				// source
+				[avAudioPlayer stop];
+				this->sound->unbindSource(this);
+				xal::mgr->destroySource(this);
+
 			}
 		}
 	}
@@ -352,12 +364,12 @@ namespace xal
 	void SourceApple::setGain(float gain)
 	{
 		this->gain = gain;
-		if (this->sourceId != 0)
-		{
+		/*if (this->sourceId != 0)
+		{*/
 			NSLog(@"Setgain");
 			avAudioPlayer.volume = this->gain *
 				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
-		}
+		//}
 	}
 
 	unsigned int SourceApple::getBuffer() const
