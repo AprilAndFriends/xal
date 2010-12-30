@@ -266,16 +266,10 @@ namespace xal
 		SoundBuffer* sound;
 		if (category->isStreamed())
 		{
-#ifdef _DEBUG
-			xal::log("creating stream sound " + filename);
-#endif
 			sound = new StreamSound(filename, categoryName, prefix);
 		}
 		else
 		{
-#ifdef _DEBUG
-			xal::log("creating simple sound " + filename);
-#endif
 			sound = new SimpleSound(filename, categoryName, prefix);
 		}
 		if (category->isDynamicLoad())
@@ -287,9 +281,6 @@ namespace xal
 			xal::log("failed to load sound " + filename);
 			return NULL;
 		}
-#ifdef _DEBUG
-		xal::log("sound " + filename + " initialized");
-#endif
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}
@@ -401,9 +392,6 @@ namespace xal
 	void AudioManager::stopAll(float fadeTime)
 	{
 		this->lockUpdate();
-#ifdef _DEBUG
-		xal::log(hsprintf("Sending stop to %d sources", this->sources.size()));
-#endif
 		harray<Sound*> sources(this->sources);
 		foreach (Sound*, it, sources)
 		{

@@ -267,7 +267,7 @@ namespace xal
 		return (this->fadeSpeed < 0.0f);
 	}
 	
-	Category *Source::getCategory()
+	Category* Source::getCategory()
 	{
 		return (this->sound->getCategory());
 	}

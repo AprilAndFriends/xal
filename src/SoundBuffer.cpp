@@ -55,19 +55,16 @@ namespace xal
 		{
 			sound = this->sources.front();
 			sound->unlock();
-			
-			source = dynamic_cast<Source*> (sound);
-
-			if(source)
+			source = dynamic_cast<Source*>(sound);
+			if (source != NULL)
 			{
 				source->stopSoft();
 				source->unbind();
 				continue;
 			}
-			
 #if TARGET_OS_IPHONE
-			SourceApple *sourceApple = dynamic_cast<SourceApple*> (sound);
-			if(sourceApple)
+			SourceApple* sourceApple = dynamic_cast<SourceApple*>(sound);
+			if (sourceApple != NULL)
 			{
 				sourceApple->stopSoft();
 				sourceApple->unbind();
@@ -275,9 +272,6 @@ namespace xal
 		}
 		else
 		{
-#ifdef _DEBUG
-			xal::log("using allocated source");
-#endif
 			source = this->sources[0];
 		}
 		source->play(fadeTime, looping);
@@ -287,10 +281,6 @@ namespace xal
 
 	void SoundBuffer::stop(float fadeTime)
 	{
-#ifdef _DEBUG
-		xal::log(hsprintf("SoundBuffer::stop(%g) for ", fadeTime) + fileName);
-		xal::log(hsprintf("SoundBuffer killing its %d sources; buffer %d", this->sources.size(), this->getBuffer()));
-#endif
 		xal::mgr->lockUpdate();
 		if (this->sources.size() > 0)
 		{
@@ -316,9 +306,6 @@ namespace xal
 	{
 		if (this->isValidBuffer())
 		{
-#ifdef _DEBUG
-			xal::log("stop all");
-#endif
 			foreach (Sound*, it, this->sources)
 			{
 				(*it)->stop(fadeTime);
