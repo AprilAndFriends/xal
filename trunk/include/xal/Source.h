@@ -48,7 +48,7 @@ namespace xal
 		bool isFadingIn();
 		bool isFadingOut();
 		
-		Category *getCategory();
+		Category* getCategory();
 		
 	protected:
 		unsigned int sourceId;
