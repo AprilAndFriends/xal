@@ -19,8 +19,8 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	Playlist::Playlist(bool repeatAll) : playing(false), index(-1),
-		sounds(harray<hstr>())
+	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false),
+		index(-1), sounds(harray<hstr>())
 	{
 		this->repeatAll = repeatAll;
 	}
@@ -68,7 +68,7 @@ namespace xal
 	
 	void Playlist::play(float fadeTime)
 	{
-		if (this->sounds.size() == 0 || this->playing)
+		if (!this->enabled || this->sounds.size() == 0 || this->playing)
 		{
 			return;
 		}

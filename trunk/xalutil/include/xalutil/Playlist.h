@@ -32,12 +32,15 @@ namespace xal
 		void queueSound(chstr name);
 		void queueSounds(harray<hstr> names);
 		
+		bool isEnabled() { return this->enabled; }
+		void setEnabled(bool value) { this->enabled = value; }
 		bool isPlaying() { return this->playing; }
 		bool isRepeatAll() { return this->repeatAll; }
 		void setRepeatAll(bool value) { this->repeatAll = value; }
 		harray<hstr> getSounds() { return this->sounds; }
 		
 	protected:
+		bool enabled;
 		bool playing;
 		bool repeatAll;
 		int index;
