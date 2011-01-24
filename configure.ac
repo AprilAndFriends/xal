@@ -57,6 +57,9 @@ AC_CHECK_HEADERS(gtypes/Rectangle.h, ,[AC_MSG_ERROR("*** gtypes headers not foun
 
 # check for ogg
 AC_CHECK_HEADERS(ogg/ogg.h, ,[AC_MSG_ERROR("*** ogg headers not found.")])
+CFLAGS="$CFLAGS -DHAVE_OGG=1"
+CXXFLAGS="$CXXFLAGS -DHAVE_OGG=1"
+
 
 # check for vorbis
 AC_CHECK_HEADERS(vorbis/vorbisfile.h, ,[AC_MSG_ERROR("*** vorbis headers not found.")])
