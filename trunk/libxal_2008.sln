@@ -1,13 +1,25 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxal", "libxal.vcxproj", "{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxal", "libxal.vcproj", "{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4D373BF-E227-48B9-99E6-84987E8674EC} = {E4D373BF-E227-48B9-99E6-84987E8674EC}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\libhltypes.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\libhltypes.vcproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxalutil", "xalutil\libxalutil.vcxproj", "{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxalutil", "xalutil\libxalutil.vcproj", "{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08} = {6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}
+		{E4D373BF-E227-48B9-99E6-84987E8674EC} = {E4D373BF-E227-48B9-99E6-84987E8674EC}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_simple", "demos\demo_simple\demo_simple.vcxproj", "{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_simple", "demos\demo_simple\demo_simple.vcproj", "{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08} = {6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}
+		{B3E8DF67-FEE1-4660-902C-3D31D1F0735F} = {B3E8DF67-FEE1-4660-902C-3D31D1F0735F}
+		{E4D373BF-E227-48B9-99E6-84987E8674EC} = {E4D373BF-E227-48B9-99E6-84987E8674EC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
