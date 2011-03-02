@@ -68,14 +68,6 @@ namespace xal
 		gLogFunction(prefix + message);
 	}
 	
-	void logf(chstr message, ...)
-	{
-		va_list args;
-		va_start(args, message);
-		xal::log(hvsprintf(message.c_str(), args));
-		va_end(args);
-	}
-	
 	void setLogFunction(void (*function)(chstr))
 	{
 		gLogFunction = function;
@@ -84,9 +76,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
-		sources(harray<Sound*>()), gain(1.0f), updating(false),
-		categories(hmap<hstr, Category*>()),
-		sounds(hmap<hstr, SoundBuffer*>()), thread(NULL)
+		gain(1.0f), updating(false), thread(NULL)
 	{
 	}
 	
