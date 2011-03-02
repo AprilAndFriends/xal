@@ -20,7 +20,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false),
-		index(-1)
+		index(-1), sounds(harray<hstr>())
 	{
 		this->repeatAll = repeatAll;
 	}

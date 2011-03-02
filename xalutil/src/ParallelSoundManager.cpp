@@ -19,7 +19,8 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	ParallelSoundManager::ParallelSoundManager(float fadeTime)
+	ParallelSoundManager::ParallelSoundManager(float fadeTime) :
+		sounds(harray<hstr>()), buildList(harray<hstr>())
 	{
 		this->fadeTime = fadeTime;
 	}
