@@ -134,17 +134,11 @@ namespace xal
 
 	void SoundBuffer::bindSource(Sound* source)
 	{
-#ifdef _DEBUG
-		xal::log(hsprintf("binding source %d to sound %s", source->getSourceId(), this->virtualFileName.c_str()));
-#endif
 		this->sources += source;
 	}
 	
 	void SoundBuffer::unbindSource(Sound* source)
 	{
-#ifdef _DEBUG
-		xal::log(hsprintf("unbinding source from sound %s", this->virtualFileName.c_str()));
-#endif
 		this->sources -= source;
 	}
 	
@@ -255,9 +249,6 @@ namespace xal
 				xal::mgr->unlockUpdate();
 				return NULL;
 			}
-#ifdef _DEBUG
-			xal::log(hsprintf("allocated new source %d", sourceId));
-#endif
 			if (this->isOgg())
 			{
 				source = xal::mgr->createSource(this, sourceId);
