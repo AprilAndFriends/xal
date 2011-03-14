@@ -72,7 +72,6 @@ namespace xal
 		{
 			return NULL;
 		}
-		Source* source = NULL;
 		if (this->sources.size() > 0 && this->sources[0]->isPlaying())
 		{
 			if (!this->isFading())
