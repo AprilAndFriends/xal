@@ -212,6 +212,11 @@ namespace xal
 	{
 		return this->sound->getBuffer();
 	}
+    
+    float Source::getDuration()
+    {
+        return this->sound->getDuration();
+    }
 	
 	bool Source::isPlaying()
 	{

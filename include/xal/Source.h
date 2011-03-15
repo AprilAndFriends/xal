@@ -31,6 +31,8 @@ namespace xal
 		void pause(float fadeTime = 0.0f);
 		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 		
+        float getDuration();
+        
 		void unbind(bool pause = false);
 		
 		unsigned int getSourceId() { return this->sourceId; }

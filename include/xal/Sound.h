@@ -34,6 +34,7 @@ namespace xal
 		virtual bool isFadingIn() = 0;
 		virtual bool isFadingOut() = 0;
 		virtual bool isPaused() = 0;
+        virtual float getDuration() = 0;
 		
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false) = 0;
 		virtual void stop(float fadeTime = 0.0f) = 0;
