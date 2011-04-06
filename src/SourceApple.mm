@@ -385,5 +385,10 @@ namespace xal
 	{
 		return (this->fadeSpeed < 0.0f);
 	}
+    
+    float SourceApple::getDuration()
+    {
+        return avAudioPlayer.duration;
+    }
 
 }
