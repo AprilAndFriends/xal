@@ -59,6 +59,7 @@ namespace xal
 		bool isLink();
 		bool isOgg();
 		bool isM4a();
+		bool isSpx();
 		
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
@@ -79,6 +80,7 @@ namespace xal
 		
 		
 		virtual bool _loadOgg() = 0;
+		virtual bool _loadSpx() = 0;
 		hstr _findLinkedFile();
 		
 	};

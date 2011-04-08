@@ -89,10 +89,15 @@ namespace xal
 #if TARGET_OS_IPHONE
 			result |= this->isM4a();
 #endif
+			result |= this->isSpx();
 		}
 		else if (this->isOgg())
 		{
 			result = this->_loadOgg();
+		}
+		else if (this->isSpx())
+		{
+			result = this->_loadSpx();
 		}
 #if TARGET_OS_IPHONE
 		else if (this->isM4a())
@@ -232,6 +237,11 @@ namespace xal
 		return this->virtualFileName.ends_with(".m4a");
 	}
 
+	bool SoundBuffer::isSpx()
+	{
+		return this->virtualFileName.ends_with(".spx");
+	}
+
 /******* PLAY CONTROLS *************************************************/
 	
 	Sound* SoundBuffer::play(float fadeTime, bool looping)
@@ -259,6 +269,10 @@ namespace xal
 			xal::log(hsprintf("allocated new source %d", sourceId));
 #endif
 			if (this->isOgg())
+			{
+				source = xal::mgr->createSource(this, sourceId);
+			}
+			else if (this->isSpx())
 			{
 				source = xal::mgr->createSource(this, sourceId);
 			}

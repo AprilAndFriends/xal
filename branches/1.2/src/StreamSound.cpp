@@ -289,7 +289,13 @@ namespace xal
 		xal::log("no ogg support built in, cannot load stream sound " + this->fileName);
 		return false;
 #endif
-		
 	}
+
+	bool StreamSound::_loadSpx()
+	{
+		throw "StreamSound does not support Speex";
+		return false;
+	}
+	
 	
 }

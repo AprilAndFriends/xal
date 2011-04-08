@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include;src/"
-				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OGG=1"
+				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OGG=1;HAVE_SPX=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
+				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libspeex.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
 				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/$(ConfigurationName)"
 				GenerateDebugInformation="true"
@@ -118,7 +118,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include;src/"
-				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_OGG=1"
+				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_OGG=1;HAVE_SPX=1"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
+				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libspeex.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/$(ConfigurationName)"
