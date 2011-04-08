@@ -62,6 +62,7 @@ namespace xal
 		bool isM4a();
 		bool isSpx();
 		
+		virtual void clearBuffer() { }
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void stopAll(float fadeTime = 0.0f);
