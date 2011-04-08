@@ -46,7 +46,7 @@ namespace xal
 		virtual bool isLocked() { return this->locked; }
 		
 		virtual Category* getCategory() { return NULL; }
-		virtual float getSampleOffset() { return 0; }
+		virtual float getSampleOffset() { return 0.0f; }
 		virtual unsigned int getSourceId() { return 0; }
 		
 	protected:

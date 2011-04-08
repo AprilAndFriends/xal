@@ -20,14 +20,15 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-#define _TEST_STREAM
+//#define _TEST_STREAM
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
+#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
-#define _TEST_MULTIPLE_STREAM
+//#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
@@ -43,6 +44,20 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define _update(time)
 #endif
 xal::Sound* s;
+
+void _test_basic()
+{
+	printf("  - start test basic...\n");
+	for (int i = 0; i < 3; i++)
+	{
+		s->play();
+		while (s->isPlaying())
+		{
+			hthread::sleep(100);
+			_update(0.1f);
+		}
+	}
+}
 
 void _test_sound()
 {
@@ -291,6 +306,9 @@ int main(int argc, char **argv)
 	s = xal::mgr->getSound("linked_sound");
 #endif
 
+#ifdef _TEST_BASIC
+	_test_basic();
+#endif
 #ifdef _TEST_SOUND
 	_test_sound();
 #endif

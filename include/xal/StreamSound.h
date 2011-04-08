@@ -16,8 +16,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
-#include "xalExport.h"
+
 #include "SoundBuffer.h"
+#include "xalExport.h"
 
 #define STREAM_BUFFER_COUNT 2
 #define STREAM_BUFFER_SIZE 262144
@@ -55,6 +56,7 @@ namespace xal
 		int _fillBuffer(unsigned int buffer);
 		void _fillStartBuffers();
 		bool _loadOgg();
+		bool _loadSpx();
 
 	};
 
