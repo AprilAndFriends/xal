@@ -12,6 +12,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 #include <hltypes/hstring.h>
 
+#if HAVE_SPX
+#include <stdio.h>
+#endif
+
 #include "SoundBuffer.h"
 #include "xalExport.h"
 
@@ -27,9 +31,14 @@ namespace xal
 		
 	protected:
 		unsigned int buffer;
+#if HAVE_SPX
+		unsigned char* spxStream;
+		int spxStreamLength;
+#endif
 		
 		bool _loadOgg();
 		bool _loadSpx();
+		bool _decodeSpx();
 		
 	};
 

@@ -40,7 +40,7 @@ namespace xal
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value);
 		Category* getCategoryByName(chstr name);
-		void createCategory(chstr name, bool streamed = false, bool dynamicLoad = false);
+		void createCategory(chstr name, bool streamed = false, bool dynamicLoad = false, bool dynamicDecode = false);
 		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
 		

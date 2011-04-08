@@ -297,5 +297,10 @@ namespace xal
 		return false;
 	}
 	
+	bool StreamSound::_decodeSpx()
+	{
+		throw "StreamSound does not support Speex";
+		return false;
+	}
 	
 }

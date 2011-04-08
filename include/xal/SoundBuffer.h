@@ -29,6 +29,7 @@ namespace xal
 		void destroySources();
 
 		bool load();
+		bool decode();
 		
 		void bindSource(Sound* source);
 		void unbindSource(Sound* source);
@@ -67,7 +68,6 @@ namespace xal
 		void pause(float fadeTime = 0.0f);
 		void stopSoft(float fadeTime = 0.0f, bool pause = false); // pause argument is ignored
 		
-
 	protected:
 		hstr name;
 		hstr fileName;
@@ -75,12 +75,13 @@ namespace xal
 		float duration;
 		unsigned int sourceId;
 		bool loaded;
+		bool decoded;
 		Category* category;
 		harray<Sound*> sources;
 		
-		
 		virtual bool _loadOgg() = 0;
 		virtual bool _loadSpx() = 0;
+		virtual bool _decodeSpx() = 0;
 		hstr _findLinkedFile();
 		
 	};

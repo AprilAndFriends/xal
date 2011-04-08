@@ -41,6 +41,9 @@ namespace xal
 	SimpleSound::SimpleSound(chstr fileName, chstr category, chstr prefix) :
 		SoundBuffer(fileName, category, prefix), buffer(0)
 	{
+#ifdef HAVE_SPX
+		this->spxStream = NULL;
+#endif
 	}
 
 	SimpleSound::~SimpleSound()
@@ -50,6 +53,13 @@ namespace xal
 		{
 			alDeleteBuffers(1, &this->buffer);
 		}
+#ifdef HAVE_SPX
+		if (this->spxStream != NULL)
+		{
+			delete this->spxStream;
+			this->spxStream = NULL;
+		}
+#endif
 	}
 	
 /******* METHODS *******************************************************/
@@ -114,7 +124,7 @@ namespace xal
 
 	bool SimpleSound::_loadSpx()
 	{
-#if HAVE_SPX
+#ifdef HAVE_SPX
 		xal::log("loading spx sound " + this->fileName);
 		if (!hfile::exists(this->fileName))
 		{
@@ -122,10 +132,20 @@ namespace xal
 			return false;
 		}
 		alGenBuffers(1, &this->buffer);
-		// REFACTOR FROM HERE
+		hfile file(this->fileName);
+		this->spxStreamLength = file.size();
+		this->spxStream = (unsigned char*)malloc(this->spxStreamLength * sizeof(unsigned char));
+		file.read_raw(this->spxStream, this->spxStreamLength);
+		file.close();
+		return true;
+#else
+		return false;
+#endif
+	}
 
-	/*The frame size in hardcoded for this sample code but it doesn't have to be*/
-		FILE* fin;
+	bool SimpleSound::_decodeSpx()
+	{
+#ifdef HAVE_SPX
 		/*Holds the audio that will be written to file (16 bits per sample)*/
 
 		/*Speex handle samples as float, so we need an array of floats*/
@@ -145,9 +165,12 @@ namespace xal
 		speex_decoder_ctl(state, SPEEX_SET_ENH, &tmp);
 
 		int size;
+		unsigned char* stream = this->spxStream;
 
-		fin = fopen(this->fileName.c_str(), "rb");
-		fread(&size, sizeof(int), 1, fin);
+		//fin = fopen(this->fileName.c_str(), "rb");
+		int offset = 0;
+		memcpy(&size, &this->spxStream[offset], sizeof(int));
+		offset += sizeof(int);
 		short* buffer = (short*)malloc((FRAME_SIZE + size) * 2 * sizeof(short));
 		short* bufferPtr = buffer;
 
@@ -158,15 +181,17 @@ namespace xal
 		{
 			/*Read the size encoded by sampleenc, this part will likely be 
 			different in your application*/
-			fread(&nbBytes, sizeof(unsigned short), 1, fin);
+			memcpy(&nbBytes, &this->spxStream[offset], sizeof(unsigned short));
+			offset += sizeof(unsigned short);
+			//fread(&nbBytes, sizeof(unsigned short), 1, fin);
 			//  fprintf (stderr, "nbBytes: %d\n", nbBytes);
-			if (feof(fin))
+			if (offset >= this->spxStreamLength)
 			{
 				break;
 			}
 
-			/*Read the "packet" encoded by sampleenc*/
-			fread(cbits, 1, nbBytes, fin);
+			memcpy(cbits, &this->spxStream[offset], nbBytes);
+			offset += nbBytes;
 			/*Copy the data into the bit-stream struct*/
 			speex_bits_read_from(&bits, cbits, nbBytes);
 
@@ -188,11 +213,12 @@ namespace xal
 		speex_bits_destroy(&bits);
 		alBufferData(this->buffer, AL_FORMAT_MONO16, buffer, size * 2, 44100);
 		this->duration = (float)size / 44100;
-		fclose(fin);
 		free(buffer);
 		// REFACTOR TO HERE
-#endif
 		return true;
+#else
+		return false;
+#endif
 	}
 
 }
