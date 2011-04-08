@@ -53,9 +53,10 @@ void _test_basic()
 		s->play();
 		while (s->isPlaying())
 		{
-			hthread::sleep(100);
 			_update(0.1f);
+			hthread::sleep(100);
 		}
+		_update(0.0f);
 	}
 }
 
@@ -250,11 +251,11 @@ void _test_util_playlist()
 {
 	printf("  - start test util playlist...\n");
 	xal::Playlist list(false);
-	list.queueSound("bark");
-	list.queueSound("bark");
+	list.queueSound("boss");
+	list.queueSound("boss");
 	list.queueSound("wind");
 	list.queueSound("wind_copy");
-	list.queueSound("bark");
+	list.queueSound("boss");
 	list.play();
 	while (list.isPlaying())
 	{
@@ -268,7 +269,7 @@ void _test_util_parallel_sounds()
 {
 	printf("  - start test util parallel sounds...\n");
 	harray<hstr> names;
-	names += "bark";
+	names += "boss";
 	xal::ParallelSoundManager pmgr;
 	pmgr.updateList(names);
 	hthread::sleep(1000);
@@ -290,7 +291,9 @@ int main(int argc, char **argv)
 #ifdef _TEST_STREAM
 	xal::mgr->createCategory("streamable", true);
 #endif
+	xal::mgr->createCategory("spx", false, true, true);
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
+	files += xal::mgr->createSoundsFromPath("../media/spx", "spx", "");
 	files += xal::mgr->createSoundsFromPath("../media", "sound", "");
 #else
 	xal::mgr->createCategory("cat", true);
@@ -300,7 +303,7 @@ int main(int argc, char **argv)
 #ifdef _TEST_STREAM
 	s = xal::mgr->getSound("wind");
 #else
-	s = xal::mgr->getSound("bark");
+	s = xal::mgr->getSound("boss");
 #endif
 #else
 	s = xal::mgr->getSound("linked_sound");

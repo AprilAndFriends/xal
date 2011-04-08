@@ -29,6 +29,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
+#include "Category.h"
 #include "SimpleSound.h"
 #include "Endianess.h"
 
@@ -64,6 +65,16 @@ namespace xal
 	
 /******* METHODS *******************************************************/
 
+	void SimpleSound::update(float k)
+	{
+		SoundBuffer::update(k);
+		if (this->category->isDynamicDecode() && this->isSpx() && this->decoded && !this->isPlaying())
+		{
+			this->clearBuffer();
+			this->decoded = false;
+		}
+	}
+
 	bool SimpleSound::_loadOgg()
 	{
 #if HAVE_OGG
@@ -97,7 +108,6 @@ namespace xal
 				size -= read;
 				buffer += read;
 			}
-
 #ifdef __BIG_ENDIAN__
 			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < buffer; p++)
 			{
@@ -120,6 +130,15 @@ namespace xal
 		xal::log("no ogg support built in, cannot load " + this->fileName);
 		return false;
 #endif
+	}
+
+	void SimpleSound::clearBuffer()
+	{
+		if (this->buffer != 0)
+		{
+			alDeleteBuffers(1, &this->buffer);
+			alGenBuffers(1, &this->buffer);
+		}
 	}
 
 	bool SimpleSound::_loadSpx()

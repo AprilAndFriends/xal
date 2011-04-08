@@ -28,6 +28,9 @@ namespace xal
 		~SimpleSound();
 		
 		unsigned int getBuffer() const { return this->buffer; }
+
+		void update(float k);
+		void clearBuffer();
 		
 	protected:
 		unsigned int buffer;
