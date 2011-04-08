@@ -12,11 +12,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
-	Category::Category(chstr name, bool streamed, bool dynamicLoad) : gain(1.0f)
+	Category::Category(chstr name, bool streamed, bool dynamicLoad, bool dynamicDecode) : gain(1.0f)
 	{
 		this->name = name;
 		this->streamed = streamed;
 		this->dynamicLoad = dynamicLoad;
+		this->dynamicDecode = dynamicDecode;
 	}
 
 	Category::~Category()

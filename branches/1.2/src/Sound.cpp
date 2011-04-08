@@ -11,8 +11,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
 	Sound::Sound() : locked(false)
 	{
 	}

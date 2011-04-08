@@ -262,15 +262,39 @@ namespace xal
 		{
 			sound = new SimpleSound(filename, categoryName, prefix);
 		}
+		hstr message;
+		bool load = true;
+		bool decode = true;
 		if (category->isDynamicLoad())
 		{
-			xal::log("created a dynamic sound: " + filename);
+			if (category->isDynamicDecode())
+			{
+				message = "created a dynamic loading/decoding sound: " + filename;
+			}
+			else
+			{
+				message = "created a dynamic loading sound: " + filename;
+			}
 		}
-		else if (!sound->load())
+		else if (category->isDynamicDecode())
+		{
+			message = "created a dynamic decoding sound: " + filename;
+		}
+		bool result = true;
+		if (!category->isDynamicLoad())
+		{
+			result = sound->load();
+			if (result && !category->isDynamicDecode())
+			{
+				result = sound->decode();
+			}
+		}
+		if (!result)
 		{
 			xal::log("failed to load sound " + filename);
 			return NULL;
 		}
+		xal::log(message);
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}
@@ -335,11 +359,11 @@ namespace xal
 		}
 	}
 
-	void AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
+	void AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad, bool dynamicDecode)
 	{
 		if (!this->categories.has_key(name))
 		{
-			this->categories[name] = new Category(name, streamed, dynamicLoad);
+			this->categories[name] = new Category(name, streamed, dynamicLoad, dynamicDecode);
 		}
 	}
 

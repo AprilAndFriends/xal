@@ -33,7 +33,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : Sound(),
-		duration(0.0f), loaded(false)
+		duration(0.0f), loaded(false), decoded(false)
 	{
 		this->fileName = hstr(fileName);
 		this->virtualFileName = this->fileName;
@@ -110,6 +110,50 @@ namespace xal
 		if (result)
 		{
 			this->loaded = result;
+#ifdef _DEBUG
+			xal::log("now loading " + this->fileName);
+#endif
+		}
+		return result;
+	}
+	
+	bool SoundBuffer::decode()
+	{
+		bool result = false;
+		if (this->isLink())
+		{
+			this->virtualFileName = this->_findLinkedFile();
+		}
+		if (!xal::mgr->isEnabled())
+		{
+			result = this->isOgg();
+#if TARGET_OS_IPHONE
+			result |= this->isM4a();
+#endif
+			result |= this->isSpx();
+		}
+		else if (this->isOgg())
+		{
+			result = true;
+		}
+		else if (this->isSpx())
+		{
+			result = this->_decodeSpx();
+		}
+#if TARGET_OS_IPHONE
+		else if (this->isM4a())
+		{
+			// no need to decode m4a aac.
+			//result = this->_loadM4a();
+			result = true;
+		}
+#endif
+		if (result)
+		{
+			this->decoded = result;
+#ifdef _DEBUG
+			xal::log("now decoding " + this->fileName);
+#endif
 		}
 		return result;
 	}
@@ -250,6 +294,10 @@ namespace xal
 		if (!this->loaded)
 		{
 			this->load();
+		}
+		if (!this->decoded)
+		{
+			this->decode();
 		}
 		if (!this->isM4a() && !this->isValidBuffer()) // TODO check if this should still perhaps say "if(!this->isM4a() && this->getBuffer() == 0)"
 		{

@@ -57,6 +57,7 @@ namespace xal
 		void _fillStartBuffers();
 		bool _loadOgg();
 		bool _loadSpx();
+		bool _decodeSpx();
 
 	};
 
