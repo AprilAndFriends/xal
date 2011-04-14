@@ -111,7 +111,7 @@ namespace xal
 		{
 			this->loaded = result;
 #ifdef _DEBUG
-			xal::log("now loading " + this->fileName);
+			xal::log("loading " + this->fileName);
 #endif
 		}
 		return result;
@@ -152,7 +152,7 @@ namespace xal
 		{
 			this->decoded = result;
 #ifdef _DEBUG
-			xal::log("now decoding " + this->fileName);
+			xal::log("decoding " + this->fileName);
 #endif
 		}
 		return result;
