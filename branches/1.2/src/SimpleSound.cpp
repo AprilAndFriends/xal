@@ -70,6 +70,7 @@ namespace xal
 		SoundBuffer::update(k);
 		if (this->category->isDynamicDecode() && this->isSpx() && this->decoded && !this->isPlaying())
 		{
+			xal::log("unloading "+this->fileName);
 			this->clearBuffer();
 			this->decoded = false;
 		}
