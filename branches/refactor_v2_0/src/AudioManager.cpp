@@ -50,8 +50,8 @@ namespace xal
 {
 	AudioManager* mgr;
 
-	AudioManager::AudioManager(chstr deviceName, bool threaded, float updateTime) : gain(1.0f),
-		updating(false), thread(NULL)
+	AudioManager::AudioManager(chstr deviceName, bool threaded, float updateTime) : enabled(false),
+		gain(1.0f), updating(false), thread(NULL)
 	{
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;
@@ -95,6 +95,16 @@ namespace xal
 		}
 	}
 	
+	void AudioManager::_setupThread()
+	{
+		xal::log("starting thread management");
+		this->updateTime = updateTime;
+		this->updating = true;
+		this->thread = new hthread(&AudioManager::update);
+		this->thread->start();
+		this->updating = false;
+	}
+
 	void AudioManager::setGlobalGain(float value)
 	{
 		this->gain = value;
@@ -278,32 +288,6 @@ namespace xal
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
-	unsigned int AudioManager::allocateSourceId()
-	{
-		harray<unsigned int> allocated;
-		unsigned int id = 0;
-		foreach (Sound*, it, this->sources)
-		{
-			Source* source = dynamic_cast<Source*> (*it); // FIXME what about SourceApple?
-			if (source != NULL)
-			{
-				id = source->getSourceId();
-				if (id != 0)
-				{
-					allocated += id;
-				}
-			}
-		}
-		harray<unsigned int> unallocated(this->sourceIds, XAL_MAX_SOURCES);
-		unallocated -= allocated;
-		if (unallocated.size() > 0)
-		{
-			return unallocated.front();
-		}
-		xal::log("unable to allocate audio source!");
-		return 0;
-	}
 
 	void AudioManager::stopAll(float fadeTime)
 	{

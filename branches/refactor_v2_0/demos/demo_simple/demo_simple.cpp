@@ -37,12 +37,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS
 
-
 #ifndef _TEST_THREADED
 #define _update(time) xal::mgr->update(time)
 #else
 #define _update(time)
 #endif
+
+#define XAL_MAX_SOURCES 16 // needed when using OpenAL
+
 xal::Sound* s;
 
 void _test_sound()

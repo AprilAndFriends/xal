@@ -14,15 +14,10 @@
 /// Represents an implementation of the AudioManager for OpenAL.
 
 #if HAVE_OPENAL
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
-#include <hltypes/hthread.h>
 #include <hltypes/util.h>
 
 #ifndef __APPLE__
@@ -39,17 +34,6 @@
 #include "OpenAL_AudioManager.h"
 #include "OpenAL_Player.h"
 #include "xal.h"
-
-
-
-#include "SimpleSound.h"
-#include "SoundBuffer.h"
-#include "Source.h"
-#include "StreamSound.h"
-
-#if TARGET_OS_IPHONE
-#include "SourceApple.h"
-#endif
 
 namespace xal
 {
@@ -77,15 +61,10 @@ namespace xal
 		alGenSources(XAL_MAX_SOURCES, this->sourceIds);
 		this->device = currentDevice;
 		this->context = currentContext;
-		this->deviceName = deviceName;
+		this->enabled = true;
 		if (threaded)
 		{
-			xal::log("starting thread management");
-			this->updateTime = updateTime;
-			this->updating = true;
-			this->thread = new hthread(&AudioManager::update);
-			this->thread->start();
-			this->updating = false;
+			this->_setupThread();
 		}
 	}
 
@@ -101,14 +80,9 @@ namespace xal
 		}
 	}
 	
-	bool OpenAL_AudioManager::isEnabled()
-	{
-		return (this->device != NULL);
-	}
-
 	Player* OpenAL_AudioManager::_createPlayer(Sound2* sound, Buffer* buffer)
 	{
-		unsigned int sourceId = this->allocateSourceId();
+		unsigned int sourceId = this->_allocateSourceId();
 		if (sourceId != 0)
 		{
 			return new OpenAL_Player(sound, buffer, sourceId);

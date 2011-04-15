@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include "Source.h"
 #include "SoundBuffer.h"
 #include "StreamSound.h"
-#include "AudioManager.h"
+#include "OpenAL_AudioManager.h"
 
 #ifndef __APPLE__
 	#include <AL/al.h>
@@ -94,7 +94,7 @@ namespace xal
 	{
 		if (this->sourceId == 0)
 		{
-			this->sourceId = xal::mgr->allocateSourceId();
+			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
 			if (this->sourceId == 0)
 			{
 				return NULL;
