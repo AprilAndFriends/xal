@@ -31,6 +31,8 @@
 #include "AudioManager.h"
 #include "xalExport.h"
 
+#define XAL_MAX_SOURCES 16
+
 namespace xal
 {
 	class Buffer;
@@ -43,14 +45,14 @@ namespace xal
 		OpenAL_AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		~OpenAL_AudioManager();
 		
-		bool isEnabled();
+		unsigned int _allocateSourceId(); // TODO - should be protected
 
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
+		unsigned int sourceIds[XAL_MAX_SOURCES];
 
 		Player* _createPlayer(Sound2* sound, Buffer* buffer);
-		unsigned int _allocateSourceId();
 
 	};
 	

@@ -23,8 +23,6 @@
 
 #include "xalExport.h"
 
-#define XAL_MAX_SOURCES 16
-
 namespace xal
 {
 	class Category;
@@ -55,7 +53,7 @@ namespace xal
 		AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		virtual ~AudioManager();
 		
-		virtual bool isEnabled() { return false; }
+		bool isEnabled() { return this->enabled; }
 		hstr getDeviceName() { return this->deviceName; }
 		float getUpdateTime() { return this->updateTime; }
 		float getGlobalGain() { return this->gain; }
@@ -85,24 +83,24 @@ namespace xal
 			Sound* createSource(SoundBuffer* sound, unsigned int sourceId);
 			Sound* createSourceApple(SoundBuffer* sound, unsigned int sourceId);
 			void destroySource(Sound* source);
-			unsigned int allocateSourceId();
 		//////////////////////////////////////////////
 
 		static void update();
 		void update(float k);
 		
 	protected:
+		bool enabled;
 		hstr deviceName;
 		float updateTime;
 		float gain;
-
 		hmap<hstr, Category*> categories;
 		harray<Player*> players;
 		harray<Player*> managedPlayers;
-
 		hmap<hstr, Sound2*> sounds;
-
+		
+		void _setupThread();
 		virtual Player* _createPlayer(Sound2* sound, Buffer* buffer);
+
 
 
 
@@ -116,7 +114,6 @@ namespace xal
 		void unlockUpdate();
 		
 	protected:
-		unsigned int sourceIds[XAL_MAX_SOURCES];
 		harray<Sound*> sources;
 		hmap<hstr, SoundBuffer*> oldSounds;
 		hthread* thread;

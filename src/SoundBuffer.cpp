@@ -22,7 +22,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include "Endianess.h"
 #include "SoundBuffer.h"
 #include "Source.h"
-#include "AudioManager.h"
+#include "OpenAL_AudioManager.h"
 #include "xal.h"
 
 #if TARGET_OS_IPHONE
@@ -247,7 +247,7 @@ namespace xal
 		Sound* source = NULL;
 		if (this->sources.size() == 0 || this->sources[0]->isPlaying() && !this->sources[0]->isFading())
 		{
-			unsigned int sourceId = xal::mgr->allocateSourceId();
+			unsigned int sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
 			if (sourceId == 0)
 			{
 				xal::mgr->unlockUpdate();
