@@ -33,13 +33,13 @@ namespace xal
 {
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
-	SoundBuffer::SoundBuffer(chstr fileName, chstr category, chstr prefix) : Sound(),
+	SoundBuffer::SoundBuffer(chstr filename, chstr category, chstr prefix) : Sound(),
 		duration(0.0f), loaded(false)
 	{
-		this->fileName = hstr(fileName);
-		this->virtualFileName = this->fileName;
+		this->filename = hstr(filename);
+		this->virtualFilename = this->filename;
 		// extracting filename without extension and prepending the prefix
-		this->name = prefix + hstr(fileName).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
+		this->name = prefix + hstr(filename).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 		this->category = xal::mgr->getCategoryByName(category);
 	}
 
@@ -47,6 +47,32 @@ namespace xal
 	{
 		xal::log("destroying sound " + this->name);
 	}
+
+	hstr SoundBuffer::_findLinkedFile()
+	{
+		if (!hfile::exists(this->filename))
+		{
+			return this->filename;
+		}
+		harray<hstr> newFolders = hfile::hread(this->filename).split("/");
+		harray<hstr> folders = this->filename.split("/");
+		folders.pop_back();
+		foreach (hstr, it, newFolders)
+		{
+			if ((*it) != "..")
+			{
+				folders += (*it);
+			}
+			else
+			{
+				folders.pop_back();
+			}
+		}
+		return folders.join("/");
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+
 	
 	void SoundBuffer::destroySources()
 	{
@@ -82,7 +108,7 @@ namespace xal
 		bool result = false;
 		if (this->isLink())
 		{
-			this->virtualFileName = this->_findLinkedFile();
+			this->virtualFilename = this->_findLinkedFile();
 		}
 		if (!xal::mgr->isEnabled())
 		{
@@ -110,29 +136,6 @@ namespace xal
 		return result;
 	}
 	
-	hstr SoundBuffer::_findLinkedFile()
-	{
-		if (!hfile::exists(this->fileName))
-		{
-			return this->fileName;
-		}
-		harray<hstr> newFolders = hfile::hread(this->fileName).split("/");
-		harray<hstr> folders = this->fileName.split("/");
-		folders.pop_back();
-		foreach (hstr, it, newFolders)
-		{
-			if ((*it) != "..")
-			{
-				folders += (*it);
-			}
-			else
-			{
-				folders.pop_back();
-			}
-		}
-		return folders.join("/");
-	}
-
 	void SoundBuffer::bindSource(Sound* source)
 	{
 		this->sources += source;
@@ -214,17 +217,17 @@ namespace xal
 
 	bool SoundBuffer::isLink()
 	{
-		return this->fileName.ends_with(".xln");
+		return this->filename.ends_with(".xln");
 	}
 
 	bool SoundBuffer::isOgg()
 	{
-		return this->virtualFileName.ends_with(".ogg");
+		return this->virtualFilename.ends_with(".ogg");
 	}
 	
 	bool SoundBuffer::isM4a()
 	{
-		return this->virtualFileName.ends_with(".m4a");
+		return this->virtualFilename.ends_with(".m4a");
 	}
 
 /******* PLAY CONTROLS *************************************************/

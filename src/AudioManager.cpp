@@ -1,12 +1,14 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Kresimir Spes
+/// @author  Boris Mikic
+/// @author  Ivan Vucica
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,13 +30,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #endif
 
 #include "AudioManager.h"
-#include "OpenAL_AudioManager.h"
+#include "Sound2.h"
 #include "Category.h"
+#include "xal.h"
+
 #include "SimpleSound.h"
 #include "SoundBuffer.h"
 #include "Source.h"
 #include "StreamSound.h"
-#include "xal.h"
 
 #if TARGET_OS_IPHONE
 #include "SourceApple.h"
@@ -59,11 +62,19 @@ namespace xal
 			this->thread->stop();
 			delete this->thread;
 		}
-		foreach_m (SoundBuffer*, it, this->sounds)
+		foreach_m (Sound2*, it, this->sounds)
 		{
 			delete it->second;
 		}
 		foreach_m (Category*, it, this->categories)
+		{
+			delete it->second;
+		}
+		/////////////////////////////////////////////////
+
+
+
+		foreach_m (SoundBuffer*, it, this->oldSounds)
 		{
 			delete it->second;
 		}
@@ -77,7 +88,50 @@ namespace xal
 		}
 	}
 	
-/******* PROPERTIES ****************************************************/
+	void AudioManager::setGlobalGain(float value)
+	{
+		this->gain = value;
+		foreach (Sound*, it, this->sources)
+		{
+			(*it)->setGain((*it)->getGain());
+		}
+	}
+
+	Category* AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
+	{
+		if (!this->categories.has_key(name))
+		{
+			this->categories[name] = new Category(name, streamed, dynamicLoad);
+		}
+		return this->categories[name];
+	}
+
+	Category* AudioManager::getCategoryByName(chstr name)
+	{
+		if (!this->categories.has_key(name))
+		{
+			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+		}
+		return this->categories[name];
+	}
+
+	float AudioManager::getCategoryGain(chstr name)
+	{
+		if (!this->categories.has_key(name))
+		{
+			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+		}
+		return this->categories[name]->getGain();
+	}
+
+	void AudioManager::setCategoryGain(chstr name, float gain)
+	{
+		this->getCategoryByName(name)->setGain(gain);
+		foreach (Sound*, it, this->sources)
+		{
+			(*it)->setGain((*it)->getGain());
+		}
+	}
 
 	void AudioManager::update()
 	{
@@ -98,7 +152,12 @@ namespace xal
 			// variable copied because (*it)->update can access
 			// xal::mgr and erase a source from this->sources.
 			// we don't want to break the iterator validity!
-			
+
+
+			//////////////////////////////////////////////////
+
+
+
 			harray<Sound*> sources(this->sources);
 			foreach (Sound*, it, sources)
 			{
@@ -106,6 +165,89 @@ namespace xal
 			}
 		}
 	}
+
+	Sound2* AudioManager::createSound2(chstr filename, chstr categoryName, chstr prefix)
+	{
+		Category* category = this->getCategoryByName(categoryName);
+		Sound2* sound = new Sound2(filename, category, prefix);
+		// TODO
+		/*
+		///##
+		if (category->isDynamicLoad())
+		{
+			xal::log("created a dynamic sound: " + filename);
+		}
+		else if (!sound->load())
+		{
+			xal::log("failed to load sound " + filename);
+			return NULL;
+		}
+		*/
+		this->sounds[sound->getName()] = sound;
+		return sound;
+	}
+
+	harray<hstr> AudioManager::createSound2sFromPath(chstr path, chstr prefix)
+	{
+		harray<hstr> result;
+		hstr category;
+		harray<hstr> dirs = hdir::directories(path, true);
+		foreach (hstr, it, dirs)
+		{
+			category = (*it).rsplit("/").pop_back();
+			result += this->createSound2sFromPath((*it).c_str(), category, prefix);
+		}
+		return result;
+	}
+
+	harray<hstr> AudioManager::createSound2sFromPath(chstr path, chstr category, chstr prefix)
+	{
+		this->createCategory(category);
+		harray<hstr> result;
+		harray<hstr> files = hdir::files(path, true);
+		SoundBuffer* sound;
+		foreach (hstr, it, files)
+		{
+			sound = (SoundBuffer*)this->createSound2((*it), category, prefix);
+			if (sound != NULL)
+			{
+				result += sound->getName();
+			}
+		}
+		return result;
+	}
+
+	void AudioManager::destroySound2(Sound2* sound)
+	{
+		foreach_m (Sound2*, it, this->sounds)
+		{
+			if (it->second == sound)
+			{
+				delete it->second;
+				this->sounds.erase(it);
+				break;
+			}
+		}
+	}
+	
+	void AudioManager::destroySound2sWithPrefix(chstr prefix)
+	{
+		harray<hstr> keys = this->sounds.keys();
+		foreach (hstr, it, keys)
+		{
+			if ((*it).starts_with(prefix))
+			{
+				delete this->sounds[*it];
+				this->sounds.remove_key(*it);
+			}
+		}
+	}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	unsigned int AudioManager::allocateSourceId()
 	{
@@ -157,144 +299,6 @@ namespace xal
 		delete source;
 	}
 
-	Sound* AudioManager::getSound(chstr name)
-	{
-		if (!this->sounds.has_key(name))
-		{
-			throw key_error(name, "Sounds");
-		}
-		return this->sounds[name];
-	}
-	
-	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
-	{
-		Category* category = this->getCategoryByName(categoryName);
-		SoundBuffer* sound;
-		if (category->isStreamed())
-		{
-			sound = new StreamSound(filename, categoryName, prefix);
-		}
-		else
-		{
-			sound = new SimpleSound(filename, categoryName, prefix);
-		}
-		if (category->isDynamicLoad())
-		{
-			xal::log("created a dynamic sound: " + filename);
-		}
-		else if (!sound->load())
-		{
-			xal::log("failed to load sound " + filename);
-			return NULL;
-		}
-		this->sounds[sound->getName()] = sound;
-		return sound;
-	}
-
-	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
-	{
-		harray<hstr> result;
-		hstr category;
-		harray<hstr> dirs = hdir::directories(path, true);
-		foreach (hstr, it, dirs)
-		{
-			category = (*it).rsplit("/").pop_back();
-			result += this->createSoundsFromPath((*it).c_str(), category, prefix);
-		}
-		return result;
-	}
-
-	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr category, chstr prefix)
-	{
-		this->createCategory(category);
-		harray<hstr> result;
-		harray<hstr> files = hdir::files(path, true);
-		SoundBuffer* sound;
-		foreach (hstr, it, files)
-		{
-			sound = (SoundBuffer*)this->createSound((*it).c_str(), category, prefix);
-			if (sound != NULL)
-			{
-				result += sound->getName();
-			}
-		}
-		return result;
-	}
-
-	void AudioManager::destroySound(SoundBuffer* sound)
-	{
-		foreach_m (SoundBuffer*, it, this->sounds)
-		{
-			if (it->second == sound)
-			{
-				this->sounds.erase(it);
-				delete it->second;
-				break;
-			}
-		}
-	}
-	
-	void AudioManager::destroySoundsWithPrefix(chstr prefix)
-	{
-		harray<hstr> deleteList;
-		foreach_m (SoundBuffer*, it, this->sounds)
-		{
-			if (it->first.starts_with(prefix))
-			{
-				delete it->second;
-				deleteList.push_back(it->first);
-			}
-		}
-		foreach (hstr, it, deleteList)
-		{
-			this->sounds.erase(*it);
-		}
-	}
-
-	void AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
-	{
-		if (!this->categories.has_key(name))
-		{
-			this->categories[name] = new Category(name, streamed, dynamicLoad);
-		}
-	}
-
-	void AudioManager::setGlobalGain(float value)
-	{
-		this->gain = value;
-		foreach (Sound*, it, this->sources)
-		{
-			(*it)->setGain((*it)->getGain());
-		}
-	}
-
-	Category* AudioManager::getCategoryByName(chstr name)
-	{
-		if (!this->categories.has_key(name))
-		{
-			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
-		}
-		return this->categories[name];
-	}
-
-	float AudioManager::getCategoryGain(chstr name)
-	{
-		if (!this->categories.has_key(name))
-		{
-			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
-		}
-		return this->categories[name]->getGain();
-	}
-
-	void AudioManager::setCategoryGain(chstr name, float gain)
-	{
-		this->getCategoryByName(name)->setGain(gain);
-		foreach (Sound*, it, this->sources)
-		{
-			(*it)->setGain((*it)->getGain());
-		}
-	}
-
 	void AudioManager::stopAll(float fadeTime)
 	{
 		this->lockUpdate();
@@ -343,4 +347,98 @@ namespace xal
 		this->updating = false;
 	}
 	
+				Sound* AudioManager::getSound(chstr name)
+				{
+					if (!this->oldSounds.has_key(name))
+					{
+						throw key_error(name, "Sounds");
+					}
+					return this->oldSounds[name];
+				}
+	
+				Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
+				{
+					Category* category = this->getCategoryByName(categoryName);
+					SoundBuffer* sound;
+					if (category->isStreamed())
+					{
+						sound = new StreamSound(filename, categoryName, prefix);
+					}
+					else
+					{
+						sound = new SimpleSound(filename, categoryName, prefix);
+					}
+					if (category->isDynamicLoad())
+					{
+						xal::log("created a dynamic sound: " + filename);
+					}
+					else if (!sound->load())
+					{
+						xal::log("failed to load sound " + filename);
+						return NULL;
+					}
+					this->oldSounds[sound->getName()] = sound;
+					return sound;
+				}
+
+				harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
+				{
+					harray<hstr> result;
+					hstr category;
+					harray<hstr> dirs = hdir::directories(path, true);
+					foreach (hstr, it, dirs)
+					{
+						category = (*it).rsplit("/").pop_back();
+						result += this->createSoundsFromPath((*it).c_str(), category, prefix);
+					}
+					return result;
+				}
+
+				harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr category, chstr prefix)
+				{
+					this->createCategory(category);
+					harray<hstr> result;
+					harray<hstr> files = hdir::files(path, true);
+					SoundBuffer* sound;
+					foreach (hstr, it, files)
+					{
+						sound = (SoundBuffer*)this->createSound((*it).c_str(), category, prefix);
+						if (sound != NULL)
+						{
+							result += sound->getName();
+						}
+					}
+					return result;
+				}
+
+				void AudioManager::destroySound(SoundBuffer* sound)
+				{
+					foreach_m (SoundBuffer*, it, this->oldSounds)
+					{
+						if (it->second == sound)
+						{
+							this->oldSounds.erase(it);
+							delete it->second;
+							break;
+						}
+					}
+				}
+	
+				void AudioManager::destroySoundsWithPrefix(chstr prefix)
+				{
+					harray<hstr> deleteList;
+					foreach_m (SoundBuffer*, it, this->oldSounds)
+					{
+						if (it->first.starts_with(prefix))
+						{
+							delete it->second;
+							deleteList.push_back(it->first);
+						}
+					}
+					foreach (hstr, it, deleteList)
+					{
+						this->oldSounds.erase(*it);
+					}
+				}
+
 }

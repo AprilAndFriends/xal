@@ -22,8 +22,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
 	Source::Source(SoundBuffer* sound, unsigned int sourceId) : Sound(),
 		gain(1.0f), looping(false), paused(false), fadeTime(0.0f),
 		fadeSpeed(0.0f), bound(true), sampleOffset(0.0f)
@@ -36,8 +34,18 @@ namespace xal
 	{
 	}
 
-/******* METHODS *******************************************************/
-	
+	void Source::setGain(float gain)
+	{
+		this->gain = gain;
+		if (this->sourceId != 0)
+		{
+			alSourcef(this->sourceId, AL_GAIN, this->gain *
+				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+		}
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void Source::update(float k)
 	{
 		if (this->sourceId == 0)
@@ -197,16 +205,6 @@ namespace xal
 	}
 	
 /******* PROPERTIES ****************************************************/
-
-	void Source::setGain(float gain)
-	{
-		this->gain = gain;
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->gain *
-				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-		}
-	}
 
 	unsigned int Source::getBuffer() const
 	{

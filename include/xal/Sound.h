@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_SOUND_H
-#define XAL_SOUND_H
+#ifndef XAL_OLD_SOUND_H
+#define XAL_OLD_SOUND_H
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
