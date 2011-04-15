@@ -93,10 +93,14 @@
   <ItemGroup>
     <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
+    <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
+    <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\Category.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SimpleSound.cpp" />
     <ClCompile Include="src\Sound.cpp" />
+    <ClCompile Include="src\Sound2.cpp" />
     <ClCompile Include="src\SoundBuffer.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\StreamSound.cpp" />
@@ -105,6 +109,10 @@
   <ItemGroup>
     <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />
+    <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h" />
+    <ClInclude Include="include\xal\Buffer.h" />
+    <ClInclude Include="include\xal\Player.h" />
+    <ClInclude Include="include\xal\Sound2.h" />
     <ClInclude Include="include\xal\xal.h" />
     <ClInclude Include="src\Endianess.h" />
     <ClInclude Include="include\xal\AudioManager.h" />

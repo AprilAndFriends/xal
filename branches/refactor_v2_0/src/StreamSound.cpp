@@ -260,8 +260,8 @@ namespace xal
 	bool StreamSound::_loadOgg()
 	{
 #if HAVE_OGG
-		xal::log("loading ogg stream sound " + this->fileName);
-		if (ov_fopen((char*)this->virtualFileName.c_str(), &this->oggStream) != 0)
+		xal::log("loading ogg stream sound " + this->filename);
+		if (ov_fopen((char*)this->virtualFilename.c_str(), &this->oggStream) != 0)
 		{
 			xal::log("ogg: Error opening file!");
 			return false;
@@ -278,14 +278,14 @@ namespace xal
 			{
 				alDeleteBuffers(STREAM_BUFFER_COUNT, this->buffers);
 				this->buffers[0] = 0;
-				xal::log("sound " + this->virtualFileName + " is too small to be streamed.");
+				xal::log("sound " + this->virtualFilename + " is too small to be streamed.");
 				break;
 			}
 		}
 		return true;
 #else
 #warning HAVE_OGG is not defined to 1. No Ogg support.
-		xal::log("no ogg support built in, cannot load stream sound " + this->fileName);
+		xal::log("no ogg support built in, cannot load stream sound " + this->filename);
 		return false;
 #endif
 		

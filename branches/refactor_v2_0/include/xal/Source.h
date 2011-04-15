@@ -24,6 +24,18 @@ namespace xal
 		Source(SoundBuffer* sound, unsigned int sourceId);
 		~Source();
 
+		float getGain() { return this->gain; }
+		void setGain(float value);
+		SoundBuffer* getSound() { return this->sound; }
+
+	protected:
+		float gain;
+		SoundBuffer* sound;
+
+
+
+
+	public:
 		void update(float k);
 		
 		Sound* play(float fadeTime = 0.0f, bool looping = false);
@@ -39,10 +51,7 @@ namespace xal
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 		float getSampleOffset() { return this->sampleOffset; }
 		unsigned int getBuffer() const;
-		SoundBuffer* getSound() { return this->sound; }
 		bool isBound() { return this->bound; }
-		float getGain() { return this->gain; }
-		void setGain(float value);
 		bool isLooping() { return this->looping; }
 		bool isPlaying();
 		bool isPaused();
@@ -54,14 +63,12 @@ namespace xal
 		
 	protected:
 		unsigned int sourceId;
-		float gain;
 		bool looping;
 		bool paused;
 		float fadeSpeed;
 		float fadeTime;
 		float sampleOffset;
 		bool bound;
-		SoundBuffer* sound;
 		
 	};
 

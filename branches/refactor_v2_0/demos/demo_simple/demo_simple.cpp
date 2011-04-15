@@ -21,14 +21,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-#define _TEST_STREAM
+//#define _TEST_STREAM
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-//#define _TEST_SOUND
+#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
-#define _TEST_MULTIPLE_STREAM
+//#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT

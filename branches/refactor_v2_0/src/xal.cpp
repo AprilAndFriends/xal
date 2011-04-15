@@ -25,12 +25,10 @@ namespace xal
 		if (deviceName == "nosound")
 		{
 			xal::mgr = new AudioManager(deviceName, threaded, updateTime);
-			//xal::mgr->init;
 			xal::log("audio is disabled");
 			return;
 		}
 		xal::mgr = new OpenAL_AudioManager(deviceName, threaded, updateTime);
-		//xal::mgr->init;
 	}
 	
 	void destroy()

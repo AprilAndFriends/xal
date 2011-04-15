@@ -26,6 +26,27 @@ namespace xal
 	public:
 		SoundBuffer(chstr name, chstr category, chstr prefix = "");
 		virtual ~SoundBuffer();
+		///////////////////////////////////////////////
+
+		chstr getName() { return this->name; }
+		chstr getFilename() { return this->filename; }
+		chstr getVirtualFilename() { return this->virtualFilename; }
+		Category* getCategory() { return this->category; }
+		float getDuration() { return this->duration; }
+
+	protected:
+		hstr name;
+		hstr filename;
+		hstr virtualFilename;
+		Category* category;
+		float duration;
+
+		hstr _findLinkedFile();
+
+		///////////////////////////////////////////////
+
+	public:
+
 		void destroySources();
 
 		bool load();
@@ -39,11 +60,6 @@ namespace xal
 		float getSampleOffset();
 		virtual unsigned int getBuffer() const = 0;
 		void setSourceId(unsigned int value) { this->sourceId = value; }
-		chstr getName() { return this->name; }
-		chstr getFileName() { return this->fileName; }
-		chstr getVirtualFileName() { return this->virtualFileName; }
-		float getDuration() { return this->duration; }
-		Category* getCategory() { return this->category; }
 		void setCategory(Category* value) { this->category = value; }
 		float getGain();
 		void setGain(float value);
@@ -68,18 +84,12 @@ namespace xal
 		
 
 	protected:
-		hstr name;
-		hstr fileName;
-		hstr virtualFileName;
-		float duration;
 		unsigned int sourceId;
 		bool loaded;
-		Category* category;
 		harray<Sound*> sources;
 		
 		
 		virtual bool _loadOgg() = 0;
-		hstr _findLinkedFile();
 		
 	};
 
