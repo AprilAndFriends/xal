@@ -9,10 +9,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 \************************************************************************************/
 #include <hltypes/hstring.h>
 
-#include "AudioManager.h"
-#include "StreamSound.h"
-#include "Source.h"
-
 #include <iostream>
 #if HAVE_OGG
 #include <ogg/ogg.h>
@@ -28,7 +24,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <OpenAL/alc.h>
 #endif
 
+#include "AudioManager.h"
 #include "Endianess.h"
+#include "StreamSound.h"
+#include "Source.h"
+#include "xal.h"
 
 namespace xal
 {

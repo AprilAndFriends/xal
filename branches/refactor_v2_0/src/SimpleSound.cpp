@@ -29,6 +29,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #endif
 
 #include "Endianess.h"
+#include "xal.h"
 
 namespace xal
 {

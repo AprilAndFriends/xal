@@ -29,16 +29,15 @@ namespace xal
 	class xalExport AudioManager
 	{
 	public:
-		AudioManager();
-		~AudioManager();
-		
-		void init(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		virtual ~AudioManager();
 		
 		hstr getDeviceName() { return this->deviceName; }
-		bool isEnabled();
 		float getUpdateTime() { return this->updateTime; }
 		float getGlobalGain() { return this->gain; }
+
 		void setGlobalGain(float value);
+		virtual bool isEnabled() { return false; }
 		Category* getCategoryByName(chstr name);
 		void createCategory(chstr name, bool streamed = false, bool dynamicLoad = false);
 		float getCategoryGain(chstr category);
@@ -78,12 +77,8 @@ namespace xal
 		
 	};
 	
-	xalFnExport void init(chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);
-	xalFnExport void destroy();
-	xalFnExport void setLogFunction(void (*function)(chstr));
-	xalFnExport void log(chstr message, chstr prefix = "[xal] ");
+	xalExport extern xal::AudioManager* mgr;
 
-	xalFnExport extern xal::AudioManager* mgr;
 }
 
 #endif

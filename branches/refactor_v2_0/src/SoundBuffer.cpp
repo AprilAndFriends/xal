@@ -23,6 +23,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include "SoundBuffer.h"
 #include "Source.h"
 #include "AudioManager.h"
+#include "xal.h"
 
 #if TARGET_OS_IPHONE
 #include "SourceApple.h"
