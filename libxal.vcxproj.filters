@@ -9,6 +9,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Header Files\audiosystems">
+      <UniqueIdentifier>{9a4c43aa-a1fe-4e74-846c-d2d9c7ff1d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems">
+      <UniqueIdentifier>{a5d68b12-7cd6-482a-a897-31b980118b19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioManager.cpp">
@@ -30,6 +36,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StreamSound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp">
+      <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp">
+      <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,6 +74,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\xal\xalExport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h">
+      <Filter>Header Files\audiosystems</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h">
+      <Filter>Header Files\audiosystems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\xal\xal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

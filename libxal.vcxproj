@@ -46,7 +46,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/DirectSound;audiosystems/OpenAL;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OGG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -69,7 +69,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/DirectSound;audiosystems/OpenAL;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_OGG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -91,6 +91,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
+    <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Category.cpp" />
     <ClCompile Include="src\SimpleSound.cpp" />
@@ -98,8 +100,12 @@
     <ClCompile Include="src\SoundBuffer.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\StreamSound.cpp" />
+    <ClCompile Include="src\xal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h" />
+    <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />
+    <ClInclude Include="include\xal\xal.h" />
     <ClInclude Include="src\Endianess.h" />
     <ClInclude Include="include\xal\AudioManager.h" />
     <ClInclude Include="include\xal\Category.h" />

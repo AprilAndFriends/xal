@@ -17,6 +17,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hthread.h>
 #include <xal/AudioManager.h>
 #include <xal/Sound.h>
+#include <xal/xal.h>
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 

@@ -28,11 +28,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #endif
 
 #include "AudioManager.h"
+#include "OpenAL_AudioManager.h"
 #include "Category.h"
 #include "SimpleSound.h"
 #include "SoundBuffer.h"
 #include "Source.h"
 #include "StreamSound.h"
+#include "xal.h"
 
 #if TARGET_OS_IPHONE
 #include "SourceApple.h"
@@ -40,86 +42,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
-/******* GLOBAL ********************************************************/
-	
 	AudioManager* mgr;
-	ALCdevice* gDevice = NULL;
-	ALCcontext* gContext = NULL;
 
-	void xal_writelog(chstr text)
+	AudioManager::AudioManager(chstr deviceName, bool threaded, float updateTime) : gain(1.0f),
+		updating(false), thread(NULL)
 	{
-		printf("%s\n", text.c_str());
-	}
-	void (*gLogFunction)(chstr) = xal_writelog;
-	
-	void init(chstr deviceName, bool threaded, float updateTime)
-	{
-		mgr = new AudioManager();
-		mgr->init(deviceName, threaded, updateTime);
-	}
-	
-	void destroy()
-	{
-		delete mgr;
-	}
-	
-	void log(chstr message, chstr prefix)
-	{
-		gLogFunction(prefix + message);
-	}
-	
-	void setLogFunction(void (*function)(chstr))
-	{
-		gLogFunction = function;
-	}
-	
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
-	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
-		gain(1.0f), updating(false), thread(NULL)
-	{
-	}
-	
-	void AudioManager::init(chstr deviceName, bool threaded, float updateTime)
-	{
-		xal::log("initializing XAL");
-		if (deviceName == "nosound")
-		{
-			this->deviceName = deviceName;
-			xal::log("audio is disabled");
-			return;
-		}
-		xal::log("initializing OpenAL");
-		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
-		{
-			return;
-		}
-		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		xal::log("audio device: " + this->deviceName);
-		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
-		{
-			return;
-		}
-		alcMakeContextCurrent(currentContext);
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
-		{
-			return;
-		}
-		alGenSources(XAL_MAX_SOURCES, this->sourceIds);
-		gDevice = currentDevice;
-		gContext = currentContext;
 		this->deviceName = deviceName;
-		if (threaded)
-		{
-			xal::log("starting thread management");
-			this->updateTime = updateTime;
-			this->updating = true;
-			this->thread = new hthread(&AudioManager::update);
-			this->thread->start();
-			this->updating = false;
-		}
+		this->updateTime = updateTime;
 	}
 
 	AudioManager::~AudioManager()
@@ -138,30 +67,17 @@ namespace xal
 		{
 			delete it->second;
 		}
-		xal::log("destroying OpenAL");
-		if (gDevice)
+		Sound* source;
+		while (this->sources.size() > 0)
 		{
-			Sound* source;
-			while (this->sources.size() > 0)
-			{
-				source = this->sources.pop_front();
-				source->unlock();
-				source->stop();
-				delete source;
-			}
-			alDeleteSources(XAL_MAX_SOURCES, this->sourceIds);
-			alcMakeContextCurrent(NULL);
-			alcDestroyContext(gContext);
-			alcCloseDevice(gDevice);
+			source = this->sources.pop_front();
+			source->unlock();
+			source->stop();
+			delete source;
 		}
 	}
 	
 /******* PROPERTIES ****************************************************/
-
-	bool AudioManager::isEnabled()
-	{
-		return (gDevice != NULL);
-	}
 
 	void AudioManager::update()
 	{
