@@ -9,11 +9,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the AudioManager for DirectSound.
+/// Represents an implementation of the AudioManager for SDL.
 
-#if HAVE_DIRECTSOUND
-#ifndef XAL_DIRECTSOUND_AUDIO_MANAGER_H
-#define XAL_DIRECTSOUND_AUDIO_MANAGER_H
+#if HAVE_SDL
+#ifndef XAL_SDL_AUDIO_MANAGER_H
+#define XAL_SDL_AUDIO_MANAGER_H
 
 #include <hltypes/hstring.h>
 
@@ -22,11 +22,11 @@
 
 namespace xal
 {
-	class xalExport DirectSound_AudioManager : public AudioManager
+	class xalExport SDL_AudioManager : public AudioManager
 	{
 	public:
-		DirectSound_AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
-		~DirectSound_AudioManager();
+		SDL_AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		~SDL_AudioManager();
 		
 	};
 
