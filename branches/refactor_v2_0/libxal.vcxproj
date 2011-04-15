@@ -92,8 +92,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
+    <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp" />
+    <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp" />
+    <ClCompile Include="audiosystems\SDL\SDL_Player.cpp" />
     <ClCompile Include="decoders\OGG_Decoder.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
@@ -110,8 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h" />
+    <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h" />
+    <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h" />
+    <ClInclude Include="audiosystems\SDL\SDL_Player.h" />
     <ClInclude Include="decoders\OGG_Decoder.h" />
     <ClInclude Include="include\xal\Buffer.h" />
     <ClInclude Include="include\xal\Decoder.h" />

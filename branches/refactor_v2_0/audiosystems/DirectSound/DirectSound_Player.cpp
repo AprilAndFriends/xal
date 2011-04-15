@@ -8,20 +8,20 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_DIRECTSOUND
-#include <hltypes/hstring.h>
-
-#include "DirectSound_AudioManager.h"
+#include "Buffer.h"
+#include "DirectSound_Player.h"
+#include "Sound2.h"
 
 namespace xal
 {
-	DirectSound_AudioManager::DirectSound_AudioManager(chstr deviceName, bool threaded, float updateTime) :
-		AudioManager(deviceName, threaded, updateTime)
+	DirectSound_Player::DirectSound_Player(Sound2* sound, Buffer* buffer) :
+		Player(sound, buffer)
 	{
 	}
 
-	DirectSound_AudioManager::~DirectSound_AudioManager()
+	DirectSound_Player::~DirectSound_Player()
 	{
 	}
-	
+
 }
 #endif

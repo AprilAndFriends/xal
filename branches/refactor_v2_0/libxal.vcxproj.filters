@@ -77,6 +77,15 @@
     <ClCompile Include="src\Decoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp">
+      <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp">
+      <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosystems\SDL\SDL_Player.cpp">
+      <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Endianess.h">
@@ -132,6 +141,15 @@
     </ClInclude>
     <ClInclude Include="include\xal\Decoder.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h">
+      <Filter>Header Files\audiosystems</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h">
+      <Filter>Header Files\audiosystems</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\SDL\SDL_Player.h">
+      <Filter>Header Files\audiosystems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -183,7 +183,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Buffer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Category.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Decoder.cpp"
 				>
 			</File>
 			<File
@@ -191,23 +199,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\SimpleSound.cpp"
+				RelativePath=".\src\Player.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Sound.cpp"
+				RelativePath=".\src\Sound2.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SoundBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Source.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\StreamSound.cpp"
+				RelativePath=".\src\xal.cpp"
 				>
 			</File>
 			<Filter
@@ -218,7 +218,55 @@
 					>
 				</File>
 				<File
+					RelativePath=".\audiosystems\DirectSound\DirectSound_Player.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosystems\OpenAL\OpenAL_Player.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosystems\SDL\SDL_AudioManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosystems\SDL\SDL_Player.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="old"
+				>
+				<File
+					RelativePath=".\src\SimpleSound.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Sound.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\SoundBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Source.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\StreamSound.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="decoders"
+				>
+				<File
+					RelativePath=".\decoders\OGG_Decoder.cpp"
 					>
 				</File>
 			</Filter>
@@ -233,27 +281,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\xal\Buffer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\xal\Category.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\SimpleSound.h"
+				RelativePath=".\include\xal\Decoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\Sound.h"
+				RelativePath=".\include\xal\Player.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\SoundBuffer.h"
+				RelativePath=".\include\xal\Sound2.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\Source.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\xal\StreamSound.h"
+				RelativePath=".\include\xal\xal.h"
 				>
 			</File>
 			<File
@@ -268,7 +316,55 @@
 					>
 				</File>
 				<File
+					RelativePath=".\audiosystems\DirectSound\DirectSound_Player.h"
+					>
+				</File>
+				<File
 					RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosystems\OpenAL\OpenAL_Player.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosystems\SDL\SDL_AudioManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosystems\SDL\SDL_Player.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="old"
+				>
+				<File
+					RelativePath=".\include\xal\SimpleSound.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\xal\Sound.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\xal\SoundBuffer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\xal\Source.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\xal\StreamSound.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="decoders"
+				>
+				<File
+					RelativePath=".\decoders\OGG_Decoder.h"
 					>
 				</File>
 			</Filter>
