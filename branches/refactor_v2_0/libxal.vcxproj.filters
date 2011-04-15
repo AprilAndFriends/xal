@@ -21,6 +21,12 @@
     <Filter Include="Header Files\old">
       <UniqueIdentifier>{7d130ed7-a18d-49c5-8bdc-bdb7378806ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\decoders">
+      <UniqueIdentifier>{702009bc-a09b-428c-bcf0-41664c26dbf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\decoders">
+      <UniqueIdentifier>{f2ce05a8-226a-43ed-8496-c44f1a9a62d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioManager.cpp">
@@ -64,6 +70,12 @@
     </ClCompile>
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp">
       <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
+    <ClCompile Include="decoders\OGG_Decoder.cpp">
+      <Filter>Source Files\decoders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Decoder.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +126,12 @@
     </ClInclude>
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h">
       <Filter>Header Files\audiosystems</Filter>
+    </ClInclude>
+    <ClInclude Include="decoders\OGG_Decoder.h">
+      <Filter>Header Files\decoders</Filter>
+    </ClInclude>
+    <ClInclude Include="include\xal\Decoder.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

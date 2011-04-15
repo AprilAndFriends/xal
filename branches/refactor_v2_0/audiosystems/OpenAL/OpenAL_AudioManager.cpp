@@ -1,12 +1,19 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Kresimir Spes
+/// @author  Boris Mikic
+/// @author  Ivan Vucica
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/// 
+/// @section DESCRIPTION
+/// 
+/// Represents an implementation of the AudioManager for OpenAL.
+
+#if HAVE_OPENAL
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,13 +34,18 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <TargetConditionals.h>
 #endif
 
-#include "OpenAL_AudioManager.h"
+#include "Buffer.h"
 #include "Category.h"
+#include "OpenAL_AudioManager.h"
+#include "OpenAL_Player.h"
+#include "xal.h"
+
+
+
 #include "SimpleSound.h"
 #include "SoundBuffer.h"
 #include "Source.h"
 #include "StreamSound.h"
-#include "xal.h"
 
 #if TARGET_OS_IPHONE
 #include "SourceApple.h"
@@ -93,5 +105,43 @@ namespace xal
 	{
 		return (this->device != NULL);
 	}
+
+	Player* OpenAL_AudioManager::_createPlayer(Sound2* sound, Buffer* buffer)
+	{
+		unsigned int sourceId = this->allocateSourceId();
+		if (sourceId != 0)
+		{
+			return new OpenAL_Player(sound, buffer, sourceId);
+		}
+		return AudioManager::_createPlayer(sound, buffer);
+	}
 	
+	unsigned int OpenAL_AudioManager::_allocateSourceId()
+	{
+		harray<unsigned int> allocated;
+		OpenAL_Player* player;
+		unsigned int id;
+		foreach (Player*, it, this->players)
+		{
+			player = dynamic_cast<OpenAL_Player*>(*it);
+			if (player != NULL)
+			{
+				id = player->getSourceId();
+				if (id != 0)
+				{
+					allocated += id;
+				}
+			}
+		}
+		harray<unsigned int> unallocated(this->sourceIds, XAL_MAX_SOURCES);
+		unallocated -= allocated;
+		if (unallocated.size() > 0)
+		{
+			return unallocated.front();
+		}
+		xal::log("unable to allocate audio source!");
+		return 0;
+	}
+
 }
+#endif

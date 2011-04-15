@@ -11,17 +11,20 @@
 #include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 
-#include "Sound2.h"
+#include "AudioManager.h"
+#include "Buffer.h"
 #include "Category.h"
+#include "Sound2.h"
 #include "xal.h"
 
 namespace xal
 {
-	Sound2::Sound2(chstr filename, Category* category, chstr prefix) : duration(0.0f)
+	Sound2::Sound2(chstr filename, Category* category, chstr prefix) : buffer(NULL)
 	{
 		this->filename = filename;
-		this->virtualFilename = this->filename;
+		this->realFilename = this->_findLinkedFile();
 		this->category = category;
+		this->buffer = new Buffer(this->realFilename);
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + hstr(filename).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 	}
@@ -29,6 +32,7 @@ namespace xal
 	Sound2::~Sound2()
 	{
 		xal::log("destroying sound " + this->name);
+		delete this->buffer;
 	}
 	
 	hstr Sound2::_findLinkedFile()
@@ -54,4 +58,16 @@ namespace xal
 		return folders.join("/");
 	}
 
+	Format Sound2::getFormat()
+	{
+		// TODO - remove?
+		return this->buffer->getFormat();
+	}
+
+	bool Sound2::load()
+	{
+		// TODO - remove?
+		return this->buffer->load();
+	}
+	
 }

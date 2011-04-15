@@ -11,6 +11,7 @@
 /// 
 /// Provides an interface to play and control audio data.
 
+#if HAVE_OPENAL
 #ifndef XAL_OPENAL_PLAYER_H
 #define XAL_OPENAL_PLAYER_H
 
@@ -25,10 +26,12 @@ namespace xal
 	class xalExport OpenAL_Player : public Player
 	{
 	public:
-		OpenAL_Player(Sound2* sound, Buffer* buffer);
+		OpenAL_Player(Sound2* sound, Buffer* buffer, unsigned int sourceId);
 		virtual ~OpenAL_Player();
 
 		virtual void setGain(float value);
+		unsigned int getSourceId() { return this->sourceId; }
+		void setSourceId(unsigned int value) { this->sourceId = value; }
 
 	protected:
 		unsigned int sourceId;
@@ -36,4 +39,5 @@ namespace xal
 	};
 
 }
+#endif
 #endif

@@ -7,6 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#if HAVE_OPENAL
 #ifndef __APPLE__
 #include <AL/al.h>
 #else
@@ -20,9 +21,10 @@
 
 namespace xal
 {
-	OpenAL_Player::OpenAL_Player(Sound2* sound, Buffer* buffer) :
+	OpenAL_Player::OpenAL_Player(Sound2* sound, Buffer* buffer, unsigned int sourceId) :
 		Player(sound, buffer)
 	{
+		this->sourceId = sourceId;
 	}
 
 	OpenAL_Player::~OpenAL_Player()
@@ -40,3 +42,4 @@ namespace xal
 	}
 
 }
+#endif

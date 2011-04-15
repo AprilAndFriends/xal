@@ -37,7 +37,7 @@ namespace xal
 		duration(0.0f), loaded(false)
 	{
 		this->filename = hstr(filename);
-		this->virtualFilename = this->filename;
+		this->realFilename = this->filename;
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + hstr(filename).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 		this->category = xal::mgr->getCategoryByName(category);
@@ -69,6 +69,54 @@ namespace xal
 			}
 		}
 		return folders.join("/");
+	}
+
+	bool SoundBuffer::load()
+	{
+		bool result = false;
+		if (this->isLink())
+		{
+			this->realFilename = this->_findLinkedFile();
+		}
+		if (!xal::mgr->isEnabled())
+		{
+			result = this->isOgg();
+#if TARGET_OS_IPHONE
+			result |= this->isM4a();
+#endif
+		}
+		else if (this->isOgg())
+		{
+			result = this->_loadOgg();
+		}
+#if TARGET_OS_IPHONE
+		else if (this->isM4a())
+		{
+			// no need to load m4a aac.
+			//result = this->_loadM4a();
+			result = true;
+		}
+#endif
+		if (result)
+		{
+			this->loaded = result;
+		}
+		return result;
+	}
+	
+	bool SoundBuffer::isLink()
+	{
+		return this->filename.ends_with(".xln");
+	}
+
+	bool SoundBuffer::isOgg()
+	{
+		return this->realFilename.ends_with(".ogg");
+	}
+	
+	bool SoundBuffer::isM4a()
+	{
+		return this->realFilename.ends_with(".m4a");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -103,39 +151,6 @@ namespace xal
 	
 /******* METHODS *******************************************************/
 
-	bool SoundBuffer::load()
-	{
-		bool result = false;
-		if (this->isLink())
-		{
-			this->virtualFilename = this->_findLinkedFile();
-		}
-		if (!xal::mgr->isEnabled())
-		{
-			result = this->isOgg();
-#if TARGET_OS_IPHONE
-			result |= this->isM4a();
-#endif
-		}
-		else if (this->isOgg())
-		{
-			result = this->_loadOgg();
-		}
-#if TARGET_OS_IPHONE
-		else if (this->isM4a())
-		{
-			// no need to load m4a aac.
-			//result = this->_loadM4a();
-			result = true;
-		}
-#endif
-		if (result)
-		{
-			this->loaded = result;
-		}
-		return result;
-	}
-	
 	void SoundBuffer::bindSource(Sound* source)
 	{
 		this->sources += source;
@@ -213,21 +228,6 @@ namespace xal
 	bool SoundBuffer::isLooping()
 	{
 		return (this->sources.size() > 0 && this->sources[0]->isLooping());
-	}
-
-	bool SoundBuffer::isLink()
-	{
-		return this->filename.ends_with(".xln");
-	}
-
-	bool SoundBuffer::isOgg()
-	{
-		return this->virtualFilename.ends_with(".ogg");
-	}
-	
-	bool SoundBuffer::isM4a()
-	{
-		return this->virtualFilename.ends_with(".m4a");
 	}
 
 /******* PLAY CONTROLS *************************************************/

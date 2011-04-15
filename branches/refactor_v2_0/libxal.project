@@ -51,12 +51,16 @@
       <Compiler Options="" C_Options="">
         <IncludePath Value="."/>
         <IncludePath Value="./src"/>
-        <IncludePath Value="./audiosystems/DirectSound"/>
         <IncludePath Value="./audiosystems/OpenAL"/>
+        <IncludePath Value="./audiosystems/SDL"/>
+        <IncludePath Value="./audiosystems/DirectSound"/>
+        <IncludePath Value="./decoders"/>
         <IncludePath Value="./include/xal"/>
         <IncludePath Value="../include"/>
         <IncludePath Value="../hltypes/include"/>
         <Preprocessor Value="XAL_EXPORTS"/>
+        <Preprocessor Value="HAVE_OPENAL=1"/>
+        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
@@ -73,7 +77,6 @@
       <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="_DEBUG"/>
-        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <Library Value="libhltypes_d"/>
@@ -106,7 +109,6 @@
       <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_UNIX"/>
         <Preprocessor Value="_DEBUG"/>
-        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <Library Value="libhltypes_d"/>
@@ -139,7 +141,6 @@
     <Configuration Name="Release_Win32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
-        <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
         <Library Value="libhltypes"/>

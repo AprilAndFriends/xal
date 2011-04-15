@@ -1,14 +1,21 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
-#ifndef XAL_OPENAL_AUDIOMANAGER_H
-#define XAL_OPENAL_AUDIOMANAGER_H
+/// @file
+/// @author  Kresimir Spes
+/// @author  Boris Mikic
+/// @author  Ivan Vucica
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/// 
+/// @section DESCRIPTION
+/// 
+/// Represents an implementation of the AudioManager for OpenAL.
+
+#if HAVE_OPENAL
+#ifndef XAL_OPENAL_AUDIO_MANAGER_H
+#define XAL_OPENAL_AUDIO_MANAGER_H
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -26,6 +33,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
+	class Buffer;
+	class Player;
+	class Sound2;
+
 	class xalExport OpenAL_AudioManager : public AudioManager
 	{
 	public:
@@ -38,8 +49,12 @@ namespace xal
 		ALCdevice* device;
 		ALCcontext* context;
 
+		Player* _createPlayer(Sound2* sound, Buffer* buffer);
+		unsigned int _allocateSourceId();
+
 	};
 	
 }
 
+#endif
 #endif
