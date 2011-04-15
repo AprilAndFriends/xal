@@ -30,16 +30,23 @@ namespace xal
 
 		chstr getName() { return this->name; }
 		chstr getFilename() { return this->filename; }
-		chstr getVirtualFilename() { return this->virtualFilename; }
+		chstr getRealFilename() { return this->realFilename; }
 		Category* getCategory() { return this->category; }
+		void setCategory(Category* value) { this->category = value; }
 		float getDuration() { return this->duration; }
+		bool isLink();
+		bool isOgg();
+		bool isM4a();
 
+		bool load();
+		
 	protected:
 		hstr name;
 		hstr filename;
-		hstr virtualFilename;
+		hstr realFilename;
 		Category* category;
 		float duration;
+		bool loaded;
 
 		hstr _findLinkedFile();
 
@@ -49,8 +56,6 @@ namespace xal
 
 		void destroySources();
 
-		bool load();
-		
 		void bindSource(Sound* source);
 		void unbindSource(Sound* source);
 		void lock();
@@ -60,7 +65,6 @@ namespace xal
 		float getSampleOffset();
 		virtual unsigned int getBuffer() const = 0;
 		void setSourceId(unsigned int value) { this->sourceId = value; }
-		void setCategory(Category* value) { this->category = value; }
 		float getGain();
 		void setGain(float value);
 		bool isLooping();
@@ -72,9 +76,6 @@ namespace xal
 		
 		bool isLoaded() { return this->loaded; }
 		bool isValidBuffer() const;
-		bool isLink();
-		bool isOgg();
-		bool isM4a();
 		
 		virtual Sound* play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
@@ -85,7 +86,6 @@ namespace xal
 
 	protected:
 		unsigned int sourceId;
-		bool loaded;
 		harray<Sound*> sources;
 		
 		

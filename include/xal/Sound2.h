@@ -16,10 +16,12 @@
 
 #include <hltypes/hstring.h>
 
+#include "AudioManager.h"
 #include "xalExport.h"
 
 namespace xal
 {
+	class Buffer;
 	class Category;
 
 	class xalExport Sound2
@@ -30,16 +32,19 @@ namespace xal
 
 		chstr getName() { return this->name; }
 		chstr getFilename() { return this->filename; }
-		chstr getVirtualFilename() { return this->virtualFilename; }
+		chstr getRealFilename() { return this->realFilename; }
 		Category* getCategory() { return this->category; }
-		float getDuration() { return this->duration; }
+		Buffer* getBuffer() { return this->buffer; }
+		Format getFormat();
 
+		bool load();
+		
 	protected:
 		hstr name;
 		hstr filename;
-		hstr virtualFilename;
+		hstr realFilename;
 		Category* category;
-		float duration;
+		Buffer* buffer;
 
 		hstr _findLinkedFile();
 		

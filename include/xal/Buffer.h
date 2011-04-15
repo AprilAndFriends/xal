@@ -17,11 +17,13 @@
 
 #include <hltypes/hstring.h>
 
+#include "AudioManager.h"
 #include "xalExport.h"
 
 namespace xal
 {
 	class Category;
+	class Decoder;
 
 	class xalExport Buffer
 	{
@@ -31,10 +33,15 @@ namespace xal
 
 		chstr getFilename() { return this->filename; }
 		float getDuration() { return this->duration; }
+		Format getFormat();
 
+		bool load();
+		
 	protected:
 		hstr filename;
 		float duration;
+		bool loaded;
+		Decoder* decoder;
 
 	};
 

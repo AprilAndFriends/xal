@@ -57,7 +57,7 @@ namespace xal
 		xal::log("loading ogg sound " + this->filename);
 		vorbis_info *info;
 		OggVorbis_File oggStream;
-		if (ov_fopen((char*)this->virtualFilename.c_str(), &oggStream) != 0)
+		if (ov_fopen((char*)this->realFilename.c_str(), &oggStream) != 0)
 		{
 			xal::log("ogg: error opening file!");
 			return false;

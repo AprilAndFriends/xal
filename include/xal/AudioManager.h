@@ -13,8 +13,8 @@
 /// 
 /// Provides an interface for audiomanagers.
 
-#ifndef XAL_AUDIOMANAGER_H
-#define XAL_AUDIOMANAGER_H
+#ifndef XAL_AUDIO_MANAGER_H
+#define XAL_AUDIO_MANAGER_H
 
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
@@ -32,7 +32,20 @@ namespace xal
 	class SoundBuffer;
 	class Source;
 	//////////////////////////
+	
+	enum Format
+	{
+		//WAV,
+#if HAVE_OGG
+		OGG,
+#endif
+#if HAVE_M4A
+		M4A,
+#endif
+		UNKNOWN
+	};
 
+	class Buffer;
 	class Player;
 	class Sound2;
 
@@ -58,6 +71,10 @@ namespace xal
 		harray<hstr> createSound2sFromPath(chstr path, chstr category, chstr prefix);
 		void destroySound2(Sound2* sound);
 		void destroySound2sWithPrefix(chstr prefix);
+
+		Player* createPlayer(chstr name);
+		void destroyPlayer(Player* player);
+
 		//////////////////////////////////////////////
 			Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
 			harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
@@ -65,6 +82,10 @@ namespace xal
 			void destroySound(SoundBuffer* sound);
 			void destroySoundsWithPrefix(chstr prefix);
 			Sound* getSound(chstr name);
+			Sound* createSource(SoundBuffer* sound, unsigned int sourceId);
+			Sound* createSourceApple(SoundBuffer* sound, unsigned int sourceId);
+			void destroySource(Sound* source);
+			unsigned int allocateSourceId();
 		//////////////////////////////////////////////
 
 		static void update();
@@ -81,14 +102,11 @@ namespace xal
 
 		hmap<hstr, Sound2*> sounds;
 
+		virtual Player* _createPlayer(Sound2* sound, Buffer* buffer);
 
 
 
 	public:
-		Sound* createSource(SoundBuffer* sound, unsigned int sourceId);
-		Sound* createSourceApple(SoundBuffer* sound, unsigned int sourceId);
-		void destroySource(Sound* source);
-		unsigned int allocateSourceId();
 		
 		void stopAll(float fadeTime = 0.0f);
 		void pauseAll(float fadeTime = 0.0f);

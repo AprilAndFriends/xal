@@ -30,9 +30,12 @@
 #endif
 
 #include "AudioManager.h"
-#include "Sound2.h"
 #include "Category.h"
+#include "Player.h"
+#include "Sound2.h"
 #include "xal.h"
+
+
 
 #include "SimpleSound.h"
 #include "SoundBuffer.h"
@@ -61,6 +64,10 @@ namespace xal
 			while (this->updating);
 			this->thread->stop();
 			delete this->thread;
+		}
+		foreach (Player*, it, this->players)
+		{
+			delete (*it);
 		}
 		foreach_m (Sound2*, it, this->sounds)
 		{
@@ -243,6 +250,29 @@ namespace xal
 		}
 	}
 
+	Player* AudioManager::createPlayer(chstr name)
+	{
+		Sound2* sound = this->sounds[name];
+		Player* player = this->_createPlayer(this->sounds[name], this->sounds[name]->getBuffer());
+		this->players += player;
+		return player;
+	}
+
+	Player* AudioManager::_createPlayer(Sound2* sound, Buffer* buffer)
+	{
+		return new Player(sound, buffer);
+	}
+	
+	void AudioManager::destroyPlayer(Player* player)
+	{
+		this->players -= player;
+		if (this->managedPlayers.contains(player))
+		{
+			this->managedPlayers -= player;
+		}
+		delete player;
+	}
+
 
 
 
@@ -273,30 +303,6 @@ namespace xal
 		}
 		xal::log("unable to allocate audio source!");
 		return 0;
-	}
-
-	Sound* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
-	{
-		Source* source = new Source(sound, sourceId);
-		this->sources += source;
-		return source;
-	}
-	
-	Sound* AudioManager::createSourceApple(SoundBuffer* sound, unsigned int sourceId)
-	{
-#if TARGET_OS_IPHONE
-		SourceApple* source = new SourceApple(sound, sourceId);
-		this->sources += source;
-		return source;
-#else
-		return NULL;
-#endif
-	}
-	
-	void AudioManager::destroySource(Sound* source)
-	{
-		this->sources -= source;
-		delete source;
 	}
 
 	void AudioManager::stopAll(float fadeTime)
@@ -347,6 +353,30 @@ namespace xal
 		this->updating = false;
 	}
 	
+				Sound* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
+				{
+					Source* source = new Source(sound, sourceId);
+					this->sources += source;
+					return source;
+				}
+	
+				Sound* AudioManager::createSourceApple(SoundBuffer* sound, unsigned int sourceId)
+				{
+#if TARGET_OS_IPHONE
+					SourceApple* source = new SourceApple(sound, sourceId);
+					this->sources += source;
+					return source;
+#else
+					return NULL;
+#endif
+				}
+	
+				void AudioManager::destroySource(Sound* source)
+				{
+					this->sources -= source;
+					delete source;
+				}
+
 				Sound* AudioManager::getSound(chstr name)
 				{
 					if (!this->oldSounds.has_key(name))

@@ -46,8 +46,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/DirectSound;audiosystems/OpenAL;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OGG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;decoders;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OPENAL=1;HAVE_OGG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -69,8 +69,8 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/DirectSound;audiosystems/OpenAL;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_OGG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;decoders;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_OPENAL=1;HAVE_OGG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -94,9 +94,11 @@
     <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp" />
+    <ClCompile Include="decoders\OGG_Decoder.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\Category.cpp" />
+    <ClCompile Include="src\Decoder.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SimpleSound.cpp" />
     <ClCompile Include="src\Sound.cpp" />
@@ -110,7 +112,9 @@
     <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h" />
+    <ClInclude Include="decoders\OGG_Decoder.h" />
     <ClInclude Include="include\xal\Buffer.h" />
+    <ClInclude Include="include\xal\Decoder.h" />
     <ClInclude Include="include\xal\Player.h" />
     <ClInclude Include="include\xal\Sound2.h" />
     <ClInclude Include="include\xal\xal.h" />
