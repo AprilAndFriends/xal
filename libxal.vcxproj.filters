@@ -15,11 +15,11 @@
     <Filter Include="Source Files\audiosystems">
       <UniqueIdentifier>{a5d68b12-7cd6-482a-a897-31b980118b19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\decoders">
-      <UniqueIdentifier>{702009bc-a09b-428c-bcf0-41664c26dbf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\decoders">
+    <Filter Include="Header Files\audiosources">
       <UniqueIdentifier>{f2ce05a8-226a-43ed-8496-c44f1a9a62d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosources">
+      <UniqueIdentifier>{702009bc-a09b-428c-bcf0-41664c26dbf6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,12 +47,6 @@
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp">
       <Filter>Source Files\audiosystems</Filter>
     </ClCompile>
-    <ClCompile Include="decoders\OGG_Decoder.cpp">
-      <Filter>Source Files\decoders</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Decoder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp">
       <Filter>Source Files\audiosystems</Filter>
     </ClCompile>
@@ -63,6 +57,12 @@
       <Filter>Source Files\audiosystems</Filter>
     </ClCompile>
     <ClCompile Include="src\Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="decoders\OGG_Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,12 +97,6 @@
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h">
       <Filter>Header Files\audiosystems</Filter>
     </ClInclude>
-    <ClInclude Include="decoders\OGG_Decoder.h">
-      <Filter>Header Files\decoders</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xal\Decoder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h">
       <Filter>Header Files\audiosystems</Filter>
     </ClInclude>
@@ -113,6 +107,12 @@
       <Filter>Header Files\audiosystems</Filter>
     </ClInclude>
     <ClInclude Include="include\xal\Sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="decoders\OGG_Source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\xal\Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

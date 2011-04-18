@@ -20,7 +20,7 @@
       <File Name="audiosystems/SDL/SDL_Player.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
-      <File Name="decoders/OGG_Source.cpp"/>
+      <File Name="audiosources/OGG_Source.cpp"/>
     </VirtualDirectory>
     <File Name="src/Buffer.cpp"/>
     <File Name="src/Player.cpp"/>
@@ -41,7 +41,7 @@
       <File Name="audiosystems/SDL/SDL_Player.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
-      <File Name="decoders/OGG_Source.h"/>
+      <File Name="audiosources/OGG_Source.h"/>
     </VirtualDirectory>
     <File Name="include/xal/Buffer.h"/>
     <File Name="include/xal/Player.h"/>
@@ -68,7 +68,7 @@
         <IncludePath Value="./audiosystems/OpenAL"/>
         <IncludePath Value="./audiosystems/SDL"/>
         <IncludePath Value="./audiosystems/DirectSound"/>
-        <IncludePath Value="./decoders"/>
+        <IncludePath Value="./audiosources"/>
         <IncludePath Value="./include/xal"/>
         <IncludePath Value="../include"/>
         <IncludePath Value="../hltypes/include"/>

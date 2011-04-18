@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;decoders;include/xal;../include;../hltypes/include;src/"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
 				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OPENAL=1;HAVE_OGG=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;decoders;include/xal;../include;../hltypes/include;src/"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
 				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_OPENAL=1;HAVE_OGG=1"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Source.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Endianess.h"
 				>
 			</File>
@@ -204,6 +200,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Sound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Source.cpp"
 				>
 			</File>
 			<File
@@ -239,10 +239,10 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="decoders"
+				Name="audiosources"
 				>
 				<File
-					RelativePath=".\decoders\OGG_Source.cpp"
+					RelativePath=".\audiosources\OGG_Source.cpp"
 					>
 				</File>
 			</Filter>
@@ -265,15 +265,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\Source.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\xal\Player.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\xal\Sound.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xal\Source.h"
 				>
 			</File>
 			<File
@@ -313,10 +313,10 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="decoders"
+				Name="audiosources"
 				>
 				<File
-					RelativePath=".\decoders\OGG_Source.h"
+					RelativePath=".\audiosources\OGG_Source.h"
 					>
 				</File>
 			</Filter>
