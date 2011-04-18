@@ -24,11 +24,11 @@ namespace xal
 	class Buffer;
 	class Category;
 
-	class xalExport Sound2
+	class xalExport Sound
 	{
 	public:
-		Sound2(chstr filename, Category* category, chstr prefix = "");
-		virtual ~Sound2();
+		Sound(chstr filename, Category* category, chstr prefix = "");
+		virtual ~Sound();
 
 		chstr getName() { return this->name; }
 		chstr getFilename() { return this->filename; }

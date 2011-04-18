@@ -10,11 +10,11 @@
 #if HAVE_DIRECTSOUND
 #include "Buffer.h"
 #include "DirectSound_Player.h"
-#include "Sound2.h"
+#include "Sound.h"
 
 namespace xal
 {
-	DirectSound_Player::DirectSound_Player(Sound2* sound, Buffer* buffer) :
+	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer)
 	{
 	}

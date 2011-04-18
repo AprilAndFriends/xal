@@ -21,12 +21,12 @@
 namespace xal
 {
 	class Buffer;
-	class Sound2;
+	class Sound;
 
 	class xalExport OpenAL_Player : public Player
 	{
 	public:
-		OpenAL_Player(Sound2* sound, Buffer* buffer, unsigned int sourceId);
+		OpenAL_Player(Sound* sound, Buffer* buffer, unsigned int sourceId);
 		virtual ~OpenAL_Player();
 
 		virtual void setGain(float value);

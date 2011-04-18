@@ -21,12 +21,12 @@
 namespace xal
 {
 	class Buffer;
-	class Sound2;
+	class Sound;
 
 	class xalExport DirectSound_Player : public Player
 	{
 	public:
-		DirectSound_Player(Sound2* sound, Buffer* buffer, unsigned int sourceId);
+		DirectSound_Player(Sound* sound, Buffer* buffer, unsigned int sourceId);
 		~DirectSound_Player();
 
 	};

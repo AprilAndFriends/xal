@@ -40,7 +40,7 @@ namespace xal
 	class Buffer;
 	class Category;
 	class Player;
-	class Sound2;
+	class Sound;
 
 	class xalExport AudioManager
 	{
@@ -59,11 +59,11 @@ namespace xal
 		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
 		
-		Sound2* createSound2(chstr filename, chstr categoryName, chstr prefix = "");
-		harray<hstr> createSound2sFromPath(chstr path, chstr prefix = "");
-		harray<hstr> createSound2sFromPath(chstr path, chstr category, chstr prefix);
-		void destroySound2(Sound2* sound);
-		void destroySound2sWithPrefix(chstr prefix);
+		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
+		harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
+		harray<hstr> createSoundsFromPath(chstr path, chstr category, chstr prefix);
+		void destroySound(Sound* sound);
+		void destroySoundsWithPrefix(chstr prefix);
 
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
@@ -79,10 +79,10 @@ namespace xal
 		hmap<hstr, Category*> categories;
 		harray<Player*> players;
 		harray<Player*> managedPlayers;
-		hmap<hstr, Sound2*> sounds;
+		hmap<hstr, Sound*> sounds;
 		
 		void _setupThread();
-		virtual Player* _createPlayer(Sound2* sound, Buffer* buffer);
+		virtual Player* _createPlayer(Sound* sound, Buffer* buffer);
 
 		//////////////////////////////////////////////
 

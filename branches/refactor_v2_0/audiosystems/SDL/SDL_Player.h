@@ -21,12 +21,12 @@
 namespace xal
 {
 	class Buffer;
-	class Sound2;
+	class Sound;
 
 	class xalExport SDL_Player : public Player
 	{
 	public:
-		SDL_Player(Sound2* sound, Buffer* buffer, unsigned int sourceId);
+		SDL_Player(Sound* sound, Buffer* buffer, unsigned int sourceId);
 		~SDL_Player();
 
 	};

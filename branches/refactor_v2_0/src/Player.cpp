@@ -11,11 +11,11 @@
 
 #include "Buffer.h"
 #include "Player.h"
-#include "Sound2.h"
+#include "Sound.h"
 
 namespace xal
 {
-	Player::Player(Sound2* sound, Buffer* buffer) : gain(1.0f), paused(false),
+	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), paused(false),
 		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f)
 	{
 		this->sound = sound;

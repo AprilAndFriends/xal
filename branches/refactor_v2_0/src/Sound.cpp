@@ -14,12 +14,12 @@
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
-#include "Sound2.h"
+#include "Sound.h"
 #include "xal.h"
 
 namespace xal
 {
-	Sound2::Sound2(chstr filename, Category* category, chstr prefix) : buffer(NULL)
+	Sound::Sound(chstr filename, Category* category, chstr prefix) : buffer(NULL)
 	{
 		this->filename = filename;
 		this->realFilename = this->_findLinkedFile();
@@ -29,13 +29,13 @@ namespace xal
 		this->name = prefix + hstr(filename).replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 	}
 
-	Sound2::~Sound2()
+	Sound::~Sound()
 	{
 		xal::log("destroying sound " + this->name);
 		delete this->buffer;
 	}
 	
-	hstr Sound2::_findLinkedFile()
+	hstr Sound::_findLinkedFile()
 	{
 		if (!this->filename.ends_with(".xln"))
 		{
@@ -62,13 +62,13 @@ namespace xal
 		return folders.join("/");
 	}
 
-	Format Sound2::getFormat()
+	Format Sound::getFormat()
 	{
 		// TODO - remove?
 		return this->buffer->getFormat();
 	}
 
-	bool Sound2::load()
+	bool Sound::load()
 	{
 		// TODO - remove?
 		return this->buffer->load();

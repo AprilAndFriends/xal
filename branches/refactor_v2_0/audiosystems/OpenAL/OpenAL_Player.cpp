@@ -18,11 +18,11 @@
 #include "Buffer.h"
 #include "Category.h"
 #include "OpenAL_Player.h"
-#include "Sound2.h"
+#include "Sound.h"
 
 namespace xal
 {
-	OpenAL_Player::OpenAL_Player(Sound2* sound, Buffer* buffer, unsigned int sourceId) :
+	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer, unsigned int sourceId) :
 		Player(sound, buffer)
 	{
 		this->sourceId = sourceId;

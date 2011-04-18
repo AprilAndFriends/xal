@@ -280,8 +280,8 @@ int main(int argc, char **argv)
 #ifdef _TEST_STREAM
 	xal::mgr->createCategory("streamable", true);
 #endif
-	harray<hstr> files = xal::mgr->createSound2sFromPath("../media/streamable", "streamable", "");
-	files += xal::mgr->createSound2sFromPath("../media", "sound", "");
+	harray<hstr> files = xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
+	files += xal::mgr->createSoundsFromPath("../media", "sound", "");
 #else
 	xal::mgr->createCategory("cat", true);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "streamable");
