@@ -31,6 +31,11 @@ namespace xal
 		this->gain = hclamp(gain, 0.0f, 1.0f);
 	}
 
+	hstr Player::getName()
+	{
+		return this->sound->getName();
+	}
+
     float Player::getDuration()
     {
         return this->buffer->getDuration();

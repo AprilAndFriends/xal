@@ -25,10 +25,7 @@ namespace xal
 	
 	Playlist::~Playlist()
 	{
-		foreach (Player*, it, this->players)
-		{
-			xal::mgr->destroyPlayer(*it);
-		}
+		this->clear();
 	}
 	
 	void Playlist::update()
@@ -69,6 +66,10 @@ namespace xal
 	void Playlist::clear()
 	{
 		this->stop();
+		foreach (Player*, it, this->players)
+		{
+			xal::mgr->destroyPlayer(*it);
+		}
 		this->players.clear();
 		this->index = -1;
 	}
