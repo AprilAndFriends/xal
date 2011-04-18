@@ -11,14 +11,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 #include <xal/AudioManager.h>
-//#include <xal/Sound.h>
+#include <xal/Player.h>
 
 #include "Playlist.h"
 
 namespace xal
 {
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
 	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false),
 		index(-1)
 	{
@@ -27,33 +25,34 @@ namespace xal
 	
 	Playlist::~Playlist()
 	{
+		foreach (Player*, it, this->players)
+		{
+			xal::mgr->destroyPlayer(*it);
+		}
 	}
 	
-/******* METHODS *******************************************************/
-
 	void Playlist::update()
 	{
-		/*
-		if (this->sounds.size() == 0 || this->index < 0)
+		if (this->players.size() == 0 || this->index < 0)
 		{
 			return;
 		}
 		if (this->repeatAll)
 		{
-			if (!xal::mgr->getSound(this->sounds[this->index])->isPlaying())
+			if (!this->players[this->index]->isPlaying())
 			{
-				this->index = (this->index + 1) % this->sounds.size();
-				xal::mgr->getSound(this->sounds[this->index])->play();
+				this->index = (this->index + 1) % this->players.size();
+				this->players[this->index]->play();
 			}
 		}
-		else if (this->index < this->sounds.size())
+		else if (this->index < this->players.size())
 		{
-			if (!xal::mgr->getSound(this->sounds[this->index])->isPlaying())
+			if (!this->players[this->index]->isPlaying())
 			{
 				this->index++;
-				if (this->index < this->sounds.size())
+				if (this->index < this->players.size())
 				{
-					xal::mgr->getSound(this->sounds[this->index])->play();
+					this->players[this->index]->play();
 				}
 				else
 				{
@@ -65,64 +64,60 @@ namespace xal
 		{
 			this->playing = false;
 		}
-		*/
-	}
-	
-	void Playlist::play(float fadeTime)
-	{
-		/*
-		if (!this->enabled || this->sounds.size() == 0 || this->playing)
-		{
-			return;
-		}
-		if (this->index >= this->sounds.size())
-		{
-			this->index = 0;
-		}
-		xal::mgr->getSound(this->sounds[this->index])->play(fadeTime);
-		this->playing = true;
-		*/
-	}
-	
-	void Playlist::stop(float fadeTime)
-	{
-		/*
-		if (this->playing)
-		{
-			xal::mgr->getSound(this->sounds[this->index])->stop(fadeTime);
-		}
-		this->playing = false;
-		*/
-	}
-	
-	void Playlist::pause(float fadeTime)
-	{
-		/*
-		if (this->playing)
-		{
-			xal::mgr->getSound(this->sounds[this->index])->pause(fadeTime);
-		}
-		this->playing = false;
-		*/
 	}
 	
 	void Playlist::clear()
 	{
 		this->stop();
-		this->sounds.clear();
+		this->players.clear();
 		this->index = -1;
 	}
 	
 	void Playlist::queueSound(chstr name)
 	{
-		this->sounds += name;
+		this->players += xal::mgr->createPlayer(name);
 		this->index = hmax(this->index, 0);
 	}
 	
 	void Playlist::queueSounds(harray<hstr> names)
 	{
-		this->sounds += names;
+		foreach (hstr, it, names)
+		{
+			this->players += xal::mgr->createPlayer(*it);
+		}
 		this->index = hmax(this->index, 0);
+	}
+	
+	void Playlist::play(float fadeTime)
+	{
+		if (!this->enabled || this->players.size() == 0 || this->playing)
+		{
+			return;
+		}
+		if (this->index >= this->players.size())
+		{
+			this->index = 0;
+		}
+		this->players[this->index]->play(fadeTime);
+		this->playing = true;
+	}
+	
+	void Playlist::stop(float fadeTime)
+	{
+		if (this->playing)
+		{
+			this->players[this->index]->stop(fadeTime);
+		}
+		this->playing = false;
+	}
+	
+	void Playlist::pause(float fadeTime)
+	{
+		if (this->playing)
+		{
+			this->players[this->index]->pause(fadeTime);
+		}
+		this->playing = false;
 	}
 	
 }
