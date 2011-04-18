@@ -13,12 +13,12 @@
 #include <hltypes/hstring.h>
 
 #if HAVE_OGG
-#include "OGG_Decoder.h"
+#include "OGG_Source.h"
 #endif
 
 #include "Buffer.h"
 #include "Category.h"
-#include "Decoder.h"
+#include "Source.h"
 #include "xal.h"
 
 namespace xal
@@ -33,16 +33,16 @@ namespace xal
 		{
 #if HAVE_OGG
 		case OGG:
-			this->decoder = new OGG_Decoder(filename);
+			this->decoder = new OGG_Source(filename);
 			break;
 #endif
 #if HAVE_M4A
 		case M4A:
-			this->decoder = new M4A_Decoder(filename);
+			this->decoder = new M4A_Source(filename);
 			break;
 #endif
 		default:
-			this->decoder = new Decoder(filename);
+			this->decoder = new Source(filename);
 			break;
 		}
 	}

@@ -191,7 +191,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Decoder.cpp"
+				RelativePath=".\src\Source.cpp"
 				>
 			</File>
 			<File
@@ -242,7 +242,7 @@
 				Name="decoders"
 				>
 				<File
-					RelativePath=".\decoders\OGG_Decoder.cpp"
+					RelativePath=".\decoders\OGG_Source.cpp"
 					>
 				</File>
 			</Filter>
@@ -265,7 +265,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\Decoder.h"
+				RelativePath=".\include\xal\Source.h"
 				>
 			</File>
 			<File
@@ -316,7 +316,7 @@
 				Name="decoders"
 				>
 				<File
-					RelativePath=".\decoders\OGG_Decoder.h"
+					RelativePath=".\decoders\OGG_Source.h"
 					>
 				</File>
 			</Filter>

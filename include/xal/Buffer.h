@@ -23,7 +23,7 @@
 namespace xal
 {
 	class Category;
-	class Decoder;
+	class Source;
 
 	class xalExport Buffer
 	{
@@ -48,7 +48,7 @@ namespace xal
 		bool loaded;
 		unsigned char* data;
 		unsigned char* stream;
-		Decoder* decoder;
+		Source* decoder;
 
 	};
 

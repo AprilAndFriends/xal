@@ -17,16 +17,16 @@
 
 #include <hltypes/hstring.h>
 
-#include "Decoder.h"
+#include "Source.h"
 #include "xalExport.h"
 
 namespace xal
 {
-	class xalExport OGG_Decoder : public Decoder
+	class xalExport OGG_Source : public Source
 	{
 	public:
-		OGG_Decoder(chstr filename);
-		~OGG_Decoder();
+		OGG_Source(chstr filename);
+		~OGG_Source();
 
 		bool load(unsigned char** output);
 		bool decode(unsigned char* input, unsigned char** output);

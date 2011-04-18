@@ -12,20 +12,20 @@
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 
-#include "OGG_Decoder.h"
+#include "OGG_Source.h"
 #include "xal.h"
 
 namespace xal
 {
-	OGG_Decoder::OGG_Decoder(chstr filename) : Decoder(filename)
+	OGG_Source::OGG_Source(chstr filename) : Source(filename)
 	{
 	}
 
-	OGG_Decoder::~OGG_Decoder()
+	OGG_Source::~OGG_Source()
 	{
 	}
 
-	bool OGG_Decoder::load(unsigned char** output)
+	bool OGG_Source::load(unsigned char** output)
 	{
 		xal::log("loading ogg sound " + this->filename);
 		*output = NULL;
@@ -39,7 +39,7 @@ namespace xal
 		return true;
 	}
 
-	bool OGG_Decoder::decode(unsigned char* input, unsigned char** output)
+	bool OGG_Source::decode(unsigned char* input, unsigned char** output)
 	{
 #if HAVE_OGG
 		xal::log("decoding ogg sound " + this->filename);
