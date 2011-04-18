@@ -19,14 +19,14 @@
       <File Name="audiosystems/SDL/SDL_AudioManager.cpp"/>
       <File Name="audiosystems/SDL/SDL_Player.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="decoders">
-      <File Name="decoders/OGG_Decoder.cpp"/>
+    <VirtualDirectory Name="audiosources">
+      <File Name="decoders/OGG_Source.cpp"/>
     </VirtualDirectory>
     <File Name="src/Buffer.cpp"/>
-    <File Name="src/Decoder.cpp"/>
     <File Name="src/Player.cpp"/>
     <File Name="src/Sound.cpp"/>
     <File Name="src/xal.cpp"/>
+    <File Name="src/Source.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/xalExport.h"/>
@@ -40,14 +40,14 @@
       <File Name="audiosystems/SDL/SDL_AudioManager.h"/>
       <File Name="audiosystems/SDL/SDL_Player.h"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="decoders">
-      <File Name="decoders/OGG_Decoder.h"/>
+    <VirtualDirectory Name="audiosources">
+      <File Name="decoders/OGG_Source.h"/>
     </VirtualDirectory>
     <File Name="include/xal/Buffer.h"/>
-    <File Name="include/xal/Decoder.h"/>
     <File Name="include/xal/Player.h"/>
     <File Name="include/xal/Sound.h"/>
     <File Name="include/xal/xal.h"/>
+    <File Name="include/xal/Source.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Linux_Debug">

@@ -97,11 +97,11 @@
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp" />
     <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp" />
     <ClCompile Include="audiosystems\SDL\SDL_Player.cpp" />
-    <ClCompile Include="decoders\OGG_Decoder.cpp" />
+    <ClCompile Include="decoders\OGG_Source.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\Category.cpp" />
-    <ClCompile Include="src\Decoder.cpp" />
+    <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Sound.cpp" />
     <ClCompile Include="src\xal.cpp" />
@@ -113,9 +113,9 @@
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h" />
     <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h" />
     <ClInclude Include="audiosystems\SDL\SDL_Player.h" />
-    <ClInclude Include="decoders\OGG_Decoder.h" />
+    <ClInclude Include="decoders\OGG_Source.h" />
     <ClInclude Include="include\xal\Buffer.h" />
-    <ClInclude Include="include\xal\Decoder.h" />
+    <ClInclude Include="include\xal\Source.h" />
     <ClInclude Include="include\xal\Player.h" />
     <ClInclude Include="include\xal\Sound.h" />
     <ClInclude Include="include\xal\xal.h" />

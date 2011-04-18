@@ -20,11 +20,11 @@
 
 namespace xal
 {
-	class xalExport Decoder
+	class xalExport Source
 	{
 	public:
-		Decoder(chstr filename);
-		virtual ~Decoder();
+		Source(chstr filename);
+		virtual ~Source();
 
 		unsigned int getSize() { return this->size; }
 		unsigned int getChannels() { return this->channels; }
