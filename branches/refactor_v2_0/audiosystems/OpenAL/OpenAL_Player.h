@@ -41,6 +41,8 @@ namespace xal
 
 		void _sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size);
 		void _sysUpdateFadeGain();
+		void _sysSetOffset(float value);
+		float _sysGetOffset();
 		void _sysPlay();
 		void _sysStop();
 

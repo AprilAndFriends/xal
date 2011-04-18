@@ -29,6 +29,7 @@ namespace xal
 
 		float getGain() { return this->gain; }
 		virtual void setGain(float value);
+		float getOffset() { return this->offset; }
 		Sound2* getSound() { return this->sound; }
 		float getDuration();
 
@@ -46,17 +47,21 @@ namespace xal
 		void play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
-		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 
 	protected:
-		Sound2* sound;
-		Buffer* buffer;
 		float gain;
 		bool paused;
 		bool looping;
 		float fadeSpeed;
 		float fadeTime;
+		float offset;
+		Sound2* sound;
+		Buffer* buffer;
 
+		void _stopSound(float fadeTime = 0.0f);
+
+		virtual float _sysGetOffset() { return 1.0f; }
+		virtual void _sysSetOffset(float value) { }
 		virtual void _sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size) { }
 		virtual void _sysUpdateFadeGain() { }
 		virtual void _sysPlay() { }
