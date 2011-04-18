@@ -203,7 +203,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Sound2.cpp"
+				RelativePath=".\src\Sound.cpp"
 				>
 			</File>
 			<File
@@ -235,30 +235,6 @@
 				</File>
 				<File
 					RelativePath=".\audiosystems\SDL\SDL_Player.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="old"
-				>
-				<File
-					RelativePath=".\src\SimpleSound.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Sound.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SoundBuffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Source.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\StreamSound.cpp"
 					>
 				</File>
 			</Filter>
@@ -297,7 +273,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\Sound2.h"
+				RelativePath=".\include\xal\Sound.h"
 				>
 			</File>
 			<File
@@ -333,30 +309,6 @@
 				</File>
 				<File
 					RelativePath=".\audiosystems\SDL\SDL_Player.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="old"
-				>
-				<File
-					RelativePath=".\include\xal\SimpleSound.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\xal\Sound.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\xal\SoundBuffer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\xal\Source.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\xal\StreamSound.h"
 					>
 				</File>
 			</Filter>

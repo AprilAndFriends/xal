@@ -45,7 +45,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define S_BARK "bark"
 #define S_WIND "wind"
 #define S_WIND_COPY "wind_copy"
-#ifdef _TEST_STREAM
+#ifndef _TEST_STREAM
 #define USED_SOUND S_BARK
 #else
 #define USED_SOUND S_WIND
