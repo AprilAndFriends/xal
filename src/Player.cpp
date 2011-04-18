@@ -15,7 +15,8 @@
 
 namespace xal
 {
-	Player::Player(Sound2* sound, Buffer* buffer)
+	Player::Player(Sound2* sound, Buffer* buffer) : gain(1.0f), paused(false),
+		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f)
 	{
 		this->sound = sound;
 		this->buffer = buffer;
@@ -114,18 +115,15 @@ namespace xal
 		{
 			this->looping = looping;
 		}
-		bool alreadyFading = false;//this->isFading();
+		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
 			this->buffer->load();
 			this->_sysSetBuffer(this->buffer->getChannels(), this->buffer->getRate(), this->buffer->getStream(), this->buffer->getSize());
-			//if (this->)
-			/*
 			if (this->isPaused())
 			{
-				//alSourcef(this->sourceId, AL_SAMPLE_OFFSET, this->sampleOffset);
+				this->_sysSetOffset(this->offset);
 			}
-			*/
 		}
 		if (fadeTime > 0.0f)
 		{
@@ -146,17 +144,18 @@ namespace xal
 
 	void Player::stop(float fadeTime)
 	{
-		this->stopSoft(fadeTime);
+		this->paused = false;
+		this->_stopSound(fadeTime);
 	}
 
 	void Player::pause(float fadeTime)
 	{
-		this->stopSoft(fadeTime, true);
+		this->paused = true;
+		this->_stopSound(fadeTime);
 	}
 
-	void Player::stopSoft(float fadeTime, bool pause)
+	void Player::_stopSound(float fadeTime)
 	{
-		this->paused = pause;
 		if (fadeTime > 0.0f)
 		{
 			this->fadeSpeed = -1.0f / fadeTime;
@@ -164,7 +163,7 @@ namespace xal
 		}
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-		//alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &this->sampleOffset);
+		this->offset = this->_sysGetOffset();
 		this->_sysStop();
 		/*
 		if (this->sound->getCategory()->isStreamed())

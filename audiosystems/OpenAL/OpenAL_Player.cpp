@@ -57,6 +57,18 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 
+	void OpenAL_Player::_sysSetOffset(float value)
+	{
+		alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
+	}
+
+	float OpenAL_Player::_sysGetOffset()
+	{
+		float offset;
+		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
+		return offset;
+	}
+
 	void OpenAL_Player::_sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size)
 	{
 		alBufferData(this->bufferId, (channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16), stream, size, rate);
