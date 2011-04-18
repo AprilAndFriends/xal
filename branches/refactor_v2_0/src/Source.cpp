@@ -147,6 +147,55 @@ namespace xal
 		}
 	}
 
+    float Source::getDuration()
+    {
+        return this->sound->getDuration();
+    }
+	
+	bool Source::isPlaying()
+	{
+		if (this->sourceId == 0)
+		{
+			return false;
+		}
+		if (this->sound->getCategory()->isStreamed())
+		{
+			int queued;
+			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+			int count;
+			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
+			return (queued > 0 || count > 0);
+		}
+		int state;
+		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
+		return (state == AL_PLAYING);
+	}
+
+	bool Source::isPaused()
+	{
+		return (this->paused && !this->isFading());
+	}
+	
+	bool Source::isFading()
+	{
+		return (this->fadeSpeed != 0.0f);
+	}
+
+	bool Source::isFadingIn()
+	{
+		return (this->fadeSpeed > 0.0f);
+	}
+
+	bool Source::isFadingOut()
+	{
+		return (this->fadeSpeed < 0.0f);
+	}
+	
+	Category* Source::getCategory()
+	{
+		return (this->sound->getCategory());
+	}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void Source::update(float k)
@@ -201,7 +250,7 @@ namespace xal
 			if (!pause)
 			{
 				this->sound->unbindSource(this);
-				xal::mgr->destroySource(this);
+				//xal::mgr->destroySource(this);
 			}
 		}
 	}
@@ -213,53 +262,4 @@ namespace xal
 		return this->sound->getBuffer();
 	}
     
-    float Source::getDuration()
-    {
-        return this->sound->getDuration();
-    }
-	
-	bool Source::isPlaying()
-	{
-		if (this->sourceId == 0)
-		{
-			return false;
-		}
-		if (this->sound->getCategory()->isStreamed())
-		{
-			int queued;
-			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-			int count;
-			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
-			return (queued > 0 || count > 0);
-		}
-		int state;
-		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
-		return (state == AL_PLAYING);
-	}
-
-	bool Source::isPaused()
-	{
-		return (this->paused && !this->isFading());
-	}
-	
-	bool Source::isFading()
-	{
-		return (this->fadeSpeed != 0.0f);
-	}
-
-	bool Source::isFadingIn()
-	{
-		return (this->fadeSpeed > 0.0f);
-	}
-
-	bool Source::isFadingOut()
-	{
-		return (this->fadeSpeed < 0.0f);
-	}
-	
-	Category* Source::getCategory()
-	{
-		return (this->sound->getCategory());
-	}
-
 }

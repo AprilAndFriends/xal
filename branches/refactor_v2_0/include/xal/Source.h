@@ -40,6 +40,9 @@ namespace xal
 		bool isFading();
 		bool isFadingIn();
 		bool isFadingOut();
+		bool isLooping() { return this->looping; }
+		
+		Category* getCategory();
 
 	protected:
 		float gain;
@@ -59,9 +62,6 @@ namespace xal
 		float getSampleOffset() { return this->sampleOffset; }
 		unsigned int getBuffer() const;
 		bool isBound() { return this->bound; }
-		bool isLooping() { return this->looping; }
-		
-		Category* getCategory();
 		
 	protected:
 		bool looping;

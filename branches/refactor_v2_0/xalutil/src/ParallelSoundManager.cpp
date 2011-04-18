@@ -43,6 +43,7 @@ namespace xal
 		
 	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
+		/*
 		harray<hstr> paused = this->sounds / names;
 		foreach (hstr, it, paused)
 		{
@@ -54,31 +55,38 @@ namespace xal
 			xal::mgr->getSound(*it)->play(this->fadeTime, true);
 		}
 		this->sounds = names;
+		*/
 	}
 	
 	void ParallelSoundManager::playAll()
 	{
+		/*
 		foreach (hstr, it, this->sounds)
 		{
 			xal::mgr->getSound(*it)->play(this->fadeTime, true);
 		}
+		*/
 	}
 	
 	void ParallelSoundManager::pauseAll()
 	{
+		/*
 		foreach (hstr, it, this->sounds)
 		{
 			xal::mgr->getSound(*it)->pause(this->fadeTime);
 		}
+		*/
 	}
 	
 	void ParallelSoundManager::stopAll()
 	{
+		/*
 		foreach (hstr, it, this->sounds)
 		{
 			xal::mgr->getSound(*it)->stop(this->fadeTime);
 		}
 		this->clear();
+		*/
 	}
 	
 	void ParallelSoundManager::clear()
