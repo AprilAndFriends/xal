@@ -1,4 +1,3 @@
-ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src include/xalutil
 EXTRA_DIST = autogen.sh
 
