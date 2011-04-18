@@ -23,27 +23,27 @@
 
 namespace xal
 {
-	Buffer::Buffer(chstr filename) : duration(0.0f), loaded(false)
+	Buffer::Buffer(chstr filename) : loaded(false), data(NULL), stream(NULL)
 	{
 		this->filename = filename;
+		this->fileSize = hfile::hsize(this->filename);
 		this->decoder = NULL;
 		Format format = this->getFormat();
 		switch (format)
 		{
 #if HAVE_OGG
 		case OGG:
-			this->decoder = new OGG_Decoder();
+			this->decoder = new OGG_Decoder(filename);
 			break;
 #endif
 #if HAVE_M4A
 		case M4A:
-			this->decoder = new M4A_Decoder();
+			this->decoder = new M4A_Decoder(filename);
 			break;
 #endif
-		}
-		if (this->decoder == NULL)
-		{
-			this->decoder = new Decoder();
+		default:
+			this->decoder = new Decoder(filename);
+			break;
 		}
 	}
 
@@ -51,8 +51,36 @@ namespace xal
 	{
 		xal::log("destroying buffer " + this->filename);
 		delete this->decoder;
+		if (this->data != NULL)
+		{
+			delete [] this->data;
+		}
+		if (this->stream != NULL)
+		{
+			delete [] this->stream;
+		}
 	}
 	
+	unsigned int Buffer::getSize()
+	{
+		return this->decoder->getSize();
+	}
+
+	unsigned int Buffer::getChannels()
+	{
+		return this->decoder->getChannels();
+	}
+
+	long Buffer::getRate()
+	{
+		return this->decoder->getRate();
+	}
+
+	float Buffer::getDuration()
+	{
+		return this->decoder->getDuration();
+	}
+
 	Format Buffer::getFormat()
 	{
 #if HAVE_OGG
@@ -72,6 +100,10 @@ namespace xal
 
 	bool Buffer::load()
 	{
+		if (this->loaded)
+		{
+			return true;
+		}
 		bool result = false;
 		Format format = this->getFormat();
 		if (!xal::mgr->isEnabled())
@@ -80,8 +112,11 @@ namespace xal
 		}
 		else
 		{
-			//result = this->decoder->decode();
-			result = true;
+			result = this->decoder->load(&this->data);
+			if (result)
+			{
+				result = this->decoder->decode(this->data, &this->stream);
+			}
 		}
 		if (result)
 		{
@@ -89,5 +124,5 @@ namespace xal
 		}
 		return result;
 	}
-	
+
 }

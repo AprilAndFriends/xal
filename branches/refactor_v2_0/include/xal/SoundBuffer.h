@@ -26,7 +26,6 @@ namespace xal
 	public:
 		SoundBuffer(chstr name, chstr category, chstr prefix = "");
 		virtual ~SoundBuffer();
-		///////////////////////////////////////////////
 
 		chstr getName() { return this->name; }
 		chstr getFilename() { return this->filename; }
@@ -34,6 +33,7 @@ namespace xal
 		Category* getCategory() { return this->category; }
 		void setCategory(Category* value) { this->category = value; }
 		float getDuration() { return this->duration; }
+
 		bool isLink();
 		bool isOgg();
 		bool isM4a();

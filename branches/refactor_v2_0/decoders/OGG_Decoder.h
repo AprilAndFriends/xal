@@ -15,6 +15,8 @@
 #ifndef XAL_OGG_DECODER_H
 #define XAL_OGG_DECODER_H
 
+#include <hltypes/hstring.h>
+
 #include "Decoder.h"
 #include "xalExport.h"
 
@@ -23,11 +25,12 @@ namespace xal
 	class xalExport OGG_Decoder : public Decoder
 	{
 	public:
-		OGG_Decoder();
+		OGG_Decoder(chstr filename);
 		~OGG_Decoder();
 
+		bool load(unsigned char** output);
 		bool decode(unsigned char* input, unsigned char** output);
-		
+
 	};
 
 }

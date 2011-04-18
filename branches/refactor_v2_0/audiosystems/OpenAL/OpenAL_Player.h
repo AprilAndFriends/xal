@@ -33,8 +33,18 @@ namespace xal
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 
+		void play(float fadeTime = 0.0f, bool looping = false);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false);
+
 	protected:
 		unsigned int sourceId;
+		unsigned int bufferId;
+		bool paused;
+		bool looping;
+		float fadeSpeed;
+		float fadeTime;
 
 	};
 
