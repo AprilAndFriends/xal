@@ -10,11 +10,11 @@
 #if HAVE_SDL
 #include "Buffer.h"
 #include "SDL_Player.h"
-#include "Sound2.h"
+#include "Sound.h"
 
 namespace xal
 {
-	SDL_Player::SDL_Player(Sound2* sound, Buffer* buffer) :
+	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer)
 	{
 	}

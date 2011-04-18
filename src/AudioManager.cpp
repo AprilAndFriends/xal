@@ -19,7 +19,7 @@
 #include "AudioManager.h"
 #include "Category.h"
 #include "Player.h"
-#include "Sound2.h"
+#include "Sound.h"
 #include "xal.h"
 
 namespace xal
@@ -45,7 +45,7 @@ namespace xal
 		{
 			delete (*it);
 		}
-		foreach_m (Sound2*, it, this->sounds)
+		foreach_m (Sound*, it, this->sounds)
 		{
 			delete it->second;
 		}
@@ -160,10 +160,10 @@ namespace xal
 		}
 	}
 
-	Sound2* AudioManager::createSound2(chstr filename, chstr categoryName, chstr prefix)
+	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
 		Category* category = this->getCategoryByName(categoryName);
-		Sound2* sound = new Sound2(filename, category, prefix);
+		Sound* sound = new Sound(filename, category, prefix);
 		// TODO
 		/*
 		///##
@@ -181,7 +181,7 @@ namespace xal
 		return sound;
 	}
 
-	harray<hstr> AudioManager::createSound2sFromPath(chstr path, chstr prefix)
+	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
 	{
 		harray<hstr> result;
 		hstr category;
@@ -189,20 +189,20 @@ namespace xal
 		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/").pop_back();
-			result += this->createSound2sFromPath((*it).c_str(), category, prefix);
+			result += this->createSoundsFromPath((*it).c_str(), category, prefix);
 		}
 		return result;
 	}
 
-	harray<hstr> AudioManager::createSound2sFromPath(chstr path, chstr category, chstr prefix)
+	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr category, chstr prefix)
 	{
 		this->createCategory(category);
 		harray<hstr> result;
 		harray<hstr> files = hdir::files(path, true);
-		Sound2* sound;
+		Sound* sound;
 		foreach (hstr, it, files)
 		{
-			sound = this->createSound2((*it), category, prefix);
+			sound = this->createSound((*it), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();
@@ -211,9 +211,9 @@ namespace xal
 		return result;
 	}
 
-	void AudioManager::destroySound2(Sound2* sound)
+	void AudioManager::destroySound(Sound* sound)
 	{
-		foreach_m (Sound2*, it, this->sounds)
+		foreach_m (Sound*, it, this->sounds)
 		{
 			if (it->second == sound)
 			{
@@ -224,7 +224,7 @@ namespace xal
 		}
 	}
 	
-	void AudioManager::destroySound2sWithPrefix(chstr prefix)
+	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		harray<hstr> keys = this->sounds.keys();
 		foreach (hstr, it, keys)
@@ -239,13 +239,13 @@ namespace xal
 
 	Player* AudioManager::createPlayer(chstr name)
 	{
-		Sound2* sound = this->sounds[name];
+		Sound* sound = this->sounds[name];
 		Player* player = this->_createPlayer(this->sounds[name], this->sounds[name]->getBuffer());
 		this->players += player;
 		return player;
 	}
 
-	Player* AudioManager::_createPlayer(Sound2* sound, Buffer* buffer)
+	Player* AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new Player(sound, buffer);
 	}

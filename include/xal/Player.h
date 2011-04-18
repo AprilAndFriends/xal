@@ -19,18 +19,18 @@
 namespace xal
 {
 	class Buffer;
-	class Sound2;
+	class Sound;
 
 	class xalExport Player
 	{
 	public:
-		Player(Sound2* sound, Buffer* buffer);
+		Player(Sound* sound, Buffer* buffer);
 		virtual ~Player();
 
 		float getGain() { return this->gain; }
 		virtual void setGain(float value);
 		float getOffset() { return this->offset; }
-		Sound2* getSound() { return this->sound; }
+		Sound* getSound() { return this->sound; }
 		float getDuration();
 
 		Category* getCategory();
@@ -55,7 +55,7 @@ namespace xal
 		float fadeSpeed;
 		float fadeTime;
 		float offset;
-		Sound2* sound;
+		Sound* sound;
 		Buffer* buffer;
 
 		void _stopSound(float fadeTime = 0.0f);

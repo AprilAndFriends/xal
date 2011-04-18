@@ -44,9 +44,6 @@
     <ClCompile Include="src\Category.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sound2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp">
       <Filter>Source Files\audiosystems</Filter>
     </ClCompile>
@@ -64,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="audiosystems\SDL\SDL_Player.cpp">
       <Filter>Source Files\audiosystems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +94,6 @@
     <ClInclude Include="include\xal\Category.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\xal\Sound2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h">
       <Filter>Header Files\audiosystems</Filter>
     </ClInclude>
@@ -114,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="audiosystems\SDL\SDL_Player.h">
       <Filter>Header Files\audiosystems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\xal\Sound.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
