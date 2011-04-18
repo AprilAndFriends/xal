@@ -19,20 +19,13 @@
       <File Name="audiosystems/SDL/SDL_AudioManager.cpp"/>
       <File Name="audiosystems/SDL/SDL_Player.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="old">
-      <File Name="src/SimpleSound.cpp"/>
-      <File Name="src/Sound.cpp"/>
-      <File Name="src/SoundBuffer.cpp"/>
-      <File Name="src/Source.cpp"/>
-      <File Name="src/StreamSound.cpp"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="decoders">
       <File Name="decoders/OGG_Decoder.cpp"/>
     </VirtualDirectory>
     <File Name="src/Buffer.cpp"/>
     <File Name="src/Decoder.cpp"/>
     <File Name="src/Player.cpp"/>
-    <File Name="src/Sound2.cpp"/>
+    <File Name="src/Sound.cpp"/>
     <File Name="src/xal.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
@@ -47,20 +40,13 @@
       <File Name="audiosystems/SDL/SDL_AudioManager.h"/>
       <File Name="audiosystems/SDL/SDL_Player.h"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="old">
-      <File Name="include/xal/SimpleSound.h"/>
-      <File Name="include/xal/Sound.h"/>
-      <File Name="include/xal/SoundBuffer.h"/>
-      <File Name="include/xal/Source.h"/>
-      <File Name="include/xal/StreamSound.h"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="decoders">
       <File Name="decoders/OGG_Decoder.h"/>
     </VirtualDirectory>
     <File Name="include/xal/Buffer.h"/>
     <File Name="include/xal/Decoder.h"/>
     <File Name="include/xal/Player.h"/>
-    <File Name="include/xal/Sound2.h"/>
+    <File Name="include/xal/Sound.h"/>
     <File Name="include/xal/xal.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
