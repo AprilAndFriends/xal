@@ -33,6 +33,7 @@ namespace xal
 
 	void Playlist::update()
 	{
+		/*
 		if (this->sounds.size() == 0 || this->index < 0)
 		{
 			return;
@@ -64,10 +65,12 @@ namespace xal
 		{
 			this->playing = false;
 		}
+		*/
 	}
 	
 	void Playlist::play(float fadeTime)
 	{
+		/*
 		if (!this->enabled || this->sounds.size() == 0 || this->playing)
 		{
 			return;
@@ -78,24 +81,29 @@ namespace xal
 		}
 		xal::mgr->getSound(this->sounds[this->index])->play(fadeTime);
 		this->playing = true;
+		*/
 	}
 	
 	void Playlist::stop(float fadeTime)
 	{
+		/*
 		if (this->playing)
 		{
 			xal::mgr->getSound(this->sounds[this->index])->stop(fadeTime);
 		}
 		this->playing = false;
+		*/
 	}
 	
 	void Playlist::pause(float fadeTime)
 	{
+		/*
 		if (this->playing)
 		{
 			xal::mgr->getSound(this->sounds[this->index])->pause(fadeTime);
 		}
 		this->playing = false;
+		*/
 	}
 	
 	void Playlist::clear()

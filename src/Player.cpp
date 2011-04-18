@@ -30,6 +30,74 @@ namespace xal
 		this->gain = hclamp(gain, 0.0f, 1.0f);
 	}
 
+    float Player::getDuration()
+    {
+        return this->buffer->getDuration();
+    }
+	
+	bool Player::isPaused()
+	{
+		return (this->paused && !this->isFading());
+	}
+	
+	bool Player::isFading()
+	{
+		return (this->fadeSpeed != 0.0f);
+	}
+
+	bool Player::isFadingIn()
+	{
+		return (this->fadeSpeed > 0.0f);
+	}
+
+	bool Player::isFadingOut()
+	{
+		return (this->fadeSpeed < 0.0f);
+	}
+	
+	Category* Player::getCategory()
+	{
+		return (this->sound->getCategory());
+	}
+
+	void Player::update(float k)
+	{
+		//this->sound->update(k);
+		if (this->isPlaying())
+		{
+			if (this->isFading())
+			{
+				this->fadeTime += this->fadeSpeed * k;
+				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
+				{
+					this->setGain(this->gain);
+					this->fadeTime = 1.0f;
+					this->fadeSpeed = 0.0f;
+				}
+				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
+				{
+					this->fadeTime = 0.0f;
+					this->fadeSpeed = 0.0f;
+					if (!this->paused)
+					{
+						this->stop();
+						return;
+					}
+					this->pause();
+				}
+				else
+				{
+					this->_sysUpdateFadeGain();
+				}
+			}
+		}
+		if (!this->isPlaying() && !this->isPaused())
+		{
+			// TODO - stop sound, unbind, etc.
+			//this->unbind();
+		}
+	}
+
 	void Player::play(float fadeTime, bool looping)
 	{
 		/*
@@ -114,24 +182,4 @@ namespace xal
 		*/
 	}
 
-	bool Player::isPaused()
-	{
-		return (this->paused && !this->isFading());
-	}
-	
-	bool Player::isFading()
-	{
-		return (this->fadeSpeed != 0.0f);
-	}
-
-	bool Player::isFadingIn()
-	{
-		return (this->fadeSpeed > 0.0f);
-	}
-
-	bool Player::isFadingOut()
-	{
-		return (this->fadeSpeed < 0.0f);
-	}
-	
 }

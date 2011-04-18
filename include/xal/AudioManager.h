@@ -25,12 +25,6 @@
 
 namespace xal
 {
-	class Category;
-	class Sound;
-	class SoundBuffer;
-	class Source;
-	//////////////////////////
-	
 	enum Format
 	{
 		//WAV,
@@ -44,6 +38,7 @@ namespace xal
 	};
 
 	class Buffer;
+	class Category;
 	class Player;
 	class Sound2;
 
@@ -74,6 +69,7 @@ namespace xal
 		void destroyPlayer(Player* player);
 
 		//////////////////////////////////////////////
+		/*
 			Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
 			harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
 			harray<hstr> createSoundsFromPath(chstr path, chstr category, chstr prefix);
@@ -83,6 +79,7 @@ namespace xal
 			Sound* createSource(SoundBuffer* sound, unsigned int sourceId);
 			Sound* createSourceApple(SoundBuffer* sound, unsigned int sourceId);
 			void destroySource(Sound* source);
+			*/
 		//////////////////////////////////////////////
 
 		static void update();
@@ -112,10 +109,11 @@ namespace xal
 		
 		void lockUpdate();
 		void unlockUpdate();
-		
 	protected:
+		/*
 		harray<Sound*> sources;
 		hmap<hstr, SoundBuffer*> oldSounds;
+		*/
 		hthread* thread;
 		bool updating;
 		

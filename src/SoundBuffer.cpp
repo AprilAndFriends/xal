@@ -253,6 +253,7 @@ namespace xal
 				xal::mgr->unlockUpdate();
 				return NULL;
 			}
+			/*
 			if (this->isOgg())
 			{
 				source = xal::mgr->createSource(this, sourceId);
@@ -263,6 +264,7 @@ namespace xal
 				source = xal::mgr->createSourceApple(this, sourceId);
 			}
 #endif
+			*/
 			this->bindSource(source);
 		}
 		else

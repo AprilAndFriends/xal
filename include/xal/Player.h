@@ -30,17 +30,23 @@ namespace xal
 		float getGain() { return this->gain; }
 		virtual void setGain(float value);
 		Sound2* getSound() { return this->sound; }
+		float getDuration();
 
-		void play(float fadeTime = 0.0f, bool looping = false);
-		void stop(float fadeTime = 0.0f);
-		void pause(float fadeTime = 0.0f);
-		void stopSoft(float fadeTime = 0.0f, bool pause = false);
+		Category* getCategory();
 
 		virtual bool isPlaying() { return false; }
 		bool isPaused();
 		bool isFading();
 		bool isFadingIn();
 		bool isFadingOut();
+		bool isLooping() { return this->looping; }
+
+		void update(float k);
+		
+		void play(float fadeTime = 0.0f, bool looping = false);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 
 	protected:
 		Sound2* sound;
@@ -55,8 +61,6 @@ namespace xal
 		virtual void _sysUpdateFadeGain() { }
 		virtual void _sysPlay() { }
 		virtual void _sysStop() { }
-		//void pause(float fadeTime = 0.0f);
-		//void stopSoft(float fadeTime = 0.0f, bool pause = false);
 
 	};
 

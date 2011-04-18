@@ -9,25 +9,12 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 #include <hltypes/util.h>
-
-#ifndef __APPLE__
-#include <AL/al.h>
-#include <AL/alc.h>
-#else
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#include <TargetConditionals.h>
-#endif
 
 #include "AudioManager.h"
 #include "Category.h"
@@ -80,7 +67,7 @@ namespace xal
 		/////////////////////////////////////////////////
 
 
-
+		/*
 		foreach_m (SoundBuffer*, it, this->oldSounds)
 		{
 			delete it->second;
@@ -93,6 +80,7 @@ namespace xal
 			source->stop();
 			delete source;
 		}
+		*/
 	}
 	
 	void AudioManager::_setupThread()
@@ -108,7 +96,7 @@ namespace xal
 	void AudioManager::setGlobalGain(float value)
 	{
 		this->gain = value;
-		foreach (Sound*, it, this->sources)
+		foreach (Player*, it, this->players)
 		{
 			(*it)->setGain((*it)->getGain());
 		}
@@ -144,7 +132,7 @@ namespace xal
 	void AudioManager::setCategoryGain(chstr name, float gain)
 	{
 		this->getCategoryByName(name)->setGain(gain);
-		foreach (Sound*, it, this->sources)
+		foreach (Player*, it, this->players)
 		{
 			(*it)->setGain((*it)->getGain());
 		}
@@ -175,8 +163,8 @@ namespace xal
 
 
 
-			harray<Sound*> sources(this->sources);
-			foreach (Sound*, it, sources)
+			harray<Player*> players(this->players);
+			foreach (Player*, it, players)
 			{
 				(*it)->update(k);
 			}
@@ -292,35 +280,39 @@ namespace xal
 	void AudioManager::stopAll(float fadeTime)
 	{
 		this->lockUpdate();
+		/*
 		harray<Sound*> sources(this->sources);
 		foreach (Sound*, it, sources)
 		{
 			(*it)->unlock();
 			(*it)->stop(fadeTime);
 		}
+		*/
 		this->unlockUpdate();
 	}
 	
 	void AudioManager::pauseAll(float fadeTime)
 	{
 		this->lockUpdate();
+		/*
 		harray<Sound*> sources(this->sources);
 		foreach (Sound*, it, sources)
 		{
 			(*it)->pause(fadeTime);
 		}
+		*/
 		this->unlockUpdate();
 	}
 	
 	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
 	{
 		Category* category = this->categories[categoryName];
-		harray<Sound*> sources(this->sources);
-		foreach (Sound*, it, sources)
+		harray<Player*> players(this->players);
+		foreach (Player*, it, players)
 		{
 			if ((*it)->getCategory() == category)
 			{
-				(*it)->unlock();
+				//(*it)->unlock();
 				(*it)->stop(fadeTime);
 			}
 		}
@@ -336,7 +328,7 @@ namespace xal
 	{
 		this->updating = false;
 	}
-	
+	/*
 				Sound* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
 				{
 					Source* source = new Source(sound, sourceId);
@@ -454,5 +446,5 @@ namespace xal
 						this->oldSounds.erase(*it);
 					}
 				}
-
+				*/
 }
