@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 #include <xal/AudioManager.h>
-#include <xal/Sound.h>
+//#include <xal/Sound.h>
 
 #include "ParallelSoundManager.h"
 

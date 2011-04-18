@@ -165,20 +165,6 @@ namespace xal
 		this->fadeSpeed = 0.0f;
 		this->offset = this->_sysGetOffset();
 		this->_sysStop();
-		/*
-		if (this->sound->getCategory()->isStreamed())
-		{
-			//this->sound->setSourceId(this->sourceId);
-			if (this->paused)
-			{
-				//((StreamSound*)this->sound)->unqueueBuffers();
-			}
-			else
-			{
-				//((StreamSound*)this->sound)->rewindStream();
-			}
-		}
-		*/
 	}
 
 }

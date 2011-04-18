@@ -15,12 +15,6 @@
     <Filter Include="Source Files\audiosystems">
       <UniqueIdentifier>{a5d68b12-7cd6-482a-a897-31b980118b19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\old">
-      <UniqueIdentifier>{3adae4b9-e40e-49e4-8886-03b1aa259368}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\old">
-      <UniqueIdentifier>{7d130ed7-a18d-49c5-8bdc-bdb7378806ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\decoders">
       <UniqueIdentifier>{702009bc-a09b-428c-bcf0-41664c26dbf6}</UniqueIdentifier>
     </Filter>
@@ -46,21 +40,6 @@
     </ClCompile>
     <ClCompile Include="src\Buffer.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SimpleSound.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sound.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SoundBuffer.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Source.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StreamSound.cpp">
-      <Filter>Source Files\old</Filter>
     </ClCompile>
     <ClCompile Include="src\Category.cpp">
       <Filter>Source Files</Filter>
@@ -111,21 +90,6 @@
     </ClInclude>
     <ClInclude Include="include\xal\Player.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xal\SimpleSound.h">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xal\Sound.h">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xal\SoundBuffer.h">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xal\Source.h">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\xal\StreamSound.h">
-      <Filter>Header Files\old</Filter>
     </ClInclude>
     <ClInclude Include="include\xal\Category.h">
       <Filter>Header Files</Filter>
