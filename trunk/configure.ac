@@ -1,7 +1,6 @@
 # autoconf configuration
 AC_PREREQ(2.61)
 AC_CONFIG_SRCDIR(src/Category.cpp)
-#AC_CONFIG_MACRO_DIR([m4]
 
 # initialize autoconf
 AC_INIT(libxal, 1.2, ivan@vucica.net)
