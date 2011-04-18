@@ -43,33 +43,20 @@ namespace xal
 		}
 		foreach (Player*, it, this->players)
 		{
+			(*it)->stop();
 			delete (*it);
 		}
+		this->players.clear();
 		foreach_m (Sound*, it, this->sounds)
 		{
 			delete it->second;
 		}
+		this->sounds.clear();
 		foreach_m (Category*, it, this->categories)
 		{
 			delete it->second;
 		}
-		/////////////////////////////////////////////////
-
-
-		/*
-		foreach_m (SoundBuffer*, it, this->oldSounds)
-		{
-			delete it->second;
-		}
-		Sound* source;
-		while (this->sources.size() > 0)
-		{
-			source = this->sources.pop_front();
-			source->unlock();
-			source->stop();
-			delete source;
-		}
-		*/
+		this->categories.clear();
 	}
 	
 	void AudioManager::_setupThread()
@@ -89,6 +76,48 @@ namespace xal
 		{
 			(*it)->setGain((*it)->getGain());
 		}
+	}
+
+	void AudioManager::update()
+	{
+		while (true)
+		{
+			while (xal::mgr->updating);
+			xal::mgr->updating = true;
+			xal::mgr->update(xal::mgr->updateTime);
+			xal::mgr->updating = false;
+			hthread::sleep(xal::mgr->updateTime * 1000);
+		}
+	}
+	
+	void AudioManager::update(float k)
+	{
+		if (this->isEnabled())
+		{
+			foreach (Player*, it, this->players)
+			{
+				(*it)->update(k);
+			}
+			harray<Player*> players(this->managedPlayers);
+			foreach (Player*, it, players)
+			{
+				if (!(*it)->isPlaying() && !(*it)->isFading())
+				{
+					this->_destroyManagedPlayer(*it);
+				}
+			}
+		}
+	}
+
+	void AudioManager::lockUpdate()
+	{
+		while (this->updating);
+		this->updating = true;
+	}
+	
+	void AudioManager::unlockUpdate()
+	{
+		this->updating = false;
 	}
 
 	Category* AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
@@ -124,39 +153,6 @@ namespace xal
 		foreach (Player*, it, this->players)
 		{
 			(*it)->setGain((*it)->getGain());
-		}
-	}
-
-	void AudioManager::update()
-	{
-		while (true)
-		{
-			while (xal::mgr->updating);
-			xal::mgr->updating = true;
-			xal::mgr->update(xal::mgr->updateTime);
-			xal::mgr->updating = false;
-			hthread::sleep(xal::mgr->updateTime * 1000);
-		}
-	}
-	
-	void AudioManager::update(float k)
-	{
-		if (this->isEnabled())
-		{
-			// variable copied because (*it)->update can access
-			// xal::mgr and erase a source from this->sources.
-			// we don't want to break the iterator validity!
-
-
-			//////////////////////////////////////////////////
-
-
-
-			harray<Player*> players(this->players);
-			foreach (Player*, it, players)
-			{
-				(*it)->update(k);
-			}
 		}
 	}
 
@@ -240,82 +236,199 @@ namespace xal
 	Player* AudioManager::createPlayer(chstr name)
 	{
 		Sound* sound = this->sounds[name];
-		Player* player = this->_createPlayer(this->sounds[name], this->sounds[name]->getBuffer());
+		Player* player = this->_createAudioPlayer(this->sounds[name], this->sounds[name]->getBuffer());
 		this->players += player;
 		return player;
 	}
 
-	Player* AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
+	void AudioManager::destroyPlayer(Player* player)
+	{
+		this->players -= player;
+		player->stop();
+		delete player;
+	}
+
+	Player* AudioManager::_createManagedPlayer(chstr name)
+	{
+		Player* player = this->createPlayer(name);
+		this->managedPlayers += player;
+		return player;
+	}
+
+	void AudioManager::_destroyManagedPlayer(Player* player)
+	{
+		this->managedPlayers -= player;
+		this->destroyPlayer(player);
+	}
+
+	Player* AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new Player(sound, buffer);
 	}
 	
-	void AudioManager::destroyPlayer(Player* player)
+	void AudioManager::play(chstr name, float fadeTime, bool looping, float gain)
 	{
-		this->players -= player;
-		if (this->managedPlayers.contains(player))
-		{
-			this->managedPlayers -= player;
-		}
-		delete player;
+		Player* player = this->_createManagedPlayer(name);
+		player->setGain(gain);
+		player->play(fadeTime, looping);
 	}
 
+	void AudioManager::stop(chstr name, float fadeTime)
+	{
+		this->lockUpdate();
+		fadeTime = hmax(fadeTime, 0.0f);
+		harray<Player*> players;
+		foreach (Player*, it, this->managedPlayers)
+		{
+			if ((*it)->getSound()->getName() == name)
+			{
+				if (fadeTime == 0.0f)
+				{
+					players += (*it);
+				}
+				else
+				{
+					(*it)->stop(fadeTime);
+				}
+			}
+		}
+		foreach (Player*, it, players)
+		{
+			this->_destroyManagedPlayer(*it);
+		}
+		this->unlockUpdate();
+	}
 
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
+	void AudioManager::stopFirst(chstr name, float fadeTime)
+	{
+		this->lockUpdate();
+		fadeTime = hmax(fadeTime, 0.0f);
+		foreach (Player*, it, this->managedPlayers)
+		{
+			if ((*it)->getSound()->getName() == name)
+			{
+				if (fadeTime == 0.0f)
+				{
+					this->_destroyManagedPlayer(*it);
+				}
+				else
+				{
+					(*it)->stop(fadeTime);
+				}
+				break;
+			}
+		}
+		this->unlockUpdate();
+	}
 
 	void AudioManager::stopAll(float fadeTime)
 	{
 		this->lockUpdate();
-		/*
-		harray<Sound*> sources(this->sources);
-		foreach (Sound*, it, sources)
+		fadeTime = hmax(fadeTime, 0.0f);
+		if (fadeTime == 0.0f)
 		{
-			(*it)->unlock();
-			(*it)->stop(fadeTime);
-		}
-		*/
-		this->unlockUpdate();
-	}
-	
-	void AudioManager::pauseAll(float fadeTime)
-	{
-		this->lockUpdate();
-		/*
-		harray<Sound*> sources(this->sources);
-		foreach (Sound*, it, sources)
-		{
-			(*it)->pause(fadeTime);
-		}
-		*/
-		this->unlockUpdate();
-	}
-	
-	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
-	{
-		Category* category = this->categories[categoryName];
-		harray<Player*> players(this->players);
-		foreach (Player*, it, players)
-		{
-			if ((*it)->getCategory() == category)
+			harray<Player*> players(this->managedPlayers);
+			foreach (Player*, it, players)
 			{
-				//(*it)->unlock();
+				this->_destroyManagedPlayer(*it);
+			}
+			foreach (Player*, it, this->players)
+			{
+				(*it)->stop();
+			}
+		}
+		else
+		{
+			foreach (Player*, it, this->players)
+			{
 				(*it)->stop(fadeTime);
 			}
 		}
+		this->unlockUpdate();
 	}
 	
-	void AudioManager::lockUpdate()
+	void AudioManager::stopCategory(chstr name, float fadeTime)
 	{
-		while (this->updating);
-		this->updating = true;
+		this->lockUpdate();
+		fadeTime = hmax(fadeTime, 0.0f);
+		Category* category = this->getCategoryByName(name);
+		if (fadeTime == 0.0f)
+		{
+			harray<Player*> players(this->managedPlayers);
+			foreach (Player*, it, players)
+			{
+				if ((*it)->getCategory() == category)
+				{
+					this->_destroyManagedPlayer(*it);
+				}
+			}
+			foreach (Player*, it, this->players)
+			{
+				if ((*it)->getCategory() == category)
+				{
+					(*it)->stop();
+				}
+			}
+		}
+		else
+		{
+			foreach (Player*, it, this->players)
+			{
+				if ((*it)->getCategory() == category)
+				{
+					(*it)->stop(fadeTime);
+				}
+			}
+		}
+		this->unlockUpdate();
 	}
 	
-	void AudioManager::unlockUpdate()
+	bool AudioManager::isAnyPlaying(chstr name)
 	{
-		this->updating = false;
+		foreach (Player*, it, this->managedPlayers)
+		{
+			if ((*it)->getSound()->getName() == name && (*it)->isPlaying())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool AudioManager::isAnyFading(chstr name)
+	{
+		foreach (Player*, it, this->managedPlayers)
+		{
+			if ((*it)->getSound()->getName() == name && (*it)->isFading())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool AudioManager::isAnyFadingIn(chstr name)
+	{
+		foreach (Player*, it, this->managedPlayers)
+		{
+			if ((*it)->getSound()->getName() == name && (*it)->isFadingIn())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool AudioManager::isAnyFadingOut(chstr name)
+	{
+		foreach (Player*, it, this->managedPlayers)
+		{
+			if ((*it)->getSound()->getName() == name && (*it)->isFadingOut())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

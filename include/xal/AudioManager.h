@@ -54,6 +54,11 @@ namespace xal
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value);
 
+		static void update();
+		void update(float k);
+		void lockUpdate();
+		void unlockUpdate();
+
 		Category* createCategory(chstr name, bool streamed = false, bool dynamicLoad = false);
 		Category* getCategoryByName(chstr name);
 		float getCategoryGain(chstr category);
@@ -68,9 +73,19 @@ namespace xal
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
 
-		static void update();
-		void update(float k);
-		
+		void play(chstr name, float fadeTime = 0.0f, bool looping = false, float gain = 1.0f);
+		void stop(chstr name, float fadeTime = 0.0f);
+		void stopFirst(chstr name, float fadeTime = 0.0f);
+		void stopAll(float fadeTime = 0.0f);
+		// TODO - pauses everything and resumes the right players / pauses and resumes entire audio module
+		//void pauseAll(float fadeTime = 0.0f);
+		//void resumeAll(float fadeTime = 0.0f);
+		void stopCategory(chstr name, float fadeTime = 0.0f);
+		bool isAnyPlaying(chstr name);
+		bool isAnyFading(chstr name);
+		bool isAnyFadingIn(chstr name);
+		bool isAnyFadingOut(chstr name);
+
 	protected:
 		bool enabled;
 		hstr deviceName;
@@ -80,24 +95,14 @@ namespace xal
 		harray<Player*> players;
 		harray<Player*> managedPlayers;
 		hmap<hstr, Sound*> sounds;
-		
-		void _setupThread();
-		virtual Player* _createPlayer(Sound* sound, Buffer* buffer);
-
-		//////////////////////////////////////////////
-
-	public:
-		
-		void stopAll(float fadeTime = 0.0f);
-		void pauseAll(float fadeTime = 0.0f);
-		void stopCategory(chstr category, float fadeTime = 0.0f);
-		
-		void lockUpdate();
-		void unlockUpdate();
-
-	protected:
 		hthread* thread;
 		bool updating;
+		
+		void _setupThread();
+		Player* _createManagedPlayer(chstr name);
+		void _destroyManagedPlayer(Player* player);
+
+		virtual Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 		
 	};
 	

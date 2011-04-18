@@ -27,9 +27,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-#define _TEST_SOUND
+//#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
-//#define _TEST_MULTIPLAY
+#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
@@ -43,6 +43,16 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define _update(time) xal::mgr->update(time)
 #else
 #define _update(time)
+#endif
+
+#ifndef _TEST_LINKS
+#ifdef _TEST_STREAM
+#define USED_SOUND "wind"
+#else
+#define USED_SOUND "bark"
+#endif
+#else
+#define USED_SOUND "linked_sound"
 #endif
 
 #define XAL_MAX_SOURCES 16 // needed when using OpenAL
@@ -100,15 +110,48 @@ void _test_multistream()
 void _test_multiplay()
 {
 	printf("  - start test multiple play...\n");
-	s->play();
+	xal::mgr->play("bark");
 	hthread::sleep(100);
-	s->play();
-	while (s->isPlaying())
+	xal::mgr->play("bark");
+	while (xal::mgr->isAnyPlaying("bark"))
 	{
 		hthread::sleep(100);
 		_update(0.1f);
 	}
-	s->stop();
+	hthread::sleep(500);
+	xal::log("starting stop test");
+	xal::mgr->play("wind");
+	hthread::sleep(200);
+	xal::mgr->play("wind");
+	int count = 0;
+	while (xal::mgr->isAnyPlaying("wind"))
+	{
+		xal::log(hsprintf("- wind stop iteration: %d", count));
+		for (int i = 0; i < 5; i++)
+		{
+			hthread::sleep(100);
+			_update(0.1f);
+		}
+		xal::mgr->stop("wind");
+		count++;
+	}
+	hthread::sleep(500);
+	xal::log("starting stopFirst test");
+	xal::mgr->play("wind");
+	hthread::sleep(200);
+	xal::mgr->play("wind");
+	count = 0;
+	while (xal::mgr->isAnyPlaying("wind"))
+	{
+		xal::log(hsprintf("- wind stopFirst iteration: %d", count));
+		for (int i = 0; i < 5; i++)
+		{
+			hthread::sleep(100);
+			_update(0.1f);
+		}
+		xal::mgr->stopFirst("wind");
+		count++;
+	}
 	_update(0.1f);
 }
 
@@ -286,15 +329,7 @@ int main(int argc, char **argv)
 	xal::mgr->createCategory("cat", true);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "streamable");
 #endif
-#ifndef _TEST_LINKS
-#ifdef _TEST_STREAM
-	s = xal::mgr->createPlayer("wind");
-#else
-	s = xal::mgr->createPlayer("bark");
-#endif
-#else
-	s = xal::mgr->createPlayer("linked_sound");
-#endif
+	s = xal::mgr->createPlayer(USED_SOUND);
 
 #ifdef _TEST_SOUND
 	_test_sound();

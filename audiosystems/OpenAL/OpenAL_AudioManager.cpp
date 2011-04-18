@@ -80,14 +80,14 @@ namespace xal
 		}
 	}
 	
-	Player* OpenAL_AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
+	Player* OpenAL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
 	{
 		unsigned int sourceId = this->_allocateSourceId();
 		if (sourceId != 0)
 		{
 			return new OpenAL_Player(sound, buffer, sourceId);
 		}
-		return AudioManager::_createPlayer(sound, buffer);
+		return AudioManager::_createAudioPlayer(sound, buffer);
 	}
 	
 	unsigned int OpenAL_AudioManager::_allocateSourceId()
