@@ -90,6 +90,20 @@ namespace xal
 	void OpenAL_Player::_sysStop()
 	{
 		alSourceStop(this->sourceId);
+		/*
+		if (this->sound->getCategory()->isStreamed())
+		{
+			//this->sound->setSourceId(this->sourceId);
+			if (this->paused)
+			{
+				//((StreamSound*)this->sound)->unqueueBuffers();
+			}
+			else
+			{
+				//((StreamSound*)this->sound)->rewindStream();
+			}
+		}
+		*/
 	}
 
 }

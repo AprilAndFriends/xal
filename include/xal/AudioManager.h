@@ -68,20 +68,6 @@ namespace xal
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
 
-		//////////////////////////////////////////////
-		/*
-			Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
-			harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
-			harray<hstr> createSoundsFromPath(chstr path, chstr category, chstr prefix);
-			void destroySound(SoundBuffer* sound);
-			void destroySoundsWithPrefix(chstr prefix);
-			Sound* getSound(chstr name);
-			Sound* createSource(SoundBuffer* sound, unsigned int sourceId);
-			Sound* createSourceApple(SoundBuffer* sound, unsigned int sourceId);
-			void destroySource(Sound* source);
-			*/
-		//////////////////////////////////////////////
-
 		static void update();
 		void update(float k);
 		
@@ -98,8 +84,7 @@ namespace xal
 		void _setupThread();
 		virtual Player* _createPlayer(Sound2* sound, Buffer* buffer);
 
-
-
+		//////////////////////////////////////////////
 
 	public:
 		
@@ -109,11 +94,8 @@ namespace xal
 		
 		void lockUpdate();
 		void unlockUpdate();
+
 	protected:
-		/*
-		harray<Sound*> sources;
-		hmap<hstr, SoundBuffer*> oldSounds;
-		*/
 		hthread* thread;
 		bool updating;
 		
