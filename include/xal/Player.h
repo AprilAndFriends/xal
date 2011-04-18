@@ -31,6 +31,7 @@ namespace xal
 		virtual void setGain(float value);
 		float getOffset() { return this->offset; }
 		Sound* getSound() { return this->sound; }
+		hstr getName();
 		float getDuration();
 
 		Category* getCategory();

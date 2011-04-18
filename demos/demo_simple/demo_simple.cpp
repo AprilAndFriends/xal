@@ -8,9 +8,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <stdio.h>
-#ifdef _WIN32
-#include <windows.h>
-#endif
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
@@ -26,7 +23,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-//#define _TEST_SOUND
+#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
@@ -307,6 +304,7 @@ void _test_util_parallel_sounds()
 	printf("  - start test util parallel sounds...\n");
 	harray<hstr> names;
 	names += S_BARK;
+	names += S_WIND;
 	xal::ParallelSoundManager pmgr;
 	pmgr.updateList(names);
 	hthread::sleep(1000);
