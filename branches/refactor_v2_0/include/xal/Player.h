@@ -31,10 +31,32 @@ namespace xal
 		virtual void setGain(float value);
 		Sound2* getSound() { return this->sound; }
 
+		void play(float fadeTime = 0.0f, bool looping = false);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false);
+
+		virtual bool isPlaying() { return false; }
+		bool isPaused();
+		bool isFading();
+		bool isFadingIn();
+		bool isFadingOut();
+
 	protected:
-		float gain;
 		Sound2* sound;
 		Buffer* buffer;
+		float gain;
+		bool paused;
+		bool looping;
+		float fadeSpeed;
+		float fadeTime;
+
+		virtual void _sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size) { }
+		virtual void _sysUpdateFadeGain() { }
+		virtual void _sysPlay() { }
+		virtual void _sysStop() { }
+		//void pause(float fadeTime = 0.0f);
+		//void stopSoft(float fadeTime = 0.0f, bool pause = false);
 
 	};
 

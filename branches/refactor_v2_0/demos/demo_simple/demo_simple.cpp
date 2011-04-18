@@ -15,8 +15,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
+
 #include <xal/AudioManager.h>
-#include <xal/Sound.h>
+//#include <xal/Sound.h>
+#include <xal/Player.h>
 #include <xal/xal.h>
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
@@ -45,7 +47,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #define XAL_MAX_SOURCES 16 // needed when using OpenAL
 
-xal::Sound* s;
+xal::Player* s;
 
 void _test_sound()
 {
@@ -125,7 +127,7 @@ void _test_sources()
 		_update(0.1f);
 	}
 	xal::mgr->update(0.01f);
-	s = xal::mgr->getSound("wind");
+	s = xal::mgr->createPlayer("wind");
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{
@@ -139,7 +141,7 @@ void _test_sources()
 void _test_fadein()
 {
 	printf("  - start test fade in...\n");
-	s = xal::mgr->getSound("wind");
+	s = xal::mgr->createPlayer("wind");
 	s->play(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
@@ -154,7 +156,7 @@ void _test_fadein()
 void _test_fadeout()
 {
 	printf("  - start test fade out...\n");
-	s = xal::mgr->getSound("wind");
+	s = xal::mgr->createPlayer("wind");
 	s->play();
 	s->stop(1.0f);
 	for (int i = 0; i < 20; i++)
@@ -170,7 +172,7 @@ void _test_fadeout()
 void _test_fadeinout()
 {
 	printf("  - start test fade in and out...\n");
-	s = xal::mgr->getSound("wind");
+	s = xal::mgr->createPlayer("wind");
 	s->play(1.0f);
 	for (int i = 0; i < 8; i++)
 	{
@@ -206,11 +208,11 @@ void _test_fadeinout()
 void _test_complex_handler()
 {
 	printf("  - start test complex handler...\n");
-	xal::Sound* temp;
-	xal::Sound* s1 = xal::mgr->getSound("wind");
-	xal::Sound* s2 = xal::mgr->getSound("wind_copy");
-	xal::Sound* t1 = s1->play();
-	xal::Sound* t2 = s2->play();
+	xal::Player* temp;
+	xal::Player* s1 = xal::mgr->createPlayer("wind");
+	xal::Player* s2 = xal::mgr->createPlayer("wind_copy");
+	s1->play();
+	s2->play();
 	s2->pause();
 	for (int i = 0; i < 50; i++)
 	{
@@ -278,20 +280,20 @@ int main(int argc, char **argv)
 #ifdef _TEST_STREAM
 	xal::mgr->createCategory("streamable", true);
 #endif
-	harray<hstr> files = xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
-	files += xal::mgr->createSoundsFromPath("../media", "sound", "");
+	harray<hstr> files = xal::mgr->createSound2sFromPath("../media/streamable", "streamable", "");
+	files += xal::mgr->createSound2sFromPath("../media", "sound", "");
 #else
 	xal::mgr->createCategory("cat", true);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "streamable");
 #endif
 #ifndef _TEST_LINKS
 #ifdef _TEST_STREAM
-	s = xal::mgr->getSound("wind");
+	s = xal::mgr->createPlayer("wind");
 #else
-	s = xal::mgr->getSound("bark");
+	s = xal::mgr->createPlayer("bark");
 #endif
 #else
-	s = xal::mgr->getSound("linked_sound");
+	s = xal::mgr->createPlayer("linked_sound");
 #endif
 
 #ifdef _TEST_SOUND

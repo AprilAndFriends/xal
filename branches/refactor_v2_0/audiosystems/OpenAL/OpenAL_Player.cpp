@@ -36,109 +36,48 @@ namespace xal
 	void OpenAL_Player::setGain(float gain)
 	{
 		Player::setGain(gain);
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->gain *
-				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-		}
+		alSourcef(this->sourceId, AL_GAIN, this->gain *
+			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
 	}
 
-	void OpenAL_Player::play(float fadeTime, bool looping)
+	bool OpenAL_Player::isPlaying()
 	{
 		/*
-		if (this->sourceId == 0)
-		{
-			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
-			if (this->sourceId == 0)
-			{
-				return NULL;
-			}
-		}
-		*/
-		if (!this->paused)
-		{
-			this->looping = looping;
-		}
-		bool alreadyFading = false;//this->isFading();
-		if (!alreadyFading)
-		{
-			this->buffer->load();
-			alBufferData(this->bufferId, (this->buffer->getChannels() == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16,
-				this->buffer->getStream(), this->buffer->getSize(), this->buffer->getRate());
-			//if (this->)
-			alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
-			alSourcei(this->sourceId, AL_LOOPING, this->looping);
-			/*
-			if (this->isPaused())
-			{
-				//alSourcef(this->sourceId, AL_SAMPLE_OFFSET, this->sampleOffset);
-			}
-			*/
-		}
-		if (fadeTime > 0.0f)
-		{
-			this->fadeSpeed = 1.0f / fadeTime;
-		}
-		else
-		{
-			this->fadeTime = 1.0f;
-			this->fadeSpeed = 0.0f;
-		}
-		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
-			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-		if (!alreadyFading)
-		{
-			alSourcePlay(this->sourceId);
-		}
-		this->paused = false;
-	}
-
-	void OpenAL_Player::stop(float fadeTime)
-	{
-		this->stopSoft(fadeTime);
-		if (this->sourceId != 0 && fadeTime <= 0.0f)
-		{
-			//this->unbind(this->paused);
-		}
-	}
-
-	void OpenAL_Player::pause(float fadeTime)
-	{
-		this->stopSoft(fadeTime, true);
-		if (this->sourceId != 0 && fadeTime <= 0.0f)
-		{
-			//this->unbind(this->paused);
-		}
-	}
-
-	void OpenAL_Player::stopSoft(float fadeTime, bool pause)
-	{
-		if (this->sourceId == 0)
-		{
-			return;
-		}
-		this->paused = pause;
-		if (fadeTime > 0.0f)
-		{
-			this->fadeSpeed = -1.0f / fadeTime;
-			return;
-		}
-		this->fadeTime = 0.0f;
-		this->fadeSpeed = 0.0f;
-		//alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &this->sampleOffset);
-		alSourceStop(this->sourceId);
 		if (this->sound->getCategory()->isStreamed())
 		{
-			//this->sound->setSourceId(this->sourceId);
-			if (this->paused)
-			{
-				//((StreamSound*)this->sound)->unqueueBuffers();
-			}
-			else
-			{
-				//((StreamSound*)this->sound)->rewindStream();
-			}
+			int queued;
+			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+			int count;
+			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
+			return (queued > 0 || count > 0);
 		}
+		*/
+		int state;
+		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
+		return (state == AL_PLAYING);
+	}
+
+	void OpenAL_Player::_sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size)
+	{
+		alBufferData(this->bufferId, (channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16), stream, size, rate);
+		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
+		alSourcei(this->sourceId, AL_LOOPING, this->looping);
+	}
+
+	void OpenAL_Player::_sysUpdateFadeGain()
+	{
+		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
+			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+	}
+
+	void OpenAL_Player::_sysPlay()
+	{
+		alSourcePlay(this->sourceId);
+	}
+
+	void OpenAL_Player::_sysStop()
+	{
+		alSourceStop(this->sourceId);
 	}
 
 }
