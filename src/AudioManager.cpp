@@ -222,10 +222,10 @@ namespace xal
 		this->createCategory(category);
 		harray<hstr> result;
 		harray<hstr> files = hdir::files(path, true);
-		SoundBuffer* sound;
+		Sound2* sound;
 		foreach (hstr, it, files)
 		{
-			sound = (SoundBuffer*)this->createSound2((*it), category, prefix);
+			sound = this->createSound2((*it), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();

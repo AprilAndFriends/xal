@@ -37,6 +37,10 @@ namespace xal
 	
 	hstr Sound2::_findLinkedFile()
 	{
+		if (!this->filename.ends_with(".xln"))
+		{
+			return this->filename;
+		}
 		if (!hfile::exists(this->filename))
 		{
 			return this->filename;

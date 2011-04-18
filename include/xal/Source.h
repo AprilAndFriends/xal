@@ -35,6 +35,12 @@ namespace xal
 		void pause(float fadeTime = 0.0f);
 		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 		
+		bool isPlaying();
+		bool isPaused();
+		bool isFading();
+		bool isFadingIn();
+		bool isFadingOut();
+
 	protected:
 		float gain;
 		SoundBuffer* sound;
@@ -54,11 +60,6 @@ namespace xal
 		unsigned int getBuffer() const;
 		bool isBound() { return this->bound; }
 		bool isLooping() { return this->looping; }
-		bool isPlaying();
-		bool isPaused();
-		bool isFading();
-		bool isFadingIn();
-		bool isFadingOut();
 		
 		Category* getCategory();
 		
