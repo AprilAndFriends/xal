@@ -12,8 +12,14 @@
 #include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 
+#if HAVE_M4A
+#include "M4A_Source.h"
+#endif
 #if HAVE_OGG
 #include "OGG_Source.h"
+#endif
+#if HAVE_SPX
+#include "SPX_Source.h"
 #endif
 
 #include "Buffer.h"
@@ -27,22 +33,26 @@ namespace xal
 	{
 		this->filename = filename;
 		this->fileSize = hfile::hsize(this->filename);
-		this->decoder = NULL;
 		Format format = this->getFormat();
 		switch (format)
 		{
-#if HAVE_OGG
-		case OGG:
-			this->decoder = new OGG_Source(filename);
-			break;
-#endif
 #if HAVE_M4A
 		case M4A:
-			this->decoder = new M4A_Source(filename);
+			this->source = new M4A_Source(filename);
+			break;
+#endif
+#if HAVE_OGG
+		case OGG:
+			this->source = new OGG_Source(filename);
+			break;
+#endif
+#if HAVE_SPX
+		case SPX:
+			this->source = new SPX_Source(filename);
 			break;
 #endif
 		default:
-			this->decoder = new Source(filename);
+			this->source = new Source(filename);
 			break;
 		}
 	}
@@ -50,7 +60,7 @@ namespace xal
 	Buffer::~Buffer()
 	{
 		xal::log("destroying buffer " + this->filename);
-		delete this->decoder;
+		delete this->source;
 		if (this->data != NULL)
 		{
 			delete [] this->data;
@@ -63,36 +73,42 @@ namespace xal
 	
 	unsigned int Buffer::getSize()
 	{
-		return this->decoder->getSize();
+		return this->source->getSize();
 	}
 
 	unsigned int Buffer::getChannels()
 	{
-		return this->decoder->getChannels();
+		return this->source->getChannels();
 	}
 
 	long Buffer::getRate()
 	{
-		return this->decoder->getRate();
+		return this->source->getRate();
 	}
 
 	float Buffer::getDuration()
 	{
-		return this->decoder->getDuration();
+		return this->source->getDuration();
 	}
 
 	Format Buffer::getFormat()
 	{
+#if HAVE_M4A
+		if (this->filename.ends_with(".m4a"))
+		{
+			return M4A;
+		}
+#endif
 #if HAVE_OGG
 		if (this->filename.ends_with(".ogg"))
 		{
 			return OGG;
 		}
 #endif
-#if HAVE_M4A
-		if (this->filename.ends_with(".m4a"))
+#if HAVE_SPX
+		if (this->filename.ends_with(".spx"))
 		{
-			return M4A;
+			return SPX;
 		}
 #endif
 		return UNKNOWN;
@@ -112,10 +128,10 @@ namespace xal
 		}
 		else
 		{
-			result = this->decoder->load(&this->data);
+			result = this->source->load(&this->data);
 			if (result)
 			{
-				result = this->decoder->decode(this->data, &this->stream);
+				result = this->source->decode(this->data, &this->stream);
 			}
 		}
 		if (result)

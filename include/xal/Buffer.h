@@ -48,7 +48,7 @@ namespace xal
 		bool loaded;
 		unsigned char* data;
 		unsigned char* stream;
-		Source* decoder;
+		Source* source;
 
 	};
 

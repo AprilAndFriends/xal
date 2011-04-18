@@ -93,11 +93,10 @@ namespace xal
 		ov_clear(&oggStream);
 		return result;
 #else
-#warning HAVE_OGG is not defined to 1. No Ogg support.
+#warning HAVE_OGG is not defined to 1. No OGG support.
 		xal::log("no ogg support built in, cannot load " + this->filename);
 		return false;
 #endif
-		//return false;
 	}
 
 }

@@ -28,11 +28,14 @@ namespace xal
 	enum Format
 	{
 		//WAV,
+#if HAVE_M4A
+		M4A,
+#endif
 #if HAVE_OGG
 		OGG,
 #endif
-#if HAVE_M4A
-		M4A,
+#if HAVE_SPX
+		SPX,
 #endif
 		UNKNOWN
 	};
