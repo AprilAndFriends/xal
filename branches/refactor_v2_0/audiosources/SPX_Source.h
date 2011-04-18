@@ -11,9 +11,9 @@
 /// 
 /// Provides a source for OGG format.
 
-#if HAVE_OGG
-#ifndef XAL_OGG_SOURCE_H
-#define XAL_OGG_SOURCE_H
+#if HAVE_SPX
+#ifndef XAL_SPX_SOURCE_H
+#define XAL_SPX_SOURCE_H
 
 #include <hltypes/hstring.h>
 
@@ -22,11 +22,11 @@
 
 namespace xal
 {
-	class xalExport OGG_Source : public Source
+	class xalExport SPX_Source : public Source
 	{
 	public:
-		OGG_Source(chstr filename);
-		~OGG_Source();
+		SPX_Source(chstr filename);
+		~SPX_Source();
 
 		bool load(unsigned char** output);
 		bool decode(unsigned char* input, unsigned char** output);

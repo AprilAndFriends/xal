@@ -21,6 +21,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
       <File Name="audiosources/OGG_Source.cpp"/>
+      <File Name="audiosources/SPX_Source.cpp"/>
     </VirtualDirectory>
     <File Name="src/Buffer.cpp"/>
     <File Name="src/Player.cpp"/>
@@ -42,6 +43,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
       <File Name="audiosources/OGG_Source.h"/>
+      <File Name="audiosources/SPX_Source.h"/>
     </VirtualDirectory>
     <File Name="include/xal/Buffer.h"/>
     <File Name="include/xal/Player.h"/>
