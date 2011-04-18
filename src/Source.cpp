@@ -8,6 +8,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
+
 #include "Category.h"
 #include "Source.h"
 #include "SoundBuffer.h"
@@ -36,57 +38,11 @@ namespace xal
 
 	void Source::setGain(float gain)
 	{
-		this->gain = gain;
+		this->gain = hclamp(gain, 0.0f, 1.0f);
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_GAIN, this->gain *
 				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-		}
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	void Source::update(float k)
-	{
-		if (this->sourceId == 0)
-		{
-			return;
-		}
-		this->sound->setSourceId(this->sourceId);
-		this->sound->update(k);
-		if (this->isPlaying())
-		{
-			if (this->isFading())
-			{
-				this->fadeTime += this->fadeSpeed * k;
-				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
-				{
-					alSourcef(this->sourceId, AL_GAIN, this->gain *
-						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-					this->fadeTime = 1.0f;
-					this->fadeSpeed = 0.0f;
-				}
-				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
-				{
-					this->fadeTime = 0.0f;
-					this->fadeSpeed = 0.0f;
-					if (!this->paused)
-					{
-						this->stop();
-						return;
-					}
-					this->pause();
-				}
-				else
-				{
-					alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
-						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-				}
-			}
-		}
-		if (!this->isPlaying() && !this->isPaused())
-		{
-			this->unbind();
 		}
 	}
 
@@ -188,6 +144,52 @@ namespace xal
 			{
 				((StreamSound*)this->sound)->rewindStream();
 			}
+		}
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void Source::update(float k)
+	{
+		if (this->sourceId == 0)
+		{
+			return;
+		}
+		this->sound->setSourceId(this->sourceId);
+		this->sound->update(k);
+		if (this->isPlaying())
+		{
+			if (this->isFading())
+			{
+				this->fadeTime += this->fadeSpeed * k;
+				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
+				{
+					alSourcef(this->sourceId, AL_GAIN, this->gain *
+						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+					this->fadeTime = 1.0f;
+					this->fadeSpeed = 0.0f;
+				}
+				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
+				{
+					this->fadeTime = 0.0f;
+					this->fadeSpeed = 0.0f;
+					if (!this->paused)
+					{
+						this->stop();
+						return;
+					}
+					this->pause();
+				}
+				else
+				{
+					alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
+						this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+				}
+			}
+		}
+		if (!this->isPlaying() && !this->isPaused())
+		{
+			this->unbind();
 		}
 	}
 

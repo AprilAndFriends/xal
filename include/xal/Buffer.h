@@ -32,15 +32,22 @@ namespace xal
 		virtual ~Buffer();
 
 		chstr getFilename() { return this->filename; }
-		float getDuration() { return this->duration; }
+		unsigned char* getStream() { return this->stream; }
+
+		unsigned int getSize();
+		unsigned int getChannels();
+		long getRate();
+		float getDuration();
 		Format getFormat();
 
 		bool load();
 		
 	protected:
 		hstr filename;
-		float duration;
+		unsigned int fileSize;
 		bool loaded;
+		unsigned char* data;
+		unsigned char* stream;
 		Decoder* decoder;
 
 	};

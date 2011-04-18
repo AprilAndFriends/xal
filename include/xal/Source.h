@@ -30,6 +30,11 @@ namespace xal
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 
+		Sound* play(float fadeTime = 0.0f, bool looping = false);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
+		void stopSoft(float fadeTime = 0.0f, bool pause = false);
+		
 	protected:
 		float gain;
 		SoundBuffer* sound;
@@ -40,11 +45,6 @@ namespace xal
 
 	public:
 		void update(float k);
-		
-		Sound* play(float fadeTime = 0.0f, bool looping = false);
-		void stop(float fadeTime = 0.0f);
-		void pause(float fadeTime = 0.0f);
-		void stopSoft(float fadeTime = 0.0f, bool pause = false);
 		
         float getDuration();
         
