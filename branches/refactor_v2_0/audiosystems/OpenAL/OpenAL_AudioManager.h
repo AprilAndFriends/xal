@@ -52,7 +52,7 @@ namespace xal
 		ALCcontext* context;
 		unsigned int sourceIds[XAL_MAX_SOURCES];
 
-		Player* _createPlayer(Sound* sound, Buffer* buffer);
+		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 
 	};
 	
