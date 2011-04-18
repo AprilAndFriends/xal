@@ -64,32 +64,29 @@ namespace xal
 	void Player::update(float k)
 	{
 		//this->sound->update(k);
-		if (this->isPlaying())
+		if (this->isFading())
 		{
-			if (this->isFading())
+			this->fadeTime += this->fadeSpeed * k;
+			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 			{
-				this->fadeTime += this->fadeSpeed * k;
-				if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
+				this->setGain(this->gain);
+				this->fadeTime = 1.0f;
+				this->fadeSpeed = 0.0f;
+			}
+			else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
+			{
+				this->fadeTime = 0.0f;
+				this->fadeSpeed = 0.0f;
+				if (!this->paused)
 				{
-					this->setGain(this->gain);
-					this->fadeTime = 1.0f;
-					this->fadeSpeed = 0.0f;
+					this->stop();
+					return;
 				}
-				else if (this->fadeTime <= 0.0f && this->fadeSpeed < 0.0f)
-				{
-					this->fadeTime = 0.0f;
-					this->fadeSpeed = 0.0f;
-					if (!this->paused)
-					{
-						this->stop();
-						return;
-					}
-					this->pause();
-				}
-				else
-				{
-					this->_sysUpdateFadeGain();
-				}
+				this->pause();
+			}
+			else
+			{
+				this->_sysUpdateFadeGain();
 			}
 		}
 		if (!this->isPlaying() && !this->isPaused())
@@ -146,6 +143,7 @@ namespace xal
 	{
 		this->paused = false;
 		this->_stopSound(fadeTime);
+		this->offset = 0.0f;
 	}
 
 	void Player::pause(float fadeTime)

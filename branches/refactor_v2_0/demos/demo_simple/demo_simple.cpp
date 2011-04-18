@@ -29,11 +29,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 //#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
-#define _TEST_MULTIPLAY
+//#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
-//#define _TEST_FADE_IN
-//#define _TEST_FADE_OUT
-//#define _TEST_FADE_IN_OUT
+#define _TEST_FADE_IN
+#define _TEST_FADE_OUT
+#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
 //#define _TEST_UTIL_PLAYLIST
@@ -46,13 +46,19 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #endif
 
 #ifndef _TEST_LINKS
+#define S_BARK "bark"
+#define S_WIND "wind"
+#define S_WIND_COPY "wind_copy"
 #ifdef _TEST_STREAM
-#define USED_SOUND "wind"
+#define USED_SOUND S_BARK
 #else
-#define USED_SOUND "bark"
+#define USED_SOUND S_WIND
 #endif
 #else
 #define USED_SOUND "linked_sound"
+#define S_BARK "bark"
+#define S_WIND "linked_sound"
+#define S_WIND_COPY "wind_copy"
 #endif
 
 #define XAL_MAX_SOURCES 16 // needed when using OpenAL
@@ -110,21 +116,21 @@ void _test_multistream()
 void _test_multiplay()
 {
 	printf("  - start test multiple play...\n");
-	xal::mgr->play("bark");
+	xal::mgr->play(S_BARK);
 	hthread::sleep(100);
-	xal::mgr->play("bark");
-	while (xal::mgr->isAnyPlaying("bark"))
+	xal::mgr->play(S_BARK);
+	while (xal::mgr->isAnyPlaying(S_BARK))
 	{
 		hthread::sleep(100);
 		_update(0.1f);
 	}
 	hthread::sleep(500);
 	xal::log("starting stop test");
-	xal::mgr->play("wind");
+	xal::mgr->play(S_WIND);
 	hthread::sleep(200);
-	xal::mgr->play("wind");
+	xal::mgr->play(S_WIND);
 	int count = 0;
-	while (xal::mgr->isAnyPlaying("wind"))
+	while (xal::mgr->isAnyPlaying(S_WIND))
 	{
 		xal::log(hsprintf("- wind stop iteration: %d", count));
 		for (int i = 0; i < 5; i++)
@@ -132,16 +138,16 @@ void _test_multiplay()
 			hthread::sleep(100);
 			_update(0.1f);
 		}
-		xal::mgr->stop("wind");
+		xal::mgr->stop(S_WIND);
 		count++;
 	}
 	hthread::sleep(500);
 	xal::log("starting stopFirst test");
-	xal::mgr->play("wind");
+	xal::mgr->play(S_WIND);
 	hthread::sleep(200);
-	xal::mgr->play("wind");
+	xal::mgr->play(S_WIND);
 	count = 0;
-	while (xal::mgr->isAnyPlaying("wind"))
+	while (xal::mgr->isAnyPlaying(S_WIND))
 	{
 		xal::log(hsprintf("- wind stopFirst iteration: %d", count));
 		for (int i = 0; i < 5; i++)
@@ -149,7 +155,7 @@ void _test_multiplay()
 			hthread::sleep(100);
 			_update(0.1f);
 		}
-		xal::mgr->stopFirst("wind");
+		xal::mgr->stopFirst(S_WIND);
 		count++;
 	}
 	_update(0.1f);
@@ -170,7 +176,7 @@ void _test_sources()
 		_update(0.1f);
 	}
 	xal::mgr->update(0.01f);
-	s = xal::mgr->createPlayer("wind");
+	s = xal::mgr->createPlayer(S_WIND);
 	s->play();
 	for (int i = 0; i < 20; i++)
 	{
@@ -184,7 +190,7 @@ void _test_sources()
 void _test_fadein()
 {
 	printf("  - start test fade in...\n");
-	s = xal::mgr->createPlayer("wind");
+	s = xal::mgr->createPlayer(S_WIND);
 	s->play(1.0f);
 	for (int i = 0; i < 20; i++)
 	{
@@ -199,7 +205,7 @@ void _test_fadein()
 void _test_fadeout()
 {
 	printf("  - start test fade out...\n");
-	s = xal::mgr->createPlayer("wind");
+	s = xal::mgr->createPlayer(S_WIND);
 	s->play();
 	s->stop(1.0f);
 	for (int i = 0; i < 20; i++)
@@ -215,7 +221,7 @@ void _test_fadeout()
 void _test_fadeinout()
 {
 	printf("  - start test fade in and out...\n");
-	s = xal::mgr->createPlayer("wind");
+	s = xal::mgr->createPlayer(S_WIND);
 	s->play(1.0f);
 	for (int i = 0; i < 8; i++)
 	{
@@ -252,8 +258,8 @@ void _test_complex_handler()
 {
 	printf("  - start test complex handler...\n");
 	xal::Player* temp;
-	xal::Player* s1 = xal::mgr->createPlayer("wind");
-	xal::Player* s2 = xal::mgr->createPlayer("wind_copy");
+	xal::Player* s1 = xal::mgr->createPlayer(S_WIND);
+	xal::Player* s2 = xal::mgr->createPlayer(S_WIND_COPY);
 	s1->play();
 	s2->play();
 	s2->pause();
@@ -283,11 +289,11 @@ void _test_util_playlist()
 {
 	printf("  - start test util playlist...\n");
 	xal::Playlist list(false);
-	list.queueSound("bark");
-	list.queueSound("bark");
-	list.queueSound("wind");
-	list.queueSound("wind_copy");
-	list.queueSound("bark");
+	list.queueSound(S_BARK);
+	list.queueSound(S_BARK);
+	list.queueSound(S_WIND);
+	list.queueSound(S_WIND_COPY);
+	list.queueSound(S_BARK);
 	list.play();
 	while (list.isPlaying())
 	{
@@ -301,7 +307,7 @@ void _test_util_parallel_sounds()
 {
 	printf("  - start test util parallel sounds...\n");
 	harray<hstr> names;
-	names += "bark";
+	names += S_BARK;
 	xal::ParallelSoundManager pmgr;
 	pmgr.updateList(names);
 	hthread::sleep(1000);
@@ -319,15 +325,15 @@ int main(int argc, char **argv)
 #else
 	xal::init("", true, 0.01f);
 #endif
+	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _TEST_LINKS
 #ifdef _TEST_STREAM
 	xal::mgr->createCategory("streamable", true);
 #endif
-	harray<hstr> files = xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
-	files += xal::mgr->createSoundsFromPath("../media", "sound", "");
+	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
 #else
 	xal::mgr->createCategory("cat", true);
-	xal::mgr->createSound("../media/linked/linked_sound.xln", "streamable");
+	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
 	s = xal::mgr->createPlayer(USED_SOUND);
 

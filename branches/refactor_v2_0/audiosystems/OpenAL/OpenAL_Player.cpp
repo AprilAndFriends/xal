@@ -52,6 +52,10 @@ namespace xal
 			return (queued > 0 || count > 0);
 		}
 		*/
+		if (this->isFadingOut())
+		{
+			return false;
+		}
 		int state;
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
