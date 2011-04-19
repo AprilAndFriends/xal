@@ -29,7 +29,7 @@ namespace xal
 			xal::log("could not create device");
 			return;
 		}
-		result = this->dsDevice->SetCooperativeLevel(0, DSSCL_NORMAL);
+		result = this->dsDevice->SetCooperativeLevel((HWND)backendId, DSSCL_NORMAL);
 		if (result != DS_OK)
 		{
 			this->dsDevice->Release();

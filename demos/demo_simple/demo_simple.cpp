@@ -8,6 +8,9 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <stdio.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
@@ -333,10 +336,15 @@ void _test_util_parallel_sounds()
 
 int main(int argc, char **argv)
 {
+	unsigned long hwnd = 0;
+#ifdef _WIN32
+	hwnd = (unsigned long)GetConsoleWindow();
+	xal::log((unsigned int)hwnd);
+#endif
 #ifndef _TEST_THREADED
-	xal::init("DirectSound", 0, "", false);
+	xal::init("DirectSound", hwnd, "", false);
 #else
-	xal::init("DirectSound", 0, "", true, 0.01f);
+	xal::init("DirectSound", hwnd, "", true, 0.01f);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _TEST_LINKS
