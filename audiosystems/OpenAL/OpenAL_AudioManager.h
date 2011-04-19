@@ -45,7 +45,7 @@ namespace xal
 		OpenAL_AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		~OpenAL_AudioManager();
 		
-		unsigned int _allocateSourceId(); // TODO - should be protected
+		unsigned int allocateSourceId();
 
 	protected:
 		ALCdevice* device;

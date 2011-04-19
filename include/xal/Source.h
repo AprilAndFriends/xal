@@ -26,9 +26,9 @@ namespace xal
 		Source(chstr filename);
 		virtual ~Source();
 
-		unsigned int getSize() { return this->size; }
-		unsigned int getChannels() { return this->channels; }
-		long getRate() { return this->rate; }
+		int getSize() { return this->size; }
+		int getChannels() { return this->channels; }
+		int getRate() { return this->rate; }
 		float getDuration() { return this->duration; }
 
 		virtual bool load(unsigned char** output);
@@ -36,10 +36,12 @@ namespace xal
 		
 	protected:
 		hstr filename;
-		unsigned int size;
-		unsigned int channels;
-		long rate;
+		int size;
+		int channels;
+		int rate;
 		float duration;
+		bool streamed;
+		int chunkSize;
 
 	};
 

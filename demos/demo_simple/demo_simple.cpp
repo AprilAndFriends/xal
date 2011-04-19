@@ -27,9 +27,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
-#define _TEST_FADE_IN
-#define _TEST_FADE_OUT
-#define _TEST_FADE_IN_OUT
+//#define _TEST_FADE_IN
+//#define _TEST_FADE_OUT
+//#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
 //#define _TEST_UTIL_PLAYLIST
@@ -160,18 +160,18 @@ void _test_multiplay()
 void _test_sources()
 {
 	printf("  - start test sources...\n");
-	s->play();
 	for (int i = 0; i < XAL_MAX_SOURCES + 1; i++)
 	{
+		xal::mgr->play(S_BARK);
 		hthread::sleep(20);
-		s->play();
 	}
-	while (s->isPlaying())
+	while (xal::mgr->isAnyPlaying(S_BARK))
 	{
 		hthread::sleep(100);
 		_update(0.1f);
 	}
 	xal::mgr->update(0.01f);
+	xal::mgr->destroyPlayer(s);
 	s = xal::mgr->createPlayer(S_WIND);
 	s->play();
 	for (int i = 0; i < 20; i++)
@@ -186,6 +186,7 @@ void _test_sources()
 void _test_fadein()
 {
 	printf("  - start test fade in...\n");
+	xal::mgr->destroyPlayer(s);
 	s = xal::mgr->createPlayer(S_WIND);
 	s->play(1.0f);
 	for (int i = 0; i < 20; i++)
@@ -201,6 +202,7 @@ void _test_fadein()
 void _test_fadeout()
 {
 	printf("  - start test fade out...\n");
+	xal::mgr->destroyPlayer(s);
 	s = xal::mgr->createPlayer(S_WIND);
 	s->play();
 	s->stop(1.0f);
@@ -217,6 +219,7 @@ void _test_fadeout()
 void _test_fadeinout()
 {
 	printf("  - start test fade in and out...\n");
+	xal::mgr->destroyPlayer(s);
 	s = xal::mgr->createPlayer(S_WIND);
 	s->play(1.0f);
 	for (int i = 0; i < 8; i++)
