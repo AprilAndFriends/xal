@@ -1,15 +1,23 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Kresimir Spes
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/// 
+/// @section DESCRIPTION
+/// 
+/// Defines macros for DLL exports/imports.
+
 #ifndef XAL_EXPORT_H
 #define XAL_EXPORT_H
 
+	/// @def xalExport
+	/// @brief Macro for DLL exports/imports.
+	/// @def xalFnExport
+	/// @brief Macro for function DLL exports/imports.
 	#ifdef _STATICLIB
 		#define xalExport
 		#define xalFnExport

@@ -26,7 +26,7 @@ namespace xal
 	class xalExport DirectSound_Player : public Player
 	{
 	public:
-		DirectSound_Player(Sound* sound, Buffer* buffer, unsigned int sourceId);
+		DirectSound_Player(Sound* sound, Buffer* buffer);
 		~DirectSound_Player();
 
 	};
