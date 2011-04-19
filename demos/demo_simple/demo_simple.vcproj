@@ -49,7 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4251"
+				DisableSpecificWarnings="4251;4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes_d.lib libxal_d.lib libxalutil_d.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../lib/msvc;../../bin/$(ConfigurationName);../../../hltypes/bin/$(ConfigurationName);../../bin/xalutil/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../../lib/msvc;../../bin;../../../hltypes/bin/$(ConfigurationName);../../bin/xalutil/$(ConfigurationName)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -89,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)"
+				CommandLine="copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\bin\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -126,6 +126,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4251;4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -140,7 +141,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes.lib libxal.lib libxalutil.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../lib/msvc;../../bin/$(ConfigurationName);../../../hltypes/bin/$(ConfigurationName);../../bin/xalutil/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../../lib/msvc;../../bin;../../../hltypes/bin/$(ConfigurationName);../../bin/xalutil/$(ConfigurationName)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -167,7 +168,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)"
+				CommandLine="copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\bin\*.dll ..\..\bin\$(ConfigurationName)"
 			/>
 		</Configuration>
 	</Configurations>

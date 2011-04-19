@@ -1,5 +1,4 @@
 /// @file
-/// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @version 2.0
 /// 

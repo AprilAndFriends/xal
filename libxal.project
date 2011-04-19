@@ -2,7 +2,7 @@
 <CodeLite_Project Name="libxal" InternalType="Library">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00040001N0005Debug0000000000000001N0011Linux_Debug0000000000000001N0007Release0000000000000001N0013Release_Win32000000000000]]>
+      <![CDATA[00050001N0005Debug0000000000000001N0012Debug_OpenAL0000000000000001N0011Linux_Debug0000000000000001N0007Release0000000000000001N0013Release_Win32000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -75,13 +75,11 @@
         <IncludePath Value="../include"/>
         <IncludePath Value="../hltypes/include"/>
         <Preprocessor Value="XAL_EXPORTS"/>
-        <Preprocessor Value="HAVE_OPENAL=1"/>
         <Preprocessor Value="HAVE_OGG=1"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
         <LibraryPath Value="../lib"/>
-        <LibraryPath Value="../hltypes/bin/$(ConfigurationName)"/>
         <Library Value="libOpenAL32"/>
         <Library Value="libogg"/>
         <Library Value="libvorbis"/>
@@ -89,12 +87,14 @@
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug_OpenAL" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="_DEBUG"/>
+        <Preprocessor Value="HAVE_OPENAL=1"/>
       </Compiler>
       <Linker Options="" Required="yes">
+        <LibraryPath Value="../hltypes/bin/Debug"/>
         <Library Value="libhltypes_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
@@ -105,7 +105,10 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">copy bin\$(ConfigurationName)\*.dll bin</Command>
+        <Command Enabled="yes">copy bin\$(ConfigurationName)\*.lib bin</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -154,11 +157,13 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
-    <Configuration Name="Release_Win32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release_Win32_OpenAL" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
+        <Preprocessor Value="HAVE_OPENAL=1"/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
+        <LibraryPath Value="../hltypes/bin/Release_Win32"/>
         <Library Value="libhltypes"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>

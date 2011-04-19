@@ -67,7 +67,8 @@
     </Link>
     <PostBuildEvent>
       <Command>copy ..\..\..\hltypes\bin\$(Configuration)\*.dll ..\..\bin\$(Configuration)
-copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Command>
+copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)
+copy ..\..\bin\*.dll ..\..\bin\$(Configuration)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">
@@ -95,7 +96,8 @@ copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Comman
     </Link>
     <PostBuildEvent>
       <Command>copy ..\..\..\hltypes\bin\$(Configuration)\*.dll ..\..\bin\$(Configuration)
-copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Command>
+copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)
+copy ..\..\bin\*.dll ..\..\bin\$(Configuration)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
