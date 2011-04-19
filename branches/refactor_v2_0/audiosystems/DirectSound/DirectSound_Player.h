@@ -37,6 +37,8 @@ namespace xal
 
 	protected:
 		IDirectSoundBuffer* dsBuffer;
+		/// @brief Playing flag.
+		/// @note Due to possible latency in DirectSound, this flag is being used to avoid problems.
 		bool playing;
 
 		void setGain(float value);
