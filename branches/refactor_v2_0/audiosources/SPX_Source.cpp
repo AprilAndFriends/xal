@@ -42,7 +42,7 @@ namespace xal
 		*output = (unsigned char*)malloc(this->size * sizeof(unsigned char));
 		file.read_raw(*output, this->size);
 		file.close();
-		*/
+		//*/
 		return true;
 	}
 
@@ -102,7 +102,7 @@ namespace xal
 		this->duration = (float)size / 44100;
 		free(buffer);
 		// REFACTOR TO HERE
-		*/
+		//*/
 		return true;
 	}
 
