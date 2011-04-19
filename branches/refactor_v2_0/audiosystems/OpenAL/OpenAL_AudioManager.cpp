@@ -37,13 +37,14 @@
 
 namespace xal
 {
-	OpenAL_AudioManager::OpenAL_AudioManager(chstr deviceName, bool threaded, float updateTime) :
-		AudioManager(deviceName, threaded, updateTime), device(NULL), context(NULL)
+	OpenAL_AudioManager::OpenAL_AudioManager(unsigned long backendId, chstr deviceName, bool threaded, float updateTime) :
+		AudioManager(backendId, deviceName, threaded, updateTime), device(NULL), context(NULL)
 	{
 		xal::log("initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
+			xal::log("could not create device");
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
@@ -51,11 +52,13 @@ namespace xal
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
+			xal::log("could not create context");
 			return;
 		}
 		alcMakeContextCurrent(currentContext);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
+			xal::log("could not set context as current");
 			return;
 		}
 		alGenSources(XAL_MAX_SOURCES, this->sourceIds);
@@ -70,6 +73,7 @@ namespace xal
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
+		this->clear();
 		xal::log("destroying OpenAL");
 		if (this->device != NULL)
 		{

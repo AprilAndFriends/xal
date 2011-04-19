@@ -38,8 +38,7 @@ namespace xal
 		Player::setGain(gain);
 		if (this->sourceId != 0)
 		{
-			alSourcef(this->sourceId, AL_GAIN, this->gain *
-				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
 		}
 	}
 
@@ -94,8 +93,7 @@ namespace xal
 
 	void OpenAL_Player::_sysUpdateFadeGain()
 	{
-		alSourcef(this->sourceId, AL_GAIN, this->fadeTime * this->gain *
-			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+		alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
 	}
 
 	void OpenAL_Player::_sysPlay()

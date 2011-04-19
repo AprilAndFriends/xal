@@ -26,20 +26,27 @@ namespace xal
 {
 	AudioManager* mgr;
 
-	AudioManager::AudioManager(chstr deviceName, bool threaded, float updateTime) : enabled(false),
+	AudioManager::AudioManager(unsigned long backendId, chstr deviceName, bool threaded, float updateTime) : enabled(false),
 		gain(1.0f), updating(false), thread(NULL)
 	{
+		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;
 	}
 
 	AudioManager::~AudioManager()
 	{
+		this->clear();
+	}
+
+	void AudioManager::clear()
+	{
 		if (this->thread != NULL)
 		{
 			while (this->updating);
 			this->thread->stop();
 			delete this->thread;
+			this->thread = NULL;
 		}
 		foreach (Player*, it, this->players)
 		{
@@ -47,6 +54,7 @@ namespace xal
 			delete (*it);
 		}
 		this->players.clear();
+		this->managedPlayers.clear();
 		foreach_m (Sound*, it, this->sounds)
 		{
 			delete it->second;

@@ -43,7 +43,7 @@ namespace xal
 		bool isFadingOut();
 		bool isLooping() { return this->looping; }
 
-		void update(float k);
+		virtual void update(float k);
 		
 		void play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
@@ -55,10 +55,12 @@ namespace xal
 		bool looping;
 		float fadeSpeed;
 		float fadeTime;
-		float offset;
+		float offset; // TODO - should be int?
 		Sound* sound;
 		Buffer* buffer;
 
+		float _calcGain();
+		float _calcFadeGain();
 		void _stopSound(float fadeTime = 0.0f);
 
 		virtual float _sysGetOffset() { return 1.0f; }
