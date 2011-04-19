@@ -1,5 +1,4 @@
-/// @file
-/// @author  Boris Mikic
+/// @file/// @author  Boris Mikic
 /// @version 2.0
 /// 
 /// @section LICENSE
@@ -41,3 +40,4 @@ namespace xal
 
 }
 #endif
+XA
