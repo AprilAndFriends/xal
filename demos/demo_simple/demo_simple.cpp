@@ -23,7 +23,8 @@
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-#define _TEST_SOUND
+#define _TEST_BASIC
+//#define _TEST_SOUND
 //#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
@@ -42,7 +43,7 @@
 #endif
 
 #ifndef _TEST_LINKS
-#define S_BARK "bark"
+#define S_BARK "bark2"
 #define S_WIND "wind"
 #define S_WIND_COPY "wind_copy"
 #ifndef _TEST_STREAM
@@ -52,7 +53,7 @@
 #endif
 #else
 #define USED_SOUND "linked_sound"
-#define S_BARK "bark"
+#define S_BARK "bark2"
 #define S_WIND "linked_sound"
 #define S_WIND_COPY "wind_copy"
 #endif
@@ -60,6 +61,18 @@
 #define XAL_MAX_SOURCES 16 // needed when using OpenAL
 
 xal::Player* s;
+
+void _test_basic()
+{
+	printf("  - start test basic...\n");
+	s->play();
+	while (s->isPlaying())
+	{
+		hthread::sleep(100);
+		_update(0.1f);
+	}
+	_update(1.0f);
+}
 
 void _test_sound()
 {
@@ -321,9 +334,9 @@ void _test_util_parallel_sounds()
 int main(int argc, char **argv)
 {
 #ifndef _TEST_THREADED
-	xal::init("", false);
+	xal::init("DirectSound", 0, "", false);
 #else
-	xal::init("", true, 0.01f);
+	xal::init("DirectSound", 0, "", true, 0.01f);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _TEST_LINKS
@@ -337,6 +350,9 @@ int main(int argc, char **argv)
 #endif
 	s = xal::mgr->createPlayer(USED_SOUND);
 
+#ifdef _TEST_BASIC
+	_test_basic();
+#endif
 #ifdef _TEST_SOUND
 	_test_sound();
 #endif

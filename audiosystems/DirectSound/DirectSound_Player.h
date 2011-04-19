@@ -18,6 +18,8 @@
 #include "Player.h"
 #include "xalExport.h"
 
+struct IDirectSoundBuffer;
+
 namespace xal
 {
 	class Buffer;
@@ -29,6 +31,23 @@ namespace xal
 		DirectSound_Player(Sound* sound, Buffer* buffer);
 		~DirectSound_Player();
 
+		bool isPlaying() { return this->playing; }
+
+		void update(float k);
+
+	protected:
+		IDirectSoundBuffer* dsBuffer;
+		bool playing;
+
+		void setGain(float value);
+
+		float _sysGetOffset();
+		void _sysSetOffset(float value);
+		bool _sysPreparePlay();
+		void _sysPrepareBuffer(int channels, int rate, unsigned char* stream, int size);
+		void _sysUpdateFadeGain();
+		void _sysPlay();
+		void _sysStop();
 	};
 
 }

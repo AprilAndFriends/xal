@@ -10,6 +10,7 @@
 #include <hltypes/util.h>
 
 #include "Buffer.h"
+#include "Category.h"
 #include "Player.h"
 #include "Sound.h"
 
@@ -157,6 +158,16 @@ namespace xal
 		this->fadeSpeed = 0.0f;
 		this->offset = this->_sysGetOffset();
 		this->_sysStop();
+	}
+
+	float Player::_calcGain()
+	{
+		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+	}
+
+	float Player::_calcFadeGain()
+	{
+		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain() * this->fadeTime);
 	}
 
 }

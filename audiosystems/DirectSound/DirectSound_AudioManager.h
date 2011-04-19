@@ -20,14 +20,21 @@
 #include "AudioManager.h"
 #include "xalExport.h"
 
+struct IDirectSound;
+
 namespace xal
 {
 	class xalExport DirectSound_AudioManager : public AudioManager
 	{
 	public:
-		DirectSound_AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		DirectSound_AudioManager(unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		~DirectSound_AudioManager();
-		
+
+		IDirectSound* dsDevice;
+
+	protected:
+		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+
 	};
 
 }

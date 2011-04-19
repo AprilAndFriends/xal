@@ -48,8 +48,9 @@ namespace xal
 	class xalExport AudioManager
 	{
 	public:
-		AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		AudioManager(unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		virtual ~AudioManager();
+		void clear();
 		
 		bool isEnabled() { return this->enabled; }
 		hstr getDeviceName() { return this->deviceName; }
@@ -91,6 +92,7 @@ namespace xal
 
 	protected:
 		bool enabled;
+		unsigned long backendId;
 		hstr deviceName;
 		float updateTime;
 		float gain;

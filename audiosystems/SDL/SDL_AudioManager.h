@@ -25,7 +25,7 @@ namespace xal
 	class xalExport SDL_AudioManager : public AudioManager
 	{
 	public:
-		SDL_AudioManager(chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		SDL_AudioManager(unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		~SDL_AudioManager();
 		
 	};
