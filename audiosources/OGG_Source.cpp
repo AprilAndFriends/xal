@@ -28,7 +28,11 @@ namespace xal
 	bool OGG_Source::load(unsigned char** output)
 	{
 		xal::log("loading ogg sound " + this->filename);
-		*output = NULL;
+		if (*output != NULL)
+		{
+			delete *output;
+			*output = NULL;
+		}
 		OggVorbis_File oggStream;
 		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
 		{
@@ -43,6 +47,11 @@ namespace xal
 	{
 #if HAVE_OGG
 		xal::log("decoding ogg sound " + this->filename);
+		if (*output != NULL)
+		{
+			delete *output;
+			*output = NULL;
+		}
 		OggVorbis_File oggStream;
 		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
 		{
