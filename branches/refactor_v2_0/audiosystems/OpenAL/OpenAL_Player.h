@@ -26,7 +26,7 @@ namespace xal
 	class xalExport OpenAL_Player : public Player
 	{
 	public:
-		OpenAL_Player(Sound* sound, Buffer* buffer, unsigned int sourceId);
+		OpenAL_Player(Sound* sound, Buffer* buffer);
 		virtual ~OpenAL_Player();
 
 		virtual void setGain(float value);
@@ -39,10 +39,11 @@ namespace xal
 		unsigned int sourceId;
 		unsigned int bufferId;
 
-		void _sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size);
-		void _sysUpdateFadeGain();
-		void _sysSetOffset(float value);
 		float _sysGetOffset();
+		void _sysSetOffset(float value);
+		bool _sysPreparePlay();
+		void _sysPrepareBuffer(int channels, int rate, unsigned char* stream, int size);
+		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
 

@@ -17,15 +17,15 @@
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
+#include "OpenAL_AudioManager.h"
 #include "OpenAL_Player.h"
 #include "Sound.h"
 
 namespace xal
 {
-	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer, unsigned int sourceId) :
-		Player(sound, buffer)
+	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
+		Player(sound, buffer), sourceId(0)
 	{
-		this->sourceId = sourceId;
 		alGenBuffers(1, &this->bufferId);
 	}
 
@@ -36,8 +36,11 @@ namespace xal
 	void OpenAL_Player::setGain(float gain)
 	{
 		Player::setGain(gain);
-		alSourcef(this->sourceId, AL_GAIN, this->gain *
-			this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+		if (this->sourceId != 0)
+		{
+			alSourcef(this->sourceId, AL_GAIN, this->gain *
+				this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+		}
 	}
 
 	bool OpenAL_Player::isPlaying()
@@ -73,7 +76,16 @@ namespace xal
 		return offset;
 	}
 
-	void OpenAL_Player::_sysSetBuffer(unsigned int channels, unsigned int rate, unsigned char* stream, unsigned int size)
+	bool OpenAL_Player::_sysPreparePlay()
+	{
+		if (this->sourceId == 0)
+		{
+			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->allocateSourceId();
+		}
+		return (this->sourceId != 0);
+	}
+
+	void OpenAL_Player::_sysPrepareBuffer(int channels, int rate, unsigned char* stream, int size)
 	{
 		alBufferData(this->bufferId, (channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16), stream, size, rate);
 		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
@@ -94,6 +106,7 @@ namespace xal
 	void OpenAL_Player::_sysStop()
 	{
 		alSourceStop(this->sourceId);
+		this->sourceId = 0;
 		/*
 		if (this->sound->getCategory()->isStreamed())
 		{

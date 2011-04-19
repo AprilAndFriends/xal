@@ -71,7 +71,7 @@ namespace xal
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
 		xal::log("destroying OpenAL");
-		if (this->device)
+		if (this->device != NULL)
 		{
 			alDeleteSources(XAL_MAX_SOURCES, this->sourceIds);
 			alcMakeContextCurrent(NULL);
@@ -82,15 +82,10 @@ namespace xal
 	
 	Player* OpenAL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
 	{
-		unsigned int sourceId = this->_allocateSourceId();
-		if (sourceId != 0)
-		{
-			return new OpenAL_Player(sound, buffer, sourceId);
-		}
-		return AudioManager::_createAudioPlayer(sound, buffer);
+		return new OpenAL_Player(sound, buffer);
 	}
 	
-	unsigned int OpenAL_AudioManager::_allocateSourceId()
+	unsigned int OpenAL_AudioManager::allocateSourceId()
 	{
 		harray<unsigned int> allocated;
 		OpenAL_Player* player;

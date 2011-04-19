@@ -94,25 +94,14 @@ namespace xal
 				this->_sysUpdateFadeGain();
 			}
 		}
-		if (!this->isPlaying() && !this->isPaused())
-		{
-			// TODO - stop sound, unbind, etc.
-			//this->unbind();
-		}
 	}
 
 	void Player::play(float fadeTime, bool looping)
 	{
-		/*
-		if (this->sourceId == 0)
+		if (!this->_sysPreparePlay())
 		{
-			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
-			if (this->sourceId == 0)
-			{
-				return NULL;
-			}
+			return;
 		}
-		*/
 		if (!this->paused)
 		{
 			this->looping = looping;
@@ -121,7 +110,7 @@ namespace xal
 		if (!alreadyFading)
 		{
 			this->buffer->load();
-			this->_sysSetBuffer(this->buffer->getChannels(), this->buffer->getRate(), this->buffer->getStream(), this->buffer->getSize());
+			this->_sysPrepareBuffer(this->buffer->getChannels(), this->buffer->getRate(), this->buffer->getStream(), this->buffer->getSize());
 			if (this->isPaused())
 			{
 				this->_sysSetOffset(this->offset);

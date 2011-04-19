@@ -12,7 +12,8 @@
 
 namespace xal
 {
-	Source::Source(chstr filename) : size(0), channels(0), rate(0), duration(0.0f)
+	Source::Source(chstr filename) : size(0), channels(0), rate(0), duration(0.0f),
+		streamed(false), chunkSize(0)
 	{
 		this->filename = filename;
 	}

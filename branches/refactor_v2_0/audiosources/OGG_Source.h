@@ -29,6 +29,7 @@ namespace xal
 		~OGG_Source();
 
 		bool load(unsigned char** output);
+		bool decode(unsigned char* input, unsigned char** output, int size);
 		bool decode(unsigned char* input, unsigned char** output);
 
 	};
