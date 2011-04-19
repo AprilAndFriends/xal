@@ -154,7 +154,7 @@ namespace xal
 	{
 		if (this->dsBuffer != NULL)
 		{
-			HRESULT result = this->dsBuffer->Play(0, 0, (this->looping ? DSBPLAY_LOOPING : 0));
+			this->dsBuffer->Play(0, 0, (this->looping ? DSBPLAY_LOOPING : 0));
 			this->playing = true;
 		}
 	}
