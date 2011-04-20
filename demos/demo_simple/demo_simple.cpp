@@ -339,12 +339,11 @@ int main(int argc, char **argv)
 	unsigned long hwnd = 0;
 #ifdef _WIN32
 	hwnd = (unsigned long)GetConsoleWindow();
-	xal::log((unsigned int)hwnd);
 #endif
 #ifndef _TEST_THREADED
-	xal::init("DirectSound", hwnd, "", false);
+	xal::init(XAL_AS_DIRECTSOUND, hwnd, "", false);
 #else
-	xal::init("DirectSound", hwnd, "", true, 0.01f);
+	xal::init(XAL_AS_DIRECTSOUND, hwnd, "", true, 0.01f);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _TEST_LINKS

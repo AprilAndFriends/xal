@@ -41,23 +41,23 @@ namespace xal
 			return;
 		}
 		MMCKINFO parent;
-		memset (&parent, 0, sizeof(MMCKINFO));
+		memset(&parent, 0, sizeof(MMCKINFO));
 		parent.fccType = mmioFOURCC ('W', 'A', 'V', 'E');
-		mmioDescend (wavefile, &parent, 0, MMIO_FINDRIFF);
+		mmioDescend(wavefile, &parent, 0, MMIO_FINDRIFF);
 		MMCKINFO child;
-		memset (&child, 0, sizeof(MMCKINFO));
+		memset(&child, 0, sizeof(MMCKINFO));
 		child.fccType = mmioFOURCC ('f', 'm', 't', ' ');
-		mmioDescend (wavefile, &child, &parent, 0);
+		mmioDescend(wavefile, &child, &parent, 0);
 		WAVEFORMATEX wavefmt;
-		mmioRead (wavefile, (char*)&wavefmt, sizeof(wavefmt));
+		mmioRead(wavefile, (char*)&wavefmt, sizeof(wavefmt));
 
 		if (wavefmt.wFormatTag != WAVE_FORMAT_PCM)
 		{
 			return;
 		}
-		mmioAscend (wavefile, &child, 0);
+		mmioAscend(wavefile, &child, 0);
 		child.ckid = mmioFOURCC ('d', 'a', 't', 'a');
-		mmioDescend (wavefile, &child, &parent, MMIO_FINDCHUNK);
+		mmioDescend(wavefile, &child, &parent, MMIO_FINDCHUNK);
 
 		// creating a dsBuffer
 		DSBUFFERDESC bufferDesc;
@@ -68,7 +68,7 @@ namespace xal
 		bufferDesc.lpwfxFormat = &wavefmt;
 
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
-		if (result != DS_OK)
+		if (FAILED(result))
 		{
 			this->dsBuffer = NULL;
 			return;

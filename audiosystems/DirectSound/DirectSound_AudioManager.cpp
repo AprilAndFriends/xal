@@ -18,19 +18,19 @@
 
 namespace xal
 {
-	DirectSound_AudioManager::DirectSound_AudioManager(unsigned long backendId, chstr deviceName, bool threaded, float updateTime) :
-		AudioManager(backendId, deviceName, threaded, updateTime)
+	DirectSound_AudioManager::DirectSound_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName, bool threaded, float updateTime) :
+		AudioManager(systemName, backendId, deviceName, threaded, updateTime)
 	{
 		xal::log("initializing DirectSound");
 		HRESULT result = DirectSoundCreate(NULL, &this->dsDevice, NULL);
-		if (result != DS_OK)
+		if (FAILED(result))
 		{
 			this->dsDevice = NULL;
 			xal::log("could not create device");
 			return;
 		}
 		result = this->dsDevice->SetCooperativeLevel((HWND)backendId, DSSCL_NORMAL);
-		if (result != DS_OK)
+		if (FAILED(result))
 		{
 			this->dsDevice->Release();
 			this->dsDevice = NULL;
