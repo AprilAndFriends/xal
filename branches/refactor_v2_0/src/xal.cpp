@@ -26,34 +26,38 @@ namespace xal
 	void init(chstr systemName, unsigned long backendId, chstr deviceName, bool threaded, float updateTime)
 	{
 		xal::log("initializing XAL");
-		if (systemName == "nosound")
+		if (systemName == XAL_AS_DISABLED)
 		{
-			xal::mgr = new AudioManager(backendId, deviceName, threaded, updateTime);
+			xal::mgr = new AudioManager(XAL_AS_DISABLED, backendId, deviceName, threaded, updateTime);
 			xal::log("audio is disabled");
 			return;
 		}
 #if HAVE_OPENAL
-		if (systemName == "OpenAL")
+		if (systemName == XAL_AS_OPENAL)
 		{
-			xal::mgr = new OpenAL_AudioManager(backendId, deviceName, threaded, updateTime);
+			xal::mgr = new OpenAL_AudioManager(systemName, backendId, deviceName, threaded, updateTime);
 		}
-#elif HAVE_DIRECTSOUND
-		if (systemName == "DirectSound")
+#endif
+#if HAVE_DIRECTSOUND
+		if (systemName == XAL_AS_DIRECTSOUND)
 		{
-			xal::mgr = new DirectSound_AudioManager(backendId, deviceName, threaded, updateTime);
+			xal::mgr = new DirectSound_AudioManager(systemName, backendId, deviceName, threaded, updateTime);
 		}
-#elif HAVE_SDL
-		if (systemName == "SDL")
+#endif
+#if HAVE_SDL
+		if (systemName == XAL_AS_SDL)
 		{
-			xal::mgr = new SDL_AudioManager(backendId, deviceName, threaded, updateTime);
+			xal::mgr = new SDL_AudioManager(systemName, backendId, deviceName, threaded, updateTime);
 		}
-#else
 #endif
 		if (xal::mgr == NULL)
 		{
-			xal::mgr = new AudioManager(backendId, deviceName, threaded, updateTime);
 			xal::log("audio system does not exist: " + systemName);
+			xal::mgr = new AudioManager(XAL_AS_DISABLED, backendId, deviceName, threaded, updateTime);
+			xal::log("audio is disabled");
+			return;
 		}
+		xal::log("audio system created: " + systemName);
 	}
 	
 	void destroy()

@@ -26,9 +26,10 @@ namespace xal
 {
 	AudioManager* mgr;
 
-	AudioManager::AudioManager(unsigned long backendId, chstr deviceName, bool threaded, float updateTime) : enabled(false),
+	AudioManager::AudioManager(chstr systemName, unsigned long backendId, chstr deviceName, bool threaded, float updateTime) : enabled(false),
 		gain(1.0f), updating(false), thread(NULL)
 	{
+		this->name = systemName;
 		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;

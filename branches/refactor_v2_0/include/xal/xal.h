@@ -18,6 +18,11 @@
 
 #include "xalExport.h"
 
+#define XAL_AS_DIRECTSOUND "DirectSound"
+#define XAL_AS_OPENAL "OpenAL"
+#define XAL_AS_SDL "SDL"
+#define XAL_AS_DISABLED "Disabled"
+
 namespace xal
 {
 	xalFnExport void init(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = true, float updateTime = 0.01f);

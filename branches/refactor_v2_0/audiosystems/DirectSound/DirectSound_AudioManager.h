@@ -27,7 +27,7 @@ namespace xal
 	class xalExport DirectSound_AudioManager : public AudioManager
 	{
 	public:
-		DirectSound_AudioManager(unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		DirectSound_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		~DirectSound_AudioManager();
 
 		IDirectSound* dsDevice;

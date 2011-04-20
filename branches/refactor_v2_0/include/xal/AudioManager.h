@@ -48,10 +48,11 @@ namespace xal
 	class xalExport AudioManager
 	{
 	public:
-		AudioManager(unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		AudioManager(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		virtual ~AudioManager();
 		void clear();
 		
+		hstr getName() { return this->name; }
 		bool isEnabled() { return this->enabled; }
 		hstr getDeviceName() { return this->deviceName; }
 		float getUpdateTime() { return this->updateTime; }
@@ -91,8 +92,9 @@ namespace xal
 		bool isAnyFadingOut(chstr name);
 
 	protected:
-		bool enabled;
 		unsigned long backendId;
+		hstr name;
+		bool enabled;
 		hstr deviceName;
 		float updateTime;
 		float gain;
