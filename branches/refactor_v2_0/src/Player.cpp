@@ -111,7 +111,7 @@ namespace xal
 		if (!alreadyFading)
 		{
 			this->buffer->load();
-			this->_sysPrepareBuffer(this->buffer->getChannels(), this->buffer->getRate(), this->buffer->getStream(), this->buffer->getSize());
+			this->_sysPrepareBuffer(this->buffer->getStream(), this->buffer->getSize(), this->buffer->getChannels(), this->buffer->getSamplingRate());
 			if (this->isPaused())
 			{
 				this->_sysSetOffset(this->offset);

@@ -24,7 +24,7 @@ namespace xal
 		this->filename = filename;
 		this->realFilename = this->_findLinkedFile();
 		this->category = category;
-		this->buffer = new Buffer(this->realFilename);
+		this->buffer = xal::mgr->_createBuffer(this->realFilename);
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 	}

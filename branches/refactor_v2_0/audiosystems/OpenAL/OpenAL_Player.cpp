@@ -84,9 +84,9 @@ namespace xal
 		return (this->sourceId != 0);
 	}
 
-	void OpenAL_Player::_sysPrepareBuffer(int channels, int rate, unsigned char* stream, int size)
+	void OpenAL_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)
 	{
-		alBufferData(this->bufferId, (channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16), stream, size, rate);
+		alBufferData(this->bufferId, (channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16), stream, size, samplingRate);
 		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
 		alSourcei(this->sourceId, AL_LOOPING, this->looping);
 	}

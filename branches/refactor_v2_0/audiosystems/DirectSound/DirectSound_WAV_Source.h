@@ -9,11 +9,13 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Provides a source for OGG format.
+/// Provides a source for WAV format when using DirectSound.
 
-#if HAVE_OGG
-#ifndef XAL_OGG_SOURCE_H
-#define XAL_OGG_SOURCE_H
+#if HAVE_DIRECTSOUND && HAVE_WAV
+#ifndef XAL_DIRECTSOUND_WAV_SOURCE_H
+#define XAL_DIRECTSOUND_WAV_SOURCE_H
+#include <dsound.h>
+#include <windows.h>
 
 #include <hltypes/hstring.h>
 
@@ -22,14 +24,19 @@
 
 namespace xal
 {
-	class xalExport OGG_Source : public Source
+	class xalExport DirectSound_WAV_Source : public Source
 	{
 	public:
-		OGG_Source(chstr filename);
-		~OGG_Source();
+		DirectSound_WAV_Source(chstr filename);
+		~DirectSound_WAV_Source();
+
+		WAVEFORMATEX getWavefmt() { return this->wavefmt; }
 
 		bool load(unsigned char** output);
 
+	protected:
+		WAVEFORMATEX wavefmt;
+		
 	};
 
 }

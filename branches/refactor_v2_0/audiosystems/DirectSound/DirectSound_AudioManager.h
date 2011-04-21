@@ -27,10 +27,12 @@ namespace xal
 	class xalExport DirectSound_AudioManager : public AudioManager
 	{
 	public:
+		IDirectSound* dsDevice;
+
 		DirectSound_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
 		~DirectSound_AudioManager();
 
-		IDirectSound* dsDevice;
+		Source* _createSource(chstr filename, Format format);
 
 	protected:
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);

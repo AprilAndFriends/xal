@@ -27,18 +27,21 @@ namespace xal
 		virtual ~Source();
 
 		int getSize() { return this->size; }
+		int getChunkSize() { return this->chunkSize; }
 		int getChannels() { return this->channels; }
-		int getRate() { return this->rate; }
+		int getSamplingRate() { return this->samplingRate; }
+		int getBitsPerSample() { return this->bitsPerSample; }
 		float getDuration() { return this->duration; }
 
 		virtual bool load(unsigned char** output);
-		virtual bool decode(unsigned char* input, unsigned char** output);
+		virtual bool load(unsigned char** output, int load);
 		
 	protected:
 		hstr filename;
 		int size;
 		int channels;
-		int rate;
+		int samplingRate;
+		int bitsPerSample;
 		float duration;
 		bool streamed;
 		int chunkSize;

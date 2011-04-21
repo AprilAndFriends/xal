@@ -17,10 +17,28 @@
 #include <hltypes/util.h>
 
 #include "AudioManager.h"
+#include "Buffer.h"
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
+#include "Source.h"
 #include "xal.h"
+
+#if HAVE_M4A
+#include "M4A_Source.h"
+#endif
+#if HAVE_MP3
+#include "MP3_Source.h"
+#endif
+#if HAVE_OGG
+#include "OGG_Source.h"
+#endif
+#if HAVE_SPX
+#include "SPX_Source.h"
+#endif
+#if HAVE_WAV
+#include "WAV_Source.h"
+#endif
 
 namespace xal
 {
@@ -169,19 +187,6 @@ namespace xal
 	{
 		Category* category = this->getCategoryByName(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
-		// TODO
-		/*
-		///##
-		if (category->isDynamicLoad())
-		{
-			xal::log("created a dynamic sound: " + filename);
-		}
-		else if (!sound->load())
-		{
-			xal::log("failed to load sound " + filename);
-			return NULL;
-		}
-		*/
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}
@@ -255,6 +260,48 @@ namespace xal
 		this->players -= player;
 		player->stop();
 		delete player;
+	}
+
+	Buffer* AudioManager::_createBuffer(chstr filename)
+	{
+		return new Buffer(filename);
+	}
+
+	Source* AudioManager::_createSource(chstr filename, Format format)
+	{
+		Source* source;
+		switch (format)
+		{
+#if HAVE_M4A
+		case M4A:
+			source = new M4A_Source(filename);
+			break;
+#endif
+#if HAVE_MP3
+		case MP3:
+			source = new MP3_Source(filename);
+			break;
+#endif
+#if HAVE_OGG
+		case OGG:
+			source = new OGG_Source(filename);
+			break;
+#endif
+#if HAVE_SPX
+		case SPX:
+			source = new SPX_Source(filename);
+			break;
+#endif
+#if HAVE_WAV
+		case WAV:
+			source = new WAV_Source(filename);
+			break;
+#endif
+		default:
+			source = new Source(filename);
+			break;
+		}
+		return source;
 	}
 
 	Player* AudioManager::_createManagedPlayer(chstr name)

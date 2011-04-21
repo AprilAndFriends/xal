@@ -11,16 +11,7 @@
 #include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 
-#if HAVE_M4A
-#include "M4A_Source.h"
-#endif
-#if HAVE_OGG
-#include "OGG_Source.h"
-#endif
-#if HAVE_SPX
-#include "SPX_Source.h"
-#endif
-
+#include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
 #include "Source.h"
@@ -32,28 +23,7 @@ namespace xal
 	{
 		this->filename = filename;
 		this->fileSize = hfile::hsize(this->filename);
-		Format format = this->getFormat();
-		switch (format)
-		{
-#if HAVE_M4A
-		case M4A:
-			this->source = new M4A_Source(filename);
-			break;
-#endif
-#if HAVE_OGG
-		case OGG:
-			this->source = new OGG_Source(filename);
-			break;
-#endif
-#if HAVE_SPX
-		case SPX:
-			this->source = new SPX_Source(filename);
-			break;
-#endif
-		default:
-			this->source = new Source(filename);
-			break;
-		}
+		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
 	}
 
 	Buffer::~Buffer()
@@ -80,9 +50,14 @@ namespace xal
 		return this->source->getChannels();
 	}
 
-	long Buffer::getRate()
+	int Buffer::getSamplingRate()
 	{
-		return this->source->getRate();
+		return this->source->getSamplingRate();
+	}
+
+	int Buffer::getBitsPerSample()
+	{
+		return this->source->getBitsPerSample();
 	}
 
 	float Buffer::getDuration()
@@ -104,10 +79,22 @@ namespace xal
 			return OGG;
 		}
 #endif
+#if HAVE_MP3
+		if (this->filename.ends_with(".mp3"))
+		{
+			return MP3;
+		}
+#endif
 #if HAVE_SPX
 		if (this->filename.ends_with(".spx"))
 		{
 			return SPX;
+		}
+#endif
+#if HAVE_WAV
+		if (this->filename.ends_with(".wav"))
+		{
+			return WAV;
 		}
 #endif
 		return UNKNOWN;
@@ -127,11 +114,7 @@ namespace xal
 		}
 		else
 		{
-			result = this->source->load(&this->data);
-			if (result)
-			{
-				result = this->source->decode(this->data, &this->stream);
-			}
+			result = this->source->load(&this->stream);
 		}
 		if (result)
 		{

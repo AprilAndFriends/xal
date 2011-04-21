@@ -16,6 +16,7 @@
 #include "Buffer.h"
 #include "DirectSound_Player.h"
 #include "DirectSound_AudioManager.h"
+#include "DirectSound_WAV_Source.h"
 #include "Sound.h"
 #include "xal.h"
 
@@ -29,63 +30,7 @@ namespace xal
 		{
 			return;
 		}
-		hstr realFilename = this->sound->getRealFilename();
-		wchar_t* filename = realFilename.w_str();
-
-		//hstr2wstr(
-		//char* filename = (char*)this->sound->getRealFilename().c_str();
-		HMMIO wavefile = mmioOpen(filename, 0, MMIO_READ | MMIO_ALLOCBUF);
-
-		if (wavefile == NULL)
-		{
-			return;
-		}
-		MMCKINFO parent;
-		memset(&parent, 0, sizeof(MMCKINFO));
-		parent.fccType = mmioFOURCC ('W', 'A', 'V', 'E');
-		mmioDescend(wavefile, &parent, 0, MMIO_FINDRIFF);
-		MMCKINFO child;
-		memset(&child, 0, sizeof(MMCKINFO));
-		child.fccType = mmioFOURCC ('f', 'm', 't', ' ');
-		mmioDescend(wavefile, &child, &parent, 0);
-		WAVEFORMATEX wavefmt;
-		mmioRead(wavefile, (char*)&wavefmt, sizeof(wavefmt));
-
-		if (wavefmt.wFormatTag != WAVE_FORMAT_PCM)
-		{
-			return;
-		}
-		mmioAscend(wavefile, &child, 0);
-		child.ckid = mmioFOURCC ('d', 'a', 't', 'a');
-		mmioDescend(wavefile, &child, &parent, MMIO_FINDCHUNK);
-
-		// creating a dsBuffer
-		DSBUFFERDESC bufferDesc;
-		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
-		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
-		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = child.cksize;
-		bufferDesc.lpwfxFormat = &wavefmt;
-
-		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
-		if (FAILED(result))
-		{
-			this->dsBuffer = NULL;
-			return;
-		}
-
-		// filling buffer data
-		void* write1 = 0;
-		void* write2 = 0;
-		unsigned long length1;
-		unsigned long length2;
-		this->dsBuffer->Lock(0, child.cksize, &write1, &length1, &write2, &length2, 0);
-		if (write1 > 0)
-			mmioRead(wavefile, (char*)write1, length1);
-		if (write2 > 0)
-			mmioRead(wavefile, (char*)write2, length2);
-		this->dsBuffer->Unlock(write1, length1, write2, length2);
-		mmioClose(wavefile, 0);
+		this->buffer->load();
 	}
 
 	DirectSound_Player::~DirectSound_Player()
@@ -138,11 +83,46 @@ namespace xal
 
 	bool DirectSound_Player::_sysPreparePlay()
 	{
-		return (this->dsBuffer != NULL);
+#if HAVE_WAV
+		DirectSound_WAV_Source* source = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
+		if (source != NULL)
+		{
+			WAVEFORMATEX wavefmt = source->getWavefmt();
+			DSBUFFERDESC bufferDesc;
+			memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
+			bufferDesc.dwSize = sizeof(DSBUFFERDESC);
+			bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
+			bufferDesc.dwBufferBytes = wavefmt.cbSize;
+			bufferDesc.lpwfxFormat = &wavefmt;
+			HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
+			if (FAILED(result))
+			{
+				this->dsBuffer = NULL;
+				return false;
+			}
+			return true;
+		}
+#endif
+		return false;
 	}
 
-	void DirectSound_Player::_sysPrepareBuffer(int channels, int rate, unsigned char* stream, int size)
+	void DirectSound_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)
 	{
+		// filling buffer data
+		void* write1 = 0;
+		void* write2 = 0;
+		unsigned long length1;
+		unsigned long length2;
+		this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
+		if (write1 != NULL)
+		{
+			memcpy(write1, stream, length1);
+		}
+		if (write2 != NULL)
+		{
+			memcpy(write2, &stream[length1], length2);
+		}
+		this->dsBuffer->Unlock(write1, length1, write2, length2);
 	}
 
 	void DirectSound_Player::_sysUpdateFadeGain()
