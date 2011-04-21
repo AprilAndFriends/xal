@@ -39,31 +39,12 @@ namespace xal
 			xal::log("ogg: error opening file!");
 			return false;
 		}
-		ov_clear(&oggStream);
-		return true;
-	}
-
-	bool OGG_Source::decode(unsigned char* input, unsigned char** output)
-	{
-#if HAVE_OGG
-		xal::log("decoding ogg sound " + this->filename);
-		if (*output != NULL)
-		{
-			delete *output;
-			*output = NULL;
-		}
-		OggVorbis_File oggStream;
-		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
-		{
-			xal::log("ogg: error opening file!");
-			return false;
-		}
-		//alGenBuffers(1, &this->buffer);
 		vorbis_info* info = ov_info(&oggStream, -1);
 		this->channels = info->channels;
-		this->rate = info->rate;
-		this->size = (unsigned long)ov_pcm_total(&oggStream, -1) * this->channels * 2; // always 16 bit data
-		this->duration = ((float)this->size) / (this->rate * this->channels * 2);
+		this->samplingRate = info->rate;
+		this->bitsPerSample = 16; // always 16 bit data
+		this->size = (unsigned long)ov_pcm_total(&oggStream, -1) * this->channels * this->bitsPerSample / 8;
+		this->duration = ((float)this->size) / (this->samplingRate * this->channels * this->bitsPerSample / 8);
 		unsigned int remaining = this->size;
 		*output = new unsigned char[this->size];
 		bool result = false;
@@ -91,8 +72,6 @@ namespace xal
 				XAL_NORMALIZE_ENDIAN(*p);
 			}
 #endif	
-			//alBufferData(this->buffer, (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data, length, info->rate);
-			//delete [] data;
 			result = true;
 		}
 		else
@@ -101,11 +80,6 @@ namespace xal
 		}
 		ov_clear(&oggStream);
 		return result;
-#else
-#warning HAVE_OGG is not defined to 1. No OGG support.
-		xal::log("no ogg support built in, cannot load " + this->filename);
-		return false;
-#endif
 	}
 
 }

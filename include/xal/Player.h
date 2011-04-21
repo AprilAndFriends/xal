@@ -66,7 +66,7 @@ namespace xal
 		virtual float _sysGetOffset() { return 1.0f; }
 		virtual void _sysSetOffset(float value) { }
 		virtual bool _sysPreparePlay() { return true; }
-		virtual void _sysPrepareBuffer(int channels, int rate, unsigned char* stream, int size) { }
+		virtual void _sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate) { }
 		virtual void _sysUpdateFadeGain() { }
 		virtual void _sysPlay() { }
 		virtual void _sysStop() { }

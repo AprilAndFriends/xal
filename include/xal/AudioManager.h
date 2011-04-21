@@ -27,15 +27,20 @@ namespace xal
 {
 	enum Format
 	{
-		//WAV,
 #if HAVE_M4A
 		M4A,
+#endif
+#if HAVE_MP3
+		MP3,
 #endif
 #if HAVE_OGG
 		OGG,
 #endif
 #if HAVE_SPX
 		SPX,
+#endif
+#if HAVE_WAV
+		WAV,
 #endif
 		UNKNOWN
 	};
@@ -44,6 +49,7 @@ namespace xal
 	class Category;
 	class Player;
 	class Sound;
+	class Source;
 
 	class xalExport AudioManager
 	{
@@ -77,6 +83,8 @@ namespace xal
 
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
+		virtual Buffer* _createBuffer(chstr filename);
+		virtual Source* _createSource(chstr filename, Format format);
 
 		void play(chstr name, float fadeTime = 0.0f, bool looping = false, float gain = 1.0f);
 		void stop(chstr name, float fadeTime = 0.0f);

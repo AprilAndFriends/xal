@@ -9,11 +9,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Provides a source for OGG format.
+/// Provides a source for WAV format.
 
-#if HAVE_OGG
-#ifndef XAL_OGG_SOURCE_H
-#define XAL_OGG_SOURCE_H
+#if HAVE_WAV
+#ifndef XAL_WAV_SOURCE_H
+#define XAL_WAV_SOURCE_H
 
 #include <hltypes/hstring.h>
 
@@ -22,11 +22,11 @@
 
 namespace xal
 {
-	class xalExport OGG_Source : public Source
+	class xalExport WAV_Source : public Source
 	{
 	public:
-		OGG_Source(chstr filename);
-		~OGG_Source();
+		WAV_Source(chstr filename);
+		~WAV_Source();
 
 		bool load(unsigned char** output);
 

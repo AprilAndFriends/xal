@@ -31,24 +31,6 @@ namespace xal
 	bool SPX_Source::load(unsigned char** output)
 	{
 		/*
-		xal::log("loading spx sound " + this->filename);
-		if (!hfile::exists(this->filename))
-		{
-			xal::log("spx: file does not exist!");
-			return false;
-		}
-		hfile file(this->filename);
-		this->size = file.size();
-		*output = (unsigned char*)malloc(this->size * sizeof(unsigned char));
-		file.read_raw(*output, this->size);
-		file.close();
-		//*/
-		return true;
-	}
-
-	bool SPX_Source::decode(unsigned char* input, unsigned char** output)
-	{
-		/*
 		float output2[FRAME_SIZE];
 		char cbits[200];
 		unsigned short nbBytes;

@@ -29,7 +29,6 @@ namespace xal
 		~SPX_Source();
 
 		bool load(unsigned char** output);
-		bool decode(unsigned char* input, unsigned char** output);
 
 	};
 

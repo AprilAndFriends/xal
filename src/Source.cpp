@@ -12,8 +12,8 @@
 
 namespace xal
 {
-	Source::Source(chstr filename) : size(0), channels(0), rate(0), duration(0.0f),
-		streamed(false), chunkSize(0)
+	Source::Source(chstr filename) : size(0), channels(2), samplingRate(44100), bitsPerSample(16),
+		duration(0.0f), chunkSize(0), streamed(false)
 	{
 		this->filename = filename;
 	}
@@ -28,9 +28,9 @@ namespace xal
 		return true;
 	}
 	
-	bool Source::decode(unsigned char* input, unsigned char** output)
+	bool Source::load(unsigned char** output, int size)
 	{
-		xal::log("decoding dummy file " + this->filename);
+		xal::log("loading dummy file " + this->filename);
 		return true;
 	}
 	

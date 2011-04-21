@@ -32,10 +32,12 @@ namespace xal
 
 		chstr getFilename() { return this->filename; }
 		unsigned char* getStream() { return this->stream; }
+		Source* getSource() { return this->source; }
 
 		unsigned int getSize();
 		unsigned int getChannels();
-		long getRate();
+		int getSamplingRate();
+		int getBitsPerSample();
 		float getDuration();
 		Format getFormat();
 
