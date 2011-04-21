@@ -7,6 +7,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/hfile.h>
+
 #include "Source.h"
 #include "xal.h"
 
@@ -24,13 +26,28 @@ namespace xal
 	
 	bool Source::load(unsigned char** output)
 	{
-		xal::log("loading dummy file " + this->filename);
+		if (*output != NULL)
+		{
+			delete *output;
+			*output = NULL;
+		}
+		xal::log("loading file " + this->filename);
+		if (!hfile::exists(this->filename))
+		{
+			xal::log("ERROR: unable to file " + this->filename);
+			return false;
+		}
 		return true;
 	}
 	
 	bool Source::load(unsigned char** output, int size)
 	{
-		xal::log("loading dummy file " + this->filename);
+		xal::log("loading file " + this->filename);
+		if (!hfile::exists(this->filename))
+		{
+			xal::log("ERROR: unable to file " + this->filename);
+			return false;
+		}
 		return true;
 	}
 	

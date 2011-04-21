@@ -102,6 +102,7 @@ namespace xal
 			}
 			return true;
 		}
+
 #endif
 		return false;
 	}
