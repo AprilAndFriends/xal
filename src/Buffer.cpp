@@ -40,12 +40,12 @@ namespace xal
 		}
 	}
 	
-	unsigned int Buffer::getSize()
+	int Buffer::getSize()
 	{
 		return this->source->getSize();
 	}
 
-	unsigned int Buffer::getChannels()
+	int Buffer::getChannels()
 	{
 		return this->source->getChannels();
 	}

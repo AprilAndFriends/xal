@@ -41,8 +41,9 @@ namespace xal
 		this->channels = info->channels;
 		this->samplingRate = info->rate;
 		this->bitsPerSample = 16; // always 16 bit data
-		this->size = (unsigned long)ov_pcm_total(&oggStream, -1) * this->channels * this->bitsPerSample / 8;
-		this->duration = ((float)this->size) / (this->samplingRate * this->channels * this->bitsPerSample / 8);
+		int bytes = this->bitsPerSample / 8;
+		this->size = (unsigned long)ov_pcm_total(&oggStream, -1) * this->channels * bytes;
+		this->duration = ((float)this->size) / (this->samplingRate * this->channels * bytes);
 		unsigned int remaining = this->size;
 		*output = new unsigned char[this->size];
 		bool result = false;
@@ -63,9 +64,8 @@ namespace xal
 				size -= read;
 				buffer += read;
 			}
-
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			for (int i = 0; i < this->size; i += this->bitsPerSample / 8)
+			for (int i = 0; i < this->size; i += bytes)
 			{
 				XAL_NORMALIZE_ENDIAN((uint16_t)((*output)[i])); // always 16 bit data
 			}

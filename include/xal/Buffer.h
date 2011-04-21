@@ -31,11 +31,12 @@ namespace xal
 		virtual ~Buffer();
 
 		chstr getFilename() { return this->filename; }
+		int getFileSize() { return this->fileSize; }
 		unsigned char* getStream() { return this->stream; }
 		Source* getSource() { return this->source; }
 
-		unsigned int getSize();
-		unsigned int getChannels();
+		int getSize();
+		int getChannels();
 		int getSamplingRate();
 		int getBitsPerSample();
 		float getDuration();
@@ -45,7 +46,7 @@ namespace xal
 		
 	protected:
 		hstr filename;
-		unsigned int fileSize;
+		int fileSize;
 		bool loaded;
 		unsigned char* data;
 		unsigned char* stream;

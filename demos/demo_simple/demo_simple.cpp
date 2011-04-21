@@ -46,7 +46,7 @@
 #endif
 
 #ifndef _TEST_LINKS
-#define S_BARK "bark2"
+#define S_BARK "bark"
 #define S_WIND "wind"
 #define S_WIND_COPY "wind_copy"
 #ifndef _TEST_STREAM
