@@ -12,6 +12,7 @@
 #include <windows.h>
 
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #include "Buffer.h"
 #include "DirectSound_Player.h"
@@ -83,28 +84,37 @@ namespace xal
 
 	bool DirectSound_Player::_sysPreparePlay()
 	{
+		WAVEFORMATEX wavefmt;
 #if HAVE_WAV
 		DirectSound_WAV_Source* source = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
 		if (source != NULL)
 		{
-			WAVEFORMATEX wavefmt = source->getWavefmt();
-			DSBUFFERDESC bufferDesc;
-			memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
-			bufferDesc.dwSize = sizeof(DSBUFFERDESC);
-			bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-			bufferDesc.dwBufferBytes = wavefmt.cbSize;
-			bufferDesc.lpwfxFormat = &wavefmt;
-			HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
-			if (FAILED(result))
-			{
-				this->dsBuffer = NULL;
-				return false;
-			}
-			return true;
+			wavefmt = source->getWavefmt();
 		}
-
+		else
 #endif
-		return false;
+		{
+			wavefmt.cbSize = this->buffer->getSize();
+			wavefmt.nChannels = this->buffer->getChannels();
+			wavefmt.nSamplesPerSec = this->buffer->getSamplingRate();
+			wavefmt.wBitsPerSample = this->buffer->getBitsPerSample();
+			wavefmt.wFormatTag = WAVE_FORMAT_PCM;
+			wavefmt.nBlockAlign = this->buffer->getSize();
+			wavefmt.nAvgBytesPerSec = hmax(this->buffer->getSize(), this->buffer->getSamplingRate());
+		}
+		DSBUFFERDESC bufferDesc;
+		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
+		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
+		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
+		bufferDesc.dwBufferBytes = wavefmt.cbSize;
+		bufferDesc.lpwfxFormat = &wavefmt;
+		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
+		if (FAILED(result))
+		{
+			this->dsBuffer = NULL;
+			return false;
+		}
+		return true;
 	}
 
 	void DirectSound_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)

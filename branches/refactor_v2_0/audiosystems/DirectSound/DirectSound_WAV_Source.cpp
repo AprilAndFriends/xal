@@ -30,19 +30,18 @@ namespace xal
 
 	bool DirectSound_WAV_Source::load(unsigned char** output)
 	{
-		xal::log("loading wav sound " + this->filename);
-		if (!hfile::exists(this->filename))
+		if (!Source::load(output))
 		{
-			xal::log("file not found " + this->filename);
 			return false;
 		}
 		wchar_t* filenameW = this->filename.w_str();
-		HMMIO file = mmioOpen(filenameW, 0, MMIO_READ | MMIO_ALLOCBUF);
+		HMMIO file = mmioOpen(filenameW, 0, (MMIO_READ | MMIO_ALLOCBUF));
 		delete [] filenameW;
 		if (file == NULL)
 		{
 			return false;
 		}
+		// getting all the info
 		MMCKINFO parent;
 		memset(&parent, 0, sizeof(MMCKINFO));
 		parent.fccType = mmioFOURCC('W', 'A', 'V', 'E');
@@ -60,49 +59,14 @@ namespace xal
 		this->size = wavefmt.cbSize;
 		this->samplingRate = wavefmt.nSamplesPerSec;
 		this->bitsPerSample = wavefmt.wBitsPerSample;
+		// reading audio data
 		mmioAscend(file, &child, 0);
 		child.ckid = mmioFOURCC('d', 'a', 't', 'a');
 		mmioDescend(file, &child, &parent, MMIO_FINDCHUNK);
-
 		*output = new unsigned char[this->size];
 		mmioRead(file, (char*)(*output), this->size);
 		mmioClose(file, 0);
 		return true;
-		/*
-
-
-
-
-
-		// creating a dsBuffer
-		DSBUFFERDESC bufferDesc;
-		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
-		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
-		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = child.cksize;
-		bufferDesc.lpwfxFormat = &wavefmt;
-
-		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
-		if (FAILED(result))
-		{
-			this->dsBuffer = NULL;
-			return;
-		}
-
-		// filling buffer data
-		void* write1 = 0;
-		void* write2 = 0;
-		unsigned long length1;
-		unsigned long length2;
-		this->dsBuffer->Lock(0, child.cksize, &write1, &length1, &write2, &length2, 0);
-		if (write1 > 0)
-			mmioRead(wavefile, (char*)write1, length1);
-		if (write2 > 0)
-			mmioRead(wavefile, (char*)write2, length2);
-		this->dsBuffer->Unlock(write1, length1, write2, length2);
-		mmioClose(wavefile, 0);
-		return true;
-		*/
 	}
 
 }

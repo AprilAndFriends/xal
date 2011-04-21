@@ -36,6 +36,8 @@ namespace xal
 		file.read_raw(buffer, 4); // WAVE
 		hstr tag;
 		int size = 0;
+		short value16;
+		int value32;
 		while (!file.eof())
 		{
 			file.read_raw(buffer, 4); // next tag
@@ -45,10 +47,61 @@ namespace xal
 			XAL_NORMALIZE_ENDIAN((uint32_t)*buffer);
 #endif
 			memcpy(&size, buffer, 4);
-            if (tag == "data")
+            if (tag == "fmt ")
+            {
+				/// TODO - implement hfile::read_little_endian and hfile::read_big_endian
+				// format
+				file.read_raw(buffer, 2);
+#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
+				XAL_NORMALIZE_ENDIAN((uint16_t)*buffer);
+#endif
+				memcpy(&value16, buffer, 2);
+				if (size == 16 && value16 == 1)
+				{
+					// channels
+					file.read_raw(buffer, 2);
+#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
+					XAL_NORMALIZE_ENDIAN((uint16_t)*buffer);
+#endif
+					memcpy(&value16, buffer, 2);
+					this->channels = value16;
+					// sampling rate
+					file.read_raw(buffer, 4);
+#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
+					XAL_NORMALIZE_ENDIAN((uint32_t)*buffer);
+#endif
+					memcpy(&value32, buffer, 4);
+					this->samplingRate = value32;
+					// bytes rate
+					file.read_raw(buffer, 4);
+					// blockalign
+					file.read_raw(buffer, 2);
+					// bits per sample
+					file.read_raw(buffer, 2);
+#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
+					XAL_NORMALIZE_ENDIAN((uint16_t)*buffer);
+#endif
+					memcpy(&value16, buffer, 2);
+					this->bitsPerSample = value16;
+					size = 0;
+				}
+				else // not PCM, some form of compressed format
+				{
+					size -= 2;
+				}
+            }
+            else if (tag == "data")
             {
 				this->size = size;
-                break;
+				*output = new unsigned char[this->size];
+				file.read_raw(*output, this->size);
+#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
+				for (int i = 0; i < size; i += 2) // always 16 bit
+				{
+					XAL_NORMALIZE_ENDIAN((uint16_t)((*output)[i]));
+				}
+#endif
+				size = 0;
             }
 			if (size > 0)
 			{
@@ -59,14 +112,6 @@ namespace xal
 		{
 			return false;
 		}
-		*output = new unsigned char[this->size];
-		file.read_raw(*output, this->size);
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-		for (int i = 0; i < size; i += 2) // always 16 bit
-		{
-			XAL_NORMALIZE_ENDIAN((uint16_t)((*output)[i]));
-		}
-#endif
 		return true;
 	}
 
