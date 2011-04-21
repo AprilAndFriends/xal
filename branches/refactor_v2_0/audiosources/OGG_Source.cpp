@@ -27,11 +27,9 @@ namespace xal
 
 	bool OGG_Source::load(unsigned char** output)
 	{
-		xal::log("loading ogg sound " + this->filename);
-		if (*output != NULL)
+		if (!Source::load(output))
 		{
-			delete *output;
-			*output = NULL;
+			return false;
 		}
 		OggVorbis_File oggStream;
 		if (ov_fopen((char*)this->filename.c_str(), &oggStream) != 0)
@@ -66,10 +64,10 @@ namespace xal
 				buffer += read;
 			}
 
-#ifdef __BIG_ENDIAN__
-			for (uint16_t* p = (uint16_t*)data; (unsigned char*)p < buffer; p++)
+#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
+			for (int i = 0; i < this->size; i += this->bitsPerSample / 8)
 			{
-				XAL_NORMALIZE_ENDIAN(*p);
+				XAL_NORMALIZE_ENDIAN((uint16_t)((*output)[i])); // always 16 bit data
 			}
 #endif	
 			result = true;

@@ -30,6 +30,10 @@ namespace xal
 
 	bool SPX_Source::load(unsigned char** output)
 	{
+		if (!Source::load(output))
+		{
+			return false;
+		}
 		/*
 		float output2[FRAME_SIZE];
 		char cbits[200];

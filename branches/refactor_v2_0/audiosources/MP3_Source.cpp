@@ -23,7 +23,10 @@ namespace xal
 
 	bool MP3_Source::load(unsigned char** output)
 	{
-		xal::log("decoding wav sound " + this->filename);
+		if (!Source::load(output))
+		{
+			return false;
+		}
 		return true;
 	}
 

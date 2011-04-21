@@ -15,6 +15,36 @@
 #include "SDL_AudioManager.h"
 #include "xal.h"
 
+#ifdef _WIN32
+	#if HAVE_DIRECTSOUND
+	#define XAL_AS_DEFAULT XAL_AS_DIRECTSOUND
+	#elif HAVE_SDL
+	#define XAL_AS_DEFAULT XAL_AS_SDL
+	#elif HAVE_OPENAL
+	#define XAL_AS_DEFAULT XAL_AS_OPENAL
+	#else
+	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#endif
+#elif defined(__APPLE__)
+	#if HAVE_SDL
+	#define XAL_AS_DEFAULT XAL_AS_SDL
+	#elif HAVE_OPENAL
+	#define XAL_AS_DEFAULT XAL_AS_OPENAL
+	#else
+	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#endif
+#elif defined(_UNIX)
+	#if HAVE_SDL
+	#define XAL_AS_DEFAULT XAL_AS_SDL
+	#elif HAVE_OPENAL
+	#define XAL_AS_DEFAULT XAL_AS_OPENAL
+	#else
+	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#endif
+#else
+	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+#endif
+
 namespace xal
 {
 	void xal_writelog(chstr text)
@@ -26,38 +56,43 @@ namespace xal
 	void init(chstr systemName, unsigned long backendId, chstr deviceName, bool threaded, float updateTime)
 	{
 		xal::log("initializing XAL");
-		if (systemName == XAL_AS_DISABLED)
+		hstr name = systemName;
+		if (name == "")
 		{
-			xal::mgr = new AudioManager(XAL_AS_DISABLED, backendId, deviceName, threaded, updateTime);
+			name = XAL_AS_DEFAULT;
+		}
+		if (name == XAL_AS_DISABLED)
+		{
+			xal::mgr = new AudioManager(name, backendId, deviceName, threaded, updateTime);
 			xal::log("audio is disabled");
 			return;
 		}
 #if HAVE_OPENAL
-		if (systemName == XAL_AS_OPENAL)
+		if (name == XAL_AS_OPENAL)
 		{
-			xal::mgr = new OpenAL_AudioManager(systemName, backendId, deviceName, threaded, updateTime);
+			xal::mgr = new OpenAL_AudioManager(name, backendId, deviceName, threaded, updateTime);
 		}
 #endif
 #if HAVE_DIRECTSOUND
-		if (systemName == XAL_AS_DIRECTSOUND)
+		if (name == XAL_AS_DIRECTSOUND)
 		{
-			xal::mgr = new DirectSound_AudioManager(systemName, backendId, deviceName, threaded, updateTime);
+			xal::mgr = new DirectSound_AudioManager(name, backendId, deviceName, threaded, updateTime);
 		}
 #endif
 #if HAVE_SDL
-		if (systemName == XAL_AS_SDL)
+		if (name == XAL_AS_SDL)
 		{
-			xal::mgr = new SDL_AudioManager(systemName, backendId, deviceName, threaded, updateTime);
+			xal::mgr = new SDL_AudioManager(name, backendId, deviceName, threaded, updateTime);
 		}
 #endif
 		if (xal::mgr == NULL)
 		{
-			xal::log("audio system does not exist: " + systemName);
+			xal::log("audio system does not exist: " + name);
 			xal::mgr = new AudioManager(XAL_AS_DISABLED, backendId, deviceName, threaded, updateTime);
 			xal::log("audio is disabled");
 			return;
 		}
-		xal::log("audio system created: " + systemName);
+		xal::log("audio system created: " + name);
 	}
 	
 	void destroy()
