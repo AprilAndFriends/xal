@@ -62,7 +62,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="libxal_d.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../../lib/msvc;../../hltypes/bin/$(ConfigurationName);../bin"
+				AdditionalLibraryDirectories="../../hltypes/bin/$(ConfigurationName);../bin"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -138,7 +138,7 @@
 				AdditionalDependencies="libxal.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../lib/msvc;../../hltypes/bin/$(ConfigurationName);../bin"
+				AdditionalLibraryDirectories="../../hltypes/bin/$(ConfigurationName);../bin"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
