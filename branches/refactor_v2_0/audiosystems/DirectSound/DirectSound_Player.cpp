@@ -90,23 +90,25 @@ namespace xal
 		if (source != NULL)
 		{
 			wavefmt = source->getWavefmt();
+			xal::log(hsprintf("%d %d %d %d %d %d", wavefmt.cbSize, wavefmt.nChannels, wavefmt.nSamplesPerSec,
+				wavefmt.wBitsPerSample, wavefmt.nBlockAlign, wavefmt.nAvgBytesPerSec));
 		}
 		else
 #endif
 		{
-			wavefmt.cbSize = this->buffer->getSize();
+			wavefmt.cbSize = 0;
 			wavefmt.nChannels = this->buffer->getChannels();
 			wavefmt.nSamplesPerSec = this->buffer->getSamplingRate();
 			wavefmt.wBitsPerSample = this->buffer->getBitsPerSample();
 			wavefmt.wFormatTag = WAVE_FORMAT_PCM;
-			wavefmt.nBlockAlign = this->buffer->getSize();
-			wavefmt.nAvgBytesPerSec = hmax(this->buffer->getSize(), this->buffer->getSamplingRate());
+			wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8; // standard calculation of WAV PCM data
+			wavefmt.nAvgBytesPerSec = wavefmt.nSamplesPerSec * wavefmt.nBlockAlign; // standard calculation of WAV PCM data
 		}
 		DSBUFFERDESC bufferDesc;
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = wavefmt.cbSize;
+		bufferDesc.dwBufferBytes = this->buffer->getSize();
 		bufferDesc.lpwfxFormat = &wavefmt;
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
@@ -120,11 +122,16 @@ namespace xal
 	void DirectSound_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)
 	{
 		// filling buffer data
-		void* write1 = 0;
-		void* write2 = 0;
+		void* write1 = NULL;
+		void* write2 = NULL;
 		unsigned long length1;
 		unsigned long length2;
-		this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
+		HRESULT result = this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
+		if (FAILED(result))
+		{
+			xal::log("cannot prepare buffer for " + this->sound->getRealFilename());
+			return;
+		}
 		if (write1 != NULL)
 		{
 			memcpy(write1, stream, length1);
