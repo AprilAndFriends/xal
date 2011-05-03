@@ -17,14 +17,14 @@ Global
 		win32_Release_OpenAL|Win32 = win32_Release_OpenAL|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_DirectSound|Win32.ActiveCfg = win32_Debug_DirectSound|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_DirectSound|Win32.Build.0 = win32_Debug_DirectSound|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_OpenAL|Win32.ActiveCfg = win32_Debug_OpenAL|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_OpenAL|Win32.Build.0 = win32_Debug_OpenAL|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_DirectSound|Win32.ActiveCfg = win32_Release_DirectSound|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_DirectSound|Win32.Build.0 = win32_Release_DirectSound|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_OpenAL|Win32.ActiveCfg = win32_Release_OpenAL|Win32
-		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_OpenAL|Win32.Build.0 = win32_Release_OpenAL|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_DirectSound|Win32.ActiveCfg = win32_DirectSound_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_DirectSound|Win32.Build.0 = win32_DirectSound_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_OpenAL|Win32.ActiveCfg = win32_DirectSound_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Debug_OpenAL|Win32.Build.0 = win32_DirectSound_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_DirectSound|Win32.ActiveCfg = win32_OpenAL_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_DirectSound|Win32.Build.0 = win32_OpenAL_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_OpenAL|Win32.ActiveCfg = win32_OpenAL_Release|Win32
+		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}.win32_Release_OpenAL|Win32.Build.0 = win32_OpenAL_Release|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug_DirectSound|Win32.ActiveCfg = win32_Debug|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug_DirectSound|Win32.Build.0 = win32_Debug|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug_OpenAL|Win32.ActiveCfg = win32_Debug|Win32

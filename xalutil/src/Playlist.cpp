@@ -27,6 +27,16 @@ namespace xal
 	{
 		this->clear();
 	}
+
+	harray<hstr> Playlist::getSoundNames()
+	{
+		harray<hstr> result;
+		foreach (Player*, it, this->players)
+		{
+			result += (*it)->getName();
+		}
+		return result;
+	}
 	
 	void Playlist::update()
 	{
