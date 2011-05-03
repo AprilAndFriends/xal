@@ -17,7 +17,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="win32_Debug_OpenAL|Win32"
+			Name="win32_OpenAL_Debug|Win32"
 			OutputDirectory="bin\$(ConfigurationName)"
 			IntermediateDirectory="bin\$(ConfigurationName)"
 			ConfigurationType="2"
@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -88,11 +88,11 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
-			Name="win32_Release_OpenAL|Win32"
+			Name="win32_OpenAL_Release|Win32"
 			OutputDirectory="bin\$(ConfigurationName)"
 			IntermediateDirectory="bin\$(ConfigurationName)"
 			ConfigurationType="2"
@@ -141,7 +141,7 @@
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -168,11 +168,11 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
-			Name="win32_Debug_DirectSound|Win32"
+			Name="win32_DirectSound_Debug|Win32"
 			OutputDirectory="bin\$(ConfigurationName)"
 			IntermediateDirectory="bin\$(ConfigurationName)"
 			ConfigurationType="2"
@@ -217,9 +217,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
+				AdditionalDependencies="winmm.lib dsound.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -243,11 +243,11 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
-			Name="win32_Release_DirectSound|Win32"
+			Name="win32_DirectSound_Release|Win32"
 			OutputDirectory="bin\$(ConfigurationName)"
 			IntermediateDirectory="bin\$(ConfigurationName)"
 			ConfigurationType="2"
@@ -293,10 +293,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
+				AdditionalDependencies="winmm.lib dsound.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -323,7 +323,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
