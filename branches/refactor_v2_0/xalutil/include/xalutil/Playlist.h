@@ -30,6 +30,7 @@ namespace xal
 		bool isRepeatAll() { return this->repeatAll; }
 		void setRepeatAll(bool value) { this->repeatAll = value; }
 		harray<Player*> getPlayers() { return this->players; }
+		harray<hstr> getSoundNames();
 		
 		void update();
 		
