@@ -42,7 +42,7 @@ namespace xal
 	class xalExport OpenAL_AudioManager : public AudioManager
 	{
 	public:
-		OpenAL_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~OpenAL_AudioManager();
 		
 		unsigned int allocateSourceId();

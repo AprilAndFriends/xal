@@ -27,10 +27,6 @@ namespace xal
 		Player(sound, buffer), playing(false)
 	{
 		this->dsBuffer = NULL;
-		if (!xal::mgr->isEnabled())
-		{
-			return;
-		}
 		this->buffer->load();
 	}
 

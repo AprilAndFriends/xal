@@ -99,6 +99,10 @@ namespace xal
 
 	void Player::play(float fadeTime, bool looping)
 	{
+		if (!xal::mgr->isEnabled())
+		{
+			return;
+		}
 		if (!this->_sysPreparePlay())
 		{
 			return;
