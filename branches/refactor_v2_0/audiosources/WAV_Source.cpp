@@ -8,6 +8,8 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_WAV
+#include <string.h>
+
 #include <hltypes/hfile.h>
 
 #include "WAV_Source.h"
