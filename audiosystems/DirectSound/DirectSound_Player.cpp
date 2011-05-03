@@ -90,8 +90,6 @@ namespace xal
 		if (source != NULL)
 		{
 			wavefmt = source->getWavefmt();
-			xal::log(hsprintf("%d %d %d %d %d %d", wavefmt.cbSize, wavefmt.nChannels, wavefmt.nSamplesPerSec,
-				wavefmt.wBitsPerSample, wavefmt.nBlockAlign, wavefmt.nAvgBytesPerSec));
 		}
 		else
 #endif
@@ -129,7 +127,7 @@ namespace xal
 		HRESULT result = this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
-			xal::log("cannot prepare buffer for " + this->sound->getRealFilename());
+			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
 			return;
 		}
 		if (write1 != NULL)
