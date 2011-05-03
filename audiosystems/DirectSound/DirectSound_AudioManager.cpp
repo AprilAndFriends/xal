@@ -21,7 +21,7 @@
 
 namespace xal
 {
-	DirectSound_AudioManager::DirectSound_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName, bool threaded, float updateTime) :
+	DirectSound_AudioManager::DirectSound_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, deviceName, threaded, updateTime)
 	{
 		xal::log("initializing DirectSound");

@@ -54,7 +54,7 @@ namespace xal
 	class xalExport AudioManager
 	{
 	public:
-		AudioManager(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		virtual ~AudioManager();
 		void clear();
 		

@@ -37,7 +37,7 @@
 
 namespace xal
 {
-	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName, bool threaded, float updateTime) :
+	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, deviceName, threaded, updateTime), device(NULL), context(NULL)
 	{
 		xal::log("initializing OpenAL");

@@ -14,7 +14,7 @@
 
 namespace xal
 {
-	SDL_AudioManager::SDL_AudioManager(unsigned long backendId, chstr deviceName, bool threaded, float updateTime) :
+	SDL_AudioManager::SDL_AudioManager(unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(deviceName, threaded, updateTime)
 	{
 	}

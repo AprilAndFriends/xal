@@ -29,7 +29,7 @@ namespace xal
 	public:
 		IDirectSound* dsDevice;
 
-		DirectSound_AudioManager(chstr systemName, unsigned long backendId, chstr deviceName = "", bool threaded = false, float updateTime = 0.01f);
+		DirectSound_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~DirectSound_AudioManager();
 
 		Source* _createSource(chstr filename, Format format);
