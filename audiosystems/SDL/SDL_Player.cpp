@@ -129,8 +129,11 @@ namespace xal
 
 	void SDL_Player::_sysPlay()
 	{
-		SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
-		this->channelId = Mix_PlayChannel(-1, source->getMixChunk(), (this->looping ? -1 : 0));
+		if (this->channelId < 0)
+		{
+			SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
+			this->channelId = Mix_PlayChannel(-1, source->getMixChunk(), (this->looping ? -1 : 0));
+		}
 		/*
 		if (this->dsBuffer != NULL)
 		{

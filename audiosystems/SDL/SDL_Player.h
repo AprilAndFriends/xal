@@ -30,7 +30,6 @@ namespace xal
 		~SDL_Player();
 
 		bool isPlaying();
-
 		void setGain(float value);
 
 	protected:
