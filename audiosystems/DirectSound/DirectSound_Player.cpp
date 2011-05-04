@@ -24,9 +24,8 @@
 namespace xal
 {
 	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), playing(false)
+		Player(sound, buffer), playing(false), dsBuffer(NULL)
 	{
-		this->dsBuffer = NULL;
 		this->buffer->load();
 	}
 

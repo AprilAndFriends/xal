@@ -22,12 +22,20 @@
 
 namespace xal
 {
+	class Source;
+	class Player;
+
 	class xalExport SDL_AudioManager : public AudioManager
 	{
 	public:
-		SDL_AudioManager(unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
+
+		Source* SDL_AudioManager::_createSource(chstr filename, Format format);
 		
+	protected:
+		Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer);
+
 	};
 
 }

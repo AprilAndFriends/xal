@@ -32,6 +32,7 @@ namespace xal
 		~DirectSound_Player();
 
 		bool isPlaying() { return this->playing; }
+		void setGain(float value);
 
 		void update(float k);
 
@@ -41,8 +42,6 @@ namespace xal
 		/// @note Due to possible latency in DirectSound, this flag is being used to avoid problems.
 		bool playing;
 
-		void setGain(float value);
-
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
 		bool _sysPreparePlay();
@@ -50,6 +49,7 @@ namespace xal
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
+
 	};
 
 }

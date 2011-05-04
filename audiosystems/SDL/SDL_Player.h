@@ -26,8 +26,27 @@ namespace xal
 	class xalExport SDL_Player : public Player
 	{
 	public:
-		SDL_Player(Sound* sound, Buffer* buffer, unsigned int sourceId);
+		SDL_Player(Sound* sound, Buffer* buffer);
 		~SDL_Player();
+
+		bool isPlaying();
+
+		void setGain(float value);
+
+	protected:
+		int channelId;
+		//IDirectSoundBuffer* dsBuffer;
+		/// @brief Playing flag.
+		/// @note Due to possible latency in DirectSound, this flag is being used to avoid problems.
+		//bool playing;
+
+		float _sysGetOffset();
+		void _sysSetOffset(float value);
+		bool _sysPreparePlay();
+		void _sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate);
+		void _sysUpdateFadeGain();
+		void _sysPlay();
+		void _sysStop();
 
 	};
 

@@ -14,7 +14,6 @@
 #include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 
-#include "DirectSound_AudioManager.h"
 #include "DirectSound_WAV_Source.h"
 #include "xal.h"
 

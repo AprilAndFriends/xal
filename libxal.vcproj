@@ -326,6 +326,161 @@
 				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
+		<Configuration
+			Name="win32_SDL_Debug|Win32"
+			OutputDirectory="bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_SDL=1;HAVE_OGG=1"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="4"
+				DisableSpecificWarnings="4251"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				GenerateDebugInformation="true"
+				ImportLibrary="$(TargetDir)\$(TargetName).lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="win32_SDL_Release|Win32"
+			OutputDirectory="bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_SDL=1;HAVE_OGG=1"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4251"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
+				OutputFile="$(OutDir)\$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -370,40 +525,68 @@
 			<Filter
 				Name="audiosystems"
 				>
-				<File
-					RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.cpp"
+				<Filter
+					Name="DirectSound"
 					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\DirectSound\DirectSound_Player.cpp"
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_Player.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_WAV_Source.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OpenAL"
 					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.cpp"
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_Player.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SDL"
 					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\OpenAL\OpenAL_Player.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\SDL\SDL_AudioManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\SDL\SDL_Player.cpp"
-					>
-				</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Player.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Source.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audiosources"
 				>
+				<File
+					RelativePath=".\audiosources\MP3_Source.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\audiosources\OGG_Source.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\audiosources\SPX_Source.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\WAV_Source.cpp"
 					>
 				</File>
 			</Filter>
@@ -448,40 +631,68 @@
 			<Filter
 				Name="audiosystems"
 				>
-				<File
-					RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.h"
+				<Filter
+					Name="DirectSound"
 					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\DirectSound\DirectSound_Player.h"
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_Player.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_WAV_Source.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SDL"
 					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.h"
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Player.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Source.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OpenAL"
 					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\OpenAL\OpenAL_Player.h"
-					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\SDL\SDL_AudioManager.h"
-					>
-				</File>
-				<File
-					RelativePath=".\audiosystems\SDL\SDL_Player.h"
-					>
-				</File>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_Player.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audiosources"
 				>
+				<File
+					RelativePath=".\audiosources\MP3_Source.h"
+					>
+				</File>
 				<File
 					RelativePath=".\audiosources\OGG_Source.h"
 					>
 				</File>
 				<File
 					RelativePath=".\audiosources\SPX_Source.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\WAV_Source.h"
 					>
 				</File>
 			</Filter>
