@@ -8,20 +8,61 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_SDL
+#include <SDL/SDL.h>
+#include <SDL_mixer/SDL_mixer.h>
+
 #include <hltypes/hstring.h>
 
 #include "SDL_AudioManager.h"
+#include "SDL_Player.h"
+#include "SDL_Source.h"
+#include "Source.h"
+#include "xal.h"
 
 namespace xal
 {
-	SDL_AudioManager::SDL_AudioManager(unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(deviceName, threaded, updateTime)
+	SDL_AudioManager::SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(systemName, threaded, threaded, updateTime, deviceName)
 	{
+		xal::log("initializing SDL Audio");
+		int result = SDL_Init(SDL_INIT_AUDIO);
+		if (result != 0)
+		{
+			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
+			return;
+		}
+		result = Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 16384); // 44.1 kHz, 16 bit stereo, 2 channels (stereo), stream chunks of 16kB
+		if (result != 0)
+		{
+			xal::log(hsprintf("Unable to initialize audio: %s\n", Mix_GetError()));
+			return;
+		}
+		this->enabled = true;
 	}
 
 	SDL_AudioManager::~SDL_AudioManager()
 	{
+		this->clear();
+		xal::log("destroying SDL Audio");
+		Mix_CloseAudio();
+		SDL_Quit(); //2DO - remove?
 	}
 	
+	Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	{
+		return new SDL_Player(sound, buffer);
+	}
+
+	Source* SDL_AudioManager::_createSource(chstr filename, Format format)
+	{
+		Source* source;
+		switch (format)
+		{
+		default:
+			source = new SDL_Source(filename);
+			break;
+		}
+		return source;
+	}
 }
 #endif

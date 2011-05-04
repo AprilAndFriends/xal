@@ -24,6 +24,9 @@ struct IDirectSound;
 
 namespace xal
 {
+	class Source;
+	class Player;
+
 	class xalExport DirectSound_AudioManager : public AudioManager
 	{
 	public:
