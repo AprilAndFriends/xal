@@ -45,7 +45,7 @@ namespace xal
 		this->clear();
 		xal::log("destroying SDL Audio");
 		Mix_CloseAudio();
-		SDL_Quit(); //2DO - remove?
+		SDL_Quit(); // TODO - remove?
 	}
 	
 	Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)

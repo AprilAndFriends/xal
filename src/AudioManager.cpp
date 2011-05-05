@@ -147,11 +147,11 @@ namespace xal
 		this->updating = false;
 	}
 
-	Category* AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
+	Category* AudioManager::createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)
 	{
 		if (!this->categories.has_key(name))
 		{
-			this->categories[name] = new Category(name, streamed, dynamicLoad);
+			this->categories[name] = new Category(name, loadMode, decodeMode);
 		}
 		return this->categories[name];
 	}
