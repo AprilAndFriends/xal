@@ -116,12 +116,12 @@ namespace xal
 			int size;
 			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 			{
-				size = this->buffer->getData((int)this->offset, STREAM_BUFFER_SIZE, &stream);
+				size = this->buffer->getData(STREAM_BUFFER_SIZE, &stream);
 				// TODO - temporary hack
 				if (stream == NULL)
 				{
 					this->buffer->rewind();
-					size = this->buffer->getData((int)this->offset, STREAM_BUFFER_SIZE, &stream);
+					size = this->buffer->getData(STREAM_BUFFER_SIZE, &stream);
 				}
 				alBufferData(this->bufferIds[i], format, stream, size, samplingRate);
 			}
@@ -144,6 +144,7 @@ namespace xal
 		if (this->sourceId != 0)
 		{
 			alSourceStop(this->sourceId);
+			Player::_sysStop();
 			((OpenAL_AudioManager*)xal::mgr)->releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
@@ -159,13 +160,17 @@ namespace xal
 		else
 		{
 			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, &this->bufferIds[0]);
 		}
 	}
  
 	void OpenAL_Player::_sysUnqueueBuffers(int index, int count)
 	{
 		printf("UN - %d %d\n", index, count);
+		if (count < 0 || count == 2)
+		{
+			count = count;
+		}
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
@@ -173,7 +178,7 @@ namespace xal
 		else
 		{
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, &this->bufferIds[0]);
 		}
 	}
 

@@ -117,11 +117,11 @@ namespace xal
 		int bytes = 0;
 		int result;
 		int i = 0;
-		unsigned char* stream;
+		unsigned char* data;
 		for (; i < processed; i++)
 		{
-			result = this->buffer->getData((int)this->offset, STREAM_BUFFER_SIZE, &stream);
-			this->__sysSetBufferData(i, stream, result);
+			result = this->buffer->getData(STREAM_BUFFER_SIZE, &data);
+			this->__sysSetBufferData(i, data, result);
 			if (result == 0)
 			{
 				break;
@@ -199,20 +199,12 @@ namespace xal
 		this->paused = false;
 		this->_stopSound(fadeTime);
 		this->offset = 0.0f;
-		if (this->sound->isStreamed())
-		{
-			this->buffer->rewind();
-		}
 	}
 
 	void Player::pause(float fadeTime)
 	{
 		this->paused = true;
 		this->_stopSound(fadeTime);
-		if (this->sound->isStreamed())
-		{
-			this->_sysUnqueueBuffers();
-		}
 	}
 
 	void Player::_stopSound(float fadeTime)
@@ -227,6 +219,14 @@ namespace xal
 		this->offset = this->_sysGetOffset();
 		this->buffer->release();
 		this->_sysStop();
+	}
+
+	void Player::_sysStop()
+	{
+		if (this->sound->isStreamed())
+		{
+			this->paused ? this->_sysUnqueueBuffers() : this->buffer->rewind();
+		}
 	}
 
 	float Player::_calcGain()

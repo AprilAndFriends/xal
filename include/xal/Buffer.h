@@ -45,7 +45,6 @@ namespace xal
 		void release();
 		void rewind();
 
-		int getData(int offset, int size, unsigned char** output);
 		int getData(int size, unsigned char** output);
 		
 	protected:

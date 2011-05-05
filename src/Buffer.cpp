@@ -103,26 +103,16 @@ namespace xal
 		return UNKNOWN;
 	}
 
-	int Buffer::getData(int offset, int size, unsigned char** output)
-	{
-		this->prepare();
-		// TODO - streaming goes here
-		// seek to offset position
-		// set dataIndex and streamIndex to proper values
-		// load the data if necessary
-		// decode the data if necessary
-		(*output) = this->stream + offset;
-		return hmin(this->getSize(), size);
-	}
-
 	int Buffer::getData(int size, unsigned char** output)
 	{
 		this->prepare();
 		// TODO - streaming goes here
 		//(*output) = NULL;
 		//return 0;
-		(*output) = this->stream;
-		return hmin(this->getSize(), size);
+		size = hmin(this->getSize(), size);
+		this->streamIndex += size;
+		(*output) = this->stream + this->streamIndex;
+		return size;
 	}
 
 	bool Buffer::prepare(int offset)
