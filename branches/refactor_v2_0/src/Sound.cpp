@@ -24,7 +24,7 @@ namespace xal
 		this->filename = filename;
 		this->realFilename = this->_findLinkedFile();
 		this->category = category;
-		this->buffer = xal::mgr->_createBuffer(this->realFilename);
+		this->buffer = xal::mgr->_createBuffer(this->realFilename, category->getLoadMode(), category->getDecodeMode());
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + filename.replace("\\", "/").rsplit("/").pop_back().rsplit(".", 1).pop_front();
 	}
@@ -62,16 +62,23 @@ namespace xal
 		return folders.join("/");
 	}
 
+	bool Sound::isStreamed()
+	{
+		return this->category->isStreamed();
+	}
+
 	Format Sound::getFormat()
 	{
 		// TODO - remove?
 		return this->buffer->getFormat();
 	}
 
+	/*
 	bool Sound::load()
 	{
 		// TODO - remove?
 		return this->buffer->load();
 	}
+	*/
 	
 }

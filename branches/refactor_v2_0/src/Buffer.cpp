@@ -19,10 +19,13 @@
 
 namespace xal
 {
-	Buffer::Buffer(chstr filename) : loaded(false), data(NULL), stream(NULL)
+	Buffer::Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode) :
+		loaded(false), decoded(false), data(NULL), stream(NULL)
 	{
 		this->filename = filename;
 		this->fileSize = hfile::hsize(this->filename);
+		this->loadMode = loadMode;
+		this->decodeMode = decodeMode;
 		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
 	}
 
@@ -73,16 +76,16 @@ namespace xal
 			return M4A;
 		}
 #endif
-#if HAVE_OGG
-		if (this->filename.ends_with(".ogg"))
-		{
-			return OGG;
-		}
-#endif
 #if HAVE_MP3
 		if (this->filename.ends_with(".mp3"))
 		{
 			return MP3;
+		}
+#endif
+#if HAVE_OGG
+		if (this->filename.ends_with(".ogg"))
+		{
+			return OGG;
 		}
 #endif
 #if HAVE_SPX
@@ -100,7 +103,39 @@ namespace xal
 		return UNKNOWN;
 	}
 
-	bool Buffer::load()
+	int Buffer::getData(int offset, int size, unsigned char** output)
+	{
+		// TODO - streaming goes here
+		//(*output) = NULL;
+		//return 0;
+		(*output) = this->stream;
+		return this->getSize();
+	}
+
+	bool Buffer::prepare(int offset)
+	{
+		if (this->loaded)
+		{
+			return true;
+		}
+		bool result = false;
+		Format format = this->getFormat();
+		if (!xal::mgr->isEnabled())
+		{
+			result = (format != UNKNOWN);
+		}
+		else
+		{
+			result = this->source->load(&this->stream);
+		}
+		if (result)
+		{
+			this->loaded = result;
+		}
+		return result;
+	}
+
+	bool Buffer::release()
 	{
 		if (this->loaded)
 		{

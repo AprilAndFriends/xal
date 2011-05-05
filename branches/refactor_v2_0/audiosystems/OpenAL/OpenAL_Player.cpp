@@ -26,11 +26,14 @@ namespace xal
 	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer), sourceId(0)
 	{
-		alGenBuffers(1, &this->bufferId);
+		Category* category = sound->getCategory();
+		this->bufferIds[1] = 0;
+		alGenBuffers((!this->sound->isStreamed() ? 1 : 2), &this->bufferIds[0]);
 	}
 
 	OpenAL_Player::~OpenAL_Player()
 	{
+		alDeleteBuffers((!this->sound->isStreamed() ? 1 : 2), &this->bufferIds[0]);
 	}
 
 	void OpenAL_Player::setGain(float gain)
@@ -44,8 +47,7 @@ namespace xal
 
 	bool OpenAL_Player::isPlaying()
 	{
-		/*
-		if (this->sound->getCategory()->isStreamed())
+		if (this->sound->isStreamed())
 		{
 			int queued;
 			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
@@ -53,7 +55,6 @@ namespace xal
 			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
 			return (queued > 0 || count > 0);
 		}
-		*/
 		if (this->isFadingOut())
 		{
 			return false;
@@ -63,16 +64,18 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 
-	void OpenAL_Player::_sysSetOffset(float value)
-	{
-		alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
-	}
-
 	float OpenAL_Player::_sysGetOffset()
 	{
 		float offset;
 		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
 		return offset;
+	}
+
+	void OpenAL_Player::_sysSetOffset(float value)
+	{
+		// TODO - should be int
+		alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
+		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
 	}
 
 	bool OpenAL_Player::_sysPreparePlay()
@@ -84,11 +87,44 @@ namespace xal
 		return (this->sourceId != 0);
 	}
 
-	void OpenAL_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)
+	void OpenAL_Player::_sysPrepareBuffer()
 	{
-		alBufferData(this->bufferId, (channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16), stream, size, samplingRate);
-		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
-		alSourcei(this->sourceId, AL_LOOPING, this->looping);
+		if (!this->sound->isStreamed())
+		{
+			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
+			alSourcei(this->sourceId, AL_LOOPING, this->looping);
+			unsigned char* stream;
+			int bufferSize = this->buffer->getSize();
+			int size = this->buffer->getData((int)this->offset, bufferSize, &stream);
+			alBufferData(this->bufferIds[0], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
+				this->buffer->getStream(), this->buffer->getSize(), this->buffer->getSamplingRate());
+		}
+		else
+		{
+			// TODO - implement streaming buffer queueing
+			/*
+			alSourcei(this->sourceId, AL_BUFFER, 0);
+			alSourcei(this->sourceId, AL_LOOPING, false);
+			unsigned char* stream;
+			int bufferSize = this->buffer->getSize();
+			int size = this->buffer->getData((int)this->offset, bufferSize, &stream);
+			alBufferData(this->bufferIds[0], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
+				stream, size, this->buffer->getSamplingRate());
+			*/
+			/*
+			alSourcei(this->sourceId, AL_BUFFER, 0);
+			alSourcei(this->sourceId, AL_LOOPING, false);
+			this->sound->setSourceId(this->sourceId);
+			((StreamSound*)this->sound)->queueBuffers();
+			*/
+		}
+	}
+
+	void OpenAL_Player::_sysUpdateBuffer()
+	{
+		//if one of two buffers empty
+		//    this->buffer->update(this->offset);
+		//    fill buffer with new data
 	}
 
 	void OpenAL_Player::_sysUpdateFadeGain()
@@ -103,22 +139,24 @@ namespace xal
 
 	void OpenAL_Player::_sysStop()
 	{
-		alSourceStop(this->sourceId);
-		this->sourceId = 0;
-		/*
-		if (this->sound->getCategory()->isStreamed())
+		if (this->sourceId != 0)
 		{
-			//this->sound->setSourceId(this->sourceId);
-			if (this->paused)
+			alSourceStop(this->sourceId);
+			((OpenAL_AudioManager*)xal::mgr)->releaseSourceId(this->sourceId);
+			this->sourceId = 0;
+			if (this->sound->isStreamed())
 			{
-				//((StreamSound*)this->sound)->unqueueBuffers();
-			}
-			else
-			{
-				//((StreamSound*)this->sound)->rewindStream();
+				//this->sound->setSourceId(this->sourceId);
+				if (this->paused)
+				{
+					//((StreamSound*)this->sound)->unqueueBuffers();
+				}
+				else
+				{
+					//((StreamSound*)this->sound)->rewindStream();
+				}
 			}
 		}
-		*/
 	}
 
 }

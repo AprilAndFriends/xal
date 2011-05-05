@@ -69,7 +69,10 @@ namespace xal
 
 	void Player::update(float k)
 	{
-		//this->sound->update(k);
+		if (this->isPlaying())
+		{
+			this->_updateBuffer();
+		}
 		if (this->isFading())
 		{
 			this->fadeTime += this->fadeSpeed * k;
@@ -97,6 +100,11 @@ namespace xal
 		}
 	}
 
+	void Player::_updateBuffer()
+	{
+		// TODO update streaming
+	}
+
 	void Player::play(float fadeTime, bool looping)
 	{
 		if (!xal::mgr->isEnabled())
@@ -114,11 +122,17 @@ namespace xal
 		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
-			this->buffer->load();
-			this->_sysPrepareBuffer(this->buffer->getStream(), this->buffer->getSize(), this->buffer->getChannels(), this->buffer->getSamplingRate());
+			// making sure the buffer is prepared (with a loaded and decoded source)
 			if (this->isPaused())
 			{
+				this->buffer->prepare(this->offset);
+				this->_sysPrepareBuffer();
 				this->_sysSetOffset(this->offset);
+			}
+			else
+			{
+				this->buffer->prepare();
+				this->_sysPrepareBuffer();
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -161,6 +175,7 @@ namespace xal
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
 		this->offset = this->_sysGetOffset();
+		this->buffer->release();
 		this->_sysStop();
 	}
 

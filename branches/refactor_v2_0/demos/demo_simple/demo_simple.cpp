@@ -61,7 +61,7 @@
 #define S_WIND_COPY "wind_copy"
 #endif
 
-#define XAL_MAX_SOURCES 16 // needed when using OpenAL
+#define OPENAL_MAX_SOURCES 16 // needed when using OpenAL
 
 xal::Player* s;
 
@@ -176,7 +176,7 @@ void _test_multiplay()
 void _test_sources()
 {
 	printf("  - start test sources...\n");
-	for (int i = 0; i < XAL_MAX_SOURCES + 1; i++)
+	for (int i = 0; i < OPENAL_MAX_SOURCES + 1; i++)
 	{
 		xal::mgr->play(S_BARK);
 		hthread::sleep(20);

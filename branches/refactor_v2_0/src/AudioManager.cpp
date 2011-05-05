@@ -262,9 +262,9 @@ namespace xal
 		delete player;
 	}
 
-	Buffer* AudioManager::_createBuffer(chstr filename)
+	Buffer* AudioManager::_createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode)
 	{
-		return new Buffer(filename);
+		return new Buffer(filename, loadMode, decodeMode);
 	}
 
 	Source* AudioManager::_createSource(chstr filename, Format format)

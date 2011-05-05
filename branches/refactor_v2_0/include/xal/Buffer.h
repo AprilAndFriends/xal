@@ -21,13 +21,12 @@
 
 namespace xal
 {
-	class Category;
 	class Source;
 
 	class xalExport Buffer
 	{
 	public:
-		Buffer(chstr filename);
+		Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
 		virtual ~Buffer();
 
 		chstr getFilename() { return this->filename; }
@@ -42,12 +41,18 @@ namespace xal
 		float getDuration();
 		Format getFormat();
 
-		bool load();
+		bool prepare(int offset = 0);
+		bool release();
+
+		int getData(int offset, int size, unsigned char** output);
 		
 	protected:
 		hstr filename;
 		int fileSize;
+		HandlingMode loadMode;
+		HandlingMode decodeMode;
 		bool loaded;
+		bool decoded;
 		unsigned char* data;
 		unsigned char* stream;
 		Source* source;

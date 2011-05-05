@@ -95,7 +95,7 @@ namespace xal
 
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
-		virtual Buffer* _createBuffer(chstr filename);
+		virtual Buffer* _createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
 		virtual Source* _createSource(chstr filename, Format format);
 
 		void play(chstr name, float fadeTime = 0.0f, bool looping = false, float gain = 1.0f);

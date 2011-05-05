@@ -41,4 +41,9 @@ namespace xal
 	{
 	}
 
+	bool Category::isStreamed()
+	{
+		return (this->decodeMode == STREAMED || this->decodeMode == STREAMED);
+	}
+
 }
