@@ -9,7 +9,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Provides a buffer for audio data.
+/// Represents a virtual entry of audio data in the sound system.
 
 #ifndef XAL_SOUND_H
 #define XAL_SOUND_H
@@ -35,9 +35,10 @@ namespace xal
 		chstr getRealFilename() { return this->realFilename; }
 		Category* getCategory() { return this->category; }
 		Buffer* getBuffer() { return this->buffer; }
+		bool isStreamed();
 		Format getFormat();
 
-		bool load();
+		//bool load();
 		
 	protected:
 		hstr name;

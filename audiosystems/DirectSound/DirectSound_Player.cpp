@@ -26,7 +26,6 @@ namespace xal
 	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer), playing(false), dsBuffer(NULL)
 	{
-		this->buffer->load();
 	}
 
 	DirectSound_Player::~DirectSound_Player()
@@ -80,11 +79,12 @@ namespace xal
 	bool DirectSound_Player::_sysPreparePlay()
 	{
 		WAVEFORMATEX wavefmt;
+		Source* source = this->buffer->getSource();
 #if HAVE_WAV
-		DirectSound_WAV_Source* source = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
-		if (source != NULL)
+		DirectSound_WAV_Source* wavSource = dynamic_cast<DirectSound_WAV_Source*>(source);
+		if (wavSource != NULL)
 		{
-			wavefmt = source->getWavefmt();
+			wavefmt = wavSource->getWavefmt();
 		}
 		else
 #endif
@@ -112,19 +112,20 @@ namespace xal
 		return true;
 	}
 
-	void DirectSound_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)
+	void DirectSound_Player::_sysPrepareBuffer()
 	{
 		// filling buffer data
 		void* write1 = NULL;
 		void* write2 = NULL;
 		unsigned long length1;
 		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
+		HRESULT result = this->dsBuffer->Lock(0, this->buffer->getSize(), &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
 			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
 			return;
 		}
+		unsigned char* stream = this->buffer->getStream();
 		if (write1 != NULL)
 		{
 			memcpy(write1, stream, length1);

@@ -94,7 +94,7 @@ namespace xal
 		return true;
 	}
 
-	void SDL_Player::_sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate)
+	void SDL_Player::_sysPrepareBuffer()
 	{
 		/*
 		// filling buffer data

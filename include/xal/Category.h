@@ -32,6 +32,7 @@ namespace xal
 		void setGain(float value) { this->gain = value; }
 		HandlingMode getLoadMode() { return this->loadMode; }
 		HandlingMode getDecodeMode() { return this->decodeMode; }
+		bool isStreamed();
 		
 	protected:
 		hstr name;

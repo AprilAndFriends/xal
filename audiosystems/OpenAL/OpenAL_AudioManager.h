@@ -31,7 +31,7 @@
 #include "AudioManager.h"
 #include "xalExport.h"
 
-#define XAL_MAX_SOURCES 16
+#define OPENAL_MAX_SOURCES 16
 
 namespace xal
 {
@@ -46,11 +46,13 @@ namespace xal
 		~OpenAL_AudioManager();
 		
 		unsigned int allocateSourceId();
+		void releaseSourceId(unsigned int sourceId);
 
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
-		unsigned int sourceIds[XAL_MAX_SOURCES];
+		unsigned int sourceIds[OPENAL_MAX_SOURCES];
+		bool allocated[OPENAL_MAX_SOURCES];
 
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 

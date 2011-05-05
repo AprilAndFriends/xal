@@ -37,12 +37,13 @@ namespace xal
 
 	protected:
 		unsigned int sourceId;
-		unsigned int bufferId;
+		unsigned int bufferIds[2];
 
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
 		bool _sysPreparePlay();
-		void _sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate);
+		void _sysPrepareBuffer();
+		void _sysUpdateBuffer();
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();

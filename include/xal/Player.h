@@ -63,10 +63,12 @@ namespace xal
 		float _calcFadeGain();
 		void _stopSound(float fadeTime = 0.0f);
 
+		void _updateBuffer();
+
 		virtual float _sysGetOffset() { return 1.0f; }
 		virtual void _sysSetOffset(float value) { }
 		virtual bool _sysPreparePlay() { return true; }
-		virtual void _sysPrepareBuffer(unsigned char* stream, int size, int channels, int samplingRate) { }
+		virtual void _sysPrepareBuffer() { }
 		virtual void _sysUpdateFadeGain() { }
 		virtual void _sysPlay() { }
 		virtual void _sysStop() { }
