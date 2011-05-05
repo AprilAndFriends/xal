@@ -37,16 +37,24 @@ namespace xal
 
 	protected:
 		unsigned int sourceId;
-		unsigned int bufferIds[2];
+		unsigned int bufferIds[STREAM_BUFFER_COUNT];
+		int bufferIndex;
 
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
+		int _sysGetQueuedBuffersCount();
+		int _sysGetProcessedBuffersCount();
 		bool _sysPreparePlay();
 		void _sysPrepareBuffer();
-		void _sysUpdateBuffer();
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
+		void _sysQueueBuffers(int index, int count);
+		void _sysUnqueueBuffers(int index, int count);
+		void _sysQueueBuffers();
+		void _sysUnqueueBuffers();
+
+		void __sysSetBufferData(int index, unsigned char* data, int size);
 
 	};
 

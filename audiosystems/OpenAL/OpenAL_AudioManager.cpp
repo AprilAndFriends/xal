@@ -41,7 +41,7 @@ namespace xal
 		AudioManager(systemName, backendId, deviceName, threaded, updateTime), device(NULL), context(NULL)
 	{
 		xal::log("initializing OpenAL");
-		memset(this->allocated, 0, sizeof(bool));
+		memset(this->allocated, 0, OPENAL_MAX_SOURCES * sizeof(bool));
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
