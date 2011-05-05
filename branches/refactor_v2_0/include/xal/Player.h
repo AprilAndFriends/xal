@@ -17,7 +17,7 @@
 #include "xalExport.h"
 
 #define STREAM_BUFFER_COUNT 2
-#define STREAM_BUFFER_SIZE 4096
+#define STREAM_BUFFER_SIZE 4096//32768//4096
 
 namespace xal
 {
@@ -77,7 +77,7 @@ namespace xal
 		virtual void _sysPrepareBuffer() { }
 		virtual void _sysUpdateFadeGain() { }
 		virtual void _sysPlay() { }
-		virtual void _sysStop() { }
+		virtual void _sysStop();
 		virtual void _sysQueueBuffers(int index, int count) { }
 		virtual void _sysUnqueueBuffers(int index, int count) { }
 		virtual void _sysQueueBuffers() { }
