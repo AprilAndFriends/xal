@@ -20,7 +20,7 @@
 namespace xal
 {
 	Buffer::Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode) :
-		loaded(false), decoded(false), data(NULL), stream(NULL)
+		loaded(false), decoded(false), data(NULL), dataIndex(0), stream(NULL), streamIndex(0)
 	{
 		this->filename = filename;
 		this->fileSize = hfile::hsize(this->filename);
@@ -106,10 +106,21 @@ namespace xal
 	int Buffer::getData(int offset, int size, unsigned char** output)
 	{
 		// TODO - streaming goes here
+		// seek to offset position
+		// set dataIndex and streamIndex to proper values
+		// load the data if necessary
+		// decode the data if necessary
+		(*output) = this->stream + offset;
+		return hmin(this->getSize(), size);
+	}
+
+	int Buffer::getData(int size, unsigned char** output)
+	{
+		// TODO - streaming goes here
 		//(*output) = NULL;
 		//return 0;
 		(*output) = this->stream;
-		return this->getSize();
+		return hmin(this->getSize(), size);
 	}
 
 	bool Buffer::prepare(int offset)
@@ -156,6 +167,12 @@ namespace xal
 			this->loaded = result;
 		}
 		return result;
+	}
+
+	void Buffer::rewind()
+	{
+		this->dataIndex = 0;
+		this->streamIndex = 0;
 	}
 
 }

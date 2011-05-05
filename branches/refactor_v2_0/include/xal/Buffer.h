@@ -43,8 +43,10 @@ namespace xal
 
 		bool prepare(int offset = 0);
 		bool release();
+		void rewind();
 
 		int getData(int offset, int size, unsigned char** output);
+		int getData(int size, unsigned char** output);
 		
 	protected:
 		hstr filename;
@@ -54,7 +56,9 @@ namespace xal
 		bool loaded;
 		bool decoded;
 		unsigned char* data;
+		int dataIndex;
 		unsigned char* stream;
+		int streamIndex;
 		Source* source;
 
 	};
