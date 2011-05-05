@@ -25,7 +25,7 @@ namespace xal
 		AudioManager(systemName, threaded, threaded, updateTime, deviceName)
 	{
 		xal::log("initializing SDL Audio");
-		int result = SDL_Init(SDL_INIT_AUDIO);
+		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
 			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
@@ -45,7 +45,7 @@ namespace xal
 		this->clear();
 		xal::log("destroying SDL Audio");
 		Mix_CloseAudio();
-		SDL_Quit(); // TODO - remove?
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	}
 	
 	Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
