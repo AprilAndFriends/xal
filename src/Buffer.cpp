@@ -105,6 +105,7 @@ namespace xal
 
 	int Buffer::getData(int offset, int size, unsigned char** output)
 	{
+		this->prepare();
 		// TODO - streaming goes here
 		// seek to offset position
 		// set dataIndex and streamIndex to proper values
@@ -116,6 +117,7 @@ namespace xal
 
 	int Buffer::getData(int size, unsigned char** output)
 	{
+		this->prepare();
 		// TODO - streaming goes here
 		//(*output) = NULL;
 		//return 0;
@@ -146,27 +148,9 @@ namespace xal
 		return result;
 	}
 
-	bool Buffer::release()
+	void Buffer::release()
 	{
-		if (this->loaded)
-		{
-			return true;
-		}
-		bool result = false;
-		Format format = this->getFormat();
-		if (!xal::mgr->isEnabled())
-		{
-			result = (format != UNKNOWN);
-		}
-		else
-		{
-			result = this->source->load(&this->stream);
-		}
-		if (result)
-		{
-			this->loaded = result;
-		}
-		return result;
+		// TODO
 	}
 
 	void Buffer::rewind()

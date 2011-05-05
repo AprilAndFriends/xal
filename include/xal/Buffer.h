@@ -42,7 +42,7 @@ namespace xal
 		Format getFormat();
 
 		bool prepare(int offset = 0);
-		bool release();
+		void release();
 		void rewind();
 
 		int getData(int offset, int size, unsigned char** output);
