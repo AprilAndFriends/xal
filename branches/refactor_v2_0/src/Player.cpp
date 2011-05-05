@@ -17,7 +17,7 @@
 namespace xal
 {
 	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), paused(false), looping(false),
-		fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f)
+		fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0)
 	{
 		this->sound = sound;
 		this->buffer = buffer;
@@ -99,58 +99,9 @@ namespace xal
 			}
 		}
 	}
-	/*
-	int OpenAL_Player::_sysGetQueuedBuffersCount()
-	{
-		int queued;
-		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-		return queued;
-	}
-
-	int OpenAL_Player::_sysGetProcessedBuffersCount()
-	{
-		int processed;
-		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
-		return processed;
-	}
-
-	void OpenAL_Player::_sysQueueBuffers(int index, int count)
-	{
-		if (index + count <= STREAM_BUFFER_COUNT)
-		{
-			alSourceQueueBuffers(this->sourceId, count, &this->buffers[index]);
-		}
-		else
-		{
-			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
-			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
-		}
-	}
- 
-	void OpenAL_Player::_sysUnqueueBuffers(int index, int count)
-	{
-		if (index + count <= STREAM_BUFFER_COUNT)
-		{
-			alSourceUnqueueBuffers(this->sourceId, count, &this->buffers[index]);
-		}
-		else
-		{
-			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->buffers[index]);
-			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->buffers);
-		}
-	}
-
-	void OpenAL_Player::__sysSetBufferData(int index, unsigned char* data, int size)
-	{
-		alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
-			data, size, this->buffer->getSamplingRate());
-	}
- 
-	*/
 
 	void Player::_updateBuffer()
 	{
-		// TODO update streaming
 		int queued = this->_sysGetQueuedBuffersCount();
 		if (queued == 0)
 		{
@@ -163,8 +114,6 @@ namespace xal
 			return;
 		}
 		this->_sysUnqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
-		/*
-		*/
 		int bytes = 0;
 		int result;
 		int i = 0;
@@ -192,8 +141,7 @@ namespace xal
 				this->play();
 			}
 		}
-		queued = this->_sysGetQueuedBuffersCount();
-		if (queued == 0)
+		if (this->_sysGetQueuedBuffersCount() == 0)
 		{
 			this->_stopSound();
 		}

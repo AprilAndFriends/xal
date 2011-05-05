@@ -38,7 +38,6 @@ namespace xal
 	protected:
 		unsigned int sourceId;
 		unsigned int bufferIds[STREAM_BUFFER_COUNT];
-		int bufferIndex;
 
 		float _sysGetOffset();
 		void _sysSetOffset(float value);

@@ -24,7 +24,7 @@
 namespace xal
 {
 	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), sourceId(0), bufferIndex(0)
+		Player(sound, buffer), sourceId(0)
 	{
 		Category* category = sound->getCategory();
 		memset(&this->bufferIds[0], 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
@@ -49,11 +49,8 @@ namespace xal
 	{
 		if (this->sound->isStreamed())
 		{
-			int queued;
-			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-			int count;
-			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &count);
-			return (queued > 0 || count > 0);
+			printf("PLAYING: %d\n", (int)(this->_sysGetQueuedBuffersCount() > 0 || this->_sysGetProcessedBuffersCount() > 0));
+			return (this->_sysGetQueuedBuffersCount() > 0 || this->_sysGetProcessedBuffersCount() > 0);
 		}
 		if (this->isFadingOut())
 		{
@@ -107,9 +104,9 @@ namespace xal
 		int samplingRate = this->buffer->getSamplingRate();
 		if (!this->sound->isStreamed())
 		{
+			alBufferData(this->bufferIds[0], format, this->buffer->getStream(), this->buffer->getSize(), samplingRate);
 			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
 			alSourcei(this->sourceId, AL_LOOPING, this->looping);
-			alBufferData(this->bufferIds[0], format, this->buffer->getStream(), this->buffer->getSize(), samplingRate);
 		}
 		else
 		{
@@ -120,6 +117,12 @@ namespace xal
 			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
 			{
 				size = this->buffer->getData((int)this->offset, STREAM_BUFFER_SIZE, &stream);
+				// TODO - temporary hack
+				if (stream == NULL)
+				{
+					this->buffer->rewind();
+					size = this->buffer->getData((int)this->offset, STREAM_BUFFER_SIZE, &stream);
+				}
 				alBufferData(this->bufferIds[i], format, stream, size, samplingRate);
 			}
 			this->_sysQueueBuffers(0, STREAM_BUFFER_COUNT);
@@ -148,6 +151,7 @@ namespace xal
 
 	void OpenAL_Player::_sysQueueBuffers(int index, int count)
 	{
+		printf("QU - %d %d\n", index, count);
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
@@ -161,6 +165,7 @@ namespace xal
  
 	void OpenAL_Player::_sysUnqueueBuffers(int index, int count)
 	{
+		printf("UN - %d %d\n", index, count);
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
