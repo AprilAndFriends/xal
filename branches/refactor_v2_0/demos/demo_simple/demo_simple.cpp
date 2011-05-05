@@ -46,7 +46,7 @@
 #endif
 
 #ifndef _TEST_LINKS
-#define S_BARK "bark2"
+#define S_BARK "bark"
 #define S_WIND "wind"
 #define S_WIND_COPY "wind_copy"
 #ifndef _TEST_STREAM
@@ -348,11 +348,11 @@ int main(int argc, char **argv)
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _TEST_LINKS
 #ifdef _TEST_STREAM
-	xal::mgr->createCategory("streamable", true);
+	xal::mgr->createCategory("streamable", xal::STREAMED, xal::STREAMED);
 #endif
 	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
 #else
-	xal::mgr->createCategory("cat", true);
+	xal::mgr->createCategory("cat", xal::STREAMED);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
 	s = xal::mgr->createPlayer(USED_SOUND);

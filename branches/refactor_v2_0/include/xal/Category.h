@@ -15,6 +15,8 @@
 #define XAL_CATEGORY_H
 
 #include <hltypes/hstring.h>
+
+#include "AudioManager.h"
 #include "xalExport.h"
 
 namespace xal
@@ -22,20 +24,20 @@ namespace xal
 	class xalExport Category
 	{
 	public:
-		Category(chstr name, bool streamed = false, bool dynamicLoad = false);
+		Category(chstr name, HandlingMode loadMode = FULL, HandlingMode decodeMode = FULL);
 		~Category();
 		
 		hstr getName() { return this->name; }
-		bool isStreamed() { return this->streamed; }
-		bool isDynamicLoad() { return this->dynamicLoad; }
 		float getGain() { return this->gain; }
 		void setGain(float value) { this->gain = value; }
+		HandlingMode getLoadMode() { return this->loadMode; }
+		HandlingMode getDecodeMode() { return this->decodeMode; }
 		
 	protected:
 		hstr name;
-		bool streamed;
-		bool dynamicLoad;
 		float gain;
+		HandlingMode loadMode;
+		HandlingMode decodeMode;
 		
 	};
 

@@ -45,6 +45,18 @@ namespace xal
 		UNKNOWN
 	};
 
+	enum HandlingMode
+	{
+		/// @brief Handles on Sound creation, keeps results in memory.
+		FULL = 0,
+		/// @brief Handles when first need arises, keeps results in memory.
+		LAZY = 1,
+		/// @brief Handles when first need arises, removes from memory when not needed anymore.
+		ON_DEMAND = 2,
+		/// @brief Handles streamed.
+		STREAMED = 3
+	};
+
 	class Buffer;
 	class Category;
 	class Player;
@@ -70,7 +82,7 @@ namespace xal
 		void lockUpdate();
 		void unlockUpdate();
 
-		Category* createCategory(chstr name, bool streamed = false, bool dynamicLoad = false);
+		Category* createCategory(chstr name, HandlingMode loadMode = FULL, HandlingMode decodeMode = FULL);
 		Category* getCategoryByName(chstr name);
 		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
