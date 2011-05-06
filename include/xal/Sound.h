@@ -38,8 +38,6 @@ namespace xal
 		bool isStreamed();
 		Format getFormat();
 
-		//bool load();
-		
 	protected:
 		hstr name;
 		hstr filename;
