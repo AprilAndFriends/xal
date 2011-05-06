@@ -120,7 +120,6 @@ namespace xal
 		for (; i < processed; i++)
 		{
 			size = this->buffer->prepare();
-			//size = this->buffer->getData(&data);
 			if (size == 0)
 			{
 				printf("END %d %d\n", i, size);
@@ -172,13 +171,13 @@ namespace xal
 			// making sure the buffer is prepared (with a loaded and decoded source)
 			if (this->isPaused())
 			{
-				this->buffer->prepare(this->offset);
+				//this->buffer->prepare(this->offset);
 				this->_sysPrepareBuffer();
 				this->_sysSetOffset(this->offset);
 			}
 			else
 			{
-				this->buffer->prepare();
+				//this->buffer->prepare();
 				this->_sysPrepareBuffer();
 			}
 		}
@@ -231,6 +230,7 @@ namespace xal
 		if (this->sound->isStreamed())
 		{
 			this->_sysUnqueueBuffers();
+			this->bufferIndex = 0;
 			if (!this->paused)
 			{
 				this->buffer->rewind();

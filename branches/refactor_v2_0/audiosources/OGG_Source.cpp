@@ -76,13 +76,12 @@ namespace xal
 		{
 			return false;
 		}
-		unsigned int remaining = this->size;
 		*output = new unsigned char[this->size];
 		bool result = false;
 		if (*output != NULL)
 		{
 			int section;
-			unsigned long size = remaining;
+			unsigned long size = this->size;
 			unsigned char* buffer = *output;
 			int read;
 			while (size > 0)
@@ -90,7 +89,6 @@ namespace xal
 				read = ov_read(&this->oggStream, (char*)buffer, size, 0, 2, 1, &section);
 				if (read == 0)
 				{
-					remaining -= size;
 					break;
 				}
 				size -= read;
@@ -106,7 +104,7 @@ namespace xal
 		}
 		else
 		{
-			xal::log("ogg: could not allocate ogg buffer.");
+			xal::log("could not allocate ogg buffer.");
 		}
 		return result;
 	}
@@ -143,7 +141,7 @@ namespace xal
 		}
 		else
 		{
-			xal::log("ogg: could not allocate ogg buffer.");
+			xal::log("could not allocate ogg buffer.");
 		}
 		return (STREAM_BUFFER_SIZE - size);
 	}
