@@ -23,6 +23,9 @@
 
 #include "xalExport.h"
 
+#define STREAM_BUFFER_COUNT 2
+#define STREAM_BUFFER_SIZE 8192//1024//4096//32768//4096
+
 namespace xal
 {
 	enum Format

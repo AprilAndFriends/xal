@@ -125,6 +125,7 @@ namespace xal
 			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
 			return;
 		}
+		this->buffer->prepare();
 		unsigned char* stream = this->buffer->getStream();
 		if (write1 != NULL)
 		{

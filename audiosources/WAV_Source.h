@@ -15,6 +15,7 @@
 #ifndef XAL_WAV_SOURCE_H
 #define XAL_WAV_SOURCE_H
 
+#include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 
 #include "Source.h"
@@ -28,7 +29,15 @@ namespace xal
 		WAV_Source(chstr filename);
 		~WAV_Source();
 
+		bool open();
+		bool close();
+		bool rewind();
 		bool load(unsigned char** output);
+
+	protected:
+		hfile file;
+
+		void _findData();
 
 	};
 

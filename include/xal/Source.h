@@ -32,9 +32,13 @@ namespace xal
 		int getSamplingRate() { return this->samplingRate; }
 		int getBitsPerSample() { return this->bitsPerSample; }
 		float getDuration() { return this->duration; }
+		bool isOpen() { return this->streamOpen; }
 
+		virtual bool open();
+		virtual bool close();
+		virtual bool rewind();
 		virtual bool load(unsigned char** output);
-		virtual bool load(unsigned char** output, int load);
+		virtual int loadChunk(unsigned char** output);
 		
 	protected:
 		hstr filename;
@@ -43,8 +47,8 @@ namespace xal
 		int samplingRate;
 		int bitsPerSample;
 		float duration;
-		bool streamed;
 		int chunkSize;
+		bool streamOpen;
 
 	};
 

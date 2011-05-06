@@ -27,6 +27,33 @@ namespace xal
 	{
 	}
 
+	bool DirectSound_WAV_Source::open()
+	{
+		result = Source::open();
+		if (result)
+		{
+		}
+		return result;
+	}
+
+	bool DirectSound_WAV_Source::close()
+	{
+		result = Source::open();
+		if (result)
+		{
+		}
+		return result;
+	}
+
+	bool DirectSound_WAV_Source::rewind()
+	{
+		result = Source::open();
+		if (result)
+		{
+		}
+		return result;
+	}
+
 	bool DirectSound_WAV_Source::load(unsigned char** output)
 	{
 		if (!Source::load(output))

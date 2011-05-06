@@ -20,7 +20,7 @@
 namespace xal
 {
 	Buffer::Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode) :
-		loaded(false), decoded(false), data(NULL), dataIndex(0), stream(NULL), streamIndex(0)
+		loaded(false), decoded(false), stream(NULL), streamSize(0)
 	{
 		this->filename = filename;
 		this->fileSize = hfile::hsize(this->filename);
@@ -32,15 +32,11 @@ namespace xal
 	Buffer::~Buffer()
 	{
 		xal::log("destroying buffer " + this->filename);
-		delete this->source;
-		if (this->data != NULL)
-		{
-			delete [] this->data;
-		}
 		if (this->stream != NULL)
 		{
 			delete [] this->stream;
 		}
+		delete this->source;
 	}
 	
 	int Buffer::getSize()
@@ -103,39 +99,45 @@ namespace xal
 		return UNKNOWN;
 	}
 
-	int Buffer::getData(int size, unsigned char** output)
+	bool Buffer::isStreamed()
 	{
-		this->prepare();
-		// TODO - streaming goes here
-		//(*output) = NULL;
-		//return 0;
-		size = hmin(this->getSize(), size);
-		this->streamIndex += size;
-		(*output) = this->stream + this->streamIndex;
-		return size;
+		return (this->loadMode == STREAMED || this->decodeMode == STREAMED);
 	}
 
-	bool Buffer::prepare(int offset)
+	int Buffer::prepare(bool looping)
 	{
 		if (this->loaded)
 		{
-			return true;
+			return this->streamSize;
 		}
 		bool result = false;
 		Format format = this->getFormat();
 		if (!xal::mgr->isEnabled())
 		{
 			result = (format != UNKNOWN);
+			this->loaded = true;
+			return 0;
 		}
-		else
+		if (!this->isStreamed())
 		{
-			result = this->source->load(&this->stream);
+			this->loaded = true;
+			result = (this->source->open() && this->source->load(&this->stream));
+			this->streamSize = this->source->getSize();
+			return this->streamSize;
 		}
-		if (result)
+		this->streamSize = 0;
+		if (this->source->isOpen() || this->source->open())
 		{
-			this->loaded = result;
+			this->streamSize = this->source->loadChunk(&this->stream);
+			printf("buffer prepare %d", streamSize);
+			if (this->streamSize == 0 && looping)
+			{
+				this->source->rewind();
+				this->streamSize = this->source->loadChunk(&this->stream);
+			}
+			printf(" %d\n", streamSize);
 		}
-		return result;
+		return this->streamSize;
 	}
 
 	void Buffer::release()
@@ -145,8 +147,7 @@ namespace xal
 
 	void Buffer::rewind()
 	{
-		this->dataIndex = 0;
-		this->streamIndex = 0;
+		this->source->rewind();
 	}
 
 }

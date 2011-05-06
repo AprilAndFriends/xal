@@ -115,22 +115,27 @@ namespace xal
 		}
 		this->_sysUnqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
 		int bytes = 0;
-		int result;
+		int size;
 		int i = 0;
-		unsigned char* data;
 		for (; i < processed; i++)
 		{
-			result = this->buffer->getData(STREAM_BUFFER_SIZE, &data);
-			this->__sysSetBufferData(i, data, result);
-			if (result == 0)
+			size = this->buffer->prepare();
+			//size = this->buffer->getData(&data);
+			if (size == 0)
 			{
+				printf("END %d %d\n", i, size);
 				break;
 			}
-			bytes += result;
+			this->__sysSetBufferData(i, this->buffer->getStream(), size);
+			bytes += size;
 		}
 		if (bytes > 0)
 		{
-			this->_sysQueueBuffers(this->bufferIndex, i);
+			if (i > 0)
+			{
+				printf("queueing %d\n", i);
+				this->_sysQueueBuffers(this->bufferIndex, i);
+			}
 			if (processed < STREAM_BUFFER_COUNT)
 			{
 				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
@@ -225,7 +230,11 @@ namespace xal
 	{
 		if (this->sound->isStreamed())
 		{
-			this->paused ? this->_sysUnqueueBuffers() : this->buffer->rewind();
+			this->_sysUnqueueBuffers();
+			if (!this->paused)
+			{
+				this->buffer->rewind();
+			}
 		}
 	}
 
