@@ -32,6 +32,9 @@ namespace xal
 
 		WAVEFORMATEX getWavefmt() { return this->wavefmt; }
 
+		bool open();
+		bool close();
+		bool rewind();
 		bool load(unsigned char** output);
 
 	protected:

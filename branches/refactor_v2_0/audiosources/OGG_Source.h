@@ -15,6 +15,8 @@
 #ifndef XAL_OGG_SOURCE_H
 #define XAL_OGG_SOURCE_H
 
+#include <vorbis/vorbisfile.h>
+
 #include <hltypes/hstring.h>
 
 #include "Source.h"
@@ -28,7 +30,14 @@ namespace xal
 		OGG_Source(chstr filename);
 		~OGG_Source();
 
+		bool open();
+		bool close();
+		bool rewind();
 		bool load(unsigned char** output);
+		int loadChunk(unsigned char** output);
+
+	protected:
+		OggVorbis_File oggStream;
 
 	};
 

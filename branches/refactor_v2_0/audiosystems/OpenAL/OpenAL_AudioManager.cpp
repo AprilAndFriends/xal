@@ -14,6 +14,8 @@
 /// Represents an implementation of the AudioManager for OpenAL.
 
 #if HAVE_OPENAL
+#include <string.h>
+
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>

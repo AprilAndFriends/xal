@@ -40,13 +40,13 @@ namespace xal
 		int getBitsPerSample();
 		float getDuration();
 		Format getFormat();
+		bool isStreamed();
+		bool setOffset(int value);
 
-		bool prepare(int offset = 0);
+		int prepare(bool looping = false);
 		void release();
 		void rewind();
 
-		int getData(int size, unsigned char** output);
-		
 	protected:
 		hstr filename;
 		int fileSize;
@@ -54,10 +54,8 @@ namespace xal
 		HandlingMode decodeMode;
 		bool loaded;
 		bool decoded;
-		unsigned char* data;
-		int dataIndex;
 		unsigned char* stream;
-		int streamIndex;
+		int streamSize;
 		Source* source;
 
 	};

@@ -66,6 +66,7 @@
       <PostBuild>
         <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
         <Command Enabled="yes">copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+        <Command Enabled="yes">copy ..\..\bin\*.dll ..\..\bin\$(ConfigurationName)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -138,6 +139,8 @@
       <PreBuild/>
       <PostBuild>
         <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+        <Command Enabled="yes">copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+        <Command Enabled="yes">copy ..\..\bin\*.dll ..\..\bin\$(ConfigurationName)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
