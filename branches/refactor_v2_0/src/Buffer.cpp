@@ -126,13 +126,11 @@ namespace xal
 		if (this->source->isOpen() || this->source->open())
 		{
 			this->streamSize = this->source->loadChunk(&this->stream);
-			printf("buffer prepare %d", this->streamSize);
 			if (this->streamSize == 0 && looping)
 			{
 				this->source->rewind();
 				this->streamSize = this->source->loadChunk(&this->stream);
 			}
-			printf(" %d\n", this->streamSize);
 		}
 		return this->streamSize;
 	}
