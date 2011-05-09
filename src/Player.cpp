@@ -113,6 +113,7 @@ namespace xal
 		{
 			return;
 		}
+		printf("Q--P %d %d\n", queued, processed);
 		this->_sysUnqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
 		int bytes = 0;
 		int size;
@@ -125,15 +126,29 @@ namespace xal
 				printf("END %d %d\n", i, size);
 				break;
 			}
-			this->__sysSetBufferData(i, this->buffer->getStream(), size);
+			this->__sysSetBufferData((this->bufferIndex + i) % STREAM_BUFFER_COUNT, this->buffer->getStream(), size);
 			bytes += size;
 		}
 		if (bytes > 0)
 		{
 			if (i > 0)
 			{
-				printf("queueing %d\n", i);
-				this->_sysQueueBuffers(this->bufferIndex, i);
+				int q = this->_sysGetQueuedBuffersCount();
+				int p = this->_sysGetProcessedBuffersCount();
+				int q2 = q;
+				int p2 = p;
+				int j = 1000;
+				while (j > 0 && q2 == q)
+				{
+				//printf("Q++P %d %d\n", this->_sysGetQueuedBuffersCount(), this->_sysGetProcessedBuffersCount());
+					this->_sysQueueBuffers(this->bufferIndex, i);
+					q2 = this->_sysGetQueuedBuffersCount();
+					p2 = this->_sysGetProcessedBuffersCount();
+					j--;
+				}
+				//int q = this->_sysGetQueuedBuffersCount();
+				//int p = this->_sysGetProcessedBuffersCount();
+				//printf("Q//P %d %d\n", this->_sysGetQueuedBuffersCount(), this->_sysGetProcessedBuffersCount());
 			}
 			if (processed < STREAM_BUFFER_COUNT)
 			{
@@ -144,7 +159,9 @@ namespace xal
 				this->pause();
 				this->play();
 			}
+			printf("INDEX %d\n", this->bufferIndex);
 		}
+		printf("Q  P %d %d\n", this->_sysGetQueuedBuffersCount(), this->_sysGetProcessedBuffersCount());
 		if (this->_sysGetQueuedBuffersCount() == 0)
 		{
 			this->_stopSound();
@@ -168,17 +185,10 @@ namespace xal
 		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
-			// making sure the buffer is prepared (with a loaded and decoded source)
+			this->_sysPrepareBuffer();
 			if (this->isPaused())
 			{
-				//this->buffer->prepare(this->offset);
-				this->_sysPrepareBuffer();
 				this->_sysSetOffset(this->offset);
-			}
-			else
-			{
-				//this->buffer->prepare();
-				this->_sysPrepareBuffer();
 			}
 		}
 		if (fadeTime > 0.0f)

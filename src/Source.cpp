@@ -33,7 +33,7 @@ namespace xal
 	{
 		if (!hfile::exists(this->filename))
 		{
-			xal::log("ERROR: unable to file " + this->filename);
+			xal::log("ERROR: unable to open " + this->filename);
 			return false;
 		}
 		this->streamOpen = true;
@@ -57,7 +57,7 @@ namespace xal
 		xal::log("loading file " + this->filename);
 		if (*output != NULL)
 		{
-			delete *output;
+			delete [] *output;
 			*output = NULL;
 		}
 		if (!this->streamOpen)
@@ -72,7 +72,7 @@ namespace xal
 	{
 		if (*output != NULL)
 		{
-			delete *output;
+			delete [] *output;
 			*output = NULL;
 		}
 		if (!this->streamOpen)

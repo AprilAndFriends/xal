@@ -68,7 +68,7 @@ xal::Player* s;
 void _test_basic()
 {
 	printf("  - start test basic...\n");
-	s->play();
+	s->play(0);
 	while (s->isPlaying())
 	{
 		hthread::sleep(100);

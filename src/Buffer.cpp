@@ -110,18 +110,15 @@ namespace xal
 		{
 			return this->streamSize;
 		}
-		bool result = false;
 		Format format = this->getFormat();
 		if (!xal::mgr->isEnabled())
 		{
-			result = (format != UNKNOWN);
 			this->loaded = true;
 			return 0;
 		}
 		if (!this->isStreamed())
 		{
 			this->loaded = true;
-			result = (this->source->open() && this->source->load(&this->stream));
 			this->streamSize = this->source->getSize();
 			return this->streamSize;
 		}
@@ -129,13 +126,13 @@ namespace xal
 		if (this->source->isOpen() || this->source->open())
 		{
 			this->streamSize = this->source->loadChunk(&this->stream);
-			printf("buffer prepare %d", streamSize);
+			printf("buffer prepare %d", this->streamSize);
 			if (this->streamSize == 0 && looping)
 			{
 				this->source->rewind();
 				this->streamSize = this->source->loadChunk(&this->stream);
 			}
-			printf(" %d\n", streamSize);
+			printf(" %d\n", this->streamSize);
 		}
 		return this->streamSize;
 	}
