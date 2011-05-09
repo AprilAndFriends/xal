@@ -29,7 +29,7 @@ namespace xal
 
 	bool DirectSound_WAV_Source::open()
 	{
-		result = Source::open();
+		bool result = Source::open();
 		if (result)
 		{
 		}
@@ -38,7 +38,7 @@ namespace xal
 
 	bool DirectSound_WAV_Source::close()
 	{
-		result = Source::open();
+		bool result = Source::open();
 		if (result)
 		{
 		}
@@ -47,7 +47,7 @@ namespace xal
 
 	bool DirectSound_WAV_Source::rewind()
 	{
-		result = Source::open();
+		bool result = Source::open();
 		if (result)
 		{
 		}
