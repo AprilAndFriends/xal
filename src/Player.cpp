@@ -113,17 +113,15 @@ namespace xal
 		{
 			return;
 		}
-		printf("Q--P %d %d\n", queued, processed);
 		this->_sysUnqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
 		int bytes = 0;
 		int size;
 		int i = 0;
 		for (; i < processed; i++)
 		{
-			size = this->buffer->prepare();
+			size = this->buffer->prepare(this->looping);
 			if (size == 0)
 			{
-				printf("END %d %d\n", i, size);
 				break;
 			}
 			this->__sysSetBufferData((this->bufferIndex + i) % STREAM_BUFFER_COUNT, this->buffer->getStream(), size);
@@ -133,22 +131,7 @@ namespace xal
 		{
 			if (i > 0)
 			{
-				int q = this->_sysGetQueuedBuffersCount();
-				int p = this->_sysGetProcessedBuffersCount();
-				int q2 = q;
-				int p2 = p;
-				int j = 1000;
-				while (j > 0 && q2 == q)
-				{
-				//printf("Q++P %d %d\n", this->_sysGetQueuedBuffersCount(), this->_sysGetProcessedBuffersCount());
-					this->_sysQueueBuffers(this->bufferIndex, i);
-					q2 = this->_sysGetQueuedBuffersCount();
-					p2 = this->_sysGetProcessedBuffersCount();
-					j--;
-				}
-				//int q = this->_sysGetQueuedBuffersCount();
-				//int p = this->_sysGetProcessedBuffersCount();
-				//printf("Q//P %d %d\n", this->_sysGetQueuedBuffersCount(), this->_sysGetProcessedBuffersCount());
+				this->_sysQueueBuffers(this->bufferIndex, i);
 			}
 			if (processed < STREAM_BUFFER_COUNT)
 			{
@@ -159,9 +142,7 @@ namespace xal
 				this->pause();
 				this->play();
 			}
-			printf("INDEX %d\n", this->bufferIndex);
 		}
-		printf("Q  P %d %d\n", this->_sysGetQueuedBuffersCount(), this->_sysGetProcessedBuffersCount());
 		if (this->_sysGetQueuedBuffersCount() == 0)
 		{
 			this->_stopSound();
