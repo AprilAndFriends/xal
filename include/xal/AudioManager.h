@@ -24,7 +24,7 @@
 #include "xalExport.h"
 
 #define STREAM_BUFFER_COUNT 4
-#define STREAM_BUFFER_SIZE 8192
+#define STREAM_BUFFER_SIZE 32768
 
 namespace xal
 {
