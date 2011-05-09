@@ -102,11 +102,13 @@ namespace xal
 	void OpenAL_Player::_sysPrepareBuffer()
 	{
 		// making sure all buffer data is loaded before accessing anything
-		int streamSize = this->buffer->prepare(this->looping);
+		this->buffer->prepare();
 		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
 		int samplingRate = this->buffer->getSamplingRate();
+		int streamSize;
 		if (!this->sound->isStreamed())
 		{
+			streamSize = this->buffer->load(this->looping);
 			alBufferData(this->bufferIds[0], format, this->buffer->getStream(), streamSize, samplingRate);
 			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
 			alSourcei(this->sourceId, AL_LOOPING, this->looping);
@@ -115,16 +117,15 @@ namespace xal
 		{
 			alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 			alSourcei(this->sourceId, AL_LOOPING, false);
-			int i = 0;
-			while (streamSize > 0)
+			int i;
+			for (i = 0; i < STREAM_BUFFER_COUNT; i++)
 			{
-				alBufferData(this->bufferIds[i], format, this->buffer->getStream(), streamSize, samplingRate);
-				i++;
-				if (i >= STREAM_BUFFER_COUNT)
+				streamSize = this->buffer->load(this->looping);
+				if (streamSize == 0)
 				{
 					break;
 				}
-				streamSize = this->buffer->prepare(this->looping);
+				alBufferData(this->bufferIds[i], format, this->buffer->getStream(), streamSize, samplingRate);
 			}
 			if (i > 0)
 			{

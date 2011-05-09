@@ -119,7 +119,7 @@ namespace xal
 		int i = 0;
 		for (; i < processed; i++)
 		{
-			size = this->buffer->prepare(this->looping);
+			size = this->buffer->load(this->looping);
 			if (size == 0)
 			{
 				break;

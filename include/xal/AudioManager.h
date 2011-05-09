@@ -11,7 +11,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Provides an interface for audiomanagers.
+/// Provides an interface for audio managers.
 
 #ifndef XAL_AUDIO_MANAGER_H
 #define XAL_AUDIO_MANAGER_H
@@ -23,8 +23,8 @@
 
 #include "xalExport.h"
 
-#define STREAM_BUFFER_COUNT 2
-#define STREAM_BUFFER_SIZE 8192//1024//4096//32768//4096
+#define STREAM_BUFFER_COUNT 4
+#define STREAM_BUFFER_SIZE 8192
 
 namespace xal
 {

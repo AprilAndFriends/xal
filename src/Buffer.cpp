@@ -104,32 +104,48 @@ namespace xal
 		return (this->loadMode == STREAMED || this->decodeMode == STREAMED);
 	}
 
-	int Buffer::prepare(bool looping)
+	void Buffer::prepare()
 	{
 		if (this->loaded)
 		{
-			return this->streamSize;
+			return;
 		}
-		Format format = this->getFormat();
 		if (!xal::mgr->isEnabled())
 		{
 			this->loaded = true;
-			return 0;
+			return;
 		}
 		if (!this->isStreamed())
 		{
 			this->loaded = true;
+			this->source->open();
+			this->source->load(&this->stream);
 			this->streamSize = this->source->getSize();
-			return this->streamSize;
+			return;
 		}
-		this->streamSize = 0;
-		if (this->source->isOpen() || this->source->open())
+		if (!this->source->isOpen())
 		{
-			this->streamSize = this->source->loadChunk(&this->stream);
-			if (this->streamSize == 0 && looping)
+			this->source->open();
+		}
+	}
+
+	int Buffer::load(bool looping)
+	{
+		if (!xal::mgr->isEnabled())
+		{
+			return 0;
+		}
+		if (this->isStreamed())
+		{
+			this->streamSize = 0;
+			if (this->source->isOpen())
 			{
-				this->source->rewind();
 				this->streamSize = this->source->loadChunk(&this->stream);
+				if (this->streamSize == 0 && looping)
+				{
+					this->source->rewind();
+					this->streamSize = this->source->loadChunk(&this->stream);
+				}
 			}
 		}
 		return this->streamSize;
