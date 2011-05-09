@@ -166,10 +166,13 @@ namespace xal
 		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
-			this->_sysPrepareBuffer();
 			if (this->isPaused())
 			{
 				this->_sysSetOffset(this->offset);
+			}
+			else
+			{
+				this->_sysPrepareBuffer();
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -220,10 +223,16 @@ namespace xal
 	{
 		if (this->sound->isStreamed())
 		{
+			int queued = this->_sysGetQueuedBuffersCount();
 			this->_sysUnqueueBuffers();
-			this->bufferIndex = 0;
-			if (!this->paused)
+			if (this->paused)
 			{
+				// requeue all buffers if the stream was only paused
+				this->_sysQueueBuffers(this->bufferIndex, queued);
+			}
+			else
+			{
+				this->bufferIndex = 0;
 				this->buffer->rewind();
 			}
 		}

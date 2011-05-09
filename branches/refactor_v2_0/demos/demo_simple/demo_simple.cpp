@@ -23,11 +23,11 @@
 #include <xalutil/Playlist.h>
 
 //#define _TEST_STREAM
-#define _TEST_LINKS
+//#define _TEST_LINKS
 //#define _TEST_THREADED
 
-#define _TEST_BASIC
-//#define _TEST_SOUND
+//#define _TEST_BASIC
+#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
