@@ -43,7 +43,8 @@ namespace xal
 		bool isStreamed();
 		bool setOffset(int value);
 
-		int prepare(bool looping = false);
+		void prepare();
+		int load(bool looping = false);
 		void release();
 		void rewind();
 

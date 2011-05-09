@@ -22,19 +22,20 @@
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-#define _TEST_STREAM
-//#define _TEST_LINKS
+//#define _TEST_STREAM
+#define _TEST_LINKS
 //#define _TEST_THREADED
 
 #define _TEST_BASIC
 //#define _TEST_SOUND
-//#define _TEST_SOURCE_HANDLING
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
+
+//#define _TEST_SOURCE_HANDLING
 
 //#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS
@@ -173,32 +174,6 @@ void _test_multiplay()
 	_update(0.1f);
 }
 
-void _test_sources()
-{
-	printf("  - start test sources...\n");
-	for (int i = 0; i < OPENAL_MAX_SOURCES + 1; i++)
-	{
-		xal::mgr->play(S_BARK);
-		hthread::sleep(20);
-	}
-	while (xal::mgr->isAnyPlaying(S_BARK))
-	{
-		hthread::sleep(100);
-		_update(0.1f);
-	}
-	xal::mgr->update(0.01f);
-	xal::mgr->destroyPlayer(s);
-	s = xal::mgr->createPlayer(S_WIND);
-	s->play();
-	for (int i = 0; i < 20; i++)
-	{
-		hthread::sleep(100);
-		_update(0.1f);
-	}
-	s->stop();
-	_update(0.1f);
-}
-
 void _test_fadein()
 {
 	printf("  - start test fade in...\n");
@@ -300,6 +275,32 @@ void _test_complex_handler()
 	_update(0.1f);
 }
 
+void _test_sources()
+{
+	printf("  - start test sources...\n");
+	for (int i = 0; i < OPENAL_MAX_SOURCES + 1; i++)
+	{
+		xal::mgr->play(S_BARK);
+		hthread::sleep(20);
+	}
+	while (xal::mgr->isAnyPlaying(S_BARK))
+	{
+		hthread::sleep(100);
+		_update(0.1f);
+	}
+	xal::mgr->update(0.01f);
+	xal::mgr->destroyPlayer(s);
+	s = xal::mgr->createPlayer(S_WIND);
+	s->play();
+	for (int i = 0; i < 20; i++)
+	{
+		hthread::sleep(100);
+		_update(0.1f);
+	}
+	s->stop();
+	_update(0.1f);
+}
+
 void _test_util_playlist()
 {
 	printf("  - start test util playlist...\n");
@@ -352,7 +353,7 @@ int main(int argc, char **argv)
 #endif
 	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
 #else
-	xal::mgr->createCategory("cat", xal::STREAMED);
+	xal::mgr->createCategory("cat", xal::FULL, xal::FULL);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
 	s = xal::mgr->createPlayer(USED_SOUND);
@@ -369,9 +370,6 @@ int main(int argc, char **argv)
 #ifdef _TEST_MULTIPLAY
 	_test_multiplay();
 #endif
-#ifdef _TEST_SOURCE_HANDLING
-	_test_sources();
-#endif
 #ifdef _TEST_FADE_IN
 	_test_fadein();
 #endif
@@ -383,6 +381,9 @@ int main(int argc, char **argv)
 #endif
 #ifdef _TEST_COMPLEX_HANDLER
 	_test_complex_handler();
+#endif
+#ifdef _TEST_SOURCE_HANDLING
+	_test_sources();
 #endif
 #ifdef _TEST_UTIL_PLAYLIST
 	_test_util_playlist();
