@@ -67,23 +67,39 @@ namespace xal
 		return folders.join("/");
 	}
 
+	int Sound::getSize()
+	{
+		return this->buffer->getSize();
+	}
+
+	int Sound::getChannels()
+	{
+		return this->buffer->getChannels();
+	}
+
+	int Sound::getSamplingRate()
+	{
+		return this->buffer->getSamplingRate();
+	}
+
+	int Sound::getBitsPerSample()
+	{
+		return this->buffer->getBitsPerSample();
+	}
+
+	float Sound::getDuration()
+	{
+		return this->buffer->getDuration();
+	}
+
+	Format Sound::getFormat()
+	{
+		return this->buffer->getFormat();
+	}
+
 	bool Sound::isStreamed()
 	{
 		return this->category->isStreamed();
 	}
 
-	Format Sound::getFormat()
-	{
-		// TODO - remove?
-		return this->buffer->getFormat();
-	}
-
-	/*
-	bool Sound::load()
-	{
-		// TODO - remove?
-		return this->buffer->load();
-	}
-	*/
-	
 }
