@@ -35,8 +35,14 @@ namespace xal
 		chstr getRealFilename() { return this->realFilename; }
 		Category* getCategory() { return this->category; }
 		Buffer* getBuffer() { return this->buffer; }
-		bool isStreamed();
+
+		int getSize();
+		int getChannels();
+		int getSamplingRate();
+		int getBitsPerSample();
+		float getDuration();
 		Format getFormat();
+		bool isStreamed();
 
 	protected:
 		hstr name;

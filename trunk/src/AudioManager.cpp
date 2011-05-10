@@ -191,6 +191,37 @@ namespace xal
 		return sound;
 	}
 
+	Sound* AudioManager::getSound(chstr name)
+	{
+		return this->sounds[name];
+	}
+
+	void AudioManager::destroySound(Sound* sound)
+	{
+		foreach_m (Sound*, it, this->sounds)
+		{
+			if (it->second == sound)
+			{
+				delete it->second;
+				this->sounds.erase(it);
+				break;
+			}
+		}
+	}
+	
+	void AudioManager::destroySoundsWithPrefix(chstr prefix)
+	{
+		harray<hstr> keys = this->sounds.keys();
+		foreach (hstr, it, keys)
+		{
+			if ((*it).starts_with(prefix))
+			{
+				delete this->sounds[*it];
+				this->sounds.remove_key(*it);
+			}
+		}
+	}
+
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
 	{
 		harray<hstr> result;
@@ -219,32 +250,6 @@ namespace xal
 			}
 		}
 		return result;
-	}
-
-	void AudioManager::destroySound(Sound* sound)
-	{
-		foreach_m (Sound*, it, this->sounds)
-		{
-			if (it->second == sound)
-			{
-				delete it->second;
-				this->sounds.erase(it);
-				break;
-			}
-		}
-	}
-	
-	void AudioManager::destroySoundsWithPrefix(chstr prefix)
-	{
-		harray<hstr> keys = this->sounds.keys();
-		foreach (hstr, it, keys)
-		{
-			if ((*it).starts_with(prefix))
-			{
-				delete this->sounds[*it];
-				this->sounds.remove_key(*it);
-			}
-		}
 	}
 
 	Player* AudioManager::createPlayer(chstr name)

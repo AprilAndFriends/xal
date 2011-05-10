@@ -91,10 +91,11 @@ namespace xal
 		void setCategoryGain(chstr category, float gain);
 		
 		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
-		harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
-		harray<hstr> createSoundsFromPath(chstr path, chstr category, chstr prefix);
+		Sound* getSound(chstr name);
 		void destroySound(Sound* sound);
 		void destroySoundsWithPrefix(chstr prefix);
+		harray<hstr> createSoundsFromPath(chstr path, chstr prefix = "");
+		harray<hstr> createSoundsFromPath(chstr path, chstr category, chstr prefix);
 
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
