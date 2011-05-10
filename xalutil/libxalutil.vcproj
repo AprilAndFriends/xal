@@ -47,7 +47,7 @@
 				RuntimeLibrary="3"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4251"
+				DisableSpecificWarnings="4251;4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -62,7 +62,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="libxal_d.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../../lib/msvc;../../hltypes/bin/$(ConfigurationName);../bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../../hltypes/bin/$(ConfigurationName);../bin"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -122,7 +122,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4251"
+				DisableSpecificWarnings="4251;4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -138,7 +138,7 @@
 				AdditionalDependencies="libxal.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../lib/msvc;../../hltypes/bin/$(ConfigurationName);../bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../../hltypes/bin/$(ConfigurationName);../bin"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

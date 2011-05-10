@@ -56,18 +56,19 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;libxal.lib;libxalutil.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../lib/msvc;../../bin/$(Configuration);../../../hltypes/bin/$(Configuration);../../bin/xalutil/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../lib/msvc;../../bin;../../../hltypes/bin/$(Configuration);../../bin/xalutil/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Command>copy ..\..\..\hltypes\bin\$(Configuration)\*.dll ..\..\bin\$(Configuration)
-copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Command>
+copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)
+copy ..\..\bin\*.dll ..\..\bin\$(Configuration)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">
@@ -82,10 +83,11 @@ copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Comman
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;libxal.lib;libxalutil.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../lib/msvc;../../bin/$(Configuration);../../../hltypes/bin/$(Configuration);../../bin/xalutil/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../lib/msvc;../../bin;../../../hltypes/bin/$(Configuration);../../bin/xalutil/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -94,7 +96,8 @@ copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Comman
     </Link>
     <PostBuildEvent>
       <Command>copy ..\..\..\hltypes\bin\$(Configuration)\*.dll ..\..\bin\$(Configuration)
-copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)</Command>
+copy ..\..\bin\xalutil\$(Configuration)\*.dll ..\..\bin\$(Configuration)
+copy ..\..\bin\*.dll ..\..\bin\$(Configuration)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

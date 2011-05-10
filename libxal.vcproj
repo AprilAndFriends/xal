@@ -17,7 +17,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="win32_Debug|Win32"
+			Name="win32_OpenAL_Debug|Win32"
 			OutputDirectory="bin\$(ConfigurationName)"
 			IntermediateDirectory="bin\$(ConfigurationName)"
 			ConfigurationType="2"
@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include;src/"
-				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OGG=1"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_OPENAL=1;HAVE_OGG=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -88,10 +88,11 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
-			Name="win32_Release|Win32"
+			Name="win32_OpenAL_Release|Win32"
 			OutputDirectory="bin\$(ConfigurationName)"
 			IntermediateDirectory="bin\$(ConfigurationName)"
 			ConfigurationType="2"
@@ -117,8 +118,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="include/xal;../include;../hltypes/include;src/"
-				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_OGG=1"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_OPENAL=1;HAVE_OGG=1"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -140,7 +141,7 @@
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -167,6 +168,317 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="win32_DirectSound_Debug|Win32"
+			OutputDirectory="bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OGG=1"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="4"
+				DisableSpecificWarnings="4251"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="winmm.lib dsound.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				GenerateDebugInformation="true"
+				ImportLibrary="$(TargetDir)\$(TargetName).lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="win32_DirectSound_Release|Win32"
+			OutputDirectory="bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OGG=1"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4251"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="winmm.lib dsound.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
+				OutputFile="$(OutDir)\$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="win32_SDL_Debug|Win32"
+			OutputDirectory="bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;_DEBUG;XAL_EXPORTS;HAVE_SDL=1;HAVE_OGG=1"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="4"
+				DisableSpecificWarnings="4251"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				GenerateDebugInformation="true"
+				ImportLibrary="$(TargetDir)\$(TargetName).lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="win32_SDL_Release|Win32"
+			OutputDirectory="bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/"
+				PreprocessorDefinitions="_WIN32;XAL_EXPORTS;HAVE_SDL=1;HAVE_OGG=1"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4251"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
+				OutputFile="$(OutDir)\$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -183,6 +495,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Buffer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Category.cpp"
 				>
 			</File>
@@ -191,7 +507,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\SimpleSound.cpp"
+				RelativePath=".\src\Player.cpp"
 				>
 			</File>
 			<File
@@ -199,17 +515,81 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\SoundBuffer.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Source.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\StreamSound.cpp"
+				RelativePath=".\src\xal.cpp"
 				>
 			</File>
+			<Filter
+				Name="audiosystems"
+				>
+				<Filter
+					Name="DirectSound"
+					>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_Player.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_WAV_Source.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OpenAL"
+					>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_Player.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SDL"
+					>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Player.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Source.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="audiosources"
+				>
+				<File
+					RelativePath=".\audiosources\MP3_Source.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\OGG_Source.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\SPX_Source.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\WAV_Source.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -221,11 +601,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\xal\Buffer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\xal\Category.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\SimpleSound.h"
+				RelativePath=".\include\xal\Player.h"
 				>
 			</File>
 			<File
@@ -233,21 +617,85 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\SoundBuffer.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\xal\Source.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\xal\StreamSound.h"
+				RelativePath=".\include\xal\xal.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\xal\xalExport.h"
 				>
 			</File>
+			<Filter
+				Name="audiosystems"
+				>
+				<Filter
+					Name="DirectSound"
+					>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_Player.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_WAV_Source.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SDL"
+					>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Player.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\SDL\SDL_Source.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OpenAL"
+					>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\OpenAL\OpenAL_Player.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="audiosources"
+				>
+				<File
+					RelativePath=".\audiosources\MP3_Source.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\OGG_Source.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\SPX_Source.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audiosources\WAV_Source.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
