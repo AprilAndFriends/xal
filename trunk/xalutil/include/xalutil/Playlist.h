@@ -16,35 +16,38 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
+	class Player;
+
 	class xalUtilExport Playlist
 	{
 	public:
 		Playlist(bool repeatAll = true);
 		~Playlist();
 		
-		void update();
-		
-		void play(float fadeTime = 0.0f);
-		void stop(float fadeTime = 0.0f);
-		void pause(float fadeTime = 0.0f);
-		
-		void clear();
-		void queueSound(chstr name);
-		void queueSounds(harray<hstr> names);
-		
 		bool isEnabled() { return this->enabled; }
 		void setEnabled(bool value) { this->enabled = value; }
 		bool isPlaying() { return this->playing; }
 		bool isRepeatAll() { return this->repeatAll; }
 		void setRepeatAll(bool value) { this->repeatAll = value; }
-		harray<hstr> getSounds() { return this->sounds; }
+		harray<Player*> getPlayers() { return this->players; }
+		harray<hstr> getSoundNames();
+		
+		void update();
+		
+		void clear();
+		void queueSound(chstr name);
+		void queueSounds(harray<hstr> names);
+		
+		void play(float fadeTime = 0.0f);
+		void stop(float fadeTime = 0.0f);
+		void pause(float fadeTime = 0.0f);
 		
 	protected:
 		bool enabled;
 		bool playing;
 		bool repeatAll;
 		int index;
-		harray<hstr> sounds;
+		harray<Player*> players;
 	
 	};
 	

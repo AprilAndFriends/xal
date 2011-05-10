@@ -1,57 +1,51 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Boris Mikic
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/// 
+/// @section DESCRIPTION
+/// 
+/// Represents a virtual entry of audio data in the sound system.
+
 #ifndef XAL_SOUND_H
 #define XAL_SOUND_H
 
-#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+
+#include "AudioManager.h"
 #include "xalExport.h"
 
 namespace xal
 {
+	class Buffer;
 	class Category;
+
 	class xalExport Sound
 	{
 	public:
-		Sound();
+		Sound(chstr filename, Category* category, chstr prefix = "");
 		virtual ~Sound();
-		
-		virtual void update(float k) { }
 
-		// pure virtual
-		virtual float getGain() = 0;
-		virtual void setGain(float value) = 0;
-		virtual bool isLooping() = 0;
-		virtual bool isPlaying() = 0;
-		virtual bool isFading() = 0;
-		virtual bool isFadingIn() = 0;
-		virtual bool isFadingOut() = 0;
-		virtual bool isPaused() = 0;
-        virtual float getDuration() = 0;
-		
-		virtual Sound* play(float fadeTime = 0.0f, bool looping = false) = 0;
-		virtual void stop(float fadeTime = 0.0f) = 0;
-		virtual void pause(float fadeTime = 0.0f) = 0;
-		virtual void stopSoft(float fadeTime = 0.0f, bool pause = false) = 0;
-		
-		// with default impl
-		virtual void lock() { this->locked = true; }
-		virtual void unlock() { this->locked = false; }
-		virtual bool isLocked() { return this->locked; }
-		
-		virtual Category* getCategory() { return NULL; }
-		virtual float getSampleOffset() { return 0; }
-		virtual unsigned int getSourceId() { return 0; }
-		
+		chstr getName() { return this->name; }
+		chstr getFilename() { return this->filename; }
+		chstr getRealFilename() { return this->realFilename; }
+		Category* getCategory() { return this->category; }
+		Buffer* getBuffer() { return this->buffer; }
+		bool isStreamed();
+		Format getFormat();
+
 	protected:
-		bool locked;
+		hstr name;
+		hstr filename;
+		hstr realFilename;
+		Category* category;
+		Buffer* buffer;
+
+		hstr _findLinkedFile();
 		
 	};
 

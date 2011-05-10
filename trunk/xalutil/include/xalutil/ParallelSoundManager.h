@@ -17,6 +17,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
+	class Player;
+
 	class xalUtilExport ParallelSoundManager
 	{
 	public:
@@ -36,8 +38,8 @@ namespace xal
 		
 	protected:
 		float fadeTime;
+		harray<Player*> players;
 		harray<hstr> sounds;
-		harray<hstr> buildList;
 	
 	};
 	

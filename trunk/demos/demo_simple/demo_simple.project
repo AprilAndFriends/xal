@@ -27,7 +27,7 @@
   </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
-      <Compiler Options="">
+      <Compiler Options="" C_Options="">
         <IncludePath Value="."/>
         <IncludePath Value="../../include"/>
         <IncludePath Value="../../xalutil/include"/>
@@ -36,7 +36,7 @@
       <Linker Options="">
         <LibraryPath Value="."/>
         <LibraryPath Value="../../../lib"/>
-        <LibraryPath Value="../../bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../bin"/>
         <LibraryPath Value="../../bin/xalutil/$(ConfigurationName)"/>
         <LibraryPath Value="../../../hltypes/bin/$(ConfigurationName)"/>
         <Library Value="libogg"/>
@@ -46,7 +46,7 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g" Required="yes" PreCompiledHeader="">
+      <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="_DEBUG"/>
       </Compiler>
@@ -56,7 +56,8 @@
         <Library Value="libxalutil_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -65,6 +66,7 @@
       <PostBuild>
         <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
         <Command Enabled="yes">copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+        <Command Enabled="yes">copy ..\..\bin\*.dll ..\..\bin\$(ConfigurationName)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -82,7 +84,7 @@
       </AdditionalRules>
     </Configuration>
     <Configuration Name="Linux_Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g" Required="yes" PreCompiledHeader="">
+      <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_UNIX"/>
         <Preprocessor Value="_DEBUG"/>
       </Compiler>
@@ -93,7 +95,8 @@
         <Library Value="libxalutil_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -118,7 +121,7 @@
       </AdditionalRules>
     </Configuration>
     <Configuration Name="Release_Win32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="" Required="yes" PreCompiledHeader="">
+      <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
@@ -127,7 +130,8 @@
         <Library Value="libxalutil"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -135,6 +139,8 @@
       <PreBuild/>
       <PostBuild>
         <Command Enabled="yes">copy ..\..\..\hltypes\bin\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+        <Command Enabled="yes">copy ..\..\bin\xalutil\$(ConfigurationName)\*.dll ..\..\bin\$(ConfigurationName)</Command>
+        <Command Enabled="yes">copy ..\..\bin\*.dll ..\..\bin\$(ConfigurationName)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>

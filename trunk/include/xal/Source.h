@@ -1,69 +1,57 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
-#ifndef XAL_SOURCE_H
-#define XAL_SOURCE_H
+/// @file
+/// @author  Boris Mikic
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/// 
+/// @section DESCRIPTION
+/// 
+/// Provides an interface for audio sources.
+
+#ifndef XAL_DECODER_H
+#define XAL_DECODER_H
+
+#include <hltypes/hstring.h>
 
 #include "xalExport.h"
 
-#include "Sound.h"
-
 namespace xal
 {
-	class SoundBuffer;
-	
-	class xalExport Source : public Sound
+	class xalExport Source
 	{
 	public:
-		Source(SoundBuffer* sound, unsigned int sourceId);
-		~Source();
+		Source(chstr filename);
+		virtual ~Source();
 
-		void update(float k);
-		
-		Sound* play(float fadeTime = 0.0f, bool looping = false);
-		void stop(float fadeTime = 0.0f);
-		void pause(float fadeTime = 0.0f);
-		void stopSoft(float fadeTime = 0.0f, bool pause = false);
-		
-        float getDuration();
-        
-		void unbind(bool pause = false);
-		
-		unsigned int getSourceId() { return this->sourceId; }
-		void setSourceId(unsigned int value) { this->sourceId = value; }
-		float getSampleOffset() { return this->sampleOffset; }
-		unsigned int getBuffer() const;
-		SoundBuffer* getSound() { return this->sound; }
-		bool isBound() { return this->bound; }
-		float getGain() { return this->gain; }
-		void setGain(float value);
-		bool isLooping() { return this->looping; }
-		bool isPlaying();
-		bool isPaused();
-		bool isFading();
-		bool isFadingIn();
-		bool isFadingOut();
-		
-		Category* getCategory();
+		int getSize() { return this->size; }
+		int getChunkSize() { return this->chunkSize; }
+		int getChannels() { return this->channels; }
+		int getSamplingRate() { return this->samplingRate; }
+		int getBitsPerSample() { return this->bitsPerSample; }
+		float getDuration() { return this->duration; }
+		bool isOpen() { return this->streamOpen; }
+
+		virtual bool open();
+		virtual bool close();
+		virtual bool rewind();
+		virtual bool load(unsigned char** output);
+		virtual int loadChunk(unsigned char** output);
 		
 	protected:
-		unsigned int sourceId;
-		float gain;
-		bool looping;
-		bool paused;
-		float fadeSpeed;
-		float fadeTime;
-		float sampleOffset;
-		bool bound;
-		SoundBuffer* sound;
-		
+		hstr filename;
+		int size;
+		int channels;
+		int samplingRate;
+		int bitsPerSample;
+		float duration;
+		int chunkSize;
+		bool streamOpen;
+
 	};
 
 }
+
 #endif
