@@ -130,6 +130,7 @@ namespace xal
 		bool updating;
 		
 		void _setupThread();
+		void _destroyThread();
 		Player* _createManagedPlayer(chstr name);
 		void _destroyManagedPlayer(Player* player);
 
