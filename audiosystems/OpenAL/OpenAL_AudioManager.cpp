@@ -76,7 +76,6 @@ namespace xal
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
-		this->clear();
 		xal::log("destroying OpenAL");
 		if (this->device != NULL)
 		{
