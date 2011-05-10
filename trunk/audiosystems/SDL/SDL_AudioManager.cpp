@@ -42,7 +42,6 @@ namespace xal
 
 	SDL_AudioManager::~SDL_AudioManager()
 	{
-		this->clear();
 		xal::log("destroying SDL Audio");
 		Mix_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);

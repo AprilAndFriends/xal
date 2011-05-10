@@ -45,7 +45,6 @@ namespace xal
 
 	DirectSound_AudioManager::~DirectSound_AudioManager()
 	{
-		this->clear();
 		xal::log("destroying DirectSound");
 		if (this->dsDevice != NULL)
 		{

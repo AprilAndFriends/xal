@@ -98,6 +98,7 @@ namespace xal
 	void destroy()
 	{
 		xal::log("destroying XAL");
+		xal::mgr->clear();
 		delete xal::mgr;
 	}
 	

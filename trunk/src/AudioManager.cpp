@@ -55,7 +55,6 @@ namespace xal
 
 	AudioManager::~AudioManager()
 	{
-		this->clear();
 	}
 
 	void AudioManager::clear()
