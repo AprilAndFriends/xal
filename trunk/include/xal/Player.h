@@ -19,6 +19,7 @@
 namespace xal
 {
 	class Buffer;
+	class Category;
 	class Sound;
 
 	class xalExport Player
