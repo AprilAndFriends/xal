@@ -55,17 +55,11 @@ namespace xal
 
 	AudioManager::~AudioManager()
 	{
+		this->_destroyThread();
 	}
 
 	void AudioManager::clear()
 	{
-		if (this->thread != NULL)
-		{
-			while (this->updating);
-			this->thread->stop();
-			delete this->thread;
-			this->thread = NULL;
-		}
 		foreach (Player*, it, this->players)
 		{
 			(*it)->stop();
@@ -93,6 +87,18 @@ namespace xal
 		this->thread = new hthread(&AudioManager::update);
 		this->thread->start();
 		this->updating = false;
+	}
+
+	void AudioManager::_destroyThread()
+	{
+		if (this->thread != NULL)
+		{
+			xal::log("stopping thread management");
+			while (this->updating);
+			this->thread->stop();
+			delete this->thread;
+			this->thread = NULL;
+		}
 	}
 
 	void AudioManager::setGlobalGain(float value)
