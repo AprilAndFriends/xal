@@ -30,6 +30,7 @@ namespace xal
 	void Player::setGain(float gain)
 	{
 		this->gain = hclamp(gain, 0.0f, 1.0f);
+		this->_sysUpdateGain();
 	}
 
 	hstr Player::getName()
@@ -51,6 +52,12 @@ namespace xal
     {
         return this->buffer->getDuration();
     }
+	
+	bool Player::isPlaying()
+	{
+		printf("-- %d\n", (int)(!this->isFadingOut() && this->_sysIsPlaying()));
+		return (!this->isFadingOut() && this->_sysIsPlaying());
+	}
 	
 	bool Player::isPaused()
 	{
@@ -79,7 +86,7 @@ namespace xal
 
 	void Player::update(float k)
 	{
-		if (this->isPlaying())
+		if (this->sound->isStreamed() && this->_sysIsPlaying())
 		{
 			this->_updateBuffer();
 		}

@@ -29,22 +29,22 @@ namespace xal
 		OpenAL_Player(Sound* sound, Buffer* buffer);
 		virtual ~OpenAL_Player();
 
-		virtual void setGain(float value);
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 
-		bool isPlaying();
 
 	protected:
 		unsigned int sourceId;
 		unsigned int bufferIds[STREAM_BUFFER_COUNT];
 
+		bool _sysIsPlaying();
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
 		int _sysGetQueuedBuffersCount();
 		int _sysGetProcessedBuffersCount();
 		bool _sysPreparePlay();
 		void _sysPrepareBuffer();
+		void _sysUpdateGain();
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();

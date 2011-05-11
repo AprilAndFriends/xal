@@ -48,7 +48,7 @@
 
 #ifndef _TEST_LINKS
 #define S_BARK "bark"
-#define S_WIND "wind_2"
+#define S_WIND "wind"
 #define S_WIND_2 "wind_2"
 #ifndef _TEST_STREAM
 #define USED_SOUND S_BARK
@@ -72,6 +72,7 @@ void _test_basic()
 	s->play();
 	while (s->isPlaying())
 	{
+		printf("~~ %d\n", (int)s->isPlaying());
 		hthread::sleep(100);
 		_update(0.1f);
 	}
