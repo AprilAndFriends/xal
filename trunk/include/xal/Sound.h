@@ -30,9 +30,9 @@ namespace xal
 		Sound(chstr filename, Category* category, chstr prefix = "");
 		virtual ~Sound();
 
-		chstr getName() { return this->name; }
-		chstr getFilename() { return this->filename; }
-		chstr getRealFilename() { return this->realFilename; }
+		hstr getName() { return this->name; }
+		hstr getFilename() { return this->filename; }
+		hstr getRealFilename() { return this->realFilename; }
 		Category* getCategory() { return this->category; }
 		Buffer* getBuffer() { return this->buffer; }
 

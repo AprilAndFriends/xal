@@ -33,6 +33,8 @@ namespace xal
 		float getOffset() { return this->offset; }
 		Sound* getSound() { return this->sound; }
 		hstr getName();
+		hstr getFilename();
+		hstr getRealFilename();
 		float getDuration();
 
 		Category* getCategory();
