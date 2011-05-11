@@ -12,6 +12,7 @@
 
 #include <hltypes/hfile.h>
 
+#include "AudioManager.h"
 #include "WAV_Source.h"
 #include "xal.h"
 
@@ -135,7 +136,7 @@ namespace xal
 		this->file.read_raw(buffer, 4); // WAVE
 		hstr tag;
 		int size = 0;
-		while (!file.eof() && size >= 0)
+		while (!file.eof())
 		{
 			file.read_raw(buffer, 4); // next tag
 			tag = (char*)buffer;
@@ -146,7 +147,8 @@ namespace xal
 			memcpy(&size, buffer, 4);
 			if (tag == "data")
 			{
-				size = -8;
+				//this->file.seek(-8);
+				break;
 			}
 			if (size > 0)
 			{
@@ -161,44 +163,17 @@ namespace xal
 		{
 			return false;
 		}
-		unsigned char buffer[5] = {0};
-		//hfile file(this->filename);
-		//this->file.read_raw(buffer, 4); // RIFF
-		//this->file.read_raw(buffer, 4); // file size
-		//this->file.read_raw(buffer, 4); // WAVE
-		hstr tag;
-		int size = 0;
-		while (!file.eof())
-		{
-			this->file.read_raw(buffer, 4); // next tag
-			tag = (char*)buffer;
-			this->file.read_raw(buffer, 4); // size of the chunk
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			XAL_NORMALIZE_ENDIAN((uint32_t)*buffer);
-#endif
-			memcpy(&size, buffer, 4);
-            if (tag == "data")
-            {
-				//this->size = size;
-				this->file.read_raw(output, this->size);
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-				for (int i = 0; i < size; i += 2) // always 16 bit
-				{
-					XAL_NORMALIZE_ENDIAN((uint16_t)output[i]);
-				}
-#endif
-				size = 0;
-            }
-			if (size > 0)
-			{
-				file.seek(size);
-			}
-		}
-		if (this->size == 0)
-		{
-			return false;
-		}
+		this->file.read_raw(output, this->size);
 		return true;
+	}
+
+	int WAV_Source::loadChunk(unsigned char* output)
+	{
+		if (Source::loadChunk(output) == 0)
+		{
+			return 0;
+		}
+		return this->file.read_raw(output, STREAM_BUFFER_SIZE);
 	}
 
 }

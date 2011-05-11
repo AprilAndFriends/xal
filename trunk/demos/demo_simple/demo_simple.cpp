@@ -48,8 +48,8 @@
 
 #ifndef _TEST_LINKS
 #define S_BARK "bark"
-#define S_WIND "wind"
-#define S_WIND_COPY "wind_copy"
+#define S_WIND "wind_2"
+#define S_WIND_2 "wind_2"
 #ifndef _TEST_STREAM
 #define USED_SOUND S_BARK
 #else
@@ -57,9 +57,9 @@
 #endif
 #else
 #define USED_SOUND "linked_sound"
-#define S_BARK "bark2"
+#define S_BARK "bark_2"
 #define S_WIND "linked_sound"
-#define S_WIND_COPY "wind_copy"
+#define S_WIND_2 "wind_2"
 #endif
 
 #define OPENAL_MAX_SOURCES 16 // needed when using OpenAL
@@ -249,7 +249,7 @@ void _test_complex_handler()
 	printf("  - start test complex handler...\n");
 	xal::Player* temp;
 	xal::Player* s1 = xal::mgr->createPlayer(S_WIND);
-	xal::Player* s2 = xal::mgr->createPlayer(S_WIND_COPY);
+	xal::Player* s2 = xal::mgr->createPlayer(S_WIND_2);
 	s1->play();
 	s2->play();
 	s2->pause();
@@ -308,7 +308,7 @@ void _test_util_playlist()
 	list.queueSound(S_BARK);
 	list.queueSound(S_BARK);
 	list.queueSound(S_WIND);
-	list.queueSound(S_WIND_COPY);
+	list.queueSound(S_WIND_2);
 	list.queueSound(S_BARK);
 	list.play();
 	while (list.isPlaying())
