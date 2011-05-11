@@ -29,7 +29,7 @@ namespace xal
 		virtual ~Player();
 
 		float getGain() { return this->gain; }
-		virtual void setGain(float value);
+		void setGain(float value);
 		float getOffset() { return this->offset; }
 		Sound* getSound() { return this->sound; }
 		hstr getName();
@@ -39,7 +39,7 @@ namespace xal
 
 		Category* getCategory();
 
-		virtual bool isPlaying() { return false; }
+		bool isPlaying();
 		bool isPaused();
 		bool isFading();
 		bool isFadingIn();
@@ -69,12 +69,14 @@ namespace xal
 
 		void _updateBuffer();
 
+		virtual bool _sysIsPlaying() { return false; }
 		virtual float _sysGetOffset() { return 1.0f; }
 		virtual void _sysSetOffset(float value) { }
 		virtual int _sysGetQueuedBuffersCount() { return 0; }
 		virtual int _sysGetProcessedBuffersCount() { return 0; }
 		virtual bool _sysPreparePlay() { return true; }
 		virtual void _sysPrepareBuffer() { }
+		virtual void _sysUpdateGain() { }
 		virtual void _sysUpdateFadeGain() { }
 		virtual void _sysPlay() { }
 		virtual void _sysStop();

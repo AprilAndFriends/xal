@@ -36,9 +36,11 @@ namespace xal
 		bool close();
 		bool rewind();
 		bool load(unsigned char* output);
+		int loadChunk(unsigned char* output);
 
 	protected:
 		WAVEFORMATEX wavefmt;
+		HMMIO file;
 		
 	};
 

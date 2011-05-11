@@ -38,24 +38,11 @@ namespace xal
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
-	void OpenAL_Player::setGain(float gain)
-	{
-		Player::setGain(gain);
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
-		}
-	}
-
-	bool OpenAL_Player::isPlaying()
+	bool OpenAL_Player::_sysIsPlaying()
 	{
 		if (this->sound->isStreamed())
 		{
 			return (this->_sysGetQueuedBuffersCount() > 0 || this->_sysGetProcessedBuffersCount() > 0);
-		}
-		if (this->isFadingOut())
-		{
-			return false;
 		}
 		int state;
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
@@ -134,9 +121,20 @@ namespace xal
 		}
 	}
 
+	void OpenAL_Player::_sysUpdateGain()
+	{
+		if (this->sourceId != 0)
+		{
+			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
+		}
+	}
+
 	void OpenAL_Player::_sysUpdateFadeGain()
 	{
-		alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
+		if (this->sourceId != 0)
+		{
+			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
+		}
 	}
 
 	void OpenAL_Player::_sysPlay()

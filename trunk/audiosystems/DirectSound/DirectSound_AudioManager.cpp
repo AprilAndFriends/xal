@@ -70,7 +70,7 @@ namespace xal
 			source = new DirectSound_WAV_Source(filename);
 			break;
 #endif
-		*/
+		//*/
 		default:
 			source = AudioManager::_createSource(filename, format);
 			break;
