@@ -37,8 +37,8 @@ namespace xal
 		virtual bool open();
 		virtual bool close();
 		virtual bool rewind();
-		virtual bool load(unsigned char** output);
-		virtual int loadChunk(unsigned char** output);
+		virtual bool load(unsigned char* output);
+		virtual int loadChunk(unsigned char* output);
 		
 	protected:
 		hstr filename;

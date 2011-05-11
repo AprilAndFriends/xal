@@ -21,9 +21,9 @@ namespace xal
 	{
 	}
 
-	bool MP3_Source::load(unsigned char** output)
+	bool MP3_Source::load(unsigned char* output)
 	{
-		if (!Source::load(output))
+		if (!Source::load(output, size))
 		{
 			return false;
 		}

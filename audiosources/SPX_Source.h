@@ -28,7 +28,7 @@ namespace xal
 		SPX_Source(chstr filename);
 		~SPX_Source();
 
-		bool load(unsigned char** output);
+		bool load(unsigned char* output);
 
 	};
 

@@ -32,7 +32,7 @@ namespace xal
 		bool open();
 		bool close();
 		bool rewind();
-		bool load(unsigned char** output);
+		bool load(unsigned char* output);
 
 	protected:
 		hfile file;

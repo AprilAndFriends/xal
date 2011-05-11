@@ -28,7 +28,7 @@ namespace xal
 		MP3_Source(chstr filename);
 		~MP3_Source();
 
-		bool load(unsigned char** output);
+		bool load(unsigned char* output);
 
 	};
 

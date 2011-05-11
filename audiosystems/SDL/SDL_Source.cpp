@@ -30,9 +30,9 @@ namespace xal
 		}
 	}
 
-	bool SDL_Source::load(unsigned char** output)
+	bool SDL_Source::load(unsigned char* output)
 	{
-		if (!Source::load(output))
+		if (!Source::load(output, size))
 		{
 			return false;
 		}

@@ -28,9 +28,9 @@ namespace xal
 	{
 	}
 
-	bool SPX_Source::load(unsigned char** output)
+	bool SPX_Source::load(unsigned char* output)
 	{
-		if (!Source::load(output))
+		if (!Source::load(output, size))
 		{
 			return false;
 		}
@@ -46,11 +46,11 @@ namespace xal
 		speex_decoder_ctl(state, SPEEX_SET_ENH, &tmp);
 
 		int size;
-		unsigned char* stream = *output;
+		unsigned char* stream = output;
 
 		//fin = fopen(this->fileName.c_str(), "rb");
 		int offset = 0;
-		memcpy(&size, &((*output)[offset]), sizeof(int));
+		memcpy(&size, &output[offset], sizeof(int));
 		offset += sizeof(int);
 		short* buffer = (short*)malloc((FRAME_SIZE + size) * 2 * sizeof(short));
 		short* bufferPtr = buffer;
@@ -59,7 +59,7 @@ namespace xal
 		int nFrames = 0;
 		while (true)
 		{
-			memcpy(&nbBytes, &((*output)[offset]), sizeof(unsigned short));
+			memcpy(&nbBytes, &output[offset], sizeof(unsigned short));
 			offset += sizeof(unsigned short);
 			//fread(&nbBytes, sizeof(unsigned short), 1, fin);
 			//  fprintf (stderr, "nbBytes: %d\n", nbBytes);
@@ -68,7 +68,7 @@ namespace xal
 				break;
 			}
 
-			memcpy(cbits, &((*output)[offset]), nbBytes);
+			memcpy(cbits, &output[offset], nbBytes);
 			offset += nbBytes;
 			speex_bits_read_from(&bits, cbits, nbBytes);
 
