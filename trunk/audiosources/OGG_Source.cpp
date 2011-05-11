@@ -70,80 +70,62 @@ namespace xal
 		return result;
 	}
 
-	bool OGG_Source::load(unsigned char** output)
+	bool OGG_Source::load(unsigned char* output)
 	{
 		if (!Source::load(output))
 		{
 			return false;
 		}
-		*output = new unsigned char[this->size];
-		bool result = false;
-		if (*output != NULL)
+		int section;
+		unsigned long remaining = this->size;
+		unsigned char* buffer = output;
+		int read;
+		while (remaining > 0)
 		{
-			int section;
-			unsigned long size = this->size;
-			unsigned char* buffer = *output;
-			int read;
-			while (size > 0)
+			read = ov_read(&this->oggStream, (char*)buffer, remaining, 0, 2, 1, &section);
+			if (read == 0)
 			{
-				read = ov_read(&this->oggStream, (char*)buffer, size, 0, 2, 1, &section);
-				if (read == 0)
-				{
-					break;
-				}
-				size -= read;
-				buffer += read;
+				break;
 			}
+			remaining -= read;
+			buffer += read;
+		}
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			for (int i = 0; i < this->size; i += bytes)
-			{
-				XAL_NORMALIZE_ENDIAN((uint16_t)((*output)[i])); // always 16 bit data
-			}
-#endif	
-			result = true;
-		}
-		else
+		for (int i = 0; i < this->size; i += 2)
 		{
-			xal::log("could not allocate ogg buffer.");
+			XAL_NORMALIZE_ENDIAN((uint16_t)output[i]); // always 16 bit data
 		}
-		return result;
+#endif	
+		return true;
 	}
 
-	int OGG_Source::loadChunk(unsigned char** output)
+	int OGG_Source::loadChunk(unsigned char* output)
 	{
 		if (Source::loadChunk(output) == 0)
 		{
 			return 0;
 		}
-		int size = STREAM_BUFFER_SIZE;
-		*output = new unsigned char[STREAM_BUFFER_SIZE];
-		if (*output != NULL)
+		int remaining = STREAM_BUFFER_SIZE;
+		int section;
+		unsigned char* buffer = output;
+		int read;
+		while (remaining > 0)
 		{
-			int section;
-			unsigned char* buffer = *output;
-			int read;
-			while (size > 0)
+			read = ov_read(&this->oggStream, (char*)buffer, remaining, 0, 2, 1, &section);
+			if (read == 0)
 			{
-				read = ov_read(&this->oggStream, (char*)buffer, size, 0, 2, 1, &section);
-				if (read == 0)
-				{
-					break;
-				}
-				size -= read;
-				buffer += read;
+				break;
 			}
+			remaining -= read;
+			buffer += read;
+		}
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			for (int i = 0; i < this->size; i += bytes)
-			{
-				XAL_NORMALIZE_ENDIAN((uint16_t)((*output)[i])); // always 16 bit data
-			}
-#endif	
-		}
-		else
+		for (int i = 0; i < this->size; i += 2)
 		{
-			xal::log("could not allocate ogg buffer.");
+			XAL_NORMALIZE_ENDIAN((uint16_t)output[i]); // always 16 bit data
 		}
-		return (STREAM_BUFFER_SIZE - size);
+#endif	
+		return (STREAM_BUFFER_SIZE - remaining);
 	}
 
 }

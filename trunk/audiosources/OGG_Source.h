@@ -33,8 +33,8 @@ namespace xal
 		bool open();
 		bool close();
 		bool rewind();
-		bool load(unsigned char** output);
-		int loadChunk(unsigned char** output);
+		bool load(unsigned char* output);
+		int loadChunk(unsigned char* output);
 
 	protected:
 		OggVorbis_File oggStream;

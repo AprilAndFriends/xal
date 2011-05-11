@@ -52,14 +52,9 @@ namespace xal
 		return this->streamOpen;
 	}
 	
-	bool Source::load(unsigned char** output)
+	bool Source::load(unsigned char* output)
 	{
 		xal::log("loading file " + this->filename);
-		if (*output != NULL)
-		{
-			delete [] *output;
-			*output = NULL;
-		}
 		if (!this->streamOpen)
 		{
 			xal::log("Error: file " + this->filename + " not open");
@@ -68,13 +63,8 @@ namespace xal
 		return true;
 	}
 	
-	int Source::loadChunk(unsigned char** output)
+	int Source::loadChunk(unsigned char* output)
 	{
-		if (*output != NULL)
-		{
-			delete [] *output;
-			*output = NULL;
-		}
 		if (!this->streamOpen)
 		{
 			xal::log("Error: file " + this->filename + " not open");

@@ -20,22 +20,38 @@
 namespace xal
 {
 	Buffer::Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode) :
-		loaded(false), decoded(false), stream(NULL), streamSize(0)
+		loaded(false), decoded(false)
 	{
 		this->filename = filename;
 		this->fileSize = hfile::hsize(this->filename);
 		this->loadMode = loadMode;
 		this->decodeMode = decodeMode;
 		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
+		this->streamSize = 0;
+		this->stream = NULL;
+		if (xal::mgr->isEnabled())
+		{
+			switch (this->loadMode)
+			{
+			case FULL:
+				this->prepare();
+				break;
+			case LAZY:
+				break;
+			case ON_DEMAND:
+				break;
+			case STREAMED:
+				this->streamSize = STREAM_BUFFER_SIZE;
+				this->stream = new unsigned char[this->streamSize];
+				break;
+			}
+		}
 	}
 
 	Buffer::~Buffer()
 	{
 		xal::log("destroying buffer " + this->filename);
-		if (this->stream != NULL)
-		{
-			delete [] this->stream;
-		}
+		delete [] this->stream;
 		delete this->source;
 	}
 	
@@ -119,8 +135,12 @@ namespace xal
 		{
 			this->loaded = true;
 			this->source->open();
-			this->source->load(&this->stream);
-			this->streamSize = this->source->getSize();
+			if (this->stream == NULL)
+			{
+				this->streamSize = this->source->getSize();
+				this->stream = new unsigned char[this->streamSize];
+			}
+			this->source->load(this->stream);
 			return;
 		}
 		if (!this->source->isOpen())
@@ -135,17 +155,13 @@ namespace xal
 		{
 			return 0;
 		}
-		if (this->isStreamed())
+		if (this->isStreamed() && this->source->isOpen())
 		{
-			this->streamSize = 0;
-			if (this->source->isOpen())
+			this->streamSize = this->source->loadChunk(this->stream);
+			if (this->streamSize == 0 && looping)
 			{
-				this->streamSize = this->source->loadChunk(&this->stream);
-				if (this->streamSize == 0 && looping)
-				{
-					this->source->rewind();
-					this->streamSize = this->source->loadChunk(&this->stream);
-				}
+				this->source->rewind();
+				this->streamSize = this->source->loadChunk(this->stream);
 			}
 		}
 		return this->streamSize;
@@ -153,7 +169,19 @@ namespace xal
 
 	void Buffer::release()
 	{
-		// TODO
+		if (this->decodeMode == xal::ON_DEMAND)
+		{
+			if (this->stream != NULL)
+			{
+				delete [] this->stream;
+				this->stream = NULL;
+			}
+		}
+		if (this->loadMode == xal::ON_DEMAND)
+		{
+			this->source->close();
+			this->loaded = false;
+		}
 	}
 
 	void Buffer::rewind()

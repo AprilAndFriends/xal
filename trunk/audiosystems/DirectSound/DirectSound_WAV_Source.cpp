@@ -54,7 +54,7 @@ namespace xal
 		return result;
 	}
 
-	bool DirectSound_WAV_Source::load(unsigned char** output)
+	bool DirectSound_WAV_Source::load(unsigned char* output)
 	{
 		if (!Source::load(output))
 		{
@@ -89,8 +89,7 @@ namespace xal
 		child.ckid = mmioFOURCC('d', 'a', 't', 'a');
 		mmioDescend(file, &child, &parent, MMIO_FINDCHUNK);
 		this->size = child.cksize;
-		*output = new unsigned char[this->size];
-		mmioRead(file, (char*)(*output), this->size);
+		mmioRead(file, (char*)output, this->size);
 		mmioClose(file, 0);
 		return true;
 	}
