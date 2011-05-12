@@ -72,7 +72,6 @@ void _test_basic()
 	s->play();
 	while (s->isPlaying())
 	{
-		printf("~~ %d\n", (int)s->isPlaying());
 		hthread::sleep(100);
 		_update(0.1f);
 	}
