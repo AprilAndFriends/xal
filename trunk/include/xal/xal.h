@@ -22,7 +22,7 @@
 #define XAL_AS_OPENAL "OpenAL"
 #define XAL_AS_SDL "SDL"
 #define XAL_AS_DISABLED "Disabled"
-#define XAL_AS_DEFAULT "Default"
+#define XAL_AS_DEFAULT ""
 
 namespace xal
 {

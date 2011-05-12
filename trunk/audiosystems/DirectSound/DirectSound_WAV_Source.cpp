@@ -64,7 +64,6 @@ namespace xal
 			child.ckid = mmioFOURCC('d', 'a', 't', 'a');
 			mmioDescend(file, &child, &parent, MMIO_FINDCHUNK);
 			this->size = child.cksize;
-			xal::log(hstr(this->size));
 		}
 		return result;
 	}
