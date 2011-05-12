@@ -17,32 +17,32 @@
 
 #ifdef _WIN32
 	#if HAVE_DIRECTSOUND
-	#define XAL_AS_DEFAULT XAL_AS_DIRECTSOUND
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DIRECTSOUND
 	#elif HAVE_SDL
-	#define XAL_AS_DEFAULT XAL_AS_SDL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
 	#elif HAVE_OPENAL
-	#define XAL_AS_DEFAULT XAL_AS_OPENAL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
-	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(__APPLE__)
 	#if HAVE_SDL
-	#define XAL_AS_DEFAULT XAL_AS_SDL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
 	#elif HAVE_OPENAL
-	#define XAL_AS_DEFAULT XAL_AS_OPENAL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
-	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(_UNIX)
 	#if HAVE_SDL
-	#define XAL_AS_DEFAULT XAL_AS_SDL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
 	#elif HAVE_OPENAL
-	#define XAL_AS_DEFAULT XAL_AS_OPENAL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
-	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #else
-	#define XAL_AS_DEFAULT XAL_AS_DISABLED
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 #endif
 
 namespace xal
@@ -57,9 +57,9 @@ namespace xal
 	{
 		xal::log("initializing XAL");
 		hstr name = systemName;
-		if (name == "")
+		if (name == XAL_AS_DEFAULT)
 		{
-			name = XAL_AS_DEFAULT;
+			name = XAL_AS_INTERNAL_DEFAULT;
 		}
 		if (name == XAL_AS_DISABLED)
 		{
