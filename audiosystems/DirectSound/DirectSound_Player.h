@@ -48,6 +48,7 @@ namespace xal
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
+		void _sysUpdateStream();
 
 	};
 

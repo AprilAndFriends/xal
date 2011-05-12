@@ -87,7 +87,7 @@ namespace xal
 	{
 		if (this->sound->isStreamed() && this->_sysIsPlaying())
 		{
-			this->_updateBuffer();
+			this->_sysUpdateStream();
 		}
 		if (this->isFading())
 		{
@@ -116,55 +116,6 @@ namespace xal
 		}
 	}
 
-	void Player::_updateBuffer()
-	{
-		int queued = this->_sysGetQueuedBuffersCount();
-		if (queued == 0)
-		{
-			this->_stopSound();
-			return;
-		}
-		int processed = this->_sysGetProcessedBuffersCount();
-		if (processed == 0)
-		{
-			return;
-		}
-		this->_sysUnqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
-		int bytes = 0;
-		int size;
-		int i = 0;
-		for (; i < processed; i++)
-		{
-			size = this->buffer->load(this->looping);
-			if (size == 0)
-			{
-				break;
-			}
-			this->__sysSetBufferData((this->bufferIndex + i) % STREAM_BUFFER_COUNT, this->buffer->getStream(), size);
-			bytes += size;
-		}
-		if (bytes > 0)
-		{
-			if (i > 0)
-			{
-				this->_sysQueueBuffers(this->bufferIndex, i);
-			}
-			if (processed < STREAM_BUFFER_COUNT)
-			{
-				this->bufferIndex = (this->bufferIndex + i) % STREAM_BUFFER_COUNT;
-			}
-			else // underrun happened, sound was stopped
-			{
-				this->pause();
-				this->play();
-			}
-		}
-		if (this->_sysGetQueuedBuffersCount() == 0)
-		{
-			this->_stopSound();
-		}
-	}
-
 	void Player::play(float fadeTime, bool looping)
 	{
 		if (!xal::mgr->isEnabled())
@@ -182,13 +133,10 @@ namespace xal
 		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
-			if (this->isPaused())
+			this->_sysPrepareBuffer();
+			if (this->paused)
 			{
 				this->_sysSetOffset(this->offset);
-			}
-			else
-			{
-				this->_sysPrepareBuffer();
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -233,25 +181,6 @@ namespace xal
 		this->offset = this->_sysGetOffset();
 		this->buffer->release();
 		this->_sysStop();
-	}
-
-	void Player::_sysStop()
-	{
-		if (this->sound->isStreamed())
-		{
-			int queued = this->_sysGetQueuedBuffersCount();
-			this->_sysUnqueueBuffers();
-			if (this->paused)
-			{
-				// requeue all buffers if the stream was only paused
-				this->_sysQueueBuffers(this->bufferIndex, queued);
-			}
-			else
-			{
-				this->bufferIndex = 0;
-				this->buffer->rewind();
-			}
-		}
 	}
 
 	float Player::_calcGain()

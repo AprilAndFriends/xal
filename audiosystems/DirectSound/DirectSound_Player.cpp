@@ -53,14 +53,6 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_sysSetOffset(float value)
-	{
-		if (this->dsBuffer != NULL)
-		{
-			this->dsBuffer->SetCurrentPosition((DWORD)value);
-		}
-	}
-
 	float DirectSound_Player::_sysGetOffset()
 	{
 		if (this->dsBuffer == NULL)
@@ -70,6 +62,14 @@ namespace xal
 		unsigned long position;
 		this->dsBuffer->GetCurrentPosition(&position, NULL);
 		return (float)position;
+	}
+
+	void DirectSound_Player::_sysSetOffset(float value)
+	{
+		if (this->dsBuffer != NULL)
+		{
+			this->dsBuffer->SetCurrentPosition((DWORD)value);
+		}
 	}
 
 	bool DirectSound_Player::_sysPreparePlay()
@@ -96,7 +96,7 @@ namespace xal
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = this->buffer->getSize();
+		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER_SIZE * STREAM_BUFFER_COUNT);
 		bufferDesc.lpwfxFormat = &wavefmt;
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
@@ -177,6 +177,11 @@ namespace xal
 			this->dsBuffer->Stop();
 			this->playing = false;
 		}
+	}
+
+	void DirectSound_Player::_sysUpdateStream()
+	{
+		// TODO
 	}
 
 }

@@ -32,7 +32,6 @@ namespace xal
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
 
-
 	protected:
 		unsigned int sourceId;
 		unsigned int bufferIds[STREAM_BUFFER_COUNT];
@@ -40,21 +39,22 @@ namespace xal
 		bool _sysIsPlaying();
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
-		int _sysGetQueuedBuffersCount();
-		int _sysGetProcessedBuffersCount();
 		bool _sysPreparePlay();
 		void _sysPrepareBuffer();
 		void _sysUpdateGain();
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
-		void _sysQueueBuffers(int index, int count);
-		void _sysUnqueueBuffers(int index, int count);
-		void _sysQueueBuffers();
-		void _sysUnqueueBuffers();
+		void _sysUpdateStream();
 
-		void __sysSetBufferData(int index, unsigned char* data, int size);
-
+		int _getQueuedBuffersCount();
+		int _getProcessedBuffersCount();
+		int _fillBuffers(int index, int count);
+		void _queueBuffers(int index, int count);
+		void _queueBuffers();
+		void _unqueueBuffers(int index, int count);
+		void _unqueueBuffers();
+		
 	};
 
 }
