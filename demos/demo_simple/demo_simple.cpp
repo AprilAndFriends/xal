@@ -342,9 +342,9 @@ int main(int argc, char **argv)
 	hwnd = (unsigned long)GetConsoleWindow();
 #endif
 #ifndef _TEST_THREADED
-	xal::init("", hwnd, false);
+	xal::init(XAL_AS_DEFAULT, hwnd, false);
 #else
-	xal::init("", hwnd, true, 0.01f);
+	xal::init(XAL_AS_DEFAULT, hwnd, true, 0.01f);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _TEST_LINKS

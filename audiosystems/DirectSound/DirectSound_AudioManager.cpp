@@ -64,7 +64,7 @@ namespace xal
 		switch (format)
 		{
 		// TODO - using mmio functions is nice and all, but how useful is it really?
-		/*
+		//*
 #if HAVE_WAV
 		case WAV:
 			source = new DirectSound_WAV_Source(filename);
