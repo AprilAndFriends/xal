@@ -55,7 +55,6 @@ namespace xal
 	
 	bool Player::isPlaying()
 	{
-		printf("-- %d\n", (int)(!this->isFadingOut() && this->_sysIsPlaying()));
 		return (!this->isFadingOut() && this->_sysIsPlaying());
 	}
 	

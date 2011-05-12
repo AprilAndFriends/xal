@@ -137,8 +137,13 @@ namespace xal
 	{
 		if (this->dsBuffer != NULL)
 		{
-			printf(". %f\n", this->_calcGain());
-			this->dsBuffer->SetVolume(DSBVOLUME_MIN + (LONG)((DSBVOLUME_MAX - DSBVOLUME_MIN) * this->_calcGain()));
+			float gain = this->_calcGain();
+			LONG value = DSBVOLUME_MIN;
+			if (gain > 0.0f)
+			{
+				value = (LONG)(log10(gain) / 4 * (DSBVOLUME_MAX - DSBVOLUME_MIN));
+			}
+			this->dsBuffer->SetVolume(value);
 		}
 	}
 
