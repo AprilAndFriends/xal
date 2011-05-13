@@ -19,6 +19,7 @@
 
 #include <hltypes/hstring.h>
 
+#include "AudioManager.h"
 #include "Source.h"
 #include "xalExport.h"
 
@@ -36,7 +37,7 @@ namespace xal
 		bool close();
 		bool rewind();
 		bool load(unsigned char* output);
-		int loadChunk(unsigned char* output, int count = 1);
+		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
 		WAVEFORMATEX wavefmt;

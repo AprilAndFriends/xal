@@ -99,13 +99,12 @@ namespace xal
 		return true;
 	}
 
-	int OGG_Source::loadChunk(unsigned char* output, int count)
+	int OGG_Source::loadChunk(unsigned char* output, int size)
 	{
-		if (Source::loadChunk(output, count) == 0)
+		if (Source::loadChunk(output, size) == 0)
 		{
 			return 0;
 		}
-		int size = count * STREAM_BUFFER_SIZE;
 		int remaining = size;
 		int section;
 		unsigned char* buffer = output;

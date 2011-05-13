@@ -160,11 +160,13 @@ namespace xal
 		}
 		if (this->isStreamed() && this->source->isOpen())
 		{
-			this->streamSize = this->source->loadChunk(this->stream, count);
-			if (this->streamSize == 0 && looping)
+			int size = count * STREAM_BUFFER_SIZE;
+			this->streamSize = this->source->loadChunk(this->stream, size);
+			while (looping && this->streamSize < size)
 			{
 				this->source->rewind();
-				this->streamSize = this->source->loadChunk(this->stream, count);
+				size -= this->streamSize;
+				this->streamSize += this->source->loadChunk(&this->stream[this->streamSize], size);
 			}
 		}
 		return this->streamSize;
