@@ -9,7 +9,6 @@
 
 #if HAVE_SDL
 #include <SDL/SDL.h>
-#include <SDL_mixer/SDL_mixer.h>
 
 #include <hltypes/hstring.h>
 
@@ -31,10 +30,10 @@ namespace xal
 			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
 			return;
 		}
-		result = Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 16384); // 44.1 kHz, 16 bit stereo, 2 channels (stereo), stream chunks of 16kB
+		//result = Mix_OpenAudio(44100, AUDIO_S16SYS, 2, STREAM_BUFFER_SIZE); // 44.1 kHz, 16 bit stereo, 2 channels (stereo), stream chunks of 16kB
 		if (result != 0)
 		{
-			xal::log(hsprintf("Unable to initialize audio: %s\n", Mix_GetError()));
+			//xal::log(hsprintf("Unable to initialize audio: %s\n", Mix_GetError()));
 			return;
 		}
 		this->enabled = true;
@@ -43,7 +42,7 @@ namespace xal
 	SDL_AudioManager::~SDL_AudioManager()
 	{
 		xal::log("destroying SDL Audio");
-		Mix_CloseAudio();
+		//Mix_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	}
 	

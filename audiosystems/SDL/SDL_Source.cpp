@@ -8,8 +8,6 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_SDL
-#include <SDL_mixer/SDL_mixer.h>
-
 #include <hltypes/hstring.h>
 
 #include "SDL_Source.h"
@@ -25,24 +23,39 @@ namespace xal
 	{
 		if (this->mixChunk != NULL)
 		{
-			Mix_FreeChunk(this->mixChunk);
+			//Mix_FreeChunk(this->mixChunk);
 			this->mixChunk = NULL;
 		}
 	}
 
 	bool SDL_Source::load(unsigned char* output)
 	{
-		if (!Source::load(output, size))
+		if (!Source::load(output))
 		{
 			return false;
 		}
-		this->mixChunk = Mix_LoadWAV(this->filename.c_str());
+		//this->mixChunk = Mix_LoadWAV(this->filename.c_str());
 		if (this->mixChunk == NULL)
 		{
-			xal::log(Mix_GetError());
+			//xal::log(Mix_GetError());
 			return false;
 		}
 		return true;
+	}
+
+	int SDL_Source::loadChunk(unsigned char* output, int count)
+	{
+		if (!Source::loadChunk(output, count) == 0)
+		{
+			return 0;
+		}
+		//this->mixChunk = Mix_LoadWAV(this->filename.c_str());
+		if (this->mixChunk == NULL)
+		{
+			//xal::log(Mix_GetError());
+			return false;
+		}
+		return 1;
 	}
 
 }

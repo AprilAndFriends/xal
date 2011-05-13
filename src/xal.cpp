@@ -112,4 +112,31 @@ namespace xal
 		gLogFunction = function;
 	}
 
+	bool hasAudioSystem(chstr name)
+	{
+#if HAVE_DIRECTSOUND
+		if (name == XAL_AS_DIRECTSOUND)
+		{
+			return true;
+		}
+#endif
+#if HAVE_OPENAL
+		if (name == XAL_AS_OPENAL)
+		{
+			return true;
+		}
+#endif
+#if HAVE_SDL
+		if (name == XAL_AS_SDL)
+		{
+			return true;
+		}
+#endif
+		if (name == XAL_AS_DISABLED)
+		{
+			return true;
+		}
+		return false;
+	}
+
 }
