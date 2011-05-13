@@ -241,23 +241,22 @@ namespace xal
 		{
 			return;
 		}
+		this->bufferCount = hmax(this->bufferCount - processed, 0);
 		int count = this->_fillBuffers(this->bufferIndex, processed);
 		if (count > 0)
 		{
 			this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
 			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
 			this->bufferCount += count;
-			/*
-			if (this->bufferCount < STREAM_BUFFER_COUNT)
-			{
-				count = STREAM_BUFFER_COUNT - this->bufferCount;
-				int size = count * STREAM_BUFFER_SIZE;
-				unsigned char* stream = new unsigned char[size];
-				memset(stream, 0, size * sizeof(unsigned char));
-				this->_copyBuffer(this->bufferCount, stream, size);
-				delete [] stream;
-			}
-			*/
+		}
+		if (this->bufferCount < STREAM_BUFFER_COUNT && !this->looping)
+		{
+			count = STREAM_BUFFER_COUNT - this->bufferCount;
+			int size = count * STREAM_BUFFER_SIZE;
+			unsigned char* stream = new unsigned char[size];
+			memset(stream, 0, size * sizeof(unsigned char));
+			this->_copyBuffer(this->bufferCount, stream, size);
+			delete [] stream;
 		}
 		if (this->bufferCount == 0)
 		{
