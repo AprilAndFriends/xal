@@ -26,8 +26,8 @@
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-//#define _TEST_BASIC
-#define _TEST_SOUND
+#define _TEST_BASIC
+//#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
 //#define _TEST_FADE_IN
@@ -48,7 +48,7 @@
 
 #ifndef _TEST_LINKS
 #define S_BARK "bark"
-#define S_WIND "wind"
+#define S_WIND "wind_2"
 #define S_WIND_2 "wind_2"
 #ifndef _TEST_STREAM
 #define USED_SOUND S_BARK

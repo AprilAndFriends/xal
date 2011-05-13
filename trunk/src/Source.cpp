@@ -63,7 +63,7 @@ namespace xal
 		return true;
 	}
 	
-	int Source::loadChunk(unsigned char* output)
+	int Source::loadChunk(unsigned char* output, int count)
 	{
 		if (!this->streamOpen)
 		{

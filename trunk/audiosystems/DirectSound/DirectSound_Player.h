@@ -38,6 +38,7 @@ namespace xal
 		/// @brief Playing flag.
 		/// @note Due to possible latency in DirectSound, this flag is being used to avoid problems.
 		bool playing;
+		int bufferCount;
 
 		bool _sysIsPlaying() { return this->playing; }
 		float _sysGetOffset();
@@ -49,6 +50,10 @@ namespace xal
 		void _sysPlay();
 		void _sysStop();
 		void _sysUpdateStream();
+
+		int _getProcessedBuffersCount();
+		int _fillBuffers(int index, int count);
+		void _copyBuffer(int index, unsigned char* stream, int size);
 
 	};
 

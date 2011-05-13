@@ -44,8 +44,9 @@ namespace xal
 		bool setOffset(int value);
 
 		void prepare();
-		int load(bool looping = false);
+		int load(bool looping, int count = 1);
 		void release();
+		void free();
 		void rewind();
 
 	protected:

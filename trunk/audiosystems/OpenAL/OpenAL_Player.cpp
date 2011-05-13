@@ -63,20 +63,6 @@ namespace xal
 		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
 	}
 
-	int OpenAL_Player::_getQueuedBuffersCount()
-	{
-		int queued;
-		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-		return queued;
-	}
-
-	int OpenAL_Player::_getProcessedBuffersCount()
-	{
-		int processed;
-		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
-		return processed;
-	}
-
 	bool OpenAL_Player::_sysPreparePlay()
 	{
 		if (this->sourceId == 0)
@@ -89,14 +75,11 @@ namespace xal
 	void OpenAL_Player::_sysPrepareBuffer()
 	{
 		// making sure all buffer data is loaded before accessing anything
-		this->buffer->prepare();
 		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
 		int samplingRate = this->buffer->getSamplingRate();
-		int size;
 		if (!this->sound->isStreamed())
 		{
-			size = this->buffer->load(this->looping);
-			alBufferData(this->bufferIds[0], format, this->buffer->getStream(), size, samplingRate);
+			this->_fillBuffers(0, 1);
 			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
 			alSourcei(this->sourceId, AL_LOOPING, this->looping);
 		}
@@ -150,7 +133,7 @@ namespace xal
 				this->_unqueueBuffers();
 				if (this->paused)
 				{
-					this->bufferIndex = (this->bufferIndex + STREAM_BUFFER_COUNT - queued + processed) % STREAM_BUFFER_COUNT;
+					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
 				}
 				else
 				{
@@ -197,21 +180,40 @@ namespace xal
 		}
 	}
 
+	int OpenAL_Player::_getQueuedBuffersCount()
+	{
+		int queued;
+		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		return queued;
+	}
+
+	int OpenAL_Player::_getProcessedBuffersCount()
+	{
+		int processed;
+		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
+		return processed;
+	}
+
 	int OpenAL_Player::_fillBuffers(int index, int count)
 	{
-		int size;
-		int i = 0;
-		for (; i < count; i++)
+		int size = this->buffer->load(this->looping, count);
+		if (!this->sound->isStreamed())
 		{
-			size = this->buffer->load(this->looping);
-			if (size == 0)
-			{
-				break;
-			}
-			alBufferData(this->bufferIds[(this->bufferIndex + i) % STREAM_BUFFER_COUNT], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
+			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
 				this->buffer->getStream(), size, this->buffer->getSamplingRate());
+			return 1;
 		}
-		return i;
+		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
+		unsigned char* stream = this->buffer->getStream();
+		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
+		int samplingRate = this->buffer->getSamplingRate();
+		for (int i = 0; i < filled; i++)
+		{
+			alBufferData(this->bufferIds[(index + i) % STREAM_BUFFER_COUNT], format,
+				&stream[i * STREAM_BUFFER_SIZE], hmin(size, STREAM_BUFFER_SIZE), samplingRate);
+			size -= STREAM_BUFFER_SIZE;
+		}
+		return filled;
 	}
 
 	void OpenAL_Player::_queueBuffers(int index, int count)

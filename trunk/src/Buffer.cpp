@@ -41,7 +41,7 @@ namespace xal
 			case ON_DEMAND:
 				break;
 			case STREAMED:
-				this->streamSize = STREAM_BUFFER_SIZE;
+				this->streamSize = STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE;
 				this->stream = new unsigned char[this->streamSize];
 				break;
 			}
@@ -152,7 +152,7 @@ namespace xal
 		}
 	}
 
-	int Buffer::load(bool looping)
+	int Buffer::load(bool looping, int count)
 	{
 		if (!xal::mgr->isEnabled())
 		{
@@ -160,11 +160,11 @@ namespace xal
 		}
 		if (this->isStreamed() && this->source->isOpen())
 		{
-			this->streamSize = this->source->loadChunk(this->stream);
+			this->streamSize = this->source->loadChunk(this->stream, count);
 			if (this->streamSize == 0 && looping)
 			{
 				this->source->rewind();
-				this->streamSize = this->source->loadChunk(this->stream);
+				this->streamSize = this->source->loadChunk(this->stream, count);
 			}
 		}
 		return this->streamSize;
@@ -185,6 +185,17 @@ namespace xal
 			this->source->close();
 			this->loaded = false;
 		}
+	}
+
+	void Buffer::free()
+	{
+		if (this->stream != NULL)
+		{
+			delete [] this->stream;
+			this->stream = NULL;
+		}
+		this->source->close();
+		this->loaded = false;
 	}
 
 	void Buffer::rewind()
