@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="win32_All_Debug|Win32">
+      <Configuration>win32_All_Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="win32_All_Release|Win32">
+      <Configuration>win32_All_Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="win32_DirectSound_Debug|Win32">
       <Configuration>win32_DirectSound_Debug</Configuration>
       <Platform>Win32</Platform>
@@ -37,6 +45,11 @@
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -48,6 +61,10 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -65,6 +82,9 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -72,6 +92,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'" Label="PropertySheets">
@@ -84,18 +107,23 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'">bin\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">bin\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">bin\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">bin\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'">bin\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">bin\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">bin\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">bin\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">bin\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">bin\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">bin\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">bin\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">bin\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">bin\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">bin\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">bin\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
@@ -115,6 +143,32 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy bin\$(Configuration)\*.dll bin
+copy bin\$(Configuration)\*.lib bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OPENAL=1;HAVE_SDL=1;HAVE_OGG=1;HAVE_WAV=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -166,7 +220,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -193,6 +247,35 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy bin\$(Configuration)\*.dll bin
+copy bin\$(Configuration)\*.lib bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OPENAL=1;HAVE_SDL=1;HAVE_OGG=1;HAVE_WAV=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -250,7 +333,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>

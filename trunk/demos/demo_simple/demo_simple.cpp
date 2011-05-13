@@ -22,17 +22,17 @@
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-#define _TEST_STREAM
+//#define _TEST_STREAM
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
-//#define _TEST_BASIC
+#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
-#define _TEST_FADE_IN
-#define _TEST_FADE_OUT
-#define _TEST_FADE_IN_OUT
+//#define _TEST_FADE_IN
+//#define _TEST_FADE_OUT
+//#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
 //#define _TEST_SOURCE_HANDLING // OpenAL only
@@ -48,7 +48,7 @@
 
 #ifndef _TEST_LINKS
 #define S_BARK "bark"
-#define S_WIND "wind_2"
+#define S_WIND "wind"
 #define S_WIND_2 "wind_2"
 #ifndef _TEST_STREAM
 #define USED_SOUND S_BARK
@@ -57,7 +57,7 @@
 #endif
 #else
 #define USED_SOUND "linked_sound"
-#define S_BARK "bark_2"
+#define S_BARK "bark"
 #define S_WIND "linked_sound"
 #define S_WIND_2 "wind_2"
 #endif
