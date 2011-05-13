@@ -32,6 +32,7 @@ namespace xal
 		Mix_Chunk* getMixChunk() { return this->mixChunk; }
 
 		bool load(unsigned char* output);
+		int loadChunk(unsigned char* output, int size);
 
 	protected:
 		Mix_Chunk* mixChunk;

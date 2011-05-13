@@ -27,15 +27,15 @@
 //#define _TEST_THREADED
 
 //#define _TEST_BASIC
-#define _TEST_SOUND
+//#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_MULTIPLE_STREAM
-//#define _TEST_FADE_IN
-//#define _TEST_FADE_OUT
-//#define _TEST_FADE_IN_OUT
+#define _TEST_FADE_IN
+#define _TEST_FADE_OUT
+#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
-//#define _TEST_SOURCE_HANDLING
+//#define _TEST_SOURCE_HANDLING // OpenAL only
 
 //#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS

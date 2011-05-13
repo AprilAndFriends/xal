@@ -8,8 +8,6 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_SDL
-#include <SDL_mixer/SDL_mixer.h>
-
 #include "Buffer.h"
 #include "SDL_Player.h"
 #include "SDL_Source.h"
@@ -27,7 +25,7 @@ namespace xal
 
 	bool SDL_Player::isPlaying()
 	{
-		return (this->channelId != -1 && Mix_Playing(this->channelId) != 0);
+		return (this->channelId != -1);// && Mix_Playing(this->channelId) != 0);
 	}
 
 	void SDL_Player::setGain(float value)
@@ -132,7 +130,7 @@ namespace xal
 		if (this->channelId < 0)
 		{
 			SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
-			this->channelId = Mix_PlayChannel(-1, source->getMixChunk(), (this->looping ? -1 : 0));
+			//this->channelId = Mix_PlayChannel(-1, source->getMixChunk(), (this->looping ? -1 : 0));
 		}
 		/*
 		if (this->dsBuffer != NULL)

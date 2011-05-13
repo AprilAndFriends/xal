@@ -30,6 +30,7 @@ namespace xal
 	xalFnExport void destroy();
 	xalFnExport void setLogFunction(void (*function)(chstr));
 	xalFnExport void log(chstr message, chstr prefix = "[xal] ");
+	xalFnExport bool hasAudioSystem(chstr name);
 
 }
 
