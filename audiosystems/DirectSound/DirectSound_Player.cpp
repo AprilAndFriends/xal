@@ -74,6 +74,10 @@ namespace xal
 
 	bool DirectSound_Player::_sysPreparePlay()
 	{
+		if (this->dsBuffer != NULL)
+		{
+			return true;
+		}
 		this->buffer->prepare();
 		WAVEFORMATEX wavefmt;
 #if HAVE_WAV
@@ -222,7 +226,7 @@ namespace xal
 				else
 				{
 					this->bufferIndex = 0;
-					this->bufferCount = 0;
+					this->bufferCount = 0,
 					this->buffer->rewind();
 				}
 			}
