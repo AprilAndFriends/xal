@@ -99,13 +99,14 @@ namespace xal
 		return true;
 	}
 
-	int OGG_Source::loadChunk(unsigned char* output)
+	int OGG_Source::loadChunk(unsigned char* output, int count)
 	{
-		if (Source::loadChunk(output) == 0)
+		if (Source::loadChunk(output, count) == 0)
 		{
 			return 0;
 		}
-		int remaining = STREAM_BUFFER_SIZE;
+		int size = count * STREAM_BUFFER_SIZE;
+		int remaining = size;
 		int section;
 		unsigned char* buffer = output;
 		int read;
@@ -125,7 +126,7 @@ namespace xal
 			XAL_NORMALIZE_ENDIAN((uint16_t)output[i]); // always 16 bit data
 		}
 #endif	
-		return (STREAM_BUFFER_SIZE - remaining);
+		return (size - remaining);
 	}
 
 }

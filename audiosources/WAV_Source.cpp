@@ -167,13 +167,13 @@ namespace xal
 		return true;
 	}
 
-	int WAV_Source::loadChunk(unsigned char* output)
+	int WAV_Source::loadChunk(unsigned char* output, int count)
 	{
-		if (Source::loadChunk(output) == 0)
+		if (Source::loadChunk(output, count) == 0)
 		{
 			return 0;
 		}
-		return this->file.read_raw(output, STREAM_BUFFER_SIZE);
+		return this->file.read_raw(output, count * STREAM_BUFFER_SIZE);
 	}
 
 }

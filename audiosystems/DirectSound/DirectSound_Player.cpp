@@ -26,7 +26,7 @@
 namespace xal
 {
 	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), playing(false), dsBuffer(NULL)
+		Player(sound, buffer), playing(false), dsBuffer(NULL), bufferCount(0)
 	{
 	}
 
@@ -74,6 +74,7 @@ namespace xal
 
 	bool DirectSound_Player::_sysPreparePlay()
 	{
+		this->buffer->prepare();
 		WAVEFORMATEX wavefmt;
 #if HAVE_WAV
 		DirectSound_WAV_Source* wavSource = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
@@ -96,12 +97,13 @@ namespace xal
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER_SIZE * STREAM_BUFFER_COUNT);
+		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE);
 		bufferDesc.lpwfxFormat = &wavefmt;
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
 		{
 			this->dsBuffer = NULL;
+			this->buffer->free();
 			return false;
 		}
 		return true;
@@ -109,19 +111,52 @@ namespace xal
 
 	void DirectSound_Player::_sysPrepareBuffer()
 	{
-		this->buffer->prepare();
-		// filling buffer data
+		if (!this->sound->isStreamed())
+		{
+			this->_copyBuffer(0, this->buffer->getStream(), this->buffer->getSize());
+			return;
+		}
+		int count = STREAM_BUFFER_COUNT;
+		if (!this->paused)
+		{
+			this->bufferIndex = 0;
+		}
+		else
+		{
+			count = STREAM_BUFFER_COUNT - this->bufferCount;
+		}
+		if (count > 0)
+		{
+			count = this->_fillBuffers(this->bufferIndex, count);
+			this->bufferCount += count;
+			if (count > 0)
+			{
+				this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
+				if (this->bufferCount < STREAM_BUFFER_COUNT)
+				{
+					count = STREAM_BUFFER_COUNT - this->bufferCount;
+					int size = count * STREAM_BUFFER_SIZE;
+					unsigned char* stream = new unsigned char[size];
+					memset(stream, 0, size * sizeof(unsigned char));
+					this->_copyBuffer(this->bufferCount, stream, size);
+					delete [] stream;
+				}
+			}
+		}
+	}
+
+	void DirectSound_Player::_copyBuffer(int index, unsigned char* stream, int size)
+	{
 		void* write1 = NULL;
 		void* write2 = NULL;
 		unsigned long length1;
 		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(0, this->buffer->getSize(), &write1, &length1, &write2, &length2, 0);
+		HRESULT result = this->dsBuffer->Lock(index * STREAM_BUFFER_SIZE, size, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
 			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
 			return;
 		}
-		unsigned char* stream = this->buffer->getStream();
 		if (write1 != NULL)
 		{
 			memcpy(write1, stream, length1);
@@ -165,7 +200,7 @@ namespace xal
 	{
 		if (this->dsBuffer != NULL)
 		{
-			this->dsBuffer->Play(0, 0, (this->looping ? DSBPLAY_LOOPING : 0));
+			this->dsBuffer->Play(0, 0, ((this->looping || this->sound->isStreamed()) ? DSBPLAY_LOOPING : 0));
 			this->playing = true;
 		}
 	}
@@ -176,12 +211,71 @@ namespace xal
 		{
 			this->dsBuffer->Stop();
 			this->playing = false;
+			if (this->sound->isStreamed())
+			{
+				if (this->paused)
+				{
+					int processed = this->_getProcessedBuffersCount();
+					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
+					this->bufferCount -= processed;
+				}
+				else
+				{
+					this->bufferIndex = 0;
+					this->bufferCount = 0;
+					this->buffer->rewind();
+				}
+			}
 		}
 	}
 
 	void DirectSound_Player::_sysUpdateStream()
 	{
-		// TODO
+		if (this->bufferCount == 0)
+		{
+			this->_stopSound();
+			return;
+		}
+		int processed = this->_getProcessedBuffersCount();
+		if (processed == 0)
+		{
+			return;
+		}
+		int count = this->_fillBuffers(this->bufferIndex, processed);
+		if (count > 0)
+		{
+			this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
+			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->bufferCount += count;
+			/*
+			if (this->bufferCount < STREAM_BUFFER_COUNT)
+			{
+				count = STREAM_BUFFER_COUNT - this->bufferCount;
+				int size = count * STREAM_BUFFER_SIZE;
+				unsigned char* stream = new unsigned char[size];
+				memset(stream, 0, size * sizeof(unsigned char));
+				this->_copyBuffer(this->bufferCount, stream, size);
+				delete [] stream;
+			}
+			*/
+		}
+		if (this->bufferCount == 0)
+		{
+			this->_stopSound();
+		}
+	}
+
+	int DirectSound_Player::_getProcessedBuffersCount()
+	{
+		unsigned long position;
+		this->dsBuffer->GetCurrentPosition(&position, NULL);
+		return ((position / STREAM_BUFFER_SIZE + STREAM_BUFFER_COUNT - this->bufferIndex) % STREAM_BUFFER_COUNT);
+	}
+
+	int DirectSound_Player::_fillBuffers(int index, int count)
+	{
+		int size = this->buffer->load(this->looping, count);
+		return (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
 	}
 
 }

@@ -133,6 +133,7 @@ namespace xal
 		bool alreadyFading = this->isFading();
 		if (!alreadyFading)
 		{
+			this->buffer->prepare();
 			this->_sysPrepareBuffer();
 			if (this->paused)
 			{

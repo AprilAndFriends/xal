@@ -33,7 +33,7 @@ namespace xal
 		bool close();
 		bool rewind();
 		bool load(unsigned char* output);
-		int loadChunk(unsigned char* output);
+		int loadChunk(unsigned char* output, int count = 1);
 
 	protected:
 		hfile file;

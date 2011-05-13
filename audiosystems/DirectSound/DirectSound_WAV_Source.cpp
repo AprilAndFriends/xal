@@ -106,13 +106,13 @@ namespace xal
 		return true;
 	}
 
-	int DirectSound_WAV_Source::loadChunk(unsigned char* output)
+	int DirectSound_WAV_Source::loadChunk(unsigned char* output, int count)
 	{
-		if (!Source::load(output))
+		if (!Source::loadChunk(output, count))
 		{
 			return false;
 		}
-		return (int)mmioRead(this->file, (char*)output, STREAM_BUFFER_SIZE);
+		return (int)mmioRead(this->file, (char*)output, count * STREAM_BUFFER_SIZE);
 	}
 
 }
