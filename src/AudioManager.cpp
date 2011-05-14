@@ -259,8 +259,12 @@ namespace xal
 
 	Player* AudioManager::createPlayer(chstr name)
 	{
+		if (!this->sounds.has_key(name))
+		{
+			throw ("Audio Manager: Sound '" + name + "' does not exist!").c_str();
+		}
 		Sound* sound = this->sounds[name];
-		Player* player = this->_createAudioPlayer(this->sounds[name], this->sounds[name]->getBuffer());
+		Player* player = this->_createAudioPlayer(sound, sound->getBuffer());
 		this->players += player;
 		return player;
 	}
