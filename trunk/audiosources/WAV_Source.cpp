@@ -46,7 +46,7 @@ namespace xal
 				tag = (char*)buffer;
 				file.read_raw(buffer, 4); // size of the chunk
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-				XAL_NORMALIZE_ENDIAN((uint32_t)*buffer);
+				XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
 #endif
 				memcpy(&size, buffer, 4);
 				if (tag == "fmt ")
@@ -55,7 +55,7 @@ namespace xal
 					// format
 					file.read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-					XAL_NORMALIZE_ENDIAN((uint16_t)*buffer);
+					XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
 #endif
 					memcpy(&value16, buffer, 2);
 					if (size == 16 && value16 == 1)
@@ -63,14 +63,14 @@ namespace xal
 						// channels
 						file.read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-						XAL_NORMALIZE_ENDIAN((uint16_t)*buffer);
+						XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
 #endif
 						memcpy(&value16, buffer, 2);
 						this->channels = value16;
 						// sampling rate
 						file.read_raw(buffer, 4);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-						XAL_NORMALIZE_ENDIAN((uint32_t)*buffer);
+						XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
 #endif
 						memcpy(&value32, buffer, 4);
 						this->samplingRate = value32;
@@ -81,7 +81,7 @@ namespace xal
 						// bits per sample
 						file.read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-						XAL_NORMALIZE_ENDIAN((uint16_t)*buffer);
+						XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
 #endif
 						memcpy(&value16, buffer, 2);
 						this->bitsPerSample = value16;
@@ -142,7 +142,7 @@ namespace xal
 			tag = (char*)buffer;
 			file.read_raw(buffer, 4); // size of the chunk
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			XAL_NORMALIZE_ENDIAN((uint32_t)*buffer);
+			XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
 #endif
 			memcpy(&size, buffer, 4);
 			if (tag == "data")
