@@ -12,6 +12,7 @@
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 
+#include "Endianess.h"
 #include "AudioManager.h"
 #include "OGG_Source.h"
 #include "xal.h"
@@ -93,7 +94,7 @@ namespace xal
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 		for (int i = 0; i < this->size; i += 2)
 		{
-			XAL_NORMALIZE_ENDIAN((uint16_t)output[i]); // always 16 bit data
+			XAL_NORMALIZE_ENDIAN(*(uint16_t*)(output + i)); // always 16 bit data
 		}
 #endif	
 		return true;
@@ -122,7 +123,7 @@ namespace xal
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 		for (int i = 0; i < this->size; i += 2)
 		{
-			XAL_NORMALIZE_ENDIAN((uint16_t)output[i]); // always 16 bit data
+			XAL_NORMALIZE_ENDIAN(*(uint16_t*)(output + i)); // always 16 bit data
 		}
 #endif	
 		return (size - remaining);
