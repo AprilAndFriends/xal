@@ -83,7 +83,7 @@ namespace xal
 		return (this->sound->getCategory());
 	}
 
-	void Player::update(float k)
+	void Player::_update(float k)
 	{
 		if (this->sound->isStreamed() && this->_sysIsPlaying())
 		{
@@ -104,10 +104,10 @@ namespace xal
 				this->fadeSpeed = 0.0f;
 				if (!this->paused)
 				{
-					this->stop();
+					this->_stop();
 					return;
 				}
-				this->pause();
+				this->_pause();
 			}
 			else
 			{
@@ -117,6 +117,27 @@ namespace xal
 	}
 
 	void Player::play(float fadeTime, bool looping)
+	{
+		xal::mgr->_lock();
+		this->_play(fadeTime, looping);
+		xal::mgr->_unlock();
+	}
+
+	void Player::stop(float fadeTime)
+	{
+		xal::mgr->_lock();
+		this->_stop(fadeTime);
+		xal::mgr->_unlock();
+	}
+
+	void Player::pause(float fadeTime)
+	{
+		xal::mgr->_lock();
+		this->_pause(fadeTime);
+		xal::mgr->_unlock();
+	}
+	
+	void Player::_play(float fadeTime, bool looping)
 	{
 		if (!xal::mgr->isEnabled())
 		{
@@ -157,14 +178,14 @@ namespace xal
 		this->paused = false;
 	}
 
-	void Player::stop(float fadeTime)
+	void Player::_stop(float fadeTime)
 	{
 		this->paused = false;
 		this->_stopSound(fadeTime);
 		this->offset = 0.0f;
 	}
 
-	void Player::pause(float fadeTime)
+	void Player::_pause(float fadeTime)
 	{
 		this->paused = true;
 		this->_stopSound(fadeTime);

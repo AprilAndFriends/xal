@@ -39,9 +39,9 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::update(float k)
+	void DirectSound_Player::_update(float k)
 	{
-		Player::update(k);
+		Player::_update(k);
 		if (this->playing)
 		{
 			unsigned long status;

@@ -69,6 +69,10 @@ namespace xal
 	class xalExport AudioManager
 	{
 	public:
+		friend class Buffer;
+		friend class Player;
+		friend class Sound;
+
 		AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		virtual ~AudioManager();
 		void clear();
@@ -82,8 +86,6 @@ namespace xal
 
 		static void update();
 		void update(float k);
-		void lockUpdate();
-		void unlockUpdate();
 
 		Category* createCategory(chstr name, HandlingMode loadMode = FULL, HandlingMode decodeMode = FULL);
 		Category* getCategoryByName(chstr name);
@@ -99,8 +101,6 @@ namespace xal
 
 		Player* createPlayer(chstr name);
 		void destroyPlayer(Player* player);
-		virtual Buffer* _createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
-		virtual Source* _createSource(chstr filename, Format format);
 
 		void play(chstr name, float fadeTime = 0.0f, bool looping = false, float gain = 1.0f);
 		void stop(chstr name, float fadeTime = 0.0f);
@@ -127,10 +127,15 @@ namespace xal
 		harray<Player*> managedPlayers;
 		hmap<hstr, Sound*> sounds;
 		hthread* thread;
-		bool updating;
+		bool locked;
 		
 		void _setupThread();
 		void _destroyThread();
+		void _lock();
+		void _unlock();
+
+		virtual Buffer* _createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
+		virtual Source* _createSource(chstr filename, Format format);
 		Player* _createManagedPlayer(chstr name);
 		void _destroyManagedPlayer(Player* player);
 

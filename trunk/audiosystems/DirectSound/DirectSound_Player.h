@@ -31,7 +31,7 @@ namespace xal
 		DirectSound_Player(Sound* sound, Buffer* buffer);
 		~DirectSound_Player();
 
-		void update(float k);
+		void _update(float k);
 
 	protected:
 		IDirectSoundBuffer* dsBuffer;
