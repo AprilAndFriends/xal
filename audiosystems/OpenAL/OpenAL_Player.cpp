@@ -67,7 +67,7 @@ namespace xal
 	{
 		if (this->sourceId == 0)
 		{
-			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->allocateSourceId();
+			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
 		}
 		return (this->sourceId != 0);
 	}
@@ -141,7 +141,7 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((OpenAL_AudioManager*)xal::mgr)->releaseSourceId(this->sourceId);
+			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
 	}

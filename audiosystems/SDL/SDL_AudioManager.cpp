@@ -21,7 +21,7 @@
 namespace xal
 {
 	SDL_AudioManager::SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, threaded, threaded, updateTime, deviceName)
+		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
 		xal::log("initializing SDL Audio");
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);

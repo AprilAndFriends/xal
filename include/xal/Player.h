@@ -18,6 +18,7 @@
 
 namespace xal
 {
+	class AudioManager;
 	class Buffer;
 	class Category;
 	class Sound;
@@ -25,6 +26,8 @@ namespace xal
 	class xalExport Player
 	{
 	public:
+		friend class AudioManager;
+
 		Player(Sound* sound, Buffer* buffer);
 		virtual ~Player();
 
@@ -46,8 +49,6 @@ namespace xal
 		bool isFadingOut();
 		bool isLooping() { return this->looping; }
 
-		virtual void update(float k);
-		
 		void play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
@@ -62,6 +63,12 @@ namespace xal
 		Sound* sound;
 		Buffer* buffer;
 		int bufferIndex;
+
+		virtual void _update(float k);
+		
+		void _play(float fadeTime = 0.0f, bool looping = false);
+		void _stop(float fadeTime = 0.0f);
+		void _pause(float fadeTime = 0.0f);
 
 		float _calcGain();
 		float _calcFadeGain();

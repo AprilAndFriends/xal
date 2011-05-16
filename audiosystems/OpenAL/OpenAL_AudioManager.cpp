@@ -40,7 +40,7 @@
 namespace xal
 {
 	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, deviceName, threaded, updateTime), device(NULL), context(NULL)
+		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
 		xal::log("initializing OpenAL");
 		memset(this->allocated, 0, OPENAL_MAX_SOURCES * sizeof(bool));
@@ -91,7 +91,7 @@ namespace xal
 		return new OpenAL_Player(sound, buffer);
 	}
 	
-	unsigned int OpenAL_AudioManager::allocateSourceId()
+	unsigned int OpenAL_AudioManager::_allocateSourceId()
 	{
 		for (int i = 0; i < OPENAL_MAX_SOURCES; i++)
 		{
@@ -105,7 +105,7 @@ namespace xal
 		return 0;
 	}
 
-	void OpenAL_AudioManager::releaseSourceId(unsigned int sourceId)
+	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
 		for (int i = 0; i < OPENAL_MAX_SOURCES; i++)
 		{

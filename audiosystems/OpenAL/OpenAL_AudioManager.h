@@ -36,18 +36,18 @@
 namespace xal
 {
 	class Buffer;
+	class OpenAL_Player;
 	class Player;
 	class Sound;
 
 	class xalExport OpenAL_AudioManager : public AudioManager
 	{
 	public:
+		friend class OpenAL_Player;
+
 		OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~OpenAL_AudioManager();
 		
-		unsigned int allocateSourceId();
-		void releaseSourceId(unsigned int sourceId);
-
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
@@ -55,6 +55,8 @@ namespace xal
 		bool allocated[OPENAL_MAX_SOURCES];
 
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		unsigned int _allocateSourceId();
+		void _releaseSourceId(unsigned int sourceId);
 
 	};
 	
