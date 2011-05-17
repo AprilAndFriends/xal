@@ -198,11 +198,11 @@ namespace xal
 			this->fadeSpeed = -1.0f / fadeTime;
 			return;
 		}
+		this->_sysStop();
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
 		this->offset = this->_sysGetOffset();
 		this->buffer->release();
-		this->_sysStop();
 	}
 
 	float Player::_calcGain()
