@@ -191,6 +191,11 @@ namespace xal
 	{
 		Category* category = this->getCategoryByName(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
+		if (this->sounds.has_key(sound->getName()))
+		{
+			delete sound;
+			return NULL;
+		}
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}

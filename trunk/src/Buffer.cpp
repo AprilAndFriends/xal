@@ -60,42 +60,33 @@ namespace xal
 	
 	int Buffer::getSize()
 	{
+
 		this->prepare();
-		int value = this->source->getSize();
-		this->release();
-		return value;
+		return this->source->getSize();
 	}
 
 	int Buffer::getChannels()
 	{
 		this->prepare();
-		int value = this->source->getChannels();
-		this->release();
-		return value;
+		return this->source->getChannels();
 	}
 
 	int Buffer::getSamplingRate()
 	{
 		this->prepare();
-		int value = this->source->getSamplingRate();
-		this->release();
-		return value;
+		return this->source->getSamplingRate();
 	}
 
 	int Buffer::getBitsPerSample()
 	{
 		this->prepare();
-		int value = this->source->getBitsPerSample();
-		this->release();
-		return value;
+		return this->source->getBitsPerSample();
 	}
 
 	float Buffer::getDuration()
 	{
 		this->prepare();
-		float value = this->source->getDuration();
-		this->release();
-		return value;
+		return this->source->getDuration();
 	}
 
 	Format Buffer::getFormat()
