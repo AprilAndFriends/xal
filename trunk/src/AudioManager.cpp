@@ -164,7 +164,7 @@ namespace xal
 	{
 		if (!this->categories.has_key(name))
 		{
-			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
 		return this->categories[name];
 	}
@@ -173,7 +173,7 @@ namespace xal
 	{
 		if (!this->categories.has_key(name))
 		{
-			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
 		return this->categories[name]->getGain();
 	}
@@ -197,6 +197,10 @@ namespace xal
 
 	Sound* AudioManager::getSound(chstr name)
 	{
+		if (!this->sounds.has_key(name))
+		{
+			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
+		}
 		return this->sounds[name];
 	}
 
@@ -234,7 +238,7 @@ namespace xal
 				{
 					if ((*it2)->getSound() == sound)
 					{
-						throw ("Audio Manager: Sound " + sound->getName() + " cannot be destroyed, there are one or more manually created players that haven't been destroyed").c_str();
+						throw hl_exception("Audio Manager: Sound " + sound->getName() + " cannot be destroyed, there are one or more manually created players that haven't been destroyed");
 					}
 				}
 				delete sound;
@@ -277,7 +281,7 @@ namespace xal
 	{
 		if (!this->sounds.has_key(name))
 		{
-			throw ("Audio Manager: Sound '" + name + "' does not exist!").c_str();
+			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		Sound* sound = this->sounds[name];
 		Player* player = this->_createAudioPlayer(sound, sound->getBuffer());
