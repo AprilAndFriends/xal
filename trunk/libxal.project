@@ -54,9 +54,8 @@
       <VirtualDirectory Name="SDL">
         <File Name="audiosystems/SDL/SDL_AudioManager.h"/>
         <File Name="audiosystems/SDL/SDL_Player.h"/>
-        <File Name="include/xal/xalExport.h"/>
+        <File Name="audiosystems/SDL/SDL_Source.h"/>
       </VirtualDirectory>
-      <File Name="audiosystems/SDL/SDL_Source.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
       <File Name="audiosources/OGG_Source.h"/>
@@ -70,6 +69,7 @@
     <File Name="include/xal/xal.h"/>
     <File Name="include/xal/Source.h"/>
     <File Name="src/Endianess.h"/>
+    <File Name="include/xal/xalExport.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Linux_Debug">
