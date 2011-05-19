@@ -36,20 +36,7 @@ namespace xal
 			xal::log("ERROR: unable to open " + this->filename);
 			return false;
 		}
-		this->streamOpen = true;
 		return true;
-	}
-	
-	bool Source::close()
-	{
-		bool result = this->streamOpen;
-		this->streamOpen = false;
-		return result;
-	}
-	
-	bool Source::rewind()
-	{
-		return this->streamOpen;
 	}
 	
 	bool Source::load(unsigned char* output)
@@ -57,7 +44,7 @@ namespace xal
 		xal::log("loading file " + this->filename);
 		if (!this->streamOpen)
 		{
-			xal::log("Error: file " + this->filename + " not open");
+			xal::log("Error: file " + this->filename + " is not open");
 			return false;
 		}
 		return true;
@@ -67,7 +54,7 @@ namespace xal
 	{
 		if (!this->streamOpen)
 		{
-			xal::log("Error: file " + this->filename + " not open");
+			xal::log("Error: file " + this->filename + " is not open");
 			return 0;
 		}
 		return 1;

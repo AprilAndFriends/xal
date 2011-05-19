@@ -36,8 +36,8 @@ namespace xal
 		bool isOpen() { return this->streamOpen; }
 
 		virtual bool open();
-		virtual bool close();
-		virtual bool rewind();
+		virtual void close() { }
+		virtual void rewind() { }
 		virtual bool load(unsigned char* output);
 		virtual int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 		

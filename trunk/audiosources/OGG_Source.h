@@ -32,8 +32,8 @@ namespace xal
 		~OGG_Source();
 
 		bool open();
-		bool close();
-		bool rewind();
+		void close();
+		void rewind();
 		bool load(unsigned char* output);
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
