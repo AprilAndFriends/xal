@@ -67,20 +67,17 @@ namespace xal
 		return result;
 	}
 
-	bool DirectSound_WAV_Source::close()
+	void DirectSound_WAV_Source::close()
 	{
-		bool result = Source::close();
-		if (result)
+		if (this->streamOpen)
 		{
 			mmioClose(this->file, 0);
 		}
-		return result;
 	}
 
-	bool DirectSound_WAV_Source::rewind()
+	void DirectSound_WAV_Source::rewind()
 	{
-		bool result = Source::rewind();
-		if (result)
+		if (this->streamOpen)
 		{
 			// getting all the info
 			mmioSeek(this->file, 0, SEEK_SET);
@@ -93,7 +90,6 @@ namespace xal
 			child.ckid = mmioFOURCC('d', 'a', 't', 'a');
 			mmioDescend(file, &child, &parent, MMIO_FINDCHUNK);
 		}
-		return result;
 	}
 
 	bool DirectSound_WAV_Source::load(unsigned char* output)

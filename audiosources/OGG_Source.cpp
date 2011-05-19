@@ -31,46 +31,44 @@ namespace xal
 
 	bool OGG_Source::open()
 	{
-		bool result = Source::open();
-		if (result)
+		this->streamOpen = Source::open();
+		if (!this->streamOpen)
 		{
-			if (ov_fopen((char*)this->filename.c_str(), &this->oggStream) == 0)
-			{
-				vorbis_info* info = ov_info(&this->oggStream, -1);
-				this->channels = info->channels;
-				this->samplingRate = info->rate;
-				this->bitsPerSample = 16; // always 16 bit data
-				int bytes = this->bitsPerSample / 8;
-				this->size = (int)ov_pcm_total(&this->oggStream, -1) * this->channels * bytes;
-				this->duration = ((float)this->size) / (this->samplingRate * this->channels * bytes);
-			}
-			else
-			{
-				xal::log("ogg: error opening file!");
-				result = false;
-			}
+			return false;
 		}
-		return result;
+		if (ov_fopen((char*)this->filename.c_str(), &this->oggStream) == 0)
+		{
+			vorbis_info* info = ov_info(&this->oggStream, -1);
+			this->channels = info->channels;
+			this->samplingRate = info->rate;
+			this->bitsPerSample = 16; // always 16 bit data
+			int bytes = this->bitsPerSample / 8;
+			this->size = (int)ov_pcm_total(&this->oggStream, -1) * this->channels * bytes;
+			this->duration = ((float)this->size) / (this->samplingRate * this->channels * bytes);
+		}
+		else
+		{
+			xal::log("ogg: error opening file!");
+			this->streamOpen = false;
+		}
+		return this->streamOpen;
 	}
 
-	bool OGG_Source::close()
+	void OGG_Source::close()
 	{
-		bool result = Source::close();
-		if (result)
+		if (this->streamOpen)
 		{
 			ov_clear(&this->oggStream);
+			this->streamOpen = false;
 		}
-		return result;
 	}
 
-	bool OGG_Source::rewind()
+	void OGG_Source::rewind()
 	{
-		bool result = Source::rewind();
-		if (result)
+		if (this->streamOpen)
 		{
 			ov_raw_seek(&this->oggStream, 0);
 		}
-		return result;
 	}
 
 	bool OGG_Source::load(unsigned char* output)
