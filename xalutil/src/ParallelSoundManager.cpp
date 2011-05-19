@@ -13,6 +13,7 @@
 #include <hltypes/util.h>
 #include <xal/AudioManager.h>
 #include <xal/Player.h>
+#include <xal/xal.h>
 
 #include "ParallelSoundManager.h"
 
@@ -43,17 +44,17 @@ namespace xal
 	{
 		foreach (Player*, it, this->players)
 		{
-			if ((*it)->isPlaying())
+			if (names.contains((*it)->getName()))
 			{
-				if (!names.contains((*it)->getName()))
+				names -= (*it)->getName();
+				if (!(*it)->isPlaying())
 				{
-					(*it)->pause(this->fadeTime);
+					(*it)->play(this->fadeTime, true);
 				}
 			}
-			else if (names.contains((*it)->getName()))
+			else if ((*it)->isPlaying())
 			{
-				(*it)->play(this->fadeTime, true);
-				names -= (*it)->getName();
+				(*it)->pause(this->fadeTime);
 			}
 		}
 		Player* player;
