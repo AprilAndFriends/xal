@@ -36,6 +36,8 @@ namespace xal
 		unsigned int sourceId;
 		unsigned int bufferIds[STREAM_BUFFER_COUNT];
 
+		void _update(float k);
+
 		bool _sysIsPlaying();
 		float _sysGetOffset();
 		void _sysSetOffset(float value);

@@ -38,6 +38,16 @@ namespace xal
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
+	void OpenAL_Player::_update(float k)
+	{
+		bool playing = this->_sysIsPlaying();
+		Player::_update(k);
+		if (playing && !this->_sysIsPlaying() && this->sourceId != 0)
+		{
+			this->_sysStop();
+		}
+	}
+
 	bool OpenAL_Player::_sysIsPlaying()
 	{
 		if (this->sourceId == 0)
