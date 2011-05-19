@@ -308,11 +308,29 @@ namespace xal
 		delete player;
 	}
 
+	Player* AudioManager::_createManagedPlayer(chstr name)
+	{
+		Player* player = this->createPlayer(name);
+		this->managedPlayers += player;
+		return player;
+	}
+
+	void AudioManager::_destroyManagedPlayer(Player* player)
+	{
+		this->managedPlayers -= player;
+		this->_destroyPlayer(player);
+	}
+
 	Buffer* AudioManager::_createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode)
 	{
 		return new Buffer(filename, loadMode, decodeMode);
 	}
 
+	Player* AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	{
+		return new Player(sound, buffer);
+	}
+	
 	Source* AudioManager::_createSource(chstr filename, Format format)
 	{
 		Source* source;
@@ -350,24 +368,6 @@ namespace xal
 		return source;
 	}
 
-	Player* AudioManager::_createManagedPlayer(chstr name)
-	{
-		Player* player = this->createPlayer(name);
-		this->managedPlayers += player;
-		return player;
-	}
-
-	void AudioManager::_destroyManagedPlayer(Player* player)
-	{
-		this->managedPlayers -= player;
-		this->_destroyPlayer(player);
-	}
-
-	Player* AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
-	{
-		return new Player(sound, buffer);
-	}
-	
 	void AudioManager::play(chstr name, float fadeTime, bool looping, float gain)
 	{
 		this->_lock();

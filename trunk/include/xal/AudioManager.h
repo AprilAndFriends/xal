@@ -135,12 +135,12 @@ namespace xal
 		void _unlock();
 
 		void _destroyPlayer(Player* player);
-		Buffer* _createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
-		virtual Source* _createSource(chstr filename, Format format);
 		Player* _createManagedPlayer(chstr name);
 		void _destroyManagedPlayer(Player* player);
+		Buffer* _createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
 
 		virtual Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		virtual Source* _createSource(chstr filename, Format format);
 		
 	};
 	
