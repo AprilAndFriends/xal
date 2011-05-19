@@ -296,6 +296,13 @@ namespace xal
 
 	void AudioManager::destroyPlayer(Player* player)
 	{
+		this->_lock();
+		this->_destroyPlayer(player);
+		this->_unlock();
+	}
+
+	void AudioManager::_destroyPlayer(Player* player)
+	{
 		this->players -= player;
 		player->_stop();
 		delete player;
@@ -353,7 +360,7 @@ namespace xal
 	void AudioManager::_destroyManagedPlayer(Player* player)
 	{
 		this->managedPlayers -= player;
-		this->destroyPlayer(player);
+		this->_destroyPlayer(player);
 	}
 
 	Player* AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
