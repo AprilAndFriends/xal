@@ -25,8 +25,6 @@
 
 namespace xal
 {
-	static unsigned int tempIds[STREAM_BUFFER_COUNT]; // added to avoid constant allocation of memory
-	
 	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer), sourceId(0)
 	{
@@ -42,6 +40,10 @@ namespace xal
 
 	bool OpenAL_Player::_sysIsPlaying()
 	{
+		if (this->sourceId == 0)
+		{
+			return false;
+		}
 		if (this->sound->isStreamed())
 		{
 			return (this->_getQueuedBuffersCount() > 0 || this->_getProcessedBuffersCount() > 0);
@@ -244,12 +246,12 @@ namespace xal
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-			alSourceUnqueueBuffers(this->sourceId, count, &tempIds[index]);
+			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
 		}
 		else
 		{
-			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &tempIds[index]);
-			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, tempIds);
+			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
+			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
 		}
 	}
 

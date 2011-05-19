@@ -307,7 +307,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

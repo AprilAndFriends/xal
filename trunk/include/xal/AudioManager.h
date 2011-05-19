@@ -23,8 +23,8 @@
 
 #include "xalExport.h"
 
-#define STREAM_BUFFER_COUNT 4
-#define STREAM_BUFFER_SIZE 32768
+#define STREAM_BUFFER_COUNT 4 // greater or equal to 2
+#define STREAM_BUFFER_SIZE 32768 // number like x^2
 
 namespace xal
 {
