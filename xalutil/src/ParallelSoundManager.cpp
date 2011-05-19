@@ -1,12 +1,13 @@
-/************************************************************************************\
-This source file is part of the KS(X) audio library                                  *
-For latest info, see http://code.google.com/p/libxal/                                *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Boris Mikic
+/// @author  Kresimir Spes
+/// @version 2.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
@@ -17,8 +18,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 namespace xal
 {
-/******* CONSTRUCT / DESTRUCT ******************************************/
-
 	ParallelSoundManager::ParallelSoundManager(float fadeTime)
 	{
 		this->fadeTime = fadeTime;
@@ -29,8 +28,6 @@ namespace xal
 		this->clear();
 	}
 	
-/******* METHODS *******************************************************/
-
 	void ParallelSoundManager::addSound(chstr name)
 	{
 		this->sounds += name;

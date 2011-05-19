@@ -19,6 +19,8 @@
 
 namespace xal
 {
+	int section;
+
 	OGG_Source::OGG_Source(chstr filename) : Source(filename)
 	{
 	}
@@ -34,7 +36,7 @@ namespace xal
 		{
 			if (ov_fopen((char*)this->filename.c_str(), &this->oggStream) == 0)
 			{
-				vorbis_info* info = ov_info(&oggStream, -1);
+				vorbis_info* info = ov_info(&this->oggStream, -1);
 				this->channels = info->channels;
 				this->samplingRate = info->rate;
 				this->bitsPerSample = 16; // always 16 bit data
@@ -77,7 +79,6 @@ namespace xal
 		{
 			return false;
 		}
-		int section;
 		unsigned long remaining = this->size;
 		unsigned char* buffer = output;
 		int read;
@@ -107,7 +108,6 @@ namespace xal
 			return 0;
 		}
 		int remaining = size;
-		int section;
 		unsigned char* buffer = output;
 		int read;
 		while (remaining > 0)
