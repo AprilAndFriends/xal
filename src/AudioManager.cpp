@@ -109,6 +109,11 @@ namespace xal
 		}
 	}
 
+	harray<Player*> AudioManager::getPlayers()
+	{
+		return (this->players - this->managedPlayers);
+	}
+
 	void AudioManager::update()
 	{
 		while (true)
@@ -299,6 +304,19 @@ namespace xal
 		this->_lock();
 		this->_destroyPlayer(player);
 		this->_unlock();
+	}
+
+	Player* AudioManager::findPlayer(chstr name)
+	{
+		harray<Player*> players = this->players - this->managedPlayers;
+		foreach (Player*, it, players)
+		{
+			if ((*it)->getName() == name)
+			{
+				return (*it);
+			}
+		}
+		return NULL;
 	}
 
 	void AudioManager::_destroyPlayer(Player* player)
