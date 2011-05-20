@@ -114,6 +114,10 @@ namespace xal
 				this->_sysUpdateFadeGain();
 			}
 		}
+		else if (!this->_sysIsPlaying())
+		{
+
+		}
 	}
 
 	void Player::play(float fadeTime, bool looping)

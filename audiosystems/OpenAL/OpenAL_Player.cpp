@@ -40,11 +40,10 @@ namespace xal
 
 	void OpenAL_Player::_update(float k)
 	{
-		bool playing = this->_sysIsPlaying();
 		Player::_update(k);
-		if (playing && !this->_sysIsPlaying() && this->sourceId != 0)
+		if (!this->_sysIsPlaying() && this->sourceId != 0)
 		{
-			this->_sysStop();
+			this->_stopSound();
 		}
 	}
 
