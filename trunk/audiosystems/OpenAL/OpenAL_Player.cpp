@@ -28,7 +28,6 @@ namespace xal
 	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer), sourceId(0)
 	{
-		Category* category = sound->getCategory();
 		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
 		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}

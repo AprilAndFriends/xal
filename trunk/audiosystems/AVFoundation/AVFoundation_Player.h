@@ -11,7 +11,7 @@
 /// 
 /// Provides an interface to play and control audio data.
 
-#if 0
+#if 1
 
 
 #ifdef __APPLE__
@@ -36,12 +36,7 @@ namespace xal
 		AVFoundation_Player(Sound* sound, Buffer* buffer);
 		virtual ~AVFoundation_Player();
 
-		unsigned int getSourceId() { return this->sourceId; }
-		void setSourceId(unsigned int value) { this->sourceId = value; }
-
 	protected:
-		unsigned int sourceId;
-		unsigned int bufferIds[STREAM_BUFFER_COUNT];
 
 		bool _sysIsPlaying();
 		float _sysGetOffset();
@@ -54,13 +49,6 @@ namespace xal
 		void _sysStop();
 		void _sysUpdateStream();
 
-		int _getQueuedBuffersCount();
-		int _getProcessedBuffersCount();
-		int _fillBuffers(int index, int count);
-		void _queueBuffers(int index, int count);
-		void _queueBuffers();
-		void _unqueueBuffers(int index, int count);
-		void _unqueueBuffers();
 		
 	};
 
