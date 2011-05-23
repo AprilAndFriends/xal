@@ -9,9 +9,9 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the AudioManager for OpenAL.
+/// Represents an implementation of the AudioManager for AVFoundation.
 
-#if 0
+#if 1
 
 #ifdef __APPLE__
 #include <TargetConditionals.h>
@@ -26,32 +26,24 @@
 #include "AudioManager.h"
 #include "xalExport.h"
 
-#define OPENAL_MAX_SOURCES 16
-
 namespace xal
 {
 	class Buffer;
-	class OpenAL_Player;
+	class AVFoundation_Player;
 	class Player;
 	class Sound;
 
-	class xalExport OpenAL_AudioManager : public AudioManager
+	class xalExport AVFoundation_AudioManager : public AudioManager
 	{
 	public:
-		friend class OpenAL_Player;
+		friend class AVFoundation_Player;
 
-		OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
-		~OpenAL_AudioManager();
+		AVFoundation_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		~AVFoundation_AudioManager();
 		
 	protected:
-		ALCdevice* device;
-		ALCcontext* context;
-		unsigned int sourceIds[OPENAL_MAX_SOURCES];
-		bool allocated[OPENAL_MAX_SOURCES];
 
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
-		unsigned int _allocateSourceId();
-		void _releaseSourceId(unsigned int sourceId);
 
 	};
 	

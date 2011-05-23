@@ -7,7 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#if 0
+#if 1
 
 #ifdef __APPLE__
 #include <TargetConditionals.h>
@@ -25,27 +25,24 @@
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
-#include "OpenAL_AudioManager.h"
-#include "OpenAL_Player.h"
+#include "AVFoundation_AudioManager.h"
+#include "AVFoundation_Player.h"
 #include "Sound.h"
 
 namespace xal
 {
 	AVFoundation_Player::AVFoundation_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), sourceId(0)
+		Player(sound, buffer)
 	{
-		Category* category = sound->getCategory();
-		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
-		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
-	OpenAL_Player::~OpenAL_Player()
+	AVFoundation_Player::~AVFoundation_Player()
 	{
-		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
-	bool OpenAL_Player::_sysIsPlaying()
+	bool AVFoundation_Player::_sysIsPlaying()
 	{
+		/*
 		if (this->sound->isStreamed())
 		{
 			return (this->_getQueuedBuffersCount() > 0 || this->_getProcessedBuffersCount() > 0);
@@ -53,33 +50,45 @@ namespace xal
 		int state;
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
+		 */
+		return false;
 	}
 
-	float OpenAL_Player::_sysGetOffset()
+	float AVFoundation_Player::_sysGetOffset()
 	{
+		/*
 		float offset;
 		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
 		return offset;
+		 */
+		return 0;
 	}
 
-	void OpenAL_Player::_sysSetOffset(float value)
+	void AVFoundation_Player::_sysSetOffset(float value)
 	{
+		/*
 		// TODO - should be int
 		alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
 		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
+		 */
+		
+		// FIXME stub
 	}
 
-	bool OpenAL_Player::_sysPreparePlay()
+	bool AVFoundation_Player::_sysPreparePlay()
 	{
+		/*
 		if (this->sourceId == 0)
 		{
 			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
 		}
-		return (this->sourceId != 0);
+		return (this->sourceId != 0);*/
+		return false;
 	}
 
-	void OpenAL_Player::_sysPrepareBuffer()
+	void AVFoundation_Player::_sysPrepareBuffer()
 	{
+		/*
 		// making sure all buffer data is loaded before accessing anything
 		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
 		int samplingRate = this->buffer->getSamplingRate();
@@ -104,31 +113,47 @@ namespace xal
 				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
 			}
 		}
+		 */
+		
+		// FIXME stub
 	}
 
-	void OpenAL_Player::_sysUpdateGain()
+	void AVFoundation_Player::_sysUpdateGain()
 	{
+		/*
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
 		}
+		 */
+		
+		// FIXME stub
 	}
 
-	void OpenAL_Player::_sysUpdateFadeGain()
+	void AVFoundation_Player::_sysUpdateFadeGain()
 	{
+		/*
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
 		}
+		 */
+		
+		// FIXME stub
 	}
 
-	void OpenAL_Player::_sysPlay()
+	void AVFoundation_Player::_sysPlay()
 	{
+		/*
 		alSourcePlay(this->sourceId);
+		 */
+		
+		// FIXME stub
 	}
 
-	void OpenAL_Player::_sysStop()
+	void AVFoundation_Player::_sysStop()
 	{
+		/*
 		if (this->sourceId != 0)
 		{
 			int processed = this->_getProcessedBuffersCount();
@@ -150,10 +175,14 @@ namespace xal
 			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
+		 */
+		
+		// FIXME stub
 	}
 
-	void OpenAL_Player::_sysUpdateStream()
+	void AVFoundation_Player::_sysUpdateStream()
 	{
+		/*
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
@@ -184,87 +213,11 @@ namespace xal
 		{
 			this->_stopSound();
 		}
+		 */
+		
+		// FIXME stub
 	}
 
-	int OpenAL_Player::_getQueuedBuffersCount()
-	{
-		int queued;
-		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-		return queued;
-	}
-
-	int OpenAL_Player::_getProcessedBuffersCount()
-	{
-		int processed;
-		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
-		return processed;
-	}
-
-	int OpenAL_Player::_fillBuffers(int index, int count)
-	{
-		int size = this->buffer->load(this->looping, count);
-		if (!this->sound->isStreamed())
-		{
-			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
-				this->buffer->getStream(), size, this->buffer->getSamplingRate());
-			return 1;
-		}
-		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
-		unsigned char* stream = this->buffer->getStream();
-		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
-		int samplingRate = this->buffer->getSamplingRate();
-		for (int i = 0; i < filled; i++)
-		{
-			alBufferData(this->bufferIds[(index + i) % STREAM_BUFFER_COUNT], format,
-				&stream[i * STREAM_BUFFER_SIZE], hmin(size, STREAM_BUFFER_SIZE), samplingRate);
-			size -= STREAM_BUFFER_SIZE;
-		}
-		return filled;
-	}
-
-	void OpenAL_Player::_queueBuffers(int index, int count)
-	{
-		if (index + count <= STREAM_BUFFER_COUNT)
-		{
-			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
-		}
-		else
-		{
-			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
-		}
-	}
- 
-	void OpenAL_Player::_queueBuffers()
-	{
-		int queued = this->_getQueuedBuffersCount();
-		if (queued < STREAM_BUFFER_COUNT)
-		{
-			this->_queueBuffers(this->bufferIndex, STREAM_BUFFER_COUNT - queued);
-		}
-	}
- 
-	void OpenAL_Player::_unqueueBuffers(int index, int count)
-	{
-		if (index + count <= STREAM_BUFFER_COUNT)
-		{
-			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
-		}
-		else
-		{
-			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
-		}
-	}
-
-	void OpenAL_Player::_unqueueBuffers()
-	{
-		int queued = this->_getQueuedBuffersCount();
-		if (queued > 0)
-		{
-			this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
-		}
-	}
 
 }
 #endif

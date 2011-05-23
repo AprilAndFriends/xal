@@ -13,6 +13,8 @@
 
 #ifndef XAL_NORMALIZE_ENDIAN
 
+#include <hltypes/exception.h>
+
 #ifdef __BIG_ENDIAN__
         // ppc & friends need convert from littleendian to their bigendian
         #define XAL_NORMALIZE_ENDIAN(variable) \

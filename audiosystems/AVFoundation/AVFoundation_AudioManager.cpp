@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the AudioManager for iOS's AVFoundation.
 
-#if 0
+#if 1
 
 #ifdef __APPLE__
 #include <TargetConditionals.h>
@@ -37,89 +37,29 @@
 
 #include "Buffer.h"
 #include "Category.h"
-#include "OpenAL_AudioManager.h"
-#include "OpenAL_Player.h"
+#include "AVFoundation_AudioManager.h"
+#include "AVFoundation_Player.h"
 #include "xal.h"
 
 namespace xal
 {
-	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
+	AVFoundation_AudioManager::AVFoundation_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
-		xal::log("initializing OpenAL");
-		memset(this->allocated, 0, OPENAL_MAX_SOURCES * sizeof(bool));
-		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
-		{
-			xal::log("could not create device");
-			return;
-		}
-		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		xal::log("audio device: " + this->deviceName);
-		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
-		{
-			xal::log("could not create context");
-			return;
-		}
-		alcMakeContextCurrent(currentContext);
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
-		{
-			xal::log("could not set context as current");
-			return;
-		}
-		alGenSources(OPENAL_MAX_SOURCES, this->sourceIds);
-		this->device = currentDevice;
-		this->context = currentContext;
+		xal::log("initializing AVFoundation");
 		this->enabled = true;
-		if (threaded)
-		{
-			this->_setupThread();
-		}
 	}
 
-	OpenAL_AudioManager::~OpenAL_AudioManager()
+	AVFoundation_AudioManager::~AVFoundation_AudioManager()
 	{
-		xal::log("destroying OpenAL");
-		if (this->device != NULL)
-		{
-			alDeleteSources(OPENAL_MAX_SOURCES, this->sourceIds);
-			alcMakeContextCurrent(NULL);
-			alcDestroyContext(this->context);
-			alcCloseDevice(this->device);
-		}
+		xal::log("destroying AVFoundation");
 	}
 	
-	Player* OpenAL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	Player* AVFoundation_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
 	{
-		return new OpenAL_Player(sound, buffer);
+		return new AVFoundation_Player(sound, buffer);
 	}
 	
-	unsigned int OpenAL_AudioManager::_allocateSourceId()
-	{
-		for (int i = 0; i < OPENAL_MAX_SOURCES; i++)
-		{
-			if (!this->allocated[i])
-			{
-				this->allocated[i] = true;
-				return this->sourceIds[i];
-			}
-		}
-		xal::log("unable to allocate audio source!");
-		return 0;
-	}
-
-	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
-	{
-		for (int i = 0; i < OPENAL_MAX_SOURCES; i++)
-		{
-			if (this->sourceIds[i] == sourceId)
-			{
-				this->allocated[i] = false;
-				break;
-			}
-		}
-	}
 
 }
 #endif
