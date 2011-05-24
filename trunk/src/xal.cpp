@@ -9,11 +9,19 @@
 
 #include <stdio.h>
 
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+#endif
+
 #include "AudioManager.h"
 #include "DirectSound_AudioManager.h"
 #include "OpenAL_AudioManager.h"
 #include "SDL_AudioManager.h"
 #include "xal.h"
+
+#if TARGET_OS_IPHONE
+#include "AVFoundation_AudioManager.h"
+#endif
 
 #ifdef _WIN32
 	#if HAVE_DIRECTSOUND
@@ -25,7 +33,7 @@
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
-#elif defined(__APPLE__)
+#elif defined(__APPLE__) && !TARGET_OS_IPHONE
 	#if HAVE_SDL
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
 	#elif HAVE_OPENAL
@@ -33,6 +41,8 @@
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
+#elif defined(__APPLE__) && TARGET_OS_IPHONE
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_AVFOUNDATION
 #elif defined(_UNIX)
 	#if HAVE_SDL
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
@@ -83,6 +93,12 @@ namespace xal
 		if (name == XAL_AS_SDL)
 		{
 			xal::mgr = new SDL_AudioManager(name, backendId, threaded, updateTime, deviceName);
+		}
+#endif
+#if TARGET_OS_IPHONE
+		if (name == XAL_AS_AVFOUNDATION)
+		{
+			xal::mgr = new AVFoundation_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
 		if (xal::mgr == NULL)

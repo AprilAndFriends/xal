@@ -49,6 +49,7 @@ namespace xal
 		void _sysStop();
 		void _sysUpdateStream();
 
+		void *avAudioPlayer_void;
 		
 	};
 
