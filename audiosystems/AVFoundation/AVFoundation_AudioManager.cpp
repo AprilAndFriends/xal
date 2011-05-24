@@ -26,12 +26,7 @@
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
-#ifndef __APPLE__
-#include <AL/al.h>
-#include <AL/alc.h>
-#else
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
+#if defined(__APPLE__)
 #include <TargetConditionals.h>
 #endif
 

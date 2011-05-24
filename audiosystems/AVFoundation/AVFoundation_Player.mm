@@ -15,12 +15,7 @@
 
 #if TARGET_OS_IPHONE
 #include <string.h>
-
-#ifndef __APPLE__
-#include <AL/al.h>
-#else
-#include <OpenAL/al.h>
-#endif
+#include <AVFoundation/AVFoundation.h>
 
 #include "AudioManager.h"
 #include "Buffer.h"
@@ -29,193 +24,139 @@
 #include "AVFoundation_Player.h"
 #include "Sound.h"
 
+#define avAudioPlayer ((AVAudioPlayer*)avAudioPlayer_void)
+
 namespace xal
 {
 	AVFoundation_Player::AVFoundation_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer)
+		Player(sound, buffer), avAudioPlayer_void(NULL)
 	{
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
 	}
 
 	AVFoundation_Player::~AVFoundation_Player()
 	{
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+		[avAudioPlayer release];
+		avAudioPlayer_void = NULL;
 	}
 
 	bool AVFoundation_Player::_sysIsPlaying()
 	{
-		/*
-		if (this->sound->isStreamed())
-		{
-			return (this->_getQueuedBuffersCount() > 0 || this->_getProcessedBuffersCount() > 0);
-		}
-		int state;
-		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
-		return (state == AL_PLAYING);
-		 */
-		return false;
+		//NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			return [avAudioPlayer isPlaying] ? true : false;
+		else
+			return false;
 	}
 
 	float AVFoundation_Player::_sysGetOffset()
 	{
-		/*
-		float offset;
-		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
-		return offset;
-		 */
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			return [avAudioPlayer currentTime];
+		else
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 		return 0;
 	}
 
 	void AVFoundation_Player::_sysSetOffset(float value)
 	{
-		/*
-		// TODO - should be int
-		alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
-		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
-		 */
-		
-		// FIXME stub
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			[avAudioPlayer setCurrentTime:value];
+		else
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 	}
 
 	bool AVFoundation_Player::_sysPreparePlay()
 	{
-		/*
-		if (this->sourceId == 0)
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+		NSString* realFilename = [NSString stringWithUTF8String:sound->getRealFilename().c_str()];
+		NSString* filePath = [[NSBundle mainBundle] pathForResource:[realFilename stringByDeletingPathExtension] 
+															 ofType:[realFilename pathExtension]];
+		NSURL *url = [NSURL fileURLWithPath:filePath];
+		NSError *error = nil;
+		avAudioPlayer_void = [AVAudioPlayer alloc];
+		[avAudioPlayer initWithContentsOfURL:url error:&error];
+		NSLog(@"-- file %@, address %p", filePath, avAudioPlayer_void);
+		if (avAudioPlayer_void && !error) 
 		{
-			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
+			return true;
 		}
-		return (this->sourceId != 0);*/
-		return false;
+		else
+		{
+			if(error)
+				NSLog(@"%s: ERROR: %@", __PRETTY_FUNCTION__, error);
+			else
+				NSLog(@"%s: ERROR: unknown error", __PRETTY_FUNCTION__);
+			
+			//[avAudioPlayer release];
+			avAudioPlayer_void = nil;
+			
+			return false;
+
+		}
 	}
 
 	void AVFoundation_Player::_sysPrepareBuffer()
 	{
-		/*
-		// making sure all buffer data is loaded before accessing anything
-		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
-		int samplingRate = this->buffer->getSamplingRate();
-		if (!this->sound->isStreamed())
-		{
-			this->_fillBuffers(0, 1);
-			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
-			alSourcei(this->sourceId, AL_LOOPING, this->looping);
-		}
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			[avAudioPlayer prepareToPlay];
 		else
-		{
-			alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
-			alSourcei(this->sourceId, AL_LOOPING, false);
-			int count = STREAM_BUFFER_COUNT;
-			if (!this->paused)
-			{
-				count = this->_fillBuffers(this->bufferIndex, STREAM_BUFFER_COUNT);
-			}
-			if (count > 0)
-			{
-				this->_queueBuffers(this->bufferIndex, count);
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
-			}
-		}
-		 */
-		
-		// FIXME stub
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 	}
 
 	void AVFoundation_Player::_sysUpdateGain()
 	{
-		/*
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
-		}
-		 */
-		
-		// FIXME stub
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			[avAudioPlayer setVolume:this->_calcGain()];
+		else
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 	}
 
 	void AVFoundation_Player::_sysUpdateFadeGain()
 	{
-		/*
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
-		}
-		 */
-		
-		// FIXME stub
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			[avAudioPlayer setVolume:this->_calcFadeGain()];
+		else
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 	}
 
 	void AVFoundation_Player::_sysPlay()
 	{
-		/*
-		alSourcePlay(this->sourceId);
-		 */
-		
-		// FIXME stub
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer) 
+			[avAudioPlayer play];
+		else
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 	}
 
 	void AVFoundation_Player::_sysStop()
 	{
-		/*
-		if (this->sourceId != 0)
-		{
-			int processed = this->_getProcessedBuffersCount();
-			int queued = this->_getQueuedBuffersCount();
-			alSourceStop(this->sourceId);
-			if (this->sound->isStreamed())
-			{
-				this->_unqueueBuffers();
-				if (this->paused)
-				{
-					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
-				}
-				else
-				{
-					this->bufferIndex = 0;
-					this->buffer->rewind();
-				}
-			}
-			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
-			this->sourceId = 0;
-		}
-		 */
-		
-		// FIXME stub
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
+		if(avAudioPlayer)
+			[avAudioPlayer stop];
+		else
+			NSLog(@"%s: ERROR: no audio player", __PRETTY_FUNCTION__);
 	}
 
 	void AVFoundation_Player::_sysUpdateStream()
 	{
-		/*
-		int queued = this->_getQueuedBuffersCount();
-		if (queued == 0)
-		{
-			this->_stopSound();
-			return;
-		}
-		int processed = this->_getProcessedBuffersCount();
-		if (processed == 0)
-		{
-			return;
-		}
-		this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
-		int count = this->_fillBuffers(this->bufferIndex, processed);
-		if (count > 0)
-		{
-			this->_queueBuffers(this->bufferIndex, count);
-			if (processed < STREAM_BUFFER_COUNT)
-			{
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
-			}
-			else // underrun happened, sound was stopped
-			{
-				this->pause();
-				this->play();
-			}
-		}
-		if (this->_getQueuedBuffersCount() == 0)
-		{
-			this->_stopSound();
-		}
-		 */
-		
-		// FIXME stub
+		NSLog(@"%s\n", __PRETTY_FUNCTION__);
+
 	}
 
 
