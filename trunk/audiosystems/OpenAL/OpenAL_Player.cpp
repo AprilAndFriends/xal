@@ -87,8 +87,6 @@ namespace xal
 	void OpenAL_Player::_sysPrepareBuffer()
 	{
 		// making sure all buffer data is loaded before accessing anything
-		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
-		int samplingRate = this->buffer->getSamplingRate();
 		if (!this->sound->isStreamed())
 		{
 			this->_fillBuffers(0, 1);
@@ -138,7 +136,6 @@ namespace xal
 		if (this->sourceId != 0)
 		{
 			int processed = this->_getProcessedBuffersCount();
-			int queued = this->_getQueuedBuffersCount();
 			alSourceStop(this->sourceId);
 			if (this->sound->isStreamed())
 			{
