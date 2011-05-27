@@ -34,6 +34,7 @@ namespace xal
 			return false;
 		}
 #if !TARGET_OS_IPHONE
+        /* kreso: vucica, ovaj kod ne radi na mac-u, privremeno komentirah
 		FSRef fsref;
 		if (FSPathMakeRef((Byte *)this->filename.c_str(), &fsref, NULL) == 0) 
 		{
@@ -52,6 +53,7 @@ namespace xal
 			xal::log("m4a: error creating fsref");
 			this->streamOpen = false;
 		}
+        */
 #else
 		CFURLRef urlref;
 		
