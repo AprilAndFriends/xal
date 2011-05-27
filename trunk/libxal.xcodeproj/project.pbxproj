@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
+		7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
+		7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */; };
+		7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F392C66138FCF8D003B93A7 /* CoreServices.framework */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068711EC970600851062 /* OpenAL.framework */; };
@@ -54,6 +58,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = M4A_Source.cpp; path = audiosources/M4A_Source.cpp; sourceTree = "<group>"; };
+		7F392BE3138FB6FF003B93A7 /* M4A_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = M4A_Source.h; path = audiosources/M4A_Source.h; sourceTree = "<group>"; };
+		7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		7F392C66138FCF8D003B93A7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		7FC8064B11EC944C00851062 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Endianess.h; path = src/Endianess.h; sourceTree = "<group>"; };
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		7FC8068711EC970600851062 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -111,6 +119,8 @@
 				7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */,
 				C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */,
 				C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */,
+				7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */,
+				7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +150,8 @@
 				7FC8068711EC970600851062 /* OpenAL.framework */,
 				C9906D9B1243853A006BFE4D /* Ogg.framework */,
 				C9906D9D1243853A006BFE4D /* Vorbis.framework */,
+				7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */,
+				7F392C66138FCF8D003B93A7 /* CoreServices.framework */,
 			);
 			name = libxal;
 			sourceTree = "<group>";
@@ -173,6 +185,15 @@
 			children = (
 			);
 			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		7F392BE1138FB6F2003B93A7 /* M4A */ = {
+			isa = PBXGroup;
+			children = (
+				7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */,
+				7F392BE3138FB6FF003B93A7 /* M4A_Source.h */,
+			);
+			name = M4A;
 			sourceTree = "<group>";
 		};
 		7FC8063811EC941D00851062 /* Sources */ = {
@@ -215,6 +236,7 @@
 		C9DAE8BE1381048F0007882A /* Audio Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7F392BE1138FB6F2003B93A7 /* M4A */,
 				C9DAE8F6138105900007882A /* WAV */,
 				C9DAE8F5138105800007882A /* SPX */,
 				C9DAE8F41381057D0007882A /* OGG */,
@@ -334,6 +356,7 @@
 				C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */,
 				C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */,
 				C9DAE8EF138104D90007882A /* SDL_Source.h in Headers */,
+				7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +441,7 @@
 				C9DAE8EA138104D90007882A /* SDL_AudioManager.cpp in Sources */,
 				C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */,
 				C9DAE8EE138104D90007882A /* SDL_Source.cpp in Sources */,
+				7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +463,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -470,6 +495,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -553,6 +579,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -603,6 +630,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -650,6 +678,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
