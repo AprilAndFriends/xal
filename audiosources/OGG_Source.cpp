@@ -19,7 +19,7 @@
 
 namespace xal
 {
-	int section;
+	static int section; // a small optimization
 
 	OGG_Source::OGG_Source(chstr filename) : Source(filename)
 	{
