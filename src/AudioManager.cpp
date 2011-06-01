@@ -220,6 +220,7 @@ namespace xal
 		{
 			if (it->second == sound)
 			{
+				xal::log("destroying sound " + it->first);
 				delete it->second;
 				this->sounds.erase(it);
 				break;
@@ -229,6 +230,7 @@ namespace xal
 	
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
+		xal::log(hsprintf("destroying sounds with prefix '%s'", prefix.c_str()));
 		harray<hstr> keys = this->sounds.keys();
 		harray<Player*> managedPlayers = this->managedPlayers;
 		Sound* sound;

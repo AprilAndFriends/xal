@@ -50,7 +50,6 @@ namespace xal
 
 	Buffer::~Buffer()
 	{
-		xal::log("destroying buffer " + this->filename);
 		if (this->stream != NULL)
 		{
 			delete [] this->stream;
