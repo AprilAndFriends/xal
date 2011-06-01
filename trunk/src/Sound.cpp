@@ -31,7 +31,6 @@ namespace xal
 
 	Sound::~Sound()
 	{
-		xal::log("destroying sound " + this->name);
 		delete this->buffer;
 	}
 	
