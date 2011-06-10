@@ -107,7 +107,7 @@ namespace xal
 		{
 			if (this->sound->getCategory()->isStreamed())
 			{
-				alSourcei(this->sourceId, AL_BUFFER, 0);
+				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 				alSourcei(this->sourceId, AL_LOOPING, false);
 				this->sound->setSourceId(this->sourceId);
 				((StreamSound*)this->sound)->queueBuffers();
@@ -184,6 +184,7 @@ namespace xal
 		this->fadeSpeed = 0.0f;
 		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &this->sampleOffset);
 		alSourceStop(this->sourceId);
+		alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 		if (this->sound->getCategory()->isStreamed())
 		{
 			this->sound->setSourceId(this->sourceId);
