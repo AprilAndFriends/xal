@@ -137,6 +137,7 @@ namespace xal
 		{
 			int processed = this->_getProcessedBuffersCount();
 			alSourceStop(this->sourceId);
+			alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
 			if (this->sound->isStreamed())
 			{
 				this->_unqueueBuffers();

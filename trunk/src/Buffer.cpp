@@ -59,7 +59,6 @@ namespace xal
 	
 	int Buffer::getSize()
 	{
-
 		this->prepare();
 		return this->source->getSize();
 	}
