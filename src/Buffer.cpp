@@ -158,10 +158,14 @@ namespace xal
 
 	int Buffer::load(bool looping, int count)
 	{
+		// returns the number of PCM bytes that were 
+		// successfully loaded in this function call
+		
 		if (!xal::mgr->isEnabled())
 		{
 			return 0;
 		}
+
 		if (this->isStreamed() && this->source->isOpen())
 		{
 			int size = count * STREAM_BUFFER_SIZE;

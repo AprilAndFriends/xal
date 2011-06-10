@@ -158,6 +158,8 @@ namespace xal
 
 	void OpenAL_Player::_sysUpdateStream()
 	{
+		// TODO - assert this is a streamed sound
+		
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
@@ -192,14 +194,14 @@ namespace xal
 
 	int OpenAL_Player::_getQueuedBuffersCount()
 	{
-		int queued;
+		int queued = 0;
 		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
 		return queued;
 	}
 
 	int OpenAL_Player::_getProcessedBuffersCount()
 	{
-		int processed;
+		int processed = 0;
 		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
 		return processed;
 	}
