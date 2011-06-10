@@ -78,11 +78,11 @@ namespace xal
 			return false;
 		}
 		unsigned long remaining = this->size;
-		unsigned char* buffer = output;
+		char* buffer = (char*)output;
 		int read;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, (char*)buffer, remaining, 0, 2, 1, &section);
+			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &section);
 			if (read == 0)
 			{
 				break;
@@ -106,11 +106,11 @@ namespace xal
 			return 0;
 		}
 		int remaining = size;
-		unsigned char* buffer = output;
+		char* buffer = (char*)output;
 		int read;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, (char*)buffer, remaining, 0, 2, 1, &section);
+			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &section);
 			if (read == 0)
 			{
 				break;

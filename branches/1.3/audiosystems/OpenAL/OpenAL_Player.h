@@ -27,7 +27,7 @@ namespace xal
 	{
 	public:
 		OpenAL_Player(Sound* sound, Buffer* buffer);
-		virtual ~OpenAL_Player();
+		~OpenAL_Player();
 
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
