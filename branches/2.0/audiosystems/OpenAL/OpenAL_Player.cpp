@@ -29,14 +29,12 @@ namespace xal
 		Player(sound, buffer), sourceId(0)
 	{
 		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
+		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
 	OpenAL_Player::~OpenAL_Player()
 	{
-		if (this->bufferIds[0] != 0)
-		{
-			alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
-		}
+		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
 	void OpenAL_Player::_update(float k)
@@ -89,7 +87,6 @@ namespace xal
 	void OpenAL_Player::_sysPrepareBuffer()
 	{
 		// making sure all buffer data is loaded before accessing anything
-		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 		if (!this->sound->isStreamed())
 		{
 			this->_fillBuffers(0, 1);
@@ -154,8 +151,6 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
-			memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
 			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
