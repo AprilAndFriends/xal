@@ -19,7 +19,6 @@
       <VirtualDirectory Name="SDL">
         <File Name="audiosystems/SDL/SDL_AudioManager.cpp"/>
         <File Name="audiosystems/SDL/SDL_Player.cpp"/>
-        <File Name="audiosystems/SDL/SDL_Source.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="OpenAL">
         <File Name="audiosystems/OpenAL/OpenAL_AudioManager.cpp"/>
@@ -54,7 +53,6 @@
       <VirtualDirectory Name="SDL">
         <File Name="audiosystems/SDL/SDL_AudioManager.h"/>
         <File Name="audiosystems/SDL/SDL_Player.h"/>
-        <File Name="audiosystems/SDL/SDL_Source.h"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">

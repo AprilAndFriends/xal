@@ -383,7 +383,6 @@ copy bin\$(Configuration)\*.lib bin
     <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp" />
     <ClCompile Include="audiosystems\SDL\SDL_Player.cpp" />
     <ClCompile Include="audiosources\OGG_Source.cpp" />
-    <ClCompile Include="audiosystems\SDL\SDL_Source.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\Category.cpp" />
@@ -404,7 +403,6 @@ copy bin\$(Configuration)\*.lib bin
     <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h" />
     <ClInclude Include="audiosystems\SDL\SDL_Player.h" />
     <ClInclude Include="audiosources\OGG_Source.h" />
-    <ClInclude Include="audiosystems\SDL\SDL_Source.h" />
     <ClInclude Include="include\xal\Buffer.h" />
     <ClInclude Include="include\xal\Source.h" />
     <ClInclude Include="include\xal\Player.h" />
