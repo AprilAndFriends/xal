@@ -10,12 +10,11 @@
 #if HAVE_SDL
 #include "Buffer.h"
 #include "SDL_Player.h"
-#include "SDL_Source.h"
 #include "Sound.h"
 
 namespace xal
 {
-	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), channelId(-1)
+	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), playing(false)
 	{
 	}
 
@@ -23,25 +22,25 @@ namespace xal
 	{
 	}
 
-	bool SDL_Player::isPlaying()
+	void SDL_Player::_update(float k)
 	{
-		return (this->channelId != -1);// && Mix_Playing(this->channelId) != 0);
-	}
-
-	void SDL_Player::setGain(float value)
-	{
-		Player::setGain(value);
-	}
-
-	void SDL_Player::_sysSetOffset(float value)
-	{
+		Player::_update(k);
 		/*
-		this->dsBuffer->SetCurrentPosition((DWORD)value);
+		if (this->playing)
+		{
+			unsigned long status;
+			this->dsBuffer->GetStatus(&status);
+			if ((status & DSBSTATUS_PLAYING) == 0)
+			{
+				this->playing = false;
+			}
+		}
 		*/
 	}
 
 	float SDL_Player::_sysGetOffset()
 	{
+		return 0.0f;
 		/*
 		if (this->dsBuffer == NULL)
 		{
@@ -51,18 +50,33 @@ namespace xal
 		this->dsBuffer->GetCurrentPosition(&position, NULL);
 		return (float)position;
 		*/
-		return 0.0f;
+	}
+
+	void SDL_Player::_sysSetOffset(float value)
+	{
+		/*
+		if (this->dsBuffer != NULL)
+		{
+			this->dsBuffer->SetCurrentPosition((DWORD)value);
+		}
+		*/
 	}
 
 	bool SDL_Player::_sysPreparePlay()
 	{
+		return false;
 		/*
+		if (this->dsBuffer != NULL)
+		{
+			return true;
+		}
+		this->buffer->prepare();
 		WAVEFORMATEX wavefmt;
 #if HAVE_WAV
-		SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
-		if (source != NULL)
+		DirectSound_WAV_Source* wavSource = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
+		if (wavSource != NULL)
 		{
-			wavefmt = source->getWavefmt();
+			wavefmt = wavSource->getWavefmt();
 		}
 		else
 #endif
@@ -79,63 +93,95 @@ namespace xal
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = this->buffer->getSize();
+		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE);
 		bufferDesc.lpwfxFormat = &wavefmt;
-		HRESULT result = ((SDL_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
+		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
 		{
 			this->dsBuffer = NULL;
+			this->buffer->free();
 			return false;
 		}
-		*/
-		
 		return true;
+		*/
 	}
 
 	void SDL_Player::_sysPrepareBuffer()
 	{
 		/*
-		// filling buffer data
-		void* write1 = NULL;
-		void* write2 = NULL;
-		unsigned long length1;
-		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
-		if (FAILED(result))
+		if (!this->sound->isStreamed())
 		{
-			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
+			this->_copyBuffer(0, this->buffer->getStream(), this->buffer->getSize());
 			return;
 		}
-		if (write1 != NULL)
+		int count = STREAM_BUFFER_COUNT;
+		if (!this->paused)
 		{
-			memcpy(write1, stream, length1);
+			this->bufferIndex = 0;
 		}
-		if (write2 != NULL)
+		else
 		{
-			memcpy(write2, &stream[length1], length2);
+			count = STREAM_BUFFER_COUNT - this->bufferCount;
 		}
-		this->dsBuffer->Unlock(write1, length1, write2, length2);
+		if (count > 0)
+		{
+			count = this->_fillBuffers(this->bufferIndex, count);
+			this->bufferCount += count;
+			if (count > 0)
+			{
+				this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
+				if (this->bufferCount < STREAM_BUFFER_COUNT)
+				{
+					count = STREAM_BUFFER_COUNT - this->bufferCount;
+					int size = count * STREAM_BUFFER_SIZE;
+					unsigned char* stream = new unsigned char[size];
+					memset(stream, 0, size * sizeof(unsigned char));
+					this->_copyBuffer(this->bufferCount, stream, size);
+					delete [] stream;
+				}
+			}
+		}
+		*/
+	}
+
+	void SDL_Player::_sysUpdateGain()
+	{
+		/*
+		if (this->dsBuffer != NULL)
+		{
+			float gain = this->_calcGain();
+			LONG value = DSBVOLUME_MIN;
+			if (gain > 0.0f)
+			{
+				value = (LONG)(log10(gain) / 4 * (DSBVOLUME_MAX - DSBVOLUME_MIN));
+			}
+			this->dsBuffer->SetVolume(value);
+		}
 		*/
 	}
 
 	void SDL_Player::_sysUpdateFadeGain()
 	{
 		/*
-		this->dsBuffer->SetVolume(DSBVOLUME_MIN + (LONG)((DSBVOLUME_MAX - DSBVOLUME_MIN) * this->_calcFadeGain()));
+		if (this->dsBuffer != NULL)
+		{
+			float gain = this->_calcFadeGain();
+			LONG value = DSBVOLUME_MIN;
+			if (gain > 0.0f)
+			{
+				value = (LONG)(log10(gain) / 4 * (DSBVOLUME_MAX - DSBVOLUME_MIN));
+			}
+			this->dsBuffer->SetVolume(value);
+		}
 		*/
 	}
 
 	void SDL_Player::_sysPlay()
 	{
-		if (this->channelId < 0)
-		{
-			SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
-			//this->channelId = Mix_PlayChannel(-1, source->getMixChunk(), (this->looping ? -1 : 0));
-		}
 		/*
 		if (this->dsBuffer != NULL)
 		{
-			this->dsBuffer->Play(0, 0, (this->looping ? DSBPLAY_LOOPING : 0));
+			this->dsBuffer->Play(0, 0, ((this->looping || this->sound->isStreamed()) ? DSBPLAY_LOOPING : 0));
 			this->playing = true;
 		}
 		*/
@@ -148,6 +194,58 @@ namespace xal
 		{
 			this->dsBuffer->Stop();
 			this->playing = false;
+			if (this->sound->isStreamed())
+			{
+				if (this->paused)
+				{
+					int processed = this->_getProcessedBuffersCount();
+					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
+					this->bufferCount -= processed;
+				}
+				else
+				{
+					this->bufferIndex = 0;
+					this->bufferCount = 0,
+					this->buffer->rewind();
+				}
+			}
+		}
+		*/
+	}
+
+	void SDL_Player::_sysUpdateStream()
+	{
+		/*
+		if (this->bufferCount == 0)
+		{
+			this->_stopSound();
+			return;
+		}
+		int processed = this->_getProcessedBuffersCount();
+		if (processed == 0)
+		{
+			return;
+		}
+		this->bufferCount = hmax(this->bufferCount - processed, 0);
+		int count = this->_fillBuffers(this->bufferIndex, processed);
+		if (count > 0)
+		{
+			this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
+			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->bufferCount += count;
+		}
+		if (this->bufferCount < STREAM_BUFFER_COUNT && !this->looping)
+		{
+			count = STREAM_BUFFER_COUNT - this->bufferCount;
+			int size = count * STREAM_BUFFER_SIZE;
+			unsigned char* stream = new unsigned char[size];
+			memset(stream, 0, size * sizeof(unsigned char));
+			this->_copyBuffer(this->bufferCount, stream, size);
+			delete [] stream;
+		}
+		if (this->bufferCount == 0)
+		{
+			this->_stopSound();
 		}
 		*/
 	}

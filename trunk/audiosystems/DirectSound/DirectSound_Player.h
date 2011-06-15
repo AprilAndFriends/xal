@@ -31,14 +31,14 @@ namespace xal
 		DirectSound_Player(Sound* sound, Buffer* buffer);
 		~DirectSound_Player();
 
-		void _update(float k);
-
 	protected:
 		IDirectSoundBuffer* dsBuffer;
 		/// @brief Playing flag.
 		/// @note Due to possible latency in DirectSound, this flag is being used to avoid problems.
 		bool playing;
 		int bufferCount;
+
+		void _update(float k);
 
 		bool _sysIsPlaying() { return this->playing; }
 		float _sysGetOffset();

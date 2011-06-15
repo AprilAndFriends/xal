@@ -9,7 +9,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the AudioManager for SDL.
+/// Represents an implementation of the AudioManager for DirectSound.
 
 #if HAVE_SDL
 #ifndef XAL_SDL_AUDIO_MANAGER_H
@@ -22,7 +22,7 @@
 
 namespace xal
 {
-	class Source;
+	class Sound;
 	class Player;
 
 	class xalExport SDL_AudioManager : public AudioManager
@@ -31,10 +31,10 @@ namespace xal
 		SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
 
-		Source* SDL_AudioManager::_createSource(chstr filename, Format format);
-		
 	protected:
-		Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer);
+		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+
+		static void _mixAudio(void* unused, unsigned char* stream, int length);
 
 	};
 
