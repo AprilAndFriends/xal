@@ -12,6 +12,7 @@
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hmutex.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 #include <hltypes/util.h>
@@ -45,7 +46,7 @@ namespace xal
 	AudioManager* mgr;
 
 	AudioManager::AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), gain(1.0f), locked(false), thread(NULL)
+		enabled(false), gain(1.0f), thread(NULL)
 	{
 		this->name = systemName;
 		this->backendId = backendId;
@@ -82,10 +83,10 @@ namespace xal
 	void AudioManager::_setupThread()
 	{
 		xal::log("starting thread management");
-		this->locked = true;
+		this->_lock();
 		this->thread = new hthread(&AudioManager::update);
 		this->thread->start();
-		this->locked = false;
+		this->_unlock();
 	}
 
 	void AudioManager::_destroyThread()
@@ -93,10 +94,11 @@ namespace xal
 		if (this->thread != NULL)
 		{
 			xal::log("stopping thread management");
-			while (this->locked);
+			this->_lock();
 			this->thread->stop();
 			delete this->thread;
 			this->thread = NULL;
+			this->_unlock();
 		}
 	}
 
@@ -119,13 +121,20 @@ namespace xal
 		while (true)
 		{
 			xal::mgr->_lock();
-			xal::mgr->update(xal::mgr->updateTime);
+			xal::mgr->_update(xal::mgr->updateTime);
 			xal::mgr->_unlock();
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
 	
 	void AudioManager::update(float k)
+	{
+		this->_lock();
+		this->_update(k);
+		this->_unlock();
+	}
+
+	void AudioManager::_update(float k)
 	{
 		if (this->isEnabled())
 		{
@@ -146,13 +155,12 @@ namespace xal
 
 	void AudioManager::_lock()
 	{
-		while (this->locked);
-		this->locked = true;
+		this->mutex.lock();
 	}
 	
 	void AudioManager::_unlock()
 	{
-		this->locked = false;
+		this->mutex.unlock();
 	}
 
 	Category* AudioManager::createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)

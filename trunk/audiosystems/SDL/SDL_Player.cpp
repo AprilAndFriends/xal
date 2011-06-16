@@ -62,7 +62,6 @@ namespace xal
 		{
 			unsigned char* data;
 			int size = hmin(this->_getData(&data, length), length);
-			printf("%d\n", size);
 			if (size > 0)
 			{
 				/*
@@ -71,10 +70,13 @@ namespace xal
 				int srcFormat = (this->buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
 				int srcChannels = this->buffer->getChannels();
 				int srcSamplingRate = this->buffer->getSamplingRate();
-				if (srcFormat != format.format || srcChannels != format.channels || srcSamplingRate != format.freq)
+				if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
+				{
+					SDL_MixAudio(stream, data, size, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
+				}
+				else
 				{
 					SDL_AudioCVT cvt;
-					xal::log(hsprintf("%d %d %d %d", srcChannels, srcSamplingRate, format.channels, format.freq));
 					result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
 					if (result == -1)
 					{
@@ -90,14 +92,8 @@ namespace xal
 						xal::log("ERROR: Could not convert audio");
 						return;
 					}
-					data = (unsigned char*)cvt.buf;
-					size = cvt.len_cvt;
-					SDL_MixAudio(stream, data, size, SDL_MIX_MAXVOLUME);
+					SDL_MixAudio(stream, cvt.buf, cvt.len_cvt, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
 					free(cvt.buf);
-				}
-				else
-				{
-					SDL_MixAudio(stream, data, size, SDL_MIX_MAXVOLUME);
 				}
 				//*/
 				SDL_MixAudio(stream, data, size, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
