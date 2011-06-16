@@ -22,7 +22,7 @@
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-//#define _TEST_STREAM
+#define _TEST_STREAM
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
