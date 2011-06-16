@@ -8,14 +8,18 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_SDL
+#include <SDL/SDL.h>
+
 #include "Buffer.h"
+#include "SDL_AudioManager.h"
 #include "SDL_Player.h"
-#include "SDL_Source.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {
-	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), channelId(-1)
+	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), playing(false),
+		position(0), currentGain(1.0f)
 	{
 	}
 
@@ -23,133 +27,149 @@ namespace xal
 	{
 	}
 
-	bool SDL_Player::isPlaying()
+	int SDL_Player::_getData(unsigned char** data, int size)
 	{
-		return (this->channelId != -1);// && Mix_Playing(this->channelId) != 0);
+		int streamSize = this->buffer->load(this->looping, size);
+		*data = this->buffer->getStream();
+		if (!this->sound->isStreamed())
+		{
+			*data = &(*data)[this->position];
+			streamSize = hmin(streamSize, streamSize - this->position);
+		}
+		return hmin(size, streamSize);
 	}
 
-	void SDL_Player::setGain(float value)
+	void SDL_Player::_update(float k)
 	{
-		Player::setGain(value);
+		Player::_update(k);
+		int size = this->buffer->getSize();
+		if (this->position >= size)
+		{
+			if (this->looping)
+			{
+				this->position -= this->position / size * size;
+			}
+			else if (this->playing)
+			{
+				this->_sysStop();
+			}
+		}
 	}
 
-	void SDL_Player::_sysSetOffset(float value)
+	void SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
 	{
-		/*
-		this->dsBuffer->SetCurrentPosition((DWORD)value);
-		*/
+		if (this->playing)
+		{
+			unsigned char* data;
+			int size = hmin(this->_getData(&data, length), length);
+			if (size > 0)
+			{
+				/*
+				int result;
+				SDL_AudioSpec format = ((SDL_AudioManager*)xal::mgr)->getFormat();
+				int srcFormat = (this->buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
+				int srcChannels = this->buffer->getChannels();
+				int srcSamplingRate = this->buffer->getSamplingRate();
+				if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
+				{
+					SDL_MixAudio(stream, data, size, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
+				}
+				else
+				{
+					SDL_AudioCVT cvt;
+					result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
+					if (result == -1)
+					{
+						xal::log("ERROR: Could not build converter");
+						return;
+					}
+					cvt.buf = (Uint8*)malloc(size * cvt.len_mult);
+					memcpy(cvt.buf, data, size * sizeof(unsigned char));
+					cvt.len = size;
+					result = SDL_ConvertAudio(&cvt);
+					if (result == -1)
+					{
+						xal::log("ERROR: Could not convert audio");
+						return;
+					}
+					// TODO - fix this later to use proper length
+					SDL_MixAudio(stream, cvt.buf, hmin(size, cvt.len_cvt), (int)(SDL_MIX_MAXVOLUME * this->currentGain));
+					free(cvt.buf);
+				}
+				//*/
+				short* sStream = (short*)stream;
+				short* sData = (short*)data;
+				// TODO - normalize endianess here?
+				length = hmin(size, length) / 2;
+				if (!first)
+				{
+					for (int i = 0; i < length; i++)
+					{
+						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData[i]), -32768, 32767);
+					}
+				}
+				else if (this->currentGain == 1.0f)
+				{
+					memcpy(stream, data, size);
+				}
+				else
+				{
+					for (int i = 0; i < length; i++)
+					{
+						sStream[i] = (short)(sData[i] * this->currentGain);
+					}
+				}
+				this->position += size;
+			}
+		}
 	}
 
 	float SDL_Player::_sysGetOffset()
 	{
-		/*
-		if (this->dsBuffer == NULL)
-		{
-			return 0.0f;
-		}
-		unsigned long position;
-		this->dsBuffer->GetCurrentPosition(&position, NULL);
-		return (float)position;
-		*/
-		return 0.0f;
+		return this->offset;
+	}
+
+	void SDL_Player::_sysSetOffset(float value)
+	{
+		this->offset = value;
 	}
 
 	bool SDL_Player::_sysPreparePlay()
 	{
-		/*
-		WAVEFORMATEX wavefmt;
-#if HAVE_WAV
-		SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
-		if (source != NULL)
-		{
-			wavefmt = source->getWavefmt();
-		}
-		else
-#endif
-		{
-			wavefmt.cbSize = 0;
-			wavefmt.nChannels = this->buffer->getChannels();
-			wavefmt.nSamplesPerSec = this->buffer->getSamplingRate();
-			wavefmt.wBitsPerSample = this->buffer->getBitsPerSample();
-			wavefmt.wFormatTag = WAVE_FORMAT_PCM;
-			wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8; // standard calculation of WAV PCM data
-			wavefmt.nAvgBytesPerSec = wavefmt.nSamplesPerSec * wavefmt.nBlockAlign; // standard calculation of WAV PCM data
-		}
-		DSBUFFERDESC bufferDesc;
-		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
-		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
-		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = this->buffer->getSize();
-		bufferDesc.lpwfxFormat = &wavefmt;
-		HRESULT result = ((SDL_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
-		if (FAILED(result))
-		{
-			this->dsBuffer = NULL;
-			return false;
-		}
-		*/
-		
 		return true;
 	}
 
 	void SDL_Player::_sysPrepareBuffer()
 	{
-		/*
-		// filling buffer data
-		void* write1 = NULL;
-		void* write2 = NULL;
-		unsigned long length1;
-		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(0, size, &write1, &length1, &write2, &length2, 0);
-		if (FAILED(result))
+		if (!this->sound->isStreamed())
 		{
-			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
-			return;
+			this->buffer->load(this->looping, this->buffer->getSize());
 		}
-		if (write1 != NULL)
-		{
-			memcpy(write1, stream, length1);
-		}
-		if (write2 != NULL)
-		{
-			memcpy(write2, &stream[length1], length2);
-		}
-		this->dsBuffer->Unlock(write1, length1, write2, length2);
-		*/
+	}
+
+	void SDL_Player::_sysUpdateGain()
+	{
+		this->currentGain = this->_calcGain();
 	}
 
 	void SDL_Player::_sysUpdateFadeGain()
 	{
-		/*
-		this->dsBuffer->SetVolume(DSBVOLUME_MIN + (LONG)((DSBVOLUME_MAX - DSBVOLUME_MIN) * this->_calcFadeGain()));
-		*/
+		this->currentGain = this->_calcFadeGain();
 	}
 
 	void SDL_Player::_sysPlay()
 	{
-		if (this->channelId < 0)
-		{
-			SDL_Source* source = dynamic_cast<SDL_Source*>(this->buffer->getSource());
-			//this->channelId = Mix_PlayChannel(-1, source->getMixChunk(), (this->looping ? -1 : 0));
-		}
-		/*
-		if (this->dsBuffer != NULL)
-		{
-			this->dsBuffer->Play(0, 0, (this->looping ? DSBPLAY_LOOPING : 0));
-			this->playing = true;
-		}
-		*/
+		this->playing = true;
 	}
 
 	void SDL_Player::_sysStop()
 	{
-		/*
-		if (this->dsBuffer != NULL)
+		this->playing = false;
+		if (!this->paused)
 		{
-			this->dsBuffer->Stop();
-			this->playing = false;
+			this->position = 0;
+			this->buffer->rewind();
 		}
-		*/
 	}
 
 }

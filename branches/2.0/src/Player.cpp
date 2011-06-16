@@ -53,6 +53,11 @@ namespace xal
         return this->buffer->getDuration();
     }
 	
+    int Player::getSize()
+    {
+		return this->buffer->getSize();
+    }
+	
 	bool Player::isPlaying()
 	{
 		return (!this->isFadingOut() && this->_sysIsPlaying());

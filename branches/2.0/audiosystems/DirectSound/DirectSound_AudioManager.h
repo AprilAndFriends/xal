@@ -24,6 +24,7 @@ struct IDirectSound;
 
 namespace xal
 {
+	class Sound;
 	class Source;
 	class Player;
 

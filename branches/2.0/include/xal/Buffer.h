@@ -44,7 +44,7 @@ namespace xal
 		bool setOffset(int value);
 
 		void prepare();
-		int load(bool looping, int count = 1);
+		int load(bool looping, int size = STREAM_BUFFER_SIZE);
 		void release();
 		void free();
 		void rewind();
@@ -59,6 +59,10 @@ namespace xal
 		unsigned char* stream;
 		int streamSize;
 		Source* source;
+
+#if HAVE_SDL
+		void _convertStream();
+#endif
 
 	};
 
