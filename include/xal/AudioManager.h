@@ -18,6 +18,7 @@
 
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hmutex.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 
@@ -129,8 +130,9 @@ namespace xal
 		harray<Player*> managedPlayers;
 		hmap<hstr, Sound*> sounds;
 		hthread* thread;
-		bool locked;
+		hmutex mutex;
 		
+		void _update(float k);
 		void _setupThread();
 		void _destroyThread();
 		void _lock();
