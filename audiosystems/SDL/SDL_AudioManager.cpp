@@ -10,11 +10,12 @@
 #if HAVE_SDL
 #include <SDL/SDL.h>
 
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #include "SDL_AudioManager.h"
 #include "SDL_Player.h"
-#include "SDL_Source.h"
 #include "Source.h"
 #include "xal.h"
 
@@ -24,26 +25,42 @@ namespace xal
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
 		xal::log("initializing SDL Audio");
+		this->buffer = new unsigned char[1];
+		this->bufferSize = 1;
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
 			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
 			return;
 		}
-		//result = Mix_OpenAudio(44100, AUDIO_S16SYS, 2, STREAM_BUFFER_SIZE); // 44.1 kHz, 16 bit stereo, 2 channels (stereo), stream chunks of 16kB
-		if (result != 0)
+		this->format.freq = 44100;
+		this->format.format = AUDIO_S16;
+		this->format.channels = 2;
+		this->format.samples = 2048;
+		this->format.callback = &SDL_AudioManager::_mixAudio;
+		this->format.userdata = NULL;
+		// open audio device
+		result = SDL_OpenAudio(&this->format, NULL);
+		if (result < 0)
 		{
-			//xal::log(hsprintf("Unable to initialize audio: %s\n", Mix_GetError()));
+			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
 			return;
 		}
+		SDL_PauseAudio(0);
 		this->enabled = true;
+		if (threaded)
+		{
+			this->_setupThread();
+		}
 	}
 
 	SDL_AudioManager::~SDL_AudioManager()
 	{
 		xal::log("destroying SDL Audio");
-		//Mix_CloseAudio();
+		SDL_PauseAudio(1);
+		SDL_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+		delete [] this->buffer;
 	}
 	
 	Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
@@ -51,16 +68,30 @@ namespace xal
 		return new SDL_Player(sound, buffer);
 	}
 
-	Source* SDL_AudioManager::_createSource(chstr filename, Format format)
+	void SDL_AudioManager::mixAudio(void* unused, unsigned char* stream, int length)
 	{
-		Source* source;
-		switch (format)
+		this->_lock();
+		if (this->bufferSize != length)
 		{
-		default:
-			source = new SDL_Source(filename);
-			break;
+			delete [] this->buffer;
+			this->buffer = new unsigned char[length];
+			this->bufferSize = length;
 		}
-		return source;
+		memset(this->buffer, 0, this->bufferSize * sizeof(unsigned char));
+		bool first = true;
+		foreach (Player*, it, this->players)
+		{
+			((SDL_Player*)(*it))->mixAudio(this->buffer, this->bufferSize, first);
+			first = false;
+		}
+		SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
+		this->_unlock();
 	}
+
+	void SDL_AudioManager::_mixAudio(void* unused, unsigned char* stream, int length)
+	{
+		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
+	}
+
 }
 #endif

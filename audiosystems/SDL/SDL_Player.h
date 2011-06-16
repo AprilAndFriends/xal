@@ -29,23 +29,26 @@ namespace xal
 		SDL_Player(Sound* sound, Buffer* buffer);
 		~SDL_Player();
 
-		bool isPlaying();
-		void setGain(float value);
+		void mixAudio(unsigned char* stream, int length, bool first);
 
 	protected:
-		int channelId;
-		//IDirectSoundBuffer* dsBuffer;
-		/// @brief Playing flag.
-		/// @note Due to possible latency in DirectSound, this flag is being used to avoid problems.
-		//bool playing;
+		bool playing;
+		int position;
+		float currentGain;
 
+		void _update(float k);
+
+		bool _sysIsPlaying() { return this->playing; }
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
 		bool _sysPreparePlay();
 		void _sysPrepareBuffer();
+		void _sysUpdateGain();
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
+
+		int _getData(unsigned char** data, int size);
 
 	};
 

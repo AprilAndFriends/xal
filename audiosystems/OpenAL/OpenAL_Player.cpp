@@ -187,7 +187,10 @@ namespace xal
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
 		{
-			if (!this->sound->isStreamed())
+			int processed = this->_getProcessedBuffersCount();
+			alSourceStop(this->sourceId);
+			alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
+			if (this->sound->isStreamed())
 			{
 				alSourceStop(this->sourceId);
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
@@ -269,7 +272,7 @@ namespace xal
 	int OpenAL_Player::_fillBuffers(int index, int count)
 	{
 		OALP_LOG_FUNCTION_NAME();
-		int size = this->buffer->load(this->looping, count);
+		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		if (!this->sound->isStreamed())
 		{
 			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),

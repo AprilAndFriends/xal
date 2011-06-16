@@ -719,10 +719,6 @@
 						RelativePath=".\audiosystems\SDL\SDL_Player.cpp"
 						>
 					</File>
-					<File
-						RelativePath=".\audiosystems\SDL\SDL_Source.cpp"
-						>
-					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -811,10 +807,6 @@
 					</File>
 					<File
 						RelativePath=".\audiosystems\SDL\SDL_Player.h"
-						>
-					</File>
-					<File
-						RelativePath=".\audiosystems\SDL\SDL_Source.h"
 						>
 					</File>
 				</Filter>
