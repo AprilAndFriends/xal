@@ -35,7 +35,7 @@
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
 
-//#define _TEST_SOURCE_HANDLING // OpenAL only
+//#define _TEST_SOURCE_HANDLING // usually OpenAL only
 
 //#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS

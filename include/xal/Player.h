@@ -39,6 +39,7 @@ namespace xal
 		hstr getFilename();
 		hstr getRealFilename();
 		float getDuration();
+		int getSize();
 
 		Category* getCategory();
 

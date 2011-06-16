@@ -148,6 +148,7 @@ namespace xal
 				this->stream = new unsigned char[this->streamSize];
 			}
 			this->source->load(this->stream);
+			// TODO - conversion to "44100Hz 16 bit Stereo", if SDL is used
 			return;
 		}
 		if (!this->source->isOpen())
@@ -156,7 +157,7 @@ namespace xal
 		}
 	}
 
-	int Buffer::load(bool looping, int count)
+	int Buffer::load(bool looping, int size)
 	{
 		if (!xal::mgr->isEnabled())
 		{
@@ -164,7 +165,6 @@ namespace xal
 		}
 		if (this->isStreamed() && this->source->isOpen())
 		{
-			int size = count * STREAM_BUFFER_SIZE;
 			this->streamSize = this->source->loadChunk(this->stream, size);
 			while (looping && this->streamSize < size)
 			{
@@ -172,6 +172,7 @@ namespace xal
 				size -= this->streamSize;
 				this->streamSize += this->source->loadChunk(&this->stream[this->streamSize], size);
 			}
+			// TODO - conversion to "44100Hz 16 bit Stereo", if SDL is used
 		}
 		return this->streamSize;
 	}
