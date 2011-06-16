@@ -21,12 +21,12 @@
 
 namespace xal
 {
-	static unsigned char scratch[STREAM_BUFFER_SIZE * STREAM_BUFFER_COUNT];
-
 	SDL_AudioManager::SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
 		xal::log("initializing SDL Audio");
+		this->buffer = new unsigned char[1];
+		this->bufferSize = 1;
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
@@ -60,6 +60,7 @@ namespace xal
 		SDL_PauseAudio(1);
 		SDL_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+		delete [] this->buffer;
 	}
 	
 	Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
@@ -70,18 +71,20 @@ namespace xal
 	void SDL_AudioManager::mixAudio(void* unused, unsigned char* stream, int length)
 	{
 		this->_lock();
+		if (this->bufferSize != length)
+		{
+			delete [] this->buffer;
+			this->buffer = new unsigned char[length];
+			this->bufferSize = length;
+		}
+		memset(this->buffer, 0, this->bufferSize * sizeof(unsigned char));
+		bool first = true;
 		foreach (Player*, it, this->players)
 		{
-			((SDL_Player*)(*it))->mixAudio(stream, length);
+			((SDL_Player*)(*it))->mixAudio(this->buffer, this->bufferSize, first);
+			first = false;
 		}
-		harray<Player*> players(this->managedPlayers);
-		foreach (Player*, it, players)
-		{
-			if (!(*it)->isPlaying() && !(*it)->isFading())
-			{
-				this->_destroyManagedPlayer(*it);
-			}
-		}
+		SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
 		this->_unlock();
 	}
 

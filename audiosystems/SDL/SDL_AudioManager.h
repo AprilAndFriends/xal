@@ -45,6 +45,8 @@ namespace xal
 
 	protected:
 		SDL_AudioSpec format;
+		unsigned char* buffer;
+		int bufferSize;
 
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 

@@ -56,7 +56,7 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::mixAudio(unsigned char* stream, int length)
+	void SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
 	{
 		if (this->playing)
 		{
@@ -92,11 +92,33 @@ namespace xal
 						xal::log("ERROR: Could not convert audio");
 						return;
 					}
-					SDL_MixAudio(stream, cvt.buf, cvt.len_cvt, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
+					// TODO - fix this later to use proper length
+					SDL_MixAudio(stream, cvt.buf, hmin(size, cvt.len_cvt), (int)(SDL_MIX_MAXVOLUME * this->currentGain));
 					free(cvt.buf);
 				}
 				//*/
-				SDL_MixAudio(stream, data, size, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
+				short* sStream = (short*)stream;
+				short* sData = (short*)data;
+				// TODO - normalize endianess here?
+				length = hmin(size, length) / 2;
+				if (!first)
+				{
+					for (int i = 0; i < length; i++)
+					{
+						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData[i]), -32768, 32767);
+					}
+				}
+				else if (this->currentGain == 1.0f)
+				{
+					memcpy(stream, data, size);
+				}
+				else
+				{
+					for (int i = 0; i < length; i++)
+					{
+						sStream[i] = (short)(sData[i] * this->currentGain);
+					}
+				}
 				this->position += size;
 			}
 		}
