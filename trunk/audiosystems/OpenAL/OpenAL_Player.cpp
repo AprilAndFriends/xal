@@ -206,7 +206,7 @@ namespace xal
 
 	int OpenAL_Player::_fillBuffers(int index, int count)
 	{
-		int size = this->buffer->load(this->looping, count);
+		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		if (!this->sound->isStreamed())
 		{
 			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),

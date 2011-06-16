@@ -29,11 +29,12 @@ namespace xal
 		SDL_Player(Sound* sound, Buffer* buffer);
 		~SDL_Player();
 
-		bool isPlaying();
-		void setGain(float value);
+		void mixAudio(unsigned char* stream, int length);
 
 	protected:
 		bool playing;
+		int position;
+		float currentGain;
 
 		void _update(float k);
 
@@ -46,7 +47,8 @@ namespace xal
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
-		void _sysUpdateStream();
+
+		int _getData(unsigned char** data, int size);
 
 	};
 

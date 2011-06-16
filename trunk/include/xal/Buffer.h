@@ -44,7 +44,7 @@ namespace xal
 		bool setOffset(int value);
 
 		void prepare();
-		int load(bool looping, int count = 1);
+		int load(bool looping, int size = STREAM_BUFFER_SIZE);
 		void release();
 		void free();
 		void rewind();

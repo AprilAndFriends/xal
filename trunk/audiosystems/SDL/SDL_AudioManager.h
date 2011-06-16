@@ -15,23 +15,37 @@
 #ifndef XAL_SDL_AUDIO_MANAGER_H
 #define XAL_SDL_AUDIO_MANAGER_H
 
+#include <SDL/SDL.h>
+
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
 #include "xalExport.h"
 
+#define SDL_MAX_PLAYING 32
+
 namespace xal
 {
+	class Buffer;
+	class SDL_Player;
 	class Sound;
 	class Player;
 
 	class xalExport SDL_AudioManager : public AudioManager
 	{
 	public:
+		friend class SDL_Player;
+
 		SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
 
+		SDL_AudioSpec getFormat() { return this->format; }
+
+		void mixAudio(void* unused, unsigned char* stream, int length);
+
 	protected:
+		SDL_AudioSpec format;
+
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 
 		static void _mixAudio(void* unused, unsigned char* stream, int length);

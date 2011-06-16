@@ -118,10 +118,9 @@ namespace xal
 	{
 		while (true)
 		{
-			while (xal::mgr->locked);
-			xal::mgr->locked = true;
+			xal::mgr->_lock();
 			xal::mgr->update(xal::mgr->updateTime);
-			xal::mgr->locked = false;
+			xal::mgr->_unlock();
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}

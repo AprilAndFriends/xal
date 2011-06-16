@@ -277,7 +277,7 @@ namespace xal
 
 	int DirectSound_Player::_fillBuffers(int index, int count)
 	{
-		int size = this->buffer->load(this->looping, count);
+		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		return (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
 	}
 
