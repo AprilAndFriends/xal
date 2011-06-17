@@ -22,7 +22,7 @@
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-#define _TEST_STREAM
+//#define _TEST_STREAM
 //#define _TEST_LINKS
 //#define _TEST_THREADED
 
@@ -325,14 +325,20 @@ void _test_util_parallel_sounds()
 	harray<hstr> names;
 	names += S_BARK;
 	names += S_WIND;
-	xal::ParallelSoundManager pmgr;
+	xal::ParallelSoundManager pmgr(0.25f);
 	pmgr.updateList(names);
-	hthread::sleep(1000);
-	_update(1.0f);
+	for (int i = 0; i < 100000; i++)
+	{
+		hthread::sleep(100);
+		_update(0.1f);
+	}
 	names.clear();
 	pmgr.updateList(names);
-	hthread::sleep(1000);
-	_update(1.0f);
+	for (int i = 0; i < 10; i++)
+	{
+		hthread::sleep(100);
+		_update(0.1f);
+	}
 }
 
 int main(int argc, char **argv)

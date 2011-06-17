@@ -372,7 +372,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
+				AdditionalDependencies="SDL.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
 				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
 				GenerateDebugInformation="true"
@@ -448,7 +448,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
+				AdditionalDependencies="SDL.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
