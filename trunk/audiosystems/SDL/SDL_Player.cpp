@@ -190,7 +190,6 @@ namespace xal
 
 	void SDL_Player::_sysUpdateStream()
 	{
-		//SDL_LockAudio(); // let's make sure this is thread-safe
 		int count = 0;
 		if (this->readPosition > this->writePosition)
 		{
@@ -204,7 +203,6 @@ namespace xal
 		{
 			this->_fillBuffer(STREAM_BUFFER_SIZE);
 		}
-		//SDL_UnlockAudio();
 	}
 
 	int SDL_Player::_fillBuffer(int size)
