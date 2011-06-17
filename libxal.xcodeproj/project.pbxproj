@@ -11,6 +11,11 @@
 		7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
 		7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */; };
 		7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F392C66138FCF8D003B93A7 /* CoreServices.framework */; };
+		7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */; };
+		7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */; };
+		7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
+		7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
+		7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068711EC970600851062 /* OpenAL.framework */; };
@@ -53,8 +58,6 @@
 		C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E5138104D90007882A /* SDL_AudioManager.h */; };
 		C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E6138104D90007882A /* SDL_Player.cpp */; };
 		C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E7138104D90007882A /* SDL_Player.h */; };
-		C9DAE8EE138104D90007882A /* SDL_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E8138104D90007882A /* SDL_Source.cpp */; };
-		C9DAE8EF138104D90007882A /* SDL_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E9138104D90007882A /* SDL_Source.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +65,11 @@
 		7F392BE3138FB6FF003B93A7 /* M4A_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = M4A_Source.h; path = audiosources/M4A_Source.h; sourceTree = "<group>"; };
 		7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7F392C66138FCF8D003B93A7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = Library/Frameworks/SDL.framework; sourceTree = SDKROOT; };
+		7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_AudioManager.cpp; sourceTree = "<group>"; };
+		7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_AudioManager.h; sourceTree = "<group>"; };
+		7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_Player.cpp; sourceTree = "<group>"; };
+		7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_Player.h; sourceTree = "<group>"; };
 		7FC8064B11EC944C00851062 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Endianess.h; path = src/Endianess.h; sourceTree = "<group>"; };
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		7FC8068711EC970600851062 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -106,8 +114,6 @@
 		C9DAE8E5138104D90007882A /* SDL_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_AudioManager.h; path = audiosystems/SDL/SDL_AudioManager.h; sourceTree = "<group>"; };
 		C9DAE8E6138104D90007882A /* SDL_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDL_Player.cpp; path = audiosystems/SDL/SDL_Player.cpp; sourceTree = "<group>"; };
 		C9DAE8E7138104D90007882A /* SDL_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_Player.h; path = audiosystems/SDL/SDL_Player.h; sourceTree = "<group>"; };
-		C9DAE8E8138104D90007882A /* SDL_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDL_Source.cpp; path = audiosystems/SDL/SDL_Source.cpp; sourceTree = "<group>"; };
-		C9DAE8E9138104D90007882A /* SDL_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_Source.h; path = audiosystems/SDL/SDL_Source.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,7 @@
 				C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */,
 				7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */,
 				7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */,
+				7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +159,7 @@
 				C9906D9D1243853A006BFE4D /* Vorbis.framework */,
 				7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */,
 				7F392C66138FCF8D003B93A7 /* CoreServices.framework */,
+				7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */,
 			);
 			name = libxal;
 			sourceTree = "<group>";
@@ -194,6 +202,18 @@
 				7F392BE3138FB6FF003B93A7 /* M4A_Source.h */,
 			);
 			name = M4A;
+			sourceTree = "<group>";
+		};
+		7F4337D513A7803200A2DB0D /* CoreAudio */ = {
+			isa = PBXGroup;
+			children = (
+				7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */,
+				7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */,
+				7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */,
+				7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */,
+			);
+			name = CoreAudio;
+			path = audiosystems/CoreAudio;
 			sourceTree = "<group>";
 		};
 		7FC8063811EC941D00851062 /* Sources */ = {
@@ -248,6 +268,7 @@
 		C9DAE8BF1381049F0007882A /* Audio Systems */ = {
 			isa = PBXGroup;
 			children = (
+				7F4337D513A7803200A2DB0D /* CoreAudio */,
 				C9DAE8F21381055B0007882A /* DirectSound */,
 				C9DAE8F1138105590007882A /* OpenAL */,
 				C9DAE8F0138105540007882A /* SDL */,
@@ -262,8 +283,6 @@
 				C9DAE8E5138104D90007882A /* SDL_AudioManager.h */,
 				C9DAE8E6138104D90007882A /* SDL_Player.cpp */,
 				C9DAE8E7138104D90007882A /* SDL_Player.h */,
-				C9DAE8E8138104D90007882A /* SDL_Source.cpp */,
-				C9DAE8E9138104D90007882A /* SDL_Source.h */,
 			);
 			name = SDL;
 			sourceTree = "<group>";
@@ -355,8 +374,9 @@
 				C9DAE8E3138104D00007882A /* OpenAL_Player.h in Headers */,
 				C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */,
 				C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */,
-				C9DAE8EF138104D90007882A /* SDL_Source.h in Headers */,
 				7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */,
+				7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */,
+				7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,8 +460,9 @@
 				C9DAE8E2138104D00007882A /* OpenAL_Player.cpp in Sources */,
 				C9DAE8EA138104D90007882A /* SDL_AudioManager.cpp in Sources */,
 				C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */,
-				C9DAE8EE138104D90007882A /* SDL_Source.cpp in Sources */,
 				7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */,
+				7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */,
+				7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,16 +484,14 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_SDL=1",
+					"HAVE_COREAUDIO=1",
 					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../lib/macosx\"",
-				);
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
@@ -495,16 +514,14 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_SDL=1",
+					"HAVE_COREAUDIO=1",
 					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../lib/macosx\"",
-				);
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
@@ -579,16 +596,14 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_SDL=1",
+					"HAVE_COREAUDIO=1",
 					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../lib/macosx\"",
-				);
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
@@ -630,6 +645,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_SDL=1",
+					"HAVE_COREAUDIO=1",
 					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
@@ -637,10 +654,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../lib/macosx\"",
-				);
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
@@ -678,6 +691,8 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_SDL=1",
+					"HAVE_COREAUDIO=1",
 					"HAVE_M4A=1",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
@@ -685,10 +700,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../lib/macosx\"",
-				);
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
