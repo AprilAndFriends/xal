@@ -19,24 +19,38 @@
 namespace xal
 {
 	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), playing(false),
-		position(0), currentGain(1.0f)
+		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
 	{
+		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
 	}
 
 	SDL_Player::~SDL_Player()
 	{
 	}
 
-	int SDL_Player::_getData(unsigned char** data, int size)
+	void SDL_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
 	{
-		int streamSize = this->buffer->load(this->looping, size);
-		*data = this->buffer->getStream();
 		if (!this->sound->isStreamed())
 		{
-			*data = &(*data)[this->position];
-			streamSize = hmin(streamSize, streamSize - this->position);
+			int streamSize = this->buffer->load(this->looping, size);
+			*data1 = &this->buffer->getStream()[this->readPosition];
+			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
+			*data2 = NULL;
+			*size2 = 0;
+			this->readPosition += *size1;
+			return;
 		}
-		return hmin(size, streamSize);
+		*data1 = &this->circleBuffer[this->readPosition];
+		*size1 = size;
+		*data2 = NULL;
+		*size2 = 0;
+		if (this->readPosition + size > STREAM_BUFFER)
+		{
+			*size1 = STREAM_BUFFER - this->readPosition;
+			*data2 = this->circleBuffer;
+			*size2 = size - *size1;
+		}
+		this->readPosition = (this->readPosition + size) % STREAM_BUFFER;
 	}
 
 	void SDL_Player::_update(float k)
@@ -58,69 +72,58 @@ namespace xal
 
 	void SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
 	{
-		if (this->playing)
+		if (!this->playing)
 		{
-			unsigned char* data;
-			int size = hmin(this->_getData(&data, length), length);
-			if (size > 0)
+			return;
+		}
+		unsigned char* data1;
+		unsigned char* data2;
+		int size1;
+		int size2;
+		this->_getData(length, &data1, &size1, &data2, &size2);
+		if (size1 > 0)
+		{
+			if (first && this->currentGain == 1.0f)
 			{
-				/*
-				int result;
-				SDL_AudioSpec format = ((SDL_AudioManager*)xal::mgr)->getFormat();
-				int srcFormat = (this->buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
-				int srcChannels = this->buffer->getChannels();
-				int srcSamplingRate = this->buffer->getSamplingRate();
-				if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
+				memcpy(stream, data1, size1);
+				if (size2 > 0)
 				{
-					SDL_MixAudio(stream, data, size, (int)(SDL_MIX_MAXVOLUME * this->currentGain));
+					memcpy(&stream[size1], data2, size2);
 				}
-				else
-				{
-					SDL_AudioCVT cvt;
-					result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
-					if (result == -1)
-					{
-						xal::log("ERROR: Could not build converter");
-						return;
-					}
-					cvt.buf = (Uint8*)malloc(size * cvt.len_mult);
-					memcpy(cvt.buf, data, size * sizeof(unsigned char));
-					cvt.len = size;
-					result = SDL_ConvertAudio(&cvt);
-					if (result == -1)
-					{
-						xal::log("ERROR: Could not convert audio");
-						return;
-					}
-					// TODO - fix this later to use proper length
-					SDL_MixAudio(stream, cvt.buf, hmin(size, cvt.len_cvt), (int)(SDL_MIX_MAXVOLUME * this->currentGain));
-					free(cvt.buf);
-				}
-				//*/
+			}
+			else
+			{
 				short* sStream = (short*)stream;
-				short* sData = (short*)data;
+				short* sData = (short*)data1;
 				// TODO - normalize endianess here?
-				length = hmin(size, length) / 2;
+				size1 = size1 * sizeof(unsigned char) / sizeof(short);
+				size2 = size2 * sizeof(unsigned char) / sizeof(short);
 				if (!first)
 				{
-					for (int i = 0; i < length; i++)
+					for (int i = 0; i < size1; i++)
 					{
 						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData[i]), -32768, 32767);
 					}
-				}
-				else if (this->currentGain == 1.0f)
-				{
-					memcpy(stream, data, size);
+					sData = (short*)data2;
+					for (int i = 0; i < size2; i++)
+					{
+						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData[i]), -32768, 32767);
+					}
 				}
 				else
 				{
-					for (int i = 0; i < length; i++)
+					for (int i = 0; i < size1; i++)
 					{
 						sStream[i] = (short)(sData[i] * this->currentGain);
 					}
+					sData = (short*)data2;
+					for (int i = 0; i < size2; i++)
+					{
+						sStream[size1 + i] = (short)(sData[i] * this->currentGain);
+					}
 				}
-				this->position += size;
 			}
+			this->position += size1 + size2;
 		}
 	}
 
@@ -144,6 +147,17 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			this->buffer->load(this->looping, this->buffer->getSize());
+			return;
+		}
+		if (!this->paused)
+		{
+			this->readPosition = 0;
+			this->writePosition = 0;
+			int size = this->_fillBuffer(STREAM_BUFFER_SIZE);
+			if (size < STREAM_BUFFER)
+			{
+				memset(&this->circleBuffer[size], 0, (STREAM_BUFFER - size) * sizeof(unsigned char));
+			}
 		}
 	}
 
@@ -168,8 +182,63 @@ namespace xal
 		if (!this->paused)
 		{
 			this->position = 0;
+			this->readPosition = 0;
+			this->writePosition = 0;
 			this->buffer->rewind();
 		}
+	}
+
+	void SDL_Player::_sysUpdateStream()
+	{
+		//SDL_LockAudio(); // let's make sure this is thread-safe
+		int count = 0;
+		if (this->readPosition > this->writePosition)
+		{
+			count = (this->readPosition - this->writePosition) / STREAM_BUFFER_SIZE;
+		}
+		else if (this->readPosition < this->writePosition)
+		{
+			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
+		}
+		if (count >= STREAM_BUFFER_COUNT / 2)
+		{
+			this->_fillBuffer(STREAM_BUFFER_SIZE);
+		}
+		//SDL_UnlockAudio();
+	}
+
+	int SDL_Player::_fillBuffer(int size)
+	{
+		int streamSize = this->buffer->load(this->looping, size);
+		unsigned char* stream = this->buffer->getStream();
+		if (this->writePosition + streamSize <= STREAM_BUFFER)
+		{
+			memcpy(&this->circleBuffer[this->writePosition], stream, streamSize * sizeof(unsigned char));
+		}
+		else
+		{
+			int remaining = STREAM_BUFFER - this->writePosition;
+			memcpy(&this->circleBuffer[this->writePosition], stream, remaining * sizeof(unsigned char));
+			memcpy(this->circleBuffer, stream, (streamSize - remaining) * sizeof(unsigned char));
+		}
+		this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
+		if (!this->looping && streamSize < size) // fill with silence if source is at the end
+		{
+			streamSize = size - streamSize;
+			if (this->writePosition + streamSize <= STREAM_BUFFER)
+			{
+				memset(&this->circleBuffer[this->writePosition], 0, streamSize * sizeof(unsigned char));
+			}
+			else
+			{
+				int remaining = STREAM_BUFFER - this->writePosition;
+				memset(&this->circleBuffer[this->writePosition], 0, remaining * sizeof(unsigned char));
+				memset(this->circleBuffer, 0, (streamSize - remaining) * sizeof(unsigned char));
+			}
+			this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
+			streamSize = size;
+		}
+		return streamSize;
 	}
 
 }

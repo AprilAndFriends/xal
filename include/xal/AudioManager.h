@@ -26,6 +26,7 @@
 
 #define STREAM_BUFFER_COUNT 8 // greater or equal to 2
 #define STREAM_BUFFER_SIZE 32768 // number like x^2
+#define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
 
 namespace xal
 {

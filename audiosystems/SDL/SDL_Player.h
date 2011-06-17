@@ -35,6 +35,9 @@ namespace xal
 		bool playing;
 		int position;
 		float currentGain;
+		unsigned char circleBuffer[STREAM_BUFFER];
+		int readPosition;
+		int writePosition;
 
 		void _update(float k);
 
@@ -47,8 +50,10 @@ namespace xal
 		void _sysUpdateFadeGain();
 		void _sysPlay();
 		void _sysStop();
+		void _sysUpdateStream();
 
-		int _getData(unsigned char** data, int size);
+		int _fillBuffer(int size);
+		void _getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2);
 
 	};
 
