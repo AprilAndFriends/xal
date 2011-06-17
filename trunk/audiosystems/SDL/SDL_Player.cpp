@@ -33,11 +33,17 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			int streamSize = this->buffer->load(this->looping, size);
-			*data1 = &this->buffer->getStream()[this->readPosition];
+			unsigned char* stream = this->buffer->getStream();
+			*data1 = &stream[this->readPosition];
 			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
 			*data2 = NULL;
 			*size2 = 0;
-			this->readPosition += *size1;
+			if (this->looping && this->readPosition + size > streamSize)
+			{
+				*data2 = stream;
+				*size2 = size - *size1;
+			}
+			this->readPosition = (this->readPosition + size) % streamSize;
 			return;
 		}
 		*data1 = &this->circleBuffer[this->readPosition];
@@ -199,6 +205,7 @@ namespace xal
 		{
 			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
 		}
+		xal::log("WHAT");
 		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
 			this->_fillBuffer(STREAM_BUFFER_SIZE);
@@ -207,6 +214,7 @@ namespace xal
 
 	int SDL_Player::_fillBuffer(int size)
 	{
+		xal::log(this->looping);
 		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
 		if (this->writePosition + streamSize <= STREAM_BUFFER)
