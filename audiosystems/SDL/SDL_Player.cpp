@@ -213,7 +213,6 @@ namespace xal
 		{
 			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
 		}
-		xal::log("WHAT");
 		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
 			this->_fillBuffer(STREAM_BUFFER_SIZE);
