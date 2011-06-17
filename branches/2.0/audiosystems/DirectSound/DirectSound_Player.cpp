@@ -101,7 +101,7 @@ namespace xal
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE);
+		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER);
 		bufferDesc.lpwfxFormat = &wavefmt;
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
