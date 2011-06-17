@@ -14,6 +14,7 @@
 #include "SDL_AudioManager.h"
 #include "SDL_Player.h"
 #include "Sound.h"
+#include "Endianess.h"
 #include "xal.h"
 
 namespace xal
@@ -100,32 +101,39 @@ namespace xal
 			else
 			{
 				short* sStream = (short*)stream;
-				short* sData = (short*)data1;
-				// TODO - normalize endianess here?
+				short* sData1 = (short*)data1;
+				short* sData2 = (short*)data2;
 				size1 = size1 * sizeof(unsigned char) / sizeof(short);
 				size2 = size2 * sizeof(unsigned char) / sizeof(short);
+				
 				if (!first)
 				{
 					for (int i = 0; i < size1; i++)
 					{
-						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
+						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData1[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
-					sData = (short*)data2;
 					for (int i = 0; i < size2; i++)
 					{
-						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData2[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 					}
 				}
 				else
 				{
 					for (int i = 0; i < size1; i++)
 					{
-						sStream[i] = (short)(sData[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
+						sStream[i] = (short)(sData1[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
-					sData = (short*)data2;
 					for (int i = 0; i < size2; i++)
 					{
-						sStream[size1 + i] = (short)(sData[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+						sStream[size1 + i] = (short)(sData2[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 					}
 				}
 			}
@@ -205,7 +213,6 @@ namespace xal
 		{
 			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
 		}
-		xal::log("WHAT");
 		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
 			this->_fillBuffer(STREAM_BUFFER_SIZE);
