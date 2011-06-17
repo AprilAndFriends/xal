@@ -156,7 +156,6 @@ namespace xal
 				this->stream = new unsigned char[this->streamSize];
 			}
 			this->source->load(this->stream);
-			// TODO - conversion to "44100Hz 16 bit Stereo", if SDL is used
 #if HAVE_SDL
 			if (xal::mgr->getName() == XAL_AS_SDL)
 			{
@@ -186,7 +185,6 @@ namespace xal
 				size -= this->streamSize;
 				this->streamSize += this->source->loadChunk(&this->stream[this->streamSize], size);
 			}
-			// TODO - conversion from 8 bit to 16 bit can cause problems, investigate possible problem
 #if HAVE_SDL
 			if (xal::mgr->getName() == XAL_AS_SDL)
 			{
@@ -246,7 +244,7 @@ namespace xal
 				xal::log("ERROR: Could not build converter " + this->filename);
 				return;
 			}
-			cvt.buf = new Uint8[this->streamSize * cvt.len_mult];
+			cvt.buf = (Uint8*)(new unsigned char[this->streamSize * cvt.len_mult]); // making sure the conversion buffer is large enough
 			memcpy(cvt.buf, this->stream, this->streamSize * sizeof(unsigned char));
 			cvt.len = this->streamSize;
 			result = SDL_ConvertAudio(&cvt);
@@ -255,8 +253,13 @@ namespace xal
 				xal::log("ERROR: Could not convert audio " + this->filename);
 				return;
 			}
-			// TODO - still causes clipping when upsampling from 22050 Hz to 44100 Hz, why?
-			this->streamSize = hround(cvt.len_cvt / cvt.len_ratio);
+			int newSize = hround(cvt.len * cvt.len_ratio);
+			if (this->streamSize != newSize) // stream has to be resized
+			{
+				this->streamSize = newSize;
+				delete this->stream;
+				this->stream = new unsigned char[this->streamSize];
+			}
 			memcpy(this->stream, cvt.buf, this->streamSize * sizeof(unsigned char));
 			delete [] cvt.buf;
 		}
