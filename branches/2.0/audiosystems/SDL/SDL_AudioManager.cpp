@@ -33,6 +33,7 @@ namespace xal
 			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
 			return;
 		}
+
 		this->format.freq = 44100;
 		this->format.format = AUDIO_S16;
 		this->format.channels = 2;
@@ -84,7 +85,15 @@ namespace xal
 			((SDL_Player*)(*it))->mixAudio(this->buffer, this->bufferSize, first);
 			first = false;
 		}
+		
+		// SDL docs say we don't need to use SDL_MixAudio if we
+		// use only one audio channel.
+		// 
+		/*
 		SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
+		 */
+		memcpy(stream, this->buffer, this->bufferSize);
+		
 		this->_unlock();
 	}
 
