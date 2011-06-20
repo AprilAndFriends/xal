@@ -9,7 +9,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the AudioManager for DirectSound.
+/// Represents an implementation of the AudioManager for SDL.
 
 #if HAVE_SDL
 #ifndef XAL_SDL_AUDIO_MANAGER_H
