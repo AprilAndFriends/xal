@@ -53,10 +53,9 @@ namespace xal
 	protected:
 		
 		AudioUnit outputAudioUnit;
-		unsigned char* buffer;
-		int bufferSize;
 
 		Component _findOutputComponent();
+		OSStatus _connectAudioUnit();
 		
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 
