@@ -66,6 +66,7 @@ namespace xal
 		int size = this->buffer->getSize();
 		if (this->position >= size)
 		{
+			// FIXME check size == 0
 			if (this->looping)
 			{
 				this->position -= this->position / size * size;
