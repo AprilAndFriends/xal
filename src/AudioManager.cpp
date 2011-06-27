@@ -76,7 +76,7 @@ namespace xal
 /******* CONSTRUCT / DESTRUCT ******************************************/
 
 	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
-		gain(1.0f), updating(false), thread(NULL)
+		gain(1.0f), updating(false), thread(NULL), paused(false)
 	{
 	}
 	
@@ -415,15 +415,37 @@ namespace xal
 		this->unlockUpdate();
 	}
 	
-	void AudioManager::pauseAll(float fadeTime)
+	void AudioManager::pauseAll()
 	{
-		this->lockUpdate();
-		harray<Sound*> sources(this->sources);
-		foreach (Sound*, it, sources)
+		if (!this->paused)
 		{
-			(*it)->pause(fadeTime);
+			this->lockUpdate();
+			foreach (Sound*, it, this->sources)
+			{
+				if ((*it)->isPlaying())
+				{
+					(*it)->pause();
+					this->pausedSources += (*it);
+				}
+			}
+			this->paused = true;
+			this->unlockUpdate();
 		}
-		this->unlockUpdate();
+	}
+	
+	void AudioManager::resumeAll()
+	{
+		if (this->paused)
+		{
+			this->lockUpdate();
+			foreach (Sound*, it, this->pausedSources)
+			{
+				(*it)->play();
+			}
+			this->paused = false;
+			this->pausedSources.clear();
+			this->unlockUpdate();
+		}
 	}
 	
 	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
