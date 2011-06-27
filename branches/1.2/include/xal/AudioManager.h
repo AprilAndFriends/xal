@@ -36,6 +36,7 @@ namespace xal
 		
 		hstr getDeviceName() { return this->deviceName; }
 		bool isEnabled();
+		bool isPaused() { return this->paused; }
 		float getUpdateTime() { return this->updateTime; }
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value);
@@ -59,7 +60,8 @@ namespace xal
 		Sound* getSound(chstr name);
 		
 		void stopAll(float fadeTime = 0.0f);
-		void pauseAll(float fadeTime = 0.0f);
+		void pauseAll();
+		void resumeAll();
 		void stopCategory(chstr category, float fadeTime = 0.0f);
 		
 		void lockUpdate();
@@ -75,6 +77,8 @@ namespace xal
 		float updateTime;
 		hthread* thread;
 		bool updating;
+		bool paused;
+		harray<Sound*> pausedSources;
 		
 	};
 	
