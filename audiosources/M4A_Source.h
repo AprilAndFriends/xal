@@ -44,6 +44,8 @@ namespace xal
 		
 		void _readFileProps();
 
+        AudioStreamBasicDescription streamDescription;
+
 	};
 
 }
