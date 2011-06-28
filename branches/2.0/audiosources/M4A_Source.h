@@ -45,7 +45,7 @@ namespace xal
 		void _readFileProps();
 
         AudioStreamBasicDescription streamDescription;
-
+		UInt64 nFrames;
 	};
 
 }
