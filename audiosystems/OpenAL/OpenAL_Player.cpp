@@ -187,10 +187,7 @@ namespace xal
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
 		{
-			int processed = this->_getProcessedBuffersCount();
-			alSourceStop(this->sourceId);
-			alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
-			if (this->sound->isStreamed())
+			if (!this->sound->isStreamed())
 			{
 				alSourceStop(this->sourceId);
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
@@ -200,6 +197,7 @@ namespace xal
 				int processed = this->_getProcessedBuffersCount();
 				alSourceStop(this->sourceId);
 				this->_unqueueBuffers();
+				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
 				if (this->paused)
 				{
 					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
@@ -209,7 +207,6 @@ namespace xal
 					this->bufferIndex = 0;
 					this->buffer->rewind();
 				}
-				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
 			}
 			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;

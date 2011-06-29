@@ -46,6 +46,7 @@ namespace xal
 
         AudioStreamBasicDescription streamDescription;
 		UInt64 nFrames;
+		hstr mFilename;
 	};
 
 }
