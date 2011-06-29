@@ -91,45 +91,67 @@ namespace xal
 	{
 		UInt32 propSize;
 		
-		/* AudioStreamBasicDescription streamDescription; */
-		propSize = sizeof(streamDescription);
-		ExtAudioFileGetProperty(audioFileID, kExtAudioFileProperty_FileDataFormat, &propSize, &streamDescription);
+		AudioStreamBasicDescription fileStreamDescription;
+		propSize = sizeof(fileStreamDescription);
+		ExtAudioFileGetProperty(audioFileID, kExtAudioFileProperty_FileDataFormat, &propSize, &fileStreamDescription);
 		
 		/* UInt64 nFrames; */
 		propSize = sizeof(nFrames);
 		ExtAudioFileGetProperty(audioFileID,  kExtAudioFileProperty_FileLengthFrames, &propSize, &nFrames);
         
         
-		// Fix bits per channel
-		streamDescription.mBitsPerChannel = 16;
+		// Make client format same number of channels as file format, but tweak a few things.
+		// Client format will be linear PCM (canonical), and potentially change sample-rate.
+		streamDescription = fileStreamDescription;
+		/*
+		streamDescription.mFormatID = kAudioFormatLinearPCM;
+		streamDescription.mFormatFlags = kAudioFormatFlagsCanonical;
+		streamDescription.mBitsPerChannel = 8 * sizeof(AudioSampleType);
+		streamDescription.mChannelsPerFrame = 2 * fileStreamDescription.mChannelsPerFrame;
+		streamDescription.mFramesPerPacket = 1;
+		streamDescription.mBytesPerPacket = 2 * sizeof(AudioSampleType);
+		streamDescription.mBytesPerFrame = 2 * sizeof(AudioSampleType);
+		streamDescription.mFormatFlags |= kAudioFormatFlagIsNonInterleaved;
+		 if (fileStreamDescription.mSampleRate)
+			streamDescription.mSampleRate = fileStreamDescription.mSampleRate;
+		*/
 		
-        // Fix derived values
-        streamDescription.mBytesPerFrame = streamDescription.mBytesPerPacket = (streamDescription.mBitsPerChannel >> 3) * streamDescription.mChannelsPerFrame;
-        streamDescription.mFramesPerPacket = 1;
-		printf("bytes per packet: %d\n", streamDescription.mBytesPerPacket);
-		printf("bits per channel: %d\n", streamDescription.mBitsPerChannel);
-		printf("channels per frame: %d\n", streamDescription.mChannelsPerFrame);
-        
-        
+		streamDescription.mFormatID = kAudioFormatLinearPCM;
+		streamDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
+		streamDescription.mChannelsPerFrame = 2;
+		streamDescription.mSampleRate = 44100;
+		streamDescription.mBitsPerChannel = 16;
+		streamDescription.mFramesPerPacket = 1;
+		streamDescription.mBytesPerFrame = streamDescription.mBitsPerChannel * streamDescription.mChannelsPerFrame / 8;
+		streamDescription.mBytesPerPacket = streamDescription.mBytesPerFrame * streamDescription.mFramesPerPacket;
+		
+				OSStatus res = noErr;
+		if (res = ExtAudioFileSetProperty(audioFileID, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &streamDescription) != noErr)
+		{
+			printf("err: %ld\n", res);
+			return; // TODO: should return a failure!
+		}
+		nFrames = nFrames * (streamDescription.mSampleRate / fileStreamDescription.mSampleRate);
+
 		/*
 		UInt64 nBytes;
 		propSize = sizeof(nBytes);
 		ExtAudioFileGetProperty(audioFileID, kAudioFilePropertyAudioDataByteCount, &propSize, &nBytes);
 		*/
+		
 		this->channels = streamDescription.mChannelsPerFrame;
 		this->samplingRate = streamDescription.mSampleRate;
 		this->bitsPerSample = 16; // should always be 16 bit data
-        /*
-		this->size = nBytes;
-         */
-
-        this->size = nFrames * streamDescription.mBytesPerFrame;
-		printf("Bytes: %d\n", this->size);
-        printf("Bytes per frame: %d\n", streamDescription.mBytesPerFrame);
-        printf("nFrames: %d\n", nFrames);
+        //this->size = nBytes;
+		this->size = nFrames * streamDescription.mBytesPerFrame;
 		this->duration = nFrames / streamDescription.mSampleRate;
-		printf("Duration: %g\n", this->duration);
 		this->chunkOffset = 0;
+		
+		printf("Bytes: %d\n", this->size);
+        printf("Bytes per frame: %ld\n", streamDescription.mBytesPerFrame);
+        printf("nFrames: %lld\n", nFrames);
+		printf("Duration: %g\n", this->duration);
+		
 		
 	}
 
@@ -168,11 +190,11 @@ namespace xal
         fillBufList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
         fillBufList.mBuffers[0].mDataByteSize = this->size;
         fillBufList.mBuffers[0].mData = output;
+		printf("-> data byte size: %d\n", this->size);
         
 		UInt32 read = nFrames; // number of frames, not bytes, to read
 		memset(output, 0, this->size); 
-        if(ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != 0)
-//		if(AudioFileReadBytes(this->audioFileID, false, 0, &read, output) != 0)
+        if(ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
 		{
 			xal::log("m4a could not read a file");
 			return false;
