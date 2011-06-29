@@ -240,8 +240,8 @@ namespace xal
 			}
 			else // underrun happened, sound was stopped
 			{
-				this->pause();
-				this->play();
+				this->_pause();
+				this->_play();
 			}
 		}
 		if (this->_getQueuedBuffersCount() == 0)
