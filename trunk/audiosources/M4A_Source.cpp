@@ -10,6 +10,7 @@
 #if HAVE_M4A
 #include <CoreAudio/CoreAudioTypes.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
 
 #include "Endianess.h"
 #include "AudioManager.h"
@@ -34,11 +35,11 @@ namespace xal
 			return false;
 		}
 #if !TARGET_OS_IPHONE
-        /* kreso: vucica, ovaj kod ne radi na mac-u, privremeno komentirah
-		FSRef fsref;
+        FSRef fsref;
+
 		if (FSPathMakeRef((Byte *)this->filename.c_str(), &fsref, NULL) == 0) 
 		{
-			if (AudioFileOpen (&fsref, fsRdPerm, 0, &audioFileID) == 0) 
+			if (ExtAudioFileOpen (&fsref, &audioFileID) == 0) 
 			{
 				this->_readFileProps();
 			}
@@ -53,8 +54,9 @@ namespace xal
 			xal::log("m4a: error creating fsref");
 			this->streamOpen = false;
 		}
-        */
 #else
+		/*
+		 // TODO port over to ExtAudio
 		CFURLRef urlref;
 		
 		
@@ -76,6 +78,8 @@ namespace xal
 			xal::log("m4a: error creating urlref");
 			this->streamOpen = false;
 		}
+		 */
+		this->streamOpen = false;
 #endif
 		
 		
@@ -86,24 +90,38 @@ namespace xal
 	void M4A_Source::_readFileProps()
 	{
 		UInt32 propSize;
-		AudioStreamBasicDescription streamDescription;
-		propSize = sizeof(streamDescription);
-		AudioFileGetProperty(audioFileID, kAudioFilePropertyDataFormat, &propSize, &streamDescription);
 		
-		UInt64 nPackets;
-		propSize = sizeof(nPackets);
-		AudioFileGetProperty(audioFileID, kAudioFilePropertyAudioDataPacketCount, &propSize, &nPackets);
+		/* get original stream description */
+		AudioStreamBasicDescription fileStreamDescription;
+		propSize = sizeof(fileStreamDescription);
+		ExtAudioFileGetProperty(audioFileID, kExtAudioFileProperty_FileDataFormat, &propSize, &fileStreamDescription);
 		
-		UInt64 nBytes;
-		propSize = sizeof(nBytes);
-		AudioFileGetProperty(audioFileID, kAudioFilePropertyAudioDataByteCount, &propSize, &nBytes);
+		/* UInt64 nFrames; */
+		propSize = sizeof(nFrames);
+		ExtAudioFileGetProperty(audioFileID,  kExtAudioFileProperty_FileLengthFrames, &propSize, &nFrames);
+        
+        /* Fill out the desired client format. */
+		streamDescription.mFormatID = kAudioFormatLinearPCM;
+		streamDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
+		streamDescription.mChannelsPerFrame = 2;
+		streamDescription.mSampleRate = 44100;
+		streamDescription.mBitsPerChannel = 16;
+		streamDescription.mFramesPerPacket = 1;
+		streamDescription.mBytesPerFrame = streamDescription.mBitsPerChannel * streamDescription.mChannelsPerFrame / 8;
+		streamDescription.mBytesPerPacket = streamDescription.mBytesPerFrame * streamDescription.mFramesPerPacket;
+		
+		OSStatus res = noErr;
+		if (res = ExtAudioFileSetProperty(audioFileID, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &streamDescription) != noErr)
+		{
+			return; // TODO: should return a failure!
+		}
+		nFrames = nFrames * (streamDescription.mSampleRate / fileStreamDescription.mSampleRate);
 		
 		this->channels = streamDescription.mChannelsPerFrame;
 		this->samplingRate = streamDescription.mSampleRate;
 		this->bitsPerSample = 16; // should always be 16 bit data
-		this->size = nBytes;
-		this->duration = (nPackets * streamDescription.mFramesPerPacket) / streamDescription.mSampleRate;
-		
+		this->size = nFrames * streamDescription.mBytesPerFrame;
+		this->duration = nFrames / streamDescription.mSampleRate;
 		this->chunkOffset = 0;
 		
 	}
@@ -113,7 +131,7 @@ namespace xal
 		
 		if (this->streamOpen)
 		{
-			AudioFileClose(this->audioFileID);
+            ExtAudioFileDispose(this->audioFileID);
 			this->audioFileID = 0;
 			this->streamOpen = false;
 		}
@@ -137,15 +155,23 @@ namespace xal
 		{
 			return false;
 		}
-		UInt32 read = this->size;
-		if(AudioFileReadBytes(this->audioFileID, false, 0, &read, output) != 0)
+        
+        AudioBufferList fillBufList;
+        fillBufList.mNumberBuffers = 1;
+        fillBufList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
+        fillBufList.mBuffers[0].mDataByteSize = this->size;
+        fillBufList.mBuffers[0].mData = output;
+        
+		UInt32 read = nFrames; // number of frames, not bytes, to read
+		memset(output, 0, this->size); 
+        if(ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
 		{
 			xal::log("m4a could not read a file");
 			return false;
 		}
-		if(read != this->size)
+		if(read != nFrames)
 		{
-			xal::log(hsprintf("Warning: m4a read size is not equal to requested size (requested %d vs. actually read %d)", this->size, read));
+			xal::log(hsprintf("Warning: m4a read size is not equal to requested size (requested %d vs. actually read %d)", (int)nFrames, (int)read));
 		}
 
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
@@ -159,14 +185,16 @@ namespace xal
 
 	int M4A_Source::loadChunk(unsigned char* output, int size)
 	{
-		
+		printf("m4a source loadchunk not ported\n");
+#warning M4A source loadChunk unported to ext audio api
+#if 0
 		if (Source::loadChunk(output, size) == 0)
 		{
 			return 0;
 		}
 		
 		UInt32 read = size;
-		if(AudioFileReadBytes(this->audioFileID, false, 0, &read, output) != 0)
+		if(AudioFileReadBytes(this->audioFileID, false, chunkOffset, &read, output) != 0)
 		{
 			xal::log("m4a could not read a file");
 			return false;
@@ -180,7 +208,8 @@ namespace xal
 		}
 #endif	
 		return read;
-		
+#endif
+        return 0;
 	}
 
 }

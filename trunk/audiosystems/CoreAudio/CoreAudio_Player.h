@@ -9,11 +9,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Provides an interface to play and control audio data.
+/// Represents an implementation of the Player for CoreAudio.
 
-#if HAVE_OPENAL
-#ifndef XAL_OPENAL_PLAYER_H
-#define XAL_OPENAL_PLAYER_H
+#if HAVE_COREAUDIO
+#ifndef XAL_COREAUDIO_PLAYER_H
+#define XAL_COREAUDIO_PLAYER_H
 
 #include "Player.h"
 #include "xalExport.h"
@@ -29,16 +29,19 @@ namespace xal
 		CoreAudio_Player(Sound* sound, Buffer* buffer);
 		~CoreAudio_Player();
 
-		unsigned int getSourceId() { return this->sourceId; }
-		void setSourceId(unsigned int value) { this->sourceId = value; }
+		void mixAudio(unsigned char* stream, int length, bool first);
 
 	protected:
-		unsigned int sourceId;
-		unsigned int bufferIds[STREAM_BUFFER_COUNT];
+		bool playing;
+		int position;
+		float currentGain;
+		unsigned char circleBuffer[STREAM_BUFFER];
+		int readPosition;
+		int writePosition;
 
 		void _update(float k);
 
-		bool _sysIsPlaying();
+		bool _sysIsPlaying() { return this->playing; }
 		float _sysGetOffset();
 		void _sysSetOffset(float value);
 		bool _sysPreparePlay();
@@ -49,14 +52,9 @@ namespace xal
 		void _sysStop();
 		void _sysUpdateStream();
 
-		int _getQueuedBuffersCount();
-		int _getProcessedBuffersCount();
-		int _fillBuffers(int index, int count);
-		void _queueBuffers(int index, int count);
-		void _queueBuffers();
-		void _unqueueBuffers(int index, int count);
-		void _unqueueBuffers();
-		
+		int _fillBuffer(int size);
+		void _getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2);
+
 	};
 
 }

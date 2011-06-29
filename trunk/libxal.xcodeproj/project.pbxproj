@@ -16,6 +16,7 @@
 		7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
 		7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
 		7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
+		7F4A744B13AF762700CA7256 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4A744A13AF762700CA7256 /* AudioUnit.framework */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068711EC970600851062 /* OpenAL.framework */; };
@@ -70,6 +71,7 @@
 		7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_AudioManager.h; sourceTree = "<group>"; };
 		7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_Player.cpp; sourceTree = "<group>"; };
 		7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_Player.h; sourceTree = "<group>"; };
+		7F4A744A13AF762700CA7256 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		7FC8064B11EC944C00851062 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Endianess.h; path = src/Endianess.h; sourceTree = "<group>"; };
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		7FC8068711EC970600851062 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -128,6 +130,7 @@
 				7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */,
 				7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */,
 				7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */,
+				7F4A744B13AF762700CA7256 /* AudioUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +163,7 @@
 				7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */,
 				7F392C66138FCF8D003B93A7 /* CoreServices.framework */,
 				7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */,
+				7F4A744A13AF762700CA7256 /* AudioUnit.framework */,
 			);
 			name = libxal;
 			sourceTree = "<group>";
@@ -485,8 +489,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=1",
-					"HAVE_M4A=1",
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=0",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -515,8 +519,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=1",
-					"HAVE_M4A=1",
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=0",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -597,8 +601,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=1",
-					"HAVE_M4A=1",
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=0",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -646,8 +650,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=1",
-					"HAVE_M4A=1",
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=0",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);
@@ -692,8 +696,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=1",
-					"HAVE_M4A=1",
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=0",
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=1",
 				);

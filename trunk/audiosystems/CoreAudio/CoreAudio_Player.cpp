@@ -8,328 +8,251 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_COREAUDIO
-#include <string.h>
 
-#include <TargetConditionals.h>
-#include <AudioToolbox/AudioToolbox.h>
+#include <AudioUnit/AudioUnit.h>
 
-#include "AudioManager.h"
 #include "Buffer.h"
-#include "Category.h"
 #include "CoreAudio_AudioManager.h"
 #include "CoreAudio_Player.h"
 #include "Sound.h"
+#include "Endianess.h"
+#include "xal.h"
 
 namespace xal
 {
-	CoreAudio_Player::CoreAudio_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), sourceId(0)
+	CoreAudio_Player::CoreAudio_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), playing(false),
+		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
 	{
-		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
-		/*
-		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
-		 */
+		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
 	}
 
 	CoreAudio_Player::~CoreAudio_Player()
 	{
-		/*
-		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
-		 */
+	}
+
+	void CoreAudio_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
+	{
+		if (!this->sound->isStreamed())
+		{
+			int streamSize = this->buffer->load(this->looping, size);
+			unsigned char* stream = this->buffer->getStream();
+			*data1 = &stream[this->readPosition];
+			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
+			*data2 = NULL;
+			*size2 = 0;
+			if (this->looping && this->readPosition + size > streamSize)
+			{
+				*data2 = stream;
+				*size2 = size - *size1;
+			}
+			this->readPosition = (this->readPosition + size) % streamSize;
+			return;
+		}
+		*data1 = &this->circleBuffer[this->readPosition];
+		*size1 = size;
+		*data2 = NULL;
+		*size2 = 0;
+		if (this->readPosition + size > STREAM_BUFFER)
+		{
+			*size1 = STREAM_BUFFER - this->readPosition;
+			*data2 = this->circleBuffer;
+			*size2 = size - *size1;
+		}
+		this->readPosition = (this->readPosition + size) % STREAM_BUFFER;
 	}
 
 	void CoreAudio_Player::_update(float k)
 	{
 		Player::_update(k);
-		/*
-		if (!this->_sysIsPlaying() && this->sourceId != 0)
+		int size = this->buffer->getSize();
+		if (this->position >= size)
 		{
-			this->_stopSound();
+			if (this->looping)
+			{
+				this->position -= this->position / size * size;
+			}
+			else if (this->playing)
+			{
+				this->_sysStop();
+			}
 		}
-		 */
 	}
 
-	bool CoreAudio_Player::_sysIsPlaying()
+	void CoreAudio_Player::mixAudio(unsigned char* stream, int length, bool first)
 	{
-		if (this->sourceId == 0)
+		if (!this->playing)
 		{
-			return false;
+			return;
 		}
-		if (this->sound->isStreamed())
+		unsigned char* data1;
+		unsigned char* data2;
+		int size1;
+		int size2;
+		this->_getData(length, &data1, &size1, &data2, &size2);
+		if (size1 > 0)
 		{
-			return (this->_getQueuedBuffersCount() > 0 || this->_getProcessedBuffersCount() > 0);
+			if (first && this->currentGain == 1.0f)
+			{
+				memcpy(stream, data1, size1);
+				if (size2 > 0)
+				{
+					memcpy(&stream[size1], data2, size2);
+				}
+			}
+			else
+			{
+				short* sStream = (short*)stream;
+				short* sData1 = (short*)data1;
+				short* sData2 = (short*)data2;
+				size1 = size1 * sizeof(unsigned char) / sizeof(short);
+				size2 = size2 * sizeof(unsigned char) / sizeof(short);
+				
+				if (!first)
+				{
+					for (int i = 0; i < size1; i++)
+					{
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
+						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData1[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
+					}
+					for (int i = 0; i < size2; i++)
+					{
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData2[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+					}
+				}
+				else
+				{
+					for (int i = 0; i < size1; i++)
+					{
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
+						sStream[i] = (short)(sData1[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
+					}
+					for (int i = 0; i < size2; i++)
+					{
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+						sStream[size1 + i] = (short)(sData2[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+					}
+				}
+			}
+			this->position += size1 + size2;
 		}
-		/*
-		int state;
-		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
-		return (state == AL_PLAYING);
-		 */
-		return false;
 	}
 
 	float CoreAudio_Player::_sysGetOffset()
 	{
-		float offset = 0;
-		return offset;
+		return this->offset;
 	}
 
 	void CoreAudio_Player::_sysSetOffset(float value)
 	{
+		this->offset = value;
 	}
 
 	bool CoreAudio_Player::_sysPreparePlay()
 	{
-		if (this->sourceId == 0)
-		{
-			this->sourceId = ((CoreAudio_AudioManager*)xal::mgr)->_allocateSourceId();
-		}
-		return (this->sourceId != 0);
+		return true;
 	}
 
 	void CoreAudio_Player::_sysPrepareBuffer()
 	{
-		// making sure all buffer data is loaded before accessing anything
 		if (!this->sound->isStreamed())
 		{
-			bool failed = false;
-			this->_fillBuffers(0, 1);
-			/*
-			if(!failed) OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]), failed = true);
-			if(!failed) OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_LOOPING, this->looping), failed = true);
-			
-			if(failed)
-			{
-				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
-				alSourcei(this->sourceId, AL_LOOPING, false);
-			}
-			 */
-			
+			this->buffer->load(this->looping, this->buffer->getSize());
+			return;
 		}
-		else
+		if (!this->paused)
 		{
-			/*
-			alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
-			alSourcei(this->sourceId, AL_LOOPING, false);
-			 */
-			int count = STREAM_BUFFER_COUNT;
-			if (!this->paused)
+			this->readPosition = 0;
+			this->writePosition = 0;
+			int size = this->_fillBuffer(STREAM_BUFFER_SIZE);
+			if (size < STREAM_BUFFER)
 			{
-				count = this->_fillBuffers(this->bufferIndex, STREAM_BUFFER_COUNT);
-			}
-			if (count > 0)
-			{
-				this->_queueBuffers(this->bufferIndex, count);
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+				memset(&this->circleBuffer[size], 0, (STREAM_BUFFER - size) * sizeof(unsigned char));
 			}
 		}
 	}
 
 	void CoreAudio_Player::_sysUpdateGain()
 	{
-		if (this->sourceId != 0)
-		{
-			/*
-			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
-			 */
-		}
+		this->currentGain = this->_calcGain();
 	}
 
 	void CoreAudio_Player::_sysUpdateFadeGain()
 	{
-		if (this->sourceId != 0)
-		{
-			/*
-			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
-			 */
-		}
+		this->currentGain = this->_calcFadeGain();
 	}
 
 	void CoreAudio_Player::_sysPlay()
 	{
-		if (this->sourceId != 0)
-		{
-			/*
-			int er = alGetError();
-			if (er != AL_NO_ERROR) 
-			{
-				printf("OpenAL Error before play: %d\n", er);
-			}
-			else
-			{
-				alSourcePlay(this->sourceId);
-			}
-			 */
-		}
+		this->playing = true;
 	}
 
 	void CoreAudio_Player::_sysStop()
 	{
-		if (this->sourceId != 0)
+		this->playing = false;
+		if (!this->paused)
 		{
-			if (!this->sound->isStreamed())
-			{
-				/*
-				alSourceStop(this->sourceId);
-				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
-				 */
-			}
-			else
-			{
-				int processed = this->_getProcessedBuffersCount();
-				/*
-				alSourceStop(this->sourceId);
-				 */
-				this->_unqueueBuffers();
-				if (this->paused)
-				{
-					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
-				}
-				else
-				{
-					this->bufferIndex = 0;
-					this->buffer->rewind();
-				}
-				/*
-				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in CoreAudio
-				 */
-			}
-			((CoreAudio_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
-			this->sourceId = 0;
+			this->position = 0;
+			this->readPosition = 0;
+			this->writePosition = 0;
+			this->buffer->rewind();
 		}
 	}
 
 	void CoreAudio_Player::_sysUpdateStream()
 	{
-		// TODO - assert this is a streamed sound
-		
-		int queued = this->_getQueuedBuffersCount();
-		if (queued == 0)
+		int count = 0;
+		if (this->readPosition > this->writePosition)
 		{
-			this->_stopSound();
-			return;
+			count = (this->readPosition - this->writePosition) / STREAM_BUFFER_SIZE;
 		}
-		int processed = this->_getProcessedBuffersCount();
-		if (processed == 0)
+		else if (this->readPosition < this->writePosition)
 		{
-			return;
+			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
 		}
-		this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
-		int count = this->_fillBuffers(this->bufferIndex, processed);
-		if (count > 0)
+		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
-			this->_queueBuffers(this->bufferIndex, count);
-			if (processed < STREAM_BUFFER_COUNT)
-			{
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
-			}
-			else // underrun happened, sound was stopped
-			{
-				this->pause();
-				this->play();
-			}
-		}
-		if (this->_getQueuedBuffersCount() == 0)
-		{
-			this->_stopSound();
+			this->_fillBuffer(STREAM_BUFFER_SIZE);
 		}
 	}
 
-	int CoreAudio_Player::_getQueuedBuffersCount()
+	int CoreAudio_Player::_fillBuffer(int size)
 	{
-		int queued = 0;
-		/*
-		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
-		 */
-		return queued;
-	}
-
-	int CoreAudio_Player::_getProcessedBuffersCount()
-	{
-		int processed = 0;
-		/*
-		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
-		 */
-		return processed;
-	}
-
-	int CoreAudio_Player::_fillBuffers(int index, int count)
-	{
-		int size = this->buffer->load(this->looping, count);
-		if (!this->sound->isStreamed())
-		{
-			/*
-			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
-				this->buffer->getStream(), size, this->buffer->getSamplingRate());
-			 */
-			return 1;
-		}
-		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
-		/*
+		xal::log(this->looping);
+		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
-		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
-		int samplingRate = this->buffer->getSamplingRate();
-		 */
-		for (int i = 0; i < filled; i++)
+		if (this->writePosition + streamSize <= STREAM_BUFFER)
 		{
-			/*
-			alBufferData(this->bufferIds[(index + i) % STREAM_BUFFER_COUNT], format,
-				&stream[i * STREAM_BUFFER_SIZE], hmin(size, STREAM_BUFFER_SIZE), samplingRate);
-			 */
-			size -= STREAM_BUFFER_SIZE;
-		}
-		return filled;
-	}
-
-	void CoreAudio_Player::_queueBuffers(int index, int count)
-	{
-		if (index + count <= STREAM_BUFFER_COUNT)
-		{
-			/*
-			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
-			 */
+			memcpy(&this->circleBuffer[this->writePosition], stream, streamSize * sizeof(unsigned char));
 		}
 		else
 		{
-			/*
-			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
-			 */
+			int remaining = STREAM_BUFFER - this->writePosition;
+			memcpy(&this->circleBuffer[this->writePosition], stream, remaining * sizeof(unsigned char));
+			memcpy(this->circleBuffer, stream, (streamSize - remaining) * sizeof(unsigned char));
 		}
-	}
- 
-	void CoreAudio_Player::_queueBuffers()
-	{
-		int queued = this->_getQueuedBuffersCount();
-		if (queued < STREAM_BUFFER_COUNT)
+		this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
+		if (!this->looping && streamSize < size) // fill with silence if source is at the end
 		{
-			this->_queueBuffers(this->bufferIndex, STREAM_BUFFER_COUNT - queued);
+			streamSize = size - streamSize;
+			if (this->writePosition + streamSize <= STREAM_BUFFER)
+			{
+				memset(&this->circleBuffer[this->writePosition], 0, streamSize * sizeof(unsigned char));
+			}
+			else
+			{
+				int remaining = STREAM_BUFFER - this->writePosition;
+				memset(&this->circleBuffer[this->writePosition], 0, remaining * sizeof(unsigned char));
+				memset(this->circleBuffer, 0, (streamSize - remaining) * sizeof(unsigned char));
+			}
+			this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
+			streamSize = size;
 		}
-	}
- 
-	void CoreAudio_Player::_unqueueBuffers(int index, int count)
-	{
-		if (index + count <= STREAM_BUFFER_COUNT)
-		{
-			/*
-			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
-			 */
-		}
-		else
-		{
-			/*
-			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
-			 */
-		}
-	}
-
-	void CoreAudio_Player::_unqueueBuffers()
-	{
-		int queued = this->_getQueuedBuffersCount();
-		if (queued > 0)
-		{
-			this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
-		}
+		return streamSize;
 	}
 
 }

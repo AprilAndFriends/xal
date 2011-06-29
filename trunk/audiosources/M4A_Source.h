@@ -39,11 +39,13 @@ namespace xal
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
-		AudioFileID audioFileID;
+		ExtAudioFileRef audioFileID;
 		UInt32 chunkOffset;
 		
 		void _readFileProps();
 
+        AudioStreamBasicDescription streamDescription;
+		UInt64 nFrames;
 	};
 
 }
