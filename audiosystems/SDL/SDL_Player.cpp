@@ -34,6 +34,10 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			int streamSize = this->buffer->load(this->looping, size);
+            if(streamSize == 0)
+            {
+                return;
+            }
 			unsigned char* stream = this->buffer->getStream();
 			*data1 = &stream[this->readPosition];
 			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
@@ -64,8 +68,13 @@ namespace xal
 	{
 		Player::_update(k);
 		int size = this->buffer->getSize();
+        if(size == 0)
+        {
+            return;
+        }
 		if (this->position >= size)
 		{
+			// FIXME check size == 0
 			if (this->looping)
 			{
 				this->position -= this->position / size * size;

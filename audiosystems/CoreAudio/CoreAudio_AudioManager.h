@@ -10,28 +10,31 @@
 /// @section DESCRIPTION
 /// 
 /// Represents an implementation of the AudioManager for CoreAudio.
-/// This implementation uses Audio Queue Services from the
-/// Audio Toolbox framework.
 
 #if HAVE_COREAUDIO
 #ifndef XAL_COREAUDIO_AUDIO_MANAGER_H
 #define XAL_COREAUDIO_AUDIO_MANAGER_H
 
-#include <AudioToolbox/AudioToolbox.h>
+#include <AudioUnit/AudioUnit.h>
+#include <CoreServices/CoreServices.h>
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= 1050
+#include <AudioUnit/AUNTComponent.h>
+#endif
 
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
 #include "xalExport.h"
 
-#define COREAUDIO_MAX_SOURCES 16
+
+#define SDL_MAX_PLAYING 32
 
 namespace xal
 {
 	class Buffer;
 	class CoreAudio_Player;
-	class Player;
 	class Sound;
+	class Player;
 
 	class xalExport CoreAudio_AudioManager : public AudioManager
 	{
@@ -40,21 +43,31 @@ namespace xal
 
 		CoreAudio_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~CoreAudio_AudioManager();
-		
-	protected:
-		/*
-		ALCdevice* device;
-		ALCcontext* context;
-		 */
-		unsigned int sourceIds[COREAUDIO_MAX_SOURCES];
-		bool allocated[COREAUDIO_MAX_SOURCES];
+		OSStatus mixAudio(void                        *inRefCon,
+						  AudioUnitRenderActionFlags  *ioActionFlags,
+						  const AudioTimeStamp        *inTimeStamp,
+						  UInt32                      inBusNumber,
+						  UInt32                      inNumberFrames,
+						  AudioBufferList             *ioData);
 
+	protected:
+		
+		AudioUnit outputAudioUnit;
+
+		Component _findOutputComponent();
+		OSStatus _connectAudioUnit();
+		
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
-		unsigned int _allocateSourceId();
-		void _releaseSourceId(unsigned int sourceId);
+
+		static OSStatus _mixAudio(void                        *inRefCon,
+								  AudioUnitRenderActionFlags  *ioActionFlags,
+								  const AudioTimeStamp        *inTimeStamp,
+								  UInt32                      inBusNumber,
+								  UInt32                      inNumberFrames,
+								  AudioBufferList             *ioData);
 
 	};
-	
+
 }
 
 #endif
