@@ -36,7 +36,7 @@ namespace xal
 		}
 #if !TARGET_OS_IPHONE
         FSRef fsref;
-        printf("Working with %s\n", this->filename.c_str());
+
 		if (FSPathMakeRef((Byte *)this->filename.c_str(), &fsref, NULL) == 0) 
 		{
 			if (ExtAudioFileOpen (&fsref, &audioFileID) == 0) 
@@ -91,6 +91,7 @@ namespace xal
 	{
 		UInt32 propSize;
 		
+		/* get original stream description */
 		AudioStreamBasicDescription fileStreamDescription;
 		propSize = sizeof(fileStreamDescription);
 		ExtAudioFileGetProperty(audioFileID, kExtAudioFileProperty_FileDataFormat, &propSize, &fileStreamDescription);
@@ -99,23 +100,7 @@ namespace xal
 		propSize = sizeof(nFrames);
 		ExtAudioFileGetProperty(audioFileID,  kExtAudioFileProperty_FileLengthFrames, &propSize, &nFrames);
         
-        
-		// Make client format same number of channels as file format, but tweak a few things.
-		// Client format will be linear PCM (canonical), and potentially change sample-rate.
-		streamDescription = fileStreamDescription;
-		/*
-		streamDescription.mFormatID = kAudioFormatLinearPCM;
-		streamDescription.mFormatFlags = kAudioFormatFlagsCanonical;
-		streamDescription.mBitsPerChannel = 8 * sizeof(AudioSampleType);
-		streamDescription.mChannelsPerFrame = 2 * fileStreamDescription.mChannelsPerFrame;
-		streamDescription.mFramesPerPacket = 1;
-		streamDescription.mBytesPerPacket = 2 * sizeof(AudioSampleType);
-		streamDescription.mBytesPerFrame = 2 * sizeof(AudioSampleType);
-		streamDescription.mFormatFlags |= kAudioFormatFlagIsNonInterleaved;
-		 if (fileStreamDescription.mSampleRate)
-			streamDescription.mSampleRate = fileStreamDescription.mSampleRate;
-		*/
-		
+        /* Fill out the desired client format. */
 		streamDescription.mFormatID = kAudioFormatLinearPCM;
 		streamDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
 		streamDescription.mChannelsPerFrame = 2;
@@ -125,33 +110,19 @@ namespace xal
 		streamDescription.mBytesPerFrame = streamDescription.mBitsPerChannel * streamDescription.mChannelsPerFrame / 8;
 		streamDescription.mBytesPerPacket = streamDescription.mBytesPerFrame * streamDescription.mFramesPerPacket;
 		
-				OSStatus res = noErr;
+		OSStatus res = noErr;
 		if (res = ExtAudioFileSetProperty(audioFileID, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &streamDescription) != noErr)
 		{
-			printf("err: %ld\n", res);
 			return; // TODO: should return a failure!
 		}
 		nFrames = nFrames * (streamDescription.mSampleRate / fileStreamDescription.mSampleRate);
-
-		/*
-		UInt64 nBytes;
-		propSize = sizeof(nBytes);
-		ExtAudioFileGetProperty(audioFileID, kAudioFilePropertyAudioDataByteCount, &propSize, &nBytes);
-		*/
 		
 		this->channels = streamDescription.mChannelsPerFrame;
 		this->samplingRate = streamDescription.mSampleRate;
 		this->bitsPerSample = 16; // should always be 16 bit data
-        //this->size = nBytes;
 		this->size = nFrames * streamDescription.mBytesPerFrame;
 		this->duration = nFrames / streamDescription.mSampleRate;
 		this->chunkOffset = 0;
-		
-		printf("Bytes: %d\n", this->size);
-        printf("Bytes per frame: %ld\n", streamDescription.mBytesPerFrame);
-        printf("nFrames: %lld\n", nFrames);
-		printf("Duration: %g\n", this->duration);
-		
 		
 	}
 
@@ -190,7 +161,6 @@ namespace xal
         fillBufList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
         fillBufList.mBuffers[0].mDataByteSize = this->size;
         fillBufList.mBuffers[0].mData = output;
-		printf("-> data byte size: %d\n", this->size);
         
 		UInt32 read = nFrames; // number of frames, not bytes, to read
 		memset(output, 0, this->size); 
@@ -199,11 +169,9 @@ namespace xal
 			xal::log("m4a could not read a file");
 			return false;
 		}
-		printf("m4asource load read %d frames\n", (int)read);
 		if(read != nFrames)
 		{
 			xal::log(hsprintf("Warning: m4a read size is not equal to requested size (requested %d vs. actually read %d)", (int)nFrames, (int)read));
-			printf("Warning: m4a read size is not equal to requested size (requested %d vs. actually read %d)", (int)nFrames, (int)read);
 		}
 
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
