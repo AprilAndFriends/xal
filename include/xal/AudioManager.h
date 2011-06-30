@@ -119,6 +119,8 @@ namespace xal
 		bool isAnyFadingIn(chstr name);
 		bool isAnyFadingOut(chstr name);
 
+
+
 	protected:
 		unsigned long backendId;
 		hstr name;
@@ -147,6 +149,8 @@ namespace xal
 		virtual Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 		virtual Source* _createSource(chstr filename, Format format);
 		
+		virtual void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize) { }
+
 	};
 	
 	xalExport extern xal::AudioManager* mgr;

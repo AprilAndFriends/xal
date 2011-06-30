@@ -166,17 +166,20 @@ namespace xal
         
 		UInt32 frames = size / streamDescription.mBytesPerFrame;
 		UInt32 read = frames; // number of frames, not bytes, to read
-		printf("Loading chunk for %s of size %d - framecount %d\n", mFilename.c_str(), size, frames);
+		printf("Loading chunk for %s of size %d - framecount %d\n", mFilename.c_str(), (int)size, (int)frames);
 		memset(output, 0, size); 
         if(ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
 		{
 			xal::log("m4a could not read a file");
 			return 0;
 		}
+		
+		/*
 		if(read != frames)
 		{
 			xal::log(hsprintf("Warning: m4a read size is not equal to requested size (requested %d vs. actually read %d)", (int)frames, (int)read));
 		}
+		 */
 
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 		for (int i = 0; i < size; i += 2)

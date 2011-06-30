@@ -156,12 +156,7 @@ namespace xal
 				this->stream = new unsigned char[this->streamSize];
 			}
 			this->source->load(this->stream);
-#if HAVE_SDL
-			if (xal::mgr->getName() == XAL_AS_SDL)
-			{
-				this->_convertStream();
-			}
-#endif
+			xal::mgr->_convertStream(this, &this->stream, &this->streamSize);
 			return;
 		}
 		if (!this->source->isOpen())
@@ -185,12 +180,7 @@ namespace xal
 				size -= this->streamSize;
 				this->streamSize += this->source->loadChunk(&this->stream[this->streamSize], size);
 			}
-#if HAVE_SDL
-			if (xal::mgr->getName() == XAL_AS_SDL)
-			{
-				this->_convertStream();
-			}
-#endif
+			xal::mgr->_convertStream(this, &this->stream, &this->streamSize);
 		}
 		return this->streamSize;
 	}
@@ -228,42 +218,5 @@ namespace xal
 		this->source->rewind();
 	}
 
-#if HAVE_SDL
-	void Buffer::_convertStream()
-	{
-		SDL_AudioSpec format = ((SDL_AudioManager*)xal::mgr)->getFormat();
-		int srcFormat = (this->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
-		int srcChannels = this->getChannels();
-		int srcSamplingRate = this->getSamplingRate();
-		if (srcFormat != format.format || srcChannels != format.channels || srcSamplingRate != format.freq)
-		{
-			SDL_AudioCVT cvt;
-			int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
-			if (result == -1)
-			{
-				xal::log("ERROR: Could not build converter " + this->filename);
-				return;
-			}
-			cvt.buf = (Uint8*)(new unsigned char[this->streamSize * cvt.len_mult]); // making sure the conversion buffer is large enough
-			memcpy(cvt.buf, this->stream, this->streamSize * sizeof(unsigned char));
-			cvt.len = this->streamSize;
-			result = SDL_ConvertAudio(&cvt);
-			if (result == -1)
-			{
-				xal::log("ERROR: Could not convert audio " + this->filename);
-				return;
-			}
-			int newSize = hround(cvt.len * cvt.len_ratio);
-			if (this->streamSize != newSize) // stream has to be resized
-			{
-				this->streamSize = newSize;
-				delete this->stream;
-				this->stream = new unsigned char[this->streamSize];
-			}
-			memcpy(this->stream, cvt.buf, this->streamSize * sizeof(unsigned char));
-			delete [] cvt.buf;
-		}
-	}
-#endif
 
 }

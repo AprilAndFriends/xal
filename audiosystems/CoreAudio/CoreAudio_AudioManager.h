@@ -16,10 +16,24 @@
 #define XAL_COREAUDIO_AUDIO_MANAGER_H
 
 #include <AudioUnit/AudioUnit.h>
+
+#if !TARGET_OS_IPHONE
+// iOS contains newer API that exists on OS X 10.6, but
+// not on earlier OS. So let's use older APIs.
 #include <CoreServices/CoreServices.h>
+#define AudioComponent Component
+#define AudioComponentInstanceNew OpenAComponent
+#define AudioComponentDescription ComponentDescription
+#define AudioComponentFindNext FindNextComponent
+#endif
+
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= 1050
 #include <AudioUnit/AUNTComponent.h>
 #endif
+
+// for audio converter
+#include <AudioToolbox/AudioToolbox.h>
+
 
 #include <hltypes/hstring.h>
 
@@ -28,6 +42,7 @@
 
 
 #define SDL_MAX_PLAYING 32
+
 
 namespace xal
 {
@@ -53,8 +68,9 @@ namespace xal
 	protected:
 		
 		AudioUnit outputAudioUnit;
-
-		Component _findOutputComponent();
+		AudioStreamBasicDescription unitDescription;
+		
+		AudioComponent _findOutputComponent();
 		OSStatus _connectAudioUnit();
 		
 		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
@@ -65,6 +81,13 @@ namespace xal
 								  UInt32                      inBusNumber,
 								  UInt32                      inNumberFrames,
 								  AudioBufferList             *ioData);
+		
+		void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize);
+		static OSStatus _converterComplexInputDataProc(AudioConverterRef inAudioConverter,
+													   UInt32* ioNumberDataPackets,
+													   AudioBufferList* ioData,
+													   AudioStreamPacketDescription** ioDataPacketDescription,
+													   void* inUserData);
 
 	};
 

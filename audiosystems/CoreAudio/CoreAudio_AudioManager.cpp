@@ -21,6 +21,7 @@
 #include "CoreAudio_AudioManager.h"
 #include "CoreAudio_Player.h"
 #include "Source.h"
+#include "Buffer.h"
 #include "xal.h"
 
 namespace xal
@@ -44,14 +45,20 @@ namespace xal
 	{
 		xal::log("initializing CoreAudio");
 		
+		// set up threads before moving on
+		if (threaded)
+		{
+			this->_setupThread();
+		}
+		
 		OSErr result = noErr;
 		
 		// find output audio unit
-		Component outputComponent = this->_findOutputComponent();
+		AudioComponent outputComponent = this->_findOutputComponent();
 		CA_INIT_ASSERTION(outputComponent != NULL, "FindNextComponent returned NULL");
 		
 		// open the output audio unit and initialize it
-		result = OpenAComponent (outputComponent, &outputAudioUnit);
+		result = AudioComponentInstanceNew (outputComponent, &outputAudioUnit);
 		CA_INIT_ASSERTION(result == noErr, "OpenAComponent() failed for output audio unit");
 		result = AudioUnitInitialize(outputAudioUnit);
 		CA_INIT_ASSERTION(result == noErr, "AudioUnitInitialize() failed for output audio unit");
@@ -60,30 +67,36 @@ namespace xal
 		// and assign the callback to generate the data
 		result = this->_connectAudioUnit();
 		CA_INIT_ASSERTION(result == noErr, "_connectAudioUnit() failed");
+				this->enabled = true;
+		
 		
 		// start!
+		// // FIXME // //
+		// move to init() method which needs to be
+		// launched AFTER constructor.
+		// some coreaudio-callbacked code needs to use xal::mgr
 		result = AudioOutputUnitStart(outputAudioUnit);
 		CA_INIT_ASSERTION(result == noErr, "AudioUnitOutputStart() failed");
 		
-		this->enabled = true;
-		if (threaded)
-		{
-			this->_setupThread();
-		}
+		
 	}
 	
 	
-	Component CoreAudio_AudioManager::_findOutputComponent()
+	AudioComponent CoreAudio_AudioManager::_findOutputComponent()
 	{
-		ComponentDescription outputComponentDescription;
+		AudioComponentDescription outputComponentDescription;
 		memset(&outputComponentDescription, 0, sizeof(outputComponentDescription));
 		outputComponentDescription.componentType = kAudioUnitType_Output;
+#if !TARGET_OS_IPHONE
 		outputComponentDescription.componentSubType = kAudioUnitSubType_DefaultOutput;
+#else
+		outputComponentDescription.componentSubType = kAudioUnitSubType_RemoteIO;
+#endif
 		outputComponentDescription.componentManufacturer = kAudioUnitManufacturer_Apple;
 		outputComponentDescription.componentFlags = 0;
 		outputComponentDescription.componentFlagsMask = 0;
 		
-		return FindNextComponent (NULL, &outputComponentDescription);
+		return AudioComponentFindNext (NULL, &outputComponentDescription);
 	}
 	
 	OSStatus CoreAudio_AudioManager::_connectAudioUnit()
@@ -91,7 +104,8 @@ namespace xal
 		OSStatus result;
 		
 		// tell the output audio unit what input will we connect to it
-		AudioStreamBasicDescription unitDescription;
+		// also, fill member variable with format description
+		/* AudioStreamBasicDescription unitDescription; */
 		memset(&unitDescription, 0, sizeof(unitDescription));
 		unitDescription.mFormatID = kAudioFormatLinearPCM;
 		unitDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
@@ -194,8 +208,87 @@ namespace xal
 											   UInt32                      inNumberFrames,
 											   AudioBufferList             *ioData)
 	{
+		if(!xal::mgr)
+			return 0;
 		return ((CoreAudio_AudioManager*)xal::mgr)->mixAudio(inRefCon, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData);
 	}
+	
+	void CoreAudio_AudioManager::_convertStream(Buffer* buffer, unsigned char** stream, int *streamSize)
+	{
+		if (buffer->getBitsPerSample() != unitDescription.mBitsPerChannel || 
+			buffer->getChannels() != unitDescription.mChannelsPerFrame || 
+			buffer->getSamplingRate() != unitDescription.mSampleRate)
+		{
+			AudioStreamBasicDescription inputDescription;
+			memset(&inputDescription, 0, sizeof(inputDescription));
+			inputDescription.mFormatID = kAudioFormatLinearPCM;
+			inputDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
+			inputDescription.mChannelsPerFrame = buffer->getChannels();
+			inputDescription.mSampleRate = buffer->getSamplingRate();
+			inputDescription.mBitsPerChannel = buffer->getBitsPerSample();
+			inputDescription.mBytesPerFrame = inputDescription.mBitsPerChannel * inputDescription.mChannelsPerFrame / 8;
+			inputDescription.mBytesPerPacket = inputDescription.mBytesPerFrame * inputDescription.mFramesPerPacket;
+			inputDescription.mFramesPerPacket = *streamSize / inputDescription.mBytesPerFrame;
+			
+			AudioStreamBasicDescription outputDescription = unitDescription;
+			outputDescription.mFramesPerPacket = inputDescription.mFramesPerPacket;
+			
+			AudioConverterRef audioConverter;
+			AudioConverterNew(&inputDescription, &unitDescription, &audioConverter);
+			
+			UInt32 outputBytes = outputDescription.mFramesPerPacket * outputDescription.mBytesPerFrame;
+			char outputBuffer[outputBytes];
+			
+			AudioBuffer inputBuffer;
+			inputBuffer.mNumberChannels = inputDescription.mChannelsPerFrame;
+			inputBuffer.mDataByteSize = *streamSize;
+			inputBuffer.mData = *stream;
+			
+			AudioBufferList outputBufferList;
+			outputBufferList.mNumberBuffers = 1;
+			outputBufferList.mBuffers[0].mNumberChannels = outputDescription.mChannelsPerFrame;
+			outputBufferList.mBuffers[0].mDataByteSize = outputBytes;
+			outputBufferList.mBuffers[0].mData = outputBuffer;
+			
+			AudioConverterFillComplexBuffer(audioConverter, CoreAudio_AudioManager::_converterComplexInputDataProc, &inputBuffer, &outputBytes, &outputBufferList, NULL);
+			
+			if (*streamSize != outputBytes)
+			{
+				*streamSize = outputBytes;
+				delete *stream;
+				*stream = new unsigned char[*streamSize];
+			}
+			memcpy(*stream, outputBuffer, *streamSize * sizeof(unsigned char));
+			
+			AudioConverterDispose(audioConverter);
+		}
+	}
+	
+	
+	OSStatus CoreAudio_AudioManager::_converterComplexInputDataProc(AudioConverterRef inAudioConverter,
+																	UInt32* ioNumberDataPackets,
+																	AudioBufferList* ioData,
+																	AudioStreamPacketDescription** ioDataPacketDescription,
+																	void* inUserData)
+	{
+		if(*ioNumberDataPackets != 1)
+		{
+			xal::log("_converterComplexInputDataProc cannot provide input data; invalid number of packets requested");
+			*ioNumberDataPackets = 0;
+			ioData->mNumberBuffers = 0;
+			return -50;
+		}
+		
+		*ioNumberDataPackets = 1;
+		ioData->mNumberBuffers = 1;
+		ioData->mBuffers[0] = *(AudioBuffer*)inUserData;
+		
+		*ioDataPacketDescription = NULL;
+		
+		return 0;
+	}
+	
+	
 
 }
 #endif

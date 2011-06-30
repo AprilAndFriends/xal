@@ -60,10 +60,6 @@ namespace xal
 		int streamSize;
 		Source* source;
 
-#if HAVE_SDL
-		void _convertStream();
-#endif
-
 	};
 
 }

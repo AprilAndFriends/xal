@@ -17,6 +17,7 @@
 #include "SDL_AudioManager.h"
 #include "SDL_Player.h"
 #include "Source.h"
+#include "Buffer.h"
 #include "xal.h"
 
 namespace xal
@@ -100,6 +101,42 @@ namespace xal
 	void SDL_AudioManager::_mixAudio(void* unused, unsigned char* stream, int length)
 	{
 		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
+	}
+	
+	void SDL_AudioManager::_convertStream(Buffer* buffer, unsigned char** stream, int *streamSize)
+	{	
+		SDL_AudioSpec format = this->getFormat();
+		int srcFormat = (buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
+		int srcChannels = buffer->getChannels();
+		int srcSamplingRate = buffer->getSamplingRate();
+		if (srcFormat != format.format || srcChannels != format.channels || srcSamplingRate != format.freq)
+		{
+			SDL_AudioCVT cvt;
+			int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
+			if (result == -1)
+			{
+				xal::log("ERROR: Could not build converter " + buffer->getFilename());
+				return;
+			}
+			cvt.buf = (Uint8*)(new unsigned char[*streamSize * cvt.len_mult]); // making sure the conversion buffer is large enough
+			memcpy(cvt.buf, *stream, *streamSize * sizeof(unsigned char));
+			cvt.len = *streamSize;
+			result = SDL_ConvertAudio(&cvt);
+			if (result == -1)
+			{
+				xal::log("ERROR: Could not convert audio " + buffer->getFilename());
+				return;
+			}
+			int newSize = hround(cvt.len * cvt.len_ratio);
+			if (*streamSize != newSize) // stream has to be resized
+			{
+				*streamSize = newSize;
+				delete *stream;
+				*stream = new unsigned char[*streamSize];
+			}
+			memcpy(*stream, cvt.buf, *streamSize * sizeof(unsigned char));
+			delete [] cvt.buf;
+		}
 	}
 
 }
