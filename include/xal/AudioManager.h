@@ -81,6 +81,7 @@ namespace xal
 		
 		hstr getName() { return this->name; }
 		bool isEnabled() { return this->enabled; }
+		bool isPaused() { return this->paused; }
 		hstr getDeviceName() { return this->deviceName; }
 		float getUpdateTime() { return this->updateTime; }
 		float getGlobalGain() { return this->gain; }
@@ -110,27 +111,26 @@ namespace xal
 		void stop(chstr name, float fadeTime = 0.0f);
 		void stopFirst(chstr name, float fadeTime = 0.0f);
 		void stopAll(float fadeTime = 0.0f);
-		// TODO - pauses everything and resumes the right players / pauses and resumes entire audio module
-		//void pauseAll(float fadeTime = 0.0f);
-		//void resumeAll(float fadeTime = 0.0f);
+		void pauseAll(float fadeTime = 0.0f);
+		void resumeAll(float fadeTime = 0.0f);
 		void stopCategory(chstr name, float fadeTime = 0.0f);
 		bool isAnyPlaying(chstr name);
 		bool isAnyFading(chstr name);
 		bool isAnyFadingIn(chstr name);
 		bool isAnyFadingOut(chstr name);
 
-
-
 	protected:
 		unsigned long backendId;
 		hstr name;
 		bool enabled;
+		bool paused;
 		hstr deviceName;
 		float updateTime;
 		float gain;
 		hmap<hstr, Category*> categories;
 		harray<Player*> players;
 		harray<Player*> managedPlayers;
+		harray<Player*> pausedPlayers;
 		hmap<hstr, Sound*> sounds;
 		hthread* thread;
 		hmutex mutex;

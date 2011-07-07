@@ -28,6 +28,11 @@ namespace xal
 		this->clear();
 	}
 
+	bool Playlist::isPaused()
+	{
+		return (this->index >= 0 && this->index < this->players.size() && this->players[this->index]->isPaused());
+	}
+	
 	harray<hstr> Playlist::getSoundNames()
 	{
 		harray<hstr> result;
@@ -36,6 +41,11 @@ namespace xal
 			result += (*it)->getName();
 		}
 		return result;
+	}
+
+	Player* Playlist::getCurrentPlayer()
+	{
+		return (this->isPlaying() ? this->players[this->index] : NULL);
 	}
 	
 	void Playlist::update()
@@ -129,6 +139,25 @@ namespace xal
 			this->players[this->index]->pause(fadeTime);
 		}
 		this->playing = false;
+	}
+
+	void Playlist::shuffle()
+	{
+		if (!this->playing)
+		{
+			xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
+			this->players.randomize();
+			if (player != NULL)
+			{
+				this->index = this->players.index_of(player);
+			}
+		}
+	}
+
+	void Playlist::reset()
+	{
+		this->stop();
+		this->index = 0;
 	}
 	
 }
