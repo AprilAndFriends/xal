@@ -166,7 +166,7 @@ namespace xal
         
 		UInt32 frames = size / streamDescription.mBytesPerFrame;
 		UInt32 read = frames; // number of frames, not bytes, to read
-		printf("Loading chunk for %s of size %d - framecount %d\n", mFilename.c_str(), (int)size, (int)frames);
+		//printf("Loading chunk for %s of size %d - framecount %d\n", mFilename.c_str(), (int)size, (int)frames);
 		memset(output, 0, size); 
         if(ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
 		{

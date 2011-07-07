@@ -219,6 +219,8 @@ namespace xal
 			buffer->getChannels() != unitDescription.mChannelsPerFrame || 
 			buffer->getSamplingRate() != unitDescription.mSampleRate)
 		{
+			printf("INPUT STREAM SIZE: %d\n", *streamSize);
+			// describe the input format's description
 			AudioStreamBasicDescription inputDescription;
 			memset(&inputDescription, 0, sizeof(inputDescription));
 			inputDescription.mFormatID = kAudioFormatLinearPCM;
@@ -226,40 +228,76 @@ namespace xal
 			inputDescription.mChannelsPerFrame = buffer->getChannels();
 			inputDescription.mSampleRate = buffer->getSamplingRate();
 			inputDescription.mBitsPerChannel = buffer->getBitsPerSample();
-			inputDescription.mBytesPerFrame = inputDescription.mBitsPerChannel * inputDescription.mChannelsPerFrame / 8;
+			inputDescription.mBytesPerFrame = (inputDescription.mBitsPerChannel * inputDescription.mChannelsPerFrame) / 8;
+			inputDescription.mFramesPerPacket = 1; //*streamSize / inputDescription.mBytesPerFrame;
 			inputDescription.mBytesPerPacket = inputDescription.mBytesPerFrame * inputDescription.mFramesPerPacket;
-			inputDescription.mFramesPerPacket = *streamSize / inputDescription.mBytesPerFrame;
+			printf("INPUT : %lu bytes per packet for sample rate %g, channels %d\n", inputDescription.mBytesPerPacket, inputDescription.mSampleRate, inputDescription.mChannelsPerFrame);
 			
+			// copy conversion output format's description from the
+			// output audio unit's description.
+			// then adjust framesPerPacket to match the input we'll be passing.
+			
+			// framecount of our input stream is based on the input bytecount.
+			// output stream will have same number of frames, but different
+			// number of bytes.
 			AudioStreamBasicDescription outputDescription = unitDescription;
-			outputDescription.mFramesPerPacket = inputDescription.mFramesPerPacket;
+			outputDescription.mFramesPerPacket = 1; //inputDescription.mFramesPerPacket;
+			outputDescription.mBytesPerPacket = outputDescription.mBytesPerFrame * outputDescription.mFramesPerPacket;
+			printf("OUTPUT : %lu bytes per packet for sample rate %g, channels %d\n", outputDescription.mBytesPerPacket, outputDescription.mSampleRate, outputDescription.mChannelsPerFrame);
 			
+			// create an audio converter
 			AudioConverterRef audioConverter;
-			AudioConverterNew(&inputDescription, &unitDescription, &audioConverter);
+			OSStatus acCreationResult = AudioConverterNew(&inputDescription, &outputDescription, &audioConverter);
+			printf("Created audio converter %p (status: %d)\n", audioConverter, acCreationResult);
+			if(!audioConverter)
+			{
+				// bail out
+				free(*stream);
+				*streamSize = 0;
+				*stream = (unsigned char*)malloc(0);
+				return;
+			}
 			
-			UInt32 outputBytes = outputDescription.mFramesPerPacket * outputDescription.mBytesPerFrame;
-			char outputBuffer[outputBytes];
+			// calculate number of bytes required for output of input stream.
+			// allocate buffer of adequate size.
+			UInt32 outputBytes = outputDescription.mBytesPerPacket * (*streamSize / inputDescription.mBytesPerFrame); // outputDescription.mFramesPerPacket * outputDescription.mBytesPerFrame;
+			unsigned char *outputBuffer = (unsigned char*)malloc(outputBytes);
+			memset(outputBuffer, 0, outputBytes);
+			printf("OUTPUT BYTES : %d\n", outputBytes);
 			
+			// describe input data we'll pass into converter
 			AudioBuffer inputBuffer;
 			inputBuffer.mNumberChannels = inputDescription.mChannelsPerFrame;
 			inputBuffer.mDataByteSize = *streamSize;
 			inputBuffer.mData = *stream;
 			
+			// describe output data buffers into which we can receive data.
 			AudioBufferList outputBufferList;
 			outputBufferList.mNumberBuffers = 1;
 			outputBufferList.mBuffers[0].mNumberChannels = outputDescription.mChannelsPerFrame;
 			outputBufferList.mBuffers[0].mDataByteSize = outputBytes;
 			outputBufferList.mBuffers[0].mData = outputBuffer;
 			
-			AudioConverterFillComplexBuffer(audioConverter, CoreAudio_AudioManager::_converterComplexInputDataProc, &inputBuffer, &outputBytes, &outputBufferList, NULL);
+			// set output data packet size
+			UInt32 outputDataPacketSize = outputDescription.mBytesPerPacket;
 			
-			if (*streamSize != outputBytes)
-			{
-				*streamSize = outputBytes;
-				delete *stream;
-				*stream = new unsigned char[*streamSize];
-			}
-			memcpy(*stream, outputBuffer, *streamSize * sizeof(unsigned char));
+			// convert
+			OSStatus result = AudioConverterFillComplexBuffer(audioConverter, /* AudioConverterRef inAudioConverter */
+															  CoreAudio_AudioManager::_converterComplexInputDataProc, /* AudioConverterComplexInputDataProc inInputDataProc */
+															  &inputBuffer, /* void *inInputDataProcUserData */
+															  &outputDataPacketSize, /* UInt32 *ioOutputDataPacketSize */
+															  &outputBufferList, /* AudioBufferList *outOutputData */
+															  NULL /* AudioStreamPacketDescription *outPacketDescription */
+															  );
+			printf("Result: %d wheee\n", result);
 			
+			// change "stream" to describe our output buffer.
+			// even if error occured, we'd rather have silence than unconverted audio.
+			free(*stream);
+			*stream = outputBuffer;
+			*streamSize = outputBytes;
+			
+			// dispose of the audio converter
 			AudioConverterDispose(audioConverter);
 		}
 	}
@@ -271,6 +309,7 @@ namespace xal
 																	AudioStreamPacketDescription** ioDataPacketDescription,
 																	void* inUserData)
 	{
+		printf("Converter\n");
 		if(*ioNumberDataPackets != 1)
 		{
 			xal::log("_converterComplexInputDataProc cannot provide input data; invalid number of packets requested");
