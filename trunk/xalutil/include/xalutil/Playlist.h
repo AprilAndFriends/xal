@@ -34,7 +34,9 @@ namespace xal
 		bool isRepeatAll() { return this->repeatAll; }
 		void setRepeatAll(bool value) { this->repeatAll = value; }
 		harray<Player*> getPlayers() { return this->players; }
+		bool isPaused();
 		harray<hstr> getSoundNames();
+		Player* getCurrentPlayer();
 		
 		void update();
 		
@@ -45,6 +47,8 @@ namespace xal
 		void play(float fadeTime = 0.0f);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
+		void shuffle();
+		void reset();
 		
 	protected:
 		bool enabled;

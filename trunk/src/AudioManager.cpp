@@ -46,7 +46,7 @@ namespace xal
 	AudioManager* mgr;
 
 	AudioManager::AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), gain(1.0f), thread(NULL)
+		enabled(false), paused(false), gain(1.0f), thread(NULL)
 	{
 		this->name = systemName;
 		this->backendId = backendId;
@@ -476,6 +476,39 @@ namespace xal
 			}
 		}
 		this->_unlock();
+	}
+	
+	void AudioManager::pauseAll(float fadeTime)
+	{
+		if (!this->paused)
+		{
+			this->_lock();
+			foreach (Player*, it, this->players)
+			{
+				if ((*it)->isPlaying())
+				{
+					(*it)->pause();
+					this->pausedPlayers += (*it);
+				}
+			}
+			this->paused = true;
+			this->_unlock();
+		}
+	}
+	
+	void AudioManager::resumeAll(float fadeTime)
+	{
+		if (this->paused)
+		{
+			this->_lock();
+			foreach (Player*, it, this->players)
+			{
+				(*it)->play();
+			}
+			this->paused = false;
+			this->pausedPlayers.clear();
+			this->_unlock();
+		}
 	}
 	
 	void AudioManager::stopCategory(chstr name, float fadeTime)
