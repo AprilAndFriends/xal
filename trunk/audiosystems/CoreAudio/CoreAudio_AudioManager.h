@@ -89,6 +89,9 @@ namespace xal
 													   AudioStreamPacketDescription** ioDataPacketDescription,
 													   void* inUserData);
 
+	private:
+		AudioBuffer *_converter_currentBuffer;
+		AudioStreamBasicDescription _converter_currentInputDescription;
 	};
 
 }
