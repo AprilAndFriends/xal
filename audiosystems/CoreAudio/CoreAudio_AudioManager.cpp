@@ -219,7 +219,6 @@ namespace xal
 			buffer->getChannels() != unitDescription.mChannelsPerFrame || 
 			buffer->getSamplingRate() != unitDescription.mSampleRate)
 		{
-			printf("INPUT STREAM SIZE: %d\n", *streamSize);
 			// describe the input format's description
 			AudioStreamBasicDescription inputDescription;
 			memset(&inputDescription, 0, sizeof(inputDescription));
@@ -231,7 +230,6 @@ namespace xal
 			inputDescription.mBytesPerFrame = (inputDescription.mBitsPerChannel * inputDescription.mChannelsPerFrame) / 8;
 			inputDescription.mFramesPerPacket = 1; //*streamSize / inputDescription.mBytesPerFrame;
 			inputDescription.mBytesPerPacket = inputDescription.mBytesPerFrame * inputDescription.mFramesPerPacket;
-			printf("INPUT : %lu bytes per packet for sample rate %g, channels %d\n", inputDescription.mBytesPerPacket, inputDescription.mSampleRate, inputDescription.mChannelsPerFrame);
 			
 			// copy conversion output format's description from the
 			// output audio unit's description.
@@ -243,12 +241,10 @@ namespace xal
 			AudioStreamBasicDescription outputDescription = unitDescription;
 			outputDescription.mFramesPerPacket = 1; //inputDescription.mFramesPerPacket;
 			outputDescription.mBytesPerPacket = outputDescription.mBytesPerFrame * outputDescription.mFramesPerPacket;
-			printf("OUTPUT : %lu bytes per packet for sample rate %g, channels %d\n", outputDescription.mBytesPerPacket, outputDescription.mSampleRate, outputDescription.mChannelsPerFrame);
 			
 			// create an audio converter
 			AudioConverterRef audioConverter;
 			OSStatus acCreationResult = AudioConverterNew(&inputDescription, &outputDescription, &audioConverter);
-			printf("Created audio converter %p (status: %d)\n", audioConverter, acCreationResult);
 			if(!audioConverter)
 			{
 				// bail out
@@ -261,9 +257,8 @@ namespace xal
 			// calculate number of bytes required for output of input stream.
 			// allocate buffer of adequate size.
 			UInt32 outputBytes = outputDescription.mBytesPerPacket * (*streamSize / inputDescription.mBytesPerPacket); // outputDescription.mFramesPerPacket * outputDescription.mBytesPerFrame;
-			unsigned char *outputBuffer = (unsigned char*)malloc(4*outputBytes);
+			unsigned char *outputBuffer = (unsigned char*)malloc(outputBytes);
 			memset(outputBuffer, 0, outputBytes);
-			printf("OUTPUT BYTES : %d\n", outputBytes);
 			
 			// describe input data we'll pass into converter
 			AudioBuffer inputBuffer;
@@ -279,14 +274,13 @@ namespace xal
 			outputBufferList.mBuffers[0].mData = outputBuffer;
 			
 			// set output data packet size
-			UInt32 outputDataPacketSize = outputBytes;
+			UInt32 outputDataPacketSize = outputBytes / outputDescription.mBytesPerPacket;
 			
 			// fill class members with data that we'll pass into
 			// the InputDataProc
 			_converter_currentBuffer = &inputBuffer;
 			_converter_currentInputDescription = inputDescription;
 			
-			printf("Output data packet size %d\n", outputDataPacketSize);
 			// convert
 			OSStatus result = AudioConverterFillComplexBuffer(audioConverter, /* AudioConverterRef inAudioConverter */
 															  CoreAudio_AudioManager::_converterComplexInputDataProc, /* AudioConverterComplexInputDataProc inInputDataProc */
@@ -295,7 +289,6 @@ namespace xal
 															  &outputBufferList, /* AudioBufferList *outOutputData */
 															  NULL /* AudioStreamPacketDescription *outPacketDescription */
 															  );
-			printf("Result: %d wheee\n", result);
 			
 			// change "stream" to describe our output buffer.
 			// even if error occured, we'd rather have silence than unconverted audio.
@@ -315,7 +308,6 @@ namespace xal
 																	AudioStreamPacketDescription** ioDataPacketDescription,
 																	void* inUserData)
 	{
-		printf("Converter\n");
 		if(ioDataPacketDescription)
 		{
 			xal::log("_converterComplexInputDataProc cannot provide input data; it doesn't know how to provide packet descriptions");
@@ -327,14 +319,10 @@ namespace xal
 		
 		CoreAudio_AudioManager *self = (CoreAudio_AudioManager*)inUserData;
 		
-		printf("number of data packets %d\n", *ioNumberDataPackets);
-		printf("number of buffers %d\n", ioData->mNumberBuffers);
-		
 		ioData->mNumberBuffers = 1;
 		ioData->mBuffers[0] = *(self->_converter_currentBuffer);
 		
 		*ioNumberDataPackets = ioData->mBuffers[0].mDataByteSize / self->_converter_currentInputDescription.mBytesPerPacket;
-		printf("data packets: %d\n", *ioNumberDataPackets);
 		return 0;
 	}
 	
