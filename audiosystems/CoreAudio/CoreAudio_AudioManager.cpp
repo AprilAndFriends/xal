@@ -279,8 +279,9 @@ namespace xal
 			outputBufferList.mBuffers[0].mData = outputBuffer;
 			
 			// set output data packet size
-			UInt32 outputDataPacketSize = outputDescription.mBytesPerPacket;
+			UInt32 outputDataPacketSize = outputBytes;
 			
+			printf("Output data packet size %d\n", outputDataPacketSize);
 			// convert
 			OSStatus result = AudioConverterFillComplexBuffer(audioConverter, /* AudioConverterRef inAudioConverter */
 															  CoreAudio_AudioManager::_converterComplexInputDataProc, /* AudioConverterComplexInputDataProc inInputDataProc */
@@ -310,19 +311,30 @@ namespace xal
 																	void* inUserData)
 	{
 		printf("Converter\n");
+		if(ioDataPacketDescription)
+		{
+			xal::log("_converterComplexInputDataProc cannot provide input data; it doesn't know how to provide packet descriptions");
+			*ioDataPacketDescription = NULL;
+			*ioNumberDataPackets = 0;
+			ioData->mNumberBuffers = 0;
+			return 501;
+		}
+		/*
 		if(*ioNumberDataPackets != 1)
 		{
 			xal::log("_converterComplexInputDataProc cannot provide input data; invalid number of packets requested");
 			*ioNumberDataPackets = 0;
 			ioData->mNumberBuffers = 0;
-			return -50;
+			return 500;
 		}
 		
-		*ioNumberDataPackets = 1;
+		*/
+		printf("number of data packets %d\n", *ioNumberDataPackets);
+		printf("number of buffers %d\n", ioData->mNumberBuffers);
+
 		ioData->mNumberBuffers = 1;
 		ioData->mBuffers[0] = *(AudioBuffer*)inUserData;
 		
-		*ioDataPacketDescription = NULL;
 		
 		return 0;
 	}
