@@ -266,6 +266,8 @@
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					deps/,
@@ -287,6 +289,7 @@
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					deps/,
