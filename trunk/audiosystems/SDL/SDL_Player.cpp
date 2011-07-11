@@ -106,6 +106,17 @@ namespace xal
 				{
 					memcpy(&stream[size1], data2, size2);
 				}
+#ifdef __BIG_ENDIAN__
+				short* sStream = (short*)stream;
+				for (int i = 0; i < size1; i++)
+				{
+					XAL_NORMALIZE_ENDIAN(sStream[i]);
+				}
+				for (int i = 0; i < size2; i++)
+				{
+					XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+				}
+#endif				
 			}
 			else
 			{
