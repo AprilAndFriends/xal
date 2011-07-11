@@ -8,6 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_OPENAL
+#include <stdio.h>
 #include <string.h>
 
 #ifndef __APPLE__
@@ -120,10 +121,16 @@ namespace xal
 		{
 			bool failed = false;
 			this->_fillBuffers(0, 1);
-			if(!failed) OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]), failed = true);
-			if(!failed) OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_LOOPING, this->looping), failed = true);
+			if (!failed)
+			{
+				OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]), failed = true);
+			}
+			if (!failed)
+			{
+				OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_LOOPING, this->looping), failed = true);
+			}
 			
-			if(failed)
+			if (failed)
 			{
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 				alSourcei(this->sourceId, AL_LOOPING, false);
