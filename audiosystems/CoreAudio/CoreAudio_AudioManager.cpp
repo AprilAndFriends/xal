@@ -24,6 +24,9 @@
 #include "Buffer.h"
 #include "xal.h"
 
+
+#define COREAUDIO_MANUALLY_SET_OUTPUT_UNIT_PROPERTIES 0
+
 namespace xal
 {
 	
@@ -67,8 +70,16 @@ namespace xal
 		// and assign the callback to generate the data
 		result = this->_connectAudioUnit();
 		CA_INIT_ASSERTION(result == noErr, "_connectAudioUnit() failed");
-				this->enabled = true;
 		
+		// read back what we got
+		UInt32 unitDescriptionSize = sizeof(unitDescription);
+		result = AudioUnitGetProperty (outputAudioUnit,
+									   kAudioUnitProperty_StreamFormat,
+									   kAudioUnitScope_Input,
+									   0,
+									   &unitDescription,
+									   &unitDescriptionSize);
+		CA_INIT_ASSERTION(result == noErr, "AudioUnitGetProperty() failed to read input format for output audio unit");
 		
 		// start!
 		// // FIXME // //
@@ -77,7 +88,8 @@ namespace xal
 		// some coreaudio-callbacked code needs to use xal::mgr
 		result = AudioOutputUnitStart(outputAudioUnit);
 		CA_INIT_ASSERTION(result == noErr, "AudioUnitOutputStart() failed");
-		
+		this->enabled = true;
+
 		
 	}
 	
@@ -107,6 +119,8 @@ namespace xal
 		// also, fill member variable with format description
 		/* AudioStreamBasicDescription unitDescription; */
 		memset(&unitDescription, 0, sizeof(unitDescription));
+
+#if COREAUDIO_MANUALLY_SET_OUTPUT_UNIT_PROPERTIES
 		unitDescription.mFormatID = kAudioFormatLinearPCM;
 		unitDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
 		unitDescription.mChannelsPerFrame = 2;
@@ -114,7 +128,23 @@ namespace xal
 		unitDescription.mBitsPerChannel = 16;
 		unitDescription.mFramesPerPacket = 1;
 		unitDescription.mBytesPerFrame = unitDescription.mBitsPerChannel * unitDescription.mChannelsPerFrame / 8;
-		unitDescription.mBytesPerPacket = unitDescription.mBytesPerFrame * unitDescription.mFramesPerPacket;
+		unitDescription.mBytesPerPacket = unitDescription.mBytesPerFrame * unitDescription.mFramesPerPacket;		
+		CA_INIT_ASSERTION_EX(result == noErr, "AudioUnitSetProperty() failed to set input format for output audio unit", result);
+#else
+		// read the audio unit output properties.
+		// serve it the same format on input.
+		// (conversion will be performed using Audio Converter Services.)
+		
+		UInt32 descriptionSize = sizeof(unitDescription);
+		result = AudioUnitGetProperty (outputAudioUnit,
+									   kAudioUnitProperty_StreamFormat,
+									   kAudioUnitScope_Output,
+									   0,
+									   &unitDescription,
+									   &descriptionSize);
+		CA_INIT_ASSERTION_EX(result == noErr, "AudioUnitGetProperty() failed to get output format for output audio unit", result);
+#endif
+		
 		result = AudioUnitSetProperty (outputAudioUnit,
 									   kAudioUnitProperty_StreamFormat,
 									   kAudioUnitScope_Input,

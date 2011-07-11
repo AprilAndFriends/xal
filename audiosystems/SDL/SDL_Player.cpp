@@ -241,7 +241,6 @@ namespace xal
 
 	int SDL_Player::_fillBuffer(int size)
 	{
-		xal::log(this->looping);
 		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
 		if (this->writePosition + streamSize <= STREAM_BUFFER)
