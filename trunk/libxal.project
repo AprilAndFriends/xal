@@ -36,6 +36,7 @@
     <File Name="src/Sound.cpp"/>
     <File Name="src/xal.cpp"/>
     <File Name="src/Source.cpp"/>
+    <File Name="fileproperties.rc"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xal/Category.h"/>

@@ -39,6 +39,9 @@
     <Filter Include="Source Files\audiosystems\SDL">
       <UniqueIdentifier>{b019b05c-5f5d-45c0-990d-d0c58bb47a63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8e56379e-ed92-4bfb-976f-3756a846171d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioManager.cpp">
@@ -157,5 +160,10 @@
     <ClInclude Include="audiosystems\DirectSound\DirectSound_WAV_Source.h">
       <Filter>Header Files\audiosystems\DirectSound</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="fileproperties.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
