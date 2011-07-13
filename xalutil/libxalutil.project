@@ -10,6 +10,7 @@
   <VirtualDirectory Name="src">
     <File Name="src/ParallelSoundManager.cpp"/>
     <File Name="src/Playlist.cpp"/>
+    <File Name="fileproperties.rc"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/xalutil/ParallelSoundManager.h"/>
