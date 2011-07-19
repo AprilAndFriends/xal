@@ -263,8 +263,7 @@ namespace xal
 			sound = new SimpleSound(filename, categoryName, prefix);
 		}
 		hstr message;
-		bool load = true;
-		bool decode = true;
+
 		if (category->isDynamicLoad())
 		{
 			if (category->isDynamicDecode())
@@ -294,7 +293,7 @@ namespace xal
 			xal::log("failed to load sound " + filename);
 			return NULL;
 		}
-		xal::log(message);
+		if (message != "") xal::log(message);
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}
