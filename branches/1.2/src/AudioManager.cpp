@@ -313,6 +313,7 @@ namespace xal
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr category, chstr prefix)
 	{
+		log("loading category "+category);
 		this->createCategory(category);
 		harray<hstr> result;
 		harray<hstr> files = hdir::files(path, true);

@@ -203,7 +203,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = xalutil;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/xalutil;
@@ -266,6 +266,82 @@
 			};
 			name = Release;
 		};
+		C90D177E13D63E43001DCCD5 /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(USER_LIBRARY_DIR)/SDKs/xalSDK/$(PLATFORM_NAME).sdk/usr/local/include",
+					"$(USER_LIBRARY_DIR)/SDKs/hltypesSDK/$(PLATFORM_NAME).sdk/usr/local/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-LLVM";
+		};
+		C90D177F13D63E43001DCCD5 /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = xalutil;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/xalutil;
+			};
+			name = "Debug-LLVM";
+		};
+		C90D178613D63E7A001DCCD5 /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(USER_LIBRARY_DIR)/SDKs/xalSDK/$(PLATFORM_NAME).sdk/usr/local/include",
+					"$(USER_LIBRARY_DIR)/SDKs/hltypesSDK/$(PLATFORM_NAME).sdk/usr/local/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-LLVM";
+		};
+		C90D178713D63E7A001DCCD5 /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME)SDK/$(PLATFORM_NAME).sdk";
+				GCC_MODEL_TUNING = G5;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = xalutil;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/xalutil;
+			};
+			name = "Release-LLVM";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -273,7 +349,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB921F08733DC00010E9CD /* Debug */,
+				C90D177F13D63E43001DCCD5 /* Debug-LLVM */,
 				1DEB922008733DC00010E9CD /* Release */,
+				C90D178713D63E7A001DCCD5 /* Release-LLVM */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -282,7 +360,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB922308733DC00010E9CD /* Debug */,
+				C90D177E13D63E43001DCCD5 /* Debug-LLVM */,
 				1DEB922408733DC00010E9CD /* Release */,
+				C90D178613D63E7A001DCCD5 /* Release-LLVM */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

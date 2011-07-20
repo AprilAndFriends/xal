@@ -49,9 +49,11 @@ namespace xal
 			xal::mgr->getSound(*it)->pause(this->fadeTime);
 		}
 		harray<hstr> started = names / this->sounds;
+		xal::Sound* s;
 		foreach (hstr, it, started)
 		{
-			xal::mgr->getSound(*it)->play(this->fadeTime, true);
+			s=xal::mgr->getSound(*it);
+			s->play(this->fadeTime, true);
 		}
 		this->sounds = names;
 	}
