@@ -249,6 +249,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\fileproperties.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
