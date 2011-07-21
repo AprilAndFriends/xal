@@ -1,24 +1,24 @@
-/// @file
-/// @author  Boris Mikic
-/// @author  Kresimir Spes
-/// @version 2.0
-/// 
-/// @section LICENSE
-/// 
-/// This program is free software; you can redistribute it and/or modify it under
-/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
-
+/************************************************************************************\
+This source file is part of the KS(X) audio library                                  *
+For latest info, see http://code.google.com/p/libxal/                                *
+**************************************************************************************
+Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
+*                                                                                    *
+* This program is free software; you can redistribute it and/or modify it under      *
+* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
+\************************************************************************************/
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 #include <xal/AudioManager.h>
-#include <xal/Player.h>
-#include <xal/xal.h>
+#include <xal/Sound.h>
 
 #include "ParallelSoundManager.h"
 
 namespace xal
 {
+/******* CONSTRUCT / DESTRUCT ******************************************/
+
 	ParallelSoundManager::ParallelSoundManager(float fadeTime)
 	{
 		this->fadeTime = fadeTime;
@@ -26,74 +26,64 @@ namespace xal
 	
 	ParallelSoundManager::~ParallelSoundManager()
 	{
-		this->clear();
 	}
 	
+/******* METHODS *******************************************************/
+
 	void ParallelSoundManager::addSound(chstr name)
 	{
-		this->sounds += name;
+		this->buildList += name;
 	}
 	
 	void ParallelSoundManager::updateList()
 	{
-		this->updateList(this->sounds);
-		this->sounds.clear();
+		this->updateList(this->buildList);
+		this->buildList.clear();
 	}
 		
 	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
-		foreach (Player*, it, this->players)
+		harray<hstr> paused = this->sounds / names;
+		foreach (hstr, it, paused)
 		{
-			if (names.contains((*it)->getName()))
-			{
-				names -= (*it)->getName();
-				if (!(*it)->isPlaying())
-				{
-					(*it)->play(this->fadeTime, true);
-				}
-			}
-			else if ((*it)->isPlaying())
-			{
-				(*it)->pause(this->fadeTime);
-			}
+			xal::mgr->getSound(*it)->pause(this->fadeTime);
 		}
-		Player* player;
-		foreach (hstr, it, names)
+		harray<hstr> started = names / this->sounds;
+		foreach (hstr, it, started)
 		{
-			player = xal::mgr->createPlayer(*it);
-			player->play(this->fadeTime, true);
-			this->players += player;
+			xal::mgr->getSound(*it)->play(this->fadeTime, true);
 		}
+		this->sounds = names;
 	}
 	
 	void ParallelSoundManager::playAll()
 	{
-		foreach (Player*, it, this->players)
+		foreach (hstr, it, this->sounds)
 		{
-			(*it)->play(this->fadeTime, true);
+			xal::mgr->getSound(*it)->play(this->fadeTime, true);
 		}
 	}
 	
 	void ParallelSoundManager::pauseAll()
 	{
-		foreach (Player*, it, this->players)
+		foreach (hstr, it, this->sounds)
 		{
-			(*it)->pause(this->fadeTime);
+			xal::mgr->getSound(*it)->pause(this->fadeTime);
 		}
 	}
 	
 	void ParallelSoundManager::stopAll()
 	{
+		foreach (hstr, it, this->sounds)
+		{
+			xal::mgr->getSound(*it)->stop(this->fadeTime);
+		}
 		this->clear();
 	}
 	
 	void ParallelSoundManager::clear()
 	{
-		foreach (Player*, it, this->players)
-		{
-			xal::mgr->destroyPlayer(*it);
-		}
-		this->players.clear();
+		this->sounds.clear();
 	}
 	
 }

@@ -7,40 +7,30 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef XAL_PARALLELSOUNDMANAGER_H
-#define XAL_PARALLELSOUNDMANAGER_H
+#ifndef XAL_SIMPLESOUND_H
+#define XAL_SIMPLESOUND_H
 
-#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
-
-#include "xalUtilExport.h"
+#include "xalExport.h"
+#include "SoundBuffer.h"
 
 namespace xal
 {
-	class xalUtilExport ParallelSoundManager
+	class xalExport SimpleSound : public SoundBuffer
 	{
 	public:
-		ParallelSoundManager(float fadeTime = 1.0f);
-		~ParallelSoundManager();
+		SimpleSound(chstr name, chstr category, chstr prefix = "");
+		~SimpleSound();
 		
-		float getFadeTime() { return this->fadeTime; }
-		void setFadeTime(float value) { this->fadeTime = value; }
-		
-		void addSound(chstr name);
-		void updateList();
-		void updateList(harray<hstr> names);
-		void playAll();
-		void pauseAll();
-		void stopAll();
-		void clear();
+		unsigned int getBuffer() const { return this->buffer; }
 		
 	protected:
-		float fadeTime;
-		harray<hstr> sounds;
-		harray<hstr> buildList;
-	
+		unsigned int buffer;
+		
+		bool _loadOgg();
+		
 	};
-	
+
 }
 
 #endif

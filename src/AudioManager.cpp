@@ -1,269 +1,278 @@
-/// @file
-/// @author  Kresimir Spes
-/// @author  Boris Mikic
-/// @author  Ivan Vucica
-/// @version 2.0
-/// 
-/// @section LICENSE
-/// 
-/// This program is free software; you can redistribute it and/or modify it under
-/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/************************************************************************************\
+This source file is part of the KS(X) audio library                                  *
+For latest info, see http://code.google.com/p/libxal/                                *
+**************************************************************************************
+Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
+*                                                                                    *
+* This program is free software; you can redistribute it and/or modify it under      *
+* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
+\************************************************************************************/
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
-#include <hltypes/hmutex.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 #include <hltypes/util.h>
 
-#include "AudioManager.h"
-#include "Buffer.h"
-#include "Category.h"
-#include "Player.h"
-#include "Sound.h"
-#include "Source.h"
-#include "xal.h"
+#ifndef __APPLE__
+#include <AL/al.h>
+#include <AL/alc.h>
+#else
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <TargetConditionals.h>
+#endif
 
-#if HAVE_M4A
-#include "M4A_Source.h"
-#endif
-#if HAVE_MP3
-#include "MP3_Source.h"
-#endif
-#if HAVE_OGG
-#include "OGG_Source.h"
-#endif
-#if HAVE_SPX
-#include "SPX_Source.h"
-#endif
-#if HAVE_WAV
-#include "WAV_Source.h"
+#include "AudioManager.h"
+#include "Category.h"
+#include "SimpleSound.h"
+#include "SoundBuffer.h"
+#include "Source.h"
+#include "StreamSound.h"
+
+#if TARGET_OS_IPHONE
+#include "SourceApple.h"
 #endif
 
 namespace xal
 {
+/******* GLOBAL ********************************************************/
+	
 	AudioManager* mgr;
+	ALCdevice* gDevice = NULL;
+	ALCcontext* gContext = NULL;
 
-	AudioManager::AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), paused(false), gain(1.0f), thread(NULL)
+	void xal_writelog(chstr text)
 	{
-		this->name = systemName;
-		this->backendId = backendId;
+		printf("%s\n", text.c_str());
+	}
+	void (*gLogFunction)(chstr) = xal_writelog;
+	
+	void init(chstr deviceName, bool threaded, float updateTime)
+	{
+		mgr = new AudioManager();
+		mgr->init(deviceName, threaded, updateTime);
+	}
+	
+	void destroy()
+	{
+		delete mgr;
+	}
+	
+	void log(chstr message, chstr prefix)
+	{
+		gLogFunction(prefix + message);
+	}
+	
+	void setLogFunction(void (*function)(chstr))
+	{
+		gLogFunction = function;
+	}
+	
+/******* CONSTRUCT / DESTRUCT ******************************************/
+
+	AudioManager::AudioManager() : deviceName(""), updateTime(0.01f),
+		gain(1.0f), updating(false), thread(NULL)
+	{
+	}
+	
+	void AudioManager::init(chstr deviceName, bool threaded, float updateTime)
+	{
+		xal::log("initializing XAL");
+		if (deviceName == "nosound")
+		{
+			this->deviceName = deviceName;
+			xal::log("audio is disabled");
+			return;
+		}
+		xal::log("initializing OpenAL");
+		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
+		if (alcGetError(currentDevice) != ALC_NO_ERROR)
+		{
+			return;
+		}
+		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
+		xal::log("audio device: " + this->deviceName);
+		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
+		if (alcGetError(currentDevice) != ALC_NO_ERROR)
+		{
+			return;
+		}
+		alcMakeContextCurrent(currentContext);
+		if (alcGetError(currentDevice) != ALC_NO_ERROR)
+		{
+			return;
+		}
+		alGenSources(XAL_MAX_SOURCES, this->sourceIds);
+		gDevice = currentDevice;
+		gContext = currentContext;
 		this->deviceName = deviceName;
-		this->updateTime = updateTime;
+		if (threaded)
+		{
+			xal::log("starting thread management");
+			this->updateTime = updateTime;
+			this->updating = true;
+			this->thread = new hthread(&AudioManager::update);
+			this->thread->start();
+			this->updating = false;
+		}
 	}
 
 	AudioManager::~AudioManager()
 	{
-		this->_destroyThread();
-	}
-
-	void AudioManager::clear()
-	{
-		foreach (Player*, it, this->players)
+		if (this->thread != NULL)
 		{
-			(*it)->_stop();
-			delete (*it);
+			while (this->updating);
+			this->thread->stop();
+			delete this->thread;
 		}
-		this->players.clear();
-		this->managedPlayers.clear();
-		foreach_m (Sound*, it, this->sounds)
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
 			delete it->second;
 		}
-		this->sounds.clear();
 		foreach_m (Category*, it, this->categories)
 		{
 			delete it->second;
 		}
-		this->categories.clear();
+		xal::log("destroying OpenAL");
+		if (gDevice)
+		{
+			Sound* source;
+			while (this->sources.size() > 0)
+			{
+				source = this->sources.pop_front();
+				source->unlock();
+				source->stop();
+				delete source;
+			}
+			alDeleteSources(XAL_MAX_SOURCES, this->sourceIds);
+			alcMakeContextCurrent(NULL);
+			alcDestroyContext(gContext);
+			alcCloseDevice(gDevice);
+		}
 	}
 	
-	void AudioManager::_setupThread()
-	{
-		xal::log("starting thread management");
-		this->_lock();
-		this->thread = new hthread(&AudioManager::update);
-		this->thread->start();
-		this->_unlock();
-	}
+/******* PROPERTIES ****************************************************/
 
-	void AudioManager::_destroyThread()
+	bool AudioManager::isEnabled()
 	{
-		if (this->thread != NULL)
-		{
-			xal::log("stopping thread management");
-			this->_lock();
-			this->thread->stop();
-			delete this->thread;
-			this->thread = NULL;
-			this->_unlock();
-		}
-	}
-
-	void AudioManager::setGlobalGain(float value)
-	{
-		this->gain = value;
-		foreach (Player*, it, this->players)
-		{
-			(*it)->setGain((*it)->getGain());
-		}
-	}
-
-	harray<Player*> AudioManager::getPlayers()
-	{
-		return (this->players - this->managedPlayers);
+		return (gDevice != NULL);
 	}
 
 	void AudioManager::update()
 	{
 		while (true)
 		{
-			xal::mgr->_lock();
-			xal::mgr->_update(xal::mgr->updateTime);
-			xal::mgr->_unlock();
+			while (xal::mgr->updating);
+			xal::mgr->updating = true;
+			xal::mgr->update(xal::mgr->updateTime);
+			xal::mgr->updating = false;
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
 	
 	void AudioManager::update(float k)
 	{
-		this->_lock();
-		this->_update(k);
-		this->_unlock();
-	}
-
-	void AudioManager::_update(float k)
-	{
 		if (this->isEnabled())
 		{
-			foreach (Player*, it, this->players)
+			// variable copied because (*it)->update can access
+			// xal::mgr and erase a source from this->sources.
+			// we don't want to break the iterator validity!
+			
+			harray<Sound*> sources(this->sources);
+			foreach (Sound*, it, sources)
 			{
-				(*it)->_update(k);
+				(*it)->update(k);
 			}
-			harray<Player*> players(this->managedPlayers);
-			foreach (Player*, it, players)
+		}
+	}
+
+	unsigned int AudioManager::allocateSourceId()
+	{
+		harray<unsigned int> allocated;
+		unsigned int id = 0;
+		foreach (Sound*, it, this->sources)
+		{
+			Source* source = dynamic_cast<Source*> (*it); // FIXME what about SourceApple?
+			if (source != NULL)
 			{
-				if (!(*it)->isPlaying() && !(*it)->isFading())
+				id = source->getSourceId();
+				if (id != 0)
 				{
-					this->_destroyManagedPlayer(*it);
+					allocated += id;
 				}
 			}
 		}
+		harray<unsigned int> unallocated(this->sourceIds, XAL_MAX_SOURCES);
+		unallocated -= allocated;
+		if (unallocated.size() > 0)
+		{
+			return unallocated.front();
+		}
+		xal::log("unable to allocate audio source!");
+		return 0;
 	}
 
-	void AudioManager::_lock()
+	Sound* AudioManager::createSource(SoundBuffer* sound, unsigned int sourceId)
 	{
-		this->mutex.lock();
+		Source* source = new Source(sound, sourceId);
+		this->sources += source;
+		return source;
 	}
 	
-	void AudioManager::_unlock()
+	Sound* AudioManager::createSourceApple(SoundBuffer* sound, unsigned int sourceId)
 	{
-		this->mutex.unlock();
+#if TARGET_OS_IPHONE
+		SourceApple* source = new SourceApple(sound, sourceId);
+		this->sources += source;
+		return source;
+#else
+		return NULL;
+#endif
 	}
-
-	Category* AudioManager::createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)
+	
+	void AudioManager::destroySource(Sound* source)
 	{
-		if (!this->categories.has_key(name))
-		{
-			this->categories[name] = new Category(name, loadMode, decodeMode);
-		}
-		return this->categories[name];
-	}
-
-	Category* AudioManager::getCategoryByName(chstr name)
-	{
-		if (!this->categories.has_key(name))
-		{
-			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
-		}
-		return this->categories[name];
-	}
-
-	float AudioManager::getCategoryGain(chstr name)
-	{
-		if (!this->categories.has_key(name))
-		{
-			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
-		}
-		return this->categories[name]->getGain();
-	}
-
-	void AudioManager::setCategoryGain(chstr name, float gain)
-	{
-		this->getCategoryByName(name)->setGain(gain);
-		foreach (Player*, it, this->players)
-		{
-			(*it)->setGain((*it)->getGain());
-		}
-	}
-
-	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
-	{
-		Category* category = this->getCategoryByName(categoryName);
-		Sound* sound = new Sound(filename, category, prefix);
-		if (this->sounds.has_key(sound->getName()))
-		{
-			delete sound;
-			return NULL;
-		}
-		this->sounds[sound->getName()] = sound;
-		return sound;
+		this->sources -= source;
+		delete source;
 	}
 
 	Sound* AudioManager::getSound(chstr name)
 	{
 		if (!this->sounds.has_key(name))
 		{
-			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
+			throw key_error(name, "Sounds");
 		}
 		return this->sounds[name];
 	}
-
-	void AudioManager::destroySound(Sound* sound)
-	{
-		foreach_m (Sound*, it, this->sounds)
-		{
-			if (it->second == sound)
-			{
-				xal::log("destroying sound " + it->first);
-				delete it->second;
-				this->sounds.erase(it);
-				break;
-			}
-		}
-	}
 	
-	void AudioManager::destroySoundsWithPrefix(chstr prefix)
+	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
-		xal::log(hsprintf("destroying sounds with prefix '%s'", prefix.c_str()));
-		harray<hstr> keys = this->sounds.keys();
-		harray<Player*> managedPlayers = this->managedPlayers;
-		Sound* sound;
-		foreach (hstr, it, keys)
+		Category* category = this->getCategoryByName(categoryName);
+		SoundBuffer* sound;
+		if (category->isStreamed())
 		{
-			if ((*it).starts_with(prefix))
-			{
-				sound = this->sounds[*it];
-				foreach (Player*, it2, managedPlayers)
-				{
-					if ((*it2)->getSound() == sound)
-					{
-						this->_destroyManagedPlayer(*it2);
-					}
-				}
-				foreach (Player*, it2, this->players)
-				{
-					if ((*it2)->getSound() == sound)
-					{
-						throw hl_exception("Audio Manager: Sound " + sound->getName() + " cannot be destroyed, there are one or more manually created players that haven't been destroyed");
-					}
-				}
-				delete sound;
-				this->sounds.remove_key(*it);
-			}
+			sound = new StreamSound(filename, categoryName, prefix);
 		}
+		else
+		{
+			sound = new SimpleSound(filename, categoryName, prefix);
+		}
+		if (category->isDynamicLoad())
+		{
+			xal::log("created a dynamic sound: " + filename);
+		}
+		else if (!sound->load())
+		{
+			xal::log("failed to load sound " + filename);
+			return NULL;
+		}
+		this->sounds[sound->getName()] = sound;
+		return sound;
 	}
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
@@ -284,10 +293,10 @@ namespace xal
 		this->createCategory(category);
 		harray<hstr> result;
 		harray<hstr> files = hdir::files(path, true);
-		Sound* sound;
+		SoundBuffer* sound;
 		foreach (hstr, it, files)
 		{
-			sound = this->createSound((*it), category, prefix);
+			sound = (SoundBuffer*)this->createSound((*it).c_str(), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();
@@ -296,303 +305,126 @@ namespace xal
 		return result;
 	}
 
-	Player* AudioManager::createPlayer(chstr name)
+	void AudioManager::destroySound(SoundBuffer* sound)
 	{
-		if (!this->sounds.has_key(name))
+		foreach_m (SoundBuffer*, it, this->sounds)
 		{
-			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
-		}
-		Sound* sound = this->sounds[name];
-		Player* player = this->_createAudioPlayer(sound, sound->getBuffer());
-		this->players += player;
-		return player;
-	}
-
-	void AudioManager::destroyPlayer(Player* player)
-	{
-		this->_lock();
-		this->_destroyPlayer(player);
-		this->_unlock();
-	}
-
-	Player* AudioManager::findPlayer(chstr name)
-	{
-		harray<Player*> players = this->players - this->managedPlayers;
-		foreach (Player*, it, players)
-		{
-			if ((*it)->getName() == name)
+			if (it->second == sound)
 			{
-				return (*it);
-			}
-		}
-		return NULL;
-	}
-
-	void AudioManager::_destroyPlayer(Player* player)
-	{
-		this->players -= player;
-		player->_stop();
-		delete player;
-	}
-
-	Player* AudioManager::_createManagedPlayer(chstr name)
-	{
-		Player* player = this->createPlayer(name);
-		this->managedPlayers += player;
-		return player;
-	}
-
-	void AudioManager::_destroyManagedPlayer(Player* player)
-	{
-		this->managedPlayers -= player;
-		this->_destroyPlayer(player);
-	}
-
-	Buffer* AudioManager::_createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode)
-	{
-		return new Buffer(filename, loadMode, decodeMode);
-	}
-
-	Player* AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
-	{
-		return new Player(sound, buffer);
-	}
-	
-	Source* AudioManager::_createSource(chstr filename, Format format)
-	{
-		Source* source;
-		switch (format)
-		{
-#if HAVE_M4A
-		case M4A:
-			source = new M4A_Source(filename);
-			break;
-#endif
-#if HAVE_MP3
-		case MP3:
-			source = new MP3_Source(filename);
-			break;
-#endif
-#if HAVE_OGG
-		case OGG:
-			source = new OGG_Source(filename);
-			break;
-#endif
-#if HAVE_SPX
-		case SPX:
-			source = new SPX_Source(filename);
-			break;
-#endif
-#if HAVE_WAV
-		case WAV:
-			source = new WAV_Source(filename);
-			break;
-#endif
-		default:
-			source = new Source(filename);
-			break;
-		}
-		return source;
-	}
-
-	void AudioManager::play(chstr name, float fadeTime, bool looping, float gain)
-	{
-		this->_lock();
-		Player* player = this->_createManagedPlayer(name);
-		player->setGain(gain);
-		player->_play(fadeTime, looping);
-		this->_unlock();
-	}
-
-	void AudioManager::stop(chstr name, float fadeTime)
-	{
-		this->_lock();
-		fadeTime = hmax(fadeTime, 0.0f);
-		harray<Player*> players;
-		foreach (Player*, it, this->managedPlayers)
-		{
-			if ((*it)->getSound()->getName() == name)
-			{
-				if (fadeTime == 0.0f)
-				{
-					players += (*it);
-				}
-				else
-				{
-					(*it)->_stop(fadeTime);
-				}
-			}
-		}
-		foreach (Player*, it, players)
-		{
-			this->_destroyManagedPlayer(*it);
-		}
-		this->_unlock();
-	}
-
-	void AudioManager::stopFirst(chstr name, float fadeTime)
-	{
-		this->_lock();
-		fadeTime = hmax(fadeTime, 0.0f);
-		foreach (Player*, it, this->managedPlayers)
-		{
-			if ((*it)->getSound()->getName() == name)
-			{
-				if (fadeTime == 0.0f)
-				{
-					this->_destroyManagedPlayer(*it);
-				}
-				else
-				{
-					(*it)->_stop(fadeTime);
-				}
+				this->sounds.erase(it);
+				delete it->second;
 				break;
 			}
 		}
-		this->_unlock();
+	}
+	
+	void AudioManager::destroySoundsWithPrefix(chstr prefix)
+	{
+		harray<hstr> deleteList;
+		foreach_m (SoundBuffer*, it, this->sounds)
+		{
+			if (it->first.starts_with(prefix))
+			{
+				delete it->second;
+				deleteList.push_back(it->first);
+			}
+		}
+		foreach (hstr, it, deleteList)
+		{
+			this->sounds.erase(*it);
+		}
+	}
+
+	void AudioManager::createCategory(chstr name, bool streamed, bool dynamicLoad)
+	{
+		if (!this->categories.has_key(name))
+		{
+			this->categories[name] = new Category(name, streamed, dynamicLoad);
+		}
+	}
+
+	void AudioManager::setGlobalGain(float value)
+	{
+		this->gain = value;
+		foreach (Sound*, it, this->sources)
+		{
+			(*it)->setGain((*it)->getGain());
+		}
+	}
+
+	Category* AudioManager::getCategoryByName(chstr name)
+	{
+		if (!this->categories.has_key(name))
+		{
+			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+		}
+		return this->categories[name];
+	}
+
+	float AudioManager::getCategoryGain(chstr name)
+	{
+		if (!this->categories.has_key(name))
+		{
+			throw ("Audio Manager: Category '" + name + "' does not exist!").c_str();
+		}
+		return this->categories[name]->getGain();
+	}
+
+	void AudioManager::setCategoryGain(chstr name, float gain)
+	{
+		this->getCategoryByName(name)->setGain(gain);
+		foreach (Sound*, it, this->sources)
+		{
+			(*it)->setGain((*it)->getGain());
+		}
 	}
 
 	void AudioManager::stopAll(float fadeTime)
 	{
-		this->_lock();
-		fadeTime = hmax(fadeTime, 0.0f);
-		if (fadeTime == 0.0f)
+		this->lockUpdate();
+		harray<Sound*> sources(this->sources);
+		foreach (Sound*, it, sources)
 		{
-			harray<Player*> players(this->managedPlayers);
-			foreach (Player*, it, players)
-			{
-				this->_destroyManagedPlayer(*it);
-			}
-			foreach (Player*, it, this->players)
-			{
-				(*it)->_stop();
-			}
+			(*it)->unlock();
+			(*it)->stop(fadeTime);
 		}
-		else
-		{
-			foreach (Player*, it, this->players)
-			{
-				(*it)->_stop(fadeTime);
-			}
-		}
-		this->_unlock();
+		this->unlockUpdate();
 	}
 	
 	void AudioManager::pauseAll(float fadeTime)
 	{
-		if (!this->paused)
+		this->lockUpdate();
+		harray<Sound*> sources(this->sources);
+		foreach (Sound*, it, sources)
 		{
-			this->_lock();
-			foreach (Player*, it, this->players)
+			(*it)->pause(fadeTime);
+		}
+		this->unlockUpdate();
+	}
+	
+	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
+	{
+		Category* category = this->categories[categoryName];
+		harray<Sound*> sources(this->sources);
+		foreach (Sound*, it, sources)
+		{
+			if ((*it)->getCategory() == category)
 			{
-				if ((*it)->isPlaying())
-				{
-					(*it)->pause();
-					this->pausedPlayers += (*it);
-				}
+				(*it)->unlock();
+				(*it)->stop(fadeTime);
 			}
-			this->paused = true;
-			this->_unlock();
 		}
 	}
 	
-	void AudioManager::resumeAll(float fadeTime)
+	void AudioManager::lockUpdate()
 	{
-		if (this->paused)
-		{
-			this->_lock();
-			foreach (Player*, it, this->players)
-			{
-				(*it)->play();
-			}
-			this->paused = false;
-			this->pausedPlayers.clear();
-			this->_unlock();
-		}
+		while (this->updating);
+		this->updating = true;
 	}
 	
-	void AudioManager::stopCategory(chstr name, float fadeTime)
+	void AudioManager::unlockUpdate()
 	{
-		this->_lock();
-		fadeTime = hmax(fadeTime, 0.0f);
-		Category* category = this->getCategoryByName(name);
-		if (fadeTime == 0.0f)
-		{
-			harray<Player*> players(this->managedPlayers);
-			foreach (Player*, it, players)
-			{
-				if ((*it)->getCategory() == category)
-				{
-					this->_destroyManagedPlayer(*it);
-				}
-			}
-			foreach (Player*, it, this->players)
-			{
-				if ((*it)->getCategory() == category)
-				{
-					(*it)->_stop();
-				}
-			}
-		}
-		else
-		{
-			foreach (Player*, it, this->players)
-			{
-				if ((*it)->getCategory() == category)
-				{
-					(*it)->_stop(fadeTime);
-				}
-			}
-		}
-		this->_unlock();
+		this->updating = false;
 	}
 	
-	bool AudioManager::isAnyPlaying(chstr name)
-	{
-		foreach (Player*, it, this->managedPlayers)
-		{
-			if ((*it)->getSound()->getName() == name && (*it)->isPlaying())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	bool AudioManager::isAnyFading(chstr name)
-	{
-		foreach (Player*, it, this->managedPlayers)
-		{
-			if ((*it)->getSound()->getName() == name && (*it)->isFading())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	bool AudioManager::isAnyFadingIn(chstr name)
-	{
-		foreach (Player*, it, this->managedPlayers)
-		{
-			if ((*it)->getSound()->getName() == name && (*it)->isFadingIn())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	bool AudioManager::isAnyFadingOut(chstr name)
-	{
-		foreach (Player*, it, this->managedPlayers)
-		{
-			if ((*it)->getSound()->getName() == name && (*it)->isFadingOut())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
 }

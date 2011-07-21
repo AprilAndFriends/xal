@@ -1,22 +1,24 @@
-/// @file
-/// @author  Boris Mikic
-/// @version 2.0
-/// 
-/// @section LICENSE
-/// 
-/// This program is free software; you can redistribute it and/or modify it under
-/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
-
+/************************************************************************************\
+This source file is part of the KS(X) audio library                                  *
+For latest info, see http://code.google.com/p/libxal/                                *
+**************************************************************************************
+Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
+*                                                                                    *
+* This program is free software; you can redistribute it and/or modify it under      *
+* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
+\************************************************************************************/
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 #include <xal/AudioManager.h>
-#include <xal/Player.h>
+#include <xal/Sound.h>
 
 #include "Playlist.h"
 
 namespace xal
 {
+/******* CONSTRUCT / DESTRUCT ******************************************/
+
 	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false),
 		index(-1)
 	{
@@ -25,51 +27,32 @@ namespace xal
 	
 	Playlist::~Playlist()
 	{
-		this->clear();
-	}
-
-	bool Playlist::isPaused()
-	{
-		return (this->index >= 0 && this->index < this->players.size() && this->players[this->index]->isPaused());
 	}
 	
-	harray<hstr> Playlist::getSoundNames()
-	{
-		harray<hstr> result;
-		foreach (Player*, it, this->players)
-		{
-			result += (*it)->getName();
-		}
-		return result;
-	}
+/******* METHODS *******************************************************/
 
-	Player* Playlist::getCurrentPlayer()
-	{
-		return (this->isPlaying() ? this->players[this->index] : NULL);
-	}
-	
 	void Playlist::update()
 	{
-		if (this->players.size() == 0 || this->index < 0)
+		if (this->sounds.size() == 0 || this->index < 0)
 		{
 			return;
 		}
 		if (this->repeatAll)
 		{
-			if (!this->players[this->index]->isPlaying())
+			if (!xal::mgr->getSound(this->sounds[this->index])->isPlaying())
 			{
-				this->index = (this->index + 1) % this->players.size();
-				this->players[this->index]->play();
+				this->index = (this->index + 1) % this->sounds.size();
+				xal::mgr->getSound(this->sounds[this->index])->play();
 			}
 		}
-		else if (this->index < this->players.size())
+		else if (this->index < this->sounds.size())
 		{
-			if (!this->players[this->index]->isPlaying())
+			if (!xal::mgr->getSound(this->sounds[this->index])->isPlaying())
 			{
 				this->index++;
-				if (this->index < this->players.size())
+				if (this->index < this->sounds.size())
 				{
-					this->players[this->index]->play();
+					xal::mgr->getSound(this->sounds[this->index])->play();
 				}
 				else
 				{
@@ -83,43 +66,17 @@ namespace xal
 		}
 	}
 	
-	void Playlist::clear()
-	{
-		this->stop();
-		foreach (Player*, it, this->players)
-		{
-			xal::mgr->destroyPlayer(*it);
-		}
-		this->players.clear();
-		this->index = -1;
-	}
-	
-	void Playlist::queueSound(chstr name)
-	{
-		this->players += xal::mgr->createPlayer(name);
-		this->index = hmax(this->index, 0);
-	}
-	
-	void Playlist::queueSounds(harray<hstr> names)
-	{
-		foreach (hstr, it, names)
-		{
-			this->players += xal::mgr->createPlayer(*it);
-		}
-		this->index = hmax(this->index, 0);
-	}
-	
 	void Playlist::play(float fadeTime)
 	{
-		if (!this->enabled || this->players.size() == 0 || this->playing)
+		if (!this->enabled || this->sounds.size() == 0 || this->playing)
 		{
 			return;
 		}
-		if (this->index >= this->players.size())
+		if (this->index >= this->sounds.size())
 		{
 			this->index = 0;
 		}
-		this->players[this->index]->play(fadeTime);
+		xal::mgr->getSound(this->sounds[this->index])->play(fadeTime);
 		this->playing = true;
 	}
 	
@@ -127,7 +84,7 @@ namespace xal
 	{
 		if (this->playing)
 		{
-			this->players[this->index]->stop(fadeTime);
+			xal::mgr->getSound(this->sounds[this->index])->stop(fadeTime);
 		}
 		this->playing = false;
 	}
@@ -136,28 +93,28 @@ namespace xal
 	{
 		if (this->playing)
 		{
-			this->players[this->index]->pause(fadeTime);
+			xal::mgr->getSound(this->sounds[this->index])->pause(fadeTime);
 		}
 		this->playing = false;
 	}
-
-	void Playlist::shuffle()
-	{
-		if (!this->playing)
-		{
-			xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
-			this->players.randomize();
-			if (player != NULL)
-			{
-				this->index = this->players.index_of(player);
-			}
-		}
-	}
-
-	void Playlist::reset()
+	
+	void Playlist::clear()
 	{
 		this->stop();
-		this->index = 0;
+		this->sounds.clear();
+		this->index = -1;
+	}
+	
+	void Playlist::queueSound(chstr name)
+	{
+		this->sounds += name;
+		this->index = hmax(this->index, 0);
+	}
+	
+	void Playlist::queueSounds(harray<hstr> names)
+	{
+		this->sounds += names;
+		this->index = hmax(this->index, 0);
 	}
 	
 }
