@@ -41,10 +41,6 @@ namespace xal
 			return;
 		}
 		this->enabled = true;
-		if (threaded)
-		{
-			this->_setupThread();
-		}
 	}
 
 	DirectSound_AudioManager::~DirectSound_AudioManager()

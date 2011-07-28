@@ -130,6 +130,8 @@ namespace xal
 			return;
 		}
 		xal::log("audio system created: " + name);
+		// actually starts threading
+		xal::mgr->init();
 	}
 	
 	void destroy()

@@ -77,6 +77,7 @@ namespace xal
 
 		AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		virtual ~AudioManager();
+		virtual void init();
 		void clear();
 		
 		hstr getName() { return this->name; }
@@ -124,6 +125,7 @@ namespace xal
 		hstr name;
 		bool enabled;
 		bool paused;
+		bool threaded;
 		hstr deviceName;
 		float updateTime;
 		float gain;
@@ -136,8 +138,6 @@ namespace xal
 		hmutex mutex;
 		
 		void _update(float k);
-		void _setupThread();
-		void _destroyThread();
 		void _lock();
 		void _unlock();
 

@@ -52,11 +52,32 @@ namespace xal
 		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;
+		if (threaded)
+		{
+			this->thread = new hthread(&AudioManager::update);
+		}
 	}
 
 	AudioManager::~AudioManager()
 	{
-		this->_destroyThread();
+		if (this->thread != NULL)
+		{
+			xal::log("stopping thread management");
+			this->_lock();
+			this->thread->stop();
+			delete this->thread;
+			this->thread = NULL;
+			this->_unlock();
+		}
+	}
+
+	void AudioManager::init()
+	{
+		if (this->enabled && this->thread != NULL)
+		{
+			xal::log("starting thread management");
+			this->thread->start();
+		}
 	}
 
 	void AudioManager::clear()
@@ -80,28 +101,6 @@ namespace xal
 		this->categories.clear();
 	}
 	
-	void AudioManager::_setupThread()
-	{
-		xal::log("starting thread management");
-		this->_lock();
-		this->thread = new hthread(&AudioManager::update);
-		this->thread->start();
-		this->_unlock();
-	}
-
-	void AudioManager::_destroyThread()
-	{
-		if (this->thread != NULL)
-		{
-			xal::log("stopping thread management");
-			this->_lock();
-			this->thread->stop();
-			delete this->thread;
-			this->thread = NULL;
-			this->_unlock();
-		}
-	}
-
 	void AudioManager::setGlobalGain(float value)
 	{
 		this->gain = value;
