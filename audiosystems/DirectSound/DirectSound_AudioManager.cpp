@@ -60,21 +60,22 @@ namespace xal
 
 	Source* DirectSound_AudioManager::_createSource(chstr filename, Format format)
 	{
+/*
 		Source* source;
 		switch (format)
 		{
-/*
 #if HAVE_WAV
 		case WAV:
 			source = new DirectSound_WAV_Source(filename);
 			break;
 #endif
-*/
 		default:
 			source = AudioManager::_createSource(filename, format);
 			break;
 		}
 		return source;
+*/
+		return AudioManager::_createSource(filename, format);
 	}
 
 }
