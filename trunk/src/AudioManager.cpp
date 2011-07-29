@@ -500,7 +500,7 @@ namespace xal
 		if (this->paused)
 		{
 			this->_lock();
-			foreach (Player*, it, this->players)
+			foreach (Player*, it, this->pausedPlayers)
 			{
 				(*it)->play();
 			}
