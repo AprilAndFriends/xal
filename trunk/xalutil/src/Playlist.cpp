@@ -143,7 +143,7 @@ namespace xal
 
 	void Playlist::shuffle()
 	{
-		if (!this->playing)
+		if (!this->playing && this->players.size() > 1)
 		{
 			xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
 			this->players.randomize();
