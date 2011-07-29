@@ -50,10 +50,6 @@ namespace xal
 		}
 		SDL_PauseAudio(0);
 		this->enabled = true;
-		if (threaded)
-		{
-			this->_setupThread();
-		}
 	}
 
 	SDL_AudioManager::~SDL_AudioManager()

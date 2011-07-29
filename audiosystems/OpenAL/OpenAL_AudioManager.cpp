@@ -68,10 +68,6 @@ namespace xal
 		this->device = currentDevice;
 		this->context = currentContext;
 		this->enabled = true;
-		if (threaded)
-		{
-			this->_setupThread();
-		}
 	}
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
