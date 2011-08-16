@@ -148,6 +148,14 @@ namespace xal
 		{
 			return;
 		}
+		if (xal::mgr->isPaused())
+		{
+			if (!xal::mgr->pausedPlayers.contains(this))
+			{
+				xal::mgr->pausedPlayers += this;
+			}
+			return;
+		}
 		if (!this->_sysPreparePlay())
 		{
 			return;

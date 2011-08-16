@@ -135,18 +135,22 @@ namespace xal
 
 	void AudioManager::_update(float k)
 	{
-		if (this->isEnabled())
+		if (this->enabled)
 		{
 			foreach (Player*, it, this->players)
 			{
 				(*it)->_update(k);
 			}
-			harray<Player*> players(this->managedPlayers);
-			foreach (Player*, it, players)
+			if (!this->paused)
 			{
-				if (!(*it)->isPlaying() && !(*it)->isFading())
+				// creating a copy, because _destroyManagedPlayer alters managedPlayers
+				harray<Player*> players(this->managedPlayers);
+				foreach (Player*, it, players)
 				{
-					this->_destroyManagedPlayer(*it);
+					if (!(*it)->isPlaying() && !(*it)->isFading())
+					{
+						this->_destroyManagedPlayer(*it);
+					}
 				}
 			}
 		}
