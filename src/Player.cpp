@@ -153,6 +153,11 @@ namespace xal
 			if (!xal::mgr->pausedPlayers.contains(this))
 			{
 				xal::mgr->pausedPlayers += this;
+				if (!this->paused)
+				{
+					this->looping = looping;
+					this->paused = true;
+				}
 			}
 			return;
 		}

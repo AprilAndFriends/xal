@@ -493,6 +493,10 @@ namespace xal
 					(*it)->pause();
 					this->pausedPlayers += (*it);
 				}
+				else if ((*it)->isFadingOut())
+				{
+					(*it)->paused ? (*it)->pause() : (*it)->stop();
+				}
 			}
 			this->paused = true;
 			this->_unlock();
