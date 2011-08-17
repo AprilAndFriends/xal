@@ -30,7 +30,7 @@ namespace xal
 	void Player::setGain(float gain)
 	{
 		this->gain = hclamp(gain, 0.0f, 1.0f);
-		this->_sysUpdateGain();
+		this->_systemUpdateGain();
 	}
 
 	hstr Player::getName()
@@ -60,7 +60,7 @@ namespace xal
 	
 	bool Player::isPlaying()
 	{
-		return (!this->isFadingOut() && this->_sysIsPlaying());
+		return (!this->isFadingOut() && this->_systemIsPlaying());
 	}
 	
 	bool Player::isPaused()
@@ -90,9 +90,9 @@ namespace xal
 
 	void Player::_update(float k)
 	{
-		if (this->sound->isStreamed() && this->_sysIsPlaying())
+		if (this->sound->isStreamed() && this->_systemIsPlaying())
 		{
-			this->_sysUpdateStream();
+			this->_systemUpdateStream();
 		}
 		if (this->isFading())
 		{
@@ -116,7 +116,7 @@ namespace xal
 			}
 			else
 			{
-				this->_sysUpdateFadeGain();
+				this->_systemUpdateFadeGain();
 			}
 		}
 	}
@@ -161,7 +161,7 @@ namespace xal
 			}
 			return;
 		}
-		if (!this->_sysPreparePlay())
+		if (!this->_systemPreparePlay())
 		{
 			return;
 		}
@@ -173,10 +173,10 @@ namespace xal
 		if (!alreadyFading)
 		{
 			this->buffer->prepare();
-			this->_sysPrepareBuffer();
+			this->_systemPrepareBuffer();
 			if (this->paused)
 			{
-				this->_sysSetOffset(this->offset);
+				this->_systemSetOffset(this->offset);
 			}
 		}
 		if (fadeTime > 0.0f)
@@ -188,16 +188,20 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		this->_sysUpdateFadeGain();
+		this->_systemUpdateFadeGain();
 		if (!alreadyFading)
 		{
-			this->_sysPlay();
+			this->_systemPlay();
 		}
 		this->paused = false;
 	}
 
 	void Player::_stop(float fadeTime)
 	{
+		if (xal::mgr->isPaused() && xal::mgr->pausedPlayers.contains(this))
+		{
+			xal::mgr->pausedPlayers -= this;
+		}
 		this->paused = false;
 		this->_stopSound(fadeTime);
 		this->offset = 0.0f;
@@ -216,10 +220,10 @@ namespace xal
 			this->fadeSpeed = -1.0f / fadeTime;
 			return;
 		}
-		this->_sysStop();
+		this->_systemStop();
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-		this->offset = this->_sysGetOffset();
+		this->offset = this->_systemGetOffset();
 		this->buffer->release();
 	}
 

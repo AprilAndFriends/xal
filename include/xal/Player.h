@@ -14,6 +14,8 @@
 #ifndef XAL_PLAYER_H
 #define XAL_PLAYER_H
 
+#include <hltypes/hstring.h>
+
 #include "xalExport.h"
 
 namespace xal
@@ -22,11 +24,13 @@ namespace xal
 	class Buffer;
 	class Category;
 	class Sound;
+	class Updateable;
 
 	class xalExport Player
 	{
 	public:
 		friend class AudioManager;
+		friend class Updateable;
 
 		Player(Sound* sound, Buffer* buffer);
 		virtual ~Player();
@@ -75,16 +79,16 @@ namespace xal
 		float _calcFadeGain();
 		void _stopSound(float fadeTime = 0.0f);
 
-		virtual bool _sysIsPlaying() { return false; }
-		virtual float _sysGetOffset() { return 1.0f; }
-		virtual void _sysSetOffset(float value) { }
-		virtual bool _sysPreparePlay() { return true; }
-		virtual void _sysPrepareBuffer() { }
-		virtual void _sysUpdateGain() { }
-		virtual void _sysUpdateFadeGain() { }
-		virtual void _sysPlay() { }
-		virtual void _sysStop() { }
-		virtual void _sysUpdateStream() { }
+		virtual bool _systemIsPlaying() { return false; }
+		virtual float _systemGetOffset() { return 1.0f; }
+		virtual void _systemSetOffset(float value) { }
+		virtual bool _systemPreparePlay() { return true; }
+		virtual void _systemPrepareBuffer() { }
+		virtual void _systemUpdateGain() { }
+		virtual void _systemUpdateFadeGain() { }
+		virtual void _systemPlay() { }
+		virtual void _systemStop() { }
+		virtual void _systemUpdateStream() { }
 
 	};
 

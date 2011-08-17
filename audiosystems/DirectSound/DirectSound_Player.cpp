@@ -26,7 +26,7 @@
 namespace xal
 {
 	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), playing(false), dsBuffer(NULL), bufferCount(0)
+		Player(sound, buffer), dsBuffer(NULL), bufferCount(0)
 	{
 	}
 
@@ -39,21 +39,18 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_update(float k)
+	bool DirectSound_Player::_systemIsPlaying()
 	{
-		Player::_update(k);
-		if (this->playing)
+		if (this->dsBuffer == NULL)
 		{
-			unsigned long status;
-			this->dsBuffer->GetStatus(&status);
-			if ((status & DSBSTATUS_PLAYING) == 0)
-			{
-				this->playing = false;
-			}
+			return false;
 		}
+		unsigned long status;
+		this->dsBuffer->GetStatus(&status);
+		return ((status & DSBSTATUS_PLAYING) != 0);
 	}
 
-	float DirectSound_Player::_sysGetOffset()
+	float DirectSound_Player::_systemGetOffset()
 	{
 		if (this->dsBuffer == NULL)
 		{
@@ -64,7 +61,7 @@ namespace xal
 		return (float)position;
 	}
 
-	void DirectSound_Player::_sysSetOffset(float value)
+	void DirectSound_Player::_systemSetOffset(float value)
 	{
 		if (this->dsBuffer != NULL)
 		{
@@ -72,7 +69,7 @@ namespace xal
 		}
 	}
 
-	bool DirectSound_Player::_sysPreparePlay()
+	bool DirectSound_Player::_systemPreparePlay()
 	{
 		if (this->dsBuffer != NULL)
 		{
@@ -113,7 +110,7 @@ namespace xal
 		return true;
 	}
 
-	void DirectSound_Player::_sysPrepareBuffer()
+	void DirectSound_Player::_systemPrepareBuffer()
 	{
 		if (!this->sound->isStreamed())
 		{
@@ -172,7 +169,7 @@ namespace xal
 		this->dsBuffer->Unlock(write1, length1, write2, length2);
 	}
 
-	void DirectSound_Player::_sysUpdateGain()
+	void DirectSound_Player::_systemUpdateGain()
 	{
 		if (this->dsBuffer != NULL)
 		{
@@ -186,7 +183,7 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_sysUpdateFadeGain()
+	void DirectSound_Player::_systemUpdateFadeGain()
 	{
 		if (this->dsBuffer != NULL)
 		{
@@ -200,21 +197,19 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_sysPlay()
+	void DirectSound_Player::_systemPlay()
 	{
 		if (this->dsBuffer != NULL)
 		{
 			this->dsBuffer->Play(0, 0, ((this->looping || this->sound->isStreamed()) ? DSBPLAY_LOOPING : 0));
-			this->playing = true;
 		}
 	}
 
-	void DirectSound_Player::_sysStop()
+	void DirectSound_Player::_systemStop()
 	{
 		if (this->dsBuffer != NULL)
 		{
 			this->dsBuffer->Stop();
-			this->playing = false;
 			if (this->sound->isStreamed())
 			{
 				if (this->paused)
@@ -233,7 +228,7 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_sysUpdateStream()
+	void DirectSound_Player::_systemUpdateStream()
 	{
 		if (this->bufferCount == 0)
 		{

@@ -41,16 +41,16 @@ namespace xal
 
 		void _update(float k);
 
-		bool _sysIsPlaying() { return this->playing; }
-		float _sysGetOffset();
-		void _sysSetOffset(float value);
-		bool _sysPreparePlay();
-		void _sysPrepareBuffer();
-		void _sysUpdateGain();
-		void _sysUpdateFadeGain();
-		void _sysPlay();
-		void _sysStop();
-		void _sysUpdateStream();
+		bool _systemIsPlaying() { return this->playing; }
+		float _systemGetOffset();
+		void _systemSetOffset(float value);
+		bool _systemPreparePlay();
+		void _systemPrepareBuffer();
+		void _systemUpdateGain();
+		void _systemUpdateFadeGain();
+		void _systemPlay();
+		void _systemStop();
+		void _systemUpdateStream();
 
 		int _fillBuffer(int size);
 		void _getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2);

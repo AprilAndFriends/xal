@@ -17,8 +17,7 @@
 
 namespace xal
 {
-	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false),
-		index(-1)
+	Playlist::Playlist(bool repeatAll) : ExternalComponent(), enabled(true), playing(false), index(-1)
 	{
 		this->repeatAll = repeatAll;
 	}
@@ -54,6 +53,7 @@ namespace xal
 		{
 			return;
 		}
+		this->_lock();
 		if (this->repeatAll)
 		{
 			if (!this->players[this->index]->isPlaying())
@@ -81,6 +81,7 @@ namespace xal
 		{
 			this->playing = false;
 		}
+		this->_unlock();
 	}
 	
 	void Playlist::clear()

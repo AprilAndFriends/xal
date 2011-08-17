@@ -98,6 +98,9 @@
     <ClCompile Include="audiosystems\DirectSound\DirectSound_WAV_Source.cpp">
       <Filter>Source Files\audiosystems\DirectSound</Filter>
     </ClCompile>
+    <ClCompile Include="src\ExternalComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Endianess.h">
@@ -159,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="audiosystems\DirectSound\DirectSound_WAV_Source.h">
       <Filter>Header Files\audiosystems\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\xal\ExternalComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
