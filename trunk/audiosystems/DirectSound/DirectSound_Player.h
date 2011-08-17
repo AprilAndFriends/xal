@@ -34,6 +34,7 @@ namespace xal
 	protected:
 		IDirectSoundBuffer* dsBuffer;
 		int bufferCount;
+		int bufferQueued;
 
 		bool _systemIsPlaying();
 		float _systemGetOffset();
@@ -48,7 +49,8 @@ namespace xal
 
 		int _getProcessedBuffersCount();
 		int _fillBuffers(int index, int count);
-		void _copyBuffer(int index, unsigned char* stream, int size);
+		void _copyBuffer(unsigned char* stream, int size, int count = 1);
+		void _copySilence(int size, int count = 1);
 
 	};
 

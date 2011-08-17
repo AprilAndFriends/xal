@@ -74,7 +74,7 @@ namespace xal
 			break;
 		}
 		return source;
-*/
+//*/
 		return AudioManager::_createSource(filename, format);
 	}
 
