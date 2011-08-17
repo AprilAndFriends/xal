@@ -174,11 +174,25 @@ namespace xal
 		if (this->isStreamed() && this->source->isOpen())
 		{
 			this->streamSize = this->source->loadChunk(this->stream, size);
-			while (looping && this->streamSize < size)
+			size -= this->streamSize;
+			if (size > 0)
 			{
-				this->source->rewind();
-				size -= this->streamSize;
-				this->streamSize += this->source->loadChunk(&this->stream[this->streamSize], size);
+				if (!looping)
+				{
+					// fill rest of buffer with silence so systems that depends on buffered chunks don't get messed up
+					memset(&this->stream[this->streamSize], 0, size * sizeof(unsigned char));
+				}
+				else
+				{
+					int read = 0;
+					while (size > 0)
+					{
+						this->source->rewind();
+						read = this->source->loadChunk(&this->stream[this->streamSize], size);
+						size -= read;
+						this->streamSize += read;
+					}
+				}
 			}
 			xal::mgr->_convertStream(this, &this->stream, &this->streamSize);
 		}

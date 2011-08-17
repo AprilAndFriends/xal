@@ -26,7 +26,7 @@
 namespace xal
 {
 	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), dsBuffer(NULL), bufferCount(0)
+		Player(sound, buffer), dsBuffer(NULL), bufferCount(0), bufferQueued(0)
 	{
 	}
 
@@ -114,7 +114,7 @@ namespace xal
 	{
 		if (!this->sound->isStreamed())
 		{
-			this->_copyBuffer(0, this->buffer->getStream(), this->buffer->getSize());
+			this->_copyBuffer(this->buffer->getStream(), this->buffer->getSize());
 			return;
 		}
 		int count = STREAM_BUFFER_COUNT;
@@ -124,7 +124,7 @@ namespace xal
 		}
 		else
 		{
-			count = STREAM_BUFFER_COUNT - this->bufferCount;
+			count -= this->bufferQueued;
 		}
 		if (count > 0)
 		{
@@ -132,27 +132,23 @@ namespace xal
 			this->bufferCount += count;
 			if (count > 0)
 			{
-				this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
-				if (this->bufferCount < STREAM_BUFFER_COUNT)
-				{
-					count = STREAM_BUFFER_COUNT - this->bufferCount;
-					int size = count * STREAM_BUFFER_SIZE;
-					unsigned char* stream = new unsigned char[size];
-					memset(stream, 0, size * sizeof(unsigned char));
-					this->_copyBuffer(this->bufferCount, stream, size);
-					delete [] stream;
-				}
+				this->_copyBuffer(this->buffer->getStream(), STREAM_BUFFER_SIZE, count);
+			}
+			if (this->bufferQueued < STREAM_BUFFER_COUNT)
+			{
+				count = STREAM_BUFFER_COUNT - this->bufferQueued;
+				this->_copySilence(STREAM_BUFFER_SIZE, count);
 			}
 		}
 	}
 
-	void DirectSound_Player::_copyBuffer(int index, unsigned char* stream, int size)
+	void DirectSound_Player::_copyBuffer(unsigned char* stream, int size, int count)
 	{
 		void* write1 = NULL;
 		void* write2 = NULL;
 		unsigned long length1;
 		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(index * STREAM_BUFFER_SIZE, size, &write1, &length1, &write2, &length2, 0);
+		HRESULT result = this->dsBuffer->Lock(this->bufferIndex * STREAM_BUFFER_SIZE, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
 			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
@@ -167,6 +163,39 @@ namespace xal
 			memcpy(write2, &stream[length1], length2);
 		}
 		this->dsBuffer->Unlock(write1, length1, write2, length2);
+		if (this->sound->isStreamed())
+		{
+			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->bufferQueued += count;
+		}
+	}
+
+	void DirectSound_Player::_copySilence(int size, int count)
+	{
+		void* write1 = NULL;
+		void* write2 = NULL;
+		unsigned long length1;
+		unsigned long length2;
+		HRESULT result = this->dsBuffer->Lock(this->bufferIndex * STREAM_BUFFER_SIZE, size * count, &write1, &length1, &write2, &length2, 0);
+		if (FAILED(result))
+		{
+			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
+			return;
+		}
+		if (write1 != NULL)
+		{
+			memset(write1, 0, length1);
+		}
+		if (write2 != NULL)
+		{
+			memset(write2, 0, length2);
+		}
+		this->dsBuffer->Unlock(write1, length1, write2, length2);
+		if (this->sound->isStreamed())
+		{
+			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->bufferQueued += count;
+		}
 	}
 
 	void DirectSound_Player::_systemUpdateGain()
@@ -217,11 +246,13 @@ namespace xal
 					int processed = this->_getProcessedBuffersCount();
 					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
 					this->bufferCount -= processed;
+					this->bufferQueued -= processed;
 				}
 				else
 				{
 					this->bufferIndex = 0;
-					this->bufferCount = 0,
+					this->bufferCount = 0;
+					this->bufferQueued = 0;
 					this->buffer->rewind();
 				}
 			}
@@ -241,21 +272,17 @@ namespace xal
 			return;
 		}
 		this->bufferCount = hmax(this->bufferCount - processed, 0);
+		this->bufferQueued = hmax(this->bufferQueued - processed, 0);
 		int count = this->_fillBuffers(this->bufferIndex, processed);
 		if (count > 0)
 		{
-			this->_copyBuffer(this->bufferIndex, this->buffer->getStream(), count * STREAM_BUFFER_SIZE);
-			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->_copyBuffer(this->buffer->getStream(), STREAM_BUFFER_SIZE, count);
 			this->bufferCount += count;
 		}
-		if (this->bufferCount < STREAM_BUFFER_COUNT && !this->looping)
+		if (!this->looping && this->bufferQueued < STREAM_BUFFER_COUNT)
 		{
-			count = STREAM_BUFFER_COUNT - this->bufferCount;
-			int size = count * STREAM_BUFFER_SIZE;
-			unsigned char* stream = new unsigned char[size];
-			memset(stream, 0, size * sizeof(unsigned char));
-			this->_copyBuffer(this->bufferCount, stream, size);
-			delete [] stream;
+			count = STREAM_BUFFER_COUNT - this->bufferQueued;
+			this->_copySilence(STREAM_BUFFER_SIZE, count);
 		}
 		if (this->bufferCount == 0)
 		{
