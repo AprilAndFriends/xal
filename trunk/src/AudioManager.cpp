@@ -119,9 +119,7 @@ namespace xal
 	{
 		while (true)
 		{
-			xal::mgr->_lock();
-			xal::mgr->_update(xal::mgr->updateTime);
-			xal::mgr->_unlock();
+			xal::mgr->update(xal::mgr->updateTime);
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
@@ -141,16 +139,13 @@ namespace xal
 			{
 				(*it)->_update(k);
 			}
-			if (!this->paused)
+			// creating a copy, because _destroyManagedPlayer alters managedPlayers
+			harray<Player*> players = this->managedPlayers;
+			foreach (Player*, it, players)
 			{
-				// creating a copy, because _destroyManagedPlayer alters managedPlayers
-				harray<Player*> players(this->managedPlayers);
-				foreach (Player*, it, players)
+				if (!(*it)->isPlaying() && !(*it)->isFadingOut())
 				{
-					if (!(*it)->isPlaying() && !(*it)->isFading())
-					{
-						this->_destroyManagedPlayer(*it);
-					}
+					this->_destroyManagedPlayer(*it);
 				}
 			}
 		}
@@ -242,6 +237,7 @@ namespace xal
 	{
 		xal::log(hsprintf("destroying sounds with prefix '%s'", prefix.c_str()));
 		harray<hstr> keys = this->sounds.keys();
+		// creating a copy, because _destroyManagedPlayer alters managedPlayers
 		harray<Player*> managedPlayers = this->managedPlayers;
 		Sound* sound;
 		foreach (hstr, it, keys)
@@ -333,8 +329,12 @@ namespace xal
 
 	void AudioManager::_destroyPlayer(Player* player)
 	{
-		this->players -= player;
 		player->_stop();
+		this->players -= player;
+		if (this->paused && this->pausedPlayers.contains(player))
+		{
+			this->pausedPlayers -= player;
+		}
 		delete player;
 	}
 
@@ -400,6 +400,10 @@ namespace xal
 
 	void AudioManager::play(chstr name, float fadeTime, bool looping, float gain)
 	{
+		if (this->paused)
+		{
+			return;
+		}
 		this->_lock();
 		Player* player = this->_createManagedPlayer(name);
 		player->setGain(gain);
@@ -411,24 +415,21 @@ namespace xal
 	{
 		this->_lock();
 		fadeTime = hmax(fadeTime, 0.0f);
-		harray<Player*> players;
+		// creating a copy, because _destroyManagedPlayer alters managedPlayers
+		harray<Player*> players = this->managedPlayers;
 		foreach (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == name)
 			{
 				if (fadeTime == 0.0f)
 				{
-					players += (*it);
+					this->_destroyManagedPlayer(*it);
 				}
 				else
 				{
 					(*it)->_stop(fadeTime);
 				}
 			}
-		}
-		foreach (Player*, it, players)
-		{
-			this->_destroyManagedPlayer(*it);
 		}
 		this->_unlock();
 	}
@@ -461,22 +462,16 @@ namespace xal
 		fadeTime = hmax(fadeTime, 0.0f);
 		if (fadeTime == 0.0f)
 		{
-			harray<Player*> players(this->managedPlayers);
+			// creating a copy, because _destroyManagedPlayer alters managedPlayers
+			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
 			{
 				this->_destroyManagedPlayer(*it);
 			}
-			foreach (Player*, it, this->players)
-			{
-				(*it)->_stop();
-			}
 		}
-		else
+		foreach (Player*, it, this->players)
 		{
-			foreach (Player*, it, this->players)
-			{
-				(*it)->_stop(fadeTime);
-			}
+			(*it)->_stop(fadeTime);
 		}
 		this->_unlock();
 	}
@@ -490,12 +485,12 @@ namespace xal
 			{
 				if ((*it)->isPlaying())
 				{
-					(*it)->pause();
+					(*it)->_pause();
 					this->pausedPlayers += (*it);
 				}
 				else if ((*it)->isFadingOut())
 				{
-					(*it)->paused ? (*it)->pause() : (*it)->stop();
+					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
 				}
 			}
 			this->paused = true;
@@ -508,11 +503,11 @@ namespace xal
 		if (this->paused)
 		{
 			this->_lock();
+			this->paused = false;
 			foreach (Player*, it, this->pausedPlayers)
 			{
-				(*it)->play();
+				(*it)->_play();
 			}
-			this->paused = false;
 			this->pausedPlayers.clear();
 			this->_unlock();
 		}
@@ -525,7 +520,8 @@ namespace xal
 		Category* category = this->getCategoryByName(name);
 		if (fadeTime == 0.0f)
 		{
-			harray<Player*> players(this->managedPlayers);
+			// creating a copy, because _destroyManagedPlayer alters managedPlayers
+			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
 			{
 				if ((*it)->getCategory() == category)
@@ -533,22 +529,12 @@ namespace xal
 					this->_destroyManagedPlayer(*it);
 				}
 			}
-			foreach (Player*, it, this->players)
-			{
-				if ((*it)->getCategory() == category)
-				{
-					(*it)->_stop();
-				}
-			}
 		}
-		else
+		foreach (Player*, it, this->players)
 		{
-			foreach (Player*, it, this->players)
+			if ((*it)->getCategory() == category)
 			{
-				if ((*it)->getCategory() == category)
-				{
-					(*it)->_stop(fadeTime);
-				}
+				(*it)->_stop(fadeTime);
 			}
 		}
 		this->_unlock();

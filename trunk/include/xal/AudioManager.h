@@ -64,6 +64,7 @@ namespace xal
 
 	class Buffer;
 	class Category;
+	class ExternalComponent;
 	class Player;
 	class Sound;
 	class Source;
@@ -72,6 +73,7 @@ namespace xal
 	{
 	public:
 		friend class Buffer;
+		friend class ExternalComponent;
 		friend class Player;
 		friend class Sound;
 
@@ -148,7 +150,7 @@ namespace xal
 
 		virtual Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
 		virtual Source* _createSource(chstr filename, Format format);
-		
+
 		virtual void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize) { }
 
 	};

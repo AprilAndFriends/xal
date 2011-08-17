@@ -16,13 +16,15 @@
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
+#include <xal/ExternalComponent.h>
+
 #include "xalUtilExport.h"
 
 namespace xal
 {
 	class Player;
 
-	class xalUtilExport Playlist
+	class xalUtilExport Playlist : ExternalComponent
 	{
 	public:
 		Playlist(bool repeatAll = true);

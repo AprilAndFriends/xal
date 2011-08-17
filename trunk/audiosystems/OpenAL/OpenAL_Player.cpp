@@ -57,13 +57,13 @@ namespace xal
 	{
 		OALP_LOG_FUNCTION_NAME();
 		Player::_update(k);
-		if (!this->_sysIsPlaying() && this->sourceId != 0)
+		if (!this->_systemIsPlaying() && this->sourceId != 0)
 		{
 			this->_stopSound();
 		}
 	}
 
-	bool OpenAL_Player::_sysIsPlaying()
+	bool OpenAL_Player::_systemIsPlaying()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId == 0)
@@ -79,7 +79,7 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 
-	float OpenAL_Player::_sysGetOffset()
+	float OpenAL_Player::_systemGetOffset()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		float offset = 0;
@@ -91,7 +91,7 @@ namespace xal
 		return offset;
 	}
 
-	void OpenAL_Player::_sysSetOffset(float value)
+	void OpenAL_Player::_systemSetOffset(float value)
 	{
 		OALP_LOG_FUNCTION_NAME();
 #if !TARGET_OS_MAC
@@ -103,7 +103,7 @@ namespace xal
 #endif
 	}
 
-	bool OpenAL_Player::_sysPreparePlay()
+	bool OpenAL_Player::_systemPreparePlay()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId == 0)
@@ -113,7 +113,7 @@ namespace xal
 		return (this->sourceId != 0);
 	}
 
-	void OpenAL_Player::_sysPrepareBuffer()
+	void OpenAL_Player::_systemPrepareBuffer()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		// making sure all buffer data is loaded before accessing anything
@@ -154,7 +154,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_sysUpdateGain()
+	void OpenAL_Player::_systemUpdateGain()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
@@ -163,7 +163,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_sysUpdateFadeGain()
+	void OpenAL_Player::_systemUpdateFadeGain()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
@@ -172,7 +172,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_sysPlay()
+	void OpenAL_Player::_systemPlay()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
@@ -189,7 +189,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_sysStop()
+	void OpenAL_Player::_systemStop()
 	{
 		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
@@ -220,7 +220,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_sysUpdateStream()
+	void OpenAL_Player::_systemUpdateStream()
 	{
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)

@@ -81,7 +81,7 @@ namespace xal
 			}
 			else if (this->playing)
 			{
-				this->_sysStop();
+				this->_systemStop();
 			}
 		}
 	}
@@ -161,22 +161,22 @@ namespace xal
 		}
 	}
 
-	float SDL_Player::_sysGetOffset()
+	float SDL_Player::_systemGetOffset()
 	{
 		return this->offset;
 	}
 
-	void SDL_Player::_sysSetOffset(float value)
+	void SDL_Player::_systemSetOffset(float value)
 	{
 		this->offset = value;
 	}
 
-	bool SDL_Player::_sysPreparePlay()
+	bool SDL_Player::_systemPreparePlay()
 	{
 		return true;
 	}
 
-	void SDL_Player::_sysPrepareBuffer()
+	void SDL_Player::_systemPrepareBuffer()
 	{
 		if (!this->sound->isStreamed())
 		{
@@ -195,22 +195,22 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::_sysUpdateGain()
+	void SDL_Player::_systemUpdateGain()
 	{
 		this->currentGain = this->_calcGain();
 	}
 
-	void SDL_Player::_sysUpdateFadeGain()
+	void SDL_Player::_systemUpdateFadeGain()
 	{
 		this->currentGain = this->_calcFadeGain();
 	}
 
-	void SDL_Player::_sysPlay()
+	void SDL_Player::_systemPlay()
 	{
 		this->playing = true;
 	}
 
-	void SDL_Player::_sysStop()
+	void SDL_Player::_systemStop()
 	{
 		this->playing = false;
 		if (!this->paused)
@@ -222,7 +222,7 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::_sysUpdateStream()
+	void SDL_Player::_systemUpdateStream()
 	{
 		int count = 0;
 		if (this->readPosition > this->writePosition)
