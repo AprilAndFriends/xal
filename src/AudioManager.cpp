@@ -82,6 +82,7 @@ namespace xal
 
 	void AudioManager::clear()
 	{
+		this->_lock();
 		foreach (Player*, it, this->players)
 		{
 			(*it)->_stop();
@@ -99,6 +100,7 @@ namespace xal
 			delete it->second;
 		}
 		this->categories.clear();
+		this->_unlock();
 	}
 	
 	void AudioManager::setGlobalGain(float value)
