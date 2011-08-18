@@ -131,7 +131,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OGG=1;HAVE_WAV=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OGG=1;HAVE_WAV=1;HAVE_MIDI=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -157,7 +157,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OPENAL=1;HAVE_SDL=1;HAVE_OGG=1;HAVE_WAV=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32;_DEBUG;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OPENAL=1;HAVE_SDL=1;HAVE_OGG=1;HAVE_WAV=1;HAVE_MIDI=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -236,7 +236,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OGG=1;HAVE_WAV=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OGG=1;HAVE_WAV=1;HAVE_MIDI=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -265,7 +265,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OPENAL=1;HAVE_SDL=1;HAVE_OGG=1;HAVE_WAV=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND=1;HAVE_OPENAL=1;HAVE_SDL=1;HAVE_OGG=1;HAVE_WAV=1;HAVE_MIDI=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -376,6 +376,7 @@ copy bin\$(Configuration)\*.lib bin
     <ClCompile Include="audiosources\SPX_Source.cpp" />
     <ClCompile Include="audiosources\WAV_Source.cpp" />
     <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
+    <ClCompile Include="audiosystems\DirectSound\DirectSound_MIDI_Source.cpp" />
     <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp" />
     <ClCompile Include="audiosystems\DirectSound\DirectSound_WAV_Source.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
@@ -397,6 +398,7 @@ copy bin\$(Configuration)\*.lib bin
     <ClInclude Include="audiosources\SPX_Source.h" />
     <ClInclude Include="audiosources\WAV_Source.h" />
     <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h" />
+    <ClInclude Include="audiosystems\DirectSound\DirectSound_MIDI_Source.h" />
     <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h" />
     <ClInclude Include="audiosystems\DirectSound\DirectSound_WAV_Source.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />

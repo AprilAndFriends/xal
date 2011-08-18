@@ -692,6 +692,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_MIDI_Source.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\audiosystems\DirectSound\DirectSound_Player.cpp"
 						>
 					</File>
@@ -795,6 +799,10 @@
 					>
 					<File
 						RelativePath=".\audiosystems\DirectSound\DirectSound_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\DirectSound\DirectSound_MIDI_Source.h"
 						>
 					</File>
 					<File

@@ -13,6 +13,7 @@
     <VirtualDirectory Name="audiosystems">
       <VirtualDirectory Name="DirectSound">
         <File Name="audiosystems/DirectSound/DirectSound_AudioManager.cpp"/>
+        <File Name="audiosystems/DirectSound/DirectSound_MIDI_Source.cpp"/>
         <File Name="audiosystems/DirectSound/DirectSound_Player.cpp"/>
         <File Name="audiosystems/DirectSound/DirectSound_WAV_Source.cpp"/>
       </VirtualDirectory>
@@ -45,6 +46,7 @@
     <VirtualDirectory Name="audiosystems">
       <VirtualDirectory Name="DirectSound">
         <File Name="audiosystems/DirectSound/DirectSound_AudioManager.h"/>
+        <File Name="audiosystems/DirectSound/DirectSound_MIDI_Source.h"/>
         <File Name="audiosystems/DirectSound/DirectSound_Player.h"/>
         <File Name="audiosystems/DirectSound/DirectSound_WAV_Source.h"/>
       </VirtualDirectory>
