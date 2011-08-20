@@ -23,6 +23,11 @@ namespace xal
 
 	bool FLAC_Source::open()
 	{
+		this->streamOpen = Source::open();
+		if (!this->streamOpen)
+		{
+			return false;
+		}
 		// TODO - implement
 		return this->streamOpen;
 	}
