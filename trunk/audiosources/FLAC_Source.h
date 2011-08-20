@@ -9,11 +9,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Provides a source for WAMP3V format.
+/// Provides a source for FLAC format.
 
-#if HAVE_MP3
-#ifndef XAL_MP3_SOURCE_H
-#define XAL_MP3_SOURCE_H
+#if HAVE_FLAC
+#ifndef XAL_FLAC_SOURCE_H
+#define XAL_FLAC_SOURCE_H
 
 #include <hltypes/hstring.h>
 
@@ -22,13 +22,17 @@
 
 namespace xal
 {
-	class xalExport MP3_Source : public Source
+	class xalExport FLAC_Source : public Source
 	{
 	public:
-		MP3_Source(chstr filename);
-		~MP3_Source();
+		FLAC_Source(chstr filename);
+		~FLAC_Source();
 
+		bool open();
+		void close();
+		void rewind();
 		bool load(unsigned char* output);
+		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	};
 
