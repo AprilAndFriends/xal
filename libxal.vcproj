@@ -733,7 +733,7 @@
 				Name="audiosources"
 				>
 				<File
-					RelativePath=".\audiosources\MP3_Source.cpp"
+					RelativePath=".\audiosources\FLAC_Source.cpp"
 					>
 				</File>
 				<File
@@ -843,7 +843,7 @@
 				Name="audiosources"
 				>
 				<File
-					RelativePath=".\audiosources\MP3_Source.h"
+					RelativePath=".\audiosources\FLAC_Source.h"
 					>
 				</File>
 				<File

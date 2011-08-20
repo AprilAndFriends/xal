@@ -74,9 +74,6 @@
     <ClCompile Include="audiosources\WAV_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
-    <ClCompile Include="audiosources\MP3_Source.cpp">
-      <Filter>Source Files\audiosources</Filter>
-    </ClCompile>
     <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp">
       <Filter>Source Files\audiosystems\DirectSound</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="audiosystems\DirectSound\DirectSound_MIDI_Source.cpp">
       <Filter>Source Files\audiosystems\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosources\FLAC_Source.cpp">
+      <Filter>Source Files\audiosources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,9 +142,6 @@
     <ClInclude Include="audiosources\WAV_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="audiosources\MP3_Source.h">
-      <Filter>Header Files\audiosources</Filter>
-    </ClInclude>
     <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h">
       <Filter>Header Files\audiosystems\DirectSound</Filter>
     </ClInclude>
@@ -171,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="audiosystems\DirectSound\DirectSound_MIDI_Source.h">
       <Filter>Header Files\audiosystems\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosources\FLAC_Source.h">
+      <Filter>Header Files\audiosources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

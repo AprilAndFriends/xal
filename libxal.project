@@ -27,9 +27,9 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
+      <File Name="audiosources/FLAC_Source.cpp"/>
       <File Name="audiosources/OGG_Source.cpp"/>
       <File Name="audiosources/SPX_Source.cpp"/>
-      <File Name="audiosources/MP3_Source.cpp"/>
       <File Name="audiosources/WAV_Source.cpp"/>
     </VirtualDirectory>
     <File Name="src/Buffer.cpp"/>
@@ -60,9 +60,9 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="audiosources">
+      <File Name="audiosources/FLAC_Source.h"/>
       <File Name="audiosources/OGG_Source.h"/>
       <File Name="audiosources/SPX_Source.h"/>
-      <File Name="audiosources/MP3_Source.h"/>
       <File Name="audiosources/WAV_Source.h"/>
     </VirtualDirectory>
     <File Name="include/xal/Buffer.h"/>
