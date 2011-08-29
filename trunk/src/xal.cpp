@@ -14,9 +14,15 @@
 #endif
 
 #include "AudioManager.h"
+#ifdef HAVE_DIRECTSOUND
 #include "DirectSound_AudioManager.h"
+#endif
+#ifdef HAVE_OPENAL
 #include "OpenAL_AudioManager.h"
+#endif
+#ifdef HAVE_SDL
 #include "SDL_AudioManager.h"
+#endif
 #include "xal.h"
 
 #if TARGET_OS_MAC

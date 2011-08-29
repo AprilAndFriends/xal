@@ -26,6 +26,8 @@
 #define XAL_AS_DISABLED "Disabled"
 #define XAL_AS_DEFAULT ""
 
+#define XAL_AS_ANDROID_AUDIO "AndroidAudio"
+
 namespace xal
 {
 	xalFnExport void init(chstr systemName, unsigned long backendId, bool threaded = true, float updateTime = 0.01f, chstr deviceName = "");
