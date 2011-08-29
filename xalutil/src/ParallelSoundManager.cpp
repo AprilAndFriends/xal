@@ -37,7 +37,8 @@ namespace xal
 	
 	void ParallelSoundManager::updateList()
 	{
-		this->updateList(this->buildList);
+		if (!(this->buildList.size() == 1 && this->buildList[0] == "DONT_CHANGE"))
+			this->updateList(this->buildList);
 		this->buildList.clear();
 	}
 		
