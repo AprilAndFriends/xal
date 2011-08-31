@@ -1,0 +1,24 @@
+define HAVE_MARMELADE
+define _STATICLIB
+
+includepaths
+{
+	.
+	include
+	include/xalutil
+}
+
+library
+{
+	".,xalutil"
+}
+
+files
+{
+	(include/xalutil)
+	Playlist.h
+	ParallelSoundManager.h
+	xalUtilExport.h
+	
+}
+
