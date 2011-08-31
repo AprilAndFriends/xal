@@ -37,8 +37,6 @@
 		C9DAE8BA138103F80007882A /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
 		C9DAE8BB138103F80007882A /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
 		C9DAE8BD138103F80007882A /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
-		C9DAE8C8138104BA0007882A /* MP3_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C0138104BA0007882A /* MP3_Source.cpp */; };
-		C9DAE8C9138104BA0007882A /* MP3_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C1138104BA0007882A /* MP3_Source.h */; };
 		C9DAE8CA138104BA0007882A /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
 		C9DAE8CB138104BA0007882A /* OGG_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C3138104BA0007882A /* OGG_Source.h */; };
 		C9DAE8CC138104BA0007882A /* SPX_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C4138104BA0007882A /* SPX_Source.cpp */; };
@@ -59,6 +57,8 @@
 		C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E5138104D90007882A /* SDL_AudioManager.h */; };
 		C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E6138104D90007882A /* SDL_Player.cpp */; };
 		C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E7138104D90007882A /* SDL_Player.h */; };
+		D129D44C140E69E400CC5073 /* ExternalComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D129D44B140E69E400CC5073 /* ExternalComponent.cpp */; };
+		D129D44E140E6A0300CC5073 /* ExternalComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = D129D44D140E6A0300CC5073 /* ExternalComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,8 +94,6 @@
 		C9DAE8B2138103F80007882A /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sound.cpp; path = src/Sound.cpp; sourceTree = "<group>"; };
 		C9DAE8B3138103F80007882A /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Source.cpp; path = src/Source.cpp; sourceTree = "<group>"; };
 		C9DAE8B5138103F80007882A /* xal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xal.cpp; path = src/xal.cpp; sourceTree = "<group>"; };
-		C9DAE8C0138104BA0007882A /* MP3_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MP3_Source.cpp; path = audiosources/MP3_Source.cpp; sourceTree = "<group>"; };
-		C9DAE8C1138104BA0007882A /* MP3_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MP3_Source.h; path = audiosources/MP3_Source.h; sourceTree = "<group>"; };
 		C9DAE8C2138104BA0007882A /* OGG_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OGG_Source.cpp; path = audiosources/OGG_Source.cpp; sourceTree = "<group>"; };
 		C9DAE8C3138104BA0007882A /* OGG_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGG_Source.h; path = audiosources/OGG_Source.h; sourceTree = "<group>"; };
 		C9DAE8C4138104BA0007882A /* SPX_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SPX_Source.cpp; path = audiosources/SPX_Source.cpp; sourceTree = "<group>"; };
@@ -116,6 +114,8 @@
 		C9DAE8E5138104D90007882A /* SDL_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_AudioManager.h; path = audiosystems/SDL/SDL_AudioManager.h; sourceTree = "<group>"; };
 		C9DAE8E6138104D90007882A /* SDL_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDL_Player.cpp; path = audiosystems/SDL/SDL_Player.cpp; sourceTree = "<group>"; };
 		C9DAE8E7138104D90007882A /* SDL_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_Player.h; path = audiosystems/SDL/SDL_Player.h; sourceTree = "<group>"; };
+		D129D44B140E69E400CC5073 /* ExternalComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExternalComponent.cpp; path = src/ExternalComponent.cpp; sourceTree = "<group>"; };
+		D129D44D140E6A0300CC5073 /* ExternalComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalComponent.h; path = include/xal/ExternalComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				C9DAE8AE138103F80007882A /* AudioManager.cpp */,
+				D129D44B140E69E400CC5073 /* ExternalComponent.cpp */,
 				C9DAE8AF138103F80007882A /* Buffer.cpp */,
 				C9DAE8B0138103F80007882A /* Category.cpp */,
 				C9DAE8B1138103F80007882A /* Player.cpp */,
@@ -237,6 +238,7 @@
 		7FC8063911EC942100851062 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				D129D44D140E6A0300CC5073 /* ExternalComponent.h */,
 				C9DAE89E138103DA0007882A /* AudioManager.h */,
 				C9DAE89F138103DA0007882A /* Buffer.h */,
 				C9DAE8A0138103DA0007882A /* Category.h */,
@@ -264,7 +266,6 @@
 				C9DAE8F6138105900007882A /* WAV */,
 				C9DAE8F5138105800007882A /* SPX */,
 				C9DAE8F41381057D0007882A /* OGG */,
-				C9DAE8F31381057A0007882A /* MP3 */,
 			);
 			name = "Audio Sources";
 			sourceTree = "<group>";
@@ -315,15 +316,6 @@
 			name = DirectSound;
 			sourceTree = "<group>";
 		};
-		C9DAE8F31381057A0007882A /* MP3 */ = {
-			isa = PBXGroup;
-			children = (
-				C9DAE8C0138104BA0007882A /* MP3_Source.cpp */,
-				C9DAE8C1138104BA0007882A /* MP3_Source.h */,
-			);
-			name = MP3;
-			sourceTree = "<group>";
-		};
 		C9DAE8F41381057D0007882A /* OGG */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +350,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D129D44E140E6A0300CC5073 /* ExternalComponent.h in Headers */,
 				C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */,
 				C9DAE8A7138103DA0007882A /* Buffer.h in Headers */,
 				C9DAE8A8138103DA0007882A /* Category.h in Headers */,
@@ -367,7 +360,6 @@
 				C9DAE8AC138103DA0007882A /* xal.h in Headers */,
 				C9DAE8AD138103DA0007882A /* xalExport.h in Headers */,
 				7FC8064E11EC944C00851062 /* Endianess.h in Headers */,
-				C9DAE8C9138104BA0007882A /* MP3_Source.h in Headers */,
 				C9DAE8CB138104BA0007882A /* OGG_Source.h in Headers */,
 				C9DAE8CD138104BA0007882A /* SPX_Source.h in Headers */,
 				C9DAE8CF138104BA0007882A /* WAV_Source.h in Headers */,
@@ -453,7 +445,6 @@
 				C9DAE8BA138103F80007882A /* Sound.cpp in Sources */,
 				C9DAE8BB138103F80007882A /* Source.cpp in Sources */,
 				C9DAE8BD138103F80007882A /* xal.cpp in Sources */,
-				C9DAE8C8138104BA0007882A /* MP3_Source.cpp in Sources */,
 				C9DAE8CA138104BA0007882A /* OGG_Source.cpp in Sources */,
 				C9DAE8CC138104BA0007882A /* SPX_Source.cpp in Sources */,
 				C9DAE8CE138104BA0007882A /* WAV_Source.cpp in Sources */,
@@ -467,6 +458,7 @@
 				7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */,
 				7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */,
 				7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */,
+				D129D44C140E69E400CC5073 /* ExternalComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,7 +484,7 @@
 					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=0",
 					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
+					"HAVE_OPENAL=0",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -522,7 +514,7 @@
 					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=0",
 					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
+					"HAVE_OPENAL=0",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -604,7 +596,7 @@
 					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=0",
 					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
+					"HAVE_OPENAL=0",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -653,7 +645,7 @@
 					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=0",
 					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
+					"HAVE_OPENAL=0",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
@@ -699,7 +691,7 @@
 					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=0",
 					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
+					"HAVE_OPENAL=0",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
