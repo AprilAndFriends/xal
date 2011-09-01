@@ -3,23 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
-		7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */; };
-		7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F392C66138FCF8D003B93A7 /* CoreServices.framework */; };
 		7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */; };
 		7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */; };
 		7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
 		7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
 		7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
-		7F4A744B13AF762700CA7256 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4A744A13AF762700CA7256 /* AudioUnit.framework */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
-		7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068711EC970600851062 /* OpenAL.framework */; };
 		C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9B1243853A006BFE4D /* Ogg.framework */; };
 		C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9D1243853A006BFE4D /* Vorbis.framework */; };
 		C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,22 +55,30 @@
 		C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E7138104D90007882A /* SDL_Player.h */; };
 		D129D44C140E69E400CC5073 /* ExternalComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D129D44B140E69E400CC5073 /* ExternalComponent.cpp */; };
 		D129D44E140E6A0300CC5073 /* ExternalComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = D129D44D140E6A0300CC5073 /* ExternalComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */; };
+		D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */; };
+		D1981C99140F8ADB0057C3AF /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
+		D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
+		D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AE138103F80007882A /* AudioManager.cpp */; };
+		D1981C9C140F8ADB0057C3AF /* ExternalComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D129D44B140E69E400CC5073 /* ExternalComponent.cpp */; };
+		D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AF138103F80007882A /* Buffer.cpp */; };
+		D1981C9E140F8ADB0057C3AF /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B0138103F80007882A /* Category.cpp */; };
+		D1981C9F140F8ADB0057C3AF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B1138103F80007882A /* Player.cpp */; };
+		D1981CA0140F8ADB0057C3AF /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
+		D1981CA1140F8ADB0057C3AF /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
+		D1981CA2140F8ADB0057C3AF /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = M4A_Source.cpp; path = audiosources/M4A_Source.cpp; sourceTree = "<group>"; };
 		7F392BE3138FB6FF003B93A7 /* M4A_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = M4A_Source.h; path = audiosources/M4A_Source.h; sourceTree = "<group>"; };
-		7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		7F392C66138FCF8D003B93A7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = Library/Frameworks/SDL.framework; sourceTree = SDKROOT; };
 		7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_AudioManager.cpp; sourceTree = "<group>"; };
 		7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_AudioManager.h; sourceTree = "<group>"; };
 		7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_Player.cpp; sourceTree = "<group>"; };
 		7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_Player.h; sourceTree = "<group>"; };
-		7F4A744A13AF762700CA7256 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		7FC8064B11EC944C00851062 /* Endianess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Endianess.h; path = src/Endianess.h; sourceTree = "<group>"; };
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
-		7FC8068711EC970600851062 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9906D9B1243853A006BFE4D /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = Library/Frameworks/Ogg.framework; sourceTree = SDKROOT; };
@@ -116,6 +120,7 @@
 		C9DAE8E7138104D90007882A /* SDL_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_Player.h; path = audiosystems/SDL/SDL_Player.h; sourceTree = "<group>"; };
 		D129D44B140E69E400CC5073 /* ExternalComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExternalComponent.cpp; path = src/ExternalComponent.cpp; sourceTree = "<group>"; };
 		D129D44D140E6A0300CC5073 /* ExternalComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalComponent.h; path = include/xal/ExternalComponent.h; sourceTree = "<group>"; };
+		D1981C82140F8A230057C3AF /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,13 +129,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */,
-				7FC8068811EC970600851062 /* OpenAL.framework in Frameworks */,
 				C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */,
 				C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */,
-				7F392C5C138FCF4B003B93A7 /* AudioToolbox.framework in Frameworks */,
-				7F392C67138FCF8D003B93A7 /* CoreServices.framework in Frameworks */,
 				7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */,
-				7F4A744B13AF762700CA7256 /* AudioUnit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1981C7F140F8A230057C3AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* xal.framework */,
+				D1981C82140F8A230057C3AF /* libxal.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,55 +157,15 @@
 		0867D691FE84028FC02AAC07 /* libxal */ = {
 			isa = PBXGroup;
 			children = (
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
 				C9DAE8BF1381049F0007882A /* Audio Systems */,
 				C9DAE8BE1381048F0007882A /* Audio Sources */,
-				7FC8064911EC943E00851062 /* Private Includes */,
-				7FC8063911EC942100851062 /* Includes */,
-				7FC8063811EC941D00851062 /* Sources */,
-				089C1665FE841158C02AAC07 /* Resources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				7FC8063911EC942100851062 /* include */,
+				7FC8063811EC941D00851062 /* src */,
+				D1981C83140F8A230057C3AF /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				7FC8068011EC96EF00851062 /* hltypes.framework */,
-				7FC8068711EC970600851062 /* OpenAL.framework */,
-				C9906D9B1243853A006BFE4D /* Ogg.framework */,
-				C9906D9D1243853A006BFE4D /* Vorbis.framework */,
-				7F392C5B138FCF4B003B93A7 /* AudioToolbox.framework */,
-				7F392C66138FCF8D003B93A7 /* CoreServices.framework */,
-				7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */,
-				7F4A744A13AF762700CA7256 /* AudioUnit.framework */,
 			);
 			name = libxal;
-			sourceTree = "<group>";
-		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
-				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
-			);
-			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		089C1665FE841158C02AAC07 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				8DC2EF5A0486A6940098B216 /* Info.plist */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		7F392BE1138FB6F2003B93A7 /* M4A */ = {
@@ -220,7 +189,7 @@
 			path = audiosystems/CoreAudio;
 			sourceTree = "<group>";
 		};
-		7FC8063811EC941D00851062 /* Sources */ = {
+		7FC8063811EC941D00851062 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				C9DAE8AE138103F80007882A /* AudioManager.cpp */,
@@ -232,12 +201,13 @@
 				C9DAE8B3138103F80007882A /* Source.cpp */,
 				C9DAE8B5138103F80007882A /* xal.cpp */,
 			);
-			name = Sources;
+			name = src;
 			sourceTree = "<group>";
 		};
-		7FC8063911EC942100851062 /* Includes */ = {
+		7FC8063911EC942100851062 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				7FC8064B11EC944C00851062 /* Endianess.h */,
 				D129D44D140E6A0300CC5073 /* ExternalComponent.h */,
 				C9DAE89E138103DA0007882A /* AudioManager.h */,
 				C9DAE89F138103DA0007882A /* Buffer.h */,
@@ -248,15 +218,7 @@
 				C9DAE8A4138103DA0007882A /* xal.h */,
 				C9DAE8A5138103DA0007882A /* xalExport.h */,
 			);
-			name = Includes;
-			sourceTree = "<group>";
-		};
-		7FC8064911EC943E00851062 /* Private Includes */ = {
-			isa = PBXGroup;
-			children = (
-				7FC8064B11EC944C00851062 /* Endianess.h */,
-			);
-			name = "Private Includes";
+			name = include;
 			sourceTree = "<group>";
 		};
 		C9DAE8BE1381048F0007882A /* Audio Sources */ = {
@@ -343,6 +305,25 @@
 			name = WAV;
 			sourceTree = "<group>";
 		};
+		D1981C83140F8A230057C3AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1981C96140F8A7F0057C3AF /* mac */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D1981C96140F8A7F0057C3AF /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				7FC8068011EC96EF00851062 /* hltypes.framework */,
+				C9906D9B1243853A006BFE4D /* Ogg.framework */,
+				C9906D9D1243853A006BFE4D /* Vorbis.framework */,
+				7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -376,6 +357,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1981C80140F8A230057C3AF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -398,13 +386,33 @@
 			productReference = 8DC2EF5B0486A6940098B216 /* xal.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		D1981C81140F8A230057C3AF /* libxal-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "libxal-ios" */;
+			buildPhases = (
+				D1981C7E140F8A230057C3AF /* Sources */,
+				D1981C7F140F8A230057C3AF /* Frameworks */,
+				D1981C80140F8A230057C3AF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libxal-ios";
+			productName = "libxal-ios";
+			productReference = D1981C82140F8A230057C3AF /* libxal.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libxal" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -419,6 +427,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* libxal */,
+				D1981C81140F8A230057C3AF /* libxal-ios */,
 			);
 		};
 /* End PBXProject section */
@@ -459,6 +468,25 @@
 				7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */,
 				7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */,
 				D129D44C140E69E400CC5073 /* ExternalComponent.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1981C7E140F8A230057C3AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */,
+				D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */,
+				D1981C99140F8ADB0057C3AF /* M4A_Source.cpp in Sources */,
+				D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */,
+				D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */,
+				D1981C9C140F8ADB0057C3AF /* ExternalComponent.cpp in Sources */,
+				D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */,
+				D1981C9E140F8ADB0057C3AF /* Category.cpp in Sources */,
+				D1981C9F140F8ADB0057C3AF /* Player.cpp in Sources */,
+				D1981CA0140F8ADB0057C3AF /* Sound.cpp in Sources */,
+				D1981CA1140F8ADB0057C3AF /* Source.cpp in Sources */,
+				D1981CA2140F8ADB0057C3AF /* xal.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +565,11 @@
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
@@ -556,7 +588,11 @@
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
@@ -574,7 +610,11 @@
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -619,7 +659,11 @@
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
@@ -669,7 +713,11 @@
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
@@ -703,6 +751,159 @@
 			};
 			name = "Release-LLVM";
 		};
+		D1981C8C140F8A230057C3AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libxal_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					_DEBUG,
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=1",
+					"HAVE_OPENAL=1",
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1981C8D140F8A230057C3AF /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libxal_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					_DEBUG,
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=1",
+					"HAVE_OPENAL=1",
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = "Debug-LLVM";
+		};
+		D1981C8E140F8A230057C3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxal_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=1",
+					"HAVE_OPENAL=1",
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1981C8F140F8A230057C3AF /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxal_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=1",
+					"HAVE_OPENAL=1",
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-LLVM";
+		};
+		D1981C90140F8A230057C3AF /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxal_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"HAVE_COREAUDIO=0",
+					"HAVE_M4A=1",
+					"HAVE_OPENAL=1",
+					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					"HAVE_OGG=1",
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -729,6 +930,17 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "libxal-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1981C8C140F8A230057C3AF /* Debug */,
+				D1981C8D140F8A230057C3AF /* Debug-LLVM */,
+				D1981C8E140F8A230057C3AF /* Release */,
+				D1981C8F140F8A230057C3AF /* Release-LLVM */,
+				D1981C90140F8A230057C3AF /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
