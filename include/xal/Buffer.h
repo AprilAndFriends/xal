@@ -27,7 +27,7 @@ namespace xal
 	{
 	public:
 		Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode);
-		virtual ~Buffer();
+		~Buffer();
 
 		chstr getFilename() { return this->filename; }
 		int getFileSize() { return this->fileSize; }

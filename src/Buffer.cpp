@@ -34,10 +34,10 @@ namespace xal
 		this->fileSize = hfile::hsize(this->filename);
 		this->loadMode = loadMode;
 		this->decodeMode = decodeMode;
-		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
 		this->streamSize = 0;
 		this->stream = NULL;
-		if (xal::mgr->isEnabled())
+		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
+		if (xal::mgr->isEnabled() && this->getFormat() != UNKNOWN)
 		{
 			switch (this->loadMode)
 			{
