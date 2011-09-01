@@ -34,17 +34,6 @@ namespace xal
 		delete this->buffer;
 	}
 	
-	Sound* Sound::create(chstr filename, Category* category, chstr prefix)
-	{
-		Sound* sound = new Sound(filename, category, prefix);
-		if (sound->buffer->getFormat() == UNKNOWN)
-		{
-			delete sound;
-			return NULL;
-		}
-		return sound;
-	}
-
 	hstr Sound::_findLinkedFile()
 	{
 		if (!this->filename.ends_with(".xln"))
