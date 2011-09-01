@@ -24,14 +24,14 @@
 #include "SDL_AudioManager.h"
 #endif
 #include "xal.h"
-
+/*
 #if TARGET_OS_MAC
 #include "CoreAudio_AudioManager.h"
 #if TARGET_OS_IPHONE
 #include "AVFoundation_AudioManager.h"
 #endif
 #endif
-
+*/
 
 #ifdef _WIN32
 	#if HAVE_DIRECTSOUND
@@ -116,12 +116,14 @@ namespace xal
 			xal::mgr = new SDL_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
+/*
 #if TARGET_OS_IPHONE
 		if (name == XAL_AS_AVFOUNDATION)
 		{
 			xal::mgr = new AVFoundation_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
+*/
 #if HAVE_COREAUDIO
 		if (name == XAL_AS_COREAUDIO) 
 		{

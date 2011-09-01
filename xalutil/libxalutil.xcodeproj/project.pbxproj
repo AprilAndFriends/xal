@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,8 @@
 		7F2192EF11F081DF00660245 /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
 		7F2192F711F0820000660245 /* xal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192F611F0820000660245 /* xal.framework */; };
 		7F2192FB11F0820B00660245 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192FA11F0820B00660245 /* hltypes.framework */; };
+		D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
+		D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,7 @@
 		7F2192FA11F0820B00660245 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xalutil.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xalutil.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1981CA8140F8D4F0057C3AF /* libxalutil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxalutil.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +41,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1981CA5140F8D4F0057C3AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -45,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* xalutil.framework */,
+				D1981CA8140F8D4F0057C3AF /* libxalutil.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -52,65 +63,49 @@
 		0867D691FE84028FC02AAC07 /* xalutil */ = {
 			isa = PBXGroup;
 			children = (
-				7F2192E511F081C200660245 /* Includes */,
-				7F2192E311F081BE00660245 /* Sources */,
-				089C1665FE841158C02AAC07 /* Resources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				7F2192E511F081C200660245 /* include */,
+				7F2192E311F081BE00660245 /* src */,
+				D1981CA9140F8D4F0057C3AF /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				7F2192F611F0820000660245 /* xal.framework */,
-				7F2192FA11F0820B00660245 /* hltypes.framework */,
 			);
 			name = xalutil;
 			sourceTree = "<group>";
 		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
-				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
-			);
-			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		089C1665FE841158C02AAC07 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				8DC2EF5A0486A6940098B216 /* Info.plist */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		7F2192E311F081BE00660245 /* Sources */ = {
+		7F2192E311F081BE00660245 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */,
 				7F2192ED11F081DF00660245 /* Playlist.cpp */,
 			);
-			name = Sources;
+			name = src;
 			sourceTree = "<group>";
 		};
-		7F2192E511F081C200660245 /* Includes */ = {
+		7F2192E511F081C200660245 /* include */ = {
 			isa = PBXGroup;
 			children = (
 				7F2192E611F081D500660245 /* ParallelSoundManager.h */,
 				7F2192E711F081D500660245 /* Playlist.h */,
 				7F2192E811F081D500660245 /* xalUtilExport.h */,
 			);
-			name = Includes;
+			name = include;
+			sourceTree = "<group>";
+		};
+		D1981CA9140F8D4F0057C3AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1981CB9140F8D730057C3AF /* mac */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D1981CB9140F8D730057C3AF /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				7F2192F611F0820000660245 /* xal.framework */,
+				7F2192FA11F0820B00660245 /* hltypes.framework */,
+			);
+			name = mac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,12 +121,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1981CA6140F8D4F0057C3AF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* xalutil */ = {
+		8DC2EF4F0486A6940098B216 /* libxalutil */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libxalutil" */;
 			buildPhases = (
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
@@ -142,19 +144,39 @@
 			);
 			dependencies = (
 			);
-			name = xalutil;
+			name = libxalutil;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = xalutil;
 			productReference = 8DC2EF5B0486A6940098B216 /* xalutil.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		D1981CA7140F8D4F0057C3AF /* libxalutil-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "libxalutil-ios" */;
+			buildPhases = (
+				D1981CA4140F8D4F0057C3AF /* Sources */,
+				D1981CA5140F8D4F0057C3AF /* Frameworks */,
+				D1981CA6140F8D4F0057C3AF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libxalutil-ios";
+			productName = "libxalutil-ios";
+			productReference = D1981CA8140F8D4F0057C3AF /* libxalutil.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */;
-			compatibilityVersion = "Xcode 3.1";
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libxalutil" */;
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -168,7 +190,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* xalutil */,
+				8DC2EF4F0486A6940098B216 /* libxalutil */,
+				D1981CA7140F8D4F0057C3AF /* libxalutil-ios */,
 			);
 		};
 /* End PBXProject section */
@@ -193,6 +216,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1981CA4140F8D4F0057C3AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */,
+				D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -212,6 +244,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -230,6 +263,7 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -295,6 +329,7 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -332,6 +367,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -364,15 +400,139 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Release-LLVM";
 		};
+		D1981CB2140F8D4F0057C3AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1981CB3140F8D4F0057C3AF /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = "Debug-LLVM";
+		};
+		D1981CB4140F8D4F0057C3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1981CB5140F8D4F0057C3AF /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-LLVM";
+		};
+		D1981CB6140F8D4F0057C3AF /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libxalutil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
@@ -384,7 +544,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */ = {
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libxalutil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
@@ -395,6 +555,17 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "libxalutil-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1981CB2140F8D4F0057C3AF /* Debug */,
+				D1981CB3140F8D4F0057C3AF /* Debug-LLVM */,
+				D1981CB4140F8D4F0057C3AF /* Release */,
+				D1981CB5140F8D4F0057C3AF /* Release-LLVM */,
+				D1981CB6140F8D4F0057C3AF /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
