@@ -202,7 +202,11 @@ namespace xal
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
 		Category* category = this->getCategoryByName(categoryName);
-		Sound* sound = new Sound(filename, category, prefix);
+		Sound* sound = Sound::create(filename, category, prefix);
+		if (sound == NULL)
+		{
+			return NULL;
+		}
 		if (this->sounds.has_key(sound->getName()))
 		{
 			delete sound;

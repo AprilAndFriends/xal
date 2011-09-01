@@ -27,7 +27,7 @@ namespace xal
 	class xalExport Sound
 	{
 	public:
-		Sound(chstr filename, Category* category, chstr prefix = "");
+		static Sound* create(chstr filename, Category* category, chstr prefix = "");
 		virtual ~Sound();
 
 		hstr getName() { return this->name; }
@@ -45,6 +45,8 @@ namespace xal
 		bool isStreamed();
 
 	protected:
+		Sound(chstr filename, Category* category, chstr prefix);
+
 		hstr name;
 		hstr filename;
 		hstr realFilename;
