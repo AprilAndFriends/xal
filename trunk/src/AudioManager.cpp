@@ -275,7 +275,7 @@ namespace xal
 		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/", -1, true).pop_back();
-			result += this->createSoundsFromPath((*it).c_str(), category, prefix);
+			result += this->createSoundsFromPath((*it), category, prefix);
 		}
 		return result;
 	}
