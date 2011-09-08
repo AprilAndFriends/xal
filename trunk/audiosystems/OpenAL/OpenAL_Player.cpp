@@ -25,37 +25,23 @@
 #include "OpenAL_Player.h"
 #include "Sound.h"
 
-#define OALP_LOG_FUNCTION_NAME() //printf("%s\n", __PRETTY_FUNCTION__);
-#define OALP_ERROR_GUARD(call, onfail) \
-	{ \
-		call; \
-		int er = alGetError(); \
-		if (er != AL_NO_ERROR) \
-		{ \
-			printf("OpenAL ERROR %d!\n", er); \
-			onfail; \
-		} \
-	}
-
 namespace xal
 {
 	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer), sourceId(0)
 	{
-		OALP_LOG_FUNCTION_NAME();
 		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
 		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
 	OpenAL_Player::~OpenAL_Player()
 	{
-		OALP_LOG_FUNCTION_NAME();
+		this->_stop();
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
 	void OpenAL_Player::_update(float k)
 	{
-		OALP_LOG_FUNCTION_NAME();
 		Player::_update(k);
 		if (!this->_systemIsPlaying() && this->sourceId != 0)
 		{
@@ -65,7 +51,6 @@ namespace xal
 
 	bool OpenAL_Player::_systemIsPlaying()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId == 0)
 		{
 			return false;
@@ -81,10 +66,12 @@ namespace xal
 
 	float OpenAL_Player::_systemGetOffset()
 	{
-		OALP_LOG_FUNCTION_NAME();
-		float offset = 0;
+		float offset = 0.0f;
 #if !TARGET_OS_MAC
-		alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
+		if (this->sourceId != 0)
+		{
+			alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
+		}
 #else
 		// did not find anything that works on Mac OS X and iOS!
 #endif
@@ -93,10 +80,12 @@ namespace xal
 
 	void OpenAL_Player::_systemSetOffset(float value)
 	{
-		OALP_LOG_FUNCTION_NAME();
 #if !TARGET_OS_MAC
 		// TODO - should be int
-		alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);		
+		if (this->sourceId != 0)
+		{
+			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
+		}
 		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
 #else
 		// did not find anything that works on Mac OS X and iOS!
@@ -105,7 +94,6 @@ namespace xal
 
 	bool OpenAL_Player::_systemPreparePlay()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId == 0)
 		{
 			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
@@ -115,27 +103,13 @@ namespace xal
 
 	void OpenAL_Player::_systemPrepareBuffer()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		// making sure all buffer data is loaded before accessing anything
 		if (!this->sound->isStreamed())
 		{
 			bool failed = false;
 			this->_fillBuffers(0, 1);
-			if (!failed)
-			{
-				OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]), failed = true);
-			}
-			if (!failed)
-			{
-				OALP_ERROR_GUARD(alSourcei(this->sourceId, AL_LOOPING, this->looping), failed = true);
-			}
-			
-			if (failed)
-			{
-				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
-				alSourcei(this->sourceId, AL_LOOPING, false);
-			}
-			
+			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
+			alSourcei(this->sourceId, AL_LOOPING, this->looping);
 		}
 		else
 		{
@@ -156,7 +130,6 @@ namespace xal
 
 	void OpenAL_Player::_systemUpdateGain()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
@@ -165,7 +138,6 @@ namespace xal
 
 	void OpenAL_Player::_systemUpdateFadeGain()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
@@ -174,24 +146,14 @@ namespace xal
 
 	void OpenAL_Player::_systemPlay()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
 		{
-			int er = alGetError();
-			if (er != AL_NO_ERROR) 
-			{
-				printf("OpenAL Error before play: %d\n", er);
-			}
-			else
-			{
-				alSourcePlay(this->sourceId);
-			}
+			alSourcePlay(this->sourceId);
 		}
 	}
 
 	void OpenAL_Player::_systemStop()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (this->sourceId != 0)
 		{
 			if (!this->sound->isStreamed())
@@ -292,7 +254,6 @@ namespace xal
 
 	void OpenAL_Player::_queueBuffers(int index, int count)
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
@@ -306,7 +267,6 @@ namespace xal
  
 	void OpenAL_Player::_queueBuffers()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		int queued = this->_getQueuedBuffersCount();
 		if (queued < STREAM_BUFFER_COUNT)
 		{
@@ -316,7 +276,6 @@ namespace xal
  
 	void OpenAL_Player::_unqueueBuffers(int index, int count)
 	{
-		OALP_LOG_FUNCTION_NAME();
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
@@ -330,7 +289,6 @@ namespace xal
 
 	void OpenAL_Player::_unqueueBuffers()
 	{
-		OALP_LOG_FUNCTION_NAME();
 		int queued = this->_getQueuedBuffersCount();
 		if (queued > 0)
 		{
