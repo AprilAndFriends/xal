@@ -32,6 +32,7 @@ namespace xal
 
 	DirectSound_Player::~DirectSound_Player()
 	{
+		this->_stop();
 		if (this->dsBuffer != NULL)
 		{
 			this->dsBuffer->Release();

@@ -220,10 +220,10 @@ namespace xal
 			this->fadeSpeed = -1.0f / fadeTime;
 			return;
 		}
+		this->offset = this->_systemGetOffset();
 		this->_systemStop();
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-		this->offset = this->_systemGetOffset();
 		this->buffer->release();
 	}
 
