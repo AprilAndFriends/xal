@@ -419,7 +419,7 @@ namespace xal
 		fadeTime = hmax(fadeTime, 0.0f);
 		// creating a copy, because _destroyManagedPlayer alters managedPlayers
 		harray<Player*> players = this->managedPlayers;
-		foreach (Player*, it, this->managedPlayers)
+		foreach (Player*, it, players)
 		{
 			if ((*it)->getSound()->getName() == name)
 			{
