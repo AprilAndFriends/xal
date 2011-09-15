@@ -106,7 +106,7 @@ namespace xal
 		// making sure all buffer data is loaded before accessing anything
 		if (!this->sound->isStreamed())
 		{
-			bool failed = false;
+			//bool failed = false;
 			this->_fillBuffers(0, 1);
 			alSourcei(this->sourceId, AL_BUFFER, this->bufferIds[0]);
 			alSourcei(this->sourceId, AL_LOOPING, this->looping);
