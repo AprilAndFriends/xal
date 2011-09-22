@@ -137,7 +137,7 @@ namespace xal
 		harray<Player*> pausedPlayers;
 		hmap<hstr, Sound*> sounds;
 		hthread* thread;
-		hmutex mutex;
+		hmutex mutex; // a mute ex would be nice
 		
 		void _update(float k);
 		void _lock();
