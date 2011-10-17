@@ -144,12 +144,15 @@
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -170,12 +173,15 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -196,12 +202,15 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -222,12 +231,15 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -248,7 +260,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -256,7 +268,10 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -277,7 +292,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -285,7 +300,10 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -306,7 +324,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -314,7 +332,10 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -335,7 +356,7 @@ copy bin\$(Configuration)\*.lib bin</Command>
     <Link>
       <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -343,7 +364,10 @@ copy bin\$(Configuration)\*.lib bin</Command>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy bin\$(Configuration)\*.dll bin
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll bin
 copy bin\$(Configuration)\*.lib bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

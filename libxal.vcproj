@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -88,7 +88,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -141,7 +141,7 @@
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -168,7 +168,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -219,7 +219,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib dsound.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -243,7 +243,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -296,7 +296,7 @@
 				AdditionalDependencies="winmm.lib dsound.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -323,7 +323,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -374,7 +374,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -398,7 +398,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -451,7 +451,7 @@
 				AdditionalDependencies="SDL.lib SDL_mixer.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -478,7 +478,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -529,7 +529,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib dsound.lib OpenAL32.lib SDL.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -553,7 +553,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 		<Configuration
@@ -606,7 +606,7 @@
 				AdditionalDependencies="winmm.lib dsound.lib OpenAL32.lib SDL.lib libogg.lib libvorbis.lib libvorbisfile.lib libhltypes.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc90;../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="../lib/msvc90;$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -633,7 +633,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin&#x0D;&#x0A;"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll bin&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib bin"
 			/>
 		</Configuration>
 	</Configurations>
@@ -662,6 +662,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ExternalComponent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Player.cpp"
 				>
 			</File>
@@ -671,10 +675,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Source.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ExternalComponent.cpp"
 				>
 			</File>
 			<File
@@ -768,6 +768,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\xal\ExternalComponent.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\xal\Player.h"
 				>
 			</File>
@@ -777,10 +781,6 @@
 			</File>
 			<File
 				RelativePath=".\include\xal\Source.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\xal\ExternalComponent.h"
 				>
 			</File>
 			<File
