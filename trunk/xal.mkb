@@ -1,3 +1,5 @@
+define NO_FS_TREE
+
 option lib
 
 subproject xal
