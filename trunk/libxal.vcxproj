@@ -106,22 +106,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">bin\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">bin\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">false</LinkIncremental>
@@ -143,17 +143,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Debug|Win32'">
@@ -172,17 +169,14 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Debug|Win32'">
@@ -201,17 +195,14 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Debug|Win32'">
@@ -230,17 +221,14 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_DirectSound_Release|Win32'">
@@ -259,20 +247,18 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_All_Release|Win32'">
@@ -291,20 +277,18 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_OpenAL_Release|Win32'">
@@ -323,20 +307,18 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_SDL_Release|Win32'">
@@ -355,20 +337,18 @@ copy bin\$(Configuration)\*.lib bin</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll bin
-copy bin\$(Configuration)\*.lib bin</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">

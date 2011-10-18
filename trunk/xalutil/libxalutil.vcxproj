@@ -36,10 +36,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">..\bin\xalutil\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">..\bin\xalutil\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">..\bin\xalutil\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">..\bin\xalutil\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">
@@ -56,16 +56,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;libxal.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(TargetDir)\$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy ..\bin\xalutil\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy ..\bin\xalutil\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">
@@ -84,19 +82,18 @@ copy ..\bin\xalutil\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;libxal.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy ..\bin\xalutil\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy ..\bin\xalutil\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
