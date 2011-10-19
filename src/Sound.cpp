@@ -26,7 +26,7 @@ namespace xal
 		this->category = category;
 		this->buffer = xal::mgr->_createBuffer(this->realFilename, category->getLoadMode(), category->getDecodeMode());
 		// extracting filename without extension and prepending the prefix
-		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).pop_back().rsplit(".", 1, false).pop_front();
+		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).pop_last().rsplit(".", 1, false).pop_first();
 	}
 
 	Sound::~Sound()
@@ -46,7 +46,7 @@ namespace xal
 		}
 		harray<hstr> newFolders = hfile::hread(this->filename).split("/", -1, true);
 		harray<hstr> folders = this->filename.split("/", -1, true);
-		folders.pop_back();
+		folders.pop_last();
 		foreach (hstr, it, newFolders)
 		{
 			if ((*it) != "..")
@@ -55,7 +55,7 @@ namespace xal
 			}
 			else
 			{
-				folders.pop_back();
+				folders.pop_last();
 			}
 		}
 		return folders.join("/");
