@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="win32_Debug|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libspeex.lib libhltypes_d.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/$(ConfigurationName)"
+				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libspeex.lib libhltypes.lib"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)\$(TargetName).lib"
 			/>
@@ -88,12 +88,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="win32_Release|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -138,9 +139,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="OpenAL32.lib libogg.lib libvorbis.lib libvorbisfile.lib libspeex.lib libhltypes.lib"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../lib/msvc;../hltypes/bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -167,6 +168,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
