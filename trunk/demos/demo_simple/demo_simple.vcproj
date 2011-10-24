@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes.lib libxal.lib libxalutil.lib"
-				OutputFile="$(SolutionDir)bin\$(ProjectName).exe"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(SolutionDir)bin"
 				GenerateDebugInformation="true"
@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin"
+				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\*.dll $(SolutionDir)bin\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -141,7 +141,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes.lib libxal.lib libxalutil.lib"
-				OutputFile="$(SolutionDir)bin\$(ProjectName).exe"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(SolutionDir)bin"
 				GenerateDebugInformation="true"
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin&#x0D;&#x0A;"
+				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\*.dll $(SolutionDir)bin\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
