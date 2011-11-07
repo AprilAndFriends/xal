@@ -35,10 +35,14 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			int streamSize = this->buffer->load(this->looping, size);
-            if(streamSize == 0)
-            {
-                return;
-            }
+			if (streamSize == 0)
+			{
+				*data1 = NULL;
+				*size1 = 0;
+				*data2 = NULL;
+				*size2 = 0;
+				return;
+			}
 			unsigned char* stream = this->buffer->getStream();
 			*data1 = &stream[this->readPosition];
 			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
@@ -48,8 +52,12 @@ namespace xal
 			{
 				*data2 = stream;
 				*size2 = size - *size1;
+				this->readPosition = (this->readPosition + size) % streamSize;
 			}
-			this->readPosition = (this->readPosition + size) % streamSize;
+			else
+			{
+				this->readPosition = hmin(this->readPosition + size, streamSize);
+			}
 			return;
 		}
 		*data1 = &this->circleBuffer[this->readPosition];
@@ -75,7 +83,7 @@ namespace xal
         }
 		if (this->position >= size)
 		{
-			// FIXME check size == 0
+			// TODO check size == 0
 			if (this->looping)
 			{
 				this->position -= this->position / size * size;
@@ -126,7 +134,6 @@ namespace xal
 				short* sData2 = (short*)data2;
 				size1 = size1 * sizeof(unsigned char) / sizeof(short);
 				size2 = size2 * sizeof(unsigned char) / sizeof(short);
-				
 				if (!first)
 				{
 					for (int i = 0; i < size1; i++)

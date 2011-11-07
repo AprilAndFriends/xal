@@ -658,10 +658,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Endianess.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ExternalComponent.cpp"
 				>
 			</File>
@@ -765,6 +761,10 @@
 			</File>
 			<File
 				RelativePath=".\include\xal\Category.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Endianess.h"
 				>
 			</File>
 			<File
