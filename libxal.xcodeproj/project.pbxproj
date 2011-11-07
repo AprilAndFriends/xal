@@ -518,6 +518,7 @@
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -548,6 +549,7 @@
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -624,6 +626,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -638,10 +641,12 @@
 					"HAVE_OGG=1",
 					"HAVE_OPENAL=0",
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "App Store";
@@ -697,6 +702,7 @@
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Debug-LLVM";
@@ -747,6 +753,7 @@
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Release-LLVM";
