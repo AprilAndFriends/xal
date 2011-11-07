@@ -106,9 +106,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Endianess.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\xal\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -171,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="audiosources\FLAC_Source.h">
       <Filter>Header Files\audiosources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Endianess.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
