@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxalutil", "xalutil\libxa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_simple", "demos\demo_simple\demo_simple.vcxproj", "{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_test", "demos\demo_test\demo_test.vcxproj", "{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		win32_All_Debug|Win32 = win32_All_Debug|Win32
@@ -88,6 +90,22 @@ Global
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.win32_SDL_Debug|Win32.Build.0 = win32_Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.win32_SDL_Release|Win32.ActiveCfg = win32_Release|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.win32_SDL_Release|Win32.Build.0 = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_All_Debug|Win32.ActiveCfg = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_All_Debug|Win32.Build.0 = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_All_Release|Win32.ActiveCfg = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_All_Release|Win32.Build.0 = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_DirectSound_Debug|Win32.ActiveCfg = win32_Debug|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_DirectSound_Debug|Win32.Build.0 = win32_Debug|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_DirectSound_Release|Win32.ActiveCfg = win32_Debug|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_DirectSound_Release|Win32.Build.0 = win32_Debug|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_OpenAL_Debug|Win32.ActiveCfg = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_OpenAL_Debug|Win32.Build.0 = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_OpenAL_Release|Win32.ActiveCfg = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_OpenAL_Release|Win32.Build.0 = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_SDL_Debug|Win32.ActiveCfg = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_SDL_Debug|Win32.Build.0 = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_SDL_Release|Win32.ActiveCfg = win32_Release|Win32
+		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.win32_SDL_Release|Win32.Build.0 = win32_Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
