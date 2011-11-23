@@ -222,9 +222,9 @@ namespace xal
 		}
 		this->offset = this->_systemGetOffset();
 		this->_systemStop();
+		this->buffer->release();
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-		this->buffer->release();
 	}
 
 	float Player::_calcGain()

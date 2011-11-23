@@ -83,6 +83,7 @@ namespace xal
 	void AudioManager::clear()
 	{
 		this->_lock();
+		this->_update(0.0f);
 		foreach (Player*, it, this->players)
 		{
 			(*it)->_stop();
