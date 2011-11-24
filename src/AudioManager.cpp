@@ -43,7 +43,7 @@
 
 namespace xal
 {
-	AudioManager* mgr;
+	AudioManager* mgr = NULL;
 
 	AudioManager::AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
 		enabled(false), paused(false), gain(1.0f), thread(NULL)
