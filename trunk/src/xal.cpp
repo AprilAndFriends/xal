@@ -147,6 +147,7 @@ namespace xal
 		xal::log("destroying XAL");
 		xal::mgr->clear();
 		delete xal::mgr;
+		xal::mgr = NULL;
 	}
 	
 	void log(chstr message, chstr prefix)
