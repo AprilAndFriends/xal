@@ -39,7 +39,7 @@ namespace xal
 		Source* _createSource(chstr filename, Format format);
 
 	protected:
-		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		Player* _createPlayer(Sound* sound, Buffer* buffer);
 
 	};
 
