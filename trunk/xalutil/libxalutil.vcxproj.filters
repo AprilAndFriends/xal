@@ -20,6 +20,9 @@
     <ClCompile Include="src\Playlist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MultiPlaylist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\xalutil\ParallelSoundManager.h">
@@ -29,6 +32,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\xalutil\xalUtilExport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\xalutil\MultiPlaylist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -97,10 +97,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\MultiPlaylist.cpp" />
     <ClCompile Include="src\ParallelSoundManager.cpp" />
     <ClCompile Include="src\Playlist.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\xalutil\MultiPlaylist.h" />
     <ClInclude Include="include\xalutil\ParallelSoundManager.h" />
     <ClInclude Include="include\xalutil\Playlist.h" />
     <ClInclude Include="include\xalutil\xalUtilExport.h" />
