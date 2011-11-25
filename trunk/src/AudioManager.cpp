@@ -224,6 +224,7 @@ namespace xal
 
 	void AudioManager::destroySound(Sound* sound)
 	{
+		this->_lock();
 		foreach_m (Sound*, it, this->sounds)
 		{
 			if (it->second == sound)
@@ -234,10 +235,12 @@ namespace xal
 				break;
 			}
 		}
+		this->_unlock();
 	}
 	
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
+		this->_lock();
 		xal::log(hsprintf("destroying sounds with prefix '%s'", prefix.c_str()));
 		harray<hstr> keys = this->sounds.keys();
 		// creating a copy, because _destroyManagedPlayer alters managedPlayers
@@ -266,6 +269,7 @@ namespace xal
 				this->sounds.remove_key(*it);
 			}
 		}
+		this->_unlock();
 	}
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
@@ -305,7 +309,7 @@ namespace xal
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		Sound* sound = this->sounds[name];
-		Player* player = this->_createAudioPlayer(sound, sound->getBuffer());
+		Player* player = this->_createPlayer(sound, sound->getBuffer());
 		this->players += player;
 		return player;
 	}
@@ -354,12 +358,7 @@ namespace xal
 		this->_destroyPlayer(player);
 	}
 
-	Buffer* AudioManager::_createBuffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode)
-	{
-		return new Buffer(filename, loadMode, decodeMode);
-	}
-
-	Player* AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	Player* AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new Player(sound, buffer);
 	}

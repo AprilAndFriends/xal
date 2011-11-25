@@ -53,7 +53,7 @@ namespace xal
 		}
 	}
 	
-	Player* DirectSound_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	Player* DirectSound_AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new DirectSound_Player(sound, buffer);
 	}

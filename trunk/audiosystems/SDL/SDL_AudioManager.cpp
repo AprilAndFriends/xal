@@ -61,7 +61,7 @@ namespace xal
 		delete [] this->buffer;
 	}
 	
-	Player* SDL_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	Player* SDL_AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new SDL_Player(sound, buffer);
 	}

@@ -48,7 +48,7 @@ namespace xal
 		unsigned char* buffer;
 		int bufferSize;
 
-		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		Player* _createPlayer(Sound* sound, Buffer* buffer);
 
 		static void _mixAudio(void* unused, unsigned char* stream, int length);
 

@@ -54,7 +54,7 @@ namespace xal
 		unsigned int sourceIds[OPENAL_MAX_SOURCES];
 		bool allocated[OPENAL_MAX_SOURCES];
 
-		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		Player* _createPlayer(Sound* sound, Buffer* buffer);
 		unsigned int _allocateSourceId();
 		void _releaseSourceId(unsigned int sourceId);
 
