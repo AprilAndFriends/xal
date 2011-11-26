@@ -27,10 +27,16 @@ namespace xal
 	{
 	}
 
-	void Player::setGain(float gain)
+	void Player::setGain(float value)
 	{
-		this->gain = hclamp(gain, 0.0f, 1.0f);
+		this->gain = hclamp(value, 0.0f, 1.0f);
 		this->_systemUpdateGain();
+	}
+
+	void Player::setPitch(float value)
+	{
+		this->pitch = hclamp(value, 0.01f, 100.0f);
+		this->_systemUpdatePitch();
 	}
 
 	hstr Player::getName()

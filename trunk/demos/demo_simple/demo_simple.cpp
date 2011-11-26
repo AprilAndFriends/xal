@@ -62,6 +62,7 @@ int main(int argc, char **argv)
 	// play the sound
 	printf(("- starting " SOUND_NORMAL "\n"));
 	p->play();
+	p->setPitch(0.5f);
 	while (p->isPlaying())
 	{
 		hthread::sleep(10);
