@@ -16,8 +16,8 @@
 
 namespace xal
 {
-	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), paused(false), looping(false),
-		fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0)
+	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), pitch(1.0f), paused(false),
+		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0)
 	{
 		this->sound = sound;
 		this->buffer = buffer;
