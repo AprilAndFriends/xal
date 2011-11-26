@@ -44,7 +44,7 @@ namespace xal
 			this->bitsPerSample = 16; // always 16 bit data
 			int bytes = this->bitsPerSample / 8;
 			this->size = (int)ov_pcm_total(&this->oggStream, -1) * this->channels * bytes;
-			this->duration = ((float)this->size) / (this->samplingRate * this->channels * bytes);
+			this->duration = (float)this->size / (this->samplingRate * this->channels * bytes);
 		}
 		else
 		{
