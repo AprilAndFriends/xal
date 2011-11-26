@@ -43,6 +43,7 @@ namespace xal
 		void _systemPrepareBuffer();
 		void _systemUpdateGain();
 		void _systemUpdateFadeGain();
+		void _systemUpdatePitch();
 		void _systemPlay();
 		void _systemStop();
 		void _systemUpdateStream();

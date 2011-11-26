@@ -102,7 +102,7 @@ namespace xal
 		DSBUFFERDESC bufferDesc;
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
-		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
+		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
 		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER);
 		bufferDesc.lpwfxFormat = &wavefmt;
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
@@ -228,6 +228,14 @@ namespace xal
 				value = (LONG)(log10(gain) / 4 * (DSBVOLUME_MAX - DSBVOLUME_MIN));
 			}
 			this->dsBuffer->SetVolume(value);
+		}
+	}
+
+	void DirectSound_Player::_systemUpdatePitch()
+	{
+		if (this->dsBuffer != NULL)
+		{
+			this->dsBuffer->SetFrequency((DWORD)(this->pitch * this->buffer->getSamplingRate()));
 		}
 	}
 
