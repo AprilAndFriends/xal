@@ -17,9 +17,11 @@
 #include "Buffer.h"
 #include "DirectSound_Player.h"
 #include "DirectSound_AudioManager.h"
+/*
 #if HAVE_WAV
 #include "DirectSound_WAV_Source.h"
 #endif
+*/
 #include "Sound.h"
 #include "xal.h"
 
@@ -78,6 +80,7 @@ namespace xal
 		}
 		this->buffer->prepare();
 		WAVEFORMATEX wavefmt;
+		/*
 #if HAVE_WAV
 		DirectSound_WAV_Source* wavSource = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
 		if (wavSource != NULL)
@@ -86,6 +89,7 @@ namespace xal
 		}
 		else
 #endif
+		*/
 		{
 			wavefmt.cbSize = 0;
 			wavefmt.nChannels = this->buffer->getChannels();

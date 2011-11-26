@@ -6,7 +6,7 @@
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
-
+/*
 #if HAVE_DIRECTSOUND && HAVE_WAV
 #include <windows.h>
 
@@ -113,3 +113,4 @@ namespace xal
 
 }
 #endif
+*/

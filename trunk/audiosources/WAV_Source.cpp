@@ -99,13 +99,14 @@ namespace xal
 			}
 			else if (tag == "data")
 			{
-				this->size = size;
+				this->size += size;
 			}
 			if (size > 0)
 			{
 				this->file.seek(size);
 			}
 		}
+		this->duration = (float)this->size / (this->samplingRate * this->channels * this->bitsPerSample / 8);
 		this->_findData();
 		return this->streamOpen;
 	}

@@ -14,9 +14,11 @@
 
 #include "DirectSound_AudioManager.h"
 #include "DirectSound_Player.h"
+/*
 #if HAVE_WAV
 #include "DirectSound_WAV_Source.h"
 #endif
+*/
 #include "xal.h"
 
 namespace xal
@@ -60,7 +62,7 @@ namespace xal
 
 	Source* DirectSound_AudioManager::_createSource(chstr filename, Format format)
 	{
-/*
+		/*
 		Source* source;
 		switch (format)
 		{
@@ -74,7 +76,7 @@ namespace xal
 			break;
 		}
 		return source;
-//*/
+		*/
 		return AudioManager::_createSource(filename, format);
 	}
 
