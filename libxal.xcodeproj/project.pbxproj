@@ -278,7 +278,7 @@
 					"\"$(SRCROOT)/../lib/macosx\"",
 				);
 				PRODUCT_NAME = xal;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -307,7 +307,7 @@
 					"\"$(SRCROOT)/../lib/macosx\"",
 				);
 				PRODUCT_NAME = xal;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -380,7 +380,7 @@
 					"\"$(SRCROOT)/../lib/macosx\"",
 				);
 				PRODUCT_NAME = xal;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -426,7 +426,7 @@
 				);
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx10.6;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -467,7 +467,7 @@
 				);
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx10.6;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
