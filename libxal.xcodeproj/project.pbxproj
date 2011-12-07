@@ -809,7 +809,7 @@
 					"HAVE_OGG=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
@@ -866,7 +866,7 @@
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
