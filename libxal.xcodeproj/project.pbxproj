@@ -762,6 +762,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -795,6 +799,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -828,6 +836,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -857,6 +869,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -886,8 +902,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=1",
