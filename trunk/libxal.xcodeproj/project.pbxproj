@@ -16,6 +16,7 @@
 		7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
+		C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9B1243853A006BFE4D /* Ogg.framework */; };
 		C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9D1243853A006BFE4D /* Vorbis.framework */; };
 		C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,7 +58,6 @@
 		D129D44E140E6A0300CC5073 /* ExternalComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = D129D44D140E6A0300CC5073 /* ExternalComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */; };
 		D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */; };
-		D1981C99140F8ADB0057C3AF /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
 		D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AE138103F80007882A /* AudioManager.cpp */; };
 		D1981C9C140F8ADB0057C3AF /* ExternalComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D129D44B140E69E400CC5073 /* ExternalComponent.cpp */; };
@@ -475,9 +475,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */,
 				D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */,
 				D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */,
-				D1981C99140F8ADB0057C3AF /* M4A_Source.cpp in Sources */,
 				D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */,
 				D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */,
 				D1981C9C140F8ADB0057C3AF /* ExternalComponent.cpp in Sources */,
