@@ -186,15 +186,21 @@ namespace xal
 			}
 		}
 	}
-
+	static int locks = 0;
 	void AudioManager::_lock()
 	{
-		this->mutex.lock();
+		if (this->isThreaded())
+		{
+			this->mutex.lock();
+		}
 	}
 	
 	void AudioManager::_unlock()
 	{
-		this->mutex.unlock();
+		if (this->isThreaded())
+		{
+			this->mutex.unlock();
+		}
 	}
 
 	Category* AudioManager::createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)

@@ -134,6 +134,17 @@ namespace xal
 			delete [] cvt.buf;
 		}
 	}
+	
+	// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
+	void SDL_AudioManager::_lock()
+	{
+		this->mutex.lock();
+	}
+	
+	void SDL_AudioManager::_unlock()
+	{
+		this->mutex.unlock();
+	}
 
 }
 #endif
