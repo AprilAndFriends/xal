@@ -86,6 +86,7 @@ namespace xal
 		bool isEnabled() { return this->enabled; }
 		bool isPaused() { return this->paused; }
 		hstr getDeviceName() { return this->deviceName; }
+		bool isThreaded() { return (this->thread != NULL); }
 		float getUpdateTime() { return this->updateTime; }
 		float getGlobalGain() { return this->gain; }
 		void setGlobalGain(float value);
