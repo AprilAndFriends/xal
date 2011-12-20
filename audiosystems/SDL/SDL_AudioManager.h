@@ -53,6 +53,10 @@ namespace xal
 		static void _mixAudio(void* unused, unsigned char* stream, int length);
 
 		void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize);
+		
+		// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
+		void _lock();
+		void _unlock();
 
 	};
 

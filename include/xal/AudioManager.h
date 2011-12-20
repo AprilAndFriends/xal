@@ -147,8 +147,8 @@ namespace xal
 		void _clear();
 		
 		void _update(float k);
-		void _lock();
-		void _unlock();
+		virtual void _lock();
+		virtual void _unlock();
 
 		Category* _createCategory(chstr name, HandlingMode loadMod, HandlingMode decodeMode);
 		Category* _getCategoryByName(chstr name);
