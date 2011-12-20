@@ -138,17 +138,49 @@ namespace xal
 		hmap<hstr, Sound*> sounds;
 		hthread* thread;
 		hmutex mutex; // a mute ex would be nice
+
+		void _setGlobalGain(float value);
+		harray<Player*> _getPlayers();
+
+		void _startThreading();
+		void _clear();
 		
 		void _update(float k);
 		void _lock();
 		void _unlock();
 
+		Category* _createCategory(chstr name, HandlingMode loadMod, HandlingMode decodeMode);
+		Category* _getCategoryByName(chstr name);
+		float _getCategoryGain(chstr category);
+		void _setCategoryGain(chstr category, float gain);
+
+		Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
+		Sound* _getSound(chstr name);
+		void _destroySound(Sound* sound);
+		void _destroySoundsWithPrefix(chstr prefix);
+		harray<hstr> _createSoundsFromPath(chstr path, chstr prefix);
+		harray<hstr> _createSoundsFromPath(chstr path, chstr category, chstr prefix);
+
+		Player* _createPlayer(chstr name);
 		void _destroyPlayer(Player* player);
+		Player* _findPlayer(chstr name);
 		Player* _createManagedPlayer(chstr name);
 		void _destroyManagedPlayer(Player* player);
 
-		virtual Player* _createPlayer(Sound* sound, Buffer* buffer);
+		virtual Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
 		virtual Source* _createSource(chstr filename, Format format);
+
+		void _play(chstr name, float fadeTime, bool looping, float gain);
+		void _stop(chstr name, float fadeTime);
+		void _stopFirst(chstr name, float fadeTime);
+		void _stopAll(float fadeTime);
+		void _pauseAll(float fadeTime);
+		void _resumeAll(float fadeTime);
+		void _stopCategory(chstr name, float fadeTime);
+		bool _isAnyPlaying(chstr name);
+		bool _isAnyFading(chstr name);
+		bool _isAnyFadingIn(chstr name);
+		bool _isAnyFadingOut(chstr name);
 
 		virtual void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize) { }
 

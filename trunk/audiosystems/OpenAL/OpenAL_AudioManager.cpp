@@ -82,7 +82,7 @@ namespace xal
 		}
 	}
 	
-	Player* OpenAL_AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
+	Player* OpenAL_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new OpenAL_Player(sound, buffer);
 	}

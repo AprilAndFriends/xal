@@ -658,10 +658,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ExternalComponent.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Player.cpp"
 				>
 			</File>
@@ -765,10 +761,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Endianess.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\xal\ExternalComponent.h"
 				>
 			</File>
 			<File

@@ -36,10 +36,10 @@ namespace xal
 		DirectSound_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~DirectSound_AudioManager();
 
-		Source* _createSource(chstr filename, Format format);
 
 	protected:
-		Player* _createPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
+		Source* _createSource(chstr filename, Format format);
 
 	};
 

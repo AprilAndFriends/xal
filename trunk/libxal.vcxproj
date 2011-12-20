@@ -394,7 +394,6 @@ copy bin\$(Configuration)\*.lib bin
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Sound.cpp" />
-    <ClCompile Include="src\ExternalComponent.cpp" />
     <ClCompile Include="src\xal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -414,7 +413,6 @@ copy bin\$(Configuration)\*.lib bin
     <ClInclude Include="include\xal\Source.h" />
     <ClInclude Include="include\xal\Player.h" />
     <ClInclude Include="include\xal\Sound.h" />
-    <ClInclude Include="include\xal\ExternalComponent.h" />
     <ClInclude Include="include\xal\xal.h" />
     <ClInclude Include="src\Endianess.h" />
     <ClInclude Include="include\xal\AudioManager.h" />

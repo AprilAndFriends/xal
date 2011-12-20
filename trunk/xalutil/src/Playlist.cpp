@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -17,7 +17,7 @@
 
 namespace xal
 {
-	Playlist::Playlist(bool repeatAll) : ExternalComponent(), enabled(true), playing(false), index(-1)
+	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false), index(-1)
 	{
 		this->repeatAll = repeatAll;
 	}
@@ -49,11 +49,10 @@ namespace xal
 	
 	void Playlist::update()
 	{
-		if (this->players.size() == 0 || this->index < 0)
+		if (this->players.size() == 0 || !this->playing || this->index < 0)
 		{
 			return;
 		}
-		this->_lock();
 		if (this->repeatAll)
 		{
 			if (!this->players[this->index]->isPlaying())
@@ -81,7 +80,6 @@ namespace xal
 		{
 			this->playing = false;
 		}
-		this->_unlock();
 	}
 	
 	void Playlist::clear()

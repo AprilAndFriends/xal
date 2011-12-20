@@ -36,8 +36,10 @@ namespace xal
 
 		void registerPlaylist(Playlist* playlist);
 		void unregisterPlaylist(Playlist* playlist);
-		
+
 		void clear();
+		
+		void update();
 		
 		void play(float fadeTime = 0.0f);
 		void stop(float fadeTime = 0.0f);
