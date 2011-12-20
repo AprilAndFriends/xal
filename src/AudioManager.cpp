@@ -149,13 +149,19 @@ namespace xal
 	{
 		while (true)
 		{
-			xal::mgr->update(xal::mgr->updateTime);
+			xal::mgr->_lock();
+			xal::mgr->_update(xal::mgr->updateTime);
+			xal::mgr->_unlock();
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
 	
 	void AudioManager::update(float k)
 	{
+		if (this->isThreaded())
+		{
+			xal::log("Warning! AudioManager update called manually while in threaded update mode!");
+		}
 		this->_lock();
 		this->_update(k);
 		this->_unlock();
