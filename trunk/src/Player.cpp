@@ -145,7 +145,7 @@ namespace xal
 			this->fadeTime += this->fadeSpeed * k;
 			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 			{
-				this->setGain(this->gain);
+				this->_setGain(this->gain);
 				this->fadeTime = 1.0f;
 				this->fadeSpeed = 0.0f;
 			}
