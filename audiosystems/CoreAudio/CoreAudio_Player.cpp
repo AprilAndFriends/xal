@@ -1,6 +1,7 @@
 /// @file
+/// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -8,7 +9,6 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #if HAVE_COREAUDIO
-
 #include <AudioUnit/AudioUnit.h>
 
 #include "Buffer.h"
@@ -28,6 +28,7 @@ namespace xal
 
 	CoreAudio_Player::~CoreAudio_Player()
 	{
+		this->_stop();
 	}
 
 	void CoreAudio_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
@@ -35,6 +36,14 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			int streamSize = this->buffer->load(this->looping, size);
+			if (streamSize == 0)
+			{
+				*data1 = NULL;
+				*size1 = 0;
+				*data2 = NULL;
+				*size2 = 0;
+				return;
+			}
 			unsigned char* stream = this->buffer->getStream();
 			*data1 = &stream[this->readPosition];
 			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
@@ -44,8 +53,12 @@ namespace xal
 			{
 				*data2 = stream;
 				*size2 = size - *size1;
+				this->readPosition = (this->readPosition + size) % streamSize;
 			}
-			this->readPosition = (this->readPosition + size) % streamSize;
+			else
+			{
+				this->readPosition = hmin(this->readPosition + size, streamSize);
+			}
 			return;
 		}
 		*data1 = &this->circleBuffer[this->readPosition];
@@ -65,15 +78,15 @@ namespace xal
 	{
 		Player::_update(k);
 		int size = this->buffer->getSize();
-		if (this->position >= size)
-		{
+        if (size > 0 && this->position >= size)
+        {
 			if (this->looping)
 			{
 				this->position -= this->position / size * size;
 			}
 			else if (this->playing)
 			{
-				this->_sysStop();
+				this->_systemStop();
 			}
 		}
 	}
@@ -108,7 +121,7 @@ namespace xal
 				{
 					XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 				}
-#endif
+#endif				
 			}
 			else
 			{
@@ -117,7 +130,6 @@ namespace xal
 				short* sData2 = (short*)data2;
 				size1 = size1 * sizeof(unsigned char) / sizeof(short);
 				size2 = size2 * sizeof(unsigned char) / sizeof(short);
-				
 				if (!first)
 				{
 					for (int i = 0; i < size1; i++)
@@ -153,22 +165,22 @@ namespace xal
 		}
 	}
 
-	float CoreAudio_Player::_sysGetOffset()
+	float CoreAudio_Player::_systemGetOffset()
 	{
 		return this->offset;
 	}
 
-	void CoreAudio_Player::_sysSetOffset(float value)
+	void CoreAudio_Player::_systemSetOffset(float value)
 	{
 		this->offset = value;
 	}
 
-	bool CoreAudio_Player::_sysPreparePlay()
+	bool CoreAudio_Player::_systemPreparePlay()
 	{
 		return true;
 	}
 
-	void CoreAudio_Player::_sysPrepareBuffer()
+	void CoreAudio_Player::_systemPrepareBuffer()
 	{
 		if (!this->sound->isStreamed())
 		{
@@ -187,22 +199,22 @@ namespace xal
 		}
 	}
 
-	void CoreAudio_Player::_sysUpdateGain()
+	void CoreAudio_Player::_systemUpdateGain()
 	{
 		this->currentGain = this->_calcGain();
 	}
 
-	void CoreAudio_Player::_sysUpdateFadeGain()
+	void CoreAudio_Player::_systemUpdateFadeGain()
 	{
 		this->currentGain = this->_calcFadeGain();
 	}
 
-	void CoreAudio_Player::_sysPlay()
+	void CoreAudio_Player::_systemPlay()
 	{
 		this->playing = true;
 	}
 
-	void CoreAudio_Player::_sysStop()
+	void CoreAudio_Player::_systemStop()
 	{
 		this->playing = false;
 		if (!this->paused)
@@ -214,7 +226,7 @@ namespace xal
 		}
 	}
 
-	void CoreAudio_Player::_sysUpdateStream()
+	void CoreAudio_Player::_systemUpdateStream()
 	{
 		int count = 0;
 		if (this->readPosition > this->writePosition)
