@@ -186,7 +186,7 @@ namespace xal
 			}
 		}
 	}
-	static int locks = 0;
+	
 	void AudioManager::_lock()
 	{
 		if (this->isThreaded())
