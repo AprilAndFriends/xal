@@ -77,13 +77,8 @@ namespace xal
 	{
 		Player::_update(k);
 		int size = this->buffer->getSize();
-        if(size == 0)
+        if (size > 0 && this->position >= size)
         {
-            return;
-        }
-		if (this->position >= size)
-		{
-			// TODO check size == 0
 			if (this->looping)
 			{
 				this->position -= this->position / size * size;
