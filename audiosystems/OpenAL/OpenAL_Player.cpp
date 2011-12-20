@@ -36,7 +36,7 @@ namespace xal
 
 	OpenAL_Player::~OpenAL_Player()
 	{
-		this->_stop();
+		// AudioManager calls _stop before destruction
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 

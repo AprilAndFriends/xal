@@ -27,7 +27,7 @@ namespace xal
 
 	SDL_Player::~SDL_Player()
 	{
-		this->_stop();
+		// AudioManager calls _stop before destruction
 	}
 
 	void SDL_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)

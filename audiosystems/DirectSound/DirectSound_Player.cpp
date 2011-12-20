@@ -34,7 +34,7 @@ namespace xal
 
 	DirectSound_Player::~DirectSound_Player()
 	{
-		this->_stop();
+		// AudioManager calls _stop before destruction
 		if (this->dsBuffer != NULL)
 		{
 			this->dsBuffer->Release();

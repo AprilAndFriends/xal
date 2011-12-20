@@ -28,7 +28,6 @@ namespace xal
 
 	CoreAudio_Player::~CoreAudio_Player()
 	{
-		this->_stop();
 	}
 
 	void CoreAudio_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
