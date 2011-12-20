@@ -189,7 +189,7 @@ namespace xal
 	// MARK: -
 	// MARK: Rest of audio manager code
 	
-	Player* CoreAudio_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	Player* CoreAudio_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new CoreAudio_Player(sound, buffer);
 	}

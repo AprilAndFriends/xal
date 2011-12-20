@@ -43,7 +43,7 @@ namespace xal
 		
 	protected:
 
-		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
 
 	};
 	

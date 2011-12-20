@@ -50,7 +50,7 @@ namespace xal
 		xal::log("destroying AVFoundation");
 	}
 	
-	Player* AVFoundation_AudioManager::_createAudioPlayer(Sound* sound, Buffer* buffer)
+	Player* AVFoundation_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new AVFoundation_Player(sound, buffer);
 	}

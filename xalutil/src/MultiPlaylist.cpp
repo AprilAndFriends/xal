@@ -76,6 +76,14 @@ namespace xal
 		this->playlists.clear();
 	}
 	
+	void MultiPlaylist::update()
+	{
+		foreach (Playlist*, it, this->playlists)
+		{
+			(*it)->update();
+		}
+	}
+		
 	void MultiPlaylist::play(float fadeTime)
 	{
 		foreach (Playlist*, it, this->playlists)

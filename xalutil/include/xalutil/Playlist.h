@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -16,7 +16,6 @@
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
-#include <xal/ExternalComponent.h>
 
 #include "xalUtilExport.h"
 
@@ -24,7 +23,7 @@ namespace xal
 {
 	class Player;
 
-	class xalUtilExport Playlist : ExternalComponent
+	class xalUtilExport Playlist
 	{
 	public:
 		Playlist(bool repeatAll = true);

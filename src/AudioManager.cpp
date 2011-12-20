@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -73,16 +73,29 @@ namespace xal
 
 	void AudioManager::init()
 	{
+		this->_lock();
 		if (this->enabled && this->thread != NULL)
 		{
-			xal::log("starting thread management");
-			this->thread->start();
+			this->_startThreading();
 		}
+		this->_unlock();
+	}
+
+	void AudioManager::_startThreading()
+	{
+		xal::log("starting thread management");
+		this->thread->start();
 	}
 
 	void AudioManager::clear()
 	{
 		this->_lock();
+		this->_clear();
+		this->_unlock();
+	}
+	
+	void AudioManager::_clear()
+	{
 		this->_update(0.0f);
 		foreach (Player*, it, this->players)
 		{
@@ -101,19 +114,33 @@ namespace xal
 			delete it->second;
 		}
 		this->categories.clear();
+	}
+
+	void AudioManager::setGlobalGain(float value)
+	{
+		this->_lock();
+		this->_setGlobalGain(value);
 		this->_unlock();
 	}
-	
-	void AudioManager::setGlobalGain(float value)
+
+	void AudioManager::_setGlobalGain(float value)
 	{
 		this->gain = value;
 		foreach (Player*, it, this->players)
 		{
-			(*it)->setGain((*it)->getGain());
+			(*it)->_systemUpdateGain();
 		}
 	}
 
 	harray<Player*> AudioManager::getPlayers()
+	{
+		this->_lock();
+		harray<Player*> players = this->_getPlayers();
+		this->_unlock();
+		return players;
+	}
+
+	harray<Player*> AudioManager::_getPlayers()
 	{
 		return (this->players - this->managedPlayers);
 	}
@@ -166,6 +193,14 @@ namespace xal
 
 	Category* AudioManager::createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)
 	{
+		this->_lock();
+		Category* category = this->_createCategory(name, loadMode, decodeMode);
+		this->_unlock();
+		return category;
+	}
+
+	Category* AudioManager::_createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)
+	{
 		if (!this->categories.has_key(name))
 		{
 			this->categories[name] = new Category(name, loadMode, decodeMode);
@@ -174,6 +209,14 @@ namespace xal
 	}
 
 	Category* AudioManager::getCategoryByName(chstr name)
+	{
+		this->_lock();
+		Category* category = this->_getCategoryByName(name);
+		this->_unlock();
+		return category;
+	}
+
+	Category* AudioManager::_getCategoryByName(chstr name)
 	{
 		if (!this->categories.has_key(name))
 		{
@@ -184,6 +227,14 @@ namespace xal
 
 	float AudioManager::getCategoryGain(chstr name)
 	{
+		this->_lock();
+		float gain = this->_getCategoryGain(name);
+		this->_unlock();
+		return gain;
+	}
+
+	float AudioManager::_getCategoryGain(chstr name)
+	{
 		if (!this->categories.has_key(name))
 		{
 			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
@@ -193,16 +244,31 @@ namespace xal
 
 	void AudioManager::setCategoryGain(chstr name, float gain)
 	{
-		this->getCategoryByName(name)->setGain(gain);
+		this->_lock();
+		this->_setCategoryGain(name, gain);
+		this->_unlock();
+	}
+
+	void AudioManager::_setCategoryGain(chstr name, float gain)
+	{
+		this->_getCategoryByName(name)->setGain(gain);
 		foreach (Player*, it, this->players)
 		{
-			(*it)->setGain((*it)->getGain());
+			(*it)->_systemUpdateGain();
 		}
 	}
 
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
-		Category* category = this->getCategoryByName(categoryName);
+		this->_lock();
+		Sound* sound = this->_createSound(filename, categoryName, prefix);
+		this->_unlock();
+		return sound;
+	}
+
+	Sound* AudioManager::_createSound(chstr filename, chstr categoryName, chstr prefix)
+	{
+		Category* category = this->_getCategoryByName(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
 		if (sound->getFormat() == UNKNOWN || this->sounds.has_key(sound->getName()))
 		{
@@ -215,6 +281,14 @@ namespace xal
 
 	Sound* AudioManager::getSound(chstr name)
 	{
+		this->_lock();
+		Sound* sound = this->_getSound(name);
+		this->_unlock();
+		return sound;
+	}
+
+	Sound* AudioManager::_getSound(chstr name)
+	{
 		if (!this->sounds.has_key(name))
 		{
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
@@ -225,6 +299,12 @@ namespace xal
 	void AudioManager::destroySound(Sound* sound)
 	{
 		this->_lock();
+		this->_destroySound(sound);
+		this->_unlock();
+	}
+	
+	void AudioManager::_destroySound(Sound* sound)
+	{
 		foreach_m (Sound*, it, this->sounds)
 		{
 			if (it->second == sound)
@@ -235,44 +315,72 @@ namespace xal
 				break;
 			}
 		}
-		this->_unlock();
 	}
 	
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
 		this->_lock();
+		this->_destroySoundsWithPrefix(prefix);
+		this->_unlock();
+	}
+
+	void AudioManager::_destroySoundsWithPrefix(chstr prefix)
+	{
 		xal::log(hsprintf("destroying sounds with prefix '%s'", prefix.c_str()));
 		harray<hstr> keys = this->sounds.keys();
 		// creating a copy, because _destroyManagedPlayer alters managedPlayers
-		harray<Player*> managedPlayers = this->managedPlayers;
-		Sound* sound;
+		harray<Sound*> destroySounds;
 		foreach (hstr, it, keys)
 		{
 			if ((*it).starts_with(prefix))
 			{
-				sound = this->sounds[*it];
-				foreach (Player*, it2, managedPlayers)
-				{
-					if ((*it2)->getSound() == sound)
-					{
-						this->_destroyManagedPlayer(*it2);
-					}
-				}
-				foreach (Player*, it2, this->players)
-				{
-					if ((*it2)->getSound() == sound)
-					{
-						throw hl_exception("Audio Manager: Sound " + sound->getName() + " cannot be destroyed, there are one or more manually created players that haven't been destroyed");
-					}
-				}
-				delete sound;
-				this->sounds.remove_key(*it);
+				destroySounds += this->sounds[*it];
 			}
 		}
-		this->_unlock();
+		harray<hstr> manualSoundNames;
+		harray<Player*> managedPlayers;
+		bool manual;
+		foreach (Sound*, it, destroySounds)
+		{
+			managedPlayers = this->managedPlayers;
+			foreach (Player*, it2, managedPlayers)
+			{
+				if ((*it2)->getSound() == (*it))
+				{
+					this->_destroyManagedPlayer(*it2);
+				}
+			}
+			manual = false;
+			foreach (Player*, it2, this->players)
+			{
+				if ((*it2)->getSound() == (*it))
+				{
+					manualSoundNames += (*it)->getName();
+					manual = true;
+					break;
+				}
+			}
+			if (!manual)
+			{
+				this->sounds.remove_value(*it);
+				delete (*it);
+			}
+		}
+		if (manualSoundNames.size() > 0)
+		{
+			throw hl_exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.join(", "));
+		}
 	}
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
+	{
+		this->_lock();
+		harray<hstr> result = this->_createSoundsFromPath(path, prefix);
+		this->_unlock();
+		return result;
+	}
+
+	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr prefix)
 	{
 		harray<hstr> result;
 		hstr category;
@@ -280,20 +388,28 @@ namespace xal
 		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/", -1, true).pop_last();
-			result += this->createSoundsFromPath((*it), category, prefix);
+			result += this->_createSoundsFromPath((*it), category, prefix);
 		}
 		return result;
 	}
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr category, chstr prefix)
 	{
-		this->createCategory(category);
+		this->_lock();
+		harray<hstr> result = this->_createSoundsFromPath(path, category, prefix);
+		this->_unlock();
+		return result;
+	}
+
+	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr category, chstr prefix)
+	{
+		this->_createCategory(category, xal::FULL, xal::FULL);
 		harray<hstr> result;
 		harray<hstr> files = hdir::files(path, true);
 		Sound* sound;
 		foreach (hstr, it, files)
 		{
-			sound = this->createSound((*it), category, prefix);
+			sound = this->_createSound((*it), category, prefix);
 			if (sound != NULL)
 			{
 				result += sound->getName();
@@ -304,12 +420,20 @@ namespace xal
 
 	Player* AudioManager::createPlayer(chstr name)
 	{
+		this->_lock();
+		Player* player = this->_createPlayer(name);
+		this->_unlock();
+		return player;
+	}
+
+	Player* AudioManager::_createPlayer(chstr name)
+	{
 		if (!this->sounds.has_key(name))
 		{
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		Sound* sound = this->sounds[name];
-		Player* player = this->_createPlayer(sound, sound->getBuffer());
+		Player* player = this->_createSystemPlayer(sound, sound->getBuffer());
 		this->players += player;
 		return player;
 	}
@@ -319,19 +443,6 @@ namespace xal
 		this->_lock();
 		this->_destroyPlayer(player);
 		this->_unlock();
-	}
-
-	Player* AudioManager::findPlayer(chstr name)
-	{
-		harray<Player*> players = this->players - this->managedPlayers;
-		foreach (Player*, it, players)
-		{
-			if ((*it)->getName() == name)
-			{
-				return (*it);
-			}
-		}
-		return NULL;
 	}
 
 	void AudioManager::_destroyPlayer(Player* player)
@@ -345,9 +456,30 @@ namespace xal
 		delete player;
 	}
 
+	Player* AudioManager::findPlayer(chstr name)
+	{
+		this->_lock();
+		Player* player = this->_findPlayer(name);
+		this->_unlock();
+		return player;
+	}
+
+	Player* AudioManager::_findPlayer(chstr name)
+	{
+		harray<Player*> players = this->players - this->managedPlayers;
+		foreach (Player*, it, players)
+		{
+			if ((*it)->getName() == name)
+			{
+				return (*it);
+			}
+		}
+		return NULL;
+	}
+
 	Player* AudioManager::_createManagedPlayer(chstr name)
 	{
-		Player* player = this->createPlayer(name);
+		Player* player = this->_createPlayer(name);
 		this->managedPlayers += player;
 		return player;
 	}
@@ -358,7 +490,7 @@ namespace xal
 		this->_destroyPlayer(player);
 	}
 
-	Player* AudioManager::_createPlayer(Sound* sound, Buffer* buffer)
+	Player* AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
 	{
 		return new Player(sound, buffer);
 	}
@@ -402,20 +534,31 @@ namespace xal
 
 	void AudioManager::play(chstr name, float fadeTime, bool looping, float gain)
 	{
+		this->_lock();
+		this->_play(name, fadeTime, looping, gain);
+		this->_unlock();
+	}
+
+	void AudioManager::_play(chstr name, float fadeTime, bool looping, float gain)
+	{
 		if (this->paused)
 		{
 			return;
 		}
-		this->_lock();
 		Player* player = this->_createManagedPlayer(name);
-		player->setGain(gain);
+		player->_setGain(gain);
 		player->_play(fadeTime, looping);
-		this->_unlock();
 	}
 
 	void AudioManager::stop(chstr name, float fadeTime)
 	{
 		this->_lock();
+		this->_stop(name, fadeTime);
+		this->_unlock();
+	}
+
+	void AudioManager::_stop(chstr name, float fadeTime)
+	{
 		fadeTime = hmax(fadeTime, 0.0f);
 		// creating a copy, because _destroyManagedPlayer alters managedPlayers
 		harray<Player*> players = this->managedPlayers;
@@ -433,12 +576,17 @@ namespace xal
 				}
 			}
 		}
-		this->_unlock();
 	}
 
 	void AudioManager::stopFirst(chstr name, float fadeTime)
 	{
 		this->_lock();
+		this->_stopFirst(name, fadeTime);
+		this->_unlock();
+	}
+
+	void AudioManager::_stopFirst(chstr name, float fadeTime)
+	{
 		fadeTime = hmax(fadeTime, 0.0f);
 		foreach (Player*, it, this->managedPlayers)
 		{
@@ -455,12 +603,17 @@ namespace xal
 				break;
 			}
 		}
-		this->_unlock();
 	}
 
 	void AudioManager::stopAll(float fadeTime)
 	{
 		this->_lock();
+		this->_stopAll(fadeTime);
+		this->_unlock();
+	}
+	
+	void AudioManager::_stopAll(float fadeTime)
+	{
 		fadeTime = hmax(fadeTime, 0.0f);
 		if (fadeTime == 0.0f)
 		{
@@ -475,14 +628,19 @@ namespace xal
 		{
 			(*it)->_stop(fadeTime);
 		}
-		this->_unlock();
 	}
 	
 	void AudioManager::pauseAll(float fadeTime)
 	{
+		this->_lock();
+		this->_pauseAll(fadeTime);
+		this->_unlock();
+	}
+	
+	void AudioManager::_pauseAll(float fadeTime)
+	{
 		if (!this->paused)
 		{
-			this->_lock();
 			foreach (Player*, it, this->players)
 			{
 				if ((*it)->isPlaying())
@@ -496,30 +654,40 @@ namespace xal
 				}
 			}
 			this->paused = true;
-			this->_unlock();
 		}
 	}
 	
 	void AudioManager::resumeAll(float fadeTime)
 	{
+		this->_lock();
+		this->_resumeAll(fadeTime);
+		this->_unlock();
+	}
+	
+	void AudioManager::_resumeAll(float fadeTime)
+	{
 		if (this->paused)
 		{
-			this->_lock();
 			this->paused = false;
 			foreach (Player*, it, this->pausedPlayers)
 			{
 				(*it)->_play();
 			}
 			this->pausedPlayers.clear();
-			this->_unlock();
 		}
 	}
 	
 	void AudioManager::stopCategory(chstr name, float fadeTime)
 	{
 		this->_lock();
+		this->_stopCategory(name, fadeTime);
+		this->_unlock();
+	}
+	
+	void AudioManager::_stopCategory(chstr name, float fadeTime)
+	{
 		fadeTime = hmax(fadeTime, 0.0f);
-		Category* category = this->getCategoryByName(name);
+		Category* category = this->_getCategoryByName(name);
 		if (fadeTime == 0.0f)
 		{
 			// creating a copy, because _destroyManagedPlayer alters managedPlayers
@@ -539,10 +707,17 @@ namespace xal
 				(*it)->_stop(fadeTime);
 			}
 		}
-		this->_unlock();
 	}
 	
 	bool AudioManager::isAnyPlaying(chstr name)
+	{
+		this->_lock();
+		bool result = this->_isAnyPlaying(name);
+		this->_unlock();
+		return result;
+	}
+
+	bool AudioManager::_isAnyPlaying(chstr name)
 	{
 		foreach (Player*, it, this->managedPlayers)
 		{
@@ -556,6 +731,14 @@ namespace xal
 
 	bool AudioManager::isAnyFading(chstr name)
 	{
+		this->_lock();
+		bool result = this->_isAnyFading(name);
+		this->_unlock();
+		return result;
+	}
+
+	bool AudioManager::_isAnyFading(chstr name)
+	{
 		foreach (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == name && (*it)->isFading())
@@ -568,6 +751,14 @@ namespace xal
 
 	bool AudioManager::isAnyFadingIn(chstr name)
 	{
+		this->_lock();
+		bool result = this->_isAnyFadingIn(name);
+		this->_unlock();
+		return result;
+	}
+
+	bool AudioManager::_isAnyFadingIn(chstr name)
+	{
 		foreach (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == name && (*it)->isFadingIn())
@@ -579,6 +770,14 @@ namespace xal
 	}
 
 	bool AudioManager::isAnyFadingOut(chstr name)
+	{
+		this->_lock();
+		bool result = this->_isAnyFadingOut(name);
+		this->_unlock();
+		return result;
+	}
+
+	bool AudioManager::_isAnyFadingOut(chstr name)
 	{
 		foreach (Player*, it, this->managedPlayers)
 		{

@@ -74,7 +74,7 @@ namespace xal
 		AudioComponent _findOutputComponent();
 		OSStatus _connectAudioUnit();
 		
-		Player* _createAudioPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
 
 		static OSStatus _mixAudio(void                        *inRefCon,
 								  AudioUnitRenderActionFlags  *ioActionFlags,

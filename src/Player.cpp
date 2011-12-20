@@ -27,13 +27,53 @@ namespace xal
 	{
 	}
 
+	float Player::getGain()
+	{
+		xal::mgr->_lock();
+		float gain = this->_getGain();
+		xal::mgr->_unlock();
+		return gain;
+	}
+
+	float Player::_getGain()
+	{
+		return this->gain;
+	}
+
 	void Player::setGain(float value)
+	{
+		xal::mgr->_lock();
+		this->_setGain(value);
+		xal::mgr->_unlock();
+	}
+
+	void Player::_setGain(float value)
 	{
 		this->gain = hclamp(value, 0.0f, 1.0f);
 		this->_systemUpdateGain();
 	}
 
+	float Player::getPitch()
+	{
+		xal::mgr->_lock();
+		float pitch = this->_getPitch();
+		xal::mgr->_unlock();
+		return pitch;
+	}
+
+	float Player::_getPitch()
+	{
+		return this->pitch;
+	}
+
 	void Player::setPitch(float value)
+	{
+		xal::mgr->_lock();
+		this->_setPitch(value);
+		xal::mgr->_unlock();
+	}
+
+	void Player::_setPitch(float value)
 	{
 		this->pitch = hclamp(value, 0.01f, 100.0f);
 		this->_systemUpdatePitch();
