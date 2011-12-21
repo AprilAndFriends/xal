@@ -24,6 +24,7 @@
 #include "OpenAL_AudioManager.h"
 #include "OpenAL_Player.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {
@@ -57,6 +58,12 @@ namespace xal
 		}
 		if (this->sound->isStreamed())
 		{
+			/*
+			if (this->_getQueuedBuffersCount() == 0 && this->_getProcessedBuffersCount() == 0);
+			{
+				return false;
+			}
+			*/
 			return (this->_getQueuedBuffersCount() > 0 || this->_getProcessedBuffersCount() > 0);
 		}
 		int state;
@@ -153,8 +160,10 @@ namespace xal
 
 	void OpenAL_Player::_systemStop()
 	{
+		xal::log("    STOP SOUND  " + this->sound->getName());
 		if (this->sourceId != 0)
 		{
+		xal::log("    STOP REALLY SOUND  " + this->sound->getName());
 			if (!this->sound->isStreamed())
 			{
 				alSourceStop(this->sourceId);
@@ -186,46 +195,77 @@ namespace xal
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
+			xal::log("      QUEUE EMTPY - STOP  " + this->sound->getName());
 			this->_stopSound();
 			return;
 		}
 		int processed = this->_getProcessedBuffersCount();
+		xal::log(hsprintf("  -> DATA: %d  %d", queued, processed));
 		if (processed == 0)
 		{
+			//int state;
+			//alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
+			//xal::log((state == AL_PLAYING) ? "    -> 1" : "    -> 0");
 			return;
 		}
+		xal::log(hsprintf("      I: %d   Q: %d   P: %d  %s", this->bufferIndex,  queued, processed, this->sound->getName().c_str()));
 		this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
 		int count = this->_fillBuffers(this->bufferIndex, processed);
 		if (count > 0)
 		{
 			this->_queueBuffers(this->bufferIndex, count);
-			if (processed < STREAM_BUFFER_COUNT)
+			bool playing = (processed < STREAM_BUFFER_COUNT);
+			if (playing)
+			{
+				int state;
+				alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
+				if (state != AL_PLAYING)
+				{
+					playing = false;
+					xal::log(hsprintf("      FOUND THE BASTARD! %d", this->_getProcessedBuffersCount()));
+				}
+			}
+			//xal::log((state == AL_PLAYING) ? "    -> 1" : "    -> 0");
+			//int state
+			if (playing)//processed < STREAM_BUFFER_COUNT)
 			{
 				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
 			}
 			else // underrun happened, sound was stopped
 			{
+				xal::log("      UNDERRUN  " + this->sound->getName());
 				this->_pause();
 				this->_play();
 			}
 		}
+		else
+		{
+			xal::log("    NO FILL  " + this->sound->getName());
+		}
 		if (this->_getQueuedBuffersCount() == 0)
 		{
+			xal::log("    NO QUEUE - STOP  " + this->sound->getName());
 			this->_stopSound();
 		}
 	}
 
 	int OpenAL_Player::_getQueuedBuffersCount()
 	{
-		int queued;
-		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		int queued = 0;
+		if (this->sourceId)
+		{
+			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		}
 		return queued;
 	}
 
 	int OpenAL_Player::_getProcessedBuffersCount()
 	{
-		int processed;
-		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
+		int processed = 0;
+		if (this->sourceId)
+		{
+			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
+		}
 		return processed;
 	}
 
@@ -259,9 +299,25 @@ namespace xal
 		}
 		else
 		{
+			harray<hstr> ids1;
+			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
+			{
+				ids1 += hsprintf("%08X", this->bufferIds[i]);
+			}
 			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
 			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+			harray<hstr> ids2;
+			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
+			{
+				ids2 += hsprintf("%08X", this->bufferIds[i]);
+			}
+			if (ids1 != ids2)
+			{
+				xal::log("      " + ids1.join(" "));
+				xal::log("      " + ids2.join(" "));
+			}
 		}
+		xal::log(hsprintf("      QUE - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
 	}
  
 	void OpenAL_Player::_queueBuffers()
@@ -281,9 +337,25 @@ namespace xal
 		}
 		else
 		{
+			harray<hstr> ids1;
+			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
+			{
+				ids1 += hsprintf("%08X", this->bufferIds[i]);
+			}
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
 			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+			harray<hstr> ids2;
+			for (int i = 0; i < STREAM_BUFFER_COUNT; i++)
+			{
+				ids2 += hsprintf("%08X", this->bufferIds[i]);
+			}
+			if (ids1 != ids2)
+			{
+				xal::log("      " + ids1.join(" "));
+				xal::log("      " + ids2.join(" "));
+			}
 		}
+		xal::log(hsprintf("      UNQ - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
 	}
 
 	void OpenAL_Player::_unqueueBuffers()

@@ -43,6 +43,8 @@
 
 namespace xal
 {
+	extern void (*gLogFunction)(chstr);
+	
 	AudioManager* mgr = NULL;
 
 	AudioManager::AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
@@ -62,8 +64,8 @@ namespace xal
 	{
 		if (this->thread != NULL)
 		{
-			xal::log("stopping thread management");
 			this->_lock();
+			xal::log("stopping thread management");
 			this->thread->stop();
 			delete this->thread;
 			this->thread = NULL;
@@ -158,12 +160,8 @@ namespace xal
 	
 	void AudioManager::update(float k)
 	{
-		if (this->isThreaded())
-		{
-			xal::log("Warning! AudioManager update called manually while in threaded update mode!");
-		}
 		this->_lock();
-		this->_update(k);
+		this->isThreaded() ? this->_flushQueuedMessages() : this->_update(k);
 		this->_unlock();
 	}
 
@@ -799,6 +797,20 @@ namespace xal
 			}
 		}
 		return false;
+	}
+
+	void AudioManager::queueMessage(chstr message)
+	{
+		this->_queuedMessages += message;
+	}
+
+	void AudioManager::_flushQueuedMessages()
+	{
+		foreach (hstr, it, this->_queuedMessages)
+		{
+			gLogFunction(*it);
+		}
+		this->_queuedMessages.clear();
 	}
 
 }
