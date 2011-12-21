@@ -123,6 +123,8 @@ namespace xal
 		bool isAnyFadingIn(chstr name);
 		bool isAnyFadingOut(chstr name);
 
+		void queueMessage(chstr message);
+
 	protected:
 		unsigned long backendId;
 		hstr name;
@@ -184,6 +186,11 @@ namespace xal
 		bool _isAnyFadingOut(chstr name);
 
 		virtual void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize) { }
+
+	private:
+		harray<hstr> _queuedMessages;
+
+		void _flushQueuedMessages();
 
 	};
 	
