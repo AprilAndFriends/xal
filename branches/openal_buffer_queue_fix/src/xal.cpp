@@ -152,7 +152,14 @@ namespace xal
 	
 	void log(chstr message, chstr prefix)
 	{
-		gLogFunction(prefix + message);
+		if (xal::mgr != NULL && xal::mgr->isThreaded())
+		{
+			xal::mgr->queueMessage(prefix + message);
+		}
+		else
+		{
+			gLogFunction(prefix + message);
+		}
 	}
 	
 	void setLogFunction(void (*function)(chstr))

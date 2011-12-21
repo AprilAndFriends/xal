@@ -13,6 +13,7 @@
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {

@@ -24,8 +24,8 @@
 
 #include "xalExport.h"
 
-#define STREAM_BUFFER_COUNT 8 // greater or equal to 2
-#define STREAM_BUFFER_SIZE 32768 // equal to any power of 2
+#define STREAM_BUFFER_COUNT 4 // greater or equal to 2
+#define STREAM_BUFFER_SIZE 4096 // equal to any power of 2
 #define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
 
 namespace xal
@@ -123,6 +123,8 @@ namespace xal
 		bool isAnyFadingIn(chstr name);
 		bool isAnyFadingOut(chstr name);
 
+		void queueMessage(chstr message);
+
 	protected:
 		unsigned long backendId;
 		hstr name;
@@ -184,6 +186,11 @@ namespace xal
 		bool _isAnyFadingOut(chstr name);
 
 		virtual void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize) { }
+
+	private:
+		harray<hstr> _queuedMessages;
+
+		void _flushQueuedMessages();
 
 	};
 	
