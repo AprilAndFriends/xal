@@ -25,7 +25,7 @@
 #include "xalExport.h"
 
 #define STREAM_BUFFER_COUNT 4 // greater or equal to 2
-#define STREAM_BUFFER_SIZE 4096 // equal to any power of 2
+#define STREAM_BUFFER_SIZE 2048 // equal to any power of 2
 #define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
 
 namespace xal
