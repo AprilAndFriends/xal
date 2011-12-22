@@ -87,14 +87,14 @@ namespace xal
 	
 	unsigned int OpenAL_AudioManager::_allocateSourceId()
 	{
-        unsigned int id = 0;
+		unsigned int id = 0;
 		alGenSources(1, &id);
 		if (alGetError() != AL_NO_ERROR)
-        {
-            xal::log("unable to allocate audio source!");
-            return 0;
-        }
-        return id;
+		{
+			xal::log("unable to allocate audio source!");
+			return 0;
+		}
+		return id;
 	}
 
 	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)

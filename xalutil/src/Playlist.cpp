@@ -49,48 +49,54 @@ namespace xal
 	
 	void Playlist::update()
 	{
-		if (this->players.size() == 0 || !this->playing || this->index < 0)
+		if (this->enabled)
 		{
-			return;
-		}
-		if (this->repeatAll)
-		{
-			if (!this->players[this->index]->isPlaying())
+			if (this->players.size() == 0 || !this->playing || this->index < 0)
 			{
-				this->index = (this->index + 1) % this->players.size();
-				this->players[this->index]->play();
+				return;
 			}
-		}
-		else if (this->index < this->players.size())
-		{
-			if (!this->players[this->index]->isPlaying())
+			if (this->repeatAll)
 			{
-				this->index++;
-				if (this->index < this->players.size())
+				if (!this->players[this->index]->isPlaying())
 				{
+					this->index = (this->index + 1) % this->players.size();
 					this->players[this->index]->play();
 				}
-				else
+			}
+			else if (this->index < this->players.size())
+			{
+				if (!this->players[this->index]->isPlaying())
 				{
-					this->playing = false;
+					this->index++;
+					if (this->index < this->players.size())
+					{
+						this->players[this->index]->play();
+					}
+					else
+					{
+						this->playing = false;
+					}
 				}
 			}
-		}
-		else
-		{
-			this->playing = false;
+			else
+			{
+				this->playing = false;
+			}
 		}
 	}
 	
 	void Playlist::clear()
 	{
-		this->stop();
-		foreach (Player*, it, this->players)
+		if (this->enabled)
 		{
-			xal::mgr->destroyPlayer(*it);
+			this->stop();
+			foreach (Player*, it, this->players)
+			{
+				xal::mgr->destroyPlayer(*it);
+			}
+			this->players.clear();
+			this->index = -1;
 		}
-		this->players.clear();
-		this->index = -1;
 	}
 	
 	void Playlist::queueSound(chstr name)
@@ -110,53 +116,68 @@ namespace xal
 	
 	void Playlist::play(float fadeTime)
 	{
-		if (!this->enabled || this->players.size() == 0 || this->playing)
+		if (this->enabled)
 		{
-			return;
+			if (this->players.size() == 0 || this->playing)
+			{
+				return;
+			}
+			if (this->index >= this->players.size())
+			{
+				this->index = 0;
+			}
+			this->players[this->index]->play(fadeTime);
+			this->playing = true;
 		}
-		if (this->index >= this->players.size())
-		{
-			this->index = 0;
-		}
-		this->players[this->index]->play(fadeTime);
-		this->playing = true;
 	}
 	
 	void Playlist::stop(float fadeTime)
 	{
-		if (this->playing)
+		if (this->enabled)
 		{
-			this->players[this->index]->stop(fadeTime);
+			if (this->playing)
+			{
+				this->players[this->index]->stop(fadeTime);
+			}
+			this->playing = false;
 		}
-		this->playing = false;
 	}
 	
 	void Playlist::pause(float fadeTime)
 	{
-		if (this->playing)
+		if (this->enabled)
 		{
-			this->players[this->index]->pause(fadeTime);
+			if (this->playing)
+			{
+				this->players[this->index]->pause(fadeTime);
+			}
+			this->playing = false;
 		}
-		this->playing = false;
 	}
 
 	void Playlist::shuffle()
 	{
-		if (!this->playing && this->players.size() > 1)
+		if (this->enabled)
 		{
-			xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
-			this->players.randomize();
-			if (player != NULL)
+			if (!this->playing && this->players.size() > 1)
 			{
-				this->index = this->players.index_of(player);
+				xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
+				this->players.randomize();
+				if (player != NULL)
+				{
+					this->index = this->players.index_of(player);
+				}
 			}
 		}
 	}
 
 	void Playlist::reset()
 	{
-		this->stop();
-		this->index = 0;
+		if (this->enabled)
+		{
+			this->stop();
+			this->index = 0;
+		}
 	}
 	
 }
