@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,7 @@ namespace xal
 		SDL_Player(Sound* sound, Buffer* buffer);
 		~SDL_Player();
 
-		void mixAudio(unsigned char* stream, int length, bool first);
+		bool mixAudio(unsigned char* stream, int length, bool first);
 
 	protected:
 		bool playing;

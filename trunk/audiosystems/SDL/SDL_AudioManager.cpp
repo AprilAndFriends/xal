@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -34,7 +34,6 @@ namespace xal
 			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
 			return;
 		}
-
 		this->format.freq = 44100;
 		this->format.format = AUDIO_S16;
 		this->format.channels = 2;
@@ -77,20 +76,18 @@ namespace xal
 		}
 		memset(this->buffer, 0, this->bufferSize * sizeof(unsigned char));
 		bool first = true;
-		foreach (Player*, it, this->players)
+		harray<SDL_Player*> players = this->players.cast<SDL_Player*>();
+		foreach (SDL_Player*, it, players)
 		{
-			((SDL_Player*)(*it))->mixAudio(this->buffer, this->bufferSize, first);
-			first = false;
+			if ((*it)->mixAudio(this->buffer, this->bufferSize, first)) // returns true if playing and first audio data has been mixed into the stream
+			{
+				first = false;
+			}
 		}
-		
-		// SDL docs say we don't need to use SDL_MixAudio if we
-		// use only one audio channel.
-		// 
-		/*
-		SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
-		 */
+		// because stream mixing is done manually, there is no need to call SDL_MixAudio and memcpy is enough,
+		// the following line is here only for demonstration how it would look like with SDL_MixAudio
+		//SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
 		memcpy(stream, this->buffer, this->bufferSize);
-		
 		this->_unlock();
 	}
 
