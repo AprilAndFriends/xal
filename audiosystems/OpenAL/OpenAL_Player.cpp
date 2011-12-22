@@ -154,16 +154,16 @@ namespace xal
 	{
 		if (this->sourceId != 0)
 		{
+			xal::log("    PLAY SOUND  " + this->sound->getName());
 			alSourcePlay(this->sourceId);
 		}
 	}
 
 	void OpenAL_Player::_systemStop()
 	{
-		xal::log("    STOP SOUND  " + this->sound->getName());
 		if (this->sourceId != 0)
 		{
-		xal::log("    STOP REALLY SOUND  " + this->sound->getName());
+			xal::log("    STOP SOUND  " + this->sound->getName());
 			if (!this->sound->isStreamed())
 			{
 				alSourceStop(this->sourceId);
@@ -203,9 +203,6 @@ namespace xal
 		xal::log(hsprintf("  -> DATA: %d  %d", queued, processed));
 		if (processed == 0)
 		{
-			//int state;
-			//alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
-			//xal::log((state == AL_PLAYING) ? "    -> 1" : "    -> 0");
 			return;
 		}
 		xal::log(hsprintf("      I: %d   Q: %d   P: %d  %s", this->bufferIndex,  queued, processed, this->sound->getName().c_str()));
@@ -222,7 +219,7 @@ namespace xal
 				if (state != AL_PLAYING)
 				{
 					playing = false;
-					xal::log(hsprintf("      FOUND THE BASTARD! %d", this->_getProcessedBuffersCount()));
+					xal::log(hsprintf("- FOUND THE BASTARD! %d", this->_getProcessedBuffersCount()));
 				}
 			}
 			//xal::log((state == AL_PLAYING) ? "    -> 1" : "    -> 0");
@@ -233,7 +230,7 @@ namespace xal
 			}
 			else // underrun happened, sound was stopped
 			{
-				xal::log("      UNDERRUN  " + this->sound->getName());
+				xal::log(hsprintf("      UNDERRUN  %d %s", this->_getProcessedBuffersCount(), this->sound->getName().c_str()));
 				this->_pause();
 				this->_play();
 			}
@@ -296,6 +293,7 @@ namespace xal
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
+			xal::log(hsprintf("      QUE_1 - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
 		}
 		else
 		{
@@ -313,11 +311,13 @@ namespace xal
 			}
 			if (ids1 != ids2)
 			{
-				xal::log("      " + ids1.join(" "));
-				xal::log("      " + ids2.join(" "));
+				xal::log("    X-> " + ids1.join(" "));
+				xal::log("    X-> " + ids2.join(" "));
 			}
+			xal::log(hsprintf("      QUE_2 - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
+			xal::log("      " + (ids1(index, STREAM_BUFFER_COUNT - index) + ids1(0, count + index - STREAM_BUFFER_COUNT)).join(" "));
+			xal::log("      " + (ids2(index, STREAM_BUFFER_COUNT - index) + ids2(0, count + index - STREAM_BUFFER_COUNT)).join(" "));
 		}
-		xal::log(hsprintf("      QUE - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
 	}
  
 	void OpenAL_Player::_queueBuffers()
@@ -334,6 +334,7 @@ namespace xal
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
+			xal::log(hsprintf("      UNQ_1 - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
 		}
 		else
 		{
@@ -351,11 +352,13 @@ namespace xal
 			}
 			if (ids1 != ids2)
 			{
-				xal::log("      " + ids1.join(" "));
-				xal::log("      " + ids2.join(" "));
+				xal::log("    X-> " + ids1.join(" "));
+				xal::log("    X-> " + ids2.join(" "));
 			}
+			xal::log(hsprintf("      UNQ_2 - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
+			xal::log("      " + (ids1(index, STREAM_BUFFER_COUNT - index) + ids1(0, count + index - STREAM_BUFFER_COUNT)).join(" "));
+			xal::log("      " + (ids2(index, STREAM_BUFFER_COUNT - index) + ids2(0, count + index - STREAM_BUFFER_COUNT)).join(" "));
 		}
-		xal::log(hsprintf("      UNQ - I: %d   C: %d   %d %d %d  %s", index, count, this->_getQueuedBuffersCount(), this->_getProcessedBuffersCount(), (int)this->_systemIsPlaying(), this->sound->getName().c_str()));
 	}
 
 	void OpenAL_Player::_unqueueBuffers()
