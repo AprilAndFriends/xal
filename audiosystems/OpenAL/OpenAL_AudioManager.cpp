@@ -43,7 +43,6 @@ namespace xal
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
 		xal::log("initializing OpenAL");
-		memset(this->allocated, 0, OPENAL_MAX_SOURCES * sizeof(bool));
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
@@ -64,7 +63,7 @@ namespace xal
 			xal::log("could not set context as current");
 			return;
 		}
-		alGenSources(OPENAL_MAX_SOURCES, this->sourceIds);
+
 		this->device = currentDevice;
 		this->context = currentContext;
 		this->enabled = true;
@@ -75,7 +74,6 @@ namespace xal
 		xal::log("destroying OpenAL");
 		if (this->device != NULL)
 		{
-			alDeleteSources(OPENAL_MAX_SOURCES, this->sourceIds);
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(this->context);
 			alcCloseDevice(this->device);
@@ -89,29 +87,19 @@ namespace xal
 	
 	unsigned int OpenAL_AudioManager::_allocateSourceId()
 	{
-		for (int i = 0; i < OPENAL_MAX_SOURCES; i++)
-		{
-			if (!this->allocated[i])
-			{
-				this->allocated[i] = true;
-				return this->sourceIds[i];
-			}
-		}
-		xal::log("unable to allocate audio source!");
-		return 0;
+        unsigned int id = 0;
+		alGenSources(1, &id);
+		if (alGetError() != AL_NO_ERROR)
+        {
+            xal::log("unable to allocate audio source!");
+            return 0;
+        }
+        return id;
 	}
 
 	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
-		for (int i = 0; i < OPENAL_MAX_SOURCES; i++)
-		{
-			if (this->sourceIds[i] == sourceId)
-			{
-				this->allocated[i] = false;
-				break;
-			}
-		}
+		alDeleteSources(1, &sourceId);
 	}
-
 }
 #endif

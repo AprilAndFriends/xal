@@ -54,13 +54,10 @@
 		C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E5138104D90007882A /* SDL_AudioManager.h */; };
 		C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E6138104D90007882A /* SDL_Player.cpp */; };
 		C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E7138104D90007882A /* SDL_Player.h */; };
-		D129D44C140E69E400CC5073 /* ExternalComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D129D44B140E69E400CC5073 /* ExternalComponent.cpp */; };
-		D129D44E140E6A0300CC5073 /* ExternalComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = D129D44D140E6A0300CC5073 /* ExternalComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */; };
 		D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */; };
 		D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
 		D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AE138103F80007882A /* AudioManager.cpp */; };
-		D1981C9C140F8ADB0057C3AF /* ExternalComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D129D44B140E69E400CC5073 /* ExternalComponent.cpp */; };
 		D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AF138103F80007882A /* Buffer.cpp */; };
 		D1981C9E140F8ADB0057C3AF /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B0138103F80007882A /* Category.cpp */; };
 		D1981C9F140F8ADB0057C3AF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B1138103F80007882A /* Player.cpp */; };
@@ -118,8 +115,6 @@
 		C9DAE8E5138104D90007882A /* SDL_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_AudioManager.h; path = audiosystems/SDL/SDL_AudioManager.h; sourceTree = "<group>"; };
 		C9DAE8E6138104D90007882A /* SDL_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDL_Player.cpp; path = audiosystems/SDL/SDL_Player.cpp; sourceTree = "<group>"; };
 		C9DAE8E7138104D90007882A /* SDL_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_Player.h; path = audiosystems/SDL/SDL_Player.h; sourceTree = "<group>"; };
-		D129D44B140E69E400CC5073 /* ExternalComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExternalComponent.cpp; path = src/ExternalComponent.cpp; sourceTree = "<group>"; };
-		D129D44D140E6A0300CC5073 /* ExternalComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalComponent.h; path = include/xal/ExternalComponent.h; sourceTree = "<group>"; };
 		D1981C82140F8A230057C3AF /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -193,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				C9DAE8AE138103F80007882A /* AudioManager.cpp */,
-				D129D44B140E69E400CC5073 /* ExternalComponent.cpp */,
 				C9DAE8AF138103F80007882A /* Buffer.cpp */,
 				C9DAE8B0138103F80007882A /* Category.cpp */,
 				C9DAE8B1138103F80007882A /* Player.cpp */,
@@ -208,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				7FC8064B11EC944C00851062 /* Endianess.h */,
-				D129D44D140E6A0300CC5073 /* ExternalComponent.h */,
 				C9DAE89E138103DA0007882A /* AudioManager.h */,
 				C9DAE89F138103DA0007882A /* Buffer.h */,
 				C9DAE8A0138103DA0007882A /* Category.h */,
@@ -331,7 +324,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D129D44E140E6A0300CC5073 /* ExternalComponent.h in Headers */,
 				C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */,
 				C9DAE8A7138103DA0007882A /* Buffer.h in Headers */,
 				C9DAE8A8138103DA0007882A /* Category.h in Headers */,
@@ -467,7 +459,6 @@
 				7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */,
 				7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */,
 				7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */,
-				D129D44C140E69E400CC5073 /* ExternalComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,7 +471,6 @@
 				D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */,
 				D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */,
 				D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */,
-				D1981C9C140F8ADB0057C3AF /* ExternalComponent.cpp in Sources */,
 				D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */,
 				D1981C9E140F8ADB0057C3AF /* Category.cpp in Sources */,
 				D1981C9F140F8ADB0057C3AF /* Player.cpp in Sources */,
@@ -570,7 +560,9 @@
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include",
+					"${SRCROOT}/include/xal",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -593,7 +585,9 @@
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include",
+					"${SRCROOT}/include/xal",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/../include/audiosources",
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
@@ -615,7 +609,9 @@
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include",
+					"${SRCROOT}/include/xal",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/../include/audiosources",
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -667,7 +663,9 @@
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include",
+					"${SRCROOT}/include/xal",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -722,7 +720,9 @@
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include",
+					"${SRCROOT}/include/xal",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/../include/audiosources",
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
@@ -778,15 +778,10 @@
 					"HAVE_OPENAL=1",
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
+					_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
@@ -815,15 +810,10 @@
 					"HAVE_OPENAL=1",
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
+					_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
@@ -848,14 +838,9 @@
 					"HAVE_OPENAL=1",
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
+					_IOS,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
@@ -881,14 +866,9 @@
 					"HAVE_OPENAL=1",
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
+					_IOS,
 				);
 				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
@@ -915,14 +895,9 @@
 					"HAVE_OPENAL=1",
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
 					"HAVE_OGG=1",
+					_IOS,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
