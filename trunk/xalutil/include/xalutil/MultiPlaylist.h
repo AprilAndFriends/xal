@@ -28,9 +28,9 @@ namespace xal
 		MultiPlaylist();
 		~MultiPlaylist();
 		
-		bool isEnabled() { return this->enabled; }
-		void setEnabled(bool value) { this->enabled = value; }
 		harray<Playlist*> getPlaylists() { return this->playlists; }
+		bool isEnabled();
+		void setEnabled(bool value);
 		bool isPlaying();
 		bool isPaused();
 
@@ -48,7 +48,6 @@ namespace xal
 		void reset();
 		
 	protected:
-		bool enabled;
 		harray<Playlist*> playlists;
 	
 	};

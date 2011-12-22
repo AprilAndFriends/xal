@@ -15,7 +15,7 @@
 
 namespace xal
 {
-	MultiPlaylist::MultiPlaylist() : enabled(true)
+	MultiPlaylist::MultiPlaylist()
 	{
 	}
 	
@@ -24,6 +24,26 @@ namespace xal
 		this->clear();
 	}
 
+	bool MultiPlaylist::isEnabled()
+	{
+		foreach (Playlist*, it, this->playlists)
+		{
+			if (!(*it)->isEnabled())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	void MultiPlaylist::setEnabled(bool value)
+	{
+		foreach (Playlist*, it, this->playlists)
+		{
+			(*it)->setEnabled(value);
+		}
+	}
+	
 	bool MultiPlaylist::isPlaying()
 	{
 		foreach (Playlist*, it, this->playlists)
