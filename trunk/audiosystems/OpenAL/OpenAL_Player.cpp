@@ -10,6 +10,7 @@
 #if HAVE_OPENAL
 #include <stdio.h>
 #include <string.h>
+#include "xal.h"
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -164,8 +165,8 @@ namespace xal
 			{
 				int processed = this->_getProcessedBuffersCount();
 				alSourceStop(this->sourceId);
-				this->_unqueueBuffers();
-				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
+                this->_unqueueBuffers();
+                alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
 				if (this->paused)
 				{
 					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
@@ -286,17 +287,35 @@ namespace xal
 		}
 	}
  
-	void OpenAL_Player::_unqueueBuffers(int index, int count)
+    void OpenAL_Player::_unqueueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
+#ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
+            int n = this->_getQueuedBuffersCount();
+#endif
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
+#ifdef _IOS
+            while (n - this->_getQueuedBuffersCount() != count) hthread::sleep(1);
+#endif
 		}
 		else
 		{
+#ifdef _IOS
+            int n = this->_getQueuedBuffersCount();
+#endif
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
+#ifdef _IOS
+            while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index) hthread::sleep(1);
+            n -= STREAM_BUFFER_COUNT - index;
+#endif
 			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+#ifdef _IOS
+            while (n - this->_getQueuedBuffersCount() != count + index - STREAM_BUFFER_COUNT)
+                hthread::sleep(1);
+#endif
 		}
+
 	}
 
 	void OpenAL_Player::_unqueueBuffers()
