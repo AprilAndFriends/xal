@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.0
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -24,8 +24,8 @@
 
 #include "xalExport.h"
 
-#define STREAM_BUFFER_COUNT 8 // greater or equal to 2
-#define STREAM_BUFFER_SIZE 32768 // equal to any power of 2
+#define STREAM_BUFFER_COUNT 16 // greater or equal to 2
+#define STREAM_BUFFER_SIZE 16384 // equal to any power of 2
 #define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
 
 namespace xal

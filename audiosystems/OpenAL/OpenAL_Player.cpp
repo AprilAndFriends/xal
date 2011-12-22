@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -199,11 +199,18 @@ namespace xal
 		if (count > 0)
 		{
 			this->_queueBuffers(this->bufferIndex, count);
-			if (processed < STREAM_BUFFER_COUNT)
+			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			bool playing = (processed < STREAM_BUFFER_COUNT);
+			if (playing)
 			{
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+				int state;
+				alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
+				if (state != AL_PLAYING)
+				{
+					playing = false;
+				}
 			}
-			else // underrun happened, sound was stopped
+			if (!playing) // underrun happened, sound was stopped by OpenAL so let's reboot it properly
 			{
 				this->_pause();
 				this->_play();
@@ -217,15 +224,21 @@ namespace xal
 
 	int OpenAL_Player::_getQueuedBuffersCount()
 	{
-		int queued;
-		alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		int queued = 0;
+		if (this->sourceId)
+		{
+			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
+		}
 		return queued;
 	}
 
 	int OpenAL_Player::_getProcessedBuffersCount()
 	{
-		int processed;
-		alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
+		int processed = 0;
+		if (this->sourceId)
+		{
+			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
+		}
 		return processed;
 	}
 

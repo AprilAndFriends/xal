@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -90,11 +90,11 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
+	bool SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
 	{
 		if (!this->playing)
 		{
-			return;
+			return false;
 		}
 		unsigned char* data1;
 		unsigned char* data2;
@@ -162,6 +162,7 @@ namespace xal
 			}
 			this->position += size1 + size2;
 		}
+		return true;
 	}
 
 	float SDL_Player::_systemGetOffset()
