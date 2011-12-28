@@ -32,9 +32,12 @@
 #if HAVE_M4A
 #include "M4A_Source.h"
 #endif
+// TODO
+/*
 #if HAVE_MIDI
 #include "MIDI_Source.h"
 #endif
+*/
 #if HAVE_OGG
 #include "OGG_Source.h"
 #endif
