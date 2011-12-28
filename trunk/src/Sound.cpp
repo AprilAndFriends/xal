@@ -45,21 +45,8 @@ namespace xal
 		{
 			return this->filename;
 		}
-		harray<hstr> newFolders = hfile::hread(this->filename).split("/", -1, true);
-		harray<hstr> folders = this->filename.split("/", -1, true);
-		folders.pop_last();
-		foreach (hstr, it, newFolders)
-		{
-			if ((*it) != "..")
-			{
-				folders += (*it);
-			}
-			else
-			{
-				folders.pop_last();
-			}
-		}
-		return folders.join("/");
+		// It's dangerous to go alone! Take this.
+		return xal::mgr->findAudioFile(normalize_path(get_basedir(this->filename) + "/" + hfile::hread(this->filename)));
 	}
 
 	int Sound::getSize()

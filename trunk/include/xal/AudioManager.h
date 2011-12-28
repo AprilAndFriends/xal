@@ -32,11 +32,14 @@ namespace xal
 {
 	enum Format
 	{
+#if HAVE_FLAC
+		FLAC,
+#endif
 #if HAVE_M4A
 		M4A,
 #endif
-#if HAVE_MP3
-		MP3,
+#if HAVE_MIDI
+		MIDI,
 #endif
 #if HAVE_OGG
 		OGG,
@@ -125,6 +128,9 @@ namespace xal
 
 		void queueMessage(chstr message);
 
+		void addAudioExtension(chstr extension);
+		hstr findAudioFile(chstr _filename);
+
 	protected:
 		unsigned long backendId;
 		hstr name;
@@ -139,6 +145,7 @@ namespace xal
 		harray<Player*> managedPlayers;
 		harray<Player*> pausedPlayers;
 		hmap<hstr, Sound*> sounds;
+		harray<hstr> extensions;
 		hthread* thread;
 		hmutex mutex; // a mute ex would be nice
 
