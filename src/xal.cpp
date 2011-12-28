@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 
+#include <hltypes/harray.h>
+#include <hltypes/hstring.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #endif

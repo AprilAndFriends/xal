@@ -88,16 +88,22 @@ namespace xal
 
 	Format Buffer::getFormat()
 	{
+#if HAVE_FLAC
+		if (this->filename.ends_with(".flac"))
+		{
+			return FLAC;
+		}
+#endif
 #if HAVE_M4A
 		if (this->filename.ends_with(".m4a"))
 		{
 			return M4A;
 		}
 #endif
-#if HAVE_MP3
-		if (this->filename.ends_with(".mp3"))
+#if HAVE_MIDI
+		if (this->filename.ends_with(".mid"))
 		{
-			return MP3;
+			return MIDI;
 		}
 #endif
 #if HAVE_OGG

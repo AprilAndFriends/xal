@@ -10,6 +10,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/exception.h>
+#include <hltypes/harray.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
@@ -25,11 +26,14 @@
 #include "Source.h"
 #include "xal.h"
 
+#if HAVE_FLAC
+#include "FLAC_Source.h"
+#endif
 #if HAVE_M4A
 #include "M4A_Source.h"
 #endif
-#if HAVE_MP3
-#include "MP3_Source.h"
+#if HAVE_MIDI
+#include "MIDI_Source.h"
 #endif
 #if HAVE_OGG
 #include "OGG_Source.h"
@@ -54,6 +58,24 @@ namespace xal
 		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;
+#if HAVE_FLAC
+		this->extensions += ".flac";
+#endif
+#if HAVE_M4A
+		this->extensions += ".m4a";
+#endif
+#if HAVE_MIDI
+		this->extensions += ".mid";
+#endif
+#if HAVE_OGG
+		this->extensions += ".ogg";
+#endif
+#if HAVE_SPX
+		this->extensions += ".spx";
+#endif
+#if HAVE_WAV
+		this->extensions += ".wav";
+#endif
 		if (threaded)
 		{
 			this->thread = new hthread(&AudioManager::update);
@@ -510,16 +532,27 @@ namespace xal
 		Source* source;
 		switch (format)
 		{
+			// TODO
+			/*
+#if HAVE_FLAC
+		case FLAC:
+			source = new FLAC_Source(filename);
+			break;
+#endif
+			*/
 #if HAVE_M4A
 		case M4A:
 			source = new M4A_Source(filename);
 			break;
 #endif
-#if HAVE_MP3
-		case MP3:
-			source = new MP3_Source(filename);
+			// TODO
+			/*
+#if HAVE_MIDI
+		case MIDI:
+			source = new MIDI_Source(filename);
 			break;
 #endif
+			*/
 #if HAVE_OGG
 		case OGG:
 			source = new OGG_Source(filename);
@@ -813,4 +846,41 @@ namespace xal
 		this->_queuedMessages.clear();
 	}
 
+	void AudioManager::addAudioExtension(chstr extension)
+	{
+		this->extensions += extension;
+	}
+
+	hstr AudioManager::findAudioFile(chstr _filename)
+	{
+		hstr filename = _filename;
+		if (hfile::exists(filename))
+		{
+			return filename;
+		}
+		hstr name;
+		foreach (hstr, it, this->extensions)
+		{
+			name = filename + (*it);
+			if (hfile::exists(name))
+			{
+				return name;
+			}
+		}
+		int index = filename.rfind(".");
+		if (index >= 0)
+		{
+			filename = filename.substr(0, index);
+			foreach (hstr, it, this->extensions)
+			{
+				name = filename + (*it);
+				if (hfile::exists(name))
+				{
+					return name;
+				}
+			}
+		}
+		return "";
+	}
+	
 }
