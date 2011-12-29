@@ -1,0 +1,21 @@
+option lib
+
+subproject xalutil
+
+options
+{
+	enable-exceptions
+}
+
+subprojects
+{
+	xal
+	hltypes
+}
+
+files
+{
+	(src)
+	Playlist.cpp
+	ParallelSoundManager.cpp
+}
