@@ -12,6 +12,7 @@
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
 #include <hltypes/hstring.h>
