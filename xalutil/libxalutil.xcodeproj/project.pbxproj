@@ -14,6 +14,10 @@
 		7F2192EF11F081DF00660245 /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
 		7F2192F711F0820000660245 /* xal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192F611F0820000660245 /* xal.framework */; };
 		7F2192FB11F0820B00660245 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192FA11F0820B00660245 /* hltypes.framework */; };
+		C9C04E8F14BAF745005BD333 /* MultiPlaylist.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9C04E9014BAF745005BD333 /* MultiPlaylist.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */; };
+		C9C04E9314BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
+		C9C04E9414BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
 		D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
 		D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
 /* End PBXBuildFile section */
@@ -28,6 +32,8 @@
 		7F2192FA11F0820B00660245 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xalutil.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xalutil.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiPlaylist.h; path = include/xalutil/MultiPlaylist.h; sourceTree = "<group>"; };
+		C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MultiPlaylist.cpp; path = src/MultiPlaylist.cpp; sourceTree = "<group>"; };
 		D1981CA8140F8D4F0057C3AF /* libxalutil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxalutil.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -75,6 +81,7 @@
 		7F2192E311F081BE00660245 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */,
 				7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */,
 				7F2192ED11F081DF00660245 /* Playlist.cpp */,
 			);
@@ -84,6 +91,7 @@
 		7F2192E511F081C200660245 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */,
 				7F2192E611F081D500660245 /* ParallelSoundManager.h */,
 				7F2192E711F081D500660245 /* Playlist.h */,
 				7F2192E811F081D500660245 /* xalUtilExport.h */,
@@ -117,6 +125,7 @@
 			files = (
 				7F2192E911F081D500660245 /* ParallelSoundManager.h in Headers */,
 				7F2192EA11F081D500660245 /* Playlist.h in Headers */,
+				C9C04E8F14BAF745005BD333 /* MultiPlaylist.h in Headers */,
 				7F2192EB11F081D500660245 /* xalUtilExport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +134,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9C04E9014BAF745005BD333 /* MultiPlaylist.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +223,7 @@
 			files = (
 				7F2192EE11F081DF00660245 /* ParallelSoundManager.cpp in Sources */,
 				7F2192EF11F081DF00660245 /* Playlist.cpp in Sources */,
+				C9C04E9314BAF750005BD333 /* MultiPlaylist.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +233,7 @@
 			files = (
 				D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */,
 				D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */,
+				C9C04E9414BAF750005BD333 /* MultiPlaylist.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +249,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../__build__/pharaoh/Build/Products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -261,6 +277,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../__build__/pharaoh/Build/Products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -330,6 +350,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../__build__/pharaoh/Build/Products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -367,6 +391,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../__build__/pharaoh/Build/Products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -405,6 +433,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../__build__/pharaoh/Build/Products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = "";
