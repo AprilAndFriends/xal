@@ -88,15 +88,6 @@ namespace xal
 
 	AudioManager::~AudioManager()
 	{
-		if (this->thread != NULL)
-		{
-			this->_lock();
-			xal::log("stopping thread management");
-			this->thread->stop();
-			delete this->thread;
-			this->thread = NULL;
-			this->_unlock();
-		}
 	}
 
 	void AudioManager::init()
@@ -111,7 +102,7 @@ namespace xal
 
 	void AudioManager::_startThreading()
 	{
-		xal::log("starting thread management");
+		xal::log("starting audio update thread");
 		this->thread->start();
 	}
 
@@ -124,6 +115,16 @@ namespace xal
 	
 	void AudioManager::_clear()
 	{
+		if (this->thread != NULL)
+		{
+			xal::log("stopping audio update thread");
+			hthread* t = this->thread;
+			this->thread = NULL;
+			this->_unlock();
+			t->join();
+			this->_lock();
+			delete t;
+		}
 		this->_update(0.0f);
 		foreach (Player*, it, this->players)
 		{
@@ -175,7 +176,7 @@ namespace xal
 
 	void AudioManager::update()
 	{
-		while (true)
+		while (xal::mgr->thread != NULL)
 		{
 			xal::mgr->_lock();
 			xal::mgr->_update(xal::mgr->updateTime);
