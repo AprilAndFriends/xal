@@ -11,7 +11,7 @@
 /// 
 /// Provides an interface to play and control audio data.
 
-#if HAVE_OPENAL
+#ifdef HAVE_OPENAL
 #ifndef XAL_OPENAL_PLAYER_H
 #define XAL_OPENAL_PLAYER_H
 

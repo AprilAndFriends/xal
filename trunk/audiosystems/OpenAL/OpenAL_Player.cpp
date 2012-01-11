@@ -7,7 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#if HAVE_OPENAL
+#ifdef HAVE_OPENAL
 #include <stdio.h>
 #include <string.h>
 #include "xal.h"

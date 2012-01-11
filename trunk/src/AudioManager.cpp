@@ -27,25 +27,25 @@
 #include "Source.h"
 #include "xal.h"
 
-#if HAVE_FLAC
+#ifdef HAVE_FLAC
 #include "FLAC_Source.h"
 #endif
-#if HAVE_M4A
+#ifdef HAVE_M4A
 #include "M4A_Source.h"
 #endif
 // TODO
 /*
-#if HAVE_MIDI
+#ifdef HAVE_MIDI
 #include "MIDI_Source.h"
 #endif
 */
-#if HAVE_OGG
+#ifdef HAVE_OGG
 #include "OGG_Source.h"
 #endif
-#if HAVE_SPX
+#ifdef HAVE_SPX
 #include "SPX_Source.h"
 #endif
-#if HAVE_WAV
+#ifdef HAVE_WAV
 #include "WAV_Source.h"
 #endif
 
@@ -62,22 +62,22 @@ namespace xal
 		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;
-#if HAVE_FLAC
+#ifdef HAVE_FLAC
 		this->extensions += ".flac";
 #endif
-#if HAVE_M4A
+#ifdef HAVE_M4A
 		this->extensions += ".m4a";
 #endif
-#if HAVE_MIDI
+#ifdef HAVE_MIDI
 		this->extensions += ".mid";
 #endif
-#if HAVE_OGG
+#ifdef HAVE_OGG
 		this->extensions += ".ogg";
 #endif
-#if HAVE_SPX
+#ifdef HAVE_SPX
 		this->extensions += ".spx";
 #endif
-#if HAVE_WAV
+#ifdef HAVE_WAV
 		this->extensions += ".wav";
 #endif
 		if (threaded)
@@ -539,36 +539,36 @@ namespace xal
 		{
 			// TODO
 			/*
-#if HAVE_FLAC
+#ifdef HAVE_FLAC
 		case FLAC:
 			source = new FLAC_Source(filename);
 			break;
 #endif
 			*/
-#if HAVE_M4A
+#ifdef HAVE_M4A
 		case M4A:
 			source = new M4A_Source(filename);
 			break;
 #endif
 			// TODO
 			/*
-#if HAVE_MIDI
+#ifdef HAVE_MIDI
 		case MIDI:
 			source = new MIDI_Source(filename);
 			break;
 #endif
 			*/
-#if HAVE_OGG
+#ifdef HAVE_OGG
 		case OGG:
 			source = new OGG_Source(filename);
 			break;
 #endif
-#if HAVE_SPX
+#ifdef HAVE_SPX
 		case SPX:
 			source = new SPX_Source(filename);
 			break;
 #endif
-#if HAVE_WAV
+#ifdef HAVE_WAV
 		case WAV:
 			source = new WAV_Source(filename);
 			break;

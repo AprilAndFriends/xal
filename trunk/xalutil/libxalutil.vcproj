@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="libxalutil"
 	ProjectGUID="{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}"
 	RootNamespace="xalutil"
@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="include/xalutil;../include;../../hltypes/include;src/"
-				PreprocessorDefinitions="_WIN32;_DEBUG;XALUTIL_EXPORTS"
+				PreprocessorDefinitions="_WIN32;XALUTIL_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -117,7 +117,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="include/xalutil;../include;../../hltypes/include;src/"
-				PreprocessorDefinitions="_WIN32;XALUTIL_EXPORTS"
+				PreprocessorDefinitions="_WIN32;XALUTIL_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"

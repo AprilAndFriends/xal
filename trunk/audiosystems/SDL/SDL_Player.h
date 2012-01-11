@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the Player for SDL.
 
-#if HAVE_SDL
+#ifdef HAVE_SDL
 #ifndef XAL_SDL_PLAYER_H
 #define XAL_SDL_PLAYER_H
 

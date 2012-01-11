@@ -7,7 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#if HAVE_DIRECTSOUND
+#ifdef HAVE_DIRECTSOUND
 #include <dsound.h>
 #include <windows.h>
 
@@ -18,7 +18,7 @@
 #include "DirectSound_Player.h"
 #include "DirectSound_AudioManager.h"
 /*
-#if HAVE_WAV
+#ifdef HAVE_WAV
 #include "DirectSound_WAV_Source.h"
 #endif
 */
@@ -81,7 +81,7 @@ namespace xal
 		this->buffer->prepare();
 		WAVEFORMATEX wavefmt;
 		/*
-#if HAVE_WAV
+#ifdef HAVE_WAV
 		DirectSound_WAV_Source* wavSource = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
 		if (wavSource != NULL)
 		{

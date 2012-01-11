@@ -11,7 +11,7 @@
 /// 
 /// Provides a source for MIDI format when using DirectSound.
 
-#if HAVE_DIRECTSOUND && HAVE_MIDI
+#if defined(HAVE_DIRECTSOUND) && defined(HAVE_MIDI)
 #ifndef XAL_DIRECTSOUND_MIDI_SOURCE_H
 #define XAL_DIRECTSOUND_MIDI_SOURCE_H
 #include <dsound.h>

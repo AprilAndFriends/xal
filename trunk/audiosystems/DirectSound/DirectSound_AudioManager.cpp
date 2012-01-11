@@ -7,7 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#if HAVE_DIRECTSOUND
+#ifdef HAVE_DIRECTSOUND
 #include <dsound.h>
 
 #include <hltypes/hstring.h>
@@ -15,7 +15,7 @@
 #include "DirectSound_AudioManager.h"
 #include "DirectSound_Player.h"
 /*
-#if HAVE_WAV
+#ifdef HAVE_WAV
 #include "DirectSound_WAV_Source.h"
 #endif
 */
@@ -66,7 +66,7 @@ namespace xal
 		Source* source;
 		switch (format)
 		{
-#if HAVE_WAV
+#ifdef HAVE_WAV
 		case WAV:
 			source = new DirectSound_WAV_Source(filename);
 			break;

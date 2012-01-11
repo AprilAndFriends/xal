@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the Player for DirectSound.
 
-#if HAVE_DIRECTSOUND
+#ifdef HAVE_DIRECTSOUND
 #ifndef XAL_DIRECTSOUND_PLAYER_H
 #define XAL_DIRECTSOUND_PLAYER_H
 
