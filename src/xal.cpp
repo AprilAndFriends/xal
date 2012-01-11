@@ -37,40 +37,40 @@
 */
 
 #ifdef _WIN32
-	#if HAVE_DIRECTSOUND
+	#ifdef HAVE_DIRECTSOUND
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DIRECTSOUND
-	#elif HAVE_SDL
+	#elif defined(HAVE_SDL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
-	#elif HAVE_OPENAL
+	#elif defined(HAVE_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(__APPLE__) && !TARGET_OS_IPHONE
-	#if HAVE_COREAUDIO
+	#ifdef HAVE_COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
-	#elif HAVE_SDL
+	#elif defined(HAVE_SDL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
-	#elif HAVE_OPENAL
+	#elif defined(HAVE_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(__APPLE__) && TARGET_OS_IPHONE
-	#if HAVE_COREAUDIO
+	#ifdef HAVE_COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
-	#elif HAVE_OPENAL
+	#elif defined(HAVE_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
-	#elif HAVE_AVFOUNDATION
+	#elif defined(HAVE_AVFOUNDATION)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_AVFOUNDATION
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 	//XAL_AS_AVFOUNDATION
 #elif defined(_UNIX)
-	#if HAVE_SDL
+	#ifdef HAVE_SDL
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
-	#elif HAVE_OPENAL
+	#elif defined(HAVE_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
@@ -101,19 +101,19 @@ namespace xal
 			xal::log("audio is disabled");
 			return;
 		}
-#if HAVE_DIRECTSOUND
+#ifdef HAVE_DIRECTSOUND
 		if (name == XAL_AS_DIRECTSOUND)
 		{
 			xal::mgr = new DirectSound_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
-#if HAVE_OPENAL
+#ifdef HAVE_OPENAL
 		if (name == XAL_AS_OPENAL)
 		{
 			xal::mgr = new OpenAL_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
-#if HAVE_SDL
+#ifdef HAVE_SDL
 		if (name == XAL_AS_SDL)
 		{
 			xal::mgr = new SDL_AudioManager(name, backendId, threaded, updateTime, deviceName);
@@ -127,7 +127,7 @@ namespace xal
 		}
 #endif
 */
-#if HAVE_COREAUDIO
+#ifdef HAVE_COREAUDIO
 		if (name == XAL_AS_COREAUDIO) 
 		{
 			xal::mgr = new CoreAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
@@ -172,19 +172,19 @@ namespace xal
 
 	bool hasAudioSystem(chstr name)
 	{
-#if HAVE_DIRECTSOUND
+#ifdef HAVE_DIRECTSOUND
 		if (name == XAL_AS_DIRECTSOUND)
 		{
 			return true;
 		}
 #endif
-#if HAVE_OPENAL
+#ifdef HAVE_OPENAL
 		if (name == XAL_AS_OPENAL)
 		{
 			return true;
 		}
 #endif
-#if HAVE_SDL
+#ifdef HAVE_SDL
 		if (name == XAL_AS_SDL)
 		{
 			return true;

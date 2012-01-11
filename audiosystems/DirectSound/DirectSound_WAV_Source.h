@@ -11,7 +11,7 @@
 /// 
 /// Provides a source for WAV format when using DirectSound.
 /*
-#if HAVE_DIRECTSOUND && HAVE_WAV
+#if defined(HAVE_DIRECTSOUND) && defined(HAVE_WAV)
 #ifndef XAL_DIRECTSOUND_WAV_SOURCE_H
 #define XAL_DIRECTSOUND_WAV_SOURCE_H
 #include <dsound.h>

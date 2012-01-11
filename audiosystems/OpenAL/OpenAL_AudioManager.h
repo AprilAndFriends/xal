@@ -13,7 +13,7 @@
 /// 
 /// Represents an implementation of the AudioManager for OpenAL.
 
-#if HAVE_OPENAL
+#ifdef HAVE_OPENAL
 #ifndef XAL_OPENAL_AUDIO_MANAGER_H
 #define XAL_OPENAL_AUDIO_MANAGER_H
 

@@ -11,7 +11,7 @@
 /// 
 /// Provides a source for OGG format.
 
-#if HAVE_SPX
+#ifdef HAVE_SPX
 #ifndef XAL_SPX_SOURCE_H
 #define XAL_SPX_SOURCE_H
 
