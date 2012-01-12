@@ -62,8 +62,8 @@ namespace xal
 #else
 		CFURLRef urlref;
 		
-		
-		if (urlref = CFURLCreateFromFileSystemRepresentation(NULL, (UInt8*)this->filename.c_str(), this->filename.size(), false))
+		urlref = CFURLCreateFromFileSystemRepresentation(NULL, (UInt8*)this->filename.c_str(), this->filename.size(), false);
+		if (urlref)
 		{
 			if (ExtAudioFileOpenURL(urlref, &audioFileID) == 0) 
 			{
@@ -112,11 +112,9 @@ namespace xal
 		streamDescription.mBytesPerFrame = streamDescription.mBitsPerChannel * streamDescription.mChannelsPerFrame / 8;
 		streamDescription.mBytesPerPacket = streamDescription.mBytesPerFrame * streamDescription.mFramesPerPacket;
 		
-		OSStatus res = noErr;
-		if (res = ExtAudioFileSetProperty(audioFileID, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &streamDescription) != noErr)
-		{
+		OSStatus res = ExtAudioFileSetProperty(audioFileID, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &streamDescription);
+		if (res != noErr)
 			return; // TODO: should return a failure!
-		}
 		nFrames = nFrames * (streamDescription.mSampleRate / fileStreamDescription.mSampleRate);
 		
 		this->channels = streamDescription.mChannelsPerFrame;

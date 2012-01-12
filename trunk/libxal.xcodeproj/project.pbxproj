@@ -498,11 +498,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=0",
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=0",
+					_DEBUG,
+					HAVE_SDL,
+					HAVE_OGG,
 				);
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
@@ -530,11 +528,8 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=0",
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=0",
+					HAVE_SDL,
+					HAVE_OGG,
 				);
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
@@ -633,11 +628,8 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=0",
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=0",
+					HAVE_SDL,
+					HAVE_OGG,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNUSED_VARIABLE = NO;
@@ -691,13 +683,11 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=0",
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=0",
+					_DEBUG,
+					HAVE_SDL,
+					HAVE_OGG,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -745,13 +735,10 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_SDL=1",
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=0",
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=0",
+					HAVE_SDL,
+					HAVE_OGG,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -775,14 +762,13 @@
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					_DEBUG,
 					"$(inherited)",
 					_DEBUG,
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=1",
-					"HAVE_OPENAL=1",
+					HAVE_M4A,
+					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					"HAVE_OGG=1",
+					HAVE_OGG,
 					_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -807,14 +793,13 @@
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					_DEBUG,
 					"$(inherited)",
 					_DEBUG,
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=1",
-					"HAVE_OPENAL=1",
+					HAVE_M4A,
+					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					"HAVE_OGG=1",
+					HAVE_OGG,
 					_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -838,11 +823,10 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=1",
-					"HAVE_OPENAL=1",
+					HAVE_M4A,
+					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					"HAVE_OGG=1",
+					HAVE_OGG,
 					_IOS,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -866,11 +850,10 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_COREAUDIO=0",
 					"HAVE_M4A=1",
-					"HAVE_OPENAL=1",
+					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					"HAVE_OGG=1",
+					HAVE_OGG,
 					_IOS,
 				);
 				GCC_VERSION = "";
@@ -895,11 +878,10 @@
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_COREAUDIO=0",
-					"HAVE_M4A=1",
-					"HAVE_OPENAL=1",
+					HAVE_M4A,
+					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					"HAVE_OGG=1",
+					HAVE_OGG,
 					_IOS,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
