@@ -31,8 +31,10 @@ namespace xal
 		
 		float getFadeTime() { return this->fadeTime; }
 		void setFadeTime(float value) { this->fadeTime = value; }
+		harray<hstr> getSoundQueue() { return this->soundQueue; }
+		void setSoundQueue(harray<hstr> value) { this->soundQueue = value; }
 		
-		void addSound(chstr name);
+		void queueSound(chstr name);
 		void updateList();
 		void updateList(harray<hstr> names);
 		void playAll();
@@ -40,10 +42,12 @@ namespace xal
 		void stopAll();
 		void clear();
 		
+		DEPRECATED_ATTRIBUTE void addSound(chstr name) { this->queueSound(name); }
+
 	protected:
 		float fadeTime;
 		harray<Player*> players;
-		harray<hstr> sounds;
+		harray<hstr> soundQueue;
 	
 	};
 	
