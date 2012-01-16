@@ -29,15 +29,15 @@ namespace xal
 		this->clear();
 	}
 	
-	void ParallelSoundManager::addSound(chstr name)
+	void ParallelSoundManager::queueSound(chstr name)
 	{
-		this->sounds += name;
+		this->soundQueue += name;
 	}
 	
 	void ParallelSoundManager::updateList()
 	{
-		this->updateList(this->sounds);
-		this->sounds.clear();
+		this->updateList(this->soundQueue);
+		this->soundQueue.clear();
 	}
 		
 	void ParallelSoundManager::updateList(harray<hstr> names)
