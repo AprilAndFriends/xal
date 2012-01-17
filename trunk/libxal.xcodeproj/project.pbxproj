@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
-		7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */; };
 		7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */; };
 		7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
 		7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
@@ -17,8 +16,9 @@
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
-		C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9B1243853A006BFE4D /* Ogg.framework */; };
-		C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9906D9D1243853A006BFE4D /* Vorbis.framework */; };
+		C9506D1C14C5916D004464FC /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9506D1914C5916D004464FC /* Ogg.framework */; };
+		C9506D1D14C5916D004464FC /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9506D1A14C5916D004464FC /* SDL.framework */; };
+		C9506D1E14C5916D004464FC /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9506D1B14C5916D004464FC /* Vorbis.framework */; };
 		C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9DAE8A7138103DA0007882A /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89F138103DA0007882A /* Buffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9DAE8A8138103DA0007882A /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A0138103DA0007882A /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -69,7 +69,6 @@
 /* Begin PBXFileReference section */
 		7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = M4A_Source.cpp; path = audiosources/M4A_Source.cpp; sourceTree = "<group>"; };
 		7F392BE3138FB6FF003B93A7 /* M4A_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = M4A_Source.h; path = audiosources/M4A_Source.h; sourceTree = "<group>"; };
-		7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = Library/Frameworks/SDL.framework; sourceTree = SDKROOT; };
 		7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_AudioManager.cpp; sourceTree = "<group>"; };
 		7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAudio_AudioManager.h; sourceTree = "<group>"; };
 		7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreAudio_Player.cpp; sourceTree = "<group>"; };
@@ -78,8 +77,9 @@
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9906D9B1243853A006BFE4D /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = Library/Frameworks/Ogg.framework; sourceTree = SDKROOT; };
-		C9906D9D1243853A006BFE4D /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = Library/Frameworks/Vorbis.framework; sourceTree = SDKROOT; };
+		C9506D1914C5916D004464FC /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../lib/mac/Ogg.framework; sourceTree = "<group>"; };
+		C9506D1A14C5916D004464FC /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../lib/mac/SDL.framework; sourceTree = "<group>"; };
+		C9506D1B14C5916D004464FC /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../lib/mac/Vorbis.framework; sourceTree = "<group>"; };
 		C9DAE89E138103DA0007882A /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = include/xal/AudioManager.h; sourceTree = "<group>"; };
 		C9DAE89F138103DA0007882A /* Buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Buffer.h; path = include/xal/Buffer.h; sourceTree = "<group>"; };
 		C9DAE8A0138103DA0007882A /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = include/xal/Category.h; sourceTree = "<group>"; };
@@ -123,10 +123,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9506D1C14C5916D004464FC /* Ogg.framework in Frameworks */,
+				C9506D1D14C5916D004464FC /* SDL.framework in Frameworks */,
+				C9506D1E14C5916D004464FC /* Vorbis.framework in Frameworks */,
 				7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */,
-				C9906D9C1243853A006BFE4D /* Ogg.framework in Frameworks */,
-				C9906D9E1243853A006BFE4D /* Vorbis.framework in Frameworks */,
-				7F3A4CDF13AB5F3E00C3DA0E /* SDL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,10 +309,10 @@
 		D1981C96140F8A7F0057C3AF /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				C9506D1914C5916D004464FC /* Ogg.framework */,
+				C9506D1A14C5916D004464FC /* SDL.framework */,
+				C9506D1B14C5916D004464FC /* Vorbis.framework */,
 				7FC8068011EC96EF00851062 /* hltypes.framework */,
-				C9906D9B1243853A006BFE4D /* Ogg.framework */,
-				C9906D9D1243853A006BFE4D /* Vorbis.framework */,
-				7F3A4CDE13AB5F3E00C3DA0E /* SDL.framework */,
 			);
 			name = mac;
 			sourceTree = "<group>";
@@ -487,11 +487,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/mac\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -502,10 +507,13 @@
 					HAVE_SDL,
 					HAVE_OGG,
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
@@ -516,25 +524,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					ppc,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/mac\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_SDL,
 					HAVE_OGG,
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
@@ -625,6 +637,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/mac\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -635,9 +651,11 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = i386;
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "App Store";
@@ -672,11 +690,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/mac\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -691,6 +714,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -727,11 +751,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib/mac\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -742,6 +771,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
