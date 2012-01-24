@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug_OpenAL|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -94,7 +94,7 @@
 		<Configuration
 			Name="Release_OpenAL|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -174,7 +174,7 @@
 		<Configuration
 			Name="Debug_DirectSound|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -249,7 +249,7 @@
 		<Configuration
 			Name="Release_DirectSound|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -329,7 +329,7 @@
 		<Configuration
 			Name="Debug_SDL|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -404,7 +404,7 @@
 		<Configuration
 			Name="Release_SDL|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -484,7 +484,7 @@
 		<Configuration
 			Name="Debug_All|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -559,7 +559,7 @@
 		<Configuration
 			Name="Release_All|Win32"
 			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
