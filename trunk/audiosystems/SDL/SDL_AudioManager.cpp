@@ -11,8 +11,8 @@
 #include <SDL/SDL.h>
 
 #include <hltypes/harray.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #include "SDL_AudioManager.h"
 #include "SDL_Player.h"

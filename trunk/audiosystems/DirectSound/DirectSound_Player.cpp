@@ -11,8 +11,8 @@
 #include <dsound.h>
 #include <windows.h>
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #include "Buffer.h"
 #include "DirectSound_Player.h"

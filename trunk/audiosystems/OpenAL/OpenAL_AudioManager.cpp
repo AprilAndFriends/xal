@@ -18,9 +18,9 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #ifndef __APPLE__
 #include <AL/al.h>

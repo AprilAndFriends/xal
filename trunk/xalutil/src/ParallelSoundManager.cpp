@@ -9,8 +9,8 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/harray.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 #include <xal/AudioManager.h>
 #include <xal/Player.h>
 #include <xal/xal.h>
