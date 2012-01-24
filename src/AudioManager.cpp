@@ -13,11 +13,11 @@
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hfile.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
-#include <hltypes/util.h>
 
 #include "AudioManager.h"
 #include "Buffer.h"
