@@ -17,9 +17,9 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="win32_Debug|Win32"
-			OutputDirectory="$(SolutionDir)bin\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)bin\$(ConfigurationName)"
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -65,7 +65,7 @@
 				AdditionalDependencies="libhltypes.lib libxal.lib libxalutil.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(SolutionDir)bin"
+				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -90,13 +90,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\*.dll $(SolutionDir)bin\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
+				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\$(PlatformName)\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\$(PlatformName)\*.dll $(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
-			Name="win32_Release|Win32"
-			OutputDirectory="$(SolutionDir)bin\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)bin\$(ConfigurationName)"
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -143,7 +143,7 @@
 				AdditionalDependencies="libhltypes.lib libxal.lib libxalutil.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(SolutionDir)bin"
+				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\*.dll $(SolutionDir)bin\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
+				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\$(PlatformName)\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\$(PlatformName)\*.dll $(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
