@@ -467,7 +467,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = iphoneos;
@@ -499,7 +499,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = iphoneos;
@@ -525,7 +525,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = iphoneos;
@@ -552,7 +552,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = iphoneos;
@@ -579,7 +579,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = iphoneos;
