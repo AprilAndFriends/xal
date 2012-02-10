@@ -194,7 +194,7 @@ namespace xal
 
 	void AudioManager::_update(float k)
 	{
-		if (this->enabled)
+		if (this->enabled && !this->paused)
 		{
 			foreach (Player*, it, this->players)
 			{
