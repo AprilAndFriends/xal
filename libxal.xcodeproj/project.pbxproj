@@ -401,7 +401,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libxal" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -499,7 +499,6 @@
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -574,7 +573,6 @@
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
 			name = Debug;
@@ -598,7 +596,6 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../include/audiosources",
 				);
-				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
 			name = Release;
@@ -622,7 +619,6 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../include/audiosources",
 				);
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
 			name = "App Store";
@@ -681,7 +677,6 @@
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
 			name = "Debug-LLVM";
@@ -702,7 +697,6 @@
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -742,7 +736,6 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../include/audiosources",
 				);
-				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
 			name = "Release-LLVM";
@@ -802,6 +795,7 @@
 					_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -833,6 +827,7 @@
 					_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -859,6 +854,7 @@
 					HAVE_OGG,
 					_IOS,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -886,6 +882,7 @@
 					HAVE_OGG,
 					_IOS,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -914,6 +911,7 @@
 					HAVE_OGG,
 					_IOS,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_LDFLAGS = "-ObjC";
