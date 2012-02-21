@@ -9,6 +9,9 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <stdio.h>
+#ifdef _ANDROID
+#include <android/log.h>
+#endif
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
@@ -81,9 +84,13 @@
 
 namespace xal
 {
-	void xal_writelog(chstr text)
+	void xal_writelog(chstr message)
 	{
-		printf("%s\n", text.c_str());
+#ifndef _ANDROID
+		printf("%s\n", message.c_str());
+#else
+		__android_log_print(ANDROID_LOG_INFO, "xal", "%s", message.c_str());
+#endif
 	}
 	void (*gLogFunction)(chstr) = xal_writelog;
 	
