@@ -307,11 +307,19 @@ namespace xal
 	{
 		Category* category = this->_getCategoryByName(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
+#ifndef HAVE_NOAUDIO
 		if (sound->getFormat() == UNKNOWN || this->sounds.has_key(sound->getName()))
 		{
 			delete sound;
 			return NULL;
 		}
+#else
+		if (this->sounds.has_key(sound->getName()))
+		{
+			delete sound;
+			return NULL;
+		}
+#endif
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}
@@ -421,7 +429,7 @@ namespace xal
 	{
 		harray<hstr> result;
 		hstr category;
-		harray<hstr> dirs = hdir::directories(path, true);
+		harray<hstr> dirs = hdir::resource_directories(path, true);
 		foreach (hstr, it, dirs)
 		{
 			category = (*it).rsplit("/", -1, true).pop_last();
@@ -442,7 +450,7 @@ namespace xal
 	{
 		this->_createCategory(category, xal::FULL, xal::FULL);
 		harray<hstr> result;
-		harray<hstr> files = hdir::files(path, true);
+		harray<hstr> files = hdir::resource_files(path, true);
 		Sound* sound;
 		foreach (hstr, it, files)
 		{
