@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -10,7 +10,6 @@
 #if defined(HAVE_DIRECTSOUND) && defined(HAVE_MIDI)
 #include <windows.h>
 
-#include <hltypes/hfile.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
