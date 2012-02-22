@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -8,7 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/harray.h>
-#include <hltypes/hfile.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -22,7 +22,7 @@ namespace xal
 		loaded(false), decoded(false)
 	{
 		this->filename = filename;
-		this->fileSize = hfile::hsize(this->filename);
+		this->fileSize = hresource::hsize(this->filename);
 		this->loadMode = loadMode;
 		this->decodeMode = decodeMode;
 		this->streamSize = 0;

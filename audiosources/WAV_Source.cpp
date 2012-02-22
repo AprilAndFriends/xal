@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -10,7 +10,7 @@
 #ifdef HAVE_WAV
 #include <string.h>
 
-#include <hltypes/hfile.h>
+#include <hltypes/hresource.h>
 
 #include "AudioManager.h"
 #include "WAV_Source.h"
@@ -53,7 +53,7 @@ namespace xal
 			memcpy(&size, buffer, 4);
 			if (tag == "fmt ")
 			{
-				/// TODO - implement hfile::read_little_endian and hfile::read_big_endian
+				/// TODO - implement hresource::read_little_endian and hresource::read_big_endian
 				// format
 				file.read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
@@ -129,7 +129,7 @@ namespace xal
 
 	void WAV_Source::_findData()
 	{
-		this->file.seek(0, hfile::START);
+		this->file.open(this->filename);
 		unsigned char buffer[5] = {0};
 		this->file.read_raw(buffer, 4); // RIFF
 		this->file.read_raw(buffer, 4); // file size
@@ -147,7 +147,6 @@ namespace xal
 			memcpy(&size, buffer, 4);
 			if (tag == "data")
 			{
-				//this->file.seek(-8);
 				break;
 			}
 			if (size > 0)

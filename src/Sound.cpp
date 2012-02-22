@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -8,7 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/harray.h>
-#include <hltypes/hfile.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -41,12 +41,12 @@ namespace xal
 		{
 			return this->filename;
 		}
-		if (!hfile::exists(this->filename))
+		if (!hresource::exists(this->filename))
 		{
 			return this->filename;
 		}
 		// It's dangerous to go alone! Take this.
-		return xal::mgr->findAudioFile(normalize_path(get_basedir(this->filename) + "/" + hfile::hread(this->filename)));
+		return xal::mgr->findAudioFile(normalize_path(get_basedir(this->filename) + "/" + hresource::hread(this->filename)));
 	}
 
 	int Sound::getSize()

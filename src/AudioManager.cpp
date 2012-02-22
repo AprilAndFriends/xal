@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.2
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -12,10 +12,10 @@
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
-#include <hltypes/hfile.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 
@@ -866,8 +866,9 @@ namespace xal
 
 	hstr AudioManager::findAudioFile(chstr _filename)
 	{
+#ifndef HAVE_NOAUDIO
 		hstr filename = _filename;
-		if (hfile::exists(filename))
+		if (hresource::exists(filename))
 		{
 			return filename;
 		}
@@ -875,7 +876,7 @@ namespace xal
 		foreach (hstr, it, this->extensions)
 		{
 			name = filename + (*it);
-			if (hfile::exists(name))
+			if (hresource::exists(name))
 			{
 				return name;
 			}
@@ -887,12 +888,13 @@ namespace xal
 			foreach (hstr, it, this->extensions)
 			{
 				name = filename + (*it);
-				if (hfile::exists(name))
+				if (hresource::exists(name))
 				{
 					return name;
 				}
 			}
 		}
+#endif
 		return "";
 	}
 	

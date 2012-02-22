@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -15,7 +15,7 @@
 #ifndef XAL_WAV_SOURCE_H
 #define XAL_WAV_SOURCE_H
 
-#include <hltypes/hfile.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -37,7 +37,7 @@ namespace xal
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
-		hfile file;
+		hresource file;
 
 		void _findData();
 
