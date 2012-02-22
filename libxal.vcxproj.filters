@@ -42,6 +42,12 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{8e56379e-ed92-4bfb-976f-3756a846171d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\audiosystems\NoAudio">
+      <UniqueIdentifier>{682f66b1-c863-4b76-bfc5-49dffdc191ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\audiosystems\NoAudio">
+      <UniqueIdentifier>{6d09185e-ee34-45c9-a992-ea4c216beaca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioManager.cpp">
@@ -100,6 +106,12 @@
     </ClCompile>
     <ClCompile Include="audiosources\FLAC_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosystems\NoAudio\NoAudio_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\NoAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="audiosystems\NoAudio\NoAudio_Player.cpp">
+      <Filter>Source Files\audiosystems\NoAudio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +177,12 @@
     </ClInclude>
     <ClInclude Include="src\Endianess.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\NoAudio\NoAudio_AudioManager.h">
+      <Filter>Header Files\audiosystems\NoAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="audiosystems\NoAudio\NoAudio_Player.h">
+      <Filter>Header Files\audiosystems\NoAudio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

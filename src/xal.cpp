@@ -29,6 +29,7 @@
 #ifdef HAVE_SDL
 #include "SDL_AudioManager.h"
 #endif
+#include "NoAudio_AudioManager.h"
 #include "xal.h"
 /*
 #if TARGET_OS_MAC
@@ -104,7 +105,7 @@ namespace xal
 		}
 		if (name == XAL_AS_DISABLED)
 		{
-			xal::mgr = new AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new NoAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
 			xal::log("audio is disabled");
 			return;
 		}
@@ -135,7 +136,7 @@ namespace xal
 #endif
 */
 #ifdef HAVE_COREAUDIO
-		if (name == XAL_AS_COREAUDIO) 
+		if (name == XAL_AS_COREAUDIO)
 		{
 			xal::mgr = new CoreAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
@@ -143,7 +144,7 @@ namespace xal
 		if (xal::mgr == NULL)
 		{
 			xal::log("audio system does not exist: " + name);
-			xal::mgr = new AudioManager(XAL_AS_DISABLED, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new NoAudio_AudioManager(XAL_AS_DISABLED, backendId, threaded, updateTime, deviceName);
 			xal::log("audio is disabled");
 			return;
 		}

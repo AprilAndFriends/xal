@@ -9,12 +9,12 @@
       <Configuration>Debug_All</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_None|Android">
-      <Configuration>Debug_None</Configuration>
+    <ProjectConfiguration Include="Debug_NoAudio|Android">
+      <Configuration>Debug_NoAudio</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_None|Win32">
-      <Configuration>Debug_None</Configuration>
+    <ProjectConfiguration Include="Debug_NoAudio|Win32">
+      <Configuration>Debug_NoAudio</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_All|Android">
@@ -49,12 +49,12 @@
       <Configuration>Release_DirectSound</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_None|Android">
-      <Configuration>Release_None</Configuration>
+    <ProjectConfiguration Include="Release_NoAudio|Android">
+      <Configuration>Release_NoAudio</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_None|Win32">
-      <Configuration>Release_None</Configuration>
+    <ProjectConfiguration Include="Release_NoAudio|Win32">
+      <Configuration>Release_NoAudio</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_OpenAL|Android">
@@ -93,7 +93,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_None|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -104,7 +104,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <AndroidAPILevel>android-5</AndroidAPILevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_None|Android'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -147,7 +147,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -156,7 +156,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <AndroidAPILevel>android-5</AndroidAPILevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_None|Android'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <AndroidAPILevel>android-5</AndroidAPILevel>
@@ -188,19 +188,23 @@
     <CharacterSet>Unicode</CharacterSet>
     <AndroidAPILevel>android-5</AndroidAPILevel>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_None|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_None|Android'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'" Label="PropertySheets">
@@ -224,13 +228,13 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_None|Android'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'" Label="PropertySheets">
@@ -255,9 +259,9 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
@@ -265,9 +269,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
@@ -275,9 +279,9 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_None|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_None|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
@@ -285,9 +289,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_None|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_None|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
@@ -295,20 +299,22 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_None|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_None|Android'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;_DEBUG;HAVE_DIRECTSOUND;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -331,11 +337,11 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;_DEBUG;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;_DEBUG;HAVE_NOAUDIO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -346,7 +352,7 @@
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -360,7 +366,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_DIRECTSOUND;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -387,11 +393,11 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_None|Android'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_NOAUDIO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -420,7 +426,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;_DEBUG;HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -446,7 +452,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -476,7 +482,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;_DEBUG;HAVE_OPENAL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -502,7 +508,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_OPENAL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -532,7 +538,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;_DEBUG;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -558,7 +564,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -589,7 +595,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -615,12 +621,12 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_None|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_NOAUDIO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -630,13 +636,10 @@
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
     </Link>
@@ -649,7 +652,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_DIRECTSOUND;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -676,12 +679,12 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_None|Android'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_NOAUDIO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -711,7 +714,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -741,7 +744,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -772,7 +775,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_OPENAL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -802,7 +805,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_OPENAL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -833,7 +836,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;XAL_EXPORTS;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -863,7 +866,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/NoAudio;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_SDL;HAVE_FLAC;HAVE_MIDI;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -946,6 +949,8 @@ copy bin\$(Configuration)\*.lib bin
     <ClCompile Include="audiosystems\DirectSound\DirectSound_MIDI_Source.cpp" />
     <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp" />
     <ClCompile Include="audiosystems\DirectSound\DirectSound_WAV_Source.cpp" />
+    <ClCompile Include="audiosystems\NoAudio\NoAudio_AudioManager.cpp" />
+    <ClCompile Include="audiosystems\NoAudio\NoAudio_Player.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
     <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp" />
     <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp" />
@@ -967,6 +972,8 @@ copy bin\$(Configuration)\*.lib bin
     <ClInclude Include="audiosystems\DirectSound\DirectSound_MIDI_Source.h" />
     <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h" />
     <ClInclude Include="audiosystems\DirectSound\DirectSound_WAV_Source.h" />
+    <ClInclude Include="audiosystems\NoAudio\NoAudio_AudioManager.h" />
+    <ClInclude Include="audiosystems\NoAudio\NoAudio_Player.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />
     <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h" />
     <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h" />

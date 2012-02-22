@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -24,9 +24,10 @@ struct IDirectSound;
 
 namespace xal
 {
+	class Buffer;
+	class Player;
 	class Sound;
 	class Source;
-	class Player;
 
 	class xalExport DirectSound_AudioManager : public AudioManager
 	{
@@ -35,7 +36,6 @@ namespace xal
 
 		DirectSound_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~DirectSound_AudioManager();
-
 
 	protected:
 		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);

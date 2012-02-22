@@ -80,7 +80,6 @@ namespace xal
 		friend class Player;
 		friend class Sound;
 
-		AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		virtual ~AudioManager();
 		virtual void init();
 		void clear();
@@ -132,6 +131,9 @@ namespace xal
 		hstr findAudioFile(chstr _filename);
 
 	protected:
+		// protected constructor to ensure that this class has to be subclassed
+		AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+
 		unsigned long backendId;
 		hstr name;
 		bool enabled;

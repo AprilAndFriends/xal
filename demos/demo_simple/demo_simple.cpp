@@ -31,12 +31,11 @@
 #define SOUND_STREAMED PREFIX SOUND_NAME_STREAMED
 
 #ifndef _THREADED_UPDATE
-#define _update(time) xal::mgr->update(time)
 #define __XAL_THREADED false
 #else
-#define _update(time)
 #define __XAL_THREADED true
 #endif
+#define _update(time) xal::mgr->update(time)
 
 int main(int argc, char **argv)
 {
