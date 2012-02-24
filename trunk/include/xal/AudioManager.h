@@ -132,9 +132,9 @@ namespace xal
 
 	protected:
 		// protected constructor to ensure that this class has to be subclassed
-		AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 
-		unsigned long backendId;
+		void* backendId;
 		hstr name;
 		bool enabled;
 		bool paused;

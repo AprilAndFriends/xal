@@ -34,7 +34,7 @@ namespace xal
 	public:
 		IDirectSound* dsDevice;
 
-		DirectSound_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		DirectSound_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~DirectSound_AudioManager();
 
 	protected:

@@ -15,7 +15,7 @@
 
 namespace xal
 {
-	NoAudio_AudioManager::NoAudio_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
+	NoAudio_AudioManager::NoAudio_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
 		xal::log("initializing NoAudio");

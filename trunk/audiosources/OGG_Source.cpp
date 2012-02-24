@@ -8,9 +8,13 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #ifdef HAVE_OGG
+#include <stdio.h>
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
+
+#include <hltypes/hresource.h>
+#include <hltypes/hstream.h>
 
 #include "Endianess.h"
 #include "AudioManager.h"
@@ -21,12 +25,43 @@ namespace xal
 {
 	static int section; // a small optimization
 
+	size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
+	{
+		hstream* stream = (hstream*)dataSource;
+		return stream->read_raw(data, size * count);
+	}
+
+	int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
+	{
+		hstream::SeekMode mode = hstream::CURRENT;
+		switch (whence)
+		{
+		case SEEK_CUR:
+			mode = hstream::CURRENT;
+			break;
+		case SEEK_SET:
+			mode = hstream::START;
+			break;
+		case SEEK_END:
+			mode = hstream::END;
+			break;
+		}
+		((hstream*)dataSource)->seek((long) offset, mode);
+		return 0;
+	}
+
+	long _dataTell(void* dataSource)
+	{
+		return ((hstream*)dataSource)->position();
+	}
+
 	OGG_Source::OGG_Source(chstr filename) : Source(filename)
 	{
 	}
 
 	OGG_Source::~OGG_Source()
 	{
+		this->close();
 	}
 
 	bool OGG_Source::open()
@@ -36,7 +71,24 @@ namespace xal
 		{
 			return false;
 		}
-		if (ov_fopen((char*)this->filename.c_str(), &this->oggStream) == 0)
+		// loading the sound using hresource and writing it into the stream
+		if (this->stream.size() == 0)
+		{
+			hresource file(this->filename);
+			int size = file.size();
+			unsigned char* data = new unsigned char[size];
+			file.read_raw(data, size);
+			file.close();
+			this->stream.write_raw(data, size);
+			this->stream.seek(0, hstream::START);
+		}
+		// setting the special callbacks
+		ov_callbacks callbacks;
+		callbacks.read_func = &_dataRead;
+		callbacks.seek_func = &_dataSeek;
+		callbacks.close_func = NULL;
+		callbacks.tell_func = &_dataTell;
+		if (ov_open_callbacks((void*)&this->stream, &this->oggStream, NULL, 0, callbacks) == 0)
 		{
 			vorbis_info* info = ov_info(&this->oggStream, -1);
 			this->channels = info->channels;
@@ -58,7 +110,6 @@ namespace xal
 	{
 		if (this->streamOpen)
 		{
-			ov_clear(&this->oggStream);
 			this->streamOpen = false;
 		}
 	}

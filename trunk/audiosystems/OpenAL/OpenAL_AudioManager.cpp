@@ -37,11 +37,18 @@
 #include "OpenAL_Player.h"
 #include "xal.h"
 
+#ifdef _ANDROID
+extern "C" int __openal__JNI_OnLoad(void* vm);
+#endif
+
 namespace xal
 {
-	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
+	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
+#ifdef _ANDROID
+		__openal__JNI_OnLoad(backendId);
+#endif
 		xal::log("initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
@@ -63,7 +70,6 @@ namespace xal
 			xal::log("could not set context as current");
 			return;
 		}
-
 		this->device = currentDevice;
 		this->context = currentContext;
 		this->enabled = true;

@@ -28,7 +28,7 @@
 
 namespace xal
 {
-	xalFnExport void init(chstr systemName, unsigned long backendId, bool threaded = true, float updateTime = 0.01f, chstr deviceName = "");
+	xalFnExport void init(chstr systemName, void* backendId, bool threaded = true, float updateTime = 0.01f, chstr deviceName = "");
 	xalFnExport void destroy();
 	xalFnExport void setLogFunction(void (*function)(chstr));
 	xalFnExport void log(chstr message, chstr prefix = "[xal] ");

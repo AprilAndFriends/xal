@@ -79,6 +79,12 @@
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
+#elif defined(_ANDROID)
+	#ifdef HAVE_OPENAL
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#else
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#endif
 #else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 #endif
@@ -95,7 +101,7 @@ namespace xal
 	}
 	void (*gLogFunction)(chstr) = xal_writelog;
 	
-	void init(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName)
+	void init(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
 		xal::log("initializing XAL");
 		hstr name = systemName;
