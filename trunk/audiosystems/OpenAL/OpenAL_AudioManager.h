@@ -45,7 +45,9 @@ namespace xal
 
 		OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~OpenAL_AudioManager();
-		
+
+		void suspendOpenALContext();
+		void resumeOpenALContext();
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
@@ -53,7 +55,6 @@ namespace xal
 		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
 		unsigned int _allocateSourceId();
 		void _releaseSourceId(unsigned int sourceId);
-
 	};
 	
 }
