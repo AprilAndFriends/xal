@@ -41,6 +41,11 @@
 extern "C" int __openal__JNI_OnLoad(void* vm);
 #endif
 
+#ifdef _IOS
+void OpenAL_iOS_init();
+void OpenAL_iOS_destroy();
+#endif
+
 namespace xal
 {
 	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
@@ -73,11 +78,17 @@ namespace xal
 		this->device = currentDevice;
 		this->context = currentContext;
 		this->enabled = true;
+#ifdef _IOS
+		OpenAL_iOS_init();
+#endif
 	}
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
 		xal::log("destroying OpenAL");
+#ifdef _IOS
+		OpenAL_iOS_destroy();
+#endif
 		if (this->device != NULL)
 		{
 			alcMakeContextCurrent(NULL);
@@ -106,6 +117,22 @@ namespace xal
 	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
 		alDeleteSources(1, &sourceId);
+	}
+	
+	void OpenAL_AudioManager::suspendOpenALContext()
+	{
+		this->_lock();
+		alcMakeContextCurrent(NULL);
+		alcSuspendContext(this->context);
+		this->_unlock();
+	}
+
+	void OpenAL_AudioManager::resumeOpenALContext()
+	{
+		this->_lock();
+		alcMakeContextCurrent(this->context);
+		alcProcessContext(this->context);
+		this->_unlock();
 	}
 }
 #endif

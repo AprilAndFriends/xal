@@ -25,6 +25,7 @@
 		C9506D1C14C5916D004464FC /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9506D1914C5916D004464FC /* Ogg.framework */; };
 		C9506D1D14C5916D004464FC /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9506D1A14C5916D004464FC /* SDL.framework */; };
 		C9506D1E14C5916D004464FC /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9506D1B14C5916D004464FC /* Vorbis.framework */; };
+		C9C5A32214F7CB790062122D /* OpenAL_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = C9C5A32114F7CB790062122D /* OpenAL_iOS.mm */; };
 		C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9DAE8A7138103DA0007882A /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89F138103DA0007882A /* Buffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9DAE8A8138103DA0007882A /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A0138103DA0007882A /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -87,6 +88,7 @@
 		C9506D1914C5916D004464FC /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../lib/mac/Ogg.framework; sourceTree = "<group>"; };
 		C9506D1A14C5916D004464FC /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../lib/mac/SDL.framework; sourceTree = "<group>"; };
 		C9506D1B14C5916D004464FC /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../lib/mac/Vorbis.framework; sourceTree = "<group>"; };
+		C9C5A32114F7CB790062122D /* OpenAL_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenAL_iOS.mm; path = audiosystems/OpenAL/OpenAL_iOS.mm; sourceTree = "<group>"; };
 		C9DAE89E138103DA0007882A /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = include/xal/AudioManager.h; sourceTree = "<group>"; };
 		C9DAE89F138103DA0007882A /* Buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Buffer.h; path = include/xal/Buffer.h; sourceTree = "<group>"; };
 		C9DAE8A0138103DA0007882A /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = include/xal/Category.h; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			children = (
 				C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */,
 				C9DAE8DD138104D00007882A /* OpenAL_AudioManager.h */,
+				C9C5A32114F7CB790062122D /* OpenAL_iOS.mm */,
 				C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */,
 				C9DAE8DF138104D00007882A /* OpenAL_Player.h */,
 			);
@@ -491,6 +494,7 @@
 				D1981CA2140F8ADB0057C3AF /* xal.cpp in Sources */,
 				C946EC0F14F66441001BE21E /* NoAudio_AudioManager.cpp in Sources */,
 				C946EC1314F66441001BE21E /* NoAudio_Player.cpp in Sources */,
+				C9C5A32214F7CB790062122D /* OpenAL_iOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
