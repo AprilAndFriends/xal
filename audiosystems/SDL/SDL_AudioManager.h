@@ -36,7 +36,7 @@ namespace xal
 	public:
 		friend class SDL_Player;
 
-		SDL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		SDL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
 
 		SDL_AudioSpec getFormat() { return this->format; }

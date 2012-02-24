@@ -28,7 +28,7 @@ namespace xal
 	class xalExport NoAudio_AudioManager : public AudioManager
 	{
 	public:
-		NoAudio_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		NoAudio_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~NoAudio_AudioManager();
 
 	protected:

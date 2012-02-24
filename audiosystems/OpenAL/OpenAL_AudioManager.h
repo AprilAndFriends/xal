@@ -43,7 +43,7 @@ namespace xal
 	public:
 		friend class OpenAL_Player;
 
-		OpenAL_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~OpenAL_AudioManager();
 		
 	protected:
