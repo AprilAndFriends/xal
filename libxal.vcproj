@@ -887,6 +887,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Android"
+					>
+					<File
+						RelativePath=".\audiosystems\Android\Android_AudioManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\Android\Android_Player.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audiosources"
@@ -1006,6 +1018,18 @@
 					</File>
 					<File
 						RelativePath=".\audiosystems\NoAudio\NoAudio_Player.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Android"
+					>
+					<File
+						RelativePath=".\audiosystems\Android\Android_AudioManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audiosystems\Android\Android_Player.h"
 						>
 					</File>
 				</Filter>

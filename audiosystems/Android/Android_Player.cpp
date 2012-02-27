@@ -7,41 +7,36 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#ifdef HAVE_OPENAL
+#ifdef HAVE_ANDROID
 #include <stdio.h>
 #include <string.h>
 #include "xal.h"
 
-#ifndef __APPLE__
 #include <AL/al.h>
-#else
-#include <TargetConditionals.h>
-#include <OpenAL/al.h>
-#endif
 
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
-#include "OpenAL_AudioManager.h"
-#include "OpenAL_Player.h"
+#include "Android_AudioManager.h"
+#include "Android_Player.h"
 #include "Sound.h"
 
 namespace xal
 {
-	OpenAL_Player::OpenAL_Player(Sound* sound, Buffer* buffer) :
+	Android_Player::Android_Player(Sound* sound, Buffer* buffer) :
 		Player(sound, buffer), sourceId(0)
 	{
 		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
 		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
-	OpenAL_Player::~OpenAL_Player()
+	Android_Player::~Android_Player()
 	{
 		// AudioManager calls _stop before destruction
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 
-	void OpenAL_Player::_update(float k)
+	void Android_Player::_update(float k)
 	{
 		Player::_update(k);
 		if (!this->_systemIsPlaying() && this->sourceId != 0)
@@ -50,7 +45,7 @@ namespace xal
 		}
 	}
 
-	bool OpenAL_Player::_systemIsPlaying()
+	bool Android_Player::_systemIsPlaying()
 	{
 		if (this->sourceId == 0)
 		{
@@ -65,44 +60,36 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 
-	float OpenAL_Player::_systemGetOffset()
+	float Android_Player::_systemGetOffset()
 	{
 		float offset = 0.0f;
-#if !TARGET_OS_MAC
 		if (this->sourceId != 0)
 		{
 			alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
 		}
-#else
-		// did not find anything that works on Mac OS X and iOS!
-#endif
 		return offset;
 	}
 
-	void OpenAL_Player::_systemSetOffset(float value)
+	void Android_Player::_systemSetOffset(float value)
 	{
-#if !TARGET_OS_MAC
 		// TODO - should be int
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
 		}
 		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
-#else
-		// did not find anything that works on Mac OS X and iOS!
-#endif
 	}
 
-	bool OpenAL_Player::_systemPreparePlay()
+	bool Android_Player::_systemPreparePlay()
 	{
 		if (this->sourceId == 0)
 		{
-			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
+			this->sourceId = ((Android_AudioManager*)xal::mgr)->_allocateSourceId();
 		}
 		return (this->sourceId != 0);
 	}
 
-	void OpenAL_Player::_systemPrepareBuffer()
+	void Android_Player::_systemPrepareBuffer()
 	{
 		// making sure all buffer data is loaded before accessing anything
 		if (!this->sound->isStreamed())
@@ -128,7 +115,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemUpdateGain()
+	void Android_Player::_systemUpdateGain()
 	{
 		if (this->sourceId != 0)
 		{
@@ -136,7 +123,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemUpdateFadeGain()
+	void Android_Player::_systemUpdateFadeGain()
 	{
 		if (this->sourceId != 0)
 		{
@@ -144,7 +131,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemPlay()
+	void Android_Player::_systemPlay()
 	{
 		if (this->sourceId != 0)
 		{
@@ -152,7 +139,7 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemStop()
+	void Android_Player::_systemStop()
 	{
 		if (this->sourceId != 0)
 		{
@@ -177,12 +164,12 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
+			((Android_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
 	}
 
-	void OpenAL_Player::_systemUpdateStream()
+	void Android_Player::_systemUpdateStream()
 	{
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
@@ -223,7 +210,7 @@ namespace xal
 		}
 	}
 
-	int OpenAL_Player::_getQueuedBuffersCount()
+	int Android_Player::_getQueuedBuffersCount()
 	{
 		int queued = 0;
 		if (this->sourceId)
@@ -233,7 +220,7 @@ namespace xal
 		return queued;
 	}
 
-	int OpenAL_Player::_getProcessedBuffersCount()
+	int Android_Player::_getProcessedBuffersCount()
 	{
 		int processed = 0;
 		if (this->sourceId)
@@ -243,7 +230,7 @@ namespace xal
 		return processed;
 	}
 
-	int OpenAL_Player::_fillBuffers(int index, int count)
+	int Android_Player::_fillBuffers(int index, int count)
 	{
 		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		if (!this->sound->isStreamed())
@@ -265,7 +252,7 @@ namespace xal
 		return filled;
 	}
 
-	void OpenAL_Player::_queueBuffers(int index, int count)
+	void Android_Player::_queueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
@@ -278,7 +265,7 @@ namespace xal
 		}
 	}
  
-	void OpenAL_Player::_queueBuffers()
+	void Android_Player::_queueBuffers()
 	{
 		int queued = this->_getQueuedBuffersCount();
 		if (queued < STREAM_BUFFER_COUNT)
@@ -287,45 +274,20 @@ namespace xal
 		}
 	}
  
-	void OpenAL_Player::_unqueueBuffers(int index, int count)
+	void Android_Player::_unqueueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-#ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
-			int n = this->_getQueuedBuffersCount();
-#endif
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
-#ifdef _IOS
-			while (n - this->_getQueuedBuffersCount() != count)
-			{
-				hthread::sleep(1);
-			}
-#endif
 		}
 		else
 		{
-#ifdef _IOS
-			int n = this->_getQueuedBuffersCount();
-#endif
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-#ifdef _IOS
-			while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index)
-			{
-				hthread::sleep(1);
-			}
-			n -= STREAM_BUFFER_COUNT - index;
-#endif
 			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
-#ifdef _IOS
-			while (n - this->_getQueuedBuffersCount() != count + index - STREAM_BUFFER_COUNT)
-			{
-				hthread::sleep(1);
-			}
-#endif
 		}
 	}
 
-	void OpenAL_Player::_unqueueBuffers()
+	void Android_Player::_unqueueBuffers()
 	{
 		int queued = this->_getQueuedBuffersCount();
 		if (queued > 0)

@@ -20,6 +20,9 @@
 #endif
 
 #include "AudioManager.h"
+#ifdef HAVE_ANDROID
+#include "Android_AudioManager.h"
+#endif
 #ifdef HAVE_DIRECTSOUND
 #include "DirectSound_AudioManager.h"
 #endif
@@ -80,8 +83,8 @@
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(_ANDROID)
-	#ifdef HAVE_OPENAL
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#ifdef HAVE_ANDROID
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_ANDROID
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
@@ -115,6 +118,12 @@ namespace xal
 			xal::log("audio is disabled");
 			return;
 		}
+#ifdef HAVE_ANDROID
+		if (name == XAL_AS_ANDROID)
+		{
+			xal::mgr = new Android_AudioManager(name, backendId, threaded, updateTime, deviceName);
+		}
+#endif
 #ifdef HAVE_DIRECTSOUND
 		if (name == XAL_AS_DIRECTSOUND)
 		{
@@ -186,6 +195,12 @@ namespace xal
 
 	bool hasAudioSystem(chstr name)
 	{
+#ifdef HAVE_ANDROID
+		if (name == XAL_AS_ANDROID)
+		{
+			return true;
+		}
+#endif
 #ifdef HAVE_DIRECTSOUND
 		if (name == XAL_AS_DIRECTSOUND)
 		{

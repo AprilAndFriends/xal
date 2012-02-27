@@ -9,11 +9,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the Player for OpenAL.
+/// Represents an implementation of the Player for Android.
 
-#ifdef HAVE_OPENAL
-#ifndef XAL_OPENAL_PLAYER_H
-#define XAL_OPENAL_PLAYER_H
+#ifdef HAVE_ANDROID
+#ifndef XAL_ANDROID_PLAYER_H
+#define XAL_ANDROID_PLAYER_H
 
 #include "Player.h"
 #include "xalExport.h"
@@ -23,11 +23,11 @@ namespace xal
 	class Buffer;
 	class Sound;
 
-	class xalExport OpenAL_Player : public Player
+	class xalExport Android_Player : public Player
 	{
 	public:
-		OpenAL_Player(Sound* sound, Buffer* buffer);
-		~OpenAL_Player();
+		Android_Player(Sound* sound, Buffer* buffer);
+		~Android_Player();
 
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
