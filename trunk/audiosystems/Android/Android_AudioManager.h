@@ -1,7 +1,5 @@
 /// @file
-/// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @author  Ivan Vucica
 /// @version 2.4
 /// 
 /// @section LICENSE
@@ -11,11 +9,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the AudioManager for OpenAL.
+/// Represents an implementation of the AudioManager for Android.
 
-#ifdef HAVE_OPENAL
-#ifndef XAL_OPENAL_AUDIO_MANAGER_H
-#define XAL_OPENAL_AUDIO_MANAGER_H
+#ifdef HAVE_ANDROID
+#ifndef XAL_ANDROID_AUDIO_MANAGER_H
+#define XAL_ANDROID_AUDIO_MANAGER_H
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -34,20 +32,17 @@
 namespace xal
 {
 	class Buffer;
-	class OpenAL_Player;
+	class Android_Player;
 	class Player;
 	class Sound;
 
-	class xalExport OpenAL_AudioManager : public AudioManager
+	class xalExport Android_AudioManager : public AudioManager
 	{
 	public:
-		friend class OpenAL_Player;
+		friend class Android_Player;
 
-		OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
-		~OpenAL_AudioManager();
-
-		void suspendOpenALContext();
-		void resumeOpenALContext();
+		Android_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		~Android_AudioManager();
 
 	protected:
 		ALCdevice* device;

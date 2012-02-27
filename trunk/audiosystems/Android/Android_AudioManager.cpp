@@ -1,7 +1,5 @@
 /// @file
-/// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @author  Ivan Vucica
 /// @version 2.4
 /// 
 /// @section LICENSE
@@ -11,9 +9,9 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the AudioManager for OpenAL.
+/// Represents an implementation of the AudioManager for Android.
 
-#ifdef HAVE_OPENAL
+#ifdef HAVE_ANDROID
 #include <string.h>
 
 #include <hltypes/exception.h>
@@ -22,31 +20,23 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#ifndef __APPLE__
 #include <AL/al.h>
 #include <AL/alc.h>
-#else
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#include <TargetConditionals.h>
-#endif
 
 #include "Buffer.h"
 #include "Category.h"
-#include "OpenAL_AudioManager.h"
-#include "OpenAL_Player.h"
+#include "Android_AudioManager.h"
+#include "Android_Player.h"
 #include "xal.h"
 
-#ifdef _IOS
-void OpenAL_iOS_init();
-void OpenAL_iOS_destroy();
-#endif
+extern "C" int __openal__JNI_OnLoad(void* vm);
 
 namespace xal
 {
-	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
+	Android_AudioManager::Android_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
+		__openal__JNI_OnLoad(backendId);
 		xal::log("initializing OpenAL");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
@@ -71,17 +61,11 @@ namespace xal
 		this->device = currentDevice;
 		this->context = currentContext;
 		this->enabled = true;
-#ifdef _IOS
-		OpenAL_iOS_init();
-#endif
 	}
 
-	OpenAL_AudioManager::~OpenAL_AudioManager()
+	Android_AudioManager::~Android_AudioManager()
 	{
 		xal::log("destroying OpenAL");
-#ifdef _IOS
-		OpenAL_iOS_destroy();
-#endif
 		if (this->device != NULL)
 		{
 			alcMakeContextCurrent(NULL);
@@ -90,12 +74,12 @@ namespace xal
 		}
 	}
 	
-	Player* OpenAL_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* Android_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
 	{
-		return new OpenAL_Player(sound, buffer);
+		return new Android_Player(sound, buffer);
 	}
 	
-	unsigned int OpenAL_AudioManager::_allocateSourceId()
+	unsigned int Android_AudioManager::_allocateSourceId()
 	{
 		unsigned int id = 0;
 		alGenSources(1, &id);
@@ -107,26 +91,10 @@ namespace xal
 		return id;
 	}
 
-	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
+	void Android_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
 		alDeleteSources(1, &sourceId);
 	}
 	
-	void OpenAL_AudioManager::suspendOpenALContext()
-	{
-		this->_lock();
-		alcMakeContextCurrent(NULL);
-		alcSuspendContext(this->context);
-		this->_unlock();
-	}
-
-	void OpenAL_AudioManager::resumeOpenALContext()
-	{
-		this->_lock();
-		alcMakeContextCurrent(this->context);
-		alcProcessContext(this->context);
-		this->_unlock();
-	}
-
 }
 #endif
