@@ -15,7 +15,6 @@
 		7F2192F711F0820000660245 /* xal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192F611F0820000660245 /* xal.framework */; };
 		7F2192FB11F0820B00660245 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192FA11F0820B00660245 /* hltypes.framework */; };
 		C9C04E8F14BAF745005BD333 /* MultiPlaylist.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04E9014BAF745005BD333 /* MultiPlaylist.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */; };
 		C9C04E9314BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
 		C9C04E9414BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
 		D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
@@ -44,13 +43,6 @@
 			files = (
 				7F2192F711F0820000660245 /* xal.framework in Frameworks */,
 				7F2192FB11F0820B00660245 /* hltypes.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D1981CA5140F8D4F0057C3AF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,14 +122,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D1981CA6140F8D4F0057C3AF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9C04E9014BAF745005BD333 /* MultiPlaylist.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -165,8 +149,6 @@
 			buildConfigurationList = D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "libxalutil-ios" */;
 			buildPhases = (
 				D1981CA4140F8D4F0057C3AF /* Sources */,
-				D1981CA5140F8D4F0057C3AF /* Frameworks */,
-				D1981CA6140F8D4F0057C3AF /* Headers */,
 			);
 			buildRules = (
 			);
