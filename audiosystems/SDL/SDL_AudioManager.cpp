@@ -124,7 +124,7 @@ namespace xal
 			if (*streamSize != newSize) // stream has to be resized
 			{
 				*streamSize = newSize;
-				delete *stream;
+				delete [] *stream;
 				*stream = new unsigned char[*streamSize];
 			}
 			memcpy(*stream, cvt.buf, *streamSize * sizeof(unsigned char));
