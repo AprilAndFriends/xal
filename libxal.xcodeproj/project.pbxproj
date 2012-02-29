@@ -17,6 +17,8 @@
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		C9313D5014FE5CDE003BC7AB /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313D4F14FE5CDE003BC7AB /* SDL.framework */; };
+		C9313EB514FE64AA003BC7AB /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313EB314FE64AA003BC7AB /* Ogg.framework */; };
+		C9313EB614FE64AA003BC7AB /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313EB414FE64AA003BC7AB /* Vorbis.framework */; };
 		C9611F7114FE276800652DB6 /* NoAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9611F6D14FE276800652DB6 /* NoAudio_AudioManager.cpp */; };
 		C9611F7214FE276800652DB6 /* NoAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9611F6D14FE276800652DB6 /* NoAudio_AudioManager.cpp */; };
 		C9611F7314FE276800652DB6 /* NoAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9611F6E14FE276800652DB6 /* NoAudio_AudioManager.h */; };
@@ -56,8 +58,6 @@
 		C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E5138104D90007882A /* SDL_AudioManager.h */; };
 		C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E6138104D90007882A /* SDL_Player.cpp */; };
 		C9DAE8ED138104D90007882A /* SDL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E7138104D90007882A /* SDL_Player.h */; };
-		D186223914F9592600639D7C /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D186223814F9592600639D7C /* Ogg.framework */; };
-		D186225414F95B6F00639D7C /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D186225314F95B6F00639D7C /* Vorbis.framework */; };
 		D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */; };
 		D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */; };
 		D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
@@ -82,6 +82,8 @@
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9313D4F14FE5CDE003BC7AB /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../lib/mac/SDL.framework; sourceTree = "<group>"; };
+		C9313EB314FE64AA003BC7AB /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../lib/mac/Ogg.framework; sourceTree = "<group>"; };
+		C9313EB414FE64AA003BC7AB /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../lib/mac/Vorbis.framework; sourceTree = "<group>"; };
 		C9611F6D14FE276800652DB6 /* NoAudio_AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NoAudio_AudioManager.cpp; path = audiosystems/NoAudio/NoAudio_AudioManager.cpp; sourceTree = "<group>"; };
 		C9611F6E14FE276800652DB6 /* NoAudio_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoAudio_AudioManager.h; path = audiosystems/NoAudio/NoAudio_AudioManager.h; sourceTree = "<group>"; };
 		C9611F6F14FE276800652DB6 /* NoAudio_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NoAudio_Player.cpp; path = audiosystems/NoAudio/NoAudio_Player.cpp; sourceTree = "<group>"; };
@@ -122,9 +124,6 @@
 		C9DAE8E5138104D90007882A /* SDL_AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_AudioManager.h; path = audiosystems/SDL/SDL_AudioManager.h; sourceTree = "<group>"; };
 		C9DAE8E6138104D90007882A /* SDL_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDL_Player.cpp; path = audiosystems/SDL/SDL_Player.cpp; sourceTree = "<group>"; };
 		C9DAE8E7138104D90007882A /* SDL_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_Player.h; path = audiosystems/SDL/SDL_Player.h; sourceTree = "<group>"; };
-		D18621D514F956CF00639D7C /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../SDL/Xcode/SDL/build/Debug/SDL.framework; sourceTree = "<group>"; };
-		D186223814F9592600639D7C /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../ogg/macosx/build/Release/Ogg.framework; sourceTree = "<group>"; };
-		D186225314F95B6F00639D7C /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../vorbis/macosx/build/Release/Vorbis.framework; sourceTree = "<group>"; };
 		D1981C82140F8A230057C3AF /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,9 +132,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9313EB514FE64AA003BC7AB /* Ogg.framework in Frameworks */,
+				C9313EB614FE64AA003BC7AB /* Vorbis.framework in Frameworks */,
 				C9313D5014FE5CDE003BC7AB /* SDL.framework in Frameworks */,
-				D186225414F95B6F00639D7C /* Vorbis.framework in Frameworks */,
-				D186223914F9592600639D7C /* Ogg.framework in Frameworks */,
 				7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,7 +154,6 @@
 		0867D691FE84028FC02AAC07 /* libxal */ = {
 			isa = PBXGroup;
 			children = (
-				C9313D4F14FE5CDE003BC7AB /* SDL.framework */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 				C9DAE8BF1381049F0007882A /* Audio Systems */,
 				C9DAE8BE1381048F0007882A /* Audio Sources */,
@@ -326,9 +324,9 @@
 		D1981C96140F8A7F0057C3AF /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				D186225314F95B6F00639D7C /* Vorbis.framework */,
-				D186223814F9592600639D7C /* Ogg.framework */,
-				D18621D514F956CF00639D7C /* SDL.framework */,
+				C9313EB314FE64AA003BC7AB /* Ogg.framework */,
+				C9313EB414FE64AA003BC7AB /* Vorbis.framework */,
+				C9313D4F14FE5CDE003BC7AB /* SDL.framework */,
 				7FC8068011EC96EF00851062 /* hltypes.framework */,
 			);
 			name = mac;
