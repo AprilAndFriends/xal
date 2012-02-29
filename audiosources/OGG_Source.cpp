@@ -80,6 +80,7 @@ namespace xal
 			file.read_raw(data, size);
 			file.close();
 			this->stream.write_raw(data, size);
+			delete [] data;
 			this->stream.seek(0, hstream::START);
 		}
 		// setting the special callbacks
@@ -100,7 +101,7 @@ namespace xal
 		}
 		else
 		{
-			xal::log("ogg: error opening file!");
+			xal::log("ogg: error reading data!");
 			this->streamOpen = false;
 		}
 		return this->streamOpen;
