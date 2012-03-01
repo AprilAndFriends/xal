@@ -37,7 +37,7 @@ namespace xal
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
 		__openal__JNI_OnLoad(backendId);
-		xal::log("initializing OpenAL");
+		xal::log("initializing Android Audio");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
@@ -65,7 +65,7 @@ namespace xal
 
 	Android_AudioManager::~Android_AudioManager()
 	{
-		xal::log("destroying OpenAL");
+		xal::log("destroying Android Audio");
 		if (this->device != NULL)
 		{
 			alcMakeContextCurrent(NULL);
