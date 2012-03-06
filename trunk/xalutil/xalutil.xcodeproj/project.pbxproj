@@ -125,9 +125,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* libxalutil */ = {
+		8DC2EF4F0486A6940098B216 /* xalutil */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libxalutil" */;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */;
 			buildPhases = (
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
@@ -138,15 +138,15 @@
 			);
 			dependencies = (
 			);
-			name = libxalutil;
+			name = xalutil;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = xalutil;
 			productReference = 8DC2EF5B0486A6940098B216 /* xalutil.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D1981CA7140F8D4F0057C3AF /* libxalutil-ios */ = {
+		D1981CA7140F8D4F0057C3AF /* xalutil (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "libxalutil-ios" */;
+			buildConfigurationList = D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "xalutil (iOS)" */;
 			buildPhases = (
 				D1981CA4140F8D4F0057C3AF /* Sources */,
 			);
@@ -154,7 +154,7 @@
 			);
 			dependencies = (
 			);
-			name = "libxalutil-ios";
+			name = "xalutil (iOS)";
 			productName = "libxalutil-ios";
 			productReference = D1981CA8140F8D4F0057C3AF /* libxalutil.a */;
 			productType = "com.apple.product-type.library.static";
@@ -167,7 +167,7 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libxalutil" */;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -182,8 +182,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* libxalutil */,
-				D1981CA7140F8D4F0057C3AF /* libxalutil-ios */,
+				8DC2EF4F0486A6940098B216 /* xalutil */,
+				D1981CA7140F8D4F0057C3AF /* xalutil (iOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -571,7 +571,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libxalutil" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
@@ -583,7 +583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libxalutil" */ = {
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
@@ -595,7 +595,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "libxalutil-ios" */ = {
+		D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "xalutil (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1981CB2140F8D4F0057C3AF /* Debug */,
