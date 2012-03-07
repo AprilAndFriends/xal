@@ -13,6 +13,7 @@
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hresource.h>
 #include <hltypes/hstream.h>
 
@@ -143,7 +144,7 @@ namespace xal
 			buffer += read;
 		}
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-		for (int i = 0; i < this->size; i += 2)
+		for_iter_step (i, 0, this->size, 2)
 		{
 			XAL_NORMALIZE_ENDIAN(*(uint16_t*)(output + i)); // always 16 bit data
 		}
@@ -171,7 +172,7 @@ namespace xal
 			buffer += read;
 		}
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-		for (int i = 0; i < this->size; i += 2)
+		for_iter_step (i, 0, this->size, 2)
 		{
 			XAL_NORMALIZE_ENDIAN(*(uint16_t*)(output + i)); // always 16 bit data
 		}

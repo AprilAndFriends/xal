@@ -10,6 +10,8 @@
 #ifdef HAVE_SDL
 #include <SDL/SDL.h>
 
+#include <hltypes/hltypesUtil.h>
+
 #include "Buffer.h"
 #include "SDL_AudioManager.h"
 #include "SDL_Player.h"
@@ -112,11 +114,11 @@ namespace xal
 				}
 #ifdef __BIG_ENDIAN__
 				short* sStream = (short*)stream;
-				for (int i = 0; i < size1; i++)
+				for_iter (i, 0, size1)
 				{
 					XAL_NORMALIZE_ENDIAN(sStream[i]);
 				}
-				for (int i = 0; i < size2; i++)
+				for_iter (i, 0, size2)
 				{
 					XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 				}
@@ -131,13 +133,13 @@ namespace xal
 				size2 = size2 * sizeof(unsigned char) / sizeof(short);
 				if (!first)
 				{
-					for (int i = 0; i < size1; i++)
+					for_iter (i, 0, size1)
 					{
 						XAL_NORMALIZE_ENDIAN(sStream[i]);
 						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData1[i]), -32768, 32767);
 						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
-					for (int i = 0; i < size2; i++)
+					for_iter (i, 0, size2)
 					{
 						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData2[i]), -32768, 32767);
@@ -146,13 +148,13 @@ namespace xal
 				}
 				else
 				{
-					for (int i = 0; i < size1; i++)
+					for_iter (i, 0, size1)
 					{
 						XAL_NORMALIZE_ENDIAN(sStream[i]);
 						sStream[i] = (short)(sData1[i] * this->currentGain);
 						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
-					for (int i = 0; i < size2; i++)
+					for_iter (i, 0, size2)
 					{
 						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 						sStream[size1 + i] = (short)(sData2[i] * this->currentGain);

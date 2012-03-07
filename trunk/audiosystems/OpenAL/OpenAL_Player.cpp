@@ -256,7 +256,7 @@ namespace xal
 		unsigned char* stream = this->buffer->getStream();
 		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
 		int samplingRate = this->buffer->getSamplingRate();
-		for (int i = 0; i < filled; i++)
+		for_iter (i, 0, filled)
 		{
 			alBufferData(this->bufferIds[(index + i) % STREAM_BUFFER_COUNT], format,
 				&stream[i * STREAM_BUFFER_SIZE], hmin(size, STREAM_BUFFER_SIZE), samplingRate);
