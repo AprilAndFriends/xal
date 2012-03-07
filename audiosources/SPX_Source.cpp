@@ -10,6 +10,7 @@
 #ifdef HAVE_SPX
 #include <speex/speex.h>
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "SPX_Source.h"
@@ -73,9 +74,9 @@ namespace xal
 
 			speex_decode(state, &bits, output2);
 
-			for (i = 0; i < FRAME_SIZE; i++, bufferPtr++)
+			for_iterx (i, 0, FRAME_SIZE)
 			{
-				*bufferPtr = (short)output2[i];
+				bufferPtr[i] = (short)output2[i];
 			}
 			nFrames++;
 		}
