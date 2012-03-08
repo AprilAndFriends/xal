@@ -194,11 +194,11 @@ namespace xal
 		{
 			return;
 		}
-		if (xal::mgr->isPaused())
+		if (xal::mgr->isSuspended())
 		{
-			if (!xal::mgr->pausedPlayers.contains(this))
+			if (!xal::mgr->suspendedPlayers.contains(this))
 			{
-				xal::mgr->pausedPlayers += this;
+				xal::mgr->suspendedPlayers += this;
 				if (!this->paused)
 				{
 					this->looping = looping;
@@ -244,9 +244,9 @@ namespace xal
 
 	void Player::_stop(float fadeTime)
 	{
-		if (xal::mgr->isPaused() && xal::mgr->pausedPlayers.contains(this))
+		if (xal::mgr->isSuspended() && xal::mgr->suspendedPlayers.contains(this))
 		{
-			xal::mgr->pausedPlayers -= this;
+			xal::mgr->suspendedPlayers -= this;
 		}
 		this->paused = false;
 		this->_stopSound(fadeTime);

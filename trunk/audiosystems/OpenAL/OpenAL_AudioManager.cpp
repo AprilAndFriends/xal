@@ -112,19 +112,27 @@ namespace xal
 		alDeleteSources(1, &sourceId);
 	}
 	
-	void OpenAL_AudioManager::suspendOpenALContext()
+	void OpenAL_AudioManager::suspendOpenALContext() // TODO - iOS specific hack, should be removed later
 	{
 		this->_lock();
-		alcMakeContextCurrent(NULL);
+#ifdef _DEBUG
+		xal::log("suspending OpenAL Context");
+#endif
+		this->_suspendAudio();
 		alcSuspendContext(this->context);
+		alcMakeContextCurrent(NULL);
 		this->_unlock();
 	}
 
-	void OpenAL_AudioManager::resumeOpenALContext()
+	void OpenAL_AudioManager::resumeOpenALContext() // TODO - iOS specific hack, should be removed later
 	{
 		this->_lock();
+#ifdef _DEBUG
+		xal::log("unsuspending OpenAL Context");
+#endif
 		alcMakeContextCurrent(this->context);
 		alcProcessContext(this->context);
+		this->_resumeAudio();
 		this->_unlock();
 	}
 

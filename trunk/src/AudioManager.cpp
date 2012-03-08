@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.3
+/// @version 2.32
 /// 
 /// @section LICENSE
 /// 
@@ -56,7 +56,7 @@ namespace xal
 	AudioManager* mgr = NULL;
 
 	AudioManager::AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), paused(false), gain(1.0f), thread(NULL)
+		enabled(false), suspended(false), gain(1.0f), thread(NULL)
 	{
 		this->name = systemName;
 		this->backendId = backendId;
@@ -194,7 +194,7 @@ namespace xal
 
 	void AudioManager::_update(float k)
 	{
-		if (this->enabled && !this->paused)
+		if (this->enabled && !this->suspended)
 		{
 			foreach (Player*, it, this->players)
 			{
@@ -494,9 +494,9 @@ namespace xal
 	{
 		player->_stop();
 		this->players -= player;
-		if (this->paused && this->pausedPlayers.contains(player))
+		if (this->suspended && this->suspendedPlayers.contains(player))
 		{
-			this->pausedPlayers -= player;
+			this->suspendedPlayers -= player;
 		}
 		delete player;
 	}
@@ -597,7 +597,7 @@ namespace xal
 
 	void AudioManager::_play(chstr name, float fadeTime, bool looping, float gain)
 	{
-		if (this->paused)
+		if (this->suspended)
 		{
 			return;
 		}
@@ -686,50 +686,52 @@ namespace xal
 		}
 	}
 	
-	void AudioManager::pauseAll(float fadeTime)
+	void AudioManager::suspendAudio()
 	{
 		this->_lock();
-		this->_pauseAll(fadeTime);
+		this->_suspendAudio();
 		this->_unlock();
 	}
 	
-	void AudioManager::_pauseAll(float fadeTime)
+	void AudioManager::_suspendAudio()
 	{
-		if (!this->paused)
+		if (!this->suspended)
 		{
 			foreach (Player*, it, this->players)
 			{
 				if ((*it)->isPlaying())
 				{
 					(*it)->_pause();
-					this->pausedPlayers += (*it);
+					this->suspendedPlayers += (*it);
 				}
 				else if ((*it)->isFadingOut())
 				{
 					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
 				}
 			}
-			this->paused = true;
+			this->_suspendSystem();
+			this->suspended = true;
 		}
 	}
 	
-	void AudioManager::resumeAll(float fadeTime)
+	void AudioManager::resumeAudio()
 	{
 		this->_lock();
-		this->_resumeAll(fadeTime);
+		this->_resumeAudio();
 		this->_unlock();
 	}
 	
-	void AudioManager::_resumeAll(float fadeTime)
+	void AudioManager::_resumeAudio()
 	{
-		if (this->paused)
+		if (this->suspended)
 		{
-			this->paused = false;
-			foreach (Player*, it, this->pausedPlayers)
+			this->suspended = false;
+			this->_resumeSystem();
+			foreach (Player*, it, this->suspendedPlayers)
 			{
 				(*it)->_play();
 			}
-			this->pausedPlayers.clear();
+			this->suspendedPlayers.clear();
 		}
 	}
 	
