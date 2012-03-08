@@ -28,8 +28,8 @@
 
 #include <hltypes/hstring.h>
 
-#include "AudioManager.h"
-#include "xalExport.h"
+#include "../include/xal/AudioManager.h"
+#include "../include/xal/xalExport.h"
 
 namespace xal
 {
@@ -46,8 +46,8 @@ namespace xal
 		OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~OpenAL_AudioManager();
 
-		void suspendOpenALContext();
-		void resumeOpenALContext();
+		void suspendOpenALContext(); // TODO - iOS specific hack, should be removed later
+		void resumeOpenALContext(); // TODO - iOS specific hack, should be removed later
 
 	protected:
 		ALCdevice* device;
