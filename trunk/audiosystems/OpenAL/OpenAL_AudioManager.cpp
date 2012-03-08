@@ -128,7 +128,7 @@ namespace xal
 	{
 		this->_lock();
 #ifdef _DEBUG
-		xal::log("unsuspending OpenAL Context");
+		xal::log("resuming OpenAL Context");
 #endif
 		alcMakeContextCurrent(this->context);
 		alcProcessContext(this->context);
