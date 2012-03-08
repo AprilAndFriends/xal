@@ -28,8 +28,8 @@
 
 #include <hltypes/hstring.h>
 
-#include "../include/xal/AudioManager.h"
-#include "../include/xal/xalExport.h"
+#include "AudioManager.h"
+#include "xalExport.h"
 
 namespace xal
 {
