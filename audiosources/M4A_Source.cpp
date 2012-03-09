@@ -105,7 +105,7 @@ namespace xal
         /* Fill out the desired client format. */
 		streamDescription.mFormatID = kAudioFormatLinearPCM;
 		streamDescription.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
-		streamDescription.mChannelsPerFrame = 2;
+		streamDescription.mChannelsPerFrame = fileStreamDescription.mChannelsPerFrame;
 		streamDescription.mSampleRate = 44100;
 		streamDescription.mBitsPerChannel = 16;
 		streamDescription.mFramesPerPacket = 1;
