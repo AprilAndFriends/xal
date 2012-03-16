@@ -16,7 +16,6 @@
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
-		C9313D5014FE5CDE003BC7AB /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313D4F14FE5CDE003BC7AB /* SDL.framework */; };
 		C9313EB514FE64AA003BC7AB /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313EB314FE64AA003BC7AB /* Ogg.framework */; };
 		C9313EB614FE64AA003BC7AB /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313EB414FE64AA003BC7AB /* Vorbis.framework */; };
 		C935CE17150610E500AE8B67 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,6 +114,7 @@
 		D1981CA0140F8ADB0057C3AF /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
 		D1981CA1140F8ADB0057C3AF /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
 		D1981CA2140F8ADB0057C3AF /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
+		D1DDCF5C1512889E005B0523 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9313D4F14FE5CDE003BC7AB /* SDL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,9 +181,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1DDCF5C1512889E005B0523 /* SDL.framework in Frameworks */,
 				C9313EB514FE64AA003BC7AB /* Ogg.framework in Frameworks */,
 				C9313EB614FE64AA003BC7AB /* Vorbis.framework in Frameworks */,
-				C9313D5014FE5CDE003BC7AB /* SDL.framework in Frameworks */,
 				7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
