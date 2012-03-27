@@ -165,7 +165,9 @@ namespace xal
 			{
 				int processed = this->_getProcessedBuffersCount();
 				alSourceStop(this->sourceId);
+#ifndef _IOS // hack for ios only, has problems when audio is suspended
 				this->_unqueueBuffers();
+#endif
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
 				if (this->paused)
 				{
@@ -177,7 +179,7 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
+			((OpenAL_AudioManager*) xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
 	}
