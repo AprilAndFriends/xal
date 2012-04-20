@@ -463,6 +463,11 @@ namespace xal
 		return result;
 	}
 
+	bool AudioManager::hasSound(chstr name)
+	{
+		return this->sounds.has_key(name);
+	}
+	
 	Player* AudioManager::createPlayer(chstr name)
 	{
 		this->_lock();
