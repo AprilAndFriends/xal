@@ -27,6 +27,13 @@ namespace xal
 	{
 	}
 
+	float Player::getPlaybackPosition()
+	{
+		float size = ( this->buffer->getSamplingRate() * this->buffer->getChannels() * this->buffer->getBitsPerSample() / 8.0f );
+		//return this->buffer->getBitsPerSample();
+		return this->_systemGetOffset() / size;
+	}
+	
 	float Player::getGain()
 	{
 		xal::mgr->_lock();
