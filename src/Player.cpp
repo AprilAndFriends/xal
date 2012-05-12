@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.33
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,7 @@ namespace xal
 
 	float Player::getPlaybackPosition()
 	{
-		float size = ( this->buffer->getSamplingRate() * this->buffer->getChannels() * this->buffer->getBitsPerSample() / 8.0f );
+		float size = (this->buffer->getSamplingRate() * this->buffer->getChannels() * this->buffer->getBitsPerSample() / 8.0f);
 		//return this->buffer->getBitsPerSample();
 		return this->_systemGetOffset() / size;
 	}
@@ -138,7 +138,7 @@ namespace xal
 	
 	Category* Player::getCategory()
 	{
-		return (this->sound->getCategory());
+		return this->sound->getCategory();
 	}
 
 	void Player::_update(float k)
@@ -223,7 +223,7 @@ namespace xal
 			this->looping = looping;
 		}
 		bool alreadyFading = this->isFading();
-		if (!alreadyFading)
+		if (!alreadyFading && !this->_systemIsPlaying())
 		{
 			this->buffer->prepare();
 			this->_systemPrepareBuffer();

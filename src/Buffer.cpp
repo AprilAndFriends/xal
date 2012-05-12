@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.33
 /// 
 /// @section LICENSE
 /// 
@@ -40,8 +40,6 @@ namespace xal
 			case ON_DEMAND:
 				break;
 			case STREAMED:
-				this->streamSize = STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE;
-				this->stream = new unsigned char[this->streamSize];
 				break;
 			}
 		}
@@ -170,6 +168,11 @@ namespace xal
 		}
 		if (this->isStreamed() && this->source->isOpen())
 		{
+			if (this->stream == NULL)
+			{
+				this->streamSize = STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE;
+				this->stream = new unsigned char[this->streamSize];
+			}
 			this->streamSize = this->source->loadChunk(this->stream, size);
 			size -= this->streamSize;
 			if (size > 0)
@@ -198,7 +201,7 @@ namespace xal
 
 	void Buffer::release()
 	{
-		if (this->decodeMode == xal::ON_DEMAND)
+		if (this->decodeMode == xal::ON_DEMAND || this->decodeMode == xal::STREAMED)
 		{
 			if (this->stream != NULL)
 			{

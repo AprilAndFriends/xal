@@ -17,7 +17,7 @@ namespace xal
 	Category::Category(chstr name, HandlingMode loadMode, HandlingMode decodeMode) : gain(1.0f)
 	{
 		this->name = name;
-		// allowed
+		// allowed (load, decode)
 		// FULL, FULL
 		// FULL, LAZY
 		// FULL, ON_DEMAND
