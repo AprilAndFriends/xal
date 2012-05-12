@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.33
+/// @version 2.34
 /// 
 /// @section LICENSE
 /// 
@@ -28,7 +28,7 @@ namespace xal
 
 	size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
-		hstream* stream = (hstream*)dataSource;
+		hresource* stream = (hresource*)dataSource;
 		return stream->read_raw(data, size * count);
 	}
 
@@ -47,13 +47,13 @@ namespace xal
 			mode = hstream::END;
 			break;
 		}
-		((hstream*)dataSource)->seek((long)offset, mode);
+		((hresource*)dataSource)->seek((long)offset, mode);
 		return 0;
 	}
 
 	long _dataTell(void* dataSource)
 	{
-		return ((hstream*)dataSource)->position();
+		return ((hresource*)dataSource)->position();
 	}
 
 	OGG_Source::OGG_Source(chstr filename) : Source(filename)
@@ -73,16 +73,13 @@ namespace xal
 			return false;
 		}
 		// loading the sound using hresource and writing it into the stream
-		if (this->stream.size() == 0)
+		if (!this->stream.is_open())
 		{
-			hresource file(this->filename);
-			int size = file.size();
-			unsigned char* data = new unsigned char[size];
-			file.read_raw(data, size);
-			file.close();
-			this->stream.write_raw(data, size);
-			delete [] data;
-			this->stream.seek(0, hstream::START);
+			this->stream.open(this->filename);
+		}
+		else
+		{
+			this->stream.rewind();
 		}
 		// setting the special callbacks
 		ov_callbacks callbacks;
@@ -113,8 +110,7 @@ namespace xal
 		if (this->streamOpen)
 		{
 			this->streamOpen = false;
-			this->stream.rewind();
-			this->stream.clear();
+			this->stream.close();
 		}
 	}
 

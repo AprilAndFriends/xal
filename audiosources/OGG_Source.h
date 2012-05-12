@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.34
 /// 
 /// @section LICENSE
 /// 
@@ -17,7 +17,7 @@
 
 #include <vorbis/vorbisfile.h>
 
-#include <hltypes/hstream.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -39,7 +39,7 @@ namespace xal
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
-		hstream stream;
+		hresource stream;
 		OggVorbis_File oggStream;
 
 	};
