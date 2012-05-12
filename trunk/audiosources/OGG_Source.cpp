@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.33
 /// 
 /// @section LICENSE
 /// 
@@ -47,7 +47,7 @@ namespace xal
 			mode = hstream::END;
 			break;
 		}
-		((hstream*)dataSource)->seek((long) offset, mode);
+		((hstream*)dataSource)->seek((long)offset, mode);
 		return 0;
 	}
 
@@ -113,6 +113,8 @@ namespace xal
 		if (this->streamOpen)
 		{
 			this->streamOpen = false;
+			this->stream.rewind();
+			this->stream.clear();
 		}
 	}
 

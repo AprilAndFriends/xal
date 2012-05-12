@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.33
 /// 
 /// @section LICENSE
 /// 
@@ -33,7 +33,7 @@ namespace xal
 	{
 		if (!hresource::exists(this->filename))
 		{
-			xal::log("ERROR: unable to open " + this->filename);
+			xal::log("Error: unable to open " + this->filename);
 			return false;
 		}
 		return true;

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.33
 /// 
 /// @section LICENSE
 /// 
@@ -39,9 +39,9 @@
 
 int main(int argc, char **argv)
 {
-	unsigned long hwnd = 0;
+	void* hwnd = 0;
 #ifdef _WIN32
-	hwnd = (unsigned long)GetConsoleWindow();
+	hwnd = GetConsoleWindow();
 #endif
 	// initialize XAL with platform default audio system, optional threaded update and 100 times per second
 	xal::init(XAL_AS_DEFAULT, hwnd, __XAL_THREADED, 0.01f);

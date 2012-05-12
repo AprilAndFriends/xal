@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.33
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,7 @@
 #define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
-//#define _TEST_MULTIPLE_STREAM
+//#define _TEST_HANDLE_STREAM
 //#define _TEST_FADE_IN
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
@@ -64,13 +64,11 @@
 
 #define OPENAL_MAX_SOURCES 16 // needed when using OpenAL
 
-xal::Player* s;
-
-void _test_basic()
+void _test_basic(xal::Player* player)
 {
 	printf("  - start test basic...\n");
-	s->play();
-	while (s->isPlaying())
+	player->play();
+	while (player->isPlaying())
 	{
 		hthread::sleep(100);
 		_update(0.1f);
@@ -78,55 +76,24 @@ void _test_basic()
 	_update(1.0f);
 }
 
-void _test_sound()
+void _test_sound(xal::Player* player)
 {
 	printf("  - start test sound...\n");
-	s->play();
+	player->play();
 	for (int i = 0; i < 20; i++)
 	{
 		hthread::sleep(100);
 		_update(0.1f);
-		s->pause();
+		player->pause();
 		hthread::sleep(100);
 		_update(0.1f);
-		s->play();
+		player->play();
 	}
 	_update(1.0f);
-	s->stop();
+	player->stop();
 }
 
-void _test_multistream()
-{
-	printf("  - start test multiple stream...\n");
-	for (int i = 0; i < 5; i++)
-	{
-		s->play();
-		hthread::sleep(1000);
-		_update(1.0f);
-		if (i == 1)
-		{
-			s->pause(1.5f);
-			for (int j = 0; j < 10; j++)
-			{
-				hthread::sleep(100);
-				_update(0.1f);
-			}
-		}
-		else if (i == 3)
-		{
-			s->pause();
-			for (int j = 0; j < 10; j++)
-			{
-				hthread::sleep(100);
-				_update(0.1f);
-			}
-		}
-	}
-	s->stop();
-	_update(0.1f);
-}
-
-void _test_multiplay()
+void _test_multiplay(xal::Player* player)
 {
 	printf("  - start test multiple play...\n");
 	xal::mgr->play(S_BARK);
@@ -174,108 +141,145 @@ void _test_multiplay()
 	_update(0.1f);
 }
 
-void _test_fadein()
+void _test_handle_stream(xal::Player* player)
 {
-	printf("  - start test fade in...\n");
-	xal::mgr->destroyPlayer(s);
-	s = xal::mgr->createPlayer(S_WIND);
-	s->play(1.0f);
-	for (int i = 0; i < 20; i++)
+	printf("  - start test handle stream...\n");
+	player->play();
+	hthread::sleep(200);
+	_update(0.2f);
+	for (int i = 0; i < 5; i++)
 	{
-		hthread::sleep(100);
-		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		printf("  - play %d\n", i);
+		player->play();
+		hthread::sleep(1000);
+		_update(1.0f);
+		if (i == 1)
+		{
+			printf("  - fade %d\n", i);
+			player->pause(1.2f);
+			for (int j = 0; j < 10; j++)
+			{
+				hthread::sleep(100);
+				_update(0.1f);
+			}
+		}
+		else if (i == 3)
+		{
+			printf("  - pause %d\n", i);
+			player->pause();
+			for (int j = 0; j < 10; j++)
+			{
+				hthread::sleep(100);
+				_update(0.1f);
+			}
+		}
 	}
-	s->stop();
-	_update(1.0f);
-}
-
-void _test_fadeout()
-{
-	printf("  - start test fade out...\n");
-	xal::mgr->destroyPlayer(s);
-	s = xal::mgr->createPlayer(S_WIND);
-	s->play();
-	s->stop(1.0f);
-	for (int i = 0; i < 20; i++)
-	{
-		hthread::sleep(100);
-		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
-		_update(0.1f);
-	}
-	s->stop();
+	printf("  - stop\n");
+	player->stop();
 	_update(0.1f);
 }
 
-void _test_fadeinout()
+void _test_fadein(xal::Player* player)
+{
+	printf("  - start test fade in...\n");
+	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
+	p1->play(1.0f);
+	for (int i = 0; i < 20; i++)
+	{
+		hthread::sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
+		_update(0.1f);
+	}
+	p1->stop();
+	_update(1.0f);
+}
+
+void _test_fadeout(xal::Player* player)
+{
+	printf("  - start test fade out...\n");
+	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
+	p1->play();
+	p1->stop(1.0f);
+	for (int i = 0; i < 20; i++)
+	{
+		hthread::sleep(100);
+		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
+		_update(0.1f);
+	}
+	p1->stop();
+	_update(0.1f);
+}
+
+void _test_fadeinout(xal::Player* player)
 {
 	printf("  - start test fade in and out...\n");
-	xal::mgr->destroyPlayer(s);
-	s = xal::mgr->createPlayer(S_WIND);
-	s->play(1.0f);
+	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
+	p1->play(1.0f);
 	for (int i = 0; i < 8; i++)
 	{
 		hthread::sleep(100);
-		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
+		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
-	s->pause(1.0f);
+	p1->pause(1.0f);
 	for (int i = 0; i < 6; i++)
 	{
 		hthread::sleep(100);
-		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
+		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
-	s->play(1.0f);
+	p1->play(1.0f);
 	for (int i = 0; i < 3; i++)
 	{
 		hthread::sleep(100);
-		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
+		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
 	printf("- 10 more updates\n");
 	for (int i = 0; i < 10; i++)
 	{
 		hthread::sleep(100);
-		printf("T:%d P:%s FI:%s FO:%s\n", i, s->isPlaying() ? "1" : "_", s->isFadingIn() ? "1" : "_", s->isFadingOut() ? "1" : "_");
+		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		_update(0.1f);
 	}
-	s->stop();
+	p1->stop();
 	_update(1.0f);
 }
 
-void _test_complex_handler()
+void _test_complex_handler(xal::Player* player)
 {
 	printf("  - start test complex handler...\n");
 	xal::Player* temp;
-	xal::Player* s1 = xal::mgr->createPlayer(S_WIND);
-	xal::Player* s2 = xal::mgr->createPlayer(S_WIND_2);
-	s1->play();
-	s2->play();
-	s2->pause();
+	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
+	xal::Player* p2 = xal::mgr->createPlayer(S_WIND_2);
+	p1->play();
+	p2->play();
+	p2->pause();
 	for (int i = 0; i < 50; i++)
 	{
 		hthread::sleep(100);
 		_update(0.1f);
-		s2->play();
-		s1->pause();
+		p2->play();
+		p1->pause();
 		hthread::sleep(100);
 		_update(0.1f);
-		s2->pause();
-		s1->play();
+		p2->pause();
+		p1->play();
 		if (i % 3 == 0)
 		{
-			temp = s1;
-			s1 = s2;
-			s2 = temp;
+			temp = p1;
+			p1 = p2;
+			p2 = temp;
 		}
 	}
-	s1->stop();
-	s2->stop();
+	p1->stop();
+	p2->stop();
+	xal::mgr->destroyPlayer(p1);
+	xal::mgr->destroyPlayer(p2);
 	_update(0.1f);
 }
 
-void _test_sources()
+void _test_sources(xal::Player* player)
 {
 	printf("  - start test sources...\n");
 	for (int i = 0; i < OPENAL_MAX_SOURCES + 1; i++)
@@ -289,19 +293,18 @@ void _test_sources()
 		_update(0.1f);
 	}
 	xal::mgr->update(0.01f);
-	xal::mgr->destroyPlayer(s);
-	s = xal::mgr->createPlayer(S_WIND);
-	s->play();
+	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
+	p1->play();
 	for (int i = 0; i < 20; i++)
 	{
 		hthread::sleep(100);
 		_update(0.1f);
 	}
-	s->stop();
+	p1->stop();
 	_update(0.1f);
 }
 
-void _test_util_playlist()
+void _test_util_playlist(xal::Player* player)
 {
 	printf("  - start test util playlist...\n");
 	xal::Playlist list(false);
@@ -319,7 +322,7 @@ void _test_util_playlist()
 	}
 }
 
-void _test_util_parallel_sounds()
+void _test_util_parallel_sounds(xal::Player* player)
 {
 	printf("  - start test util parallel sounds...\n");
 	harray<hstr> names;
@@ -343,9 +346,9 @@ void _test_util_parallel_sounds()
 
 int main(int argc, char **argv)
 {
-	unsigned long hwnd = 0;
+	void* hwnd = 0;
 #ifdef _WIN32
-	hwnd = (unsigned long)GetConsoleWindow();
+	hwnd = GetConsoleWindow();
 #endif
 #ifndef _TEST_THREADED
 	xal::init(XAL_AS_DEFAULT, hwnd, false);
@@ -362,41 +365,43 @@ int main(int argc, char **argv)
 	xal::mgr->createCategory("cat", xal::FULL, xal::FULL);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
-	s = xal::mgr->createPlayer(USED_SOUND);
+	xal::Player* player = xal::mgr->createPlayer(USED_SOUND);
 
 #ifdef _TEST_BASIC
-	_test_basic();
+	_test_basic(player);
 #endif
 #ifdef _TEST_SOUND
-	_test_sound();
+	_test_sound(player);
 #endif
-#ifdef _TEST_MULTIPLE_STREAM
-	_test_multistream();
+#ifdef _TEST_HANDLE_STREAM
+	_test_handle_stream(player);
 #endif
 #ifdef _TEST_MULTIPLAY
-	_test_multiplay();
+	_test_multiplay(player);
 #endif
 #ifdef _TEST_FADE_IN
-	_test_fadein();
+	_test_fadein(player);
 #endif
 #ifdef _TEST_FADE_OUT
-	_test_fadeout();
+	_test_fadeout(player);
 #endif
 #ifdef _TEST_FADE_IN_OUT
-	_test_fadeinout();
+	_test_fadeinout(player);
 #endif
 #ifdef _TEST_COMPLEX_HANDLER
-	_test_complex_handler();
+	_test_complex_handler(player);
 #endif
 #ifdef _TEST_SOURCE_HANDLING
-	_test_sources();
+	_test_sources(player);
 #endif
 #ifdef _TEST_UTIL_PLAYLIST
-	_test_util_playlist();
+	_test_util_playlist(player);
 #endif
 #ifdef _TEST_UTIL_PARALLEL_SOUNDS
-	_test_util_parallel_sounds();
+	_test_util_parallel_sounds(player);
 #endif
+
+	xal::mgr->destroyPlayer(player);
 	printf("  - done\n");
 	xal::destroy();
 	system("pause");

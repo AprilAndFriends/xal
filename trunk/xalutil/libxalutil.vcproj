@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="libxalutil"
 	ProjectGUID="{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}"
 	RootNamespace="xalutil"
@@ -140,7 +140,6 @@
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
-				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
