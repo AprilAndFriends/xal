@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,7 @@ namespace xal
 
 	FLAC_Source::~FLAC_Source()
 	{
+		this->close();
 	}
 
 	bool FLAC_Source::open()
@@ -36,8 +37,8 @@ namespace xal
 	{
 		if (this->streamOpen)
 		{
-			// TODO - implement
 			this->streamOpen = false;
+			// TODO - implement
 		}
 	}
 

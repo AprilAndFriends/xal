@@ -33,12 +33,6 @@
 #ifdef HAVE_M4A
 #include "M4A_Source.h"
 #endif
-// TODO
-/*
-#ifdef HAVE_MIDI
-#include "MIDI_Source.h"
-#endif
-*/
 #ifdef HAVE_OGG
 #include "OGG_Source.h"
 #endif
@@ -67,9 +61,6 @@ namespace xal
 #endif
 #ifdef HAVE_M4A
 		this->extensions += ".m4a";
-#endif
-#ifdef HAVE_MIDI
-		this->extensions += ".mid";
 #endif
 #ifdef HAVE_OGG
 		this->extensions += ".ogg";
@@ -550,27 +541,16 @@ namespace xal
 		Source* source;
 		switch (format)
 		{
-			// TODO
-			/*
 #ifdef HAVE_FLAC
 		case FLAC:
 			source = new FLAC_Source(filename);
 			break;
 #endif
-			*/
 #ifdef HAVE_M4A
 		case M4A:
 			source = new M4A_Source(filename);
 			break;
 #endif
-			// TODO
-			/*
-#ifdef HAVE_MIDI
-		case MIDI:
-			source = new MIDI_Source(filename);
-			break;
-#endif
-			*/
 #ifdef HAVE_OGG
 		case OGG:
 			source = new OGG_Source(filename);

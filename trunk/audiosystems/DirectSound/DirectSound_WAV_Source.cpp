@@ -24,6 +24,7 @@ namespace xal
 
 	DirectSound_WAV_Source::~DirectSound_WAV_Source()
 	{
+		this->close();
 	}
 
 	bool DirectSound_WAV_Source::open()

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.33
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -25,7 +25,7 @@ namespace xal
 	{
 		if (this->streamOpen)
 		{
-			this->close();
+			xal::log("Warning: " + this->filename + " was not closed by subclass in destructor!");
 		}
 	}
 

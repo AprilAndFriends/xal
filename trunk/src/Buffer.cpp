@@ -98,12 +98,6 @@ namespace xal
 			return M4A;
 		}
 #endif
-#ifdef HAVE_MIDI
-		if (this->filename.ends_with(".mid"))
-		{
-			return MIDI;
-		}
-#endif
 #ifdef HAVE_OGG
 		if (this->filename.ends_with(".ogg"))
 		{

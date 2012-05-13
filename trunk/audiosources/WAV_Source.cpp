@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -24,6 +24,7 @@ namespace xal
 
 	WAV_Source::~WAV_Source()
 	{
+		this->close();
 	}
 
 	bool WAV_Source::open()
@@ -115,6 +116,7 @@ namespace xal
 	{
 		if (this->streamOpen)
 		{
+			this->streamOpen = false;
 			this->file.close();
 		}
 	}

@@ -26,6 +26,7 @@ namespace xal
 
 	SPX_Source::~SPX_Source()
 	{
+		this->close();
 	}
 
 	bool SPX_Source::load(unsigned char* output)
