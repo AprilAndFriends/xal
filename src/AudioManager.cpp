@@ -248,6 +248,7 @@ namespace xal
 	{
 		if (!this->categories.has_key(name))
 		{
+			this->_unlock();
 			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
 		return this->categories[name];
@@ -265,6 +266,7 @@ namespace xal
 	{
 		if (!this->categories.has_key(name))
 		{
+			this->_unlock();
 			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
 		return this->categories[name]->getGain();
@@ -327,6 +329,7 @@ namespace xal
 	{
 		if (!this->sounds.has_key(name))
 		{
+			this->_unlock();
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		return this->sounds[name];
@@ -404,6 +407,7 @@ namespace xal
 		}
 		if (manualSoundNames.size() > 0)
 		{
+			this->_unlock();
 			throw hl_exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.join(", "));
 		}
 	}
@@ -471,6 +475,7 @@ namespace xal
 	{
 		if (!this->sounds.has_key(name))
 		{
+			this->_unlock();
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		Sound* sound = this->sounds[name];
