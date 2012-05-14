@@ -284,6 +284,16 @@ namespace xal
 		this->_stopSound(fadeTime);
 	}
 
+	float Player::_calcGain()
+	{
+		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
+	}
+
+	float Player::_calcFadeGain()
+	{
+		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain() * this->fadeTime);
+	}
+
 	void Player::_stopSound(float fadeTime)
 	{
 		if (fadeTime > 0.0f)
@@ -296,16 +306,6 @@ namespace xal
 		this->buffer->release();
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
-	}
-
-	float Player::_calcGain()
-	{
-		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-	}
-
-	float Player::_calcFadeGain()
-	{
-		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain() * this->fadeTime);
 	}
 
 }

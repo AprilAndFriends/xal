@@ -269,7 +269,7 @@ namespace xal
 	{
 		if (this->bufferCount == 0)
 		{
-			this->_stopSound();
+			this->_stop();
 			return 0;
 		}
 		int processed = this->_getProcessedBuffersCount();
@@ -292,7 +292,7 @@ namespace xal
 		}
 		if (this->bufferCount == 0)
 		{
-			this->_stopSound();
+			this->_stop();
 		}
 		return (processed * STREAM_BUFFER_SIZE);
 	}
