@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -46,7 +46,7 @@ namespace xal
 		Player::_update(k);
 		if (!this->_systemIsPlaying() && this->sourceId != 0)
 		{
-			this->_stopSound();
+			this->_stop();
 		}
 	}
 
@@ -72,7 +72,7 @@ namespace xal
 		{
 			alGetSourcei(this->sourceId, AL_BYTE_OFFSET, &bytes);
 		}
-		return (bytes + (this->bufferIndex + this->_getProcessedBuffersCount()) * STREAM_BUFFER_SIZE);
+		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
 	}
 
 	float OpenAL_Player::_systemGetOffset()
@@ -194,7 +194,7 @@ namespace xal
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
-			this->_stopSound();
+			this->_stop();
 			return 0;
 		}
 		int processed = this->_getProcessedBuffersCount();
@@ -226,7 +226,7 @@ namespace xal
 		}
 		if (this->_getQueuedBuffersCount() == 0)
 		{
-			this->_stopSound();
+			this->_stop();
 		}
 		return (processed * STREAM_BUFFER_SIZE);
 	}

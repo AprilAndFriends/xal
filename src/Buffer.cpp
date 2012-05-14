@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.33
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -226,5 +226,16 @@ namespace xal
 		this->source->rewind();
 	}
 
+	int Buffer::convertToOutputSize(int size)
+	{
+		return hround((float)size * xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample() /
+			((float)this->getSamplingRate() * this->getChannels() * this->getBitsPerSample()));
+	}
+
+	int Buffer::convertToInputSize(int size)
+	{
+		return hround((float)size * this->getSamplingRate() * this->getChannels() * this->getBitsPerSample() /
+			((float)xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample()));
+	}
 
 }

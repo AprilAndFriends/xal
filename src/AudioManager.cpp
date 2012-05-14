@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.41
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -53,6 +53,9 @@ namespace xal
 		enabled(false), suspended(false), gain(1.0f), thread(NULL)
 	{
 		this->name = systemName;
+		this->samplingRate = 44100;
+		this->channels = 2;
+		this->bitsPerSample = 16;
 		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;

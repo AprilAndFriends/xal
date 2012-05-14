@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -34,9 +34,9 @@ namespace xal
 			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
 			return;
 		}
-		this->format.freq = 44100;
-		this->format.format = AUDIO_S16;
-		this->format.channels = 2;
+		this->format.freq = this->samplingRate;
+		this->format.format = (this->bitsPerSample == 16 ? AUDIO_S16 : AUDIO_S8);
+		this->format.channels = this->channels;
 		this->format.samples = 2048;
 		this->format.callback = &SDL_AudioManager::_mixAudio;
 		this->format.userdata = NULL;
