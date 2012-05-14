@@ -37,7 +37,6 @@ namespace xal
 		void setGain(float value);
 		float getPitch();
 		void setPitch(float value);
-		float getOffset() { return this->offset; }
 		Sound* getSound() { return this->sound; }
 		hstr getName();
 		hstr getFilename();
@@ -46,7 +45,6 @@ namespace xal
 		int getSize();
 		float getTimePosition();
 		unsigned int getSamplePosition();
-		DEPRECATED_ATTRIBUTE float getPlaybackPosition() { return this->getTimePosition(); }
 
 		Category* getCategory();
 
@@ -61,6 +59,8 @@ namespace xal
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
 		
+		DEPRECATED_ATTRIBUTE float getPlaybackPosition() { return this->getTimePosition(); }
+
 	protected:
 		float gain;
 		float pitch;
@@ -68,7 +68,7 @@ namespace xal
 		bool looping;
 		float fadeSpeed;
 		float fadeTime;
-		float offset; // TODO - should be int?
+		float offset; // TODO - should be removed?
 		Sound* sound;
 		Buffer* buffer;
 		int bufferIndex;
