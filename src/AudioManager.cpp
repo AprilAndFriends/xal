@@ -50,7 +50,7 @@ namespace xal
 	AudioManager* mgr = NULL;
 
 	AudioManager::AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), suspended(false), gain(1.0f), thread(NULL)
+		enabled(false), suspended(false), gain(1.0f), thread(NULL), threadRunning(false)
 	{
 		this->name = systemName;
 		this->samplingRate = 44100;
@@ -87,6 +87,7 @@ namespace xal
 	void AudioManager::init()
 	{
 		this->_lock();
+		this->_flushQueuedMessages();
 		if (this->enabled && this->thread != NULL)
 		{
 			this->_startThreading();
@@ -97,6 +98,8 @@ namespace xal
 	void AudioManager::_startThreading()
 	{
 		xal::log("starting audio update thread");
+		this->_flushQueuedMessages();
+		this->threadRunning = true;
 		this->thread->start();
 	}
 
@@ -109,16 +112,16 @@ namespace xal
 	
 	void AudioManager::_clear()
 	{
-		if (this->thread != NULL)
+		if (this->thread != NULL && this->threadRunning)
 		{
 			xal::log("stopping audio update thread");
 			this->_flushQueuedMessages();
-			hthread* t = this->thread;
-			this->thread = NULL;
+			this->threadRunning = false;
 			this->_unlock();
-			t->join();
+			this->thread->join();
 			this->_lock();
-			delete t;
+			delete this->thread;
+			this->thread = NULL;
 		}
 		this->_update(0.0f);
 		foreach (Player*, it, this->players)
@@ -171,7 +174,7 @@ namespace xal
 
 	void AudioManager::update()
 	{
-		while (xal::mgr->thread != NULL)
+		while (xal::mgr->thread != NULL && xal::mgr->threadRunning)
 		{
 			xal::mgr->_lock();
 			xal::mgr->_update(xal::mgr->updateTime);
@@ -207,6 +210,7 @@ namespace xal
 		}
 	}
 	
+	static int x = 0;
 	void AudioManager::_lock()
 	{
 		if (this->isThreaded())
