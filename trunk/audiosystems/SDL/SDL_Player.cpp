@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -167,6 +167,11 @@ namespace xal
 		return true;
 	}
 
+	unsigned int SDL_Player::_systemGetBufferPosition()
+	{
+		return this->position;
+	}
+
 	float SDL_Player::_systemGetOffset()
 	{
 		return this->offset;
@@ -201,14 +206,9 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::_systemUpdateGain()
+	void SDL_Player::_systemUpdateGain(float gain)
 	{
-		this->currentGain = this->_calcGain();
-	}
-
-	void SDL_Player::_systemUpdateFadeGain()
-	{
-		this->currentGain = this->_calcFadeGain();
+		this->currentGain = gain;
 	}
 
 	void SDL_Player::_systemPlay()
@@ -216,7 +216,7 @@ namespace xal
 		this->playing = true;
 	}
 
-	void SDL_Player::_systemStop()
+	int SDL_Player::_systemStop()
 	{
 		this->playing = false;
 		if (!this->paused)
@@ -226,10 +226,12 @@ namespace xal
 			this->writePosition = 0;
 			this->buffer->rewind();
 		}
+		return 0;
 	}
 
-	void SDL_Player::_systemUpdateStream()
+	int SDL_Player::_systemUpdateStream()
 	{
+		int result = 0;
 		int count = 0;
 		if (this->readPosition > this->writePosition)
 		{
@@ -242,7 +244,9 @@ namespace xal
 		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
 			this->_fillBuffer(STREAM_BUFFER_SIZE);
+			result = STREAM_BUFFER_SIZE;
 		}
+		return result;
 	}
 
 	int SDL_Player::_fillBuffer(int size)

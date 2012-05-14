@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.1
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -47,8 +47,7 @@ namespace xal
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
-		void _systemUpdateGain();
-		void _systemUpdateFadeGain();
+		void _systemUpdateGain(float gain);
 		void _systemPlay();
 		void _systemStop();
 		void _systemUpdateStream();

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -60,6 +60,16 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 
+	unsigned int Android_Player::_systemGetBufferPosition()
+	{
+		int bytes = 0;
+		if (this->sourceId != 0)
+		{
+			alGetSourcei(this->sourceId, AL_BYTE_OFFSET, &bytes);
+		}
+		return (bytes + (this->bufferIndex + this->_getProcessedBuffersCount()) * STREAM_BUFFER_SIZE);
+	}
+
 	float Android_Player::_systemGetOffset()
 	{
 		float offset = 0.0f;
@@ -115,19 +125,11 @@ namespace xal
 		}
 	}
 
-	void Android_Player::_systemUpdateGain()
+	void Android_Player::_systemUpdateGain(float gain)
 	{
 		if (this->sourceId != 0)
 		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
-		}
-	}
-
-	void Android_Player::_systemUpdateFadeGain()
-	{
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
+			alSourcef(this->sourceId, AL_GAIN, gain);
 		}
 	}
 

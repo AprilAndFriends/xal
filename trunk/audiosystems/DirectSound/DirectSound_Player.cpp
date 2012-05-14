@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -53,15 +53,20 @@ namespace xal
 		return ((status & DSBSTATUS_PLAYING) != 0);
 	}
 
+	unsigned int DirectSound_Player::_systemGetBufferPosition()
+	{
+		unsigned long position;
+		this->dsBuffer->GetCurrentPosition(&position, NULL);
+		return (unsigned int)position;
+	}
+
 	float DirectSound_Player::_systemGetOffset()
 	{
 		if (this->dsBuffer == NULL)
 		{
 			return 0.0f;
 		}
-		unsigned long position;
-		this->dsBuffer->GetCurrentPosition(&position, NULL);
-		return (float)position;
+		return (float)this->_systemGetBufferPosition();
 	}
 
 	void DirectSound_Player::_systemSetOffset(float value)
@@ -203,25 +208,10 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_systemUpdateGain()
+	void DirectSound_Player::_systemUpdateGain(float fain)
 	{
 		if (this->dsBuffer != NULL)
 		{
-			float gain = this->_calcGain();
-			LONG value = DSBVOLUME_MIN;
-			if (gain > 0.0f)
-			{
-				value = (LONG)(log10(gain) / 4 * (DSBVOLUME_MAX - DSBVOLUME_MIN));
-			}
-			this->dsBuffer->SetVolume(value);
-		}
-	}
-
-	void DirectSound_Player::_systemUpdateFadeGain()
-	{
-		if (this->dsBuffer != NULL)
-		{
-			float gain = this->_calcFadeGain();
 			LONG value = DSBVOLUME_MIN;
 			if (gain > 0.0f)
 			{
@@ -247,8 +237,9 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_systemStop()
+	int DirectSound_Player::_systemStop()
 	{
+		int result = 0;
 		if (this->dsBuffer != NULL)
 		{
 			this->dsBuffer->Stop();
@@ -260,6 +251,7 @@ namespace xal
 					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
 					this->bufferCount -= processed;
 					this->bufferQueued -= processed;
+					result = processed * STREAM_BUFFER_SIZE;
 				}
 				else
 				{
@@ -270,19 +262,20 @@ namespace xal
 				}
 			}
 		}
+		return result;
 	}
 
-	void DirectSound_Player::_systemUpdateStream()
+	int DirectSound_Player::_systemUpdateStream()
 	{
 		if (this->bufferCount == 0)
 		{
 			this->_stopSound();
-			return;
+			return 0;
 		}
 		int processed = this->_getProcessedBuffersCount();
 		if (processed == 0)
 		{
-			return;
+			return 0;
 		}
 		this->bufferCount = hmax(this->bufferCount - processed, 0);
 		this->bufferQueued = hmax(this->bufferQueued - processed, 0);
@@ -301,13 +294,13 @@ namespace xal
 		{
 			this->_stopSound();
 		}
+		return (processed * STREAM_BUFFER_SIZE);
 	}
 
 	int DirectSound_Player::_getProcessedBuffersCount()
 	{
-		unsigned long position;
-		this->dsBuffer->GetCurrentPosition(&position, NULL);
-		return ((position / STREAM_BUFFER_SIZE + STREAM_BUFFER_COUNT - this->bufferIndex) % STREAM_BUFFER_COUNT);
+		return ((this->_systemGetBufferPosition() / STREAM_BUFFER_SIZE +
+			STREAM_BUFFER_COUNT - this->bufferIndex) % STREAM_BUFFER_COUNT);
 	}
 
 	int DirectSound_Player::_fillBuffers(int index, int count)

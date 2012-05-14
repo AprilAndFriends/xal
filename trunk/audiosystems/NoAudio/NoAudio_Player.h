@@ -33,7 +33,7 @@ namespace xal
 
 		bool _systemIsPlaying();
 		void _systemPlay();
-		void _systemStop();
+		int _systemStop();
 
 	};
 

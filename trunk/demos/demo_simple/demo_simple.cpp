@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.33
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -35,7 +35,6 @@
 #else
 #define __XAL_THREADED true
 #endif
-#define _update(time) xal::mgr->update(time)
 
 int main(int argc, char **argv)
 {
@@ -50,50 +49,52 @@ int main(int argc, char **argv)
 	xal::mgr->createCategory(CATEGORY_NORMAL, xal::FULL, xal::FULL);
 	// create a category for streamed sounds
 	xal::mgr->createCategory(CATEGORY_STREAMED, xal::STREAMED, xal::STREAMED);
-	// create sound using a prefix
+	// create sound using a prefix (forces usage of the ogg files)
 	xal::mgr->createSound("../media/" SOUND_NAME_NORMAL ".ogg", CATEGORY_NORMAL);
-	// create streamed sound using no prefix
+	// create streamed sound using no prefix (forces usage of the ogg files)
 	xal::mgr->createSound("../media/streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
 	xal::Player* p;
 
 	// create a sound player for manual control
 	p = xal::mgr->createPlayer(SOUND_NORMAL);
 	// play the sound
-	printf(("- starting " SOUND_NORMAL "\n"));
+	printf("- starting " SOUND_NORMAL "\n");
 	p->play();
 	p->setPitch(0.5f);
 	while (p->isPlaying())
 	{
-		hthread::sleep(10);
-		_update(0.01f);
+		hthread::sleep(100);
+		xal::mgr->update(0.1f);
+		printf("    - " SOUND_NORMAL " - samples: %d - time: %f\n", p->getSamplePosition(), p->getTimePosition());
 	}
-	printf(("- finished " SOUND_NORMAL "\n"));
+	printf("- finished " SOUND_NORMAL "\n");
 	// destroy the player
 	xal::mgr->destroyPlayer(p);
 
 	// create a new sound player
 	p = xal::mgr->createPlayer(SOUND_STREAMED);
 	// play the sound
-	printf(("- starting " SOUND_STREAMED "\n"));
+	printf("- starting " SOUND_STREAMED "\n");
 	p->play();
 	while (p->isPlaying())
 	{
-		hthread::sleep(10);
-		_update(0.01f);
+		hthread::sleep(100);
+		xal::mgr->update(0.1f);
+		printf("    - " SOUND_STREAMED " - samples: %d - time: %f\n", p->getSamplePosition(), p->getTimePosition());
 	}
-	printf(("- finished " SOUND_STREAMED "\n"));
+	printf("- finished " SOUND_STREAMED "\n");
 	// destroy the player
 	xal::mgr->destroyPlayer(p);
 
 	// fire & forget, no control over the sound
 	xal::mgr->play(SOUND_NORMAL);
-	printf(("- starting " SOUND_NORMAL "\n"));
+	printf("- starting " SOUND_NORMAL "\n");
 	while (xal::mgr->isAnyPlaying(SOUND_NORMAL))
 	{
-		hthread::sleep(10);
-		_update(0.01f);
+		hthread::sleep(100);
+		xal::mgr->update(0.1f);
 	}
-	printf(("- finished " SOUND_NORMAL "\n"));
+	printf("- finished " SOUND_NORMAL "\n");
 
 	// destroying the sounds manually
 	xal::mgr->destroySound(xal::mgr->getSound(SOUND_NORMAL));
