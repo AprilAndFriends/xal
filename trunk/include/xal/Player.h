@@ -85,7 +85,6 @@ namespace xal
 		void _stop(float fadeTime = 0.0f);
 		void _pause(float fadeTime = 0.0f);
 
-		void _stopSound(float fadeTime = 0.0f);
 		float _calcGain();
 		float _calcFadeGain();
 
@@ -100,6 +99,9 @@ namespace xal
 		virtual void _systemPlay() { }
 		virtual int _systemStop() { return 0; }
 		virtual int _systemUpdateStream() { return 0; }
+
+	private:
+		void _stopSound(float fadeTime = 0.0f);
 
 	};
 

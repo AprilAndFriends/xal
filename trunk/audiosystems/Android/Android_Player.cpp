@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -41,7 +41,7 @@ namespace xal
 		Player::_update(k);
 		if (!this->_systemIsPlaying() && this->sourceId != 0)
 		{
-			this->_stopSound();
+			this->_stop();
 		}
 	}
 
@@ -176,7 +176,7 @@ namespace xal
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
-			this->_stopSound();
+			this->_stop();
 			return;
 		}
 		int processed = this->_getProcessedBuffersCount();
@@ -208,7 +208,7 @@ namespace xal
 		}
 		if (this->_getQueuedBuffersCount() == 0)
 		{
-			this->_stopSound();
+			this->_stop();
 		}
 	}
 
