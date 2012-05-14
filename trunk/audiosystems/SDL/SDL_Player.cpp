@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -78,7 +78,8 @@ namespace xal
 	void SDL_Player::_update(float k)
 	{
 		Player::_update(k);
-		int size = this->buffer->getSize();
+		// making sure a corrected size is used
+		int size = this->buffer->convertToOutputSize(this->buffer->getSize());
         if (size > 0 && this->position >= size)
         {
 			if (this->looping)
@@ -87,7 +88,7 @@ namespace xal
 			}
 			else if (this->playing)
 			{
-				this->_systemStop();
+				this->_stop();
 			}
 		}
 	}
@@ -169,7 +170,16 @@ namespace xal
 
 	unsigned int SDL_Player::_systemGetBufferPosition()
 	{
-		return this->position;
+		int count = 0;
+		if (this->readPosition > this->writePosition)
+		{
+			count = (this->readPosition - this->writePosition);
+		}
+		else if (this->readPosition < this->writePosition)
+		{
+			count = (STREAM_BUFFER - this->writePosition + this->readPosition);
+		}
+		return this->buffer->convertToInputSize(count);
 	}
 
 	float SDL_Player::_systemGetOffset()
@@ -198,7 +208,7 @@ namespace xal
 		{
 			this->readPosition = 0;
 			this->writePosition = 0;
-			int size = this->_fillBuffer(STREAM_BUFFER_SIZE);
+			int size = this->_fillBuffer(STREAM_BUFFER);
 			if (size < STREAM_BUFFER)
 			{
 				memset(&this->circleBuffer[size], 0, (STREAM_BUFFER - size) * sizeof(unsigned char));
@@ -241,16 +251,19 @@ namespace xal
 		{
 			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
 		}
-		if (count >= STREAM_BUFFER_COUNT / 2)
+		if (count > 0)
 		{
-			this->_fillBuffer(STREAM_BUFFER_SIZE);
-			result = STREAM_BUFFER_SIZE;
+			result = this->_fillBuffer(count * STREAM_BUFFER_SIZE);
+			result = this->buffer->convertToInputSize(result);
 		}
 		return result;
 	}
 
 	int SDL_Player::_fillBuffer(int size)
 	{
+		// making sure the buffer doesn't overflow since upsampling can cause that
+		size = this->buffer->convertToInputSize(size);
+		// load the data from the buffer
 		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
 		if (this->writePosition + streamSize <= STREAM_BUFFER)
