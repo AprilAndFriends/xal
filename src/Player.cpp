@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.33
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -17,7 +17,8 @@
 namespace xal
 {
 	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), pitch(1.0f), paused(false),
-		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0)
+		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0),
+		processedByteCount(0)
 	{
 		this->sound = sound;
 		this->buffer = buffer;
@@ -27,13 +28,6 @@ namespace xal
 	{
 	}
 
-	float Player::getPlaybackPosition()
-	{
-		float size = (this->buffer->getSamplingRate() * this->buffer->getChannels() * this->buffer->getBitsPerSample() / 8.0f);
-		//return this->buffer->getBitsPerSample();
-		return this->_systemGetOffset() / size;
-	}
-	
 	float Player::getGain()
 	{
 		xal::mgr->_lock();
@@ -57,7 +51,7 @@ namespace xal
 	void Player::_setGain(float value)
 	{
 		this->gain = hclamp(value, 0.0f, 1.0f);
-		this->_systemUpdateGain();
+		this->_systemUpdateGain(this->gain);
 	}
 
 	float Player::getPitch()
@@ -84,6 +78,30 @@ namespace xal
 	{
 		this->pitch = hclamp(value, 0.01f, 100.0f);
 		this->_systemUpdatePitch();
+	}
+
+	float Player::getTimePosition()
+	{
+		return ((float)this->getSamplePosition() / this->buffer->getSamplingRate());
+	}
+
+	unsigned int Player::getSamplePosition()
+	{
+		xal::mgr->_lock();
+		unsigned int position = this->_systemGetBufferPosition();
+		if (this->sound->isStreamed())
+		{
+			// corrects position by using number of processed bytes (circular)
+			position = (position + (STREAM_BUFFER_COUNT - this->bufferIndex) * STREAM_BUFFER_SIZE) %
+				(STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE);
+			// adds streamed processed byte count
+			position += this->processedByteCount;
+		}
+		position = hmin(position, (unsigned int)this->sound->getSize());
+		unsigned int samplePosition = (unsigned int)(position /
+			(this->buffer->getChannels() * this->buffer->getBitsPerSample() * 0.125f));
+		xal::mgr->_unlock();
+		return samplePosition;
 	}
 
 	hstr Player::getName()
@@ -145,7 +163,7 @@ namespace xal
 	{
 		if (this->sound->isStreamed() && this->_systemIsPlaying())
 		{
-			this->_systemUpdateStream();
+			this->processedByteCount += this->_systemUpdateStream();
 		}
 		if (this->isFading())
 		{
@@ -169,7 +187,7 @@ namespace xal
 			}
 			else
 			{
-				this->_systemUpdateFadeGain();
+				this->_systemUpdateGain(this->_calcFadeGain());
 			}
 		}
 	}
@@ -241,7 +259,7 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		this->_systemUpdateFadeGain();
+		this->_systemUpdateGain(this->_calcFadeGain());
 		if (!alreadyFading)
 		{
 			this->_systemPlay();
@@ -258,6 +276,7 @@ namespace xal
 		this->paused = false;
 		this->_stopSound(fadeTime);
 		this->offset = 0.0f;
+		this->processedByteCount = 0;
 	}
 
 	void Player::_pause(float fadeTime)
@@ -274,7 +293,7 @@ namespace xal
 			return;
 		}
 		this->offset = this->_systemGetOffset();
-		this->_systemStop();
+		this->processedByteCount += this->_systemStop();
 		this->buffer->release();
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -63,6 +63,16 @@ namespace xal
 		int state;
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
+	}
+
+	unsigned int OpenAL_Player::_systemGetBufferPosition()
+	{
+		int bytes = 0;
+		if (this->sourceId != 0)
+		{
+			alGetSourcei(this->sourceId, AL_BYTE_OFFSET, &bytes);
+		}
+		return (bytes + (this->bufferIndex + this->_getProcessedBuffersCount()) * STREAM_BUFFER_SIZE);
 	}
 
 	float OpenAL_Player::_systemGetOffset()
@@ -128,19 +138,11 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemUpdateGain()
+	void OpenAL_Player::_systemUpdateGain(float gain)
 	{
 		if (this->sourceId != 0)
 		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
-		}
-	}
-
-	void OpenAL_Player::_systemUpdateFadeGain()
-	{
-		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_GAIN, this->_calcFadeGain());
+			alSourcef(this->sourceId, AL_GAIN, gain);
 		}
 	}
 
@@ -152,8 +154,9 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemStop()
+	int OpenAL_Player::_systemStop()
 	{
+		int result = 0;
 		if (this->sourceId != 0)
 		{
 			if (!this->sound->isStreamed())
@@ -172,6 +175,7 @@ namespace xal
 				if (this->paused)
 				{
 					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
+					result = processed * STREAM_BUFFER_SIZE;
 				}
 				else
 				{
@@ -182,20 +186,21 @@ namespace xal
 			((OpenAL_AudioManager*) xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
+		return result;
 	}
 
-	void OpenAL_Player::_systemUpdateStream()
+	int OpenAL_Player::_systemUpdateStream()
 	{
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
 			this->_stopSound();
-			return;
+			return 0;
 		}
 		int processed = this->_getProcessedBuffersCount();
 		if (processed == 0)
 		{
-			return;
+			return 0;
 		}
 		this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
 		int count = this->_fillBuffers(this->bufferIndex, processed);
@@ -223,6 +228,7 @@ namespace xal
 		{
 			this->_stopSound();
 		}
+		return (processed * STREAM_BUFFER_SIZE);
 	}
 
 	int OpenAL_Player::_getQueuedBuffersCount()

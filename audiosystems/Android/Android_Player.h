@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -39,15 +39,15 @@ namespace xal
 		void _update(float k);
 
 		bool _systemIsPlaying();
+		unsigned int _systemGetBufferPosition();
 		float _systemGetOffset();
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
-		void _systemUpdateGain();
-		void _systemUpdateFadeGain();
+		void _systemUpdateGain(float gain);
 		void _systemPlay();
-		void _systemStop();
-		void _systemUpdateStream();
+		int _systemStop();
+		int _systemUpdateStream();
 
 		int _getQueuedBuffersCount();
 		int _getProcessedBuffersCount();

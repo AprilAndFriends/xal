@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -40,12 +40,6 @@
 //#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS
 
-#ifndef _TEST_THREADED
-#define _update(time) xal::mgr->update(time)
-#else
-#define _update(time)
-#endif
-
 #ifndef _TEST_LINKS
 #define S_BARK "bark"
 #define S_WIND "wind"
@@ -71,9 +65,9 @@ void _test_basic(xal::Player* player)
 	while (player->isPlaying())
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
-	_update(1.0f);
+	xal::mgr->update(1.0f);
 }
 
 void _test_sound(xal::Player* player)
@@ -83,13 +77,13 @@ void _test_sound(xal::Player* player)
 	for (int i = 0; i < 20; i++)
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 		player->pause();
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 		player->play();
 	}
-	_update(1.0f);
+	xal::mgr->update(1.0f);
 	player->stop();
 }
 
@@ -102,7 +96,7 @@ void _test_multiplay(xal::Player* player)
 	while (xal::mgr->isAnyPlaying(S_BARK))
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	hthread::sleep(500);
 	xal::log("starting stop test");
@@ -116,7 +110,7 @@ void _test_multiplay(xal::Player* player)
 		for (int i = 0; i < 5; i++)
 		{
 			hthread::sleep(100);
-			_update(0.1f);
+			xal::mgr->update(0.1f);
 		}
 		xal::mgr->stop(S_WIND);
 		count++;
@@ -133,12 +127,12 @@ void _test_multiplay(xal::Player* player)
 		for (int i = 0; i < 5; i++)
 		{
 			hthread::sleep(100);
-			_update(0.1f);
+			xal::mgr->update(0.1f);
 		}
 		xal::mgr->stopFirst(S_WIND);
 		count++;
 	}
-	_update(0.1f);
+	xal::mgr->update(0.1f);
 }
 
 void _test_handle_stream(xal::Player* player)
@@ -146,13 +140,13 @@ void _test_handle_stream(xal::Player* player)
 	printf("  - start test handle stream...\n");
 	player->play();
 	hthread::sleep(200);
-	_update(0.2f);
+	xal::mgr->update(0.2f);
 	for (int i = 0; i < 5; i++)
 	{
 		printf("  - play %d\n", i);
 		player->play();
 		hthread::sleep(1000);
-		_update(1.0f);
+		xal::mgr->update(1.0f);
 		if (i == 1)
 		{
 			printf("  - fade %d\n", i);
@@ -160,7 +154,7 @@ void _test_handle_stream(xal::Player* player)
 			for (int j = 0; j < 10; j++)
 			{
 				hthread::sleep(100);
-				_update(0.1f);
+				xal::mgr->update(0.1f);
 			}
 		}
 		else if (i == 3)
@@ -170,13 +164,13 @@ void _test_handle_stream(xal::Player* player)
 			for (int j = 0; j < 10; j++)
 			{
 				hthread::sleep(100);
-				_update(0.1f);
+				xal::mgr->update(0.1f);
 			}
 		}
 	}
 	printf("  - stop\n");
 	player->stop();
-	_update(0.1f);
+	xal::mgr->update(0.1f);
 }
 
 void _test_fadein(xal::Player* player)
@@ -188,10 +182,10 @@ void _test_fadein(xal::Player* player)
 	{
 		hthread::sleep(100);
 		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	p1->stop();
-	_update(1.0f);
+	xal::mgr->update(1.0f);
 }
 
 void _test_fadeout(xal::Player* player)
@@ -204,10 +198,10 @@ void _test_fadeout(xal::Player* player)
 	{
 		hthread::sleep(100);
 		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	p1->stop();
-	_update(0.1f);
+	xal::mgr->update(0.1f);
 }
 
 void _test_fadeinout(xal::Player* player)
@@ -219,31 +213,31 @@ void _test_fadeinout(xal::Player* player)
 	{
 		hthread::sleep(100);
 		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	p1->pause(1.0f);
 	for (int i = 0; i < 6; i++)
 	{
 		hthread::sleep(100);
 		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	p1->play(1.0f);
 	for (int i = 0; i < 3; i++)
 	{
 		hthread::sleep(100);
 		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	printf("- 10 more updates\n");
 	for (int i = 0; i < 10; i++)
 	{
 		hthread::sleep(100);
 		printf("T:%d P:%s FI:%s FO:%s\n", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	p1->stop();
-	_update(1.0f);
+	xal::mgr->update(1.0f);
 }
 
 void _test_complex_handler(xal::Player* player)
@@ -258,11 +252,11 @@ void _test_complex_handler(xal::Player* player)
 	for (int i = 0; i < 50; i++)
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 		p2->play();
 		p1->pause();
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 		p2->pause();
 		p1->play();
 		if (i % 3 == 0)
@@ -276,7 +270,7 @@ void _test_complex_handler(xal::Player* player)
 	p2->stop();
 	xal::mgr->destroyPlayer(p1);
 	xal::mgr->destroyPlayer(p2);
-	_update(0.1f);
+	xal::mgr->update(0.1f);
 }
 
 void _test_sources(xal::Player* player)
@@ -290,7 +284,7 @@ void _test_sources(xal::Player* player)
 	while (xal::mgr->isAnyPlaying(S_BARK))
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	xal::mgr->update(0.01f);
 	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
@@ -298,10 +292,10 @@ void _test_sources(xal::Player* player)
 	for (int i = 0; i < 20; i++)
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	p1->stop();
-	_update(0.1f);
+	xal::mgr->update(0.1f);
 }
 
 void _test_util_playlist(xal::Player* player)
@@ -317,7 +311,7 @@ void _test_util_playlist(xal::Player* player)
 	while (list.isPlaying())
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 		list.update();
 	}
 }
@@ -333,14 +327,14 @@ void _test_util_parallel_sounds(xal::Player* player)
 	for (int i = 0; i < 100000; i++)
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 	names.clear();
 	pmgr.updateList(names);
 	for (int i = 0; i < 10; i++)
 	{
 		hthread::sleep(100);
-		_update(0.1f);
+		xal::mgr->update(0.1f);
 	}
 }
 

@@ -37,9 +37,10 @@ namespace xal
 		this->playing = true;
 	}
 
-	void NoAudio_Player::_systemStop()
+	int NoAudio_Player::_systemStop()
 	{
 		this->playing = false;
+		return 0;
 	}
 
 }

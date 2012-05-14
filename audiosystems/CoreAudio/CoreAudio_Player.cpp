@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.1
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -198,14 +198,9 @@ namespace xal
 		}
 	}
 
-	void CoreAudio_Player::_systemUpdateGain()
+	void CoreAudio_Player::_systemUpdateGain(float gain)
 	{
-		this->currentGain = this->_calcGain();
-	}
-
-	void CoreAudio_Player::_systemUpdateFadeGain()
-	{
-		this->currentGain = this->_calcFadeGain();
+		this->currentGain = gain;
 	}
 
 	void CoreAudio_Player::_systemPlay()

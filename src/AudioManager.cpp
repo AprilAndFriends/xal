@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.32
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -109,6 +109,7 @@ namespace xal
 		if (this->thread != NULL)
 		{
 			xal::log("stopping audio update thread");
+			this->_flushQueuedMessages();
 			hthread* t = this->thread;
 			this->thread = NULL;
 			this->_unlock();
@@ -148,7 +149,7 @@ namespace xal
 		this->gain = value;
 		foreach (Player*, it, this->players)
 		{
-			(*it)->_systemUpdateGain();
+			(*it)->_systemUpdateGain((*it)->_calcGain());
 		}
 	}
 
@@ -284,7 +285,7 @@ namespace xal
 		this->_getCategoryByName(name)->setGain(gain);
 		foreach (Player*, it, this->players)
 		{
-			(*it)->_systemUpdateGain();
+			(*it)->_systemUpdateGain((*it)->_calcGain());
 		}
 	}
 
