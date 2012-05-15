@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.51
 /// 
 /// @section LICENSE
 /// 
@@ -208,7 +208,7 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_systemUpdateGain(float fain)
+	void DirectSound_Player::_systemUpdateGain(float gain)
 	{
 		if (this->dsBuffer != NULL)
 		{
