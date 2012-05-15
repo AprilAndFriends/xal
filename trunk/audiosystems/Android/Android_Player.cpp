@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -67,7 +67,11 @@ namespace xal
 		{
 			alGetSourcei(this->sourceId, AL_BYTE_OFFSET, &bytes);
 		}
-		return (bytes + (this->bufferIndex + this->_getProcessedBuffersCount()) * STREAM_BUFFER_SIZE);
+		if (!this->sound->isStreamed())
+		{
+			return bytes;
+		}
+		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
 	}
 
 	float Android_Player::_systemGetOffset()
