@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -71,6 +71,10 @@ namespace xal
 		if (this->sourceId != 0)
 		{
 			alGetSourcei(this->sourceId, AL_BYTE_OFFSET, &bytes);
+		}
+		if (!this->sound->isStreamed())
+		{
+			return bytes;
 		}
 		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
 	}

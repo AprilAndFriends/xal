@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -210,7 +210,6 @@ namespace xal
 		}
 	}
 	
-	static int x = 0;
 	void AudioManager::_lock()
 	{
 		if (this->isThreaded())
