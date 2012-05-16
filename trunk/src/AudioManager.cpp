@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.52
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -50,7 +50,7 @@ namespace xal
 	AudioManager* mgr = NULL;
 
 	AudioManager::AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), suspended(false), gain(1.0f), thread(NULL), threadRunning(false)
+		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), gain(1.0f), thread(NULL), threadRunning(false)
 	{
 		this->name = systemName;
 		this->samplingRate = 44100;
@@ -226,19 +226,19 @@ namespace xal
 		}
 	}
 
-	Category* AudioManager::createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)
+	Category* AudioManager::createCategory(chstr name, HandlingMode sourceMode, HandlingMode bufferMode, bool memoryManaged)
 	{
 		this->_lock();
-		Category* category = this->_createCategory(name, loadMode, decodeMode);
+		Category* category = this->_createCategory(name, sourceMode, bufferMode, memoryManaged);
 		this->_unlock();
 		return category;
 	}
 
-	Category* AudioManager::_createCategory(chstr name, HandlingMode loadMode, HandlingMode decodeMode)
+	Category* AudioManager::_createCategory(chstr name, HandlingMode sourceMode, HandlingMode bufferMode, bool memoryManaged)
 	{
 		if (!this->categories.has_key(name))
 		{
-			this->categories[name] = new Category(name, loadMode, decodeMode);
+			this->categories[name] = new Category(name, sourceMode, bufferMode, memoryManaged);
 		}
 		return this->categories[name];
 	}
@@ -450,7 +450,7 @@ namespace xal
 
 	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr category, chstr prefix)
 	{
-		this->_createCategory(category, xal::FULL, xal::FULL);
+		this->_createCategory(category, xal::FULL, xal::FULL, false);
 		harray<hstr> result;
 		harray<hstr> files = hdir::resource_files(path, true);
 		Sound* sound;
@@ -842,6 +842,26 @@ namespace xal
 			}
 		}
 		return false;
+	}
+
+	void AudioManager::clearMemory()
+	{
+		this->_lock();
+		this->_clearMemory();
+		this->_unlock();
+	}
+
+	void AudioManager::_clearMemory()
+	{
+		int count = 0;
+		foreach (Player*, it, this->players)
+		{
+			if ((*it)->_tryClearMemory())
+			{
+				count++;
+			}
+		}
+		xal::log(hsprintf("found %d players for memory clearing", count));
 	}
 
 	void AudioManager::queueMessage(chstr message)

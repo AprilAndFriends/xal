@@ -55,17 +55,16 @@ namespace xal
 
 	unsigned int DirectSound_Player::_systemGetBufferPosition()
 	{
-		unsigned long position;
-		this->dsBuffer->GetCurrentPosition(&position, NULL);
+		unsigned long position = 0;
+		if (this->dsBuffer != NULL)
+		{
+			this->dsBuffer->GetCurrentPosition(&position, NULL);
+		}
 		return (unsigned int)position;
 	}
 
 	float DirectSound_Player::_systemGetOffset()
 	{
-		if (this->dsBuffer == NULL)
-		{
-			return 0.0f;
-		}
 		return (float)this->_systemGetBufferPosition();
 	}
 
@@ -83,7 +82,6 @@ namespace xal
 		{
 			return true;
 		}
-		this->buffer->prepare();
 		WAVEFORMATEX wavefmt;
 		/*
 #ifdef HAVE_WAV
@@ -260,6 +258,10 @@ namespace xal
 					this->bufferQueued = 0;
 					this->buffer->rewind();
 				}
+			}
+			else if (!this->paused)
+			{
+				this->_systemSetOffset(0); // reset buffer position 0 on stop
 			}
 		}
 		return result;

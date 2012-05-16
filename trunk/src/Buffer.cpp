@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -18,19 +18,25 @@
 
 namespace xal
 {
-	Buffer::Buffer(chstr filename, HandlingMode loadMode, HandlingMode decodeMode) :
+	Buffer::Buffer(chstr filename, HandlingMode sourceMode, HandlingMode bufferMode) :
 		loaded(false), decoded(false)
 	{
 		this->filename = filename;
 		this->fileSize = hresource::hsize(this->filename);
-		this->loadMode = loadMode;
-		this->decodeMode = decodeMode;
+		this->sourceMode = sourceMode;
+		this->bufferMode = bufferMode;
 		this->streamSize = 0;
 		this->stream = NULL;
 		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
+		this->loadedData = false;
+		this->size = 0;
+		this->channels = 0;
+		this->samplingRate = 0;
+		this->bitPerSample = 0;
+		this->duration = 0.0f;
 		if (xal::mgr->isEnabled() && this->getFormat() != UNKNOWN)
 		{
-			switch (this->loadMode)
+			switch (this->bufferMode)
 			{
 			case FULL:
 				this->prepare();
@@ -56,31 +62,31 @@ namespace xal
 	
 	int Buffer::getSize()
 	{
-		this->prepare();
-		return this->source->getSize();
+		this->_tryLoadData();
+		return this->size;
 	}
 
 	int Buffer::getChannels()
 	{
-		this->prepare();
+		this->_tryLoadData();
 		return this->source->getChannels();
 	}
 
 	int Buffer::getSamplingRate()
 	{
-		this->prepare();
+		this->_tryLoadData();
 		return this->source->getSamplingRate();
 	}
 
 	int Buffer::getBitsPerSample()
 	{
-		this->prepare();
+		this->_tryLoadData();
 		return this->source->getBitsPerSample();
 	}
 
 	float Buffer::getDuration()
 	{
-		this->prepare();
+		this->_tryLoadData();
 		return this->source->getDuration();
 	}
 
@@ -121,7 +127,7 @@ namespace xal
 
 	bool Buffer::isStreamed()
 	{
-		return (this->loadMode == STREAMED || this->decodeMode == STREAMED);
+		return (this->sourceMode == STREAMED || this->bufferMode == STREAMED);
 	}
 
 	void Buffer::prepare()
@@ -139,18 +145,21 @@ namespace xal
 		{
 			this->loaded = true;
 			this->source->open();
+			this->_tryLoadData();
 			if (this->stream == NULL)
 			{
 				this->streamSize = this->source->getSize();
 				this->stream = new unsigned char[this->streamSize];
 			}
 			this->source->load(this->stream);
+			this->source->close();
 			xal::mgr->_convertStream(this, &this->stream, &this->streamSize);
 			return;
 		}
 		if (!this->source->isOpen())
 		{
 			this->source->open();
+			this->_tryLoadData();
 		}
 	}
 
@@ -193,17 +202,18 @@ namespace xal
 		return this->streamSize;
 	}
 
-	void Buffer::release()
+	void Buffer::release(bool playerPaused)
 	{
-		if (this->decodeMode == xal::ON_DEMAND || this->decodeMode == xal::STREAMED)
+		if (!playerPaused && this->bufferMode == xal::ON_DEMAND || this->bufferMode == xal::STREAMED)
 		{
 			if (this->stream != NULL)
 			{
 				delete [] this->stream;
 				this->stream = NULL;
 			}
+			this->loaded = false;
 		}
-		if (this->loadMode == xal::ON_DEMAND)
+		if (!playerPaused && this->bufferMode == xal::STREAMED)
 		{
 			this->source->close();
 			this->loaded = false;
@@ -236,6 +246,28 @@ namespace xal
 	{
 		return hround((float)size * this->getSamplingRate() * this->getChannels() * this->getBitsPerSample() /
 			((float)xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample()));
+	}
+
+	void Buffer::_tryLoadData()
+	{
+		if (!this->loadedData)
+		{
+			bool open = this->source->isOpen();
+			if (!open)
+			{
+				this->source->open();
+			}
+			this->size = this->source->getSize();
+			this->channels = this->source->getChannels();
+			this->samplingRate = this->source->getSamplingRate();
+			this->bitPerSample = this->source->getBitsPerSample();
+			this->duration = this->source->getDuration();
+			this->loadedData = true;
+			if (!open)
+			{
+				this->source->close();
+			}
+		}
 	}
 
 }

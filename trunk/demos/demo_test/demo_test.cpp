@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -22,11 +22,12 @@
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-//#define _TEST_STREAM
-//#define _TEST_LINKS
-//#define _TEST_THREADED
+//#define _USE_STREAM
+//#define _USE_LINKS
+//#define _USE_THREADING
+#define _USE_MEMORY_MANAGEMENT
 
-#define _TEST_BASIC
+//#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
@@ -34,17 +35,18 @@
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
+#define _TEST_MEMORY_MANAGEMENT
 
 //#define _TEST_SOURCE_HANDLING // usually OpenAL only
 
 //#define _TEST_UTIL_PLAYLIST
 //#define _TEST_UTIL_PARALLEL_SOUNDS
 
-#ifndef _TEST_LINKS
+#ifndef _USE_LINKS
 #define S_BARK "bark"
 #define S_WIND "wind"
 #define S_WIND_2 "wind_2"
-#ifndef _TEST_STREAM
+#ifndef _USE_STREAM
 #define USED_SOUND S_BARK
 #else
 #define USED_SOUND S_WIND
@@ -54,6 +56,11 @@
 #define S_BARK "bark"
 #define S_WIND "linked_sound"
 #define S_WIND_2 "wind_2"
+#endif
+#ifdef _USE_MEMORY_MANAGEMENT
+#define MEMORY_MANGEMENT_ENABLED true
+#else
+#define MEMORY_MANGEMENT_ENABLED false
 #endif
 
 #define OPENAL_MAX_SOURCES 16 // needed when using OpenAL
@@ -67,7 +74,6 @@ void _test_basic(xal::Player* player)
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
 	}
-	xal::mgr->update(1.0f);
 }
 
 void _test_sound(xal::Player* player)
@@ -84,7 +90,6 @@ void _test_sound(xal::Player* player)
 		player->play();
 	}
 	xal::mgr->update(1.0f);
-	player->stop();
 }
 
 void _test_multiplay(xal::Player* player)
@@ -273,6 +278,43 @@ void _test_complex_handler(xal::Player* player)
 	xal::mgr->update(0.1f);
 }
 
+void _test_memory_management(xal::Player* player)
+{
+	printf("  - start test memory management...\n");
+	xal::mgr->setIdlePlayerUnloadTime(0.5f);
+	player->play();
+	hthread::sleep(200);
+	xal::mgr->update(0.2f);
+	player->pause();
+	hthread::sleep(1000);
+	xal::mgr->update(1.0f);
+	player->stop();
+	printf("expecting sound reload because on ON_DEMAND...\n");
+	player->play();
+	hthread::sleep(200);
+	xal::mgr->update(0.2f);
+	player->stop();
+	printf("expecting automatic memory clearing now...\n");
+	hthread::sleep(1000);
+	xal::mgr->update(1.0f);
+	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
+	p1->play();
+	player->play();
+	hthread::sleep(200);
+	xal::mgr->update(0.2f);
+	p1->pause();
+	player->pause();
+	printf("trying to clear memory on paused sounds...\n");
+	xal::mgr->clearMemory();
+	hthread::sleep(1000);
+	xal::mgr->update(0.5f);
+	p1->stop();
+	player->stop();
+	printf("trying to clear memory on stopped sounds...\n");
+	xal::mgr->clearMemory();
+	xal::mgr->destroyPlayer(p1);
+}
+
 void _test_sources(xal::Player* player)
 {
 	printf("  - start test sources...\n");
@@ -344,19 +386,24 @@ int main(int argc, char **argv)
 #ifdef _WIN32
 	hwnd = GetConsoleWindow();
 #endif
-#ifndef _TEST_THREADED
+#ifndef _USE_THREADING
 	xal::init(XAL_AS_DEFAULT, hwnd, false);
 #else
 	xal::init(XAL_AS_DEFAULT, hwnd, true, 0.01f);
 #endif
+#ifdef _USE_MEMORY_MANAGEMENT
+	xal::mgr->createCategory("sound", xal::ON_DEMAND, xal::ON_DEMAND, MEMORY_MANGEMENT_ENABLED);
+#endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
-#ifndef _TEST_LINKS
-#ifdef _TEST_STREAM
-	xal::mgr->createCategory("streamable", xal::STREAMED, xal::STREAMED);
+#ifndef _USE_LINKS
+#ifndef _USE_STREAM
+	xal::mgr->createCategory("streamable", xal::LAZY, xal::LAZY, MEMORY_MANGEMENT_ENABLED);
+#else
+	xal::mgr->createCategory("streamable", xal::STREAMED, xal::STREAMED, MEMORY_MANGEMENT_ENABLED);
 #endif
 	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
 #else
-	xal::mgr->createCategory("cat", xal::FULL, xal::FULL);
+	xal::mgr->createCategory("cat", xal::FULL, xal::FULL, MEMORY_MANGEMENT_ENABLED);
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
 	xal::Player* player = xal::mgr->createPlayer(USED_SOUND);
@@ -384,6 +431,9 @@ int main(int argc, char **argv)
 #endif
 #ifdef _TEST_COMPLEX_HANDLER
 	_test_complex_handler(player);
+#endif
+#ifdef _TEST_MEMORY_MANAGEMENT
+	_test_memory_management(player);
 #endif
 #ifdef _TEST_SOURCE_HANDLING
 	_test_sources(player);
