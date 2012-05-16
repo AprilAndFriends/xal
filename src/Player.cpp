@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -13,12 +13,13 @@
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {
 	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), pitch(1.0f), paused(false),
 		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0),
-		processedByteCount(0)
+		processedByteCount(0), idleTime(0.0f)
 	{
 		this->sound = sound;
 		this->buffer = buffer;
@@ -160,9 +161,21 @@ namespace xal
 
 	void Player::_update(float k)
 	{
-		if (this->sound->isStreamed() && this->_systemIsPlaying())
+		if (this->_systemIsPlaying())
 		{
-			this->processedByteCount += this->_systemUpdateStream();
+			this->idleTime = 0.0f;
+			if (this->sound->isStreamed())
+			{
+				this->processedByteCount += this->_systemUpdateStream();
+			}
+		}
+		else
+		{
+			this->idleTime += k;
+			if (this->idleTime > xal::mgr->getIdlePlayerUnloadTime())
+			{
+				this->_tryClearMemory();
+			}
 		}
 		if (this->isFading())
 		{
@@ -294,6 +307,19 @@ namespace xal
 		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain() * this->fadeTime);
 	}
 
+	bool Player::_tryClearMemory()
+	{
+		if (this->getCategory()->isMemoryManaged() && !this->_systemIsPlaying() && !this->paused)
+		{
+#ifdef _DEBUG
+			xal::log(hsprintf("clearing memory for player '%s'", this->sound->getName().c_str()));
+#endif
+			this->buffer->free();
+			return true;
+		}
+		return false;
+	}
+
 	void Player::_stopSound(float fadeTime)
 	{
 		if (fadeTime > 0.0f)
@@ -303,7 +329,7 @@ namespace xal
 		}
 		this->offset = this->_systemGetOffset();
 		this->processedByteCount += this->_systemStop();
-		this->buffer->release();
+		this->buffer->release(this->paused);
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
 	}

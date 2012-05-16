@@ -1,12 +1,13 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -14,10 +15,10 @@
 
 namespace xal
 {
-	Category::Category(chstr name, HandlingMode loadMode, HandlingMode decodeMode) : gain(1.0f)
+	Category::Category(chstr name, HandlingMode sourceMode, HandlingMode bufferMode, bool memoryManaged) : gain(1.0f)
 	{
 		this->name = name;
-		// allowed (load, decode)
+		// allowed (source, buffer)
 		// FULL, FULL
 		// FULL, LAZY
 		// FULL, ON_DEMAND
@@ -28,12 +29,13 @@ namespace xal
 		// ON_DEMAND, ON_DEMAND
 		// ON_DEMAND, STREAMED
 		// STREAMED, STREAMED
-		this->loadMode = loadMode;
-		this->decodeMode = decodeMode;
-		// TODO - leave it like this?
-		if (this->decodeMode < this->loadMode)
+		this->sourceMode = sourceMode;
+		this->bufferMode = bufferMode;
+		this->memoryManaged = memoryManaged;
+		// TODO - this has to be refactored, throwing an exception in a constructor is horrible
+		if (this->bufferMode < this->sourceMode)
 		{
-			throw ("cannot create category " + this->name + ", combination of load-mode and decode-mode invalid").c_str();
+			throw hl_exception("cannot create category " + this->name + ", combination of load-mode and decode-mode invalid");
 		}
 	}
 
@@ -43,7 +45,7 @@ namespace xal
 
 	bool Category::isStreamed()
 	{
-		return (this->loadMode == STREAMED || this->decodeMode == STREAMED);
+		return (this->sourceMode == STREAMED || this->bufferMode == STREAMED);
 	}
 
 }
