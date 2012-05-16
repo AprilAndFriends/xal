@@ -51,7 +51,7 @@ namespace xal
 	void Player::_setGain(float value)
 	{
 		this->gain = hclamp(value, 0.0f, 1.0f);
-		this->_systemUpdateGain(this->gain);
+		this->_systemUpdateGain(this->_calcGain());
 	}
 
 	float Player::getPitch()
