@@ -46,14 +46,12 @@ namespace xal
 			{
 			case DISK:
 				this->stream = resource;
-				xal::log("    - DISK OPEN");
 				break;
 			case RAM:
 				this->stream = new hstream();
 				this->stream->write_raw(*resource);
 				delete resource;
 				this->stream->rewind();
-				xal::log("    - RAM OPEN");
 				break;
 			}
 		}
@@ -70,13 +68,8 @@ namespace xal
 		{
 			if (this->mode == DISK)
 			{
-				xal::log("    - DISK CLOSE");
 				delete this->stream;
 				this->stream = NULL;
-			}
-			else
-			{
-				xal::log("    - RAM CLOSE");
 			}
 			this->streamOpen = false;
 		}
@@ -86,7 +79,6 @@ namespace xal
 	{
 		if (this->streamOpen)
 		{
-			xal::log("    - REWIND");
 			this->stream->rewind();
 		}
 	}
