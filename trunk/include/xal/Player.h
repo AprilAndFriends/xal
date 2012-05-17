@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -58,8 +58,6 @@ namespace xal
 		void play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
 		void pause(float fadeTime = 0.0f);
-
-		DEPRECATED_ATTRIBUTE float getPlaybackPosition() { return this->getTimePosition(); }
 
 	protected:
 		float gain;

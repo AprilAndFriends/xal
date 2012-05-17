@@ -1,6 +1,7 @@
 /// @file
 /// @author  Ivan Vucica
-/// @version 2.0
+/// @author  Boris Mikic
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -26,10 +27,12 @@
 
 namespace xal
 {
+	class Category;
+	
 	class xalExport M4A_Source : public Source
 	{
 	public:
-		M4A_Source(chstr filename);
+		M4A_Source(chstr filename, Category* category);
 		~M4A_Source();
 
 		bool open();
@@ -46,7 +49,7 @@ namespace xal
 
         AudioStreamBasicDescription streamDescription;
 		UInt64 nFrames;
-		hstr mFilename;
+		
 	};
 
 }

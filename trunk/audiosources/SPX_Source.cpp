@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -20,7 +20,7 @@
 
 namespace xal
 {
-	SPX_Source::SPX_Source(chstr filename) : Source(filename)
+	SPX_Source::SPX_Source(chstr filename, Category* category) : Source(filename, category)
 	{
 	}
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -18,34 +18,39 @@
 
 namespace xal
 {
-	Buffer::Buffer(chstr filename, HandlingMode sourceMode, HandlingMode bufferMode) :
-		loaded(false), decoded(false)
+	Buffer::Buffer(chstr filename, Category* category) : loaded(false), decoded(false)
 	{
 		this->filename = filename;
 		this->fileSize = hresource::hsize(this->filename);
-		this->sourceMode = sourceMode;
-		this->bufferMode = bufferMode;
+		this->mode = category->getBufferMode();
 		this->streamSize = 0;
 		this->stream = NULL;
-		this->source = xal::mgr->_createSource(this->filename, this->getFormat());
+		this->source = xal::mgr->_createSource(this->filename, category, this->getFormat());
 		this->loadedData = false;
 		this->size = 0;
-		this->channels = 0;
-		this->samplingRate = 0;
-		this->bitPerSample = 0;
+		this->channels = 2;
+		this->samplingRate = 44100;
+		this->bitPerSample = 16;
 		this->duration = 0.0f;
 		if (xal::mgr->isEnabled() && this->getFormat() != UNKNOWN)
 		{
-			switch (this->bufferMode)
+			switch (this->mode)
 			{
 			case FULL:
 				this->prepare();
 				break;
+			case MANAGED:
+				this->prepare();
+				break;
 			case LAZY:
+				break;
+			case LAZY_MANAGED:
 				break;
 			case ON_DEMAND:
 				break;
 			case STREAMED:
+				break;
+			default:
 				break;
 			}
 		}
@@ -127,7 +132,7 @@ namespace xal
 
 	bool Buffer::isStreamed()
 	{
-		return (this->sourceMode == STREAMED || this->bufferMode == STREAMED);
+		return (this->mode == STREAMED);
 	}
 
 	void Buffer::prepare()
@@ -204,7 +209,7 @@ namespace xal
 
 	void Buffer::release(bool playerPaused)
 	{
-		if (!playerPaused && this->bufferMode == xal::ON_DEMAND || this->bufferMode == xal::STREAMED)
+		if (!playerPaused && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
 		{
 			if (this->stream != NULL)
 			{
@@ -213,7 +218,7 @@ namespace xal
 			}
 			this->loaded = false;
 		}
-		if (!playerPaused && this->bufferMode == xal::STREAMED)
+		if (!playerPaused && this->mode == xal::STREAMED)
 		{
 			this->source->close();
 			this->loaded = false;

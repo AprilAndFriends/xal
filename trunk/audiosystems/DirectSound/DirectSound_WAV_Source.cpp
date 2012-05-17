@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -18,7 +18,8 @@
 
 namespace xal
 {
-	DirectSound_WAV_Source::DirectSound_WAV_Source(chstr filename) : Source(filename), file(NULL)
+	DirectSound_WAV_Source::DirectSound_WAV_Source(chstr filename, Source::Mode mode) :
+		Source(filename, mode), file(NULL)
 	{
 	}
 

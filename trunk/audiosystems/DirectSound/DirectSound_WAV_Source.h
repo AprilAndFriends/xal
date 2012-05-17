@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -28,7 +28,7 @@ namespace xal
 	class xalExport DirectSound_WAV_Source : public Source
 	{
 	public:
-		DirectSound_WAV_Source(chstr filename);
+		DirectSound_WAV_Source(chstr filename, Source::Mode mode);
 		~DirectSound_WAV_Source();
 
 		WAVEFORMATEX getWavefmt() { return this->wavefmt; }

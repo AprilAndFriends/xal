@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -25,7 +25,7 @@ namespace xal
 		this->filename = filename;
 		this->realFilename = this->_findLinkedFile();
 		this->category = category;
-		this->buffer = new Buffer(this->realFilename, category->getSourceMode(), category->getBufferMode());
+		this->buffer = new Buffer(this->realFilename, category);
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).pop_last().rsplit(".", 1, false).pop_first();
 	}
@@ -88,7 +88,7 @@ namespace xal
 	{
 		*output = NULL;
 		int result = 0;
-		Buffer buffer(this->realFilename, xal::LAZY, xal::LAZY);
+		Buffer buffer(this->realFilename, this->category);
 		if (buffer.getFormat() != UNKNOWN)
 		{
 			Source* source = buffer.getSource();

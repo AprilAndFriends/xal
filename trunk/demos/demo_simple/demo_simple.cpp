@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -46,9 +46,9 @@ int main(int argc, char **argv)
 	xal::init(XAL_AS_DEFAULT, hwnd, __XAL_THREADED, 0.01f);
 
 	// create a category for fully loaded and decoded sounds
-	xal::mgr->createCategory(CATEGORY_NORMAL, xal::FULL, xal::FULL);
+	xal::mgr->createCategory(CATEGORY_NORMAL, xal::FULL, xal::DISK);
 	// create a category for streamed sounds
-	xal::mgr->createCategory(CATEGORY_STREAMED, xal::STREAMED, xal::STREAMED);
+	xal::mgr->createCategory(CATEGORY_STREAMED, xal::STREAMED, xal::DISK);
 	// create sound using a prefix (forces usage of the ogg files)
 	xal::mgr->createSound("../media/" SOUND_NAME_NORMAL ".ogg", CATEGORY_NORMAL);
 	// create streamed sound using no prefix (forces usage of the ogg files)

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.34
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -26,10 +26,12 @@
 
 namespace xal
 {
+	class Category;
+
 	class xalExport OGG_Source : public Source
 	{
 	public:
-		OGG_Source(chstr filename);
+		OGG_Source(chstr filename, Category* category);
 		~OGG_Source();
 
 		bool open();
