@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_SOURCE_H
 #define XAL_SOURCE_H
 
+#include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -40,8 +41,8 @@ namespace xal
 		float getDuration() { return this->duration; }
 
 		virtual bool open();
-		virtual void close() { }
-		virtual void rewind() { }
+		virtual void close();
+		virtual void rewind();
 		virtual bool load(unsigned char* output);
 		virtual int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 		
@@ -55,6 +56,7 @@ namespace xal
 		int bitsPerSample;
 		float duration;
 		int chunkSize;
+		hsbase* stream;
 
 	};
 
