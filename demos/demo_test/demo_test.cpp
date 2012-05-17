@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -26,6 +26,7 @@
 //#define _USE_LINKS
 //#define _USE_THREADING
 //#define _USE_MEMORY_MANAGEMENT
+//#define _USE_RAM_SOURCES
 
 #define _TEST_BASIC
 //#define _TEST_SOUND
@@ -43,8 +44,8 @@
 //#define _TEST_UTIL_PARALLEL_SOUNDS
 
 #ifndef _USE_LINKS
-#define S_BARK "bark"
-#define S_WIND "wind"
+#define S_BARK "bark_2"
+#define S_WIND "wind_2"
 #define S_WIND_2 "wind_2"
 #ifndef _USE_STREAM
 #define USED_SOUND S_BARK
@@ -61,6 +62,11 @@
 #define MEMORY_MANGEMENT_ENABLED true
 #else
 #define MEMORY_MANGEMENT_ENABLED false
+#endif
+#ifdef _USE_RAM_SOURCES
+#define SOURCE_MODE xal::RAM
+#else
+#define SOURCE_MODE xal::DISK
 #endif
 
 #define OPENAL_MAX_SOURCES 16 // needed when using OpenAL
@@ -289,7 +295,6 @@ void _test_memory_management(xal::Player* player)
 	hthread::sleep(1000);
 	xal::mgr->update(1.0f);
 	player->stop();
-	printf("expecting sound reload because on ON_DEMAND...\n");
 	player->play();
 	hthread::sleep(200);
 	xal::mgr->update(0.2f);
@@ -392,21 +397,21 @@ int main(int argc, char **argv)
 	xal::init(XAL_AS_DEFAULT, hwnd, true, 0.01f);
 #endif
 #ifdef _USE_MEMORY_MANAGEMENT
-	xal::mgr->createCategory("sound", xal::MANAGED, xal::DISK);
+	xal::mgr->createCategory("sound", xal::MANAGED, SOURCE_MODE);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _USE_LINKS
 #ifndef _USE_STREAM
-	xal::mgr->createCategory("streamable", xal::LAZY_MANAGED, xal::DISK);
+	xal::mgr->createCategory("streamable", xal::LAZY_MANAGED, SOURCE_MODE);
 #else
-	xal::mgr->createCategory("streamable", xal::STREAMED, xal::DISK);
+	xal::mgr->createCategory("streamable", xal::STREAMED, SOURCE_MODE);
 #endif
 	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
 #else
 #ifdef _USE_MEMORY_MANAGEMENT
-	xal::mgr->createCategory("cat", xal::MANAGED, xal::DISK);
+	xal::mgr->createCategory("cat", xal::MANAGED, SOURCE_MODE);
 #else
-	xal::mgr->createCategory("cat", xal::FULL, xal::DISK);
+	xal::mgr->createCategory("cat", xal::FULL, SOURCE_MODE);
 #endif
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif

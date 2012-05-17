@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -33,14 +33,11 @@ namespace xal
 		~WAV_Source();
 
 		bool open();
-		void close();
 		void rewind();
 		bool load(unsigned char* output);
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
-		hresource file;
-
 		void _findData();
 
 	};

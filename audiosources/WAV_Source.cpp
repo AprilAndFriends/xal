@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -34,20 +34,19 @@ namespace xal
 		{
 			return false;
 		}
-		this->file.open(this->filename);
 		unsigned char buffer[5] = {0};
-		this->file.read_raw(buffer, 4); // RIFF
-		this->file.read_raw(buffer, 4); // file size
-		this->file.read_raw(buffer, 4); // WAVE
+		this->stream->read_raw(buffer, 4); // RIFF
+		this->stream->read_raw(buffer, 4); // file size
+		this->stream->read_raw(buffer, 4); // WAVE
 		hstr tag;
 		int size = 0;
 		short value16;
 		int value32;
-		while (!file.eof())
+		while (!this->stream->eof())
 		{
-			file.read_raw(buffer, 4); // next tag
+			this->stream->read_raw(buffer, 4); // next tag
 			tag = (char*)buffer;
-			file.read_raw(buffer, 4); // size of the chunk
+			this->stream->read_raw(buffer, 4); // size of the chunk
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 			XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
 #endif
@@ -56,7 +55,7 @@ namespace xal
 			{
 				/// TODO - implement hresource::read_little_endian and hresource::read_big_endian
 				// format
-				file.read_raw(buffer, 2);
+				this->stream->read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 				XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
 #endif
@@ -64,25 +63,25 @@ namespace xal
 				if (size == 16 && value16 == 1)
 				{
 					// channels
-					file.read_raw(buffer, 2);
+					this->stream->read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 					XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
 #endif
 					memcpy(&value16, buffer, 2);
 					this->channels = value16;
 					// sampling rate
-					file.read_raw(buffer, 4);
+					this->stream->read_raw(buffer, 4);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 					XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
 #endif
 					memcpy(&value32, buffer, 4);
 					this->samplingRate = value32;
 					// bytes rate
-					file.read_raw(buffer, 4);
+					this->stream->read_raw(buffer, 4);
 					// blockalign
-					file.read_raw(buffer, 2);
+					this->stream->read_raw(buffer, 2);
 					// bits per sample
-					file.read_raw(buffer, 2);
+					this->stream->read_raw(buffer, 2);
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 					XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
 #endif
@@ -93,8 +92,7 @@ namespace xal
 				else // not PCM, some form of compressed format
 				{
 					size -= 2;
-					this->streamOpen = false;
-					this->file.close();
+					this->close();
 					break;
 				}
 			}
@@ -104,21 +102,12 @@ namespace xal
 			}
 			if (size > 0)
 			{
-				this->file.seek(size);
+				this->stream->seek(size);
 			}
 		}
 		this->duration = (float)this->size / (this->samplingRate * this->channels * this->bitsPerSample / 8);
 		this->_findData();
 		return this->streamOpen;
-	}
-
-	void WAV_Source::close()
-	{
-		if (this->streamOpen)
-		{
-			this->streamOpen = false;
-			this->file.close();
-		}
 	}
 
 	void WAV_Source::rewind()
@@ -131,18 +120,18 @@ namespace xal
 
 	void WAV_Source::_findData()
 	{
-		this->file.open(this->filename);
+		this->stream->rewind();
 		unsigned char buffer[5] = {0};
-		this->file.read_raw(buffer, 4); // RIFF
-		this->file.read_raw(buffer, 4); // file size
-		this->file.read_raw(buffer, 4); // WAVE
+		this->stream->read_raw(buffer, 4); // RIFF
+		this->stream->read_raw(buffer, 4); // file size
+		this->stream->read_raw(buffer, 4); // WAVE
 		hstr tag;
 		int size = 0;
-		while (!file.eof())
+		while (!this->stream->eof())
 		{
-			file.read_raw(buffer, 4); // next tag
+			this->stream->read_raw(buffer, 4); // next tag
 			tag = (char*)buffer;
-			file.read_raw(buffer, 4); // size of the chunk
+			this->stream->read_raw(buffer, 4); // size of the chunk
 #ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
 			XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
 #endif
@@ -153,19 +142,18 @@ namespace xal
 			}
 			if (size > 0)
 			{
-				this->file.seek(size);
+				this->stream->seek(size);
 			}
 		}
 	}
 
 	bool WAV_Source::load(unsigned char* output)
 	{
-		if (!Source::load(output))
+		if (Source::load(output) == 0)
 		{
-			return false;
+			return 0;
 		}
-		this->file.read_raw(output, this->size);
-		return true;
+		return this->stream->read_raw(output, this->size);
 	}
 
 	int WAV_Source::loadChunk(unsigned char* output, int size)
@@ -174,7 +162,7 @@ namespace xal
 		{
 			return 0;
 		}
-		return this->file.read_raw(output, size);
+		return this->stream->read_raw(output, size);
 	}
 
 }

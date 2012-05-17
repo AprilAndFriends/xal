@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -28,32 +28,32 @@ namespace xal
 
 	size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
-		hresource* stream = (hresource*)dataSource;
+		hsbase* stream = (hsbase*)dataSource;
 		return stream->read_raw(data, size * count);
 	}
 
 	int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
 	{
-		hstream::SeekMode mode = hstream::CURRENT;
+		hsbase::SeekMode mode = hsbase::CURRENT;
 		switch (whence)
 		{
 		case SEEK_CUR:
-			mode = hstream::CURRENT;
+			mode = hsbase::CURRENT;
 			break;
 		case SEEK_SET:
-			mode = hstream::START;
+			mode = hsbase::START;
 			break;
 		case SEEK_END:
-			mode = hstream::END;
+			mode = hsbase::END;
 			break;
 		}
-		((hresource*)dataSource)->seek((long)offset, mode);
+		((hsbase*)dataSource)->seek((long)offset, mode);
 		return 0;
 	}
 
 	long _dataTell(void* dataSource)
 	{
-		return ((hresource*)dataSource)->position();
+		return ((hsbase*)dataSource)->position();
 	}
 
 	OGG_Source::OGG_Source(chstr filename, Category* category) : Source(filename, category)
@@ -72,22 +72,13 @@ namespace xal
 		{
 			return false;
 		}
-		// loading the sound using hresource and writing it into the stream
-		if (!this->stream.is_open())
-		{
-			this->stream.open(this->filename);
-		}
-		else
-		{
-			this->stream.rewind();
-		}
 		// setting the special callbacks
 		ov_callbacks callbacks;
 		callbacks.read_func = &_dataRead;
 		callbacks.seek_func = &_dataSeek;
 		callbacks.close_func = NULL;
 		callbacks.tell_func = &_dataTell;
-		if (ov_open_callbacks((void*)&this->stream, &this->oggStream, NULL, 0, callbacks) == 0)
+		if (ov_open_callbacks((void*)this->stream, &this->oggStream, NULL, 0, callbacks) == 0)
 		{
 			vorbis_info* info = ov_info(&this->oggStream, -1);
 			this->channels = info->channels;
@@ -100,26 +91,9 @@ namespace xal
 		else
 		{
 			xal::log("ogg: error reading data!");
-			this->streamOpen = false;
+			this->close();
 		}
 		return this->streamOpen;
-	}
-
-	void OGG_Source::close()
-	{
-		if (this->streamOpen)
-		{
-			this->streamOpen = false;
-			this->stream.close();
-		}
-	}
-
-	void OGG_Source::rewind()
-	{
-		if (this->streamOpen)
-		{
-			ov_raw_seek(&this->oggStream, 0);
-		}
 	}
 
 	bool OGG_Source::load(unsigned char* output)
