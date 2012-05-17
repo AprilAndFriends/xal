@@ -151,9 +151,10 @@ namespace xal
 	{
 		if (Source::load(output) == 0)
 		{
-			return 0;
+			return false;
 		}
-		return this->stream->read_raw(output, this->size);
+		this->stream->read_raw(output, this->size);
+		return true;
 	}
 
 	int WAV_Source::loadChunk(unsigned char* output, int size)
