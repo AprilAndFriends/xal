@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -24,10 +24,12 @@
 
 namespace xal
 {
+	class Category;
+
 	class xalExport WAV_Source : public Source
 	{
 	public:
-		WAV_Source(chstr filename);
+		WAV_Source(chstr filename, Category* category);
 		~WAV_Source();
 
 		bool open();

@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -226,19 +226,19 @@ namespace xal
 		}
 	}
 
-	Category* AudioManager::createCategory(chstr name, HandlingMode sourceMode, HandlingMode bufferMode, bool memoryManaged)
+	Category* AudioManager::createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode)
 	{
 		this->_lock();
-		Category* category = this->_createCategory(name, sourceMode, bufferMode, memoryManaged);
+		Category* category = this->_createCategory(name, bufferMode, sourceMode);
 		this->_unlock();
 		return category;
 	}
 
-	Category* AudioManager::_createCategory(chstr name, HandlingMode sourceMode, HandlingMode bufferMode, bool memoryManaged)
+	Category* AudioManager::_createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode)
 	{
 		if (!this->categories.has_key(name))
 		{
-			this->categories[name] = new Category(name, sourceMode, bufferMode, memoryManaged);
+			this->categories[name] = new Category(name, bufferMode, sourceMode);
 		}
 		return this->categories[name];
 	}
@@ -450,7 +450,7 @@ namespace xal
 
 	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr category, chstr prefix)
 	{
-		this->_createCategory(category, xal::FULL, xal::FULL, false);
+		this->_createCategory(category, FULL, DISK);
 		harray<hstr> result;
 		harray<hstr> files = hdir::resource_files(path, true);
 		Sound* sound;
@@ -548,38 +548,38 @@ namespace xal
 		return new Player(sound, buffer);
 	}
 	
-	Source* AudioManager::_createSource(chstr filename, Format format)
+	Source* AudioManager::_createSource(chstr filename, Category* category, Format format)
 	{
 		Source* source;
 		switch (format)
 		{
 #ifdef HAVE_FLAC
 		case FLAC:
-			source = new FLAC_Source(filename);
+			source = new FLAC_Source(filename, category);
 			break;
 #endif
 #ifdef HAVE_M4A
 		case M4A:
-			source = new M4A_Source(filename);
+			source = new M4A_Source(filename, category);
 			break;
 #endif
 #ifdef HAVE_OGG
 		case OGG:
-			source = new OGG_Source(filename);
+			source = new OGG_Source(filename, category);
 			break;
 #endif
 #ifdef HAVE_SPX
 		case SPX:
-			source = new SPX_Source(filename);
+			source = new SPX_Source(filename, category);
 			break;
 #endif
 #ifdef HAVE_WAV
 		case WAV:
-			source = new WAV_Source(filename);
+			source = new WAV_Source(filename, category);
 			break;
 #endif
 		default:
-			source = new Source(filename);
+			source = new Source(filename, category);
 			break;
 		}
 		return source;

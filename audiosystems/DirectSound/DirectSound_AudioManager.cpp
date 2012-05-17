@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -60,7 +60,7 @@ namespace xal
 		return new DirectSound_Player(sound, buffer);
 	}
 
-	Source* DirectSound_AudioManager::_createSource(chstr filename, Format format)
+	Source* DirectSound_AudioManager::_createSource(chstr filename, Category* category, Format format)
 	{
 		/*
 		Source* source;
@@ -68,16 +68,16 @@ namespace xal
 		{
 #ifdef HAVE_WAV
 		case WAV:
-			source = new DirectSound_WAV_Source(filename);
+			source = new DirectSound_WAV_Source(filename, category);
 			break;
 #endif
 		default:
-			source = AudioManager::_createSource(filename, format);
+			source = AudioManager::_createSource(filename, category, format);
 			break;
 		}
 		return source;
 		*/
-		return AudioManager::_createSource(filename, format);
+		return AudioManager::_createSource(filename, category, format);
 	}
 
 }

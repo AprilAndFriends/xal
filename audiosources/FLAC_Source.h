@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -22,10 +22,12 @@
 
 namespace xal
 {
+	class Category;
+
 	class xalExport FLAC_Source : public Source
 	{
 	public:
-		FLAC_Source(chstr filename);
+		FLAC_Source(chstr filename, Category* category);
 		~FLAC_Source();
 
 		bool open();

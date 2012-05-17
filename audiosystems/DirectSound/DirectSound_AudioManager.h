@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -39,7 +39,7 @@ namespace xal
 
 	protected:
 		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
-		Source* _createSource(chstr filename, Format format);
+		Source* _createSource(chstr filename, Category* category, Format format);
 
 	};
 

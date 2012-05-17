@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -22,10 +22,12 @@
 
 namespace xal
 {
+	class Category;
+
 	class xalExport SPX_Source : public Source
 	{
 	public:
-		SPX_Source(chstr filename);
+		SPX_Source(chstr filename, Category* category);
 		~SPX_Source();
 
 		bool load(unsigned char* output);

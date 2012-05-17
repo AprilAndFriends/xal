@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -10,15 +10,17 @@
 #include <hltypes/hresource.h>
 
 #include "AudioManager.h"
+#include "Category.h"
 #include "Source.h"
 #include "xal.h"
 
 namespace xal
 {
-	Source::Source(chstr filename) : size(0), channels(2), samplingRate(44100), bitsPerSample(16),
-		duration(0.0f), chunkSize(0), streamOpen(false)
+	Source::Source(chstr filename, Category* category) : streamOpen(false), size(0), channels(2),
+		samplingRate(44100), bitsPerSample(16), duration(0.0f), chunkSize(0)
 	{
 		this->filename = filename;
+		this->mode = category->getSourceMode();
 	}
 
 	Source::~Source()

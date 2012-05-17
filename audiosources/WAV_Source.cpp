@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -18,7 +18,7 @@
 
 namespace xal
 {
-	WAV_Source::WAV_Source(chstr filename) : Source(filename)
+	WAV_Source::WAV_Source(chstr filename, Category* category) : Source(filename, category)
 	{
 	}
 

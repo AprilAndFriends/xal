@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -25,9 +25,9 @@
 //#define _USE_STREAM
 //#define _USE_LINKS
 //#define _USE_THREADING
-#define _USE_MEMORY_MANAGEMENT
+//#define _USE_MEMORY_MANAGEMENT
 
-//#define _TEST_BASIC
+#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
@@ -35,7 +35,7 @@
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
-#define _TEST_MEMORY_MANAGEMENT
+//#define _TEST_MEMORY_MANAGEMENT
 
 //#define _TEST_SOURCE_HANDLING // usually OpenAL only
 
@@ -392,18 +392,22 @@ int main(int argc, char **argv)
 	xal::init(XAL_AS_DEFAULT, hwnd, true, 0.01f);
 #endif
 #ifdef _USE_MEMORY_MANAGEMENT
-	xal::mgr->createCategory("sound", xal::ON_DEMAND, xal::ON_DEMAND, MEMORY_MANGEMENT_ENABLED);
+	xal::mgr->createCategory("sound", xal::MANAGED, xal::DISK);
 #endif
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _USE_LINKS
 #ifndef _USE_STREAM
-	xal::mgr->createCategory("streamable", xal::LAZY, xal::LAZY, MEMORY_MANGEMENT_ENABLED);
+	xal::mgr->createCategory("streamable", xal::LAZY_MANAGED, xal::DISK);
 #else
-	xal::mgr->createCategory("streamable", xal::STREAMED, xal::STREAMED, MEMORY_MANGEMENT_ENABLED);
+	xal::mgr->createCategory("streamable", xal::STREAMED, xal::DISK);
 #endif
 	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
 #else
-	xal::mgr->createCategory("cat", xal::FULL, xal::FULL, MEMORY_MANGEMENT_ENABLED);
+#ifdef _USE_MEMORY_MANAGEMENT
+	xal::mgr->createCategory("cat", xal::MANAGED, xal::DISK);
+#else
+	xal::mgr->createCategory("cat", xal::FULL, xal::DISK);
+#endif
 	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
 #endif
 	xal::Player* player = xal::mgr->createPlayer(USED_SOUND);

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.34
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -56,7 +56,7 @@ namespace xal
 		return ((hresource*)dataSource)->position();
 	}
 
-	OGG_Source::OGG_Source(chstr filename) : Source(filename)
+	OGG_Source::OGG_Source(chstr filename, Category* category) : Source(filename, category)
 	{
 	}
 

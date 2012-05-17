@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -13,7 +13,7 @@
 
 namespace xal
 {
-	FLAC_Source::FLAC_Source(chstr filename) : Source(filename)
+	FLAC_Source::FLAC_Source(chstr filename, Category* category) : Source(filename, category)
 	{
 	}
 

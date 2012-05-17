@@ -1,6 +1,7 @@
 /// @file
 /// @author  Ivan Vucica
-/// @version 2.0
+/// @author  Boris Mikic
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -22,9 +23,9 @@
 
 namespace xal
 {
-	M4A_Source::M4A_Source(chstr filename) : Source(filename), chunkOffset(0), audioFileID(0)
+	M4A_Source::M4A_Source(chstr filename, Category* category) : Source(filename, category),
+		chunkOffset(0), audioFileID(0)
 	{
-		mFilename = filename;
 	}
 
 	M4A_Source::~M4A_Source()
@@ -142,7 +143,7 @@ namespace xal
 		if (this->streamOpen)
 		{
 			
-			printf("+ rewind for %s\n", mFilename.c_str());
+			printf("+ rewind for %s\n", this->filename.c_str());
 			//ExtAudioFileSeek(this->audioFileID, 0);
 			this->close();
 			this->open();
@@ -164,9 +165,9 @@ namespace xal
         
 		UInt32 frames = size / streamDescription.mBytesPerFrame;
 		UInt32 read = frames; // number of frames, not bytes, to read
-		//printf("Loading chunk for %s of size %d - framecount %d\n", mFilename.c_str(), (int)size, (int)frames);
+		//printf("Loading chunk for %s of size %d - framecount %d\n", this->filename.c_str(), (int)size, (int)frames);
 		memset(output, 0, size); 
-        if(ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
+        if (ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
 		{
 			xal::log("m4a could not read a file");
 			return 0;
