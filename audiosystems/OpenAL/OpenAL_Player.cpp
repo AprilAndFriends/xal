@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.52
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -142,11 +142,11 @@ namespace xal
 		}
 	}
 
-	void OpenAL_Player::_systemUpdateGain(float gain)
+	void OpenAL_Player::_systemUpdateGain()
 	{
 		if (this->sourceId != 0)
 		{
-			alSourcef(this->sourceId, AL_GAIN, gain);
+			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
 		}
 	}
 

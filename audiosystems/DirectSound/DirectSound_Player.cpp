@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.51
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -156,7 +156,12 @@ namespace xal
 		void* write2 = NULL;
 		unsigned long length1;
 		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(this->bufferIndex * STREAM_BUFFER_SIZE, size * count, &write1, &length1, &write2, &length2, 0);
+		int lockOffset = 0;
+		if (this->sound->isStreamed())
+		{
+			lockOffset = this->bufferIndex * STREAM_BUFFER_SIZE;
+		}
+		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
 			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
@@ -184,7 +189,12 @@ namespace xal
 		void* write2 = NULL;
 		unsigned long length1;
 		unsigned long length2;
-		HRESULT result = this->dsBuffer->Lock(this->bufferIndex * STREAM_BUFFER_SIZE, size * count, &write1, &length1, &write2, &length2, 0);
+		int lockOffset = 0;
+		if (this->sound->isStreamed())
+		{
+			lockOffset = this->bufferIndex * STREAM_BUFFER_SIZE;
+		}
+		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
 			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
@@ -206,10 +216,11 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_systemUpdateGain(float gain)
+	void DirectSound_Player::_systemUpdateGain()
 	{
 		if (this->dsBuffer != NULL)
 		{
+			float gain = this->_calcGain();
 			LONG value = DSBVOLUME_MIN;
 			if (gain > 0.0f)
 			{

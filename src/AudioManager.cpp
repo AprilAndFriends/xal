@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -155,7 +155,7 @@ namespace xal
 		this->gain = value;
 		foreach (Player*, it, this->players)
 		{
-			(*it)->_systemUpdateGain((*it)->_calcGain());
+			(*it)->_systemUpdateGain();
 		}
 	}
 
@@ -291,7 +291,7 @@ namespace xal
 		this->_getCategoryByName(name)->setGain(gain);
 		foreach (Player*, it, this->players)
 		{
-			(*it)->_systemUpdateGain((*it)->_calcGain());
+			(*it)->_systemUpdateGain();
 		}
 	}
 
