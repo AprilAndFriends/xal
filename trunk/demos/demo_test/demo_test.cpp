@@ -44,8 +44,8 @@
 //#define _TEST_UTIL_PARALLEL_SOUNDS
 
 #ifndef _USE_LINKS
-#define S_BARK "bark_2"
-#define S_WIND "wind_2"
+#define S_BARK "bark"
+#define S_WIND "wind"
 #define S_WIND_2 "wind_2"
 #ifndef _USE_STREAM
 #define USED_SOUND S_BARK

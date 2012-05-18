@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -52,7 +52,7 @@ namespace xal
 	void Player::_setGain(float value)
 	{
 		this->gain = hclamp(value, 0.0f, 1.0f);
-		this->_systemUpdateGain(this->_calcGain());
+		this->_systemUpdateGain();
 	}
 
 	float Player::getPitch()
@@ -182,7 +182,7 @@ namespace xal
 			this->fadeTime += this->fadeSpeed * k;
 			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 			{
-				this->_setGain(this->gain);
+				this->_systemUpdateGain();
 				this->fadeTime = 1.0f;
 				this->fadeSpeed = 0.0f;
 			}
@@ -199,7 +199,7 @@ namespace xal
 			}
 			else
 			{
-				this->_systemUpdateGain(this->_calcFadeGain());
+				this->_systemUpdateGain();
 			}
 		}
 	}
@@ -271,7 +271,7 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		this->_systemUpdateGain(this->_calcFadeGain());
+		this->_systemUpdateGain();
 		if (!alreadyFading)
 		{
 			this->_systemPlay();
@@ -299,12 +299,12 @@ namespace xal
 
 	float Player::_calcGain()
 	{
-		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain());
-	}
-
-	float Player::_calcFadeGain()
-	{
-		return (this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain() * this->fadeTime);
+		float gain = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+		if (this->isFading())
+		{
+			gain *= this->fadeTime;
+		}
+		return hclamp(gain, 0.0f, 1.0f);
 	}
 
 	bool Player::_tryClearMemory()

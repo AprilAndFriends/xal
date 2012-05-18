@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -216,9 +216,9 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::_systemUpdateGain(float gain)
+	void SDL_Player::_systemUpdateGain()
 	{
-		this->currentGain = gain;
+		this->currentGain = this->_calcGain();
 	}
 
 	void SDL_Player::_systemPlay()
