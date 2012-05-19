@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.63
 /// 
 /// @section LICENSE
 /// 
@@ -94,6 +94,14 @@ namespace xal
 			this->close();
 		}
 		return this->streamOpen;
+	}
+
+	void OGG_Source::rewind()
+	{
+		if (this->streamOpen)
+		{
+			ov_pcm_seek(&this->oggStream, 0);
+		}
 	}
 
 	bool OGG_Source::load(unsigned char* output)

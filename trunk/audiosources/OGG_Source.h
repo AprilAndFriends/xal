@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.63
 /// 
 /// @section LICENSE
 /// 
@@ -34,6 +34,7 @@ namespace xal
 		~OGG_Source();
 
 		bool open();
+		void rewind();
 		bool load(unsigned char* output);
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
