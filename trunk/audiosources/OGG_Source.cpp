@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.63
+/// @version 2.65
 /// 
 /// @section LICENSE
 /// 
@@ -24,7 +24,13 @@
 
 namespace xal
 {
-	static int section; // a small optimization
+	// small optimizations
+	static int _section;
+#ifndef __BIG_ENDIAN__
+	static int _endianess = 0;
+#else
+	static int _endianess = 1;
+#endif
 
 	size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
@@ -84,9 +90,10 @@ namespace xal
 			this->channels = info->channels;
 			this->samplingRate = info->rate;
 			this->bitsPerSample = 16; // always 16 bit data
-			int bytes = this->bitsPerSample / 8;
-			this->size = (int)ov_pcm_total(&this->oggStream, -1) * this->channels * bytes;
-			this->duration = (float)this->size / (this->samplingRate * this->channels * bytes);
+			int logicalSamples = (int)ov_pcm_total(&this->oggStream, -1);
+			this->size = logicalSamples * this->channels * this->bitsPerSample / 8;
+			this->duration = (float)logicalSamples / this->samplingRate;
+			ov_pcm_seek(&this->oggStream, 0); // make sure the PCM stream is at the beginning to avoid nasty surprises
 		}
 		else
 		{
@@ -115,7 +122,7 @@ namespace xal
 		int read;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &section);
+			read = ov_read(&this->oggStream, buffer, remaining, _endianess, 2, 1, &_section);
 			if (read == 0)
 			{
 				break;
@@ -123,12 +130,6 @@ namespace xal
 			remaining -= read;
 			buffer += read;
 		}
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-		for_iter_step (i, 0, this->size, 2)
-		{
-			XAL_NORMALIZE_ENDIAN(*(uint16_t*)(output + i)); // always 16 bit data
-		}
-#endif	
 		return true;
 	}
 
@@ -143,7 +144,7 @@ namespace xal
 		int read;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &section);
+			read = ov_read(&this->oggStream, buffer, remaining, _endianess, 2, 1, &_section);
 			if (read == 0)
 			{
 				break;
@@ -151,12 +152,6 @@ namespace xal
 			remaining -= read;
 			buffer += read;
 		}
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-		for_iter_step (i, 0, this->size, 2)
-		{
-			XAL_NORMALIZE_ENDIAN(*(uint16_t*)(output + i)); // always 16 bit data
-		}
-#endif	
 		return (size - remaining);
 	}
 
