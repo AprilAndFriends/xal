@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -33,7 +33,7 @@ namespace xal
 
 	bool Category::isMemoryManaged()
 	{
-		return (this->bufferMode == MANAGED || this->bufferMode == LAZY_MANAGED);
+		return (this->bufferMode == MANAGED);
 	}
 
 }

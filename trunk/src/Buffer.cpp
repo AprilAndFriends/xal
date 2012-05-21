@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -39,12 +39,9 @@ namespace xal
 			case FULL:
 				this->prepare();
 				break;
-			case MANAGED:
-				this->prepare();
-				break;
 			case LAZY:
 				break;
-			case LAZY_MANAGED:
+			case MANAGED:
 				break;
 			case ON_DEMAND:
 				break;
