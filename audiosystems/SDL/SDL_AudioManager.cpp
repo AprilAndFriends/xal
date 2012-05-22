@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -60,9 +60,9 @@ namespace xal
 		delete [] this->buffer;
 	}
 	
-	Player* SDL_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* SDL_AudioManager::_createSystemPlayer(Sound* sound)
 	{
-		return new SDL_Player(sound, buffer);
+		return new SDL_Player(sound);
 	}
 
 	void SDL_AudioManager::mixAudio(void* unused, unsigned char* stream, int length)

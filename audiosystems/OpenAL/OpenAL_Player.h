@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -26,7 +26,7 @@ namespace xal
 	class xalExport OpenAL_Player : public Player
 	{
 	public:
-		OpenAL_Player(Sound* sound, Buffer* buffer);
+		OpenAL_Player(Sound* sound);
 		~OpenAL_Player();
 
 		unsigned int getSourceId() { return this->sourceId; }

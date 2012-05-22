@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -74,9 +74,9 @@ namespace xal
 		}
 	}
 	
-	Player* Android_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* Android_AudioManager::_createSystemPlayer(Sound* sound)
 	{
-		return new Android_Player(sound, buffer);
+		return new Android_Player(sound);
 	}
 	
 	unsigned int Android_AudioManager::_allocateSourceId()

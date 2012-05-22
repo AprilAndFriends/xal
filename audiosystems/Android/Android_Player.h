@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -26,7 +26,7 @@ namespace xal
 	class xalExport Android_Player : public Player
 	{
 	public:
-		Android_Player(Sound* sound, Buffer* buffer);
+		Android_Player(Sound* sound);
 		~Android_Player();
 
 		unsigned int getSourceId() { return this->sourceId; }

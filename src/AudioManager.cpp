@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -206,6 +206,10 @@ namespace xal
 				{
 					this->_destroyManagedPlayer(*it);
 				}
+			}
+			foreach (Buffer*, it, this->buffers)
+			{
+				(*it)->_update(k);
 			}
 		}
 	}
@@ -486,7 +490,7 @@ namespace xal
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		Sound* sound = this->sounds[name];
-		Player* player = this->_createSystemPlayer(sound, sound->getBuffer());
+		Player* player = this->_createSystemPlayer(sound);
 		this->players += player;
 		return player;
 	}
@@ -543,11 +547,19 @@ namespace xal
 		this->_destroyPlayer(player);
 	}
 
-	Player* AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Buffer* AudioManager::_createBuffer(Sound* sound)
 	{
-		return new Player(sound, buffer);
+		Buffer* buffer = new Buffer(sound);
+		this->buffers += buffer;
+		return buffer;
 	}
-	
+
+	void AudioManager::_destroyBuffer(Buffer* buffer)
+	{
+		this->buffers -= buffer;
+		delete buffer;
+	}
+
 	Source* AudioManager::_createSource(chstr filename, Category* category, Format format)
 	{
 		Source* source;
@@ -854,14 +866,14 @@ namespace xal
 	void AudioManager::_clearMemory()
 	{
 		int count = 0;
-		foreach (Player*, it, this->players)
+		foreach (Buffer*, it, this->buffers)
 		{
 			if ((*it)->_tryClearMemory())
 			{
 				count++;
 			}
 		}
-		xal::log(hsprintf("found %d players for memory clearing", count));
+		xal::log(hsprintf("found %d buffers for memory clearing", count));
 	}
 
 	void AudioManager::queueMessage(chstr message)

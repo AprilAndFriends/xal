@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.4
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -90,9 +90,9 @@ namespace xal
 		}
 	}
 	
-	Player* OpenAL_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* OpenAL_AudioManager::_createSystemPlayer(Sound* sound)
 	{
-		return new OpenAL_Player(sound, buffer);
+		return new OpenAL_Player(sound);
 	}
 	
 	unsigned int OpenAL_AudioManager::_allocateSourceId()

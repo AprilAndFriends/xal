@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -13,20 +13,27 @@
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
-#include "xal.h"
 
 namespace xal
 {
-	Player::Player(Sound* sound, Buffer* buffer) : gain(1.0f), pitch(1.0f), paused(false),
-		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0),
-		processedByteCount(0), idleTime(0.0f)
+	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false),
+		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f),
+		bufferIndex(0), processedByteCount(0), idleTime(0.0f)
 	{
 		this->sound = sound;
-		this->buffer = buffer;
+		this->buffer = sound->getBuffer();
+		if (this->buffer->isStreamed()) // streamed buffers cannot be shared
+		{
+			this->buffer = xal::mgr->_createBuffer(this->sound);
+		}
 	}
 
 	Player::~Player()
 	{
+		if (this->buffer->isStreamed()) // this buffer was created internally
+		{
+			xal::mgr->_destroyBuffer(this->buffer);
+		}
 	}
 
 	float Player::getGain()
@@ -163,19 +170,15 @@ namespace xal
 	{
 		if (this->_systemIsPlaying())
 		{
-			this->idleTime = 0.0f;
+			this->buffer->keepLoaded();
 			if (this->sound->isStreamed())
 			{
 				this->processedByteCount += this->_systemUpdateStream();
 			}
 		}
-		else
+		else if (this->paused)
 		{
-			this->idleTime += k;
-			if (this->idleTime > xal::mgr->getIdlePlayerUnloadTime())
-			{
-				this->_tryClearMemory();
-			}
+			this->buffer->keepLoaded();
 		}
 		if (this->isFading())
 		{
@@ -261,6 +264,7 @@ namespace xal
 			{
 				this->_systemSetOffset(this->offset);
 			}
+			this->buffer->bind(this, this->paused);
 		}
 		if (fadeTime > 0.0f)
 		{
@@ -307,19 +311,6 @@ namespace xal
 		return hclamp(gain, 0.0f, 1.0f);
 	}
 
-	bool Player::_tryClearMemory()
-	{
-		if (this->getCategory()->isMemoryManaged() && !this->_systemIsPlaying() && !this->paused)
-		{
-#ifdef _DEBUG
-			xal::log(hsprintf("clearing memory for player '%s'", this->sound->getName().c_str()));
-#endif
-			this->buffer->free();
-			return true;
-		}
-		return false;
-	}
-
 	void Player::_stopSound(float fadeTime)
 	{
 		if (fadeTime > 0.0f)
@@ -329,7 +320,7 @@ namespace xal
 		}
 		this->offset = this->_systemGetOffset();
 		this->processedByteCount += this->_systemStop();
-		this->buffer->release(this->paused);
+		this->buffer->unbind(this, this->paused);
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
 	}

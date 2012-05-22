@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -27,8 +27,8 @@
 
 namespace xal
 {
-	DirectSound_Player::DirectSound_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), dsBuffer(NULL), bufferCount(0), bufferQueued(0)
+	DirectSound_Player::DirectSound_Player(Sound* sound) : Player(sound),
+		dsBuffer(NULL), bufferCount(0), bufferQueued(0)
 	{
 	}
 
@@ -112,7 +112,6 @@ namespace xal
 		if (FAILED(result))
 		{
 			this->dsBuffer = NULL;
-			this->buffer->free();
 			return false;
 		}
 		return true;
@@ -169,6 +168,10 @@ namespace xal
 		}
 		if (write1 != NULL)
 		{
+			if (stream == NULL)
+			{
+				bool value = this->_systemIsPlaying();
+			}
 			memcpy(write1, stream, length1);
 		}
 		if (write2 != NULL)

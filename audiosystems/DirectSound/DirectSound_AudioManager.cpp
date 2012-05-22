@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -55,9 +55,9 @@ namespace xal
 		}
 	}
 	
-	Player* DirectSound_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* DirectSound_AudioManager::_createSystemPlayer(Sound* sound)
 	{
-		return new DirectSound_Player(sound, buffer);
+		return new DirectSound_Player(sound);
 	}
 
 	Source* DirectSound_AudioManager::_createSource(chstr filename, Category* category, Format format)

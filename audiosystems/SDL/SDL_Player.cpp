@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -21,7 +21,7 @@
 
 namespace xal
 {
-	SDL_Player::SDL_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), playing(false),
+	SDL_Player::SDL_Player(Sound* sound) : Player(sound), playing(false),
 		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
 	{
 		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));

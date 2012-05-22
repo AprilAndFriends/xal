@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.4
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -53,7 +53,7 @@ namespace xal
 		ALCdevice* device;
 		ALCcontext* context;
 
-		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound);
 		unsigned int _allocateSourceId();
 		void _releaseSourceId(unsigned int sourceId);
 

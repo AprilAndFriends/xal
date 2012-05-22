@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -25,7 +25,7 @@ namespace xal
 	class xalExport NoAudio_Player : public Player
 	{
 	public:
-		NoAudio_Player(Sound* sound, Buffer* buffer);
+		NoAudio_Player(Sound* sound);
 		~NoAudio_Player();
 
 	protected:
