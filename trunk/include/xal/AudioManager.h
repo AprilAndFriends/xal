@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.64
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -156,6 +156,7 @@ namespace xal
 		harray<Player*> managedPlayers;
 		harray<Player*> suspendedPlayers;
 		hmap<hstr, Sound*> sounds;
+		harray<Buffer*> buffers;
 		harray<hstr> extensions;
 		hthread* thread;
 		bool threadRunning;
@@ -189,7 +190,10 @@ namespace xal
 		Player* _createManagedPlayer(chstr name);
 		void _destroyManagedPlayer(Player* player);
 
-		virtual Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
+		Buffer* _createBuffer(Sound* sound);
+		void _destroyBuffer(Buffer* buffer);
+
+		virtual Player* _createSystemPlayer(Sound* sound) = 0;
 		virtual Source* _createSource(chstr filename, Category* category, Format format);
 
 		void _play(chstr name, float fadeTime, bool looping, float gain);

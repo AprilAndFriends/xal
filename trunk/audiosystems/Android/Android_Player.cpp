@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -23,8 +23,7 @@
 
 namespace xal
 {
-	Android_Player::Android_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), sourceId(0)
+	Android_Player::Android_Player(Sound* sound) : Player(sound), sourceId(0)
 	{
 		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
 		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);

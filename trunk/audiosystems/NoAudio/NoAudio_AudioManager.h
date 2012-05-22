@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -32,7 +32,7 @@ namespace xal
 		~NoAudio_AudioManager();
 
 	protected:
-		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound);
 
 	};
 

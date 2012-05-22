@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.64
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -14,18 +14,20 @@
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
+#include "Sound.h"
 #include "Source.h"
+#include "xal.h"
 
 namespace xal
 {
-	Buffer::Buffer(chstr filename, Category* category) : loaded(false), decoded(false)
+	Buffer::Buffer(Sound* sound) : loaded(false), decoded(false), boundPlayers(0), idleTime(0.0f)
 	{
-		this->filename = filename;
+		this->filename = sound->getRealFilename();
 		this->fileSize = hresource::hsize(this->filename);
-		this->mode = category->getBufferMode();
+		this->mode = sound->getCategory()->getBufferMode();
 		this->streamSize = 0;
 		this->stream = NULL;
-		this->source = xal::mgr->_createSource(this->filename, category, this->getFormat());
+		this->source = xal::mgr->_createSource(this->filename, sound->getCategory(), this->getFormat());
 		this->loadedData = false;
 		this->size = 0;
 		this->channels = 2;
@@ -132,6 +134,11 @@ namespace xal
 		return (this->mode == STREAMED);
 	}
 
+	bool Buffer::isMemoryManaged()
+	{
+		return (this->mode == MANAGED);
+	}
+
 	void Buffer::prepare()
 	{
 		if (this->loaded)
@@ -167,6 +174,7 @@ namespace xal
 
 	int Buffer::load(bool looping, int size)
 	{
+		this->keepLoaded();
 		if (!xal::mgr->isEnabled())
 		{
 			return 0;
@@ -204,9 +212,21 @@ namespace xal
 		return this->streamSize;
 	}
 
-	void Buffer::release(bool playerPaused)
+	void Buffer::bind(Player* player, bool playerPaused)
 	{
-		if (!playerPaused && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
+		if (!playerPaused)
+		{
+			this->boundPlayers++;
+		}
+	}
+
+	void Buffer::unbind(Player* player, bool playerPaused)
+	{
+		if (!playerPaused)
+		{
+			this->boundPlayers--;
+		}
+		if (this->boundPlayers == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
 		{
 			if (this->stream != NULL)
 			{
@@ -215,22 +235,16 @@ namespace xal
 			}
 			this->loaded = false;
 		}
-		if (!playerPaused && this->mode == xal::STREAMED)
+		if (this->boundPlayers == 0 && this->mode == xal::STREAMED)
 		{
 			this->source->close();
 			this->loaded = false;
 		}
 	}
 
-	void Buffer::free()
+	void Buffer::keepLoaded()
 	{
-		if (this->stream != NULL)
-		{
-			delete [] this->stream;
-			this->stream = NULL;
-		}
-		this->source->close();
-		this->loaded = false;
+		this->idleTime = 0.0f;
 	}
 
 	void Buffer::rewind()
@@ -248,6 +262,34 @@ namespace xal
 	{
 		return hround((float)size * this->getSamplingRate() * this->getChannels() * this->getBitsPerSample() /
 			((float)xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample()));
+	}
+
+	int Buffer::readPcmData(unsigned char** output)
+	{
+		*output = NULL;
+		int result = 0;
+		if (this->getFormat() != UNKNOWN)
+		{
+			this->source->open();
+			result = this->source->getSize();
+			if (result > 0)
+			{
+				*output = new unsigned char[result];
+				this->source->load(*output);
+				xal::mgr->_convertStream(this, output, &result);
+			}
+			this->source->close();
+		}
+		return result;
+	}
+
+	void Buffer::_update(float k)
+	{
+		this->idleTime += k;
+		if (this->idleTime > xal::mgr->getIdlePlayerUnloadTime())
+		{
+			this->_tryClearMemory();
+		}
 	}
 
 	void Buffer::_tryLoadData()
@@ -270,6 +312,25 @@ namespace xal
 				this->source->close();
 			}
 		}
+	}
+
+	bool Buffer::_tryClearMemory()
+	{
+		if (this->isMemoryManaged() && this->boundPlayers == 0 && (this->loaded || this->mode == STREAMED))
+		{
+#ifdef _DEBUG
+			xal::log(hsprintf("clearing memory for '%s'", this->filename.c_str()));
+#endif
+			if (this->stream != NULL)
+			{
+				delete [] this->stream;
+				this->stream = NULL;
+			}
+			this->source->close();
+			this->loaded = false;
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -18,8 +18,7 @@
 
 namespace xal
 {
-	NoAudio_Player::NoAudio_Player(Sound* sound, Buffer* buffer) :
-		Player(sound, buffer), playing(false)
+	NoAudio_Player::NoAudio_Player(Sound* sound) : Player(sound), playing(false)
 	{
 	}
 

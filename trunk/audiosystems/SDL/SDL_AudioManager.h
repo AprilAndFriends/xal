@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -48,7 +48,7 @@ namespace xal
 		unsigned char* buffer;
 		int bufferSize;
 
-		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound);
 
 		static void _mixAudio(void* unused, unsigned char* stream, int length);
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -25,10 +25,10 @@
 //#define _USE_STREAM
 //#define _USE_LINKS
 //#define _USE_THREADING
-//#define _USE_MEMORY_MANAGEMENT
+#define _USE_MEMORY_MANAGEMENT
 //#define _USE_RAM_SOURCES
 
-#define _TEST_BASIC
+//#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
@@ -36,7 +36,7 @@
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
-//#define _TEST_MEMORY_MANAGEMENT
+#define _TEST_MEMORY_MANAGEMENT
 
 //#define _TEST_SOURCE_HANDLING // usually OpenAL only
 
@@ -402,7 +402,7 @@ int main(int argc, char **argv)
 	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
 #ifndef _USE_LINKS
 #ifndef _USE_STREAM
-	xal::mgr->createCategory("streamable", xal::LAZY_MANAGED, SOURCE_MODE);
+	xal::mgr->createCategory("streamable", xal::MANAGED, SOURCE_MODE);
 #else
 	xal::mgr->createCategory("streamable", xal::STREAMED, SOURCE_MODE);
 #endif

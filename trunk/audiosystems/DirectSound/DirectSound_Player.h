@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -28,7 +28,7 @@ namespace xal
 	class xalExport DirectSound_Player : public Player
 	{
 	public:
-		DirectSound_Player(Sound* sound, Buffer* buffer);
+		DirectSound_Player(Sound* sound);
 		~DirectSound_Player();
 
 	protected:

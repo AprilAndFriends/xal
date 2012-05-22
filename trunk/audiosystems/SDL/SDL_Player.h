@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -26,7 +26,7 @@ namespace xal
 	class xalExport SDL_Player : public Player
 	{
 	public:
-		SDL_Player(Sound* sound, Buffer* buffer);
+		SDL_Player(Sound* sound);
 		~SDL_Player();
 
 		bool mixAudio(unsigned char* stream, int length, bool first);

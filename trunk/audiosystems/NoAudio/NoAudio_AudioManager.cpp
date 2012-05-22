@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -27,9 +27,9 @@ namespace xal
 		xal::log("destroying NoAudio");
 	}
 	
-	Player* NoAudio_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* NoAudio_AudioManager::_createSystemPlayer(Sound* sound)
 	{
-		return new NoAudio_Player(sound, buffer);
+		return new NoAudio_Player(sound);
 	}
 
 }

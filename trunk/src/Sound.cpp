@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -25,14 +25,14 @@ namespace xal
 		this->filename = filename;
 		this->realFilename = this->_findLinkedFile();
 		this->category = category;
-		this->buffer = new Buffer(this->realFilename, category);
+		this->buffer = xal::mgr->_createBuffer(this);;
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).pop_last().rsplit(".", 1, false).pop_first();
 	}
 
 	Sound::~Sound()
 	{
-		delete this->buffer;
+		xal::mgr->_destroyBuffer(this->buffer);
 	}
 	
 	hstr Sound::_findLinkedFile()
@@ -81,27 +81,12 @@ namespace xal
 
 	bool Sound::isStreamed()
 	{
-		return this->category->isStreamed();
+		return this->buffer->isStreamed();
 	}
 
-	int Sound::readRawData(unsigned char** output)
+	int Sound::readPcmData(unsigned char** output)
 	{
-		*output = NULL;
-		int result = 0;
-		Buffer buffer(this->realFilename, this->category);
-		if (buffer.getFormat() != UNKNOWN)
-		{
-			Source* source = buffer.getSource();
-			source->open();
-			result = source->getSize();
-			if (result > 0)
-			{
-				*output = new unsigned char[result];
-				source->load(*output);
-				xal::mgr->_convertStream(&buffer, output, &result);
-			}
-		}
-		return result;
+		return Buffer(this).readPcmData(output);
 	}
 
 }
