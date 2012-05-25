@@ -16,12 +16,6 @@
 #ifdef HAVE_OPENAL
 #include <string.h>
 
-#include <hltypes/exception.h>
-#include <hltypes/hdir.h>
-#include <hltypes/hltypesUtil.h>
-#include <hltypes/hmap.h>
-#include <hltypes/hstring.h>
-
 #ifndef __APPLE__
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -30,6 +24,12 @@
 #include <OpenAL/alc.h>
 #include <TargetConditionals.h>
 #endif
+
+#include <hltypes/exception.h>
+#include <hltypes/hdir.h>
+#include <hltypes/hltypesUtil.h>
+#include <hltypes/hmap.h>
+#include <hltypes/hstring.h>
 
 #include "Buffer.h"
 #include "Category.h"

@@ -10,16 +10,16 @@
 #ifdef HAVE_ANDROID
 #include <stdio.h>
 #include <string.h>
-#include "xal.h"
 
 #include <AL/al.h>
 
+#include "Android_AudioManager.h"
+#include "Android_Player.h"
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
-#include "Android_AudioManager.h"
-#include "Android_Player.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {
@@ -144,8 +144,9 @@ namespace xal
 		}
 	}
 
-	void Android_Player::_systemStop()
+	int Android_Player::_systemStop()
 	{
+		int result = 0;
 		if (this->sourceId != 0)
 		{
 			if (!this->sound->isStreamed())
@@ -162,6 +163,7 @@ namespace xal
 				if (this->paused)
 				{
 					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
+					result = processed * STREAM_BUFFER_SIZE;
 				}
 				else
 				{
@@ -169,23 +171,24 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((Android_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
+			((Android_AudioManager*) xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
+		return result;
 	}
 
-	void Android_Player::_systemUpdateStream()
+	int Android_Player::_systemUpdateStream()
 	{
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
 			this->_stop();
-			return;
+			return 0;
 		}
 		int processed = this->_getProcessedBuffersCount();
 		if (processed == 0)
 		{
-			return;
+			return 0;
 		}
 		this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
 		int count = this->_fillBuffers(this->bufferIndex, processed);
@@ -213,6 +216,7 @@ namespace xal
 		{
 			this->_stop();
 		}
+		return (processed * STREAM_BUFFER_SIZE);
 	}
 
 	int Android_Player::_getQueuedBuffersCount()

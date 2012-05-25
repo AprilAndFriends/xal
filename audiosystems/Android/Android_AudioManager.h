@@ -15,14 +15,8 @@
 #ifndef XAL_ANDROID_AUDIO_MANAGER_H
 #define XAL_ANDROID_AUDIO_MANAGER_H
 
-#ifndef __APPLE__
 #include <AL/al.h>
 #include <AL/alc.h>
-#else
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#include <TargetConditionals.h>
-#endif
 
 #include <hltypes/hstring.h>
 

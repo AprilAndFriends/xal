@@ -14,19 +14,19 @@
 #ifdef HAVE_ANDROID
 #include <string.h>
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include <AL/al.h>
-#include <AL/alc.h>
-
-#include "Buffer.h"
-#include "Category.h"
 #include "Android_AudioManager.h"
 #include "Android_Player.h"
+#include "Buffer.h"
+#include "Category.h"
 #include "xal.h"
 
 extern "C" int __openal__JNI_OnLoad(void* vm);
