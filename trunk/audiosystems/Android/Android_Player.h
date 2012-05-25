@@ -15,6 +15,7 @@
 #ifndef XAL_ANDROID_PLAYER_H
 #define XAL_ANDROID_PLAYER_H
 
+#include "AudioManager.h"
 #include "Player.h"
 #include "xalExport.h"
 

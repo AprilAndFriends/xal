@@ -10,7 +10,6 @@
 #ifdef HAVE_OPENAL
 #include <stdio.h>
 #include <string.h>
-#include "xal.h"
 
 #ifndef __APPLE__
 #include <AL/al.h>
@@ -25,6 +24,7 @@
 #include "OpenAL_AudioManager.h"
 #include "OpenAL_Player.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {
@@ -300,11 +300,11 @@ namespace xal
  
 	void OpenAL_Player::_unqueueBuffers(int index, int count)
 	{
+#ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
+		int n = this->_getQueuedBuffersCount();
+#endif
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
-#ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
-			int n = this->_getQueuedBuffersCount();
-#endif
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
 #ifdef _IOS
 			while (n - this->_getQueuedBuffersCount() != count)
@@ -315,9 +315,6 @@ namespace xal
 		}
 		else
 		{
-#ifdef _IOS
-			int n = this->_getQueuedBuffersCount();
-#endif
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
 #ifdef _IOS
 			while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index)

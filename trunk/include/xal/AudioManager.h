@@ -218,7 +218,7 @@ namespace xal
 
 	private:
 		harray<hstr> _queuedMessages;
-
+		
 		void _flushQueuedMessages();
 
 	};
