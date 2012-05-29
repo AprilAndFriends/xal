@@ -170,10 +170,13 @@ namespace xal
 	
 	void destroy()
 	{
-		xal::log("destroying XAL");
-		xal::mgr->clear();
-		delete xal::mgr;
-		xal::mgr = NULL;
+		if (xal::mgr != NULL)
+		{
+			xal::log("destroying XAL");
+			xal::mgr->clear();
+			delete xal::mgr;
+			xal::mgr = NULL;
+		}
 	}
 	
 	void log(chstr message, chstr prefix)
