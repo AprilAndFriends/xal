@@ -40,6 +40,7 @@
 #ifdef _IOS
 void OpenAL_iOS_init();
 void OpenAL_iOS_destroy();
+static bool gAudioSuspended = 0;
 #endif
 
 namespace xal
@@ -118,7 +119,11 @@ namespace xal
 #ifdef _DEBUG
 		xal::log("suspending OpenAL Context");
 #endif
-		this->_suspendAudio();
+		gAudioSuspended = this->isSuspended();
+		if (!gAudioSuspended)
+		{
+			this->_suspendAudio();
+		}
 		alcSuspendContext(this->context);
 		alcMakeContextCurrent(NULL);
 		this->_unlock();
@@ -132,9 +137,11 @@ namespace xal
 #endif
 		alcMakeContextCurrent(this->context);
 		alcProcessContext(this->context);
-		this->_resumeAudio();
+		if (!gAudioSuspended)
+		{
+			this->_resumeAudio();
+		}
 		this->_unlock();
 	}
-
 }
 #endif
