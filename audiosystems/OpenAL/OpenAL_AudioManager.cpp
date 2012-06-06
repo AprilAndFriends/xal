@@ -40,7 +40,7 @@
 #ifdef _IOS
 void OpenAL_iOS_init();
 void OpenAL_iOS_destroy();
-static bool gAudioSuspended = 0;
+static bool gAudioSuspended = false; // iOS specific hack as well
 #endif
 
 namespace xal
@@ -115,6 +115,7 @@ namespace xal
 	
 	void OpenAL_AudioManager::suspendOpenALContext() // TODO - iOS specific hack, should be removed later
 	{
+#ifdef _IOS
 		this->_lock();
 #ifdef _DEBUG
 		xal::log("suspending OpenAL Context");
@@ -127,10 +128,14 @@ namespace xal
 		alcSuspendContext(this->context);
 		alcMakeContextCurrent(NULL);
 		this->_unlock();
+#elif defined(_DEBUG)
+		xal::log("not iOS, suspendOpenALContext does nothing");
+#endif
 	}
 
 	void OpenAL_AudioManager::resumeOpenALContext() // TODO - iOS specific hack, should be removed later
 	{
+#ifdef _IOS
 		this->_lock();
 #ifdef _DEBUG
 		xal::log("resuming OpenAL Context");
@@ -142,6 +147,9 @@ namespace xal
 			this->_resumeAudio();
 		}
 		this->_unlock();
+#elif defined(_DEBUG)
+		xal::log("not iOS, resumeOpenALContext does nothing");
+#endif
 	}
 }
 #endif
