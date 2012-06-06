@@ -25,10 +25,10 @@
 //#define _USE_STREAM
 //#define _USE_LINKS
 //#define _USE_THREADING
-#define _USE_MEMORY_MANAGEMENT
+//#define _USE_MEMORY_MANAGEMENT
 //#define _USE_RAM_SOURCES
 
-//#define _TEST_BASIC
+#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
@@ -36,7 +36,7 @@
 //#define _TEST_FADE_OUT
 //#define _TEST_FADE_IN_OUT
 //#define _TEST_COMPLEX_HANDLER
-#define _TEST_MEMORY_MANAGEMENT
+//#define _TEST_MEMORY_MANAGEMENT
 
 //#define _TEST_SOURCE_HANDLING // usually OpenAL only
 

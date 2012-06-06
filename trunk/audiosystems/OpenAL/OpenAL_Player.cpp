@@ -186,7 +186,7 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((OpenAL_AudioManager*) xal::mgr)->_releaseSourceId(this->sourceId);
+			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
 		return result;
@@ -302,14 +302,22 @@ namespace xal
 	{
 #ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
 		int n = this->_getQueuedBuffersCount();
+		int safeWait = 50;
 #endif
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
 #ifdef _IOS
-			while (n - this->_getQueuedBuffersCount() != count)
+			while (n - this->_getQueuedBuffersCount() != count && safeWait > 0)
 			{
 				hthread::sleep(1);
+				safeWait--;
+			}
+			if (safeWait == 0) // I am so going to burn for this.
+			{
+				// let's hope the underrun detection will realize what's going on and restart the sound
+				alSourceStop(this->sourceId);
+				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 			}
 #endif
 		}
@@ -317,17 +325,33 @@ namespace xal
 		{
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
 #ifdef _IOS
-			while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index)
+			while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index && safeWait > 0)
 			{
 				hthread::sleep(1);
+				safeWait--;
+			}
+			if (safeWait == 0) // iOS hacking at its prime.
+			{
+				// let's hope the underrun detection will realize what's going on and restart the sound
+				alSourceStop(this->sourceId);
+				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
+				return;
 			}
 			n -= STREAM_BUFFER_COUNT - index;
 #endif
 			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
 #ifdef _IOS
-			while (n - this->_getQueuedBuffersCount() != count + index - STREAM_BUFFER_COUNT)
+			safeWait = 50;
+			while (n - this->_getQueuedBuffersCount() != count + index - STREAM_BUFFER_COUNT && safeWait > 0)
 			{
 				hthread::sleep(1);
+				safeWait--;
+			}
+			if (safeWait == 0) // Apple makes me resort to horrible hacks like this. :(
+			{
+				// let's hope the underrun detection will realize what's going on and restart the sound
+				alSourceStop(this->sourceId);
+				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 			}
 #endif
 		}
