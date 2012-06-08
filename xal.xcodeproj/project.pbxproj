@@ -513,7 +513,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0432;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xal" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -707,7 +707,7 @@
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -732,7 +732,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../include/audiosources",
 				);
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -757,7 +757,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../include/audiosources",
 				);
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = "App Store";
 		};
@@ -812,7 +812,7 @@
 					HAVE_OPENAL,
 					HAVE_OGG,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -845,7 +845,7 @@
 					HAVE_OPENAL,
 					HAVE_OGG,
 				);
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -875,7 +875,7 @@
 					HAVE_OPENAL,
 					HAVE_OGG,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -905,7 +905,7 @@
 					HAVE_OPENAL,
 					HAVE_OGG,
 				);
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -935,7 +935,7 @@
 					HAVE_OPENAL,
 					HAVE_OGG,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
@@ -970,7 +970,7 @@
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx;
 			};
 			name = "Debug-LLVM";
 		};
@@ -1029,7 +1029,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../include/audiosources",
 				);
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx;
 			};
 			name = "Release-LLVM";
 		};
