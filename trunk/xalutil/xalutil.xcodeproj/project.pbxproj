@@ -166,7 +166,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0432;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -282,7 +282,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -299,7 +299,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -313,7 +313,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = "App Store";
 		};
@@ -356,7 +356,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = "Debug-LLVM";
 		};
@@ -400,7 +400,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = "Release-LLVM";
 		};
