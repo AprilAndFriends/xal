@@ -82,7 +82,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;libxal.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -106,7 +106,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
       <GccExceptionHandling>true</GccExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
@@ -134,7 +134,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;libxal.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -164,7 +164,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
       <GccExceptionHandling>true</GccExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
