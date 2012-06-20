@@ -82,6 +82,10 @@ namespace xal
 
 	AudioManager::~AudioManager()
 	{
+		if (this->thread != NULL)
+		{
+			delete this->thread;
+		}
 	}
 
 	void AudioManager::init()
@@ -112,7 +116,7 @@ namespace xal
 	
 	void AudioManager::_clear()
 	{
-		if (this->thread != NULL && this->threadRunning)
+		if (this->threadRunning)
 		{
 			xal::log("stopping audio update thread");
 			this->_flushQueuedMessages();
@@ -120,6 +124,9 @@ namespace xal
 			this->_unlock();
 			this->thread->join();
 			this->_lock();
+		}
+		if (this->thread != NULL)
+		{
 			delete this->thread;
 			this->thread = NULL;
 		}
