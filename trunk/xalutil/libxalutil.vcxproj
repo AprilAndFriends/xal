@@ -209,7 +209,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fileproperties.rc" />
+    <ResourceCompile Include="fileproperties.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

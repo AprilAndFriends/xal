@@ -80,8 +80,8 @@ namespace xal
 		Player::_update(k);
 		// making sure a corrected size is used
 		int size = this->buffer->convertToOutputSize(this->buffer->getSize());
-        if (size > 0 && this->position >= size)
-        {
+		if (size > 0 && this->position >= size)
+		{
 			if (this->looping)
 			{
 				this->position -= this->position / size * size;

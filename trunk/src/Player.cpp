@@ -126,15 +126,15 @@ namespace xal
 		return this->sound->getRealFilename();
 	}
 
-    float Player::getDuration()
-    {
-        return this->buffer->getDuration();
-    }
+	float Player::getDuration()
+	{
+		return this->buffer->getDuration();
+	}
 	
-    int Player::getSize()
-    {
+	int Player::getSize()
+	{
 		return this->buffer->getSize();
-    }
+	}
 	
 	bool Player::isPlaying()
 	{
