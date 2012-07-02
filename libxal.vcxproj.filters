@@ -198,8 +198,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fileproperties.rc">
+    <ResourceCompile Include="fileproperties.rc">
       <Filter>Resource Files</Filter>
-    </None>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
