@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 2.71
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@
 
 namespace xal
 {
+	class Player;
 	class Sound;
 	class Source;
 
@@ -73,7 +74,7 @@ namespace xal
 		int samplingRate;
 		int bitPerSample;
 		float duration;
-		int boundPlayers;
+		harray<Player*> boundPlayers;
 		float idleTime;
 
 		void _update(float k);
