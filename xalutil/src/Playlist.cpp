@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.23
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,7 @@ namespace xal
 
 	bool Playlist::isPaused()
 	{
-		return (this->index >= 0 && this->index < this->players.size() && this->players[this->index]->isPaused());
+		return (is_in_range(this->index, 0, this->players.size()) && this->players[this->index]->isPaused());
 	}
 	
 	harray<hstr> Playlist::getSoundNames()
