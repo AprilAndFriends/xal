@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 2.71
 /// 
 /// @section LICENSE
 /// 
@@ -20,7 +20,7 @@
 
 namespace xal
 {
-	Buffer::Buffer(Sound* sound) : loaded(false), decoded(false), boundPlayers(0), idleTime(0.0f)
+	Buffer::Buffer(Sound* sound) : loaded(false), decoded(false), idleTime(0.0f)
 	{
 		this->filename = sound->getRealFilename();
 		this->fileSize = hresource::hsize(this->filename);
@@ -214,19 +214,16 @@ namespace xal
 
 	void Buffer::bind(Player* player, bool playerPaused)
 	{
-		if (!playerPaused)
-		{
-			this->boundPlayers++;
-		}
+		this->boundPlayers |= player;
 	}
 
 	void Buffer::unbind(Player* player, bool playerPaused)
 	{
 		if (!playerPaused)
 		{
-			this->boundPlayers--;
+			this->boundPlayers /= player;
 		}
-		if (this->boundPlayers == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
+		if (this->boundPlayers.size() == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
 		{
 			if (this->stream != NULL)
 			{
@@ -235,7 +232,7 @@ namespace xal
 			}
 			this->loaded = false;
 		}
-		if (this->boundPlayers == 0 && this->mode == xal::STREAMED)
+		if (this->boundPlayers.size() == 0 && this->mode == xal::STREAMED)
 		{
 			this->source->close();
 			this->loaded = false;
@@ -316,7 +313,7 @@ namespace xal
 
 	bool Buffer::_tryClearMemory()
 	{
-		if (this->isMemoryManaged() && this->boundPlayers == 0 && (this->loaded || this->mode == STREAMED))
+		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == STREAMED))
 		{
 #ifdef _DEBUG
 			xal::log(hsprintf("clearing memory for '%s'", this->filename.c_str()));
