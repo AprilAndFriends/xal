@@ -22,8 +22,6 @@
 
 namespace xal
 {
-	static hmutex m2;
-
 	SDL_AudioManager::SDL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
@@ -142,14 +140,12 @@ namespace xal
 	// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
 	void SDL_AudioManager::_lock()
 	{
-		m2.lock();
 		this->mutex.lock();
 	}
 	
 	void SDL_AudioManager::_unlock()
 	{
 		this->mutex.unlock();
-		m2.unlock();
 	}
 
 }
