@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 2.72
 /// 
 /// @section LICENSE
 /// 
@@ -22,6 +22,8 @@
 
 namespace xal
 {
+	static hmutex m2;
+
 	SDL_AudioManager::SDL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
@@ -102,45 +104,52 @@ namespace xal
 		int srcFormat = (buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
 		int srcChannels = buffer->getChannels();
 		int srcSamplingRate = buffer->getSamplingRate();
-		if (srcFormat != format.format || srcChannels != format.channels || srcSamplingRate != format.freq)
+		if (*stream != NULL && *streamSize > 0 && (srcFormat != format.format || srcChannels != format.channels || srcSamplingRate != format.freq))
 		{
 			SDL_AudioCVT cvt;
+			cvt.buf = NULL;
 			int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
 			if (result == -1)
 			{
 				xal::log("ERROR: Could not build converter " + buffer->getFilename());
 				return;
 			}
-			cvt.buf = (Uint8*)(new unsigned char[*streamSize * cvt.len_mult]); // making sure the conversion buffer is large enough
+			cvt.buf = (Uint8*)(new unsigned char[*streamSize * cvt.len_mult * 2]); // making sure the conversion buffer is large enough
 			memcpy(cvt.buf, *stream, *streamSize * sizeof(unsigned char));
 			cvt.len = *streamSize;
 			result = SDL_ConvertAudio(&cvt);
 			if (result == -1)
 			{
+				delete [] cvt.buf;
+				cvt.buf = NULL;
 				xal::log("ERROR: Could not convert audio " + buffer->getFilename());
 				return;
 			}
-			int newSize = hround(cvt.len * cvt.len_ratio);
-			if (*streamSize != newSize) // stream has to be resized
+			*streamSize = hround(cvt.len * cvt.len_ratio);
+			if (*streamSize > 0)
 			{
-				*streamSize = newSize;
 				delete [] *stream;
-				*stream = new unsigned char[*streamSize];
+				*stream = cvt.buf;
 			}
-			memcpy(*stream, cvt.buf, *streamSize * sizeof(unsigned char));
-			delete [] cvt.buf;
+			else
+			{
+				delete [] cvt.buf;
+			}
+			cvt.buf = NULL;
 		}
 	}
 	
 	// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
 	void SDL_AudioManager::_lock()
 	{
+		m2.lock();
 		this->mutex.lock();
 	}
 	
 	void SDL_AudioManager::_unlock()
 	{
 		this->mutex.unlock();
+		m2.unlock();
 	}
 
 }
