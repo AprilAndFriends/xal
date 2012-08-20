@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.71
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -67,6 +67,7 @@ namespace xal
 		bool decoded;
 		unsigned char* stream;
 		int streamSize;
+		int dataSize;
 		Source* source;
 		bool loadedData;
 		int size;

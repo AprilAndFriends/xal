@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.73
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -211,7 +211,13 @@ namespace xal
 		void _suspendAudio();
 		void _resumeAudio();
 
-		virtual void _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize) { }
+		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format (bit rate, channel number, sampling rate).
+		/// @param[in] buffer Buffer object that describes the data.
+		/// @param[in,out] stream The data stream buffer.
+		/// @param[in,out] streamSize The size of the stream itself.
+		/// @param[in] dataSize The size of the data within the stream.
+		/// @return 0 if no conversion was done or a positive integer for the size of the .
+		virtual int _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize) { return 0; }
 
 		virtual void _suspendSystem() { }
 		virtual void _resumeSystem() { }
