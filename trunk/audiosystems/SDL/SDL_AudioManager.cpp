@@ -126,6 +126,11 @@ namespace xal
 			int newSize = hround(cvt.len * cvt.len_ratio);
 			if (newSize > 0)
 			{
+				if (newSize > *streamSize)
+				{
+					delete [] *stream;
+					*stream = new unsigned char[newSize];
+				}
 				*streamSize = newSize;
 				memcpy(*stream, cvt.buf, *streamSize);
 			}
