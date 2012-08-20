@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.73
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -96,47 +96,52 @@ namespace xal
 		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
 	}
 	
-	void SDL_AudioManager::_convertStream(Buffer* buffer, unsigned char** stream, int *streamSize)
+	int SDL_AudioManager::_convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize)
 	{	
+		if (*stream == NULL || *streamSize <= 0 || dataSize <= 0)
+		{
+			return 0;
+		}
 		SDL_AudioSpec format = this->getFormat();
 		int srcFormat = (buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
 		int srcChannels = buffer->getChannels();
 		int srcSamplingRate = buffer->getSamplingRate();
-		if (*stream != NULL && *streamSize > 0 && (srcFormat != format.format || srcChannels != format.channels || srcSamplingRate != format.freq))
+		if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
 		{
-			SDL_AudioCVT cvt;
-			cvt.buf = NULL;
-			int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
-			if (result <= 0)
-			{
-				xal::log("ERROR: Could not build converter " + buffer->getFilename());
-				return;
-			}
-			cvt.buf = (Uint8*)malloc(*streamSize * cvt.len_mult);
-			cvt.len = *streamSize;
-			memcpy(cvt.buf, *stream, *streamSize);
-			result = SDL_ConvertAudio(&cvt);
-			if (result != 0)
-			{
-				free(cvt.buf);
-				cvt.buf = NULL;
-				xal::log("ERROR: Could not convert audio " + buffer->getFilename());
-				return;
-			}
-			int newSize = hround(cvt.len * cvt.len_ratio);
-			if (newSize > 0)
-			{
-				if (newSize > *streamSize)
-				{
-					delete [] *stream;
-					*stream = new unsigned char[newSize];
-				}
-				*streamSize = newSize;
-				memcpy(*stream, cvt.buf, *streamSize);
-			}
-			free(cvt.buf);
-			cvt.buf = NULL;
+			return 0;
 		}
+		SDL_AudioCVT cvt;
+		cvt.buf = NULL;
+		int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
+		if (result <= 0)
+		{
+			xal::log("ERROR: Could not build converter " + buffer->getFilename());
+			return 0;
+		}
+		cvt.buf = (Uint8*)new unsigned char[dataSize * cvt.len_mult];
+		cvt.len = dataSize;
+		memcpy(cvt.buf, *stream, dataSize * sizeof(unsigned char));
+		result = SDL_ConvertAudio(&cvt);
+		if (result != 0)
+		{
+			delete [] cvt.buf;
+			cvt.buf = NULL;
+			xal::log("ERROR: Could not convert audio " + buffer->getFilename());
+			return 0;
+		}
+		if (cvt.len_cvt > 0)
+		{
+			if (cvt.len_cvt > *streamSize)
+			{
+				delete [] *stream;
+				*streamSize = cvt.len_cvt;
+				*stream = new unsigned char[*streamSize];
+			}
+			memcpy(*stream, cvt.buf, cvt.len_cvt * sizeof(unsigned char));
+		}
+		delete [] cvt.buf;
+		cvt.buf = NULL;
+		return cvt.len_cvt;
 	}
 	
 	// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update

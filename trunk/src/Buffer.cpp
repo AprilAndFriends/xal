@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.71
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -25,8 +25,9 @@ namespace xal
 		this->filename = sound->getRealFilename();
 		this->fileSize = hresource::hsize(this->filename);
 		this->mode = sound->getCategory()->getBufferMode();
-		this->streamSize = 0;
 		this->stream = NULL;
+		this->streamSize = 0;
+		this->dataSize = 0;
 		this->source = xal::mgr->_createSource(this->filename, sound->getCategory(), this->getFormat());
 		this->loadedData = false;
 		this->size = 0;
@@ -157,12 +158,13 @@ namespace xal
 			this->_tryLoadData();
 			if (this->stream == NULL)
 			{
-				this->streamSize = this->source->getSize();
+				this->dataSize = this->source->getSize();
+				this->streamSize = this->dataSize;
 				this->stream = new unsigned char[this->streamSize];
 			}
 			this->source->load(this->stream);
 			this->source->close();
-			xal::mgr->_convertStream(this, &this->stream, &this->streamSize);
+			this->dataSize = xal::mgr->_convertStream(this, &this->stream, &this->streamSize, this->dataSize);
 			return;
 		}
 		if (!this->source->isOpen())
@@ -183,17 +185,18 @@ namespace xal
 		{
 			if (this->stream == NULL)
 			{
-				this->streamSize = STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE;
+				this->dataSize = STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE;
+				this->streamSize = this->dataSize;
 				this->stream = new unsigned char[this->streamSize];
 			}
-			this->streamSize = this->source->loadChunk(this->stream, size);
-			size -= this->streamSize;
+			this->dataSize = this->source->loadChunk(this->stream, size);
+			size -= this->dataSize;
 			if (size > 0)
 			{
 				if (!looping)
 				{
 					// fill rest of buffer with silence so systems that depends on buffered chunks don't get messed up
-					memset(&this->stream[this->streamSize], 0, size * sizeof(unsigned char));
+					memset(&this->stream[this->dataSize], 0, size * sizeof(unsigned char));
 				}
 				else
 				{
@@ -201,15 +204,15 @@ namespace xal
 					while (size > 0)
 					{
 						this->source->rewind();
-						read = this->source->loadChunk(&this->stream[this->streamSize], size);
+						read = this->source->loadChunk(&this->stream[this->dataSize], size);
 						size -= read;
-						this->streamSize += read;
+						this->dataSize += read;
 					}
 				}
 			}
-			xal::mgr->_convertStream(this, &this->stream, &this->streamSize);
+			this->dataSize = xal::mgr->_convertStream(this, &this->stream, &this->streamSize, this->dataSize);
 		}
-		return this->streamSize;
+		return this->dataSize;
 	}
 
 	void Buffer::bind(Player* player, bool playerPaused)
@@ -229,6 +232,7 @@ namespace xal
 			{
 				delete [] this->stream;
 				this->stream = NULL;
+				this->streamSize = 0;
 			}
 			this->loaded = false;
 		}
@@ -273,7 +277,7 @@ namespace xal
 			{
 				*output = new unsigned char[result];
 				this->source->load(*output);
-				xal::mgr->_convertStream(this, output, &result);
+				result = xal::mgr->_convertStream(this, output, &result, result);
 			}
 			this->source->close();
 		}
@@ -322,6 +326,7 @@ namespace xal
 			{
 				delete [] this->stream;
 				this->stream = NULL;
+				this->streamSize = 0;
 			}
 			this->source->close();
 			this->loaded = false;
