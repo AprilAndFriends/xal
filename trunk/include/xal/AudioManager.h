@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.7
+/// @version 2.73
 /// 
 /// @section LICENSE
 /// 
@@ -216,11 +216,11 @@ namespace xal
 		virtual void _suspendSystem() { }
 		virtual void _resumeSystem() { }
 
+		void _flushQueuedMessages();
+
 	private:
 		harray<hstr> _queuedMessages;
 		
-		void _flushQueuedMessages();
-
 	};
 	
 	xalExport extern xal::AudioManager* mgr;

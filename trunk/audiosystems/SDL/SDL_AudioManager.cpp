@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.72
+/// @version 2.73
 /// 
 /// @section LICENSE
 /// 
@@ -107,32 +107,29 @@ namespace xal
 			SDL_AudioCVT cvt;
 			cvt.buf = NULL;
 			int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
-			if (result == -1)
+			if (result <= 0)
 			{
 				xal::log("ERROR: Could not build converter " + buffer->getFilename());
 				return;
 			}
-			cvt.buf = (Uint8*)(new unsigned char[*streamSize * cvt.len_mult * 2]); // making sure the conversion buffer is large enough
-			memcpy(cvt.buf, *stream, *streamSize * sizeof(unsigned char));
+			cvt.buf = (Uint8*)malloc(*streamSize * cvt.len_mult);
 			cvt.len = *streamSize;
+			memcpy(cvt.buf, *stream, *streamSize);
 			result = SDL_ConvertAudio(&cvt);
-			if (result == -1)
+			if (result != 0)
 			{
-				delete [] cvt.buf;
+				free(cvt.buf);
 				cvt.buf = NULL;
 				xal::log("ERROR: Could not convert audio " + buffer->getFilename());
 				return;
 			}
-			*streamSize = hround(cvt.len * cvt.len_ratio);
-			if (*streamSize > 0)
+			int newSize = hround(cvt.len * cvt.len_ratio);
+			if (newSize > 0)
 			{
-				delete [] *stream;
-				*stream = cvt.buf;
+				*streamSize = newSize;
+				memcpy(*stream, cvt.buf, *streamSize);
 			}
-			else
-			{
-				delete [] cvt.buf;
-			}
+			free(cvt.buf);
 			cvt.buf = NULL;
 		}
 	}
