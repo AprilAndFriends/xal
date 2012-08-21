@@ -216,8 +216,8 @@ namespace xal
 		/// @param[in,out] stream The data stream buffer.
 		/// @param[in,out] streamSize The size of the stream itself.
 		/// @param[in] dataSize The size of the data within the stream.
-		/// @return 0 if no conversion was done or a positive integer for the size of the .
-		virtual int _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize) { return 0; }
+		/// @return dataSize if no conversion was done or a positive integer for the size of the new data.
+		virtual int _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize) { return dataSize; }
 
 		virtual void _suspendSystem() { }
 		virtual void _resumeSystem() { }
