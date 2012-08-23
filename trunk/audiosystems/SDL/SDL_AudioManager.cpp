@@ -100,7 +100,7 @@ namespace xal
 	{	
 		if (*stream == NULL || *streamSize <= 0 || dataSize <= 0)
 		{
-			return 0;
+			return dataSize;
 		}
 		SDL_AudioSpec format = this->getFormat();
 		int srcFormat = (buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
@@ -108,7 +108,7 @@ namespace xal
 		int srcSamplingRate = buffer->getSamplingRate();
 		if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
 		{
-			return 0;
+			return dataSize;
 		}
 		SDL_AudioCVT cvt;
 		cvt.buf = NULL;
@@ -116,7 +116,7 @@ namespace xal
 		if (result <= 0)
 		{
 			xal::log("ERROR: Could not build converter " + buffer->getFilename());
-			return 0;
+			return dataSize;
 		}
 		cvt.buf = (Uint8*)new unsigned char[dataSize * cvt.len_mult];
 		cvt.len = dataSize;
@@ -127,7 +127,7 @@ namespace xal
 			delete [] cvt.buf;
 			cvt.buf = NULL;
 			xal::log("ERROR: Could not convert audio " + buffer->getFilename());
-			return 0;
+			return dataSize;
 		}
 		if (cvt.len_cvt > 0)
 		{
