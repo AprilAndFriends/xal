@@ -305,6 +305,11 @@ namespace xal
 			(*it)->_systemUpdateGain();
 		}
 	}
+	
+	bool AudioManager::hasCategory(chstr category)
+	{
+		return this->categories.has_key(category);
+	}
 
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{

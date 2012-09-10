@@ -102,6 +102,7 @@ namespace xal
 		Category* getCategoryByName(chstr name);
 		float getCategoryGain(chstr category);
 		void setCategoryGain(chstr category, float gain);
+		bool hasCategory(chstr category);
 		
 		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
 		Sound* getSound(chstr name);
