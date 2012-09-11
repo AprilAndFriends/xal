@@ -33,7 +33,22 @@ namespace xal
 	{
 		this->soundQueue += name;
 	}
-	
+
+	void ParallelSoundManager::removeSound(chstr name)
+	{
+		bool found = false;
+		harray<hstr> queue;
+		foreach (Player*, it, this->players)
+		{
+			if ((*it)->getName() == name)
+			{
+				found = true;
+			}
+			else queue += (*it)->getName();
+		}
+		if (found) updateList(queue);
+	}
+
 	void ParallelSoundManager::updateList()
 	{
 		this->updateList(this->soundQueue);

@@ -35,6 +35,8 @@ namespace xal
 		void setSoundQueue(harray<hstr> value) { this->soundQueue = value; }
 		
 		void queueSound(chstr name);
+		void removeSound(chstr name);
+
 		void updateList();
 		void updateList(harray<hstr> names);
 		void playAll();
