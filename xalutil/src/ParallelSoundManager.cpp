@@ -44,7 +44,7 @@ namespace xal
 			{
 				found = true;
 			}
-			else queue += (*it)->getName();
+			else if ((*it)->isPlaying()) queue += (*it)->getName();
 		}
 		if (found) updateList(queue);
 	}
