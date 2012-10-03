@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="libxal"
 	ProjectGUID="{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}"
 	RootNamespace="libxal"
