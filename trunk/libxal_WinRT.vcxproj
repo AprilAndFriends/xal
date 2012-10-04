@@ -1,61 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug_All|Android">
-      <Configuration>Debug_All</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_All|Win32">
       <Configuration>Debug_All</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_Android|Android">
-      <Configuration>Debug_Android</Configuration>
-      <Platform>Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_Android|Win32">
       <Configuration>Debug_Android</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_NoAudio|Android">
-      <Configuration>Debug_NoAudio</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_NoAudio|Win32">
       <Configuration>Debug_NoAudio</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_All|Android">
-      <Configuration>Release_All</Configuration>
-      <Platform>Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_All|Win32">
       <Configuration>Release_All</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_DirectSound|Android">
-      <Configuration>Debug_DirectSound</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_DirectSound|Win32">
       <Configuration>Debug_DirectSound</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_Android|Android">
-      <Configuration>Release_Android</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release_Android|Win32">
       <Configuration>Release_Android</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_DirectSound|Android">
-      <Configuration>Release_DirectSound</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_OpenAL|Android">
-      <Configuration>Debug_OpenAL</Configuration>
-      <Platform>Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_OpenAL|Win32">
       <Configuration>Debug_OpenAL</Configuration>
@@ -65,33 +33,17 @@
       <Configuration>Release_DirectSound</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_NoAudio|Android">
-      <Configuration>Release_NoAudio</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release_NoAudio|Win32">
       <Configuration>Release_NoAudio</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_OpenAL|Android">
-      <Configuration>Release_OpenAL</Configuration>
-      <Platform>Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_OpenAL|Win32">
       <Configuration>Release_OpenAL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug_SDL|Android">
-      <Configuration>Debug_SDL</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_SDL|Win32">
       <Configuration>Debug_SDL</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release_SDL|Android">
-      <Configuration>Release_SDL</Configuration>
-      <Platform>Android</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_SDL|Win32">
       <Configuration>Release_SDL</Configuration>
@@ -102,7 +54,7 @@
     <ProjectGuid>{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}</ProjectGuid>
     <RootNamespace>libxal</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-	<DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'" Label="Configuration">
@@ -115,116 +67,61 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <WindowsAppContainer>true</WindowsAppContainer>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -239,16 +136,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'" Label="PropertySheets">
@@ -257,16 +145,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'" Label="PropertySheets">
@@ -275,16 +154,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'" Label="PropertySheets">
@@ -293,16 +163,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -310,66 +171,72 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Android|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Android|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Android|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">$(SolutionDir)bin\$(Platform)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_None|Win32'">$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'">
+    <TargetName>libxal</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Win32'">
+    <TargetName>libxal</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'">
     <ClCompile>
@@ -423,66 +290,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_DIRECTSOUND;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OptimizationLevel>O0</OptimizationLevel>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_NOAUDIO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OptimizationLevel>O0</OptimizationLevel>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -503,36 +310,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OptimizationLevel>O0</OptimizationLevel>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -591,66 +368,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_OPENAL;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OptimizationLevel>O0</OptimizationLevel>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_ANDROID;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OptimizationLevel>O0</OptimizationLevel>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -671,36 +388,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;_DEBUG;HAVE_SDL;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OptimizationLevel>O0</OptimizationLevel>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -767,68 +454,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_DIRECTSOUND;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_NOAUDIO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;dsound.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -853,37 +478,6 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>winmm.lib;dsound.lib;OpenAL32.lib;SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -950,68 +544,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_OPENAL;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_ANDROID;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>OpenAL32.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -1036,37 +568,6 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-    </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;include/xal;../include;../include/SDL;../hltypes/include;src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_ANDROID;XAL_EXPORTS;HAVE_SDL;HAVE_FLAC;HAVE_OGG;HAVE_WAV;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <GccExceptionHandling>true</GccExceptionHandling>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>SDL.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -1182,20 +683,7 @@ copy bin\$(Configuration)\*.lib bin
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="fileproperties.rc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_All|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'">true</ExcludedFromBuild>
-    </ResourceCompile>
+    <ResourceCompile Include="fileproperties.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
