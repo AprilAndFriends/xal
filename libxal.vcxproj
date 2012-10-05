@@ -102,7 +102,6 @@
     <ProjectGuid>{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}</ProjectGuid>
     <RootNamespace>libxal</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-	<DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Win32'" Label="Configuration">
