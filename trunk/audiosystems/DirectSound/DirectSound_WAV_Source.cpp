@@ -33,9 +33,7 @@ namespace xal
 		bool result = Source::open();
 		if (result)
 		{
-			wchar_t* filenameW = this->filename.w_str();
-			this->file = mmioOpen(filenameW, 0, (MMIO_READ | MMIO_ALLOCBUF));
-			delete [] filenameW;
+			this->file = mmioOpen(this->filename.w_str().c_str(), 0, (MMIO_READ | MMIO_ALLOCBUF));
 			if (this->file == NULL)
 			{
 				this->close();
