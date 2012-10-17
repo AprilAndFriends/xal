@@ -103,6 +103,15 @@ namespace xal
 		return this->streamOpen;
 	}
 
+	void OGG_Source::close()
+	{
+		if (this->streamOpen)
+		{
+			ov_clear(&this->oggStream);
+		}
+		Source::close();
+	}
+
 	void OGG_Source::rewind()
 	{
 		if (this->streamOpen)
