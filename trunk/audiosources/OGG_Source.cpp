@@ -57,6 +57,11 @@ namespace xal
 		return 0;
 	}
 
+	int _dataClose(void* dataSource) // an empty function is required on Android as it may crash otherwise
+	{
+		return 0;
+	}
+
 	long _dataTell(void* dataSource)
 	{
 		return ((hsbase*)dataSource)->position();
@@ -82,7 +87,7 @@ namespace xal
 		ov_callbacks callbacks;
 		callbacks.read_func = &_dataRead;
 		callbacks.seek_func = &_dataSeek;
-		callbacks.close_func = NULL;
+		callbacks.close_func = &_dataClose; // may not be NULL because it may crash on Android otherwise
 		callbacks.tell_func = &_dataTell;
 		if (ov_open_callbacks((void*)this->stream, &this->oggStream, NULL, 0, callbacks) == 0)
 		{
