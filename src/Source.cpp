@@ -1,13 +1,15 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/hlog.h>
 #include <hltypes/hstream.h>
+#include <hltypes/hstring.h>
 #include <hltypes/hresource.h>
 
 #include "AudioManager.h"
@@ -36,7 +38,7 @@ namespace xal
 	{
 		if (!hresource::exists(this->filename))
 		{
-			xal::log("Error: unable to open " + this->filename);
+			hlog::error(xal::logTag, "Unable to open: " + this->filename);
 			return false;
 		}
 		if (this->stream == NULL)
@@ -85,10 +87,10 @@ namespace xal
 	
 	bool Source::load(unsigned char* output)
 	{
-		xal::log("loading file " + this->filename);
+		hlog::write(xal::logTag, "Loading file: " + this->filename);
 		if (!this->streamOpen)
 		{
-			xal::log("Error: file " + this->filename + " is not open");
+			hlog::error(xal::logTag, "File not open: " + this->filename);
 			return false;
 		}
 		return true;
@@ -98,10 +100,10 @@ namespace xal
 	{
 		if (!this->streamOpen)
 		{
-			xal::log("Error: file " + this->filename + " is not open");
+			hlog::error(xal::logTag, "File not open: " + this->filename);
 			return 0;
 		}
-		return 1;
+		return 1; // means that "something" was read
 	}
 	
 }

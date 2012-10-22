@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,7 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -37,25 +38,25 @@ namespace xal
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
 		__openal__JNI_OnLoad(backendId);
-		xal::log("initializing Android Audio");
+		hlog::write(xal::logTag, "Initializing Android Audio.");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
-			xal::log("could not create device");
+			hlog::error(xal::logTag, "Could not create device!");
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		xal::log("audio device: " + this->deviceName);
+		hlog::write(xal::logTag, "Audio device: " + this->deviceName);
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
-			xal::log("could not create context");
+			hlog::error(xal::logTag, "Could not create context!");
 			return;
 		}
 		alcMakeContextCurrent(currentContext);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
-			xal::log("could not set context as current");
+			hlog::error(xal::logTag, "Could not set context as current!");
 			return;
 		}
 		this->device = currentDevice;
@@ -65,7 +66,7 @@ namespace xal
 
 	Android_AudioManager::~Android_AudioManager()
 	{
-		xal::log("destroying Android Audio");
+		hlog::write(xal::logTag, "Destroying Android Audio.");
 		if (this->device != NULL)
 		{
 			alcMakeContextCurrent(NULL);
@@ -85,7 +86,7 @@ namespace xal
 		alGenSources(1, &id);
 		if (alGetError() != AL_NO_ERROR)
 		{
-			xal::log("unable to allocate audio source!");
+			hlog::warn(xal::logTag, "Unable to allocate audio source!");
 			return 0;
 		}
 		return id;

@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.7
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -12,6 +12,7 @@
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
@@ -91,7 +92,6 @@ namespace xal
 	void AudioManager::init()
 	{
 		this->_lock();
-		this->_flushQueuedMessages();
 		if (this->enabled && this->thread != NULL)
 		{
 			this->_startThreading();
@@ -101,8 +101,7 @@ namespace xal
 
 	void AudioManager::_startThreading()
 	{
-		xal::log("starting audio update thread");
-		this->_flushQueuedMessages();
+		hlog::write(xal::logTag, "Starting audio update thread.");
 		this->threadRunning = true;
 		this->thread->start();
 	}
@@ -118,8 +117,7 @@ namespace xal
 	{
 		if (this->threadRunning)
 		{
-			xal::log("stopping audio update thread");
-			this->_flushQueuedMessages();
+			hlog::write(xal::logTag, "Stopping audio update thread.");
 			this->threadRunning = false;
 			this->_unlock();
 			this->thread->join();
@@ -193,7 +191,10 @@ namespace xal
 	void AudioManager::update(float k)
 	{
 		this->_lock();
-		this->isThreaded() ? this->_flushQueuedMessages() : this->_update(k);
+		if (!this->isThreaded())
+		{
+			this->_update(k);
+		}
 		this->_unlock();
 	}
 
@@ -371,7 +372,7 @@ namespace xal
 		{
 			if (it->second == sound)
 			{
-				xal::log("destroying sound " + it->first);
+				hlog::write(xal::logTag, "Destroying sound: " + it->first);
 				delete it->second;
 				this->sounds.erase(it);
 				break;
@@ -388,7 +389,7 @@ namespace xal
 
 	void AudioManager::_destroySoundsWithPrefix(chstr prefix)
 	{
-		xal::log(hsprintf("destroying sounds with prefix '%s'", prefix.c_str()));
+		hlog::write(xal::logTag, "Destroying sounds with prefix: " + prefix);
 		harray<hstr> keys = this->sounds.keys();
 		// creating a copy, because _destroyManagedPlayer alters managedPlayers
 		harray<Sound*> destroySounds;
@@ -885,21 +886,7 @@ namespace xal
 				count++;
 			}
 		}
-		xal::log(hsprintf("found %d buffers for memory clearing", count));
-	}
-
-	void AudioManager::queueMessage(chstr message)
-	{
-		this->_queuedMessages += message;
-	}
-
-	void AudioManager::_flushQueuedMessages()
-	{
-		foreach (hstr, it, this->_queuedMessages)
-		{
-			gLogFunction(*it);
-		}
-		this->_queuedMessages.clear();
+		hlog::debugf(xal::logTag, "Found %d buffers for memory clearing.", count);
 	}
 
 	void AudioManager::addAudioExtension(chstr extension)

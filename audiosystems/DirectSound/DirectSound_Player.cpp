@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -11,6 +11,7 @@
 #include <dsound.h>
 #include <windows.h>
 
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
@@ -163,7 +164,7 @@ namespace xal
 		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
-			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
+			hlog::error(xal::logTag, "Cannot lock buffer for: " + this->sound->getRealFilename());
 			return;
 		}
 		if (write1 != NULL)
@@ -200,7 +201,7 @@ namespace xal
 		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
-			xal::log("cannot lock buffer for " + this->sound->getRealFilename());
+			hlog::error(xal::logTag, "Cannot lock buffer for: " + this->sound->getRealFilename());
 			return;
 		}
 		if (write1 != NULL)

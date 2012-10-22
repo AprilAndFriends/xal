@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.7
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -27,6 +27,7 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -48,25 +49,25 @@ namespace xal
 	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
-		xal::log("initializing OpenAL");
+		hlog::write(xal::logTag, "Initializing OpenAL.");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
-			xal::log("could not create device");
+			hlog::error(xal::logTag, "Could not create device!");
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		xal::log("audio device: " + this->deviceName);
+		hlog::write(xal::logTag, "Audio device: " + this->deviceName);
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
-			xal::log("could not create context");
+			hlog::error(xal::logTag, "Could not create context!");
 			return;
 		}
 		alcMakeContextCurrent(currentContext);
 		if (alcGetError(currentDevice) != ALC_NO_ERROR)
 		{
-			xal::log("could not set context as current");
+			hlog::error(xal::logTag, "Could not set context as current!");
 			return;
 		}
 		this->device = currentDevice;
@@ -79,7 +80,7 @@ namespace xal
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
-		xal::log("destroying OpenAL");
+		hlog::write(xal::logTag, "Destroying OpenAL.");
 #ifdef _IOS
 		OpenAL_iOS_destroy();
 #endif
@@ -102,7 +103,7 @@ namespace xal
 		alGenSources(1, &id);
 		if (alGetError() != AL_NO_ERROR)
 		{
-			xal::log("unable to allocate audio source!");
+			hlog::warn(xal::logTag, "Unable to allocate audio source!");
 			return 0;
 		}
 		return id;
@@ -117,9 +118,7 @@ namespace xal
 	{
 #ifdef _IOS
 		this->_lock();
-#ifdef _DEBUG
-		xal::log("suspending OpenAL Context");
-#endif
+		hlog::debug(xal::logTag, "Suspending OpenAL Context.");
 		gAudioSuspended = this->isSuspended();
 		if (!gAudioSuspended)
 		{
@@ -128,8 +127,8 @@ namespace xal
 		alcSuspendContext(this->context);
 		alcMakeContextCurrent(NULL);
 		this->_unlock();
-#elif defined(_DEBUG)
-		xal::log("not iOS, suspendOpenALContext does nothing");
+#else
+		hlog::debug(xal::logTag, "Not iOS, suspendOpenALContext does nothing.");
 #endif
 	}
 
@@ -137,9 +136,7 @@ namespace xal
 	{
 #ifdef _IOS
 		this->_lock();
-#ifdef _DEBUG
-		xal::log("resuming OpenAL Context");
-#endif
+		hlog::debug(xal::logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
 		alcProcessContext(this->context);
 		if (!gAudioSuspended)
@@ -147,8 +144,8 @@ namespace xal
 			this->_resumeAudio();
 		}
 		this->_unlock();
-#elif defined(_DEBUG)
-		xal::log("not iOS, resumeOpenALContext does nothing");
+#else
+		hlog::debug(xal::logTag, "Not iOS, resumeOpenALContext does nothing.");
 #endif
 	}
 }

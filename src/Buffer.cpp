@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -8,6 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 
@@ -319,9 +320,7 @@ namespace xal
 	{
 		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == STREAMED))
 		{
-#ifdef _DEBUG
-			xal::log(hsprintf("clearing memory for '%s'", this->filename.c_str()));
-#endif
+			hlog::debug(xal::logTag, "Clearing memory for: " + this->filename);
 			if (this->stream != NULL)
 			{
 				delete [] this->stream;
