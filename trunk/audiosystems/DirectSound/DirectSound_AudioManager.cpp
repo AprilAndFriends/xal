@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -10,6 +10,7 @@
 #ifdef HAVE_DIRECTSOUND
 #include <dsound.h>
 
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "DirectSound_AudioManager.h"
@@ -26,12 +27,12 @@ namespace xal
 	DirectSound_AudioManager::DirectSound_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
-		xal::log("initializing DirectSound");
+		hlog::write(xal::logTag, "Initializing DirectSound.");
 		HRESULT result = DirectSoundCreate(NULL, &this->dsDevice, NULL);
 		if (FAILED(result))
 		{
 			this->dsDevice = NULL;
-			xal::log("could not create device");
+			hlog::error(xal::logTag, "Could not create device!");
 			return;
 		}
 		result = this->dsDevice->SetCooperativeLevel((HWND)backendId, DSSCL_NORMAL);
@@ -39,7 +40,7 @@ namespace xal
 		{
 			this->dsDevice->Release();
 			this->dsDevice = NULL;
-			xal::log("could not set cooperative level");
+			hlog::error(xal::logTag, "Could not set cooperative level!");
 			return;
 		}
 		this->enabled = true;
@@ -47,7 +48,7 @@ namespace xal
 
 	DirectSound_AudioManager::~DirectSound_AudioManager()
 	{
-		xal::log("destroying DirectSound");
+		hlog::write(xal::logTag, "Destroying DirectSound.");
 		if (this->dsDevice != NULL)
 		{
 			this->dsDevice->Release();

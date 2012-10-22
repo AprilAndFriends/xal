@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.81
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -13,6 +13,7 @@
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hresource.h>
 #include <hltypes/hstream.h>
@@ -102,7 +103,7 @@ namespace xal
 		}
 		else
 		{
-			xal::log("ogg: error reading data!");
+			hlog::error(xal::logTag, "OGG: error reading data!");
 			this->close();
 		}
 		return this->streamOpen;

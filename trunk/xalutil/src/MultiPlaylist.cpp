@@ -72,7 +72,7 @@ namespace xal
 	{
 		if (this->playlists.contains(playlist))
 		{
-			throw hl_exception("Error! Playlist was already registered!");
+			throw hl_exception("Playlist was already registered!");
 		}
 		this->playlists += playlist;
 	}
@@ -81,7 +81,7 @@ namespace xal
 	{
 		if (!this->playlists.contains(playlist))
 		{
-			throw hl_exception("Error! Playlist has not been registered!");
+			throw hl_exception("Playlist has not been registered!");
 		}
 		this->playlists -= playlist;
 	}

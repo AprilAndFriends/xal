@@ -131,8 +131,6 @@ namespace xal
 		void suspendAudio();
 		void resumeAudio();
 
-		void queueMessage(chstr message);
-
 		void addAudioExtension(chstr extension);
 		hstr findAudioFile(chstr _filename);
 
@@ -223,11 +221,6 @@ namespace xal
 		virtual void _suspendSystem() { }
 		virtual void _resumeSystem() { }
 
-		void _flushQueuedMessages();
-
-	private:
-		harray<hstr> _queuedMessages;
-		
 	};
 	
 	xalExport extern xal::AudioManager* mgr;

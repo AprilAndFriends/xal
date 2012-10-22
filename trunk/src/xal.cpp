@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.2
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -9,11 +9,9 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <stdio.h>
-#ifdef _ANDROID
-#include <android/log.h>
-#endif
 
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
@@ -94,19 +92,20 @@
 
 namespace xal
 {
-	void xal_writelog(chstr message)
+	hstr logTag = "xal";
+
+	void log(chstr message, chstr prefix)
 	{
-#ifndef _ANDROID
-		printf("%s\n", message.c_str());
-#else
-		__android_log_print(ANDROID_LOG_INFO, "xal", "%s", message.c_str());
-#endif
+		hlog::write(xal::logTag, message);
 	}
-	void (*gLogFunction)(chstr) = xal_writelog;
 	
+	void setLogFunction(void (*function)(chstr))
+	{
+	}
+
 	void init(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
-		xal::log("initializing XAL");
+		hlog::write(xal::logTag, "Initializing XAL.");
 		hstr name = systemName;
 		if (name == XAL_AS_DEFAULT)
 		{
@@ -115,7 +114,7 @@ namespace xal
 		if (name == XAL_AS_DISABLED)
 		{
 			xal::mgr = new NoAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
-			xal::log("audio is disabled");
+			hlog::write(xal::logTag, "Audio is disabled.");
 			return;
 		}
 #ifdef HAVE_ANDROID
@@ -158,12 +157,12 @@ namespace xal
 #endif
 		if (xal::mgr == NULL)
 		{
-			xal::log("audio system does not exist: " + name);
+			hlog::write(xal::logTag, "Audio system does not exist: " + name);
 			xal::mgr = new NoAudio_AudioManager(XAL_AS_DISABLED, backendId, threaded, updateTime, deviceName);
-			xal::log("audio is disabled");
+			hlog::write(xal::logTag, "Audio is disabled.");
 			return;
 		}
-		xal::log("audio system created: " + name);
+		hlog::write(xal::logTag, "Audio system created: " + name);
 		// actually starts threading
 		xal::mgr->init();
 	}
@@ -172,30 +171,13 @@ namespace xal
 	{
 		if (xal::mgr != NULL)
 		{
-			xal::log("destroying XAL");
+			hlog::write(xal::logTag, "Destroying XAL.");
 			xal::mgr->clear();
 			delete xal::mgr;
 			xal::mgr = NULL;
 		}
 	}
 	
-	void log(chstr message, chstr prefix)
-	{
-		if (xal::mgr != NULL && xal::mgr->isThreaded())
-		{
-			xal::mgr->queueMessage(prefix + message);
-		}
-		else
-		{
-			gLogFunction(prefix + message);
-		}
-	}
-	
-	void setLogFunction(void (*function)(chstr))
-	{
-		gLogFunction = function;
-	}
-
 	bool hasAudioSystem(chstr name)
 	{
 #ifdef HAVE_ANDROID

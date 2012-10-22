@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -11,6 +11,7 @@
 #include <SDL/SDL.h>
 
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
@@ -25,13 +26,13 @@ namespace xal
 	SDL_AudioManager::SDL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
 	{
-		xal::log("initializing SDL Audio");
+		hlog::write(xal::logTag, "Initializing SDL Audio.");
 		this->buffer = new unsigned char[1];
 		this->bufferSize = 1;
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
-			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
+			hlog::errorf(xal::logTag, "Unable to initialize SDL: %s", SDL_GetError());
 			return;
 		}
 		this->format.freq = this->samplingRate;
@@ -44,7 +45,7 @@ namespace xal
 		result = SDL_OpenAudio(&this->format, NULL);
 		if (result < 0)
 		{
-			xal::log(hsprintf("Unable to initialize SDL: %s\n", SDL_GetError()));
+			hlog::errorf(xal::logTag, "Unable to initialize SDL: %s", SDL_GetError());
 			return;
 		}
 		SDL_PauseAudio(0);
@@ -53,7 +54,7 @@ namespace xal
 
 	SDL_AudioManager::~SDL_AudioManager()
 	{
-		xal::log("destroying SDL Audio");
+		hlog::write(xal::logTag, "Destroying SDL Audio.");
 		SDL_PauseAudio(1);
 		SDL_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -115,7 +116,7 @@ namespace xal
 		int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
 		if (result <= 0)
 		{
-			xal::log("ERROR: Could not build converter " + buffer->getFilename());
+			hlog::error(xal::logTag, "Could not build converter: " + buffer->getFilename());
 			return dataSize;
 		}
 		cvt.buf = (Uint8*)new unsigned char[dataSize * cvt.len_mult];
@@ -126,7 +127,7 @@ namespace xal
 		{
 			delete [] cvt.buf;
 			cvt.buf = NULL;
-			xal::log("ERROR: Could not convert audio " + buffer->getFilename());
+			hlog::error(xal::logTag, "Could not convert audio: " + buffer->getFilename());
 			return dataSize;
 		}
 		if (cvt.len_cvt > 0)

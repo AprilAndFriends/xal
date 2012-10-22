@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.82
 /// 
 /// @section LICENSE
 /// 
@@ -29,11 +29,14 @@
 
 namespace xal
 {
+	extern hstr logTag;
+
 	xalFnExport void init(chstr systemName, void* backendId, bool threaded = true, float updateTime = 0.01f, chstr deviceName = "");
 	xalFnExport void destroy();
-	xalFnExport void setLogFunction(void (*function)(chstr));
-	xalFnExport void log(chstr message, chstr prefix = "[xal] ");
 	xalFnExport bool hasAudioSystem(chstr name);
+
+	DEPRECATED_ATTRIBUTE xalFnExport void setLogFunction(void (*function)(chstr));
+	DEPRECATED_ATTRIBUTE xalFnExport void log(chstr message, chstr prefix = "[xal] ");
 
 }
 
