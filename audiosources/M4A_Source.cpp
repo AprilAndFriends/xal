@@ -16,6 +16,8 @@
 #include <CoreServices/CoreServices.h>
 #endif
 
+#include <hltypes/hlog.h>
+
 #include "Endianess.h"
 #include "AudioManager.h"
 #include "M4A_Source.h"
@@ -72,14 +74,14 @@ namespace xal
 			}
 			else
 			{
-				xal::log("m4a: error opening file!");
+				hlog::write(xal::logTag, "m4a: error opening file!");
 				this->streamOpen = false;
 			}
 			CFRelease(urlref);
 		}
 		else
 		{
-			xal::log("m4a: error creating urlref");
+			hlog::write(xal::logTag, "m4a: error creating urlref");
 			this->streamOpen = false;
 		}
 		
@@ -169,7 +171,7 @@ namespace xal
 		memset(output, 0, size); 
         if (ExtAudioFileRead(this->audioFileID, &read, &fillBufList) != noErr)
 		{
-			xal::log("m4a could not read a file");
+			hlog::write(xal::logTag, "m4a could not read a file");
 			return 0;
 		}
 		
