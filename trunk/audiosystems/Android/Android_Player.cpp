@@ -171,7 +171,7 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((Android_AudioManager*) xal::mgr)->_releaseSourceId(this->sourceId);
+			((Android_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
 		return result;
