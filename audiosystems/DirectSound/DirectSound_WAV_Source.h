@@ -15,9 +15,9 @@
 #ifndef XAL_DIRECTSOUND_WAV_SOURCE_H
 #define XAL_DIRECTSOUND_WAV_SOURCE_H
 #include <dsound.h>
-#include <windows.h>
 
 #include <hltypes/hstring.h>
+#include <hltypes/hplatform.h>
 
 #include "AudioManager.h"
 #include "Source.h"

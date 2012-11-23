@@ -8,8 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 /*
 #if defined(HAVE_DIRECTSOUND) && defined(HAVE_WAV)
-#include <windows.h>
-
+#include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"

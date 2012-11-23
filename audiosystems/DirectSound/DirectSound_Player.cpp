@@ -9,10 +9,10 @@
 
 #ifdef HAVE_DIRECTSOUND
 #include <dsound.h>
-#include <windows.h>
 
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
+#include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
 
 #include "Buffer.h"
