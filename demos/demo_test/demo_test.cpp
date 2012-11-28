@@ -1,11 +1,22 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.7
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
+#include <hltypes/hplatform.h>
+#ifndef _ANDROID
+#if !_HL_WINRT
+#define RESOURCE_PATH "../media/"
+#else
+#define RESOURCE_PATH "media/"
+#endif
+#else
+#define RESOURCE_PATH "./"
+#endif
 
 #include <stdio.h>
 #ifdef _WIN32
@@ -388,7 +399,7 @@ void _test_util_parallel_sounds(xal::Player* player)
 int main(int argc, char **argv)
 {
 	void* hwnd = 0;
-#ifdef _WIN32
+#if defined(_WIN32) && !_HL_WINRT
 	hwnd = GetConsoleWindow();
 #endif
 #ifndef _USE_THREADING
@@ -399,21 +410,21 @@ int main(int argc, char **argv)
 #ifdef _USE_MEMORY_MANAGEMENT
 	xal::mgr->createCategory("sound", xal::MANAGED, SOURCE_MODE);
 #endif
-	harray<hstr> files = xal::mgr->createSoundsFromPath("../media", "sound", "");
+	harray<hstr> files = xal::mgr->createSoundsFromPath(RESOURCE_PATH, "sound", "");
 #ifndef _USE_LINKS
 #ifndef _USE_STREAM
 	xal::mgr->createCategory("streamable", xal::MANAGED, SOURCE_MODE);
 #else
 	xal::mgr->createCategory("streamable", xal::STREAMED, SOURCE_MODE);
 #endif
-	files += xal::mgr->createSoundsFromPath("../media/streamable", "streamable", "");
+	files += xal::mgr->createSoundsFromPath(RESOURCE_PATH "streamable", "streamable", "");
 #else
 #ifdef _USE_MEMORY_MANAGEMENT
 	xal::mgr->createCategory("cat", xal::MANAGED, SOURCE_MODE);
 #else
 	xal::mgr->createCategory("cat", xal::FULL, SOURCE_MODE);
 #endif
-	xal::mgr->createSound("../media/linked/linked_sound.xln", "cat");
+	xal::mgr->createSound(RESOURCE_PATH "linked/linked_sound.xln", "cat");
 #endif
 	xal::Player* player = xal::mgr->createPlayer(USED_SOUND);
 
@@ -457,6 +468,8 @@ int main(int argc, char **argv)
 	xal::mgr->destroyPlayer(player);
 	printf("  - done\n");
 	xal::destroy();
+#if !_HL_WINRT
 	system("pause");
+#endif
 	return 0;
 }
