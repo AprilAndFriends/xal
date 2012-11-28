@@ -5,10 +5,81 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Win8xap">
+      <UniqueIdentifier>{f0ae1058-a500-44e2-8f2a-326b57b71662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLLs">
+      <UniqueIdentifier>{f84bdb13-d712-4d85-9f76-bc08bb84c6a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media">
+      <UniqueIdentifier>{df25b4c6-d8ac-462d-b490-c614f00bcfbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\assets">
+      <UniqueIdentifier>{88ab3f03-5374-4194-8762-3355cfa6d25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\linked">
+      <UniqueIdentifier>{33f57adc-334e-452d-92d6-93c462a2f1f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\streamable">
+      <UniqueIdentifier>{a8ff6d01-9de7-46ee-85aa-2d78e9a89bef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="demo_simple_TemporaryKey.pfx">
+      <Filter>Win8xap</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="demo_simple.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <Filter>Win8xap</Filter>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="media\streamable\wind_2.wav">
+      <Filter>Win8xap\media\streamable</Filter>
+    </Media>
+    <Media Include="media\bark_2.wav">
+      <Filter>Win8xap\media</Filter>
+    </Media>
+    <Media Include="media\streamable\wind.ogg">
+      <Filter>Win8xap\media\streamable</Filter>
+    </Media>
+    <Media Include="media\bark.ogg">
+      <Filter>Win8xap\media</Filter>
+    </Media>
+    <Media Include="media\streamable\wind_3.flac">
+      <Filter>Win8xap\media\streamable</Filter>
+    </Media>
+    <Media Include="media\bark_3.flac">
+      <Filter>Win8xap\media</Filter>
+    </Media>
+    <Media Include="media\wb_male.spx">
+      <Filter>Win8xap\media</Filter>
+    </Media>
+    <Media Include="media\linked\linked_sound.xln">
+      <Filter>Win8xap\media\linked</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="media\assets\logo_icon.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\small_icon.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\splash.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\store_icon.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\icon.png">
+      <Filter>Win8xap\media</Filter>
+    </Image>
   </ItemGroup>
 </Project>

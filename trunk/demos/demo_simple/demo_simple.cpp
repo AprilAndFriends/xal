@@ -1,17 +1,26 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#include <stdio.h>
-#ifdef _WIN32
-#include <windows.h>
+#include <hltypes/hplatform.h>
+#ifndef _ANDROID
+#if !_HL_WINRT
+#define RESOURCE_PATH "../media/"
+#else
+#define RESOURCE_PATH "media/"
+#endif
+#else
+#define RESOURCE_PATH "./"
 #endif
 
+#include <stdio.h>
+
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 
@@ -36,10 +45,15 @@
 #define __XAL_THREADED true
 #endif
 
+#if !_HL_WINRT
 int main(int argc, char **argv)
+#else
+[Platform::MTAThread]
+int main(Platform::Array<Platform::String^>^ args)
+#endif
 {
 	void* hwnd = 0;
-#ifdef _WIN32
+#if defined(_WIN32) && !_HL_WINRT
 	hwnd = GetConsoleWindow();
 #endif
 	// initialize XAL with platform default audio system, optional threaded update and 100 times per second
@@ -50,57 +64,59 @@ int main(int argc, char **argv)
 	// create a category for streamed sounds
 	xal::mgr->createCategory(CATEGORY_STREAMED, xal::STREAMED, xal::DISK);
 	// create sound using a prefix (forces usage of the ogg files)
-	xal::mgr->createSound("../media/" SOUND_NAME_NORMAL ".ogg", CATEGORY_NORMAL);
+	xal::mgr->createSound(RESOURCE_PATH SOUND_NAME_NORMAL ".ogg", CATEGORY_NORMAL);
 	// create streamed sound using no prefix (forces usage of the ogg files)
-	xal::mgr->createSound("../media/streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
+	xal::mgr->createSound(RESOURCE_PATH"streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
 	xal::Player* p;
 
 	// create a sound player for manual control
 	p = xal::mgr->createPlayer(SOUND_NORMAL);
 	// play the sound
-	printf("- starting " SOUND_NORMAL "\n");
+	hlog::write("", "- starting " SOUND_NORMAL);
 	p->play();
 	p->setPitch(0.5f);
 	while (p->isPlaying())
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
-		printf("    - " SOUND_NORMAL " - samples: %d - time: %f\n", p->getSamplePosition(), p->getTimePosition());
+		hlog::writef("", "    - " SOUND_NORMAL " - samples: %d - time: %f", p->getSamplePosition(), p->getTimePosition());
 	}
-	printf("- finished " SOUND_NORMAL "\n");
+	hlog::write("", "- finished " SOUND_NORMAL);
 	// destroy the player
 	xal::mgr->destroyPlayer(p);
 
 	// create a new sound player
 	p = xal::mgr->createPlayer(SOUND_STREAMED);
 	// play the sound
-	printf("- starting " SOUND_STREAMED "\n");
+	hlog::write("", "- starting " SOUND_STREAMED);
 	p->play();
 	while (p->isPlaying())
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
-		printf("    - " SOUND_STREAMED " - samples: %d - time: %f\n", p->getSamplePosition(), p->getTimePosition());
+		hlog::writef("", "    - " SOUND_STREAMED " - samples: %d - time: %f", p->getSamplePosition(), p->getTimePosition());
 	}
-	printf("- finished " SOUND_STREAMED "\n");
+	hlog::write("", "- finished " SOUND_STREAMED);
 	// destroy the player
 	xal::mgr->destroyPlayer(p);
 
 	// fire & forget, no control over the sound
 	xal::mgr->play(SOUND_NORMAL);
-	printf("- starting " SOUND_NORMAL "\n");
+	hlog::write("", "- starting " SOUND_NORMAL);
 	while (xal::mgr->isAnyPlaying(SOUND_NORMAL))
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
 	}
-	printf("- finished " SOUND_NORMAL "\n");
+	hlog::write("", "- finished " SOUND_NORMAL);
 
 	// destroying the sounds manually
 	xal::mgr->destroySound(xal::mgr->getSound(SOUND_NORMAL));
 	xal::mgr->destroySound(xal::mgr->getSound(SOUND_STREAMED));
 	// destroying XAL itself
 	xal::destroy();
+#if !_HL_WINRT
 	system("pause");
+#endif
 	return 0;
 }

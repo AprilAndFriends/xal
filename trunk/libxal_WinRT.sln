@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxal_WinRT", "libxal_WinRT.vcxproj", "{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}"
+# Visual Studio Express 2012 for Windows 8
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxal", "libxal_WinRT.vcxproj", "{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\libhltypes_WinRT.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxalutil_WinRT", "xalutil\libxalutil_WinRT.vcxproj", "{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxalutil", "xalutil\libxalutil_WinRT.vcxproj", "{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08} = {6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_simple_WinRT", "demos\demo_simple\demo_simple_WinRT.vcxproj", "{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_simple", "demos\demo_simple\demo_simple_WinRT.vcxproj", "{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_test_WinRT", "demos\demo_test\demo_test_WinRT.vcxproj", "{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}"
 EndProject
@@ -108,8 +108,10 @@ Global
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_Android|Win32.Build.0 = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_DirectSound|Win32.ActiveCfg = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_DirectSound|Win32.Build.0 = Debug|Win32
+		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_DirectSound|Win32.Deploy.0 = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_NoAudio|Win32.ActiveCfg = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_NoAudio|Win32.Build.0 = Debug|Win32
+		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_NoAudio|Win32.Deploy.0 = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_OpenAL|Win32.ActiveCfg = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_OpenAL|Win32.Build.0 = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug_SDL|Win32.ActiveCfg = Debug|Win32
@@ -133,7 +135,6 @@ Global
 		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_DirectSound|Win32.ActiveCfg = Debug|Win32
 		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_DirectSound|Win32.Build.0 = Debug|Win32
 		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_NoAudio|Win32.ActiveCfg = Debug|Win32
-		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_NoAudio|Win32.Build.0 = Debug|Win32
 		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_OpenAL|Win32.ActiveCfg = Debug|Win32
 		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_OpenAL|Win32.Build.0 = Debug|Win32
 		{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}.Debug_SDL|Win32.ActiveCfg = Debug|Win32
