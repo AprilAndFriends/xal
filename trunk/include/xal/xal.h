@@ -22,6 +22,7 @@
 #define XAL_AS_DIRECTSOUND "DirectSound"
 #define XAL_AS_OPENAL "OpenAL"
 #define XAL_AS_SDL "SDL"
+#define XAL_AS_XAUDIO2 "XAudio2"
 #define XAL_AS_AVFOUNDATION "AVFoundation"
 #define XAL_AS_COREAUDIO "CoreAudio"
 #define XAL_AS_DISABLED "Disabled"

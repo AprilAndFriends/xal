@@ -12,6 +12,7 @@
 
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
+#include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
@@ -30,6 +31,9 @@
 #ifdef HAVE_SDL
 #include "SDL_AudioManager.h"
 #endif
+#ifdef HAVE_XAUDIO2
+#include "XAudio2_AudioManager.h"
+#endif
 #include "NoAudio_AudioManager.h"
 #include "xal.h"
 /*
@@ -42,6 +46,7 @@
 */
 
 #ifdef _WIN32
+#if !_HL_WINRT
 	#ifdef HAVE_DIRECTSOUND
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DIRECTSOUND
 	#elif defined(HAVE_SDL)
@@ -51,6 +56,13 @@
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
+#else
+	#ifdef HAVE_XAUDIO2
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_XAUDIO2
+	#else
+	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#endif
+#endif
 #elif defined(__APPLE__) && !TARGET_OS_IPHONE
 	#ifdef HAVE_COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
@@ -141,6 +153,12 @@ namespace xal
 			xal::mgr = new SDL_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
+#ifdef HAVE_XAUDIO2
+		if (name == XAL_AS_XAUDIO2)
+		{
+			xal::mgr = new XAudio2_AudioManager(name, backendId, threaded, updateTime, deviceName);
+		}
+#endif
 /*
 #if TARGET_OS_IPHONE
 		if (name == XAL_AS_AVFOUNDATION)
@@ -200,6 +218,12 @@ namespace xal
 #endif
 #ifdef HAVE_SDL
 		if (name == XAL_AS_SDL)
+		{
+			return true;
+		}
+#endif
+#ifdef HAVE_XAUDIO2
+		if (name == XAL_AS_XAUDIO2)
 		{
 			return true;
 		}

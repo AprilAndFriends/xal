@@ -21,24 +21,6 @@
     <Filter Include="Source Files\audiosources">
       <UniqueIdentifier>{702009bc-a09b-428c-bcf0-41664c26dbf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\audiosystems\DirectSound">
-      <UniqueIdentifier>{e9c094a3-cf68-4ff0-87b2-2aa1bacb1912}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\audiosystems\OpenAL">
-      <UniqueIdentifier>{58ee6ee1-b26d-4037-ae92-c5835bc291de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\audiosystems\SDL">
-      <UniqueIdentifier>{110e0a45-c7b0-43d3-b8b5-4d9cd42c8ece}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\audiosystems\DirectSound">
-      <UniqueIdentifier>{8b303320-1f39-46e4-9b93-4747f62acf51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\audiosystems\OpenAL">
-      <UniqueIdentifier>{6061671f-99bf-435a-886b-ac4197d6269b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\audiosystems\SDL">
-      <UniqueIdentifier>{b019b05c-5f5d-45c0-990d-d0c58bb47a63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{8e56379e-ed92-4bfb-976f-3756a846171d}</UniqueIdentifier>
     </Filter>
@@ -48,11 +30,11 @@
     <Filter Include="Header Files\audiosystems\NoAudio">
       <UniqueIdentifier>{6d09185e-ee34-45c9-a992-ea4c216beaca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\audiosystems\Android">
-      <UniqueIdentifier>{4c3a03b0-0516-450b-80b0-ec055b39eada}</UniqueIdentifier>
+    <Filter Include="Source Files\audiosystems\XAudio2">
+      <UniqueIdentifier>{4557971d-c4a7-4f57-bd47-4233bc4a9ec1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\audiosystems\Android">
-      <UniqueIdentifier>{5097de0c-052d-458e-9a37-e7923e65adf0}</UniqueIdentifier>
+    <Filter Include="Header Files\audiosystems\XAudio2">
+      <UniqueIdentifier>{61e4fa52-7048-491c-afa6-e8cc47ba0cfe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,27 +68,6 @@
     <ClCompile Include="audiosources\WAV_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp">
-      <Filter>Source Files\audiosystems\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp">
-      <Filter>Source Files\audiosystems\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp">
-      <Filter>Source Files\audiosystems\OpenAL</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp">
-      <Filter>Source Files\audiosystems\OpenAL</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp">
-      <Filter>Source Files\audiosystems\SDL</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\SDL\SDL_Player.cpp">
-      <Filter>Source Files\audiosystems\SDL</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\DirectSound\DirectSound_WAV_Source.cpp">
-      <Filter>Source Files\audiosystems\DirectSound</Filter>
-    </ClCompile>
     <ClCompile Include="audiosources\FLAC_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
@@ -116,11 +77,11 @@
     <ClCompile Include="audiosystems\NoAudio\NoAudio_Player.cpp">
       <Filter>Source Files\audiosystems\NoAudio</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\Android\Android_AudioManager.cpp">
-      <Filter>Source Files\audiosystems\Android</Filter>
+    <ClCompile Include="audiosystems\XAudio2\XAudio2_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\XAudio2</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\Android\Android_Player.cpp">
-      <Filter>Source Files\audiosystems\Android</Filter>
+    <ClCompile Include="audiosystems\XAudio2\XAudio2_Player.cpp">
+      <Filter>Source Files\audiosystems\XAudio2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,27 +118,6 @@
     <ClInclude Include="audiosources\WAV_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h">
-      <Filter>Header Files\audiosystems\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h">
-      <Filter>Header Files\audiosystems\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h">
-      <Filter>Header Files\audiosystems\OpenAL</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h">
-      <Filter>Header Files\audiosystems\OpenAL</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h">
-      <Filter>Header Files\audiosystems\SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\SDL\SDL_Player.h">
-      <Filter>Header Files\audiosystems\SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\DirectSound\DirectSound_WAV_Source.h">
-      <Filter>Header Files\audiosystems\DirectSound</Filter>
-    </ClInclude>
     <ClInclude Include="audiosources\FLAC_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
@@ -190,11 +130,11 @@
     <ClInclude Include="audiosystems\NoAudio\NoAudio_Player.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\Android\Android_Player.h">
-      <Filter>Header Files\audiosystems\Android</Filter>
+    <ClInclude Include="audiosystems\XAudio2\XAudio2_AudioManager.h">
+      <Filter>Header Files\audiosystems\XAudio2</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\Android\Android_AudioManager.h">
-      <Filter>Header Files\audiosystems\Android</Filter>
+    <ClInclude Include="audiosystems\XAudio2\XAudio2_Player.h">
+      <Filter>Header Files\audiosystems\XAudio2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
