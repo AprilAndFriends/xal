@@ -1,7 +1,7 @@
 /// @file
 /// @author  Ivan Vucica
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 

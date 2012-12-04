@@ -8,7 +8,9 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #ifdef HAVE_XAUDIO2
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
+#include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
 
 #include "Buffer.h"
@@ -17,14 +19,51 @@
 #include "Sound.h"
 #include "xal.h"
 
+#define AUDIO_DEVICE ((XAudio2_AudioManager*)xal::mgr)->xa2Device
+
+using namespace Microsoft::WRL;
+
 namespace xal
 {
-	XAudio2_Player::XAudio2_Player(Sound* sound) : Player(sound), playing(false)
+	XAudio2_Player::XAudio2_Player(Sound* sound) : Player(sound), playing(false), active(false),
+		stillPlaying(false), sourceVoice(NULL)
 	{
+		this->callbackHandler = new XAudio2_Player::CallbackHandler(&this->active);
+		memset(&this->xa2Buffer, 0, sizeof(XAUDIO2_BUFFER));
+		for_iter (i, 0, STREAM_BUFFER_COUNT)
+		{
+			this->streamBuffers[i] = NULL;
+		}
+		if (this->sound->isStreamed())
+		{
+			for_iter (i, 0, STREAM_BUFFER_COUNT)
+			{
+				this->streamBuffers[i] = new unsigned char[STREAM_BUFFER_SIZE];
+			}
+		}
 	}
 
 	XAudio2_Player::~XAudio2_Player()
 	{
+		if (this->sourceVoice != NULL)
+		{
+			this->sourceVoice->DestroyVoice();
+			this->sourceVoice = NULL;
+		}
+		_HL_TRY_DELETE(this->callbackHandler);
+		for_iter (i, 0, STREAM_BUFFER_COUNT)
+		{
+			_HL_TRY_DELETE_ARRAY(this->streamBuffers[i]);
+		}
+	}
+
+	void XAudio2_Player::_update(float k)
+	{
+		Player::_update(k);
+		if (!this->stillPlaying && this->playing)
+		{
+			this->_stop();
+		}
 	}
 
 	bool XAudio2_Player::_systemIsPlaying()
@@ -32,15 +71,184 @@ namespace xal
 		return this->playing;
 	}
 
+	bool XAudio2_Player::_systemPreparePlay()
+	{
+		if (this->sourceVoice != NULL)
+		{
+			return true;
+		}
+		WAVEFORMATEX wavefmt;
+		wavefmt.cbSize = 0;
+		wavefmt.nChannels = this->buffer->getChannels();
+		wavefmt.nSamplesPerSec = this->buffer->getSamplingRate();
+		wavefmt.wBitsPerSample = this->buffer->getBitsPerSample();
+		wavefmt.wFormatTag = WAVE_FORMAT_PCM;
+		wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8; // standard calculation of WAV PCM data
+		wavefmt.nAvgBytesPerSec = wavefmt.nSamplesPerSec * wavefmt.nBlockAlign; // standard calculation of WAV PCM data
+		HRESULT result = AUDIO_DEVICE->CreateSourceVoice(&this->sourceVoice, &wavefmt, 0, XAUDIO2_DEFAULT_FREQ_RATIO,
+			this->callbackHandler, NULL, NULL);
+		if (FAILED(result))
+		{
+			this->sourceVoice = NULL;
+			return false;
+		}
+		return true;
+	}
+
+	void XAudio2_Player::_systemPrepareBuffer()
+	{
+		if (!this->sound->isStreamed())
+		{
+			if (!this->paused)
+			{
+				this->_submitBuffer(this->buffer->getStream(), this->buffer->getSize());
+			}
+			return;
+		}
+		int count = STREAM_BUFFER_COUNT;
+		if (this->paused)
+		{
+			this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
+			count -= this->xa2State.BuffersQueued;
+		}
+		if (count > 0)
+		{
+			count = this->_fillStreamBuffers(count);
+			if (count > 0)
+			{
+				this->_submitStreamBuffers(count);
+			}
+		}
+	}
+
+	void XAudio2_Player::_systemUpdateGain()
+	{
+		if (this->sourceVoice != NULL)
+		{
+			this->sourceVoice->SetVolume(this->_calcGain());
+		}
+	}
+
+	void XAudio2_Player::_systemUpdatePitch()
+	{
+		if (this->sourceVoice != NULL)
+		{
+			this->sourceVoice->SetFrequencyRatio(this->pitch);
+		}
+	}
+
 	void XAudio2_Player::_systemPlay()
 	{
-		this->playing = true;
+		HRESULT result = this->sourceVoice->Start();
+		if (!FAILED(result))
+		{
+			this->playing = true;
+			this->stillPlaying = true;
+		}
+		else
+		{
+			hlog::warn(xal::logTag, "Could not start: " + this->sound->getFilename());
+		}
 	}
 
 	int XAudio2_Player::_systemStop()
 	{
-		this->playing = false;
+		if (this->playing)
+		{
+			HRESULT result = this->sourceVoice->Stop();
+			if (!FAILED(result))
+			{
+				if (!this->paused)
+				{
+					this->sourceVoice->FlushSourceBuffers();
+					if (this->sound->isStreamed())
+					{
+						this->buffer->rewind();
+					}
+				}
+				this->playing = false;
+				this->stillPlaying = false;
+			}
+			else
+			{
+				hlog::warn(xal::logTag, "Could not stop: " + this->sound->getFilename());
+			}
+		}
 		return 0;
+	}
+
+	int XAudio2_Player::_systemUpdateStream()
+	{
+		this->stillPlaying = this->active;
+		this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
+		int processed = STREAM_BUFFER_COUNT - this->xa2State.BuffersQueued;
+		if (processed == 0)
+		{
+			this->stillPlaying = true;
+			return 0;
+		}
+		int count = this->_fillStreamBuffers(processed);
+		if (count > 0)
+		{
+			this->_submitStreamBuffers(count);
+			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped by XAudio2 so let's just bitch-slap it and get this over with
+		}
+		this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
+		if (this->xa2State.BuffersQueued == 0)
+		{
+			this->_stop();
+		}
+		return (processed * STREAM_BUFFER_SIZE);
+	}
+
+	void XAudio2_Player::_submitBuffer(unsigned char* stream, int size)
+	{
+		this->xa2Buffer.AudioBytes = size;
+		this->xa2Buffer.pAudioData = stream;
+		this->xa2Buffer.LoopCount = (this->looping ? XAUDIO2_LOOP_INFINITE : 0);
+		HRESULT result = this->sourceVoice->SubmitSourceBuffer(&this->xa2Buffer);
+		if (FAILED(result))
+		{
+			hlog::warn(xal::logTag, "Could not submit source buffer!");
+		}
+	}
+
+	int XAudio2_Player::_fillStreamBuffers(int count)
+	{
+		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
+		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
+		unsigned char* stream = this->buffer->getStream();
+		int currentSize;
+		for_iter (i, 0, filled)
+		{
+			currentSize = hmin(size, STREAM_BUFFER_SIZE);
+			memcpy(this->streamBuffers[this->bufferIndex], &stream[i * STREAM_BUFFER_SIZE], currentSize);
+			if (currentSize < STREAM_BUFFER_SIZE)
+			{
+				memset(&this->streamBuffers[this->bufferIndex][currentSize], 0, STREAM_BUFFER_SIZE - currentSize);
+			}
+			this->bufferIndex = (this->bufferIndex + 1) % STREAM_BUFFER_COUNT;
+			size -= STREAM_BUFFER_SIZE;
+		}
+		return filled;
+	}
+
+	void XAudio2_Player::_submitStreamBuffers(int count)
+	{
+		HRESULT result;
+		this->xa2Buffer.AudioBytes = STREAM_BUFFER_SIZE;
+		this->xa2Buffer.LoopCount = 0;
+		int index = (this->bufferIndex + STREAM_BUFFER_COUNT - count) % STREAM_BUFFER_COUNT;
+		for_iter (i, 0, count)
+		{
+			this->xa2Buffer.pAudioData = this->streamBuffers[index];
+			result = this->sourceVoice->SubmitSourceBuffer(&this->xa2Buffer);
+			if (FAILED(result))
+			{
+				hlog::warn(xal::logTag, "Could not submit streamed source buffer!");
+			}
+			index = (index + 1) % STREAM_BUFFER_COUNT;
+		}
 	}
 
 }
