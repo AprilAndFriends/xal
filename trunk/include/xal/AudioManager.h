@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -128,8 +128,8 @@ namespace xal
 
 		void clearMemory();
 
-		void suspendAudio();
-		void resumeAudio();
+		virtual void suspendAudio();
+		virtual void resumeAudio();
 
 		void addAudioExtension(chstr extension);
 		hstr findAudioFile(chstr _filename);
