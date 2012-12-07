@@ -57,7 +57,7 @@ namespace xal
 		bool repeatAll;
 		int index;
 		harray<Player*> players;
-	
+
 	};
 	
 }

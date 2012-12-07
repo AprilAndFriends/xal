@@ -60,7 +60,7 @@ namespace xal
 				if (!this->players[this->index]->isPlaying())
 				{
 					this->index = (this->index + 1) % this->players.size();
-					this->players[this->index]->play();
+					this->players[this->index]->play(0.0f, (this->players.size() == 1));
 				}
 			}
 			else if (this->index < this->players.size())
@@ -126,7 +126,8 @@ namespace xal
 			{
 				this->index = 0;
 			}
-			this->players[this->index]->play(fadeTime);
+			bool looping = (this->players.size() == 1 && this->repeatAll);
+			this->players[this->index]->play(fadeTime, looping);
 			this->playing = true;
 		}
 	}
