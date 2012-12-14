@@ -118,13 +118,13 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_NoAudio|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -135,7 +135,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -151,13 +151,13 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Android|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -168,7 +168,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -181,12 +181,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_NoAudio|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -195,7 +195,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -208,12 +208,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Android|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -222,7 +222,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidAPILevel>android-5</AndroidAPILevel>
+    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
