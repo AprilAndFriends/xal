@@ -7,6 +7,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <string.h> // required on Unix because of memset usage
+
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hresource.h>
