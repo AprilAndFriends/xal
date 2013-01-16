@@ -100,7 +100,7 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)..\lib\msvc100\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
+      <Command>xcopy $(SolutionDir)..\lib\msvc110\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
 xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Configuration)\ /d /y
 </Command>
     </PostBuildEvent>
@@ -130,7 +130,7 @@ xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Config
       <AndroidSystemLibs>c;m;log;gcc;dl</AndroidSystemLibs>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)..\lib\msvc100\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
+      <Command>xcopy $(SolutionDir)..\lib\msvc110\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
 xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Configuration)\ /d /y
 </Command>
     </PostBuildEvent>
@@ -163,7 +163,7 @@ xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Config
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)..\lib\msvc100\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
+      <Command>xcopy $(SolutionDir)..\lib\msvc110\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
 xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Configuration)\ /d /y
 </Command>
     </PostBuildEvent>
@@ -195,7 +195,7 @@ xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Config
       <AndroidSystemLibs>c;m;log;gcc;dl</AndroidSystemLibs>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)..\lib\msvc100\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
+      <Command>xcopy $(SolutionDir)..\lib\msvc110\*.dll $(SolutionDir)bin\$(Platform)\ /d /y
 xcopy $(SolutionDir)bin\$(Platform)\*.dll $(SolutionDir)bin\$(Platform)\$(Configuration)\ /d /y
 </Command>
     </PostBuildEvent>
