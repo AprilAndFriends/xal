@@ -12,7 +12,7 @@
 #include <TargetConditionals.h>
 #include <CoreAudio/CoreAudioTypes.h>
 #include <CoreFoundation/CoreFoundation.h>
-#if !TARGET_OS_IPHONE
+#ifndef _IOS
 #include <CoreServices/CoreServices.h>
 #endif
 
@@ -42,7 +42,7 @@ namespace xal
 		{
 			return false;
 		}
-#if !TARGET_OS_IPHONE
+#ifndef _IOS
         FSRef fsref;
 
 		if (FSPathMakeRef((Byte *)this->filename.c_str(), &fsref, NULL) == 0) 

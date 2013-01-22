@@ -37,11 +37,10 @@
 #include "NoAudio_AudioManager.h"
 #include "xal.h"
 /*
-#if TARGET_OS_MAC
+#ifndef _IOS
 #include "CoreAudio_AudioManager.h"
-#if TARGET_OS_IPHONE
+#else
 #include "AVFoundation_AudioManager.h"
-#endif
 #endif
 */
 
@@ -63,7 +62,7 @@
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #endif
-#elif defined(__APPLE__) && !TARGET_OS_IPHONE
+#elif defined(__APPLE__) && !defined(_IOS)
 	#ifdef HAVE_COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
 	#elif defined(HAVE_SDL)
@@ -73,7 +72,7 @@
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
-#elif defined(__APPLE__) && TARGET_OS_IPHONE
+#elif defined(__APPLE__) && defined(_IOS)
 	#ifdef HAVE_COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
 	#elif defined(HAVE_OPENAL)
@@ -160,7 +159,7 @@ namespace xal
 		}
 #endif
 /*
-#if TARGET_OS_IPHONE
+#ifdef _IOS
 		if (name == XAL_AS_AVFOUNDATION)
 		{
 			xal::mgr = new AVFoundation_AudioManager(name, backendId, threaded, updateTime, deviceName);
