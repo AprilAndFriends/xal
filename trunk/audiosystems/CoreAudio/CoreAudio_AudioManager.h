@@ -18,7 +18,7 @@
 
 #include <AudioUnit/AudioUnit.h>
 
-#if !TARGET_OS_IPHONE
+#ifndef _IOS
 // iOS contains newer API that exists on OS X 10.6, but
 // not on earlier OS. So let's use older APIs.
 #include <CoreServices/CoreServices.h>

@@ -100,7 +100,7 @@ namespace xal
 		AudioComponentDescription outputComponentDescription;
 		memset(&outputComponentDescription, 0, sizeof(outputComponentDescription));
 		outputComponentDescription.componentType = kAudioUnitType_Output;
-#if !TARGET_OS_IPHONE
+#ifndef _IOS
 		outputComponentDescription.componentSubType = kAudioUnitSubType_DefaultOutput;
 #else
 		outputComponentDescription.componentSubType = kAudioUnitSubType_RemoteIO;
