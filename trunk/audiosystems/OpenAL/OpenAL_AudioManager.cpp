@@ -44,6 +44,48 @@ void OpenAL_iOS_destroy();
 static bool gAudioSuspended = false; // iOS specific hack as well
 #endif
 
+static hstr alGetErrorString(ALenum error)
+{
+	switch (error)
+    {
+        case AL_NO_ERROR:
+            return "AL_NO_ERROR";
+        case AL_INVALID_NAME:
+            return "AL_INVALID_NAME";
+        case AL_INVALID_ENUM:
+            return "AL_INVALID_ENUM";
+        case AL_INVALID_VALUE:
+            return "AL_INVALID_VALUE";
+        case AL_INVALID_OPERATION:
+            return "AL_INVALID_OPERATION";
+        case AL_OUT_OF_MEMORY:
+            return "AL_OUT_OF_MEMORY";
+		default:
+			return "UNKNOWN";
+    };
+}
+
+static hstr alcGetErrorStrirg(ALenum error)
+{
+    switch (error)
+    {
+        case ALC_NO_ERROR:
+            return "AL_NO_ERROR";
+        case ALC_INVALID_DEVICE:
+            return "ALC_INVALID_DEVICE";
+        case ALC_INVALID_CONTEXT:
+            return "ALC_INVALID_CONTEXT";
+        case ALC_INVALID_ENUM:
+            return "ALC_INVALID_ENUM";
+        case ALC_INVALID_VALUE:
+            return "ALC_INVALID_VALUE";
+        case ALC_OUT_OF_MEMORY:
+            return "ALC_OUT_OF_MEMORY";
+		default:
+			return "UNKNOWN";
+    };
+}
+
 namespace xal
 {
 	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
@@ -51,23 +93,26 @@ namespace xal
 	{
 		hlog::write(xal::logTag, "Initializing OpenAL.");
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
+		ALenum error = alcGetError(currentDevice);
+		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not create device!");
+			hlog::error(xal::logTag, "Could not create device!, " + alcGetErrorStrirg(error));
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
 		hlog::write(xal::logTag, "Audio device: " + this->deviceName);
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
+		error = alcGetError(currentDevice);
+		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not create context!");
+			hlog::error(xal::logTag, "Could not create context!, " + alcGetErrorStrirg(error));
 			return;
 		}
 		alcMakeContextCurrent(currentContext);
-		if (alcGetError(currentDevice) != ALC_NO_ERROR)
+		error = alcGetError(currentDevice);
+		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not set context as current!");
+			hlog::error(xal::logTag, "Could not set context as current!, " + alcGetErrorStrirg(error));
 			return;
 		}
 		this->device = currentDevice;
@@ -101,9 +146,10 @@ namespace xal
 	{
 		unsigned int id = 0;
 		alGenSources(1, &id);
-		if (alGetError() != AL_NO_ERROR)
+		ALenum error = alGetError();
+		if (error != AL_NO_ERROR)
 		{
-			hlog::warn(xal::logTag, "Unable to allocate audio source!");
+			hlog::warn(xal::logTag, "Unable to allocate audio source!, " + alGetErrorString(error));
 			return 0;
 		}
 		return id;
