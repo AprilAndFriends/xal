@@ -20,7 +20,7 @@
 
 namespace xal
 {
-	CoreAudio_Player::CoreAudio_Player(Sound* sound, Buffer* buffer) : Player(sound, buffer), playing(false),
+	CoreAudio_Player::CoreAudio_Player(Sound* sound) : Player(sound), playing(false),
 		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
 	{
 		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
@@ -208,7 +208,7 @@ namespace xal
 		this->playing = true;
 	}
 
-	void CoreAudio_Player::_systemStop()
+	int CoreAudio_Player::_systemStop()
 	{
 		this->playing = false;
 		if (!this->paused)
@@ -218,11 +218,12 @@ namespace xal
 			this->writePosition = 0;
 			this->buffer->rewind();
 		}
+		return 0;
 	}
 
-	void CoreAudio_Player::_systemUpdateStream()
+	int CoreAudio_Player::_systemUpdateStream()
 	{
-		int count = 0;
+		int count = 0, result = 0;
 		if (this->readPosition > this->writePosition)
 		{
 			count = (this->readPosition - this->writePosition) / STREAM_BUFFER_SIZE;
@@ -233,8 +234,9 @@ namespace xal
 		}
 		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
-			this->_fillBuffer(STREAM_BUFFER_SIZE);
+			result = this->_fillBuffer(STREAM_BUFFER_SIZE);
 		}
+		return result;
 	}
 
 	int CoreAudio_Player::_fillBuffer(int size)

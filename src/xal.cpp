@@ -36,13 +36,12 @@
 #endif
 #include "NoAudio_AudioManager.h"
 #include "xal.h"
-/*
-#ifndef _IOS
+
+#ifdef HAVE_COREAUDIO
 #include "CoreAudio_AudioManager.h"
-#else
-#include "AVFoundation_AudioManager.h"
+//#include "AVFoundation_AudioManager.h" // TODO: iOS maybe? probably leagacy code
 #endif
-*/
+
 
 #ifdef _WIN32
 #if !_HL_WINRT

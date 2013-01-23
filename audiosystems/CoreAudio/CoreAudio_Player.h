@@ -27,7 +27,7 @@ namespace xal
 	class xalExport CoreAudio_Player : public Player
 	{
 	public:
-		CoreAudio_Player(Sound* sound, Buffer* buffer);
+		CoreAudio_Player(Sound* sound);
 		~CoreAudio_Player();
 
 		void mixAudio(unsigned char* stream, int length, bool first);
@@ -49,8 +49,8 @@ namespace xal
 		void _systemPrepareBuffer();
 		void _systemUpdateGain(float gain);
 		void _systemPlay();
-		void _systemStop();
-		void _systemUpdateStream();
+		int _systemStop();
+		int _systemUpdateStream();
 
 		int _fillBuffer(int size);
 		void _getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2);
