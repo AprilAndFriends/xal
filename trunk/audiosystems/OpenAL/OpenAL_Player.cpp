@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.01
 /// 
 /// @section LICENSE
 /// 
@@ -33,13 +33,13 @@ namespace xal
 		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
 		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
-
+	
 	OpenAL_Player::~OpenAL_Player()
 	{
 		// AudioManager calls _stop before destruction
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
-
+	
 	void OpenAL_Player::_update(float k)
 	{
 		Player::_update(k);
@@ -48,7 +48,7 @@ namespace xal
 			this->_stop();
 		}
 	}
-
+	
 	bool OpenAL_Player::_systemIsPlaying()
 	{
 		if (this->sourceId == 0)
@@ -63,7 +63,7 @@ namespace xal
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
 	}
-
+	
 	unsigned int OpenAL_Player::_systemGetBufferPosition()
 	{
 		int bytes = 0;
@@ -77,7 +77,7 @@ namespace xal
 		}
 		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
 	}
-
+	
 	float OpenAL_Player::_systemGetOffset()
 	{
 		float offset = 0.0f;
@@ -91,7 +91,7 @@ namespace xal
 #endif
 		return offset;
 	}
-
+	
 	void OpenAL_Player::_systemSetOffset(float value)
 	{
 #ifdef _IOS
@@ -105,7 +105,7 @@ namespace xal
 		// did not find anything that works on Mac OS X and iOS!
 #endif
 	}
-
+	
 	bool OpenAL_Player::_systemPreparePlay()
 	{
 		if (this->sourceId == 0)
@@ -114,7 +114,7 @@ namespace xal
 		}
 		return (this->sourceId != 0);
 	}
-
+	
 	void OpenAL_Player::_systemPrepareBuffer()
 	{
 		// making sure all buffer data is loaded before accessing anything
@@ -128,19 +128,19 @@ namespace xal
 		{
 			alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 			alSourcei(this->sourceId, AL_LOOPING, false);
-			int count = STREAM_BUFFER_COUNT;
-			if (!this->paused)
-			{
-				count = this->_fillBuffers(this->bufferIndex, STREAM_BUFFER_COUNT);
-			}
+			int count = STREAM_BUFFER_COUNT - this->_getQueuedBuffersCount();
 			if (count > 0)
 			{
-				this->_queueBuffers(this->bufferIndex, count);
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+				count = this->_fillBuffers(this->bufferIndex, count);
+				if (count > 0)
+				{
+					this->_queueBuffers(this->bufferIndex, count);
+					this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+				}
 			}
 		}
 	}
-
+	
 	void OpenAL_Player::_systemUpdateGain()
 	{
 		if (this->sourceId != 0)
@@ -148,7 +148,7 @@ namespace xal
 			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
 		}
 	}
-
+	
 	void OpenAL_Player::_systemPlay()
 	{
 		if (this->sourceId != 0)
@@ -156,7 +156,7 @@ namespace xal
 			alSourcePlay(this->sourceId);
 		}
 	}
-
+	
 	int OpenAL_Player::_systemStop()
 	{
 		int result = 0;
@@ -191,7 +191,7 @@ namespace xal
 		}
 		return result;
 	}
-
+	
 	int OpenAL_Player::_systemUpdateStream()
 	{
 		int queued = this->_getQueuedBuffersCount();
@@ -237,7 +237,7 @@ namespace xal
 		}
 		return (processed * STREAM_BUFFER_SIZE);
 	}
-
+	
 	int OpenAL_Player::_getQueuedBuffersCount()
 	{
 		int queued = 0;
@@ -247,7 +247,7 @@ namespace xal
 		}
 		return queued;
 	}
-
+	
 	int OpenAL_Player::_getProcessedBuffersCount()
 	{
 		int processed = 0;
@@ -257,7 +257,7 @@ namespace xal
 		}
 		return processed;
 	}
-
+	
 	int OpenAL_Player::_fillBuffers(int index, int count)
 	{
 		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
@@ -279,7 +279,7 @@ namespace xal
 		}
 		return filled;
 	}
-
+	
 	void OpenAL_Player::_queueBuffers(int index, int count)
 	{
 		if (index + count <= STREAM_BUFFER_COUNT)
@@ -292,7 +292,7 @@ namespace xal
 			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
 		}
 	}
- 
+ 	
 	void OpenAL_Player::_queueBuffers()
 	{
 		int queued = this->_getQueuedBuffersCount();
@@ -301,7 +301,7 @@ namespace xal
 			this->_queueBuffers(this->bufferIndex, STREAM_BUFFER_COUNT - queued);
 		}
 	}
- 
+ 	
 	void OpenAL_Player::_unqueueBuffers(int index, int count)
 	{
 #ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
@@ -360,7 +360,7 @@ namespace xal
 #endif
 		}
 	}
-
+	
 	void OpenAL_Player::_unqueueBuffers()
 	{
 		int queued = this->_getQueuedBuffersCount();
@@ -369,6 +369,6 @@ namespace xal
 			this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
 		}
 	}
-
+	
 }
 #endif
