@@ -14,10 +14,10 @@
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= 1050
 #include <AudioUnit/AUNTComponent.h>
 #endif
-
+#include <hltypes/hlog.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
+#include <hltypes/hltypesUtil.h>
 
 #include "CoreAudio_AudioManager.h"
 #include "CoreAudio_Player.h"
@@ -37,23 +37,23 @@ namespace xal
 #define CA_INIT_ASSERTION_EX(assertion, message, returnvalue) \
 	if (!(assertion)) \
 	{ \
-		xal::log("Unable to initialize CoreAudio: " message); \
+		hlog::write(logTag, "Unable to initialize CoreAudio: " message); \
 		return returnvalue; \
 	}
 	
 #define CA_INIT_ASSERTION(assertion, message) CA_INIT_ASSERTION_EX(assertion, message, /*void*/)
 	
-	
-	CoreAudio_AudioManager::CoreAudio_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
+	CoreAudio_AudioManager::CoreAudio_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
+	AudioManager(systemName, backendId, threaded, updateTime, deviceName)
+
 	{
-		xal::log("initializing CoreAudio");
+		hlog::write(logTag, "initializing CoreAudio");
 		
 		// set up threads before moving on
-		if (threaded)
-		{
-			this->_setupThread();
-		}
+//		if (threaded)
+//		{
+//			this->_setupThread();
+//		}
 		
 		OSErr result = noErr;
 		
@@ -90,8 +90,6 @@ namespace xal
 		result = AudioOutputUnitStart(outputAudioUnit);
 		CA_INIT_ASSERTION(result == noErr, "AudioUnitOutputStart() failed");
 		this->enabled = true;
-
-		
 	}
 	
 	
@@ -176,7 +174,7 @@ namespace xal
 
 	CoreAudio_AudioManager::~CoreAudio_AudioManager()
 	{
-		xal::log("destroying CoreAudio");
+		hlog::write(logTag, "destroying CoreAudio");
 		/*
 		SDL_PauseAudio(1);
 		SDL_CloseAudio();
@@ -189,9 +187,9 @@ namespace xal
 	// MARK: -
 	// MARK: Rest of audio manager code
 	
-	Player* CoreAudio_AudioManager::_createSystemPlayer(Sound* sound, Buffer* buffer)
+	Player* CoreAudio_AudioManager::_createSystemPlayer(Sound* sound)
 	{
-		return new CoreAudio_Player(sound, buffer);
+		return new CoreAudio_Player(sound);
 	}
 
 	OSStatus CoreAudio_AudioManager::mixAudio(void                        *inRefCon,
@@ -212,7 +210,8 @@ namespace xal
 		// we will render only one buffer.
 		ioData->mNumberBuffers = 1;
 		
-		for (i = 0; i < ioData->mNumberBuffers; i++) {
+		for (i = 0; i < ioData->mNumberBuffers; i++)
+		{
 			abuf = &ioData->mBuffers[i];
 			length = abuf->mDataByteSize;
 			ptr = abuf->mData;
@@ -341,7 +340,7 @@ namespace xal
 	{
 		if(ioDataPacketDescription)
 		{
-			xal::log("_converterComplexInputDataProc cannot provide input data; it doesn't know how to provide packet descriptions");
+			hlog::write(logTag, "_converterComplexInputDataProc cannot provide input data; it doesn't know how to provide packet descriptions");
 			*ioDataPacketDescription = NULL;
 			*ioNumberDataPackets = 0;
 			ioData->mNumberBuffers = 0;
@@ -356,8 +355,5 @@ namespace xal
 		*ioNumberDataPackets = ioData->mBuffers[0].mDataByteSize / self->_converter_currentInputDescription.mBytesPerPacket;
 		return 0;
 	}
-	
-	
-
 }
 #endif

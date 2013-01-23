@@ -81,7 +81,7 @@ namespace xal
 	float OpenAL_Player::_systemGetOffset()
 	{
 		float offset = 0.0f;
-#ifdef _IOS
+#if !TARGET_OS_MAC
 		if (this->sourceId != 0)
 		{
 			alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
@@ -94,7 +94,7 @@ namespace xal
 	
 	void OpenAL_Player::_systemSetOffset(float value)
 	{
-#ifdef _IOS
+#if !TARGET_OS_MAC
 		// TODO - should be int
 		if (this->sourceId != 0)
 		{

@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
-		7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */; };
 		7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
-		7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
 		7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
 		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
@@ -45,18 +42,8 @@
 		C935CE33150610E500AE8B67 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
 		C935CE34150610E500AE8B67 /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
 		C935CE35150610E500AE8B67 /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
-		C935CE36150610E500AE8B67 /* SPX_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C4138104BA0007882A /* SPX_Source.cpp */; };
-		C935CE37150610E500AE8B67 /* WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C6138104BA0007882A /* WAV_Source.cpp */; };
-		C935CE38150610E500AE8B67 /* DirectSound_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8D0138104C70007882A /* DirectSound_AudioManager.cpp */; };
-		C935CE39150610E500AE8B67 /* DirectSound_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8D2138104C70007882A /* DirectSound_Player.cpp */; };
-		C935CE3A150610E500AE8B67 /* DirectSound_WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8D4138104C70007882A /* DirectSound_WAV_Source.cpp */; };
 		C935CE3B150610E500AE8B67 /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */; };
 		C935CE3C150610E500AE8B67 /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */; };
-		C935CE3D150610E500AE8B67 /* SDL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E4138104D90007882A /* SDL_AudioManager.cpp */; };
-		C935CE3E150610E500AE8B67 /* SDL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E6138104D90007882A /* SDL_Player.cpp */; };
-		C935CE3F150610E500AE8B67 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
-		C935CE40150610E500AE8B67 /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */; };
-		C935CE41150610E500AE8B67 /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
 		C935CE42150610E500AE8B67 /* NoAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9611F6D14FE276800652DB6 /* NoAudio_AudioManager.cpp */; };
 		C935CE43150610E500AE8B67 /* NoAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9611F6F14FE276800652DB6 /* NoAudio_Player.cpp */; };
 		C935CE48150610E500AE8B67 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
@@ -85,16 +72,9 @@
 		C9DAE8BD138103F80007882A /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
 		C9DAE8CA138104BA0007882A /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
 		C9DAE8CB138104BA0007882A /* OGG_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C3138104BA0007882A /* OGG_Source.h */; };
-		C9DAE8CC138104BA0007882A /* SPX_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C4138104BA0007882A /* SPX_Source.cpp */; };
 		C9DAE8CD138104BA0007882A /* SPX_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C5138104BA0007882A /* SPX_Source.h */; };
-		C9DAE8CE138104BA0007882A /* WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C6138104BA0007882A /* WAV_Source.cpp */; };
 		C9DAE8CF138104BA0007882A /* WAV_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C7138104BA0007882A /* WAV_Source.h */; };
-		C9DAE8D6138104C70007882A /* DirectSound_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8D0138104C70007882A /* DirectSound_AudioManager.cpp */; };
-		C9DAE8D8138104C70007882A /* DirectSound_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8D2138104C70007882A /* DirectSound_Player.cpp */; };
-		C9DAE8DA138104C70007882A /* DirectSound_WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8D4138104C70007882A /* DirectSound_WAV_Source.cpp */; };
-		C9DAE8E0138104D00007882A /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DC138104D00007882A /* OpenAL_AudioManager.cpp */; };
 		C9DAE8E1138104D00007882A /* OpenAL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8DD138104D00007882A /* OpenAL_AudioManager.h */; };
-		C9DAE8E2138104D00007882A /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8DE138104D00007882A /* OpenAL_Player.cpp */; };
 		C9DAE8E3138104D00007882A /* OpenAL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8DF138104D00007882A /* OpenAL_Player.h */; };
 		C9DAE8EA138104D90007882A /* SDL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8E4138104D90007882A /* SDL_AudioManager.cpp */; };
 		C9DAE8EB138104D90007882A /* SDL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E5138104D90007882A /* SDL_AudioManager.h */; };
@@ -115,6 +95,46 @@
 		D1CC19A915599B9B0028EDD3 /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A615599B9B0028EDD3 /* Vorbis.framework */; };
 		D1CC19AA15599BB20028EDD3 /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A415599B9B0028EDD3 /* Ogg.framework */; };
 		D1CC19AB15599BB20028EDD3 /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A615599B9B0028EDD3 /* Vorbis.framework */; };
+		D1DC20A916B0A02200E6ADEF /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AE138103F80007882A /* AudioManager.cpp */; };
+		D1DC20AA16B0A02200E6ADEF /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AF138103F80007882A /* Buffer.cpp */; };
+		D1DC20AB16B0A02200E6ADEF /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B0138103F80007882A /* Category.cpp */; };
+		D1DC20AC16B0A02200E6ADEF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B1138103F80007882A /* Player.cpp */; };
+		D1DC20AD16B0A02200E6ADEF /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
+		D1DC20AE16B0A02200E6ADEF /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
+		D1DC20AF16B0A02200E6ADEF /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
+		D1DC20B016B0A02200E6ADEF /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8C2138104BA0007882A /* OGG_Source.cpp */; };
+		D1DC20BB16B0A02200E6ADEF /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D613A7803200A2DB0D /* CoreAudio_AudioManager.cpp */; };
+		D1DC20BC16B0A02200E6ADEF /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F4337D813A7803200A2DB0D /* CoreAudio_Player.cpp */; };
+		D1DC20BD16B0A02200E6ADEF /* NoAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9611F6D14FE276800652DB6 /* NoAudio_AudioManager.cpp */; };
+		D1DC20BE16B0A02200E6ADEF /* NoAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9611F6F14FE276800652DB6 /* NoAudio_Player.cpp */; };
+		D1DC20C016B0A02200E6ADEF /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A415599B9B0028EDD3 /* Ogg.framework */; };
+		D1DC20C116B0A02200E6ADEF /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A615599B9B0028EDD3 /* Vorbis.framework */; };
+		D1DC20C316B0A02200E6ADEF /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
+		D1DC20C516B0A02200E6ADEF /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20C616B0A02200E6ADEF /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89F138103DA0007882A /* Buffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20C716B0A02200E6ADEF /* Category.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A0138103DA0007882A /* Category.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20C816B0A02200E6ADEF /* Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A1138103DA0007882A /* Player.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20C916B0A02200E6ADEF /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A2138103DA0007882A /* Sound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20CA16B0A02200E6ADEF /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A3138103DA0007882A /* Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20CB16B0A02200E6ADEF /* xal.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A4138103DA0007882A /* xal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20CC16B0A02200E6ADEF /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A5138103DA0007882A /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1DC20CD16B0A02200E6ADEF /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D1DC20CE16B0A02200E6ADEF /* OGG_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C3138104BA0007882A /* OGG_Source.h */; };
+		D1DC20CF16B0A02200E6ADEF /* SPX_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C5138104BA0007882A /* SPX_Source.h */; };
+		D1DC20D016B0A02200E6ADEF /* WAV_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C7138104BA0007882A /* WAV_Source.h */; };
+		D1DC20D116B0A02200E6ADEF /* OpenAL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8DD138104D00007882A /* OpenAL_AudioManager.h */; };
+		D1DC20D216B0A02200E6ADEF /* OpenAL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8DF138104D00007882A /* OpenAL_Player.h */; };
+		D1DC20D316B0A02200E6ADEF /* SDL_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E5138104D90007882A /* SDL_AudioManager.h */; };
+		D1DC20D416B0A02200E6ADEF /* SDL_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8E7138104D90007882A /* SDL_Player.h */; };
+		D1DC20D516B0A02200E6ADEF /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
+		D1DC20D616B0A02200E6ADEF /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
+		D1DC20D716B0A02200E6ADEF /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
+		D1DC20D816B0A02200E6ADEF /* NoAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9611F6E14FE276800652DB6 /* NoAudio_AudioManager.h */; };
+		D1DC20D916B0A02200E6ADEF /* NoAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = C9611F7014FE276800652DB6 /* NoAudio_Player.h */; };
+		D1DC20E816B0A42400E6ADEF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DC20E716B0A42400E6ADEF /* CoreAudio.framework */; };
+		D1DC20EA16B0A44E00E6ADEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DC20E916B0A44E00E6ADEF /* AudioToolbox.framework */; };
+		D1DC20EC16B0A46500E6ADEF /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DC20EB16B0A46500E6ADEF /* AudioUnit.framework */; };
+		D1DC20EE16B0A4D200E6ADEF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DC20ED16B0A4D200E6ADEF /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,6 +194,11 @@
 		D1CC19A415599B9B0028EDD3 /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../__build__/angels/Build/Products/Release/Ogg.framework; sourceTree = "<group>"; };
 		D1CC19A515599B9B0028EDD3 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../__build__/angels/Build/Products/Release/SDL.framework; sourceTree = "<group>"; };
 		D1CC19A615599B9B0028EDD3 /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../__build__/angels/Build/Products/Release/Vorbis.framework; sourceTree = "<group>"; };
+		D1DC20E016B0A02200E6ADEF /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1DC20E716B0A42400E6ADEF /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		D1DC20E916B0A44E00E6ADEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D1DC20EB16B0A46500E6ADEF /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		D1DC20ED16B0A4D200E6ADEF /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +224,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1DC20BF16B0A02200E6ADEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1DC20EE16B0A4D200E6ADEF /* Carbon.framework in Frameworks */,
+				D1DC20EC16B0A46500E6ADEF /* AudioUnit.framework in Frameworks */,
+				D1DC20EA16B0A44E00E6ADEF /* AudioToolbox.framework in Frameworks */,
+				D1DC20E816B0A42400E6ADEF /* CoreAudio.framework in Frameworks */,
+				D1DC20C016B0A02200E6ADEF /* Ogg.framework in Frameworks */,
+				D1DC20C116B0A02200E6ADEF /* Vorbis.framework in Frameworks */,
+				D1DC20C316B0A02200E6ADEF /* hltypes.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -208,6 +247,7 @@
 				8DC2EF5B0486A6940098B216 /* xal.framework */,
 				D1981C82140F8A230057C3AF /* libxal.a */,
 				C935CE4F150610E600AE8B67 /* xal.framework */,
+				D1DC20E016B0A02200E6ADEF /* xal.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -385,6 +425,10 @@
 		D1981C96140F8A7F0057C3AF /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				D1DC20ED16B0A4D200E6ADEF /* Carbon.framework */,
+				D1DC20EB16B0A46500E6ADEF /* AudioUnit.framework */,
+				D1DC20E916B0A44E00E6ADEF /* AudioToolbox.framework */,
+				D1DC20E716B0A42400E6ADEF /* CoreAudio.framework */,
 				D1CC19A415599B9B0028EDD3 /* Ogg.framework */,
 				D1CC19A515599B9B0028EDD3 /* SDL.framework */,
 				D1CC19A615599B9B0028EDD3 /* Vorbis.framework */,
@@ -453,6 +497,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1DC20C416B0A02200E6ADEF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1DC20C516B0A02200E6ADEF /* AudioManager.h in Headers */,
+				D1DC20C616B0A02200E6ADEF /* Buffer.h in Headers */,
+				D1DC20C716B0A02200E6ADEF /* Category.h in Headers */,
+				D1DC20C816B0A02200E6ADEF /* Player.h in Headers */,
+				D1DC20C916B0A02200E6ADEF /* Sound.h in Headers */,
+				D1DC20CA16B0A02200E6ADEF /* Source.h in Headers */,
+				D1DC20CB16B0A02200E6ADEF /* xal.h in Headers */,
+				D1DC20CC16B0A02200E6ADEF /* xalExport.h in Headers */,
+				D1DC20CD16B0A02200E6ADEF /* Endianess.h in Headers */,
+				D1DC20CE16B0A02200E6ADEF /* OGG_Source.h in Headers */,
+				D1DC20CF16B0A02200E6ADEF /* SPX_Source.h in Headers */,
+				D1DC20D016B0A02200E6ADEF /* WAV_Source.h in Headers */,
+				D1DC20D116B0A02200E6ADEF /* OpenAL_AudioManager.h in Headers */,
+				D1DC20D216B0A02200E6ADEF /* OpenAL_Player.h in Headers */,
+				D1DC20D316B0A02200E6ADEF /* SDL_AudioManager.h in Headers */,
+				D1DC20D416B0A02200E6ADEF /* SDL_Player.h in Headers */,
+				D1DC20D516B0A02200E6ADEF /* M4A_Source.h in Headers */,
+				D1DC20D616B0A02200E6ADEF /* CoreAudio_AudioManager.h in Headers */,
+				D1DC20D716B0A02200E6ADEF /* CoreAudio_Player.h in Headers */,
+				D1DC20D816B0A02200E6ADEF /* NoAudio_AudioManager.h in Headers */,
+				D1DC20D916B0A02200E6ADEF /* NoAudio_Player.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -507,6 +579,24 @@
 			productReference = D1981C82140F8A230057C3AF /* libxal.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D1DC20A716B0A02200E6ADEF /* xal (CoreAudio vorbis) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1DC20DA16B0A02200E6ADEF /* Build configuration list for PBXNativeTarget "xal (CoreAudio vorbis)" */;
+			buildPhases = (
+				D1DC20A816B0A02200E6ADEF /* Sources */,
+				D1DC20BF16B0A02200E6ADEF /* Frameworks */,
+				D1DC20C416B0A02200E6ADEF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "xal (CoreAudio vorbis)";
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = libxal;
+			productReference = D1DC20E016B0A02200E6ADEF /* xal.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -530,6 +620,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				D1DC20A716B0A02200E6ADEF /* xal (CoreAudio vorbis) */,
 				8DC2EF4F0486A6940098B216 /* xal (SDL_mixer vorbis) */,
 				C935CE15150610E500AE8B67 /* xal (OpenAL vorbis) */,
 				D1981C81140F8A230057C3AF /* xal (iOS OpenAL vorbis m4a) */,
@@ -550,18 +641,8 @@
 				C9DAE8BB138103F80007882A /* Source.cpp in Sources */,
 				C9DAE8BD138103F80007882A /* xal.cpp in Sources */,
 				C9DAE8CA138104BA0007882A /* OGG_Source.cpp in Sources */,
-				C9DAE8CC138104BA0007882A /* SPX_Source.cpp in Sources */,
-				C9DAE8CE138104BA0007882A /* WAV_Source.cpp in Sources */,
-				C9DAE8D6138104C70007882A /* DirectSound_AudioManager.cpp in Sources */,
-				C9DAE8D8138104C70007882A /* DirectSound_Player.cpp in Sources */,
-				C9DAE8DA138104C70007882A /* DirectSound_WAV_Source.cpp in Sources */,
-				C9DAE8E0138104D00007882A /* OpenAL_AudioManager.cpp in Sources */,
-				C9DAE8E2138104D00007882A /* OpenAL_Player.cpp in Sources */,
 				C9DAE8EA138104D90007882A /* SDL_AudioManager.cpp in Sources */,
 				C9DAE8EC138104D90007882A /* SDL_Player.cpp in Sources */,
-				7F392BE4138FB6FF003B93A7 /* M4A_Source.cpp in Sources */,
-				7F4337DA13A7803200A2DB0D /* CoreAudio_AudioManager.cpp in Sources */,
-				7F4337DC13A7803200A2DB0D /* CoreAudio_Player.cpp in Sources */,
 				C9611F7114FE276800652DB6 /* NoAudio_AudioManager.cpp in Sources */,
 				C9611F7414FE276800652DB6 /* NoAudio_Player.cpp in Sources */,
 			);
@@ -579,18 +660,8 @@
 				C935CE33150610E500AE8B67 /* Source.cpp in Sources */,
 				C935CE34150610E500AE8B67 /* xal.cpp in Sources */,
 				C935CE35150610E500AE8B67 /* OGG_Source.cpp in Sources */,
-				C935CE36150610E500AE8B67 /* SPX_Source.cpp in Sources */,
-				C935CE37150610E500AE8B67 /* WAV_Source.cpp in Sources */,
-				C935CE38150610E500AE8B67 /* DirectSound_AudioManager.cpp in Sources */,
-				C935CE39150610E500AE8B67 /* DirectSound_Player.cpp in Sources */,
-				C935CE3A150610E500AE8B67 /* DirectSound_WAV_Source.cpp in Sources */,
 				C935CE3B150610E500AE8B67 /* OpenAL_AudioManager.cpp in Sources */,
 				C935CE3C150610E500AE8B67 /* OpenAL_Player.cpp in Sources */,
-				C935CE3D150610E500AE8B67 /* SDL_AudioManager.cpp in Sources */,
-				C935CE3E150610E500AE8B67 /* SDL_Player.cpp in Sources */,
-				C935CE3F150610E500AE8B67 /* M4A_Source.cpp in Sources */,
-				C935CE40150610E500AE8B67 /* CoreAudio_AudioManager.cpp in Sources */,
-				C935CE41150610E500AE8B67 /* CoreAudio_Player.cpp in Sources */,
 				C935CE42150610E500AE8B67 /* NoAudio_AudioManager.cpp in Sources */,
 				C935CE43150610E500AE8B67 /* NoAudio_Player.cpp in Sources */,
 			);
@@ -617,6 +688,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1DC20A816B0A02200E6ADEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1DC20A916B0A02200E6ADEF /* AudioManager.cpp in Sources */,
+				D1DC20AA16B0A02200E6ADEF /* Buffer.cpp in Sources */,
+				D1DC20AB16B0A02200E6ADEF /* Category.cpp in Sources */,
+				D1DC20AC16B0A02200E6ADEF /* Player.cpp in Sources */,
+				D1DC20AD16B0A02200E6ADEF /* Sound.cpp in Sources */,
+				D1DC20AE16B0A02200E6ADEF /* Source.cpp in Sources */,
+				D1DC20AF16B0A02200E6ADEF /* xal.cpp in Sources */,
+				D1DC20B016B0A02200E6ADEF /* OGG_Source.cpp in Sources */,
+				D1DC20BB16B0A02200E6ADEF /* CoreAudio_AudioManager.cpp in Sources */,
+				D1DC20BC16B0A02200E6ADEF /* CoreAudio_Player.cpp in Sources */,
+				D1DC20BD16B0A02200E6ADEF /* NoAudio_AudioManager.cpp in Sources */,
+				D1DC20BE16B0A02200E6ADEF /* NoAudio_Player.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -637,9 +727,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
 					HAVE_SDL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -672,6 +762,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_SDL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -693,10 +784,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = NO;
@@ -719,10 +807,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
-				);
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = NO;
@@ -744,10 +828,6 @@
 				ARCHS = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
-				);
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = NO;
@@ -780,6 +860,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_SDL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -812,9 +893,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
 					HAVE_OPENAL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
@@ -846,9 +927,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
 					HAVE_OPENAL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
@@ -880,6 +961,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_OPENAL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
@@ -911,6 +993,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_OPENAL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
@@ -942,6 +1025,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_OPENAL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNUSED_VARIABLE = NO;
@@ -962,10 +1046,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = NO;
@@ -999,9 +1080,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
 					HAVE_SDL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = "";
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -1023,10 +1104,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_OGG=1",
-					"HAVE_OPENAL=1",
-				);
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = NO;
@@ -1059,6 +1136,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_SDL,
 					HAVE_OGG,
+					"$(inherited)",
 				);
 				GCC_VERSION = "";
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -1083,14 +1161,12 @@
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					"$(inherited)",
-					_DEBUG,
-					HAVE_M4A,
 					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					HAVE_M4A,
 					HAVE_OGG,
 					_IOS,
+					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
@@ -1112,14 +1188,12 @@
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					"$(inherited)",
-					_DEBUG,
-					HAVE_M4A,
 					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					HAVE_M4A,
 					HAVE_OGG,
 					_IOS,
+					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
@@ -1140,11 +1214,12 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					HAVE_M4A,
 					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					HAVE_M4A,
 					HAVE_OGG,
 					_IOS,
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -1165,11 +1240,12 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"HAVE_M4A=1",
 					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					HAVE_M4A,
 					HAVE_OGG,
 					_IOS,
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
@@ -1191,11 +1267,12 @@
 				DSTROOT = /tmp/libxal_ios.dst;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					HAVE_M4A,
 					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
+					HAVE_M4A,
 					HAVE_OGG,
 					_IOS,
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -1205,6 +1282,170 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+		D1DC20DB16B0A02200E6ADEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_COREAUDIO,
+					HAVE_OGG,
+					"$(inherited)",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		D1DC20DC16B0A02200E6ADEF /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_COREAUDIO,
+					HAVE_OGG,
+					"$(inherited)",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Debug-LLVM";
+		};
+		D1DC20DD16B0A02200E6ADEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_COREAUDIO,
+					HAVE_OGG,
+					"$(inherited)",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		D1DC20DE16B0A02200E6ADEF /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_COREAUDIO,
+					HAVE_OGG,
+					"$(inherited)",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Release-LLVM";
+		};
+		D1DC20DF16B0A02200E6ADEF /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_COREAUDIO,
+					HAVE_OGG,
+					"$(inherited)",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = xal;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
 			};
 			name = "App Store";
 		};
@@ -1255,6 +1496,18 @@
 				D1981C8E140F8A230057C3AF /* Release */,
 				D1981C8F140F8A230057C3AF /* Release-LLVM */,
 				D1981C90140F8A230057C3AF /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1DC20DA16B0A02200E6ADEF /* Build configuration list for PBXNativeTarget "xal (CoreAudio vorbis)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1DC20DB16B0A02200E6ADEF /* Debug */,
+				D1DC20DC16B0A02200E6ADEF /* Debug-LLVM */,
+				D1DC20DD16B0A02200E6ADEF /* Release */,
+				D1DC20DE16B0A02200E6ADEF /* Release-LLVM */,
+				D1DC20DF16B0A02200E6ADEF /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

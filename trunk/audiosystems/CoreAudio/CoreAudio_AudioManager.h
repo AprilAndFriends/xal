@@ -57,7 +57,7 @@ namespace xal
 	public:
 		friend class CoreAudio_Player;
 
-		CoreAudio_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		CoreAudio_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~CoreAudio_AudioManager();
 		OSStatus mixAudio(void                        *inRefCon,
 						  AudioUnitRenderActionFlags  *ioActionFlags,
@@ -74,7 +74,7 @@ namespace xal
 		AudioComponent _findOutputComponent();
 		OSStatus _connectAudioUnit();
 		
-		Player* _createSystemPlayer(Sound* sound, Buffer* buffer);
+		Player* _createSystemPlayer(Sound* sound);
 
 		static OSStatus _mixAudio(void                        *inRefCon,
 								  AudioUnitRenderActionFlags  *ioActionFlags,
