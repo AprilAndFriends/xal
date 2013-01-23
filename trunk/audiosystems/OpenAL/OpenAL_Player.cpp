@@ -223,8 +223,12 @@ namespace xal
 			}
 			if (!playing) // underrun happened, sound was stopped by OpenAL so let's reboot it properly
 			{
+				float speed = this->fadeSpeed;
+				float time = this->fadeTime;
 				this->_pause();
 				this->_play();
+				this->fadeSpeed = speed;
+				this->fadeTime = time;
 			}
 		}
 		if (this->_getQueuedBuffersCount() == 0)
