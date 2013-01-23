@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.0
+/// @version 3.01
 /// 
 /// @section LICENSE
 /// 
@@ -719,6 +719,7 @@ namespace xal
 	{
 		if (!this->suspended)
 		{
+			hlog::write(xal::logTag, "Suspending XAL.");
 			foreach (Player*, it, this->players)
 			{
 				if ((*it)->isPlaying())
@@ -747,6 +748,7 @@ namespace xal
 	{
 		if (this->suspended)
 		{
+			hlog::write(xal::logTag, "Resuming XAL.");
 			this->suspended = false;
 			this->_resumeSystem();
 			foreach (Player*, it, this->suspendedPlayers)
