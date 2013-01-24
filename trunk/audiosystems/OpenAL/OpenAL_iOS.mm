@@ -16,11 +16,48 @@
 #import <AVFoundation/AVFoundation.h>
 #include "OpenAL_AudioManager.h"
 
+static bool active = true, restoreSessionFailed = false;
+static int restoreAttempts = 0;
+
 // on iOS, interruptions such as receiving a call and cancelling it or receiving an alarm cause problems
 // with openAL. So this situation needs to be handled properly. 
 // reference article: http://benbritten.com/2009/02/02/restarting-openal-after-application-interruption-on-the-iphone/
 // modifed to use never iOS apis then the ones in the article
-	
+
+bool restoreiOSAudioSession()
+{
+	NSError* err = nil;
+	[[AVAudioSession sharedInstance] setActive:YES error:&err];
+
+	if (err != nil)
+	{
+		restoreSessionFailed = true;
+		restoreAttempts++;
+		return 0;
+	}
+	else if (restoreAttempts > 0)
+	{
+		NSLog(@"Succeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
+	}
+	((xal::OpenAL_AudioManager*) xal::mgr)->resumeOpenALContext();
+	active = true;
+	restoreSessionFailed = false;
+	restoreAttempts = 0;
+	return 1;
+}
+
+void suspendiOSAudioSession()
+{
+	[[AVAudioSession sharedInstance] setActive:NO error:NULL];
+	active = false;
+	((xal::OpenAL_AudioManager*) xal::mgr)->suspendOpenALContext();
+}
+
+bool hasiOSAudioSessionRestoreFailed()
+{
+	return restoreSessionFailed;
+}
+
 @interface OpenALAudioSessionDelegate : NSObject<AVAudioPlayerDelegate, AVAudioSessionDelegate>
 {
 
@@ -32,20 +69,26 @@
 - (void)beginInterruption
 {
 	NSLog(@"iOS audio interruption began.");
-	[[AVAudioSession sharedInstance] setActive:NO error:NULL];
-	((xal::OpenAL_AudioManager*) xal::mgr)->suspendOpenALContext();
+	suspendiOSAudioSession();
 }
 
 - (void)endInterruption
 {
 	NSLog(@"iOS audio interruption ended.");
-	[[AVAudioSession sharedInstance] setActive:YES error:NULL];
-	((xal::OpenAL_AudioManager*) xal::mgr)->resumeOpenALContext();
+	if (!restoreiOSAudioSession())
+	{
+		NSLog(@"Error resuming Audio session, try again later.");
+	}
 }
 
 @end
 
 static OpenALAudioSessionDelegate* _audio_delegate = 0;
+
+bool OpenAL_iOS_isAudioSessionActive()
+{
+	return active;
+}
 
 void OpenAL_iOS_init()
 {

@@ -81,29 +81,23 @@ namespace xal
 	float OpenAL_Player::_systemGetOffset()
 	{
 		float offset = 0.0f;
-#if !TARGET_OS_MAC
 		if (this->sourceId != 0)
 		{
 			alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
 		}
-#else
-		// did not find anything that works on Mac OS X and iOS!
-#endif
 		return offset;
 	}
 	
 	void OpenAL_Player::_systemSetOffset(float value)
 	{
-#if !TARGET_OS_MAC
-		// TODO - should be int
+#ifndef _IOS
 		if (this->sourceId != 0)
-		{
-			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
-		}
-		//alSourcei(this->sourceId, AL_SAMPLE_OFFSET, value);
 #else
-		// did not find anything that works on Mac OS X and iOS!
+		if (this->sourceId != 0 && !this->sound->isStreamed()) // Hack for iOS because apple has a bug in OpenAL and setting offset when buffers are queued messes up stuff and causes crashes.
 #endif
+		{
+			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value); // Warning: This doesn't work on MacOS's OpenAL implementation.
+		}
 	}
 	
 	bool OpenAL_Player::_systemPreparePlay()

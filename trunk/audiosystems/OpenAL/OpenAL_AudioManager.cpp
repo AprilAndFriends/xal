@@ -41,6 +41,9 @@
 #ifdef _IOS
 void OpenAL_iOS_init();
 void OpenAL_iOS_destroy();
+bool OpenAL_iOS_isAudioSessionActive();
+bool restoreiOSAudioSession();
+bool hasiOSAudioSessionRestoreFailed();
 static bool gAudioSuspended = false; // iOS specific hack as well
 #endif
 
@@ -119,6 +122,7 @@ namespace xal
 		this->context = currentContext;
 		this->enabled = true;
 #ifdef _IOS
+		this->pendingResume = false;
 		OpenAL_iOS_init();
 #endif
 	}
@@ -160,7 +164,42 @@ namespace xal
 		alDeleteSources(1, &sourceId);
 	}
 	
-	void OpenAL_AudioManager::suspendOpenALContext() // TODO - iOS specific hack, should be removed later
+#ifdef _IOS
+	void OpenAL_AudioManager::_resumeAudio()
+	{
+		if (!OpenAL_iOS_isAudioSessionActive())
+		{
+			this->pendingResume = true;
+			return;
+		}
+		AudioManager::_resumeAudio();
+		this->pendingResume = false;
+	}
+	
+	void OpenAL_AudioManager::_suspendAudio()
+	{
+		this->pendingResume = false;
+		AudioManager::_suspendAudio();
+	}
+
+	void OpenAL_AudioManager::_update(float k)
+	{
+#ifdef _IOS
+		if (hasiOSAudioSessionRestoreFailed())
+		{
+			if (!restoreiOSAudioSession())
+			{
+				hthread::sleep(50);
+				return;
+			}
+		}
+#endif
+		if (this->pendingResume) _resumeAudio();
+		AudioManager::_update(k);
+	}
+#endif
+	
+	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack
 	{
 #ifdef _IOS
 		this->_lock();
@@ -178,10 +217,10 @@ namespace xal
 #endif
 	}
 
-	void OpenAL_AudioManager::resumeOpenALContext() // TODO - iOS specific hack, should be removed later
+	void OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
 #ifdef _IOS
-		this->_lock();
+		if (!hasiOSAudioSessionRestoreFailed()) this->_lock(); // don't lock because at this point we're already locked
 		hlog::debug(xal::logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
 		alcProcessContext(this->context);
@@ -189,7 +228,7 @@ namespace xal
 		{
 			this->_resumeAudio();
 		}
-		this->_unlock();
+		if (!hasiOSAudioSessionRestoreFailed()) this->_unlock();
 #else
 		hlog::debug(xal::logTag, "Not iOS, resumeOpenALContext does nothing.");
 #endif

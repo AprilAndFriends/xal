@@ -674,6 +674,7 @@
 				C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */,
 				D1981C97140F8ADB0057C3AF /* OpenAL_AudioManager.cpp in Sources */,
 				D1981C98140F8ADB0057C3AF /* OpenAL_Player.cpp in Sources */,
+				C9C5A32214F7CB790062122D /* OpenAL_iOS.mm in Sources */,
 				D1981C9A140F8ADB0057C3AF /* OGG_Source.cpp in Sources */,
 				D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */,
 				D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */,
@@ -682,7 +683,6 @@
 				D1981CA0140F8ADB0057C3AF /* Sound.cpp in Sources */,
 				D1981CA1140F8ADB0057C3AF /* Source.cpp in Sources */,
 				D1981CA2140F8ADB0057C3AF /* xal.cpp in Sources */,
-				C9C5A32214F7CB790062122D /* OpenAL_iOS.mm in Sources */,
 				C9611F7214FE276800652DB6 /* NoAudio_AudioManager.cpp in Sources */,
 				C9611F7514FE276800652DB6 /* NoAudio_Player.cpp in Sources */,
 			);
@@ -1265,7 +1265,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxal_ios.dst;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					HAVE_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",

@@ -128,8 +128,8 @@ namespace xal
 
 		void clearMemory();
 
-		virtual void suspendAudio();
-		virtual void resumeAudio();
+		void suspendAudio();
+		void resumeAudio();
 
 		void addAudioExtension(chstr extension);
 		hstr findAudioFile(chstr _filename);
@@ -167,7 +167,7 @@ namespace xal
 		void _startThreading();
 		void _clear();
 		
-		void _update(float k);
+		virtual void _update(float k);
 		virtual void _lock();
 		virtual void _unlock();
 
@@ -207,8 +207,8 @@ namespace xal
 
 		void _clearMemory();
 
-		void _suspendAudio();
-		void _resumeAudio();
+		virtual void _suspendAudio();
+		virtual void _resumeAudio();
 
 		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format (bit rate, channel number, sampling rate).
 		/// @param[in] buffer Buffer object that describes the data.

@@ -56,7 +56,12 @@ namespace xal
 		Player* _createSystemPlayer(Sound* sound);
 		unsigned int _allocateSourceId();
 		void _releaseSourceId(unsigned int sourceId);
-
+#ifdef _IOS
+		void _resumeAudio();
+		void _suspendAudio();
+		void _update(float k);
+		bool pendingResume; // iOS exception handling dealing with Audio Session interruptions
+#endif
 	};
 	
 }
