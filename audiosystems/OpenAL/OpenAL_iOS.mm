@@ -33,6 +33,8 @@ bool restoreiOSAudioSession()
 	{
 		restoreSessionFailed = true;
 		restoreAttempts++;
+		if (restoreAttempts % 20 == 0)
+			NSLog(@"Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
 		return 0;
 	}
 	else if (restoreAttempts > 0)
