@@ -33,7 +33,7 @@
 			#endif
 		#else
 			#define xalExport __attribute__ ((visibility("default")))
-			#define xalFnExport
+			#define xalFnExport __attribute__ ((visibility("default")))
 		#endif
 	#endif
 	#ifndef DEPRECATED_ATTRIBUTE
