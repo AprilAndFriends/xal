@@ -25,14 +25,14 @@ namespace xal
 {
 	Android_Player::Android_Player(Sound* sound) : Player(sound), sourceId(0)
 	{
-		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
-		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
+		memset(this->bufferIds, 0, xal::StreamBufferCount * sizeof(unsigned int));
+		alGenBuffers((!this->sound->isStreamed() ? 1 : xal::StreamBufferCount), this->bufferIds);
 	}
 
 	Android_Player::~Android_Player()
 	{
 		// AudioManager calls _stop before destruction
-		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
+		alDeleteBuffers((!this->sound->isStreamed() ? 1 : xal::StreamBufferCount), this->bufferIds);
 	}
 
 	void Android_Player::_update(float k)
@@ -70,7 +70,7 @@ namespace xal
 		{
 			return bytes;
 		}
-		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
+		return ((bytes + this->bufferIndex * xal::StreamBufferSize) % xal::StreamBuffers);
 	}
 
 	float Android_Player::_systemGetOffset()
@@ -115,15 +115,15 @@ namespace xal
 		{
 			alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 			alSourcei(this->sourceId, AL_LOOPING, false);
-			int count = STREAM_BUFFER_COUNT;
+			int count = xal::StreamBufferCount;
 			if (!this->paused)
 			{
-				count = this->_fillBuffers(this->bufferIndex, STREAM_BUFFER_COUNT);
+				count = this->_fillBuffers(this->bufferIndex, xal::StreamBufferCount);
 			}
 			if (count > 0)
 			{
 				this->_queueBuffers(this->bufferIndex, count);
-				this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+				this->bufferIndex = (this->bufferIndex + count) % xal::StreamBufferCount;
 			}
 		}
 	}
@@ -162,8 +162,8 @@ namespace xal
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
 				if (this->paused)
 				{
-					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
-					result = processed * STREAM_BUFFER_SIZE;
+					this->bufferIndex = (this->bufferIndex + processed) % xal::StreamBufferCount;
+					result = processed * xal::StreamBufferSize;
 				}
 				else
 				{
@@ -190,13 +190,13 @@ namespace xal
 		{
 			return 0;
 		}
-		this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, processed);
+		this->_unqueueBuffers((this->bufferIndex + xal::StreamBufferCount - queued) % xal::StreamBufferCount, processed);
 		int count = this->_fillBuffers(this->bufferIndex, processed);
 		if (count > 0)
 		{
 			this->_queueBuffers(this->bufferIndex, count);
-			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
-			bool playing = (processed < STREAM_BUFFER_COUNT);
+			this->bufferIndex = (this->bufferIndex + count) % xal::StreamBufferCount;
+			bool playing = (processed < xal::StreamBufferCount);
 			if (playing)
 			{
 				int state;
@@ -220,7 +220,7 @@ namespace xal
 		{
 			this->_stop();
 		}
-		return (processed * STREAM_BUFFER_SIZE);
+		return (processed * xal::StreamBufferSize);
 	}
 
 	int Android_Player::_getQueuedBuffersCount()
@@ -245,58 +245,58 @@ namespace xal
 
 	int Android_Player::_fillBuffers(int index, int count)
 	{
-		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
+		int size = this->buffer->load(this->looping, count * xal::StreamBufferSize);
 		if (!this->sound->isStreamed())
 		{
 			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
 				this->buffer->getStream(), size, this->buffer->getSamplingRate());
 			return 1;
 		}
-		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
+		int filled = (size + xal::StreamBufferSize - 1) / xal::StreamBufferSize;
 		unsigned char* stream = this->buffer->getStream();
 		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
 		int samplingRate = this->buffer->getSamplingRate();
 		for_iter (i, 0, filled)
 		{
-			alBufferData(this->bufferIds[(index + i) % STREAM_BUFFER_COUNT], format,
-				&stream[i * STREAM_BUFFER_SIZE], hmin(size, STREAM_BUFFER_SIZE), samplingRate);
-			size -= STREAM_BUFFER_SIZE;
+			alBufferData(this->bufferIds[(index + i) % xal::StreamBufferCount], format,
+				&stream[i * xal::StreamBufferSize], hmin(size, xal::StreamBufferSize), samplingRate);
+			size -= xal::StreamBufferSize;
 		}
 		return filled;
 	}
 
 	void Android_Player::_queueBuffers(int index, int count)
 	{
-		if (index + count <= STREAM_BUFFER_COUNT)
+		if (index + count <= xal::StreamBufferCount)
 		{
 			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
 		}
 		else
 		{
-			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+			alSourceQueueBuffers(this->sourceId, xal::StreamBufferCount - index, &this->bufferIds[index]);
+			alSourceQueueBuffers(this->sourceId, count + index - xal::StreamBufferCount, this->bufferIds);
 		}
 	}
  
 	void Android_Player::_queueBuffers()
 	{
 		int queued = this->_getQueuedBuffersCount();
-		if (queued < STREAM_BUFFER_COUNT)
+		if (queued < xal::StreamBufferCount)
 		{
-			this->_queueBuffers(this->bufferIndex, STREAM_BUFFER_COUNT - queued);
+			this->_queueBuffers(this->bufferIndex, xal::StreamBufferCount - queued);
 		}
 	}
  
 	void Android_Player::_unqueueBuffers(int index, int count)
 	{
-		if (index + count <= STREAM_BUFFER_COUNT)
+		if (index + count <= xal::StreamBufferCount)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
 		}
 		else
 		{
-			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
+			alSourceUnqueueBuffers(this->sourceId, xal::StreamBufferCount - index, &this->bufferIds[index]);
+			alSourceUnqueueBuffers(this->sourceId, count + index - xal::StreamBufferCount, this->bufferIds);
 		}
 	}
 
@@ -305,7 +305,7 @@ namespace xal
 		int queued = this->_getQueuedBuffersCount();
 		if (queued > 0)
 		{
-			this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
+			this->_unqueueBuffers((this->bufferIndex + xal::StreamBufferCount - queued) % xal::StreamBufferCount, queued);
 		}
 	}
 

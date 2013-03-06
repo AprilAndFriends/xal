@@ -107,7 +107,7 @@ namespace xal
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
-		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER);
+		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : xal::StreamBuffers);
 		bufferDesc.lpwfxFormat = &wavefmt;
 		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
@@ -125,7 +125,7 @@ namespace xal
 			this->_copyBuffer(this->buffer->getStream(), this->buffer->getSize());
 			return;
 		}
-		int count = STREAM_BUFFER_COUNT;
+		int count = xal::StreamBufferCount;
 		if (!this->paused)
 		{
 			this->bufferIndex = 0;
@@ -140,12 +140,12 @@ namespace xal
 			this->bufferCount += count;
 			if (count > 0)
 			{
-				this->_copyBuffer(this->buffer->getStream(), STREAM_BUFFER_SIZE, count);
+				this->_copyBuffer(this->buffer->getStream(), xal::StreamBufferSize, count);
 			}
-			if (this->bufferQueued < STREAM_BUFFER_COUNT)
+			if (this->bufferQueued < xal::StreamBufferCount)
 			{
-				count = STREAM_BUFFER_COUNT - this->bufferQueued;
-				this->_copySilence(STREAM_BUFFER_SIZE, count);
+				count = xal::StreamBufferCount - this->bufferQueued;
+				this->_copySilence(xal::StreamBufferSize, count);
 			}
 		}
 	}
@@ -159,7 +159,7 @@ namespace xal
 		int lockOffset = 0;
 		if (this->sound->isStreamed())
 		{
-			lockOffset = this->bufferIndex * STREAM_BUFFER_SIZE;
+			lockOffset = this->bufferIndex * xal::StreamBufferSize;
 		}
 		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
@@ -182,7 +182,7 @@ namespace xal
 		this->dsBuffer->Unlock(write1, length1, write2, length2);
 		if (this->sound->isStreamed())
 		{
-			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->bufferIndex = (this->bufferIndex + count) % xal::StreamBufferCount;
 			this->bufferQueued += count;
 		}
 	}
@@ -196,7 +196,7 @@ namespace xal
 		int lockOffset = 0;
 		if (this->sound->isStreamed())
 		{
-			lockOffset = this->bufferIndex * STREAM_BUFFER_SIZE;
+			lockOffset = this->bufferIndex * xal::StreamBufferSize;
 		}
 		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
@@ -215,7 +215,7 @@ namespace xal
 		this->dsBuffer->Unlock(write1, length1, write2, length2);
 		if (this->sound->isStreamed())
 		{
-			this->bufferIndex = (this->bufferIndex + count) % STREAM_BUFFER_COUNT;
+			this->bufferIndex = (this->bufferIndex + count) % xal::StreamBufferCount;
 			this->bufferQueued += count;
 		}
 	}
@@ -261,10 +261,10 @@ namespace xal
 				if (this->paused)
 				{
 					int processed = this->_getProcessedBuffersCount();
-					this->bufferIndex = (this->bufferIndex + processed) % STREAM_BUFFER_COUNT;
+					this->bufferIndex = (this->bufferIndex + processed) % xal::StreamBufferCount;
 					this->bufferCount -= processed;
 					this->bufferQueued -= processed;
-					result = processed * STREAM_BUFFER_SIZE;
+					result = processed * xal::StreamBufferSize;
 				}
 				else
 				{
@@ -299,31 +299,31 @@ namespace xal
 		int count = this->_fillBuffers(this->bufferIndex, processed);
 		if (count > 0)
 		{
-			this->_copyBuffer(this->buffer->getStream(), STREAM_BUFFER_SIZE, count);
+			this->_copyBuffer(this->buffer->getStream(), xal::StreamBufferSize, count);
 			this->bufferCount += count;
 		}
-		if (!this->looping && this->bufferQueued < STREAM_BUFFER_COUNT)
+		if (!this->looping && this->bufferQueued < xal::StreamBufferCount)
 		{
-			count = STREAM_BUFFER_COUNT - this->bufferQueued;
-			this->_copySilence(STREAM_BUFFER_SIZE, count);
+			count = xal::StreamBufferCount - this->bufferQueued;
+			this->_copySilence(xal::StreamBufferSize, count);
 		}
 		if (this->bufferCount == 0)
 		{
 			this->_stop();
 		}
-		return (processed * STREAM_BUFFER_SIZE);
+		return (processed * xal::StreamBufferSize);
 	}
 
 	int DirectSound_Player::_getProcessedBuffersCount()
 	{
-		return ((this->_systemGetBufferPosition() / STREAM_BUFFER_SIZE +
-			STREAM_BUFFER_COUNT - this->bufferIndex) % STREAM_BUFFER_COUNT);
+		return ((this->_systemGetBufferPosition() / xal::StreamBufferSize +
+			xal::StreamBufferCount - this->bufferIndex) % xal::StreamBufferCount);
 	}
 
 	int DirectSound_Player::_fillBuffers(int index, int count)
 	{
-		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
-		return (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
+		int size = this->buffer->load(this->looping, count * xal::StreamBufferSize);
+		return (size + xal::StreamBufferSize - 1) / xal::StreamBufferSize;
 	}
 
 }

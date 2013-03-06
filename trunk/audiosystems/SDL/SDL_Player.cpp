@@ -24,7 +24,7 @@ namespace xal
 	SDL_Player::SDL_Player(Sound* sound) : Player(sound), playing(false),
 		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
 	{
-		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
+		memset(this->circleBuffer, 0, xal::StreamBuffers * sizeof(unsigned char));
 	}
 
 	SDL_Player::~SDL_Player()
@@ -66,13 +66,13 @@ namespace xal
 		*size1 = size;
 		*data2 = NULL;
 		*size2 = 0;
-		if (this->readPosition + size > STREAM_BUFFER)
+		if (this->readPosition + size > xal::StreamBuffers)
 		{
-			*size1 = STREAM_BUFFER - this->readPosition;
+			*size1 = xal::StreamBuffers - this->readPosition;
 			*data2 = this->circleBuffer;
 			*size2 = size - *size1;
 		}
-		this->readPosition = (this->readPosition + size) % STREAM_BUFFER;
+		this->readPosition = (this->readPosition + size) % xal::StreamBuffers;
 	}
 
 	void SDL_Player::_update(float k)
@@ -177,7 +177,7 @@ namespace xal
 		}
 		else if (this->readPosition < this->writePosition)
 		{
-			count = (STREAM_BUFFER - this->writePosition + this->readPosition);
+			count = (xal::StreamBuffers - this->writePosition + this->readPosition);
 		}
 		return this->buffer->convertToInputSize(count);
 	}
@@ -208,10 +208,10 @@ namespace xal
 		{
 			this->readPosition = 0;
 			this->writePosition = 0;
-			int size = this->_fillBuffer(STREAM_BUFFER);
-			if (size < STREAM_BUFFER)
+			int size = this->_fillBuffer(xal::StreamBuffers);
+			if (size < xal::StreamBuffers)
 			{
-				memset(&this->circleBuffer[size], 0, (STREAM_BUFFER - size) * sizeof(unsigned char));
+				memset(&this->circleBuffer[size], 0, (xal::StreamBuffers - size) * sizeof(unsigned char));
 			}
 		}
 	}
@@ -245,15 +245,15 @@ namespace xal
 		int count = 0;
 		if (this->readPosition > this->writePosition)
 		{
-			count = (this->readPosition - this->writePosition) / STREAM_BUFFER_SIZE;
+			count = (this->readPosition - this->writePosition) / xal::StreamBufferSize;
 		}
 		else if (this->readPosition < this->writePosition)
 		{
-			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
+			count = (xal::StreamBuffers - this->writePosition + this->readPosition) / xal::StreamBufferSize;
 		}
 		if (count > 0)
 		{
-			result = this->_fillBuffer(count * STREAM_BUFFER_SIZE);
+			result = this->_fillBuffer(count * xal::StreamBufferSize);
 			result = this->buffer->convertToInputSize(result);
 		}
 		return result;
@@ -266,31 +266,31 @@ namespace xal
 		// load the data from the buffer
 		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
-		if (this->writePosition + streamSize <= STREAM_BUFFER)
+		if (this->writePosition + streamSize <= xal::StreamBuffers)
 		{
 			memcpy(&this->circleBuffer[this->writePosition], stream, streamSize * sizeof(unsigned char));
 		}
 		else
 		{
-			int remaining = STREAM_BUFFER - this->writePosition;
+			int remaining = xal::StreamBuffers - this->writePosition;
 			memcpy(&this->circleBuffer[this->writePosition], stream, remaining * sizeof(unsigned char));
 			memcpy(this->circleBuffer, stream, (streamSize - remaining) * sizeof(unsigned char));
 		}
-		this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
+		this->writePosition = (this->writePosition + streamSize) % xal::StreamBuffers;
 		if (!this->looping && streamSize < size) // fill with silence if source is at the end
 		{
 			streamSize = size - streamSize;
-			if (this->writePosition + streamSize <= STREAM_BUFFER)
+			if (this->writePosition + streamSize <= xal::StreamBuffers)
 			{
 				memset(&this->circleBuffer[this->writePosition], 0, streamSize * sizeof(unsigned char));
 			}
 			else
 			{
-				int remaining = STREAM_BUFFER - this->writePosition;
+				int remaining = xal::StreamBuffers - this->writePosition;
 				memset(&this->circleBuffer[this->writePosition], 0, remaining * sizeof(unsigned char));
 				memset(this->circleBuffer, 0, (streamSize - remaining) * sizeof(unsigned char));
 			}
-			this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
+			this->writePosition = (this->writePosition + streamSize) % xal::StreamBuffers;
 			streamSize = size;
 		}
 		return streamSize;
