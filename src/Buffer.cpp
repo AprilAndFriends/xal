@@ -188,7 +188,7 @@ namespace xal
 		{
 			if (this->stream == NULL)
 			{
-				this->dataSize = STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE;
+				this->dataSize = xal::StreamBufferCount * xal::StreamBufferSize;
 				this->streamSize = this->dataSize;
 				this->stream = new unsigned char[this->streamSize];
 			}

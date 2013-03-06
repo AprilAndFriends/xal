@@ -35,7 +35,7 @@ namespace xal
 		bool playing;
 		int position;
 		float currentGain;
-		unsigned char circleBuffer[STREAM_BUFFER];
+		unsigned char circleBuffer[xal::StreamBuffers];
 		int readPosition;
 		int writePosition;
 

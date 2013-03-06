@@ -100,7 +100,7 @@ namespace xal
 		if (this->sound->isStreamed())
 		{
 			// corrects position by using number of processed bytes (circular)
-			position = (position + (STREAM_BUFFER_COUNT - this->bufferIndex) * STREAM_BUFFER_SIZE) % STREAM_BUFFER;
+			position = (position + (xal::StreamBufferCount - this->bufferIndex) * xal::StreamBufferSize) % xal::StreamBuffers;
 			// adds streamed processed byte count
 			position += this->processedByteCount;
 		}
