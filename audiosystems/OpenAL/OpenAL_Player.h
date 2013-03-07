@@ -34,7 +34,7 @@ namespace xal
 
 	protected:
 		unsigned int sourceId;
-		unsigned int bufferIds[xal::StreamBufferCount];
+		unsigned int bufferIds[STREAM_BUFFER_COUNT];
 
 		void _update(float k);
 
