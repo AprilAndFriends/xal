@@ -35,7 +35,7 @@ namespace xal
 		bool open();
 		void rewind();
 		bool load(unsigned char* output);
-		int loadChunk(unsigned char* output, int size = xal::StreamBufferSize);
+		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
 		void _findData();

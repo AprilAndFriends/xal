@@ -44,7 +44,7 @@ namespace xal
 		virtual void close();
 		virtual void rewind();
 		virtual bool load(unsigned char* output);
-		virtual int loadChunk(unsigned char* output, int size = xal::StreamBufferSize);
+		virtual int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
 		
 	protected:
 		hstr filename;

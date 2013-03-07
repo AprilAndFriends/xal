@@ -49,7 +49,7 @@ namespace xal
 		bool setOffset(int value);
 
 		void prepare();
-		int load(bool looping, int size = xal::StreamBufferSize);
+		int load(bool looping, int size = STREAM_BUFFER_SIZE);
 		void bind(Player* player, bool playerPaused);
 		void unbind(Player* player, bool playerPaused);
 		void keepLoaded();

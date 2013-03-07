@@ -24,12 +24,12 @@
 
 #include "xalExport.h"
 
+#define STREAM_BUFFER_COUNT 8 // greater or equal to 2
+#define STREAM_BUFFER_SIZE 32768 // equal to any power of 2
+#define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
+
 namespace xal
 {
-	static const int StreamBufferCount = 8; // greater or equal to 2
-	static const int StreamBufferSize = 32768; // equal to any power of 2
-	static const int StreamBuffers = StreamBufferCount * StreamBufferSize;
-
 	enum Format
 	{
 		FLAC,
