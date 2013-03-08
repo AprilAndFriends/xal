@@ -451,7 +451,7 @@ namespace xal
 		harray<hstr> dirs = hdir::resource_directories(path, true);
 		foreach (hstr, it, dirs)
 		{
-			category = (*it).rsplit("/", -1, true).pop_last();
+			category = (*it).rsplit("/", -1, true).remove_last();
 			result += this->_createSoundsFromPath((*it), category, prefix);
 		}
 		return result;
