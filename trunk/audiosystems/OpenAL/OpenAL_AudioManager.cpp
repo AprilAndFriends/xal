@@ -203,7 +203,7 @@ namespace xal
 	{
 #ifdef _IOS
 		this->_lock();
-		hlog::debug(xal::logTag, "Suspending OpenAL Context.");
+		hlog::write(xal::logTag, "Suspending OpenAL Context.");
 		gAudioSuspended = this->isSuspended();
 		if (!gAudioSuspended)
 		{
@@ -221,7 +221,7 @@ namespace xal
 	{
 #ifdef _IOS
 		if (!hasiOSAudioSessionRestoreFailed()) this->_lock(); // don't lock because at this point we're already locked
-		hlog::debug(xal::logTag, "Resuming OpenAL Context.");
+		hlog::write(xal::logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
 		alcProcessContext(this->context);
 		if (!gAudioSuspended)
