@@ -27,7 +27,7 @@ namespace xal
 		this->category = category;
 		this->buffer = xal::mgr->_createBuffer(this);;
 		// extracting filename without extension and prepending the prefix
-		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).pop_last().rsplit(".", 1, false).pop_first();
+		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).remove_last().rsplit(".", 1, false).remove_first();
 	}
 
 	Sound::~Sound()
