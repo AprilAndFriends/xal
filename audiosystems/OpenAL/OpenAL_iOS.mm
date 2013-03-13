@@ -14,15 +14,18 @@
 #if defined(HAVE_OPENAL) && defined(_IOS)
 
 #import <AVFoundation/AVFoundation.h>
+#include <hltypes/hlog.h>
 #include "OpenAL_AudioManager.h"
+#include "xal.h"
 
 static bool active = true, restoreSessionFailed = false;
 static int restoreAttempts = 0;
 
 // on iOS, interruptions such as receiving a call and cancelling it or receiving an alarm cause problems
-// with openAL. So this situation needs to be handled properly. 
+// with OpenAL. So this situation needs to be handled properly. 
 // reference article: http://benbritten.com/2009/02/02/restarting-openal-after-application-interruption-on-the-iphone/
-// modifed to use never iOS apis then the ones in the article
+// modifed to use newer iOS apis then the ones in the article and added exceptions for problematic devices
+// such as iPhone3GS
 
 bool restoreiOSAudioSession()
 {
@@ -34,18 +37,21 @@ bool restoreiOSAudioSession()
 		restoreSessionFailed = true;
 		restoreAttempts++;
 		if (restoreAttempts % 20 == 0)
-			NSLog(@"Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
+			hlog::writef(xal::logTag, "Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
 		return 0;
 	}
-	else if (restoreAttempts > 0)
+	if (((xal::OpenAL_AudioManager*) xal::mgr)->resumeOpenALContext())
 	{
-		NSLog(@"Succeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
+		if (restoreAttempts > 0)
+		{
+			hlog::writef(xal::logTag, "Succeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
+		}
+		active = true;
+		restoreSessionFailed = false;
+		restoreAttempts = 0;
+		return 1;
 	}
-	((xal::OpenAL_AudioManager*) xal::mgr)->resumeOpenALContext();
-	active = true;
-	restoreSessionFailed = false;
-	restoreAttempts = 0;
-	return 1;
+	else return 0;
 }
 
 void suspendiOSAudioSession()
@@ -70,16 +76,16 @@ bool hasiOSAudioSessionRestoreFailed()
 
 - (void)beginInterruption
 {
-	NSLog(@"iOS audio interruption began.");
+	hlog::writef(xal::logTag, "iOS audio interruption began.");
 	suspendiOSAudioSession();
 }
 
 - (void)endInterruption
 {
-	NSLog(@"iOS audio interruption ended.");
+	hlog::writef(xal::logTag, "iOS audio interruption ended.");
 	if (!restoreiOSAudioSession())
 	{
-		NSLog(@"Error resuming Audio session, try again later.");
+		hlog::writef(xal::logTag, "Error resuming Audio session, try again later.");
 	}
 }
 

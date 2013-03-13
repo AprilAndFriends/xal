@@ -36,9 +36,12 @@
 #include "Category.h"
 #include "OpenAL_AudioManager.h"
 #include "OpenAL_Player.h"
+#include "Sound.h"
 #include "xal.h"
 
 #ifdef _IOS
+#include <sys/sysctl.h>
+
 void OpenAL_iOS_init();
 void OpenAL_iOS_destroy();
 bool OpenAL_iOS_isAudioSessionActive();
@@ -64,11 +67,11 @@ static hstr alGetErrorString(ALenum error)
 		case AL_OUT_OF_MEMORY:
 			return "AL_OUT_OF_MEMORY";
 		default:
-			return "UNKNOWN";
+			return "AL_UNKNOWN";
 	};
 }
 
-static hstr alcGetErrorStrirg(ALenum error)
+static hstr alcGetErrorString(ALCenum error)
 {
 	switch (error)
 	{
@@ -85,7 +88,7 @@ static hstr alcGetErrorStrirg(ALenum error)
 		case ALC_OUT_OF_MEMORY:
 			return "ALC_OUT_OF_MEMORY";
 		default:
-			return "UNKNOWN";
+			return "ALC_UNKNOWN";
 	};
 }
 
@@ -95,11 +98,22 @@ namespace xal
 		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
 		hlog::write(xal::logTag, "Initializing OpenAL.");
+		initOpenAL();
+	}
+
+	OpenAL_AudioManager::~OpenAL_AudioManager()
+	{
+		hlog::write(xal::logTag, "Destroying OpenAL.");
+		destroyOpenAL();
+	}
+	
+	void OpenAL_AudioManager::initOpenAL()
+	{
 		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
 		ALenum error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not create device!, " + alcGetErrorStrirg(error));
+			hlog::error(xal::logTag, "Could not create device!, " + alcGetErrorString(error));
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
@@ -108,14 +122,14 @@ namespace xal
 		error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not create context!, " + alcGetErrorStrirg(error));
+			hlog::error(xal::logTag, "Could not create context!, " + alcGetErrorString(error));
 			return;
 		}
 		alcMakeContextCurrent(currentContext);
 		error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not set context as current!, " + alcGetErrorStrirg(error));
+			hlog::error(xal::logTag, "Could not set context as current!, " + alcGetErrorString(error));
 			return;
 		}
 		this->device = currentDevice;
@@ -126,10 +140,9 @@ namespace xal
 		OpenAL_iOS_init();
 #endif
 	}
-
-	OpenAL_AudioManager::~OpenAL_AudioManager()
+	
+	void OpenAL_AudioManager::destroyOpenAL()
 	{
-		hlog::write(xal::logTag, "Destroying OpenAL.");
 #ifdef _IOS
 		OpenAL_iOS_destroy();
 #endif
@@ -138,6 +151,24 @@ namespace xal
 			alcMakeContextCurrent(NULL);
 			alcDestroyContext(this->context);
 			alcCloseDevice(this->device);
+		}
+	}
+	
+	void OpenAL_AudioManager::resetOpenAL()
+	{
+		hlog::write(xal::logTag, "Restarting OpenAL.");
+		
+		foreach (Player*, it, this->players)
+		{
+			((OpenAL_Player*)*it)->destroyOpenALBuffers();
+		}
+
+		destroyOpenAL();
+		initOpenAL();
+
+		foreach (Player*, it, this->players)
+		{
+			((OpenAL_Player*)*it)->createOpenALBuffers();
 		}
 	}
 	
@@ -198,7 +229,7 @@ namespace xal
 		AudioManager::_update(k);
 	}
 #endif
-	
+
 	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack
 	{
 #ifdef _IOS
@@ -216,22 +247,65 @@ namespace xal
 		hlog::debug(xal::logTag, "Not iOS, suspendOpenALContext does nothing.");
 #endif
 	}
-
-	void OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
+	
+	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
 #ifdef _IOS
+		static int reset = -1;
+		ALCenum err = ALC_NO_ERROR;
+		
 		if (!hasiOSAudioSessionRestoreFailed()) this->_lock(); // don't lock because at this point we're already locked
 		hlog::write(xal::logTag, "Resuming OpenAL Context.");
-		alcMakeContextCurrent(this->context);
-		alcProcessContext(this->context);
+		
+		if (reset == -1) // only check once, for performance reasons.
+		{
+			size_t size = 255;
+			char cname[256] = {'\0'};
+			sysctlbyname("hw.machine", cname, &size, NULL, 0);
+			hstr name = cname;
+			// So far, only iPhone3GS (iPhone2,1) has problems restoring OpenAL context
+			// so instead of a restoration, a reset is used (destroy and re-init OpenAL)
+			// if another device with similar problems is found in the future, it should
+			// be added to the code below. --kspes @ March 13th, 2013
+			if (name == "iPhone2,1") reset = 1;
+			else reset = 0;
+		}
+		
+		if (reset)
+		{
+			resetOpenAL();
+		}
+		else
+		{
+			alcMakeContextCurrent(this->context);
+			if ((err = alcGetError(this->device)) == ALC_NO_ERROR)
+			{
+				alcProcessContext(this->context);
+				if ((err = alcGetError(this->device)) == ALC_NO_ERROR)
+				{
+					if (!gAudioSuspended)
+					{
+						this->_resumeAudio();
+					}
+				}
+			}
+		}
 		if (!gAudioSuspended)
 		{
 			this->_resumeAudio();
 		}
+		
 		if (!hasiOSAudioSessionRestoreFailed()) this->_unlock();
+
+		if (err != ALC_NO_ERROR)
+		{
+			hlog::write(xal::logTag, "Failed resuming OpenAL Context, will try again later. error: " + alcGetErrorString(err));
+			return 0;
+		}
 #else
 		hlog::debug(xal::logTag, "Not iOS, resumeOpenALContext does nothing.");
 #endif
+		return 1;
 	}
 }
 #endif

@@ -22,16 +22,21 @@ namespace xal
 {
 	class Buffer;
 	class Sound;
+	class OpenAL_AudioManager;
 
 	class xalExport OpenAL_Player : public Player
 	{
 	public:
+		friend class OpenAL_AudioManager;
+		
 		OpenAL_Player(Sound* sound);
 		~OpenAL_Player();
 
 		unsigned int getSourceId() { return this->sourceId; }
 		void setSourceId(unsigned int value) { this->sourceId = value; }
-
+		
+		void createOpenALBuffers();
+		void destroyOpenALBuffers();
 	protected:
 		unsigned int sourceId;
 		unsigned int bufferIds[STREAM_BUFFER_COUNT];
