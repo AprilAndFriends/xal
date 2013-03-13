@@ -46,9 +46,8 @@ namespace xal
 		OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~OpenAL_AudioManager();
 
-		void suspendOpenALContext(); // TODO - iOS specific hack, should be removed later
-		void resumeOpenALContext(); // TODO - iOS specific hack, should be removed later
-
+		void suspendOpenALContext();
+		bool resumeOpenALContext();
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
@@ -62,6 +61,10 @@ namespace xal
 		void _update(float k);
 		bool pendingResume; // iOS exception handling dealing with Audio Session interruptions
 #endif
+		void initOpenAL();
+		void destroyOpenAL();
+		void resetOpenAL();
+		
 	};
 	
 }

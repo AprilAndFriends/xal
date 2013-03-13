@@ -30,13 +30,23 @@ namespace xal
 {
 	OpenAL_Player::OpenAL_Player(Sound* sound) : Player(sound), sourceId(0)
 	{
-		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
-		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
+		createOpenALBuffers();
 	}
 	
 	OpenAL_Player::~OpenAL_Player()
 	{
 		// AudioManager calls _stop before destruction
+		destroyOpenALBuffers();
+	}
+	
+	void OpenAL_Player::createOpenALBuffers()
+	{
+		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
+		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
+	}
+
+	void OpenAL_Player::destroyOpenALBuffers()
+	{
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 	
