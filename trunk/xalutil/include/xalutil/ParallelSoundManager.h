@@ -33,7 +33,8 @@ namespace xal
 		void setFadeTime(float value) { this->fadeTime = value; }
 		harray<hstr> getSoundQueue() { return this->soundQueue; }
 		void setSoundQueue(harray<hstr> value) { this->soundQueue = value; }
-		
+		harray<hstr> getPlayingSounds();
+
 		void queueSound(chstr name);
 		void removeSound(chstr name);
 

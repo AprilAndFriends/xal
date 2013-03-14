@@ -54,7 +54,19 @@ namespace xal
 		this->updateList(this->soundQueue);
 		this->soundQueue.clear();
 	}
+
+	harray<hstr> ParallelSoundManager::getPlayingSounds()
+	{
+		harray<hstr> lst;
 		
+		foreach (Player*, it, this->players)
+		{
+			lst += (*it)->getName();
+		}
+		
+		return lst;
+	}
+
 	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
 		foreach (Player*, it, this->players)
