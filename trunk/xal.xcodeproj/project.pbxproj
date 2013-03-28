@@ -10,7 +10,7 @@
 		7F392BE5138FB6FF003B93A7 /* M4A_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F392BE3138FB6FF003B93A7 /* M4A_Source.h */; };
 		7F4337DB13A7803200A2DB0D /* CoreAudio_AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D713A7803200A2DB0D /* CoreAudio_AudioManager.h */; };
 		7F4337DD13A7803200A2DB0D /* CoreAudio_Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F4337D913A7803200A2DB0D /* CoreAudio_Player.h */; };
-		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7FC8064E11EC944C00851062 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (); }; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		C92724EF14978AF6001DBCB6 /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F392BE2138FB6FF003B93A7 /* M4A_Source.cpp */; };
 		C935CE17150610E500AE8B67 /* AudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE89E138103DA0007882A /* AudioManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,7 +21,7 @@
 		C935CE1C150610E500AE8B67 /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A3138103DA0007882A /* Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C935CE1D150610E500AE8B67 /* xal.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A4138103DA0007882A /* xal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C935CE1E150610E500AE8B67 /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A5138103DA0007882A /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C935CE1F150610E500AE8B67 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C935CE1F150610E500AE8B67 /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (); }; };
 		C935CE20150610E500AE8B67 /* OGG_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C3138104BA0007882A /* OGG_Source.h */; };
 		C935CE21150610E500AE8B67 /* SPX_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C5138104BA0007882A /* SPX_Source.h */; };
 		C935CE22150610E500AE8B67 /* WAV_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C7138104BA0007882A /* WAV_Source.h */; };
@@ -118,7 +118,7 @@
 		D1DC20CA16B0A02200E6ADEF /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A3138103DA0007882A /* Source.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1DC20CB16B0A02200E6ADEF /* xal.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A4138103DA0007882A /* xal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1DC20CC16B0A02200E6ADEF /* xalExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8A5138103DA0007882A /* xalExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1DC20CD16B0A02200E6ADEF /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D1DC20CD16B0A02200E6ADEF /* Endianess.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8064B11EC944C00851062 /* Endianess.h */; settings = {ATTRIBUTES = (); }; };
 		D1DC20CE16B0A02200E6ADEF /* OGG_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C3138104BA0007882A /* OGG_Source.h */; };
 		D1DC20CF16B0A02200E6ADEF /* SPX_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C5138104BA0007882A /* SPX_Source.h */; };
 		D1DC20D016B0A02200E6ADEF /* WAV_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DAE8C7138104BA0007882A /* WAV_Source.h */; };
@@ -453,9 +453,9 @@
 				C9DAE8AB138103DA0007882A /* Source.h in Headers */,
 				C9DAE8AC138103DA0007882A /* xal.h in Headers */,
 				C9DAE8AD138103DA0007882A /* xalExport.h in Headers */,
-				7FC8064E11EC944C00851062 /* Endianess.h in Headers */,
 				C9DAE8CB138104BA0007882A /* OGG_Source.h in Headers */,
 				C9DAE8CD138104BA0007882A /* SPX_Source.h in Headers */,
+				7FC8064E11EC944C00851062 /* Endianess.h in Headers */,
 				C9DAE8CF138104BA0007882A /* WAV_Source.h in Headers */,
 				C9DAE8E1138104D00007882A /* OpenAL_AudioManager.h in Headers */,
 				C9DAE8E3138104D00007882A /* OpenAL_Player.h in Headers */,
@@ -481,9 +481,9 @@
 				C935CE1C150610E500AE8B67 /* Source.h in Headers */,
 				C935CE1D150610E500AE8B67 /* xal.h in Headers */,
 				C935CE1E150610E500AE8B67 /* xalExport.h in Headers */,
-				C935CE1F150610E500AE8B67 /* Endianess.h in Headers */,
 				C935CE20150610E500AE8B67 /* OGG_Source.h in Headers */,
 				C935CE21150610E500AE8B67 /* SPX_Source.h in Headers */,
+				C935CE1F150610E500AE8B67 /* Endianess.h in Headers */,
 				C935CE22150610E500AE8B67 /* WAV_Source.h in Headers */,
 				C935CE23150610E500AE8B67 /* OpenAL_AudioManager.h in Headers */,
 				C935CE24150610E500AE8B67 /* OpenAL_Player.h in Headers */,
@@ -509,9 +509,9 @@
 				D1DC20CA16B0A02200E6ADEF /* Source.h in Headers */,
 				D1DC20CB16B0A02200E6ADEF /* xal.h in Headers */,
 				D1DC20CC16B0A02200E6ADEF /* xalExport.h in Headers */,
-				D1DC20CD16B0A02200E6ADEF /* Endianess.h in Headers */,
 				D1DC20CE16B0A02200E6ADEF /* OGG_Source.h in Headers */,
 				D1DC20CF16B0A02200E6ADEF /* SPX_Source.h in Headers */,
+				D1DC20CD16B0A02200E6ADEF /* Endianess.h in Headers */,
 				D1DC20D016B0A02200E6ADEF /* WAV_Source.h in Headers */,
 				D1DC20D116B0A02200E6ADEF /* OpenAL_AudioManager.h in Headers */,
 				D1DC20D216B0A02200E6ADEF /* OpenAL_Player.h in Headers */,
