@@ -61,7 +61,9 @@ namespace xal
 		void _queueBuffers();
 		void _unqueueBuffers(int index, int count);
 		void _unqueueBuffers();
-		
+#ifdef _MAC
+		float macSampleOffset;
+#endif
 	};
 
 }
