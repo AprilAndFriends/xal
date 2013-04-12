@@ -31,6 +31,9 @@ namespace xal
 	OpenAL_Player::OpenAL_Player(Sound* sound) : Player(sound), sourceId(0)
 	{
 		createOpenALBuffers();
+#ifdef _MAC
+		this->macSampleOffset = -1;
+#endif
 	}
 	
 	OpenAL_Player::~OpenAL_Player()
@@ -106,7 +109,23 @@ namespace xal
 		if (this->sourceId != 0 && !this->sound->isStreamed()) // Hack for iOS because apple has a bug in OpenAL and setting offset when buffers are queued messes up stuff and causes crashes.
 #endif
 		{
-			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value); // Warning: This doesn't work on MacOS's OpenAL implementation.
+#ifdef _MAC
+			// This is a necessarry mac-specific work-arround, setting sample offset on sources that aren't playing on MacOS doesn't work.
+			// It's a know bug and apple won't fix it. However, setting it on playing sources works. So if a source isn't playing, queue the request
+			// until the next call to alSourcePlay.
+			int state;
+			alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
+			if (state == AL_PLAYING)
+			{
+				alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
+			}
+			else
+			{
+				this->macSampleOffset = value;
+			}
+#else
+			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
+#endif
 		}
 	}
 	
@@ -158,6 +177,13 @@ namespace xal
 		if (this->sourceId != 0)
 		{
 			alSourcePlay(this->sourceId);
+#ifdef _MAC
+			if (this->macSampleOffset >= 0)
+			{
+				alSourcef(this->sourceId, AL_SAMPLE_OFFSET, this->macSampleOffset);
+				this->macSampleOffset = -1;
+			}
+#endif
 		}
 	}
 	
