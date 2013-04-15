@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.01
+/// @version 3.02
 /// 
 /// @section LICENSE
 /// 
@@ -177,7 +177,7 @@ namespace xal
 		return (this->players - this->managedPlayers);
 	}
 
-	void AudioManager::update()
+	void AudioManager::update(hthread* thread)
 	{
 		while (xal::mgr->thread != NULL && xal::mgr->threadRunning)
 		{

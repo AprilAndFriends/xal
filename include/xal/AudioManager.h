@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.0
+/// @version 3.02
 /// 
 /// @section LICENSE
 /// 
@@ -95,7 +95,7 @@ namespace xal
 		void setGlobalGain(float value);
 		harray<Player*> getPlayers();
 
-		static void update(); // used for threaded update only
+		static void update(hthread* thread); // used for threaded update only
 		void update(float k);
 
 		Category* createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode);
