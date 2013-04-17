@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.01
 /// 
 /// @section LICENSE
 /// 
@@ -87,16 +87,13 @@ namespace xal
 	
 	void Playlist::clear()
 	{
-		if (this->enabled)
+		this->stop();
+		foreach (Player*, it, this->players)
 		{
-			this->stop();
-			foreach (Player*, it, this->players)
-			{
-				xal::mgr->destroyPlayer(*it);
-			}
-			this->players.clear();
-			this->index = -1;
+			xal::mgr->destroyPlayer(*it);
 		}
+		this->players.clear();
+		this->index = -1;
 	}
 	
 	void Playlist::queueSound(chstr name)
@@ -116,69 +113,57 @@ namespace xal
 	
 	void Playlist::play(float fadeTime)
 	{
+		if (this->players.size() == 0 || this->playing)
+		{
+			return;
+		}
+		if (this->index >= this->players.size())
+		{
+			this->index = 0;
+		}
+		bool looping = (this->players.size() == 1 && this->repeatAll);
+		this->players[this->index]->play(fadeTime, looping);
 		if (this->enabled)
 		{
-			if (this->players.size() == 0 || this->playing)
-			{
-				return;
-			}
-			if (this->index >= this->players.size())
-			{
-				this->index = 0;
-			}
-			bool looping = (this->players.size() == 1 && this->repeatAll);
-			this->players[this->index]->play(fadeTime, looping);
 			this->playing = true;
 		}
 	}
 	
 	void Playlist::stop(float fadeTime)
 	{
-		if (this->enabled)
+		if (this->playing)
 		{
-			if (this->playing)
-			{
-				this->players[this->index]->stop(fadeTime);
-			}
-			this->playing = false;
+			this->players[this->index]->stop(fadeTime);
 		}
+		this->playing = false;
 	}
 	
 	void Playlist::pause(float fadeTime)
 	{
-		if (this->enabled)
+		if (this->playing)
 		{
-			if (this->playing)
-			{
-				this->players[this->index]->pause(fadeTime);
-			}
-			this->playing = false;
+			this->players[this->index]->pause(fadeTime);
 		}
+		this->playing = false;
 	}
 
 	void Playlist::shuffle()
 	{
-		if (this->enabled)
+		if (!this->playing && this->players.size() > 1)
 		{
-			if (!this->playing && this->players.size() > 1)
+			xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
+			this->players.randomize();
+			if (player != NULL)
 			{
-				xal::Player* player = (this->index >= 0 && this->index < this->players.size() ? this->players[index] : NULL);
-				this->players.randomize();
-				if (player != NULL)
-				{
-					this->index = this->players.index_of(player);
-				}
+				this->index = this->players.index_of(player);
 			}
 		}
 	}
 
 	void Playlist::reset()
 	{
-		if (this->enabled)
-		{
-			this->stop();
-			this->index = 0;
-		}
+		this->stop();
+		this->index = (this->enabled ? 0 : -1);
 	}
 	
 }
