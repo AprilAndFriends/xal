@@ -103,10 +103,10 @@ namespace xal
 	
 	void OpenAL_Player::_systemSetOffset(float value)
 	{
-#ifndef _IOS
+#ifndef __APPLE__
 		if (this->sourceId != 0)
 #else
-		if (this->sourceId != 0 && !this->sound->isStreamed()) // Hack for iOS because apple has a bug in OpenAL and setting offset when buffers are queued messes up stuff and causes crashes.
+		if (this->sourceId != 0 && !this->sound->isStreamed()) // Hack for iOS and Mac because apple has a bug in OpenAL and setting offset when buffers are queued messes up stuff and causes crashes.
 #endif
 		{
 #ifdef _MAC
@@ -201,7 +201,7 @@ namespace xal
 			{
 				int processed = this->_getProcessedBuffersCount();
 				alSourceStop(this->sourceId);
-#ifndef _IOS // hack for ios only, has problems when audio is suspended
+#ifndef _IOS // hack for iOS only, has problems when audio is suspended
 				this->_unqueueBuffers();
 #endif
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE); // necessary to avoid a memory leak in OpenAL
@@ -334,14 +334,14 @@ namespace xal
  	
 	void OpenAL_Player::_unqueueBuffers(int index, int count)
 	{
-#ifdef _IOS // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued
+#ifdef __APPLE__ // needed for ios because in IOS 5 alSourceUnqueueBuffers doesn't lock the thread and returns before all requested buffers were unqueued, Also seldomly causes crashes on MacOS
 		int n = this->_getQueuedBuffersCount();
 		int safeWait = 50;
 #endif
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceUnqueueBuffers(this->sourceId, count, &this->bufferIds[index]);
-#ifdef _IOS
+#ifdef __APPLE__
 			while (n - this->_getQueuedBuffersCount() != count && safeWait > 0)
 			{
 				hthread::sleep(1);
@@ -358,7 +358,7 @@ namespace xal
 		else
 		{
 			alSourceUnqueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
-#ifdef _IOS
+#ifdef __APPLE__
 			while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index && safeWait > 0)
 			{
 				hthread::sleep(1);
@@ -374,7 +374,7 @@ namespace xal
 			n -= STREAM_BUFFER_COUNT - index;
 #endif
 			alSourceUnqueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
-#ifdef _IOS
+#ifdef __APPLE__
 			safeWait = 50;
 			while (n - this->_getQueuedBuffersCount() != count + index - STREAM_BUFFER_COUNT && safeWait > 0)
 			{
