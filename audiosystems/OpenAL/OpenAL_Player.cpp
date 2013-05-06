@@ -30,7 +30,7 @@ namespace xal
 {
 	OpenAL_Player::OpenAL_Player(Sound* sound) : Player(sound), sourceId(0)
 	{
-		createOpenALBuffers();
+		this->createOpenALBuffers();
 #ifdef _MAC
 		this->macSampleOffset = -1;
 #endif
@@ -39,7 +39,7 @@ namespace xal
 	OpenAL_Player::~OpenAL_Player()
 	{
 		// AudioManager calls _stop before destruction
-		destroyOpenALBuffers();
+		this->destroyOpenALBuffers();
 	}
 	
 	void OpenAL_Player::createOpenALBuffers()

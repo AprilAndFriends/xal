@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="libxal"
 	ProjectGUID="{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}"
 	RootNamespace="libxal"
@@ -883,18 +883,6 @@
 						>
 					</File>
 				</Filter>
-				<Filter
-					Name="Android"
-					>
-					<File
-						RelativePath=".\audiosystems\Android\Android_AudioManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\audiosystems\Android\Android_Player.cpp"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="audiosources"
@@ -1010,18 +998,6 @@
 					</File>
 					<File
 						RelativePath=".\audiosystems\NoAudio\NoAudio_Player.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Android"
-					>
-					<File
-						RelativePath=".\audiosystems\Android\Android_AudioManager.h"
-						>
-					</File>
-					<File
-						RelativePath=".\audiosystems\Android\Android_Player.h"
 						>
 					</File>
 				</Filter>

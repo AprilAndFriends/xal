@@ -48,12 +48,6 @@
     <Filter Include="Header Files\audiosystems\NoAudio">
       <UniqueIdentifier>{6d09185e-ee34-45c9-a992-ea4c216beaca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\audiosystems\Android">
-      <UniqueIdentifier>{4c3a03b0-0516-450b-80b0-ec055b39eada}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\audiosystems\Android">
-      <UniqueIdentifier>{5097de0c-052d-458e-9a37-e7923e65adf0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioManager.cpp">
@@ -115,12 +109,6 @@
     </ClCompile>
     <ClCompile Include="audiosystems\NoAudio\NoAudio_Player.cpp">
       <Filter>Source Files\audiosystems\NoAudio</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\Android\Android_AudioManager.cpp">
-      <Filter>Source Files\audiosystems\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="audiosystems\Android\Android_Player.cpp">
-      <Filter>Source Files\audiosystems\Android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,12 +177,6 @@
     </ClInclude>
     <ClInclude Include="audiosystems\NoAudio\NoAudio_Player.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\Android\Android_Player.h">
-      <Filter>Header Files\audiosystems\Android</Filter>
-    </ClInclude>
-    <ClInclude Include="audiosystems\Android\Android_AudioManager.h">
-      <Filter>Header Files\audiosystems\Android</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

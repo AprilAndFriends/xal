@@ -19,7 +19,7 @@
 	/// @brief Macro for DLL exports/imports.
 	/// @def xalFnExport
 	/// @brief Macro for function DLL exports/imports.
-	#ifdef _STATICLIB
+	#ifdef _LIB
 		#define xalExport
 		#define xalFnExport
 	#else

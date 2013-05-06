@@ -18,7 +18,6 @@
 
 #include "xalExport.h"
 
-#define XAL_AS_ANDROID "Android"
 #define XAL_AS_DIRECTSOUND "DirectSound"
 #define XAL_AS_OPENAL "OpenAL"
 #define XAL_AS_SDL "SDL"
