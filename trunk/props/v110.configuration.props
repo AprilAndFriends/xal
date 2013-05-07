@@ -7,7 +7,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='Android'">
     <Link>
-      <AdditionalDependencies>-lhltypes;-ltremor;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>-ltremor;-logg;-lhltypes;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32' or
