@@ -11,7 +11,7 @@
 /// 
 /// iOS specific OpenAL code
 
-#if defined(HAVE_OPENAL) && defined(_IOS)
+#if defined(_OPENAL) && defined(_IOS)
 
 #import <AVFoundation/AVFoundation.h>
 #include <hltypes/hlog.h>

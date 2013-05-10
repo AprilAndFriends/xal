@@ -13,7 +13,7 @@
 /// Provides a source for M4A format. Actually supports any format supported by
 /// the Apple's Audio Toolbox.
 
-#if HAVE_M4A
+#if _FORMAT_M4A
 #ifndef XAL_M4A_SOURCE_H
 #define XAL_M4A_SOURCE_H
 
