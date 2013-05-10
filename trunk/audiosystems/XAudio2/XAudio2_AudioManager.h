@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the AudioManager for XAudio2.
 
-#ifdef HAVE_XAUDIO2
+#ifdef _XAUDIO2
 #ifndef XAL_XAUDIO2_AUDIO_MANAGER_H
 #define XAL_XAUDIO2_AUDIO_MANAGER_H
 

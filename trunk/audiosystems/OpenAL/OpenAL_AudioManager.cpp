@@ -13,7 +13,7 @@
 /// 
 /// Represents an implementation of the AudioManager for OpenAL.
 
-#ifdef HAVE_OPENAL
+#ifdef _OPENAL
 #include <string.h>
 
 #ifndef __APPLE__

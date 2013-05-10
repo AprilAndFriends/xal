@@ -12,7 +12,7 @@
 /// 
 /// Represents an implementation of the Player for CoreAudio.
 
-#if HAVE_COREAUDIO
+#if _COREAUDIO
 #ifndef XAL_COREAUDIO_PLAYER_H
 #define XAL_COREAUDIO_PLAYER_H
 

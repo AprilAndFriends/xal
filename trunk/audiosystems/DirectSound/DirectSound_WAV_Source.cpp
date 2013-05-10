@@ -7,7 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 /*
-#if defined(HAVE_DIRECTSOUND) && defined(HAVE_WAV)
+#if defined(_DIRECTSOUND) && defined(_FORMAT_WAV)
 #include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
 

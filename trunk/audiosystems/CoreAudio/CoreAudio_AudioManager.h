@@ -12,7 +12,7 @@
 /// 
 /// Represents an implementation of the AudioManager for CoreAudio.
 
-#if HAVE_COREAUDIO
+#if _COREAUDIO
 #ifndef XAL_COREAUDIO_AUDIO_MANAGER_H
 #define XAL_COREAUDIO_AUDIO_MANAGER_H
 

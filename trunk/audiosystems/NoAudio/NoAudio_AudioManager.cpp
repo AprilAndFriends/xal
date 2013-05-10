@@ -12,6 +12,7 @@
 
 #include "NoAudio_AudioManager.h"
 #include "NoAudio_Player.h"
+#include "Sound.h"
 #include "xal.h"
 
 namespace xal
@@ -28,6 +29,24 @@ namespace xal
 		hlog::write(xal::logTag, "Destroying NoAudio.");
 	}
 	
+	hstr NoAudio_AudioManager::findAudioFile(chstr _filename)
+	{
+		return "";
+	}
+	
+	Sound* NoAudio_AudioManager::_createSound(chstr filename, chstr categoryName, chstr prefix)
+	{
+		Category* category = this->_getCategoryByName(categoryName);
+		Sound* sound = new Sound(filename, category, prefix);
+		if (this->sounds.has_key(sound->getName()))
+		{
+			delete sound;
+			return NULL;
+		}
+		this->sounds[sound->getName()] = sound;
+		return sound;
+	}
+
 	Player* NoAudio_AudioManager::_createSystemPlayer(Sound* sound)
 	{
 		return new NoAudio_Player(sound);

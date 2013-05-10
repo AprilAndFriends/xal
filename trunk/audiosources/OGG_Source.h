@@ -11,7 +11,7 @@
 /// 
 /// Provides a source for OGG format.
 
-#ifdef HAVE_OGG
+#ifdef _FORMAT_OGG
 #ifndef XAL_OGG_SOURCE_H
 #define XAL_OGG_SOURCE_H
 

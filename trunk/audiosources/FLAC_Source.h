@@ -11,7 +11,7 @@
 /// 
 /// Provides a source for FLAC format.
 
-#ifdef HAVE_FLAC
+#ifdef _FORMAT_FLAC
 #ifndef XAL_FLAC_SOURCE_H
 #define XAL_FLAC_SOURCE_H
 

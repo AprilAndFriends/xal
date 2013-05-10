@@ -31,7 +31,10 @@ namespace xal
 		NoAudio_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~NoAudio_AudioManager();
 
+		hstr findAudioFile(chstr _filename);
+
 	protected:
+		Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
 		Player* _createSystemPlayer(Sound* sound);
 
 	};

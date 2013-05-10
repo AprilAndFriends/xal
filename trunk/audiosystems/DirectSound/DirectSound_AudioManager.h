@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the AudioManager for DirectSound.
 
-#ifdef HAVE_DIRECTSOUND
+#ifdef _DIRECTSOUND
 #ifndef XAL_DIRECTSOUND_AUDIO_MANAGER_H
 #define XAL_DIRECTSOUND_AUDIO_MANAGER_H
 
