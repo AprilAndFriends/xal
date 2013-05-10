@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the Player for XAudio2.
 
-#ifdef HAVE_XAUDIO2
+#ifdef _XAUDIO2
 #ifndef XAL_XAUDIO2_PLAYER_H
 #define XAL_XAUDIO2_PLAYER_H
 

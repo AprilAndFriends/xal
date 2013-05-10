@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_FLAC;HAVE_OGG;HAVE_WAV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_FORMAT_FLAC;_FORMAT_OGG;_FORMAT_WAV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>XAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 	  <AdditionalIncludeDirectories>../../include;../include;src;include/xal;audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;;../hltypes/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>

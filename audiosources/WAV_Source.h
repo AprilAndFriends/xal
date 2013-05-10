@@ -11,7 +11,7 @@
 /// 
 /// Provides a source for WAV format.
 
-#ifdef HAVE_WAV
+#ifdef _FORMAT_WAV
 #ifndef XAL_WAV_SOURCE_H
 #define XAL_WAV_SOURCE_H
 

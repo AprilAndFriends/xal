@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the AudioManager for SDL.
 
-#ifdef HAVE_SDL
+#ifdef _SDL
 #ifndef XAL_SDL_AUDIO_MANAGER_H
 #define XAL_SDL_AUDIO_MANAGER_H
 

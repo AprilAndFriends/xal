@@ -15,7 +15,7 @@
                                   '$(Configuration)|$(Platform)'=='Release_DirectSound|Win32' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_DirectSound|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_DIRECTSOUND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DIRECTSOUND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -26,7 +26,7 @@
                                   '$(Configuration)|$(Platform)'=='Release_OpenAL|Win32' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -37,7 +37,7 @@
                                   '$(Configuration)|$(Platform)'=='Release_SDL|Win32' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_SDL|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -48,7 +48,7 @@
                                   '$(Configuration)|$(Platform)'=='Release_All|Win32' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_All|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_DIRECTSOUND;HAVE_OPENAL;HAVE_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DIRECTSOUND;_OPENAL;_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dsound.lib;OpenAL32.lib;SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -59,7 +59,7 @@
                                   '$(Configuration)|$(Platform)'=='Release_OpenAL|Android' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Android'">
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>-lopenal;%(AdditionalDependencies)</AdditionalDependencies>
@@ -70,7 +70,7 @@
                                   '$(Configuration)|$(Platform)'=='Release_All|Android' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_All|Android'">
     <ClCompile>
-      <PreprocessorDefinitions>HAVE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>-lopenal;%(AdditionalDependencies)</AdditionalDependencies>

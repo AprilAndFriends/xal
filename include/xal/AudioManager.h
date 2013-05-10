@@ -132,7 +132,7 @@ namespace xal
 		void resumeAudio();
 
 		void addAudioExtension(chstr extension);
-		hstr findAudioFile(chstr _filename);
+		virtual hstr findAudioFile(chstr _filename);
 
 	protected:
 		// protected constructor to ensure that this class has to be subclassed
@@ -176,7 +176,7 @@ namespace xal
 		float _getCategoryGain(chstr category);
 		void _setCategoryGain(chstr category, float gain);
 
-		Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
+		virtual Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
 		Sound* _getSound(chstr name);
 		void _destroySound(Sound* sound);
 		void _destroySoundsWithPrefix(chstr prefix);

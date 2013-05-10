@@ -19,22 +19,22 @@
 #endif
 
 #include "AudioManager.h"
-#ifdef HAVE_DIRECTSOUND
+#ifdef _DIRECTSOUND
 #include "DirectSound_AudioManager.h"
 #endif
-#ifdef HAVE_OPENAL
+#ifdef _OPENAL
 #include "OpenAL_AudioManager.h"
 #endif
-#ifdef HAVE_SDL
+#ifdef _SDL
 #include "SDL_AudioManager.h"
 #endif
-#ifdef HAVE_XAUDIO2
+#ifdef _XAUDIO2
 #include "XAudio2_AudioManager.h"
 #endif
 #include "NoAudio_AudioManager.h"
 #include "xal.h"
 
-#ifdef HAVE_COREAUDIO
+#ifdef _COREAUDIO
 #include "CoreAudio_AudioManager.h"
 //#include "AVFoundation_AudioManager.h" // TODO: iOS maybe? probably leagacy code
 #endif
@@ -42,53 +42,53 @@
 
 #ifdef _WIN32
 #if !_HL_WINRT
-	#ifdef HAVE_DIRECTSOUND
+	#ifdef _DIRECTSOUND
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DIRECTSOUND
-	#elif defined(HAVE_SDL)
+	#elif defined(_SDL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
-	#elif defined(HAVE_OPENAL)
+	#elif defined(_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #else
-	#ifdef HAVE_XAUDIO2
+	#ifdef _XAUDIO2
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_XAUDIO2
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #endif
 #elif defined(__APPLE__) && !defined(_IOS)
-	#ifdef HAVE_COREAUDIO
+	#ifdef _COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
-	#elif defined(HAVE_SDL)
+	#elif defined(_SDL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
-	#elif defined(HAVE_OPENAL)
+	#elif defined(_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(__APPLE__) && defined(_IOS)
-	#ifdef HAVE_COREAUDIO
+	#ifdef _COREAUDIO
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
-	#elif defined(HAVE_OPENAL)
+	#elif defined(_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
-	#elif defined(HAVE_AVFOUNDATION)
+	#elif defined(_AVFOUNDATION)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_AVFOUNDATION
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 	//XAL_AS_AVFOUNDATION
 #elif defined(_UNIX)
-	#ifdef HAVE_SDL
+	#ifdef _SDL
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
-	#elif defined(HAVE_OPENAL)
+	#elif defined(_OPENAL)
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
 	#endif
 #elif defined(_ANDROID)
-	#ifdef HAVE_OPENAL
+	#ifdef _OPENAL
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
 	#else
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
@@ -124,25 +124,25 @@ namespace xal
 			hlog::write(xal::logTag, "Audio is disabled.");
 			return;
 		}
-#ifdef HAVE_DIRECTSOUND
+#ifdef _DIRECTSOUND
 		if (name == XAL_AS_DIRECTSOUND)
 		{
 			xal::mgr = new DirectSound_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
-#ifdef HAVE_OPENAL
+#ifdef _OPENAL
 		if (name == XAL_AS_OPENAL)
 		{
 			xal::mgr = new OpenAL_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
-#ifdef HAVE_SDL
+#ifdef _SDL
 		if (name == XAL_AS_SDL)
 		{
 			xal::mgr = new SDL_AudioManager(name, backendId, threaded, updateTime, deviceName);
 		}
 #endif
-#ifdef HAVE_XAUDIO2
+#ifdef _XAUDIO2
 		if (name == XAL_AS_XAUDIO2)
 		{
 			xal::mgr = new XAudio2_AudioManager(name, backendId, threaded, updateTime, deviceName);
@@ -156,7 +156,7 @@ namespace xal
 		}
 #endif
 */
-#ifdef HAVE_COREAUDIO
+#ifdef _COREAUDIO
 		if (name == XAL_AS_COREAUDIO)
 		{
 			xal::mgr = new CoreAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
@@ -187,25 +187,25 @@ namespace xal
 	
 	bool hasAudioSystem(chstr name)
 	{
-#ifdef HAVE_DIRECTSOUND
+#ifdef _DIRECTSOUND
 		if (name == XAL_AS_DIRECTSOUND)
 		{
 			return true;
 		}
 #endif
-#ifdef HAVE_OPENAL
+#ifdef _OPENAL
 		if (name == XAL_AS_OPENAL)
 		{
 			return true;
 		}
 #endif
-#ifdef HAVE_SDL
+#ifdef _SDL
 		if (name == XAL_AS_SDL)
 		{
 			return true;
 		}
 #endif
-#ifdef HAVE_XAUDIO2
+#ifdef _XAUDIO2
 		if (name == XAL_AS_XAUDIO2)
 		{
 			return true;

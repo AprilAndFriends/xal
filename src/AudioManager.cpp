@@ -23,24 +23,25 @@
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
+#include "NoAudio_AudioManager.h"
 #include "Player.h"
 #include "Sound.h"
 #include "Source.h"
 #include "xal.h"
 
-#ifdef HAVE_FLAC
+#ifdef _FORMAT_FLAC
 #include "FLAC_Source.h"
 #endif
-#ifdef HAVE_M4A
+#ifdef _FORMAT_M4A
 #include "M4A_Source.h"
 #endif
-#ifdef HAVE_OGG
+#ifdef _FORMAT_OGG
 #include "OGG_Source.h"
 #endif
-#ifdef HAVE_SPX
+#ifdef _FORMAT_SPX
 #include "SPX_Source.h"
 #endif
-#ifdef HAVE_WAV
+#ifdef _FORMAT_WAV
 #include "WAV_Source.h"
 #endif
 
@@ -60,19 +61,19 @@ namespace xal
 		this->backendId = backendId;
 		this->deviceName = deviceName;
 		this->updateTime = updateTime;
-#ifdef HAVE_FLAC
+#ifdef _FORMAT_FLAC
 		this->extensions += ".flac";
 #endif
-#ifdef HAVE_M4A
+#ifdef _FORMAT_M4A
 		this->extensions += ".m4a";
 #endif
-#ifdef HAVE_OGG
+#ifdef _FORMAT_OGG
 		this->extensions += ".ogg";
 #endif
-#ifdef HAVE_SPX
+#ifdef _FORMAT_SPX
 		this->extensions += ".spx";
 #endif
-#ifdef HAVE_WAV
+#ifdef _FORMAT_WAV
 		this->extensions += ".wav";
 #endif
 		if (threaded)
@@ -324,19 +325,11 @@ namespace xal
 	{
 		Category* category = this->_getCategoryByName(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
-#ifndef HAVE_NOAUDIO
 		if (sound->getFormat() == UNKNOWN || this->sounds.has_key(sound->getName()))
 		{
 			delete sound;
 			return NULL;
 		}
-#else
-		if (this->sounds.has_key(sound->getName()))
-		{
-			delete sound;
-			return NULL;
-		}
-#endif
 		this->sounds[sound->getName()] = sound;
 		return sound;
 	}
@@ -578,27 +571,27 @@ namespace xal
 		Source* source;
 		switch (format)
 		{
-#ifdef HAVE_FLAC
+#ifdef _FORMAT_FLAC
 		case FLAC:
 			source = new FLAC_Source(filename, category);
 			break;
 #endif
-#ifdef HAVE_M4A
+#ifdef _FORMAT_M4A
 		case M4A:
 			source = new M4A_Source(filename, category);
 			break;
 #endif
-#ifdef HAVE_OGG
+#ifdef _FORMAT_OGG
 		case OGG:
 			source = new OGG_Source(filename, category);
 			break;
 #endif
-#ifdef HAVE_SPX
+#ifdef _FORMAT_SPX
 		case SPX:
 			source = new SPX_Source(filename, category);
 			break;
 #endif
-#ifdef HAVE_WAV
+#ifdef _FORMAT_WAV
 		case WAV:
 			source = new WAV_Source(filename, category);
 			break;
@@ -898,7 +891,6 @@ namespace xal
 
 	hstr AudioManager::findAudioFile(chstr _filename)
 	{
-#ifndef HAVE_NOAUDIO
 		hstr filename = _filename;
 		if (hresource::exists(filename))
 		{
@@ -926,7 +918,6 @@ namespace xal
 				}
 			}
 		}
-#endif
 		return "";
 	}
 	

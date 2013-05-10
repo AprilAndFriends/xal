@@ -11,7 +11,7 @@
 /// 
 /// Represents an implementation of the Player for OpenAL.
 
-#ifdef HAVE_OPENAL
+#ifdef _OPENAL
 #ifndef XAL_OPENAL_PLAYER_H
 #define XAL_OPENAL_PLAYER_H
 

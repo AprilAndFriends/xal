@@ -7,7 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#ifdef HAVE_FLAC
+#ifdef _FORMAT_FLAC
 #include "FLAC_Source.h"
 #include "xal.h"
 
