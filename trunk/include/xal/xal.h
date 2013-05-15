@@ -35,9 +35,6 @@ namespace xal
 	xalFnExport void destroy();
 	xalFnExport bool hasAudioSystem(chstr name);
 
-	DEPRECATED_ATTRIBUTE xalFnExport void setLogFunction(void (*function)(chstr));
-	DEPRECATED_ATTRIBUTE xalFnExport void log(chstr message, chstr prefix = "[xal] ");
-
 }
 
 #endif

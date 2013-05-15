@@ -101,15 +101,6 @@ namespace xal
 {
 	hstr logTag = "xal";
 
-	void log(chstr message, chstr prefix)
-	{
-		hlog::write(xal::logTag, message);
-	}
-	
-	void setLogFunction(void (*function)(chstr))
-	{
-	}
-
 	void init(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
 		hlog::write(xal::logTag, "Initializing XAL.");
