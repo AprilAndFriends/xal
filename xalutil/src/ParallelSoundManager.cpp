@@ -29,6 +29,23 @@ namespace xal
 		this->clear();
 	}
 	
+	void ParallelSoundManager::stopSoundsWithPrefix(chstr prefix)
+	{
+		harray<Player*> lst;
+		foreach (Player*, it, this->players)
+		{
+			if ((*it)->getName().starts_with(prefix))
+			{
+				xal::mgr->destroyPlayer(*it);
+				lst += *it;
+			}
+		}
+		foreach (Player*, it, lst)
+		{
+			this->players.remove(*it);
+		}
+	}
+	
 	void ParallelSoundManager::queueSound(chstr name)
 	{
 		this->soundQueue += name;
