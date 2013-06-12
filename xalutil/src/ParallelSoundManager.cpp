@@ -86,6 +86,8 @@ namespace xal
 
 	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
+		harray<Player*> removeList;
+
 		foreach (Player*, it, this->players)
 		{
 			if (names.contains((*it)->getName()))
@@ -100,7 +102,17 @@ namespace xal
 			{
 				(*it)->pause(this->fadeTime);
 			}
+			else
+			{
+				xal::mgr->destroyPlayer(*it);
+				removeList += *it;
+			}
 		}
+		foreach (Player*, it, removeList)
+		{
+			this->players.remove(*it);
+		}
+		
 		Player* player;
 		foreach (hstr, it, names)
 		{
