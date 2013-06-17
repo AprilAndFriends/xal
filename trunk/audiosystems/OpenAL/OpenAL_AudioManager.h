@@ -51,6 +51,7 @@ namespace xal
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
+		int numActiveSources;
 
 		Player* _createSystemPlayer(Sound* sound);
 		unsigned int _allocateSourceId();

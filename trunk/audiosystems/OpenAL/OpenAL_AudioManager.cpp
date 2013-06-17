@@ -93,6 +93,7 @@ namespace xal
 #ifdef _ANDROID
 		__openal__JNI_OnLoad(backendId);
 #endif
+		this->numActiveSources = 0;
 		initOpenAL();
 	}
 
@@ -113,7 +114,14 @@ namespace xal
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
 		hlog::write(xal::logTag, "Audio device: " + this->deviceName);
+		
+#ifdef _IOS
+		// iOS generates only 4 stereo sources by default, so lets override that
+		ALCint params[5] = {ALC_STEREO_SOURCES, 16, ALC_MONO_SOURCES, 16, 0};
+		ALCcontext* currentContext = alcCreateContext(currentDevice, params);
+#else
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);
+#endif
 		error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
@@ -176,15 +184,23 @@ namespace xal
 		ALenum error = alGetError();
 		if (error != AL_NO_ERROR)
 		{
-			hlog::warn(xal::logTag, "Unable to allocate audio source! " + alGetErrorString(error));
+			hlog::warn(xal::logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).c_str(), this->numActiveSources));
 			return 0;
 		}
+		this->numActiveSources++;
+#ifdef _DEBUG
+		hlog::write(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
+#endif
 		return id;
 	}
 
 	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
+		if (sourceId != 0) this->numActiveSources--;
 		alDeleteSources(1, &sourceId);
+#ifdef _DEBUG
+		hlog::write(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
+#endif
 	}
 	
 #ifdef _IOS
