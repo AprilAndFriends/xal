@@ -18,6 +18,9 @@
 		C9C04E9414BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
 		D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
 		D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
+		D198F946177A3159002942E3 /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
+		D198F947177A3159002942E3 /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
+		D198F948177A3159002942E3 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
 		D1CB6B6D15CA91D300B927BC /* xal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CB6B6C15CA91D300B927BC /* xal.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +36,7 @@
 		C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiPlaylist.h; path = include/xalutil/MultiPlaylist.h; sourceTree = "<group>"; };
 		C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MultiPlaylist.cpp; path = src/MultiPlaylist.cpp; sourceTree = "<group>"; };
 		D1981CA8140F8D4F0057C3AF /* libxalutil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxalutil.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D198F94F177A3159002942E3 /* libxalutil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxalutil.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1CB6B6C15CA91D300B927BC /* xal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = xal.framework; path = "../../__build__/products/Debug-LLVM/xal.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,6 +58,7 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* xalutil.framework */,
 				D1981CA8140F8D4F0057C3AF /* libxalutil.a */,
+				D198F94F177A3159002942E3 /* libxalutil.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,6 +163,21 @@
 			productReference = D1981CA8140F8D4F0057C3AF /* libxalutil.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D198F944177A3159002942E3 /* xalutil (Mac) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D198F949177A3159002942E3 /* Build configuration list for PBXNativeTarget "xalutil (Mac)" */;
+			buildPhases = (
+				D198F945177A3159002942E3 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "xalutil (Mac)";
+			productName = "libxalutil-ios";
+			productReference = D198F94F177A3159002942E3 /* libxalutil.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -182,6 +202,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* xalutil */,
+				D198F944177A3159002942E3 /* xalutil (Mac) */,
 				D1981CA7140F8D4F0057C3AF /* xalutil (iOS) */,
 			);
 		};
@@ -208,6 +229,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D198F945177A3159002942E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D198F946177A3159002942E3 /* ParallelSoundManager.cpp in Sources */,
+				D198F947177A3159002942E3 /* Playlist.cpp in Sources */,
+				D198F948177A3159002942E3 /* MultiPlaylist.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -225,6 +256,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -247,6 +282,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -267,10 +306,16 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
@@ -292,6 +337,11 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
@@ -309,6 +359,11 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
@@ -325,6 +380,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -345,10 +404,16 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
@@ -369,6 +434,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -392,6 +461,11 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
@@ -408,6 +482,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -428,16 +506,11 @@
 				DSTROOT = /tmp/libxalutil_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					_IOS,
 					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
@@ -455,16 +528,11 @@
 				DSTROOT = /tmp/libxalutil_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					_IOS,
 					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
@@ -480,13 +548,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
@@ -503,13 +570,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
@@ -526,17 +592,121 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+		D198F94A177A3159002942E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D198F94B177A3159002942E3 /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = "Debug-LLVM";
+		};
+		D198F94C177A3159002942E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D198F94D177A3159002942E3 /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-LLVM";
+		};
+		D198F94E177A3159002942E3 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libxalutil_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = xalutil;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -577,6 +747,18 @@
 				D1981CB4140F8D4F0057C3AF /* Release */,
 				D1981CB5140F8D4F0057C3AF /* Release-LLVM */,
 				D1981CB6140F8D4F0057C3AF /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D198F949177A3159002942E3 /* Build configuration list for PBXNativeTarget "xalutil (Mac)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D198F94A177A3159002942E3 /* Debug */,
+				D198F94B177A3159002942E3 /* Debug-LLVM */,
+				D198F94C177A3159002942E3 /* Release */,
+				D198F94D177A3159002942E3 /* Release-LLVM */,
+				D198F94E177A3159002942E3 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
