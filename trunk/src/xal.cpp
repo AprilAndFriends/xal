@@ -41,7 +41,7 @@
 
 
 #ifdef _WIN32
-#if !_HL_WINRT
+#ifndef _WINRT
 	#ifdef _DIRECTSOUND
 	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DIRECTSOUND
 	#elif defined(_SDL)
