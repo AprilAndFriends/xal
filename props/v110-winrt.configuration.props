@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_XAudio2|Win32' or
-                                  '$(Configuration)|$(Platform)'=='DebugS_XAudio2|Win32' or
-                                  '$(Configuration)|$(Platform)'=='Release_XAudio2|Win32' or
-                                  '$(Configuration)|$(Platform)'=='ReleaseS_XAudio2|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug_XAudio2' or
+                                  '$(Configuration)'=='DebugS_XAudio2' or
+                                  '$(Configuration)'=='Release_XAudio2' or
+                                  '$(Configuration)'=='ReleaseS_XAudio2'">
     <ClCompile>
       <PreprocessorDefinitions>_XAUDIO2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
