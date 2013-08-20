@@ -3,7 +3,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug_XAudio2' or
                                   '$(Configuration)'=='DebugS_XAudio2' or
                                   '$(Configuration)'=='Release_XAudio2' or
-                                  '$(Configuration)'=='ReleaseS_XAudio2'">
+                                  '$(Configuration)'=='ReleaseS_XAudio2' or
+                                  '$(Configuration)'=='DebugP8_XAudio2' or
+                                  '$(Configuration)'=='DebugP8S_XAudio2' or
+                                  '$(Configuration)'=='ReleaseP8_XAudio2' or
+                                  '$(Configuration)'=='ReleaseP8S_XAudio2'">
     <ClCompile>
       <PreprocessorDefinitions>_XAUDIO2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
