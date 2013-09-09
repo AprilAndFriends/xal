@@ -718,6 +718,8 @@
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include/xal",
 					"${SRCROOT}/../include",
+					"${SRCROOT}/../ogg/include",
+					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -743,6 +745,8 @@
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include/xal",
 					"${SRCROOT}/../include",
+					"${SRCROOT}/../ogg/include",
+					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 				SDKROOT = macosx;
@@ -767,6 +771,8 @@
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include/xal",
 					"${SRCROOT}/../include",
+					"${SRCROOT}/../ogg/include",
+					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 				SDKROOT = macosx;
@@ -973,6 +979,8 @@
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include/xal",
 					"${SRCROOT}/../include",
+					"${SRCROOT}/../ogg/include",
+					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -1030,6 +1038,8 @@
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include/xal",
 					"${SRCROOT}/../include",
+					"${SRCROOT}/../ogg/include",
+					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 				SDKROOT = macosx;
