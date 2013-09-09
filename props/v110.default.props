@@ -4,7 +4,7 @@
     <ClCompile>
       <PreprocessorDefinitions>_FORMAT_FLAC;_FORMAT_OGG;_FORMAT_WAV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>XAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-	  <AdditionalIncludeDirectories>../ogg/include;../vorbis/include;../openal-soft-android/include;src;include/xal;audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;;../hltypes/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+	  <AdditionalIncludeDirectories>include/xal;audiosystems/OpenAL;audiosystems/SDL;audiosystems/DirectSound;audiosystems/Android;audiosystems/NoAudio;audiosources;;../hltypes/include;../ogg/include;../vorbis/include;../openal-soft-android/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
