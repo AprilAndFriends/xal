@@ -71,6 +71,12 @@ namespace xal
 		return this->playing;
 	}
 
+	unsigned int XAudio2_Player::_systemGetBufferPosition()
+	{
+		this->sourceVoice->GetState(&this->xa2State, 0);
+		return (unsigned int)(this->xa2State.SamplesPlayed * this->buffer->getChannels() * this->buffer->getBitsPerSample() * 0.125f);
+	}
+
 	bool XAudio2_Player::_systemPreparePlay()
 	{
 		if (this->sourceVoice != NULL)
