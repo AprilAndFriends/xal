@@ -66,6 +66,7 @@ namespace xal
 		void _update(float k);
 
 		bool _systemIsPlaying();
+		unsigned int _systemGetBufferPosition();
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
 		void _systemUpdateGain();

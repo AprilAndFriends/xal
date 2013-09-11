@@ -7,9 +7,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#include <hltypes/hplatform.h>
 #ifndef _ANDROID
-#if !_HL_WINRT
+#ifndef _WINRT
 #define RESOURCE_PATH "../media/"
 #else
 #define RESOURCE_PATH "media/"
@@ -34,14 +33,14 @@
 #include <xalutil/ParallelSoundManager.h>
 #include <xalutil/Playlist.h>
 
-//#define _USE_STREAM
+#define _USE_STREAM
 //#define _USE_LINKS
 //#define _USE_THREADING
 //#define _USE_MEMORY_MANAGEMENT
 //#define _USE_RAM_SOURCES
 
-#define _TEST_BASIC
-//#define _TEST_SOUND
+//#define _TEST_BASIC
+#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
 //#define _TEST_FADE_IN
@@ -98,14 +97,19 @@ void _test_sound(xal::Player* player)
 {
 	hlog::write("", "  - start test sound...");
 	player->play();
-	for (int i = 0; i < 20; i++)
+	for_iter (i, 0, 20)
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
 		player->pause();
+
+		hlog::writef("", "  - PAUSE: %02d - %05d %7.3f", i, player->getSamplePosition(), player->getTimePosition());
+
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
 		player->play();
+
+		hlog::writef("", "  - PLAY:  %02d - %05d %7.3f", i, player->getSamplePosition(), player->getTimePosition());
 	}
 	xal::mgr->update(1.0f);
 }
@@ -130,7 +134,7 @@ void _test_multiplay(xal::Player* player)
 	while (xal::mgr->isAnyPlaying(S_WIND))
 	{
 		hlog::writef("", "- wind stop iteration: %d", count);
-		for (int i = 0; i < 5; i++)
+		for_iter (i, 0, 5)
 		{
 			hthread::sleep(100);
 			xal::mgr->update(0.1f);
@@ -147,7 +151,7 @@ void _test_multiplay(xal::Player* player)
 	while (xal::mgr->isAnyPlaying(S_WIND))
 	{
 		hlog::writef("", "- wind stopFirst iteration: %d", count);
-		for (int i = 0; i < 5; i++)
+		for_iter (i, 0, 5)
 		{
 			hthread::sleep(100);
 			xal::mgr->update(0.1f);
@@ -164,7 +168,7 @@ void _test_handle_stream(xal::Player* player)
 	player->play();
 	hthread::sleep(200);
 	xal::mgr->update(0.2f);
-	for (int i = 0; i < 5; i++)
+	for_iter (i, 0, 5)
 	{
 		hlog::writef("", "  - play %d", i);
 		player->play();
@@ -174,7 +178,7 @@ void _test_handle_stream(xal::Player* player)
 		{
 			hlog::writef("", "  - fade %d", i);
 			player->pause(1.2f);
-			for (int j = 0; j < 10; j++)
+			for_iter (j, 0, 10)
 			{
 				hthread::sleep(100);
 				xal::mgr->update(0.1f);
@@ -184,7 +188,7 @@ void _test_handle_stream(xal::Player* player)
 		{
 			hlog::writef("", "  - pause %d", i);
 			player->pause();
-			for (int j = 0; j < 10; j++)
+			for_iter (j, 0, 10)
 			{
 				hthread::sleep(100);
 				xal::mgr->update(0.1f);
@@ -201,7 +205,7 @@ void _test_fadein(xal::Player* player)
 	hlog::write("", "  - start test fade in...");
 	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
 	p1->play(1.0f);
-	for (int i = 0; i < 20; i++)
+	for_iter (i, 0, 20)
 	{
 		hthread::sleep(100);
 		hlog::writef("", "T:%d P:%s FI:%s FO:%s", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
@@ -217,7 +221,7 @@ void _test_fadeout(xal::Player* player)
 	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
 	p1->play();
 	p1->stop(1.0f);
-	for (int i = 0; i < 20; i++)
+	for_iter (i, 0, 20)
 	{
 		hthread::sleep(100);
 		hlog::writef("", "T:%d P:%s FI:%s FO:%s", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
@@ -232,28 +236,28 @@ void _test_fadeinout(xal::Player* player)
 	hlog::write("", "  - start test fade in and out...");
 	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
 	p1->play(1.0f);
-	for (int i = 0; i < 8; i++)
+	for_iter (i, 0, 8)
 	{
 		hthread::sleep(100);
 		hlog::writef("", "T:%d P:%s FI:%s FO:%s", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		xal::mgr->update(0.1f);
 	}
 	p1->pause(1.0f);
-	for (int i = 0; i < 6; i++)
+	for_iter (i, 0, 6)
 	{
 		hthread::sleep(100);
 		hlog::writef("", "T:%d P:%s FI:%s FO:%s", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		xal::mgr->update(0.1f);
 	}
 	p1->play(1.0f);
-	for (int i = 0; i < 3; i++)
+	for_iter (i, 0, 3)
 	{
 		hthread::sleep(100);
 		hlog::writef("", "T:%d P:%s FI:%s FO:%s", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
 		xal::mgr->update(0.1f);
 	}
 	hlog::write("", "- 10 more updates");
-	for (int i = 0; i < 10; i++)
+	for_iter (i, 0, 10)
 	{
 		hthread::sleep(100);
 		hlog::writef("", "T:%d P:%s FI:%s FO:%s", i, p1->isPlaying() ? "1" : "_", p1->isFadingIn() ? "1" : "_", p1->isFadingOut() ? "1" : "_");
@@ -272,7 +276,7 @@ void _test_complex_handler(xal::Player* player)
 	p1->play();
 	p2->play();
 	p2->pause();
-	for (int i = 0; i < 50; i++)
+	for_iter (i, 0, 50)
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
@@ -335,7 +339,7 @@ void _test_memory_management(xal::Player* player)
 void _test_sources(xal::Player* player)
 {
 	hlog::write("", "  - start test sources...");
-	for (int i = 0; i < OPENAL_MAX_SOURCES + 1; i++)
+	for_iter (i, 0, OPENAL_MAX_SOURCES + 1)
 	{
 		xal::mgr->play(S_BARK);
 		hthread::sleep(20);
@@ -348,7 +352,7 @@ void _test_sources(xal::Player* player)
 	xal::mgr->update(0.01f);
 	xal::Player* p1 = xal::mgr->createPlayer(S_WIND);
 	p1->play();
-	for (int i = 0; i < 20; i++)
+	for_iter (i, 0, 20)
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
@@ -383,24 +387,29 @@ void _test_util_parallel_sounds(xal::Player* player)
 	names += S_WIND;
 	xal::ParallelSoundManager pmgr(0.25f);
 	pmgr.updateList(names);
-	for (int i = 0; i < 100000; i++)
+	for_iter (i, 0, 1000)
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
 	}
 	names.clear();
 	pmgr.updateList(names);
-	for (int i = 0; i < 10; i++)
+	for_iter (i, 0, 10)
 	{
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
 	}
 }
 
+#ifndef _WINRT
 int main(int argc, char **argv)
+#else
+[Platform::MTAThread]
+int main(Platform::Array<Platform::String^>^ args)
+#endif
 {
 	void* hwnd = 0;
-#if defined(_WIN32) && !_HL_WINRT
+#if defined(_WIN32) && !defined(_WINRT)
 	hwnd = GetConsoleWindow();
 #endif
 #ifndef _USE_THREADING
@@ -469,7 +478,7 @@ int main(int argc, char **argv)
 	xal::mgr->destroyPlayer(player);
 	hlog::write("", "  - done");
 	xal::destroy();
-#if !_HL_WINRT
+#ifndef _WINRT
 	system("pause");
 #endif
 	return 0;

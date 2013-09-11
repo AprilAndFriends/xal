@@ -7,9 +7,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#include <hltypes/hplatform.h>
 #ifndef _ANDROID
-#if !_HL_WINRT
+#ifndef _WINRT
 #define RESOURCE_PATH "../media/"
 #else
 #define RESOURCE_PATH "media/"
@@ -45,7 +44,7 @@
 #define __XAL_THREADED true
 #endif
 
-#if !_HL_WINRT
+#ifndef _WINRT
 int main(int argc, char **argv)
 #else
 [Platform::MTAThread]
@@ -53,7 +52,7 @@ int main(Platform::Array<Platform::String^>^ args)
 #endif
 {
 	void* hwnd = 0;
-#if defined(_WIN32) && !_HL_WINRT
+#if defined(_WIN32) && !defined(_WINRT)
 	hwnd = GetConsoleWindow();
 #endif
 	// initialize XAL with platform default audio system, optional threaded update and 100 times per second
@@ -115,7 +114,7 @@ int main(Platform::Array<Platform::String^>^ args)
 	xal::mgr->destroySound(xal::mgr->getSound(SOUND_STREAMED));
 	// destroying XAL itself
 	xal::destroy();
-#if !_HL_WINRT
+#ifndef _WINRT
 	system("pause");
 #endif
 	return 0;
