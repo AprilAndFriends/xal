@@ -189,7 +189,7 @@ namespace xal
 		}
 		this->numActiveSources++;
 #ifdef _DEBUG
-		hlog::write(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
+//		hlog::write(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
 #endif
 		return id;
 	}
@@ -199,7 +199,7 @@ namespace xal
 		if (sourceId != 0) this->numActiveSources--;
 		alDeleteSources(1, &sourceId);
 #ifdef _DEBUG
-		hlog::write(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
+//		hlog::write(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
 #endif
 	}
 	
