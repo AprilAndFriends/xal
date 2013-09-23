@@ -184,7 +184,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -242,111 +242,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB91AE08733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Debug;
-		};
-		1DEB91AF08733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
-		1DEB91B208733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		1DEB91B308733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					i386,
-					ppc,
-				);
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../../hltypes/include",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/include",
-				);
-				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
 		7F7A5588129D426F00E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -356,7 +251,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -395,7 +290,7 @@
 			};
 			name = "App Store";
 		};
-		C981CE87132AF3F20072B5A9 /* Debug-LLVM */ = {
+		C981CE87132AF3F20072B5A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -418,9 +313,9 @@
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
-			name = "Debug-LLVM";
+			name = Debug;
 		};
-		C981CE88132AF3F20072B5A9 /* Debug-LLVM */ = {
+		C981CE88132AF3F20072B5A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -447,9 +342,9 @@
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
-			name = "Debug-LLVM";
+			name = Debug;
 		};
-		C981CE8A132AF3FA0072B5A9 /* Release-LLVM */ = {
+		C981CE8A132AF3FA0072B5A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -469,9 +364,9 @@
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
-			name = "Release-LLVM";
+			name = Release;
 		};
-		C981CE8B132AF3FA0072B5A9 /* Release-LLVM */ = {
+		C981CE8B132AF3FA0072B5A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -495,9 +390,9 @@
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
-			name = "Release-LLVM";
+			name = Release;
 		};
-		D1981CB2140F8D4F0057C3AF /* Debug */ = {
+		D1981CB3140F8D4F0057C3AF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -519,29 +414,7 @@
 			};
 			name = Debug;
 		};
-		D1981CB3140F8D4F0057C3AF /* Debug-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libxalutil_ios.dst;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					"$(inherited)",
-				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xalutil;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = "Debug-LLVM";
-		};
-		D1981CB4140F8D4F0057C3AF /* Release */ = {
+		D1981CB5140F8D4F0057C3AF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -562,28 +435,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		D1981CB5140F8D4F0057C3AF /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libxalutil_ios.dst;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					"$(inherited)",
-				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xalutil;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-LLVM";
 		};
 		D1981CB6140F8D4F0057C3AF /* App Store */ = {
 			isa = XCBuildConfiguration;
@@ -607,7 +458,7 @@
 			};
 			name = "App Store";
 		};
-		D198F94A177A3159002942E3 /* Debug */ = {
+		D198F94B177A3159002942E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -628,28 +479,7 @@
 			};
 			name = Debug;
 		};
-		D198F94B177A3159002942E3 /* Debug-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libxalutil_ios.dst;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-			};
-			name = "Debug-LLVM";
-		};
-		D198F94C177A3159002942E3 /* Release */ = {
+		D198F94D177A3159002942E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -669,27 +499,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		D198F94D177A3159002942E3 /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libxalutil_ios.dst;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xalutil;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-LLVM";
 		};
 		D198F94E177A3159002942E3 /* App Store */ = {
 			isa = XCBuildConfiguration;
@@ -718,50 +527,42 @@
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91AE08733DA50010E9CD /* Debug */,
-				C981CE88132AF3F20072B5A9 /* Debug-LLVM */,
-				1DEB91AF08733DA50010E9CD /* Release */,
-				C981CE8B132AF3FA0072B5A9 /* Release-LLVM */,
+				C981CE88132AF3F20072B5A9 /* Debug */,
+				C981CE8B132AF3FA0072B5A9 /* Release */,
 				7F7A5589129D426F00E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91B208733DA50010E9CD /* Debug */,
-				C981CE87132AF3F20072B5A9 /* Debug-LLVM */,
-				1DEB91B308733DA50010E9CD /* Release */,
-				C981CE8A132AF3FA0072B5A9 /* Release-LLVM */,
+				C981CE87132AF3F20072B5A9 /* Debug */,
+				C981CE8A132AF3FA0072B5A9 /* Release */,
 				7F7A5588129D426F00E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "xalutil (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1981CB2140F8D4F0057C3AF /* Debug */,
-				D1981CB3140F8D4F0057C3AF /* Debug-LLVM */,
-				D1981CB4140F8D4F0057C3AF /* Release */,
-				D1981CB5140F8D4F0057C3AF /* Release-LLVM */,
+				D1981CB3140F8D4F0057C3AF /* Debug */,
+				D1981CB5140F8D4F0057C3AF /* Release */,
 				D1981CB6140F8D4F0057C3AF /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D198F949177A3159002942E3 /* Build configuration list for PBXNativeTarget "xalutil (Mac)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D198F94A177A3159002942E3 /* Debug */,
-				D198F94B177A3159002942E3 /* Debug-LLVM */,
-				D198F94C177A3159002942E3 /* Release */,
-				D198F94D177A3159002942E3 /* Release-LLVM */,
+				D198F94B177A3159002942E3 /* Debug */,
+				D198F94D177A3159002942E3 /* Release */,
 				D198F94E177A3159002942E3 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

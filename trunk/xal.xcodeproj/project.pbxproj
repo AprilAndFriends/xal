@@ -530,7 +530,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xal" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -637,122 +637,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB91AE08733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_SDL,
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PRODUCT_NAME = xal;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Debug;
-		};
-		1DEB91AF08733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_SDL,
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PRODUCT_NAME = xal;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
-		1DEB91B208733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include/xal",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/../ogg/include",
-					"${SRCROOT}/../vorbis/include",
-					"${SRCROOT}/../include/audiosources",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		1DEB91B308733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/include/xal",
-					"${SRCROOT}/../include",
-					"${SRCROOT}/../ogg/include",
-					"${SRCROOT}/../vorbis/include",
-					"${SRCROOT}/../include/audiosources",
-				);
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
 		7F7A5574129D425800E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -762,7 +646,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -808,7 +692,7 @@
 			};
 			name = "App Store";
 		};
-		C935CE4A150610E500AE8B67 /* Debug */ = {
+		C935CE4B150610E500AE8B67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -840,39 +724,7 @@
 			};
 			name = Debug;
 		};
-		C935CE4B150610E500AE8B67 /* Debug-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					_OPENAL,
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PRODUCT_NAME = xal;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = "Debug-LLVM";
-		};
-		C935CE4C150610E500AE8B67 /* Release */ = {
+		C935CE4D150610E500AE8B67 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -900,35 +752,6 @@
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
-		};
-		C935CE4D150610E500AE8B67 /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					_OPENAL,
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PRODUCT_NAME = xal;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = "Release-LLVM";
 		};
 		C935CE4E150610E500AE8B67 /* App Store */ = {
 			isa = XCBuildConfiguration;
@@ -959,7 +782,7 @@
 			};
 			name = "App Store";
 		};
-		C981CCF7132AF20B0072B5A9 /* Debug-LLVM */ = {
+		C981CCF7132AF20B0072B5A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -986,9 +809,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
-			name = "Debug-LLVM";
+			name = Debug;
 		};
-		C981CCF8132AF20B0072B5A9 /* Debug-LLVM */ = {
+		C981CCF8132AF20B0072B5A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1018,9 +841,9 @@
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
-			name = "Debug-LLVM";
+			name = Debug;
 		};
-		C981CCFA132AF2140072B5A9 /* Release-LLVM */ = {
+		C981CCFA132AF2140072B5A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1044,9 +867,9 @@
 				);
 				SDKROOT = macosx;
 			};
-			name = "Release-LLVM";
+			name = Release;
 		};
-		C981CCFB132AF2140072B5A9 /* Release-LLVM */ = {
+		C981CCFB132AF2140072B5A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1073,9 +896,9 @@
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
-			name = "Release-LLVM";
+			name = Release;
 		};
-		D1981C8C140F8A230057C3AF /* Debug */ = {
+		D1981C8D140F8A230057C3AF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1101,33 +924,7 @@
 			};
 			name = Debug;
 		};
-		D1981C8D140F8A230057C3AF /* Debug-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libxal_ios.dst;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					_OPENAL,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_M4A,
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_THUMB_SUPPORT = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xal;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = "Debug-LLVM";
-		};
-		D1981C8E140F8A230057C3AF /* Release */ = {
+		D1981C8F140F8A230057C3AF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1151,31 +948,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		D1981C8F140F8A230057C3AF /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libxal_ios.dst;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					_OPENAL,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_M4A,
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_THUMB_SUPPORT = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xal;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-LLVM";
 		};
 		D1981C90140F8A230057C3AF /* App Store */ = {
 			isa = XCBuildConfiguration;
@@ -1202,7 +974,7 @@
 			};
 			name = "App Store";
 		};
-		D1F27BA8177A30BE00E5C131 /* Debug */ = {
+		D1F27BA9177A30BE00E5C131 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1225,30 +997,7 @@
 			};
 			name = Debug;
 		};
-		D1F27BA9177A30BE00E5C131 /* Debug-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libxal_ios.dst;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					_OPENAL,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xal;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-			};
-			name = "Debug-LLVM";
-		};
-		D1F27BAA177A30BE00E5C131 /* Release */ = {
+		D1F27BAB177A30BE00E5C131 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1269,28 +1018,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		D1F27BAB177A30BE00E5C131 /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libxal_ios.dst;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_MAC,
-					_OPENAL,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = xal;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-LLVM";
 		};
 		D1F27BAC177A30BE00E5C131 /* App Store */ = {
 			isa = XCBuildConfiguration;
@@ -1320,62 +1047,52 @@
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xal (SDL_mixer vorbis)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91AE08733DA50010E9CD /* Debug */,
-				C981CCF8132AF20B0072B5A9 /* Debug-LLVM */,
-				1DEB91AF08733DA50010E9CD /* Release */,
-				C981CCFB132AF2140072B5A9 /* Release-LLVM */,
+				C981CCF8132AF20B0072B5A9 /* Debug */,
+				C981CCFB132AF2140072B5A9 /* Release */,
 				7F7A5575129D425800E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91B208733DA50010E9CD /* Debug */,
-				C981CCF7132AF20B0072B5A9 /* Debug-LLVM */,
-				1DEB91B308733DA50010E9CD /* Release */,
-				C981CCFA132AF2140072B5A9 /* Release-LLVM */,
+				C981CCF7132AF20B0072B5A9 /* Debug */,
+				C981CCFA132AF2140072B5A9 /* Release */,
 				7F7A5574129D425800E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		C935CE49150610E500AE8B67 /* Build configuration list for PBXNativeTarget "xal (OpenAL vorbis)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C935CE4A150610E500AE8B67 /* Debug */,
-				C935CE4B150610E500AE8B67 /* Debug-LLVM */,
-				C935CE4C150610E500AE8B67 /* Release */,
-				C935CE4D150610E500AE8B67 /* Release-LLVM */,
+				C935CE4B150610E500AE8B67 /* Debug */,
+				C935CE4D150610E500AE8B67 /* Release */,
 				C935CE4E150610E500AE8B67 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "xal (iOS OpenAL vorbis m4a)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1981C8C140F8A230057C3AF /* Debug */,
-				D1981C8D140F8A230057C3AF /* Debug-LLVM */,
-				D1981C8E140F8A230057C3AF /* Release */,
-				D1981C8F140F8A230057C3AF /* Release-LLVM */,
+				D1981C8D140F8A230057C3AF /* Debug */,
+				D1981C8F140F8A230057C3AF /* Release */,
 				D1981C90140F8A230057C3AF /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D1F27BA7177A30BE00E5C131 /* Build configuration list for PBXNativeTarget "xal (Mac OpenAL vorbis)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1F27BA8177A30BE00E5C131 /* Debug */,
-				D1F27BA9177A30BE00E5C131 /* Debug-LLVM */,
-				D1F27BAA177A30BE00E5C131 /* Release */,
-				D1F27BAB177A30BE00E5C131 /* Release-LLVM */,
+				D1F27BA9177A30BE00E5C131 /* Debug */,
+				D1F27BAB177A30BE00E5C131 /* Release */,
 				D1F27BAC177A30BE00E5C131 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
