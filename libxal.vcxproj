@@ -5,6 +5,10 @@
       <Configuration>DebugS_All</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_All|Android-x86">
+      <Configuration>DebugS_All</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugS_All|Win32">
       <Configuration>DebugS_All</Configuration>
       <Platform>Win32</Platform>
@@ -12,6 +16,10 @@
     <ProjectConfiguration Include="DebugS_DirectSound|Android">
       <Configuration>DebugS_DirectSound</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_DirectSound|Android-x86">
+      <Configuration>DebugS_DirectSound</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugS_DirectSound|Win32">
       <Configuration>DebugS_DirectSound</Configuration>
@@ -21,6 +29,10 @@
       <Configuration>DebugS_OpenAL</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_OpenAL|Android-x86">
+      <Configuration>DebugS_OpenAL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugS_OpenAL|Win32">
       <Configuration>DebugS_OpenAL</Configuration>
       <Platform>Win32</Platform>
@@ -28,6 +40,10 @@
     <ProjectConfiguration Include="DebugS_SDL|Android">
       <Configuration>DebugS_SDL</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_SDL|Android-x86">
+      <Configuration>DebugS_SDL</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugS_SDL|Win32">
       <Configuration>DebugS_SDL</Configuration>
@@ -37,6 +53,10 @@
       <Configuration>DebugS</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS|Android-x86">
+      <Configuration>DebugS</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugS|Win32">
       <Configuration>DebugS</Configuration>
       <Platform>Win32</Platform>
@@ -45,13 +65,33 @@
       <Configuration>Debug_All</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_All|Android-x86">
+      <Configuration>Debug_All</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_All|Win32">
       <Configuration>Debug_All</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_DirectSound|Android-x86">
+      <Configuration>Debug_DirectSound</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_OpenAL|Android-x86">
+      <Configuration>Debug_OpenAL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_SDL|Android-x86">
+      <Configuration>Debug_SDL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Android">
       <Configuration>Debug</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Android-x86">
+      <Configuration>Debug</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -61,6 +101,10 @@
       <Configuration>ReleaseS_All</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_All|Android-x86">
+      <Configuration>ReleaseS_All</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS_All|Win32">
       <Configuration>ReleaseS_All</Configuration>
       <Platform>Win32</Platform>
@@ -68,6 +112,10 @@
     <ProjectConfiguration Include="ReleaseS_DirectSound|Android">
       <Configuration>ReleaseS_DirectSound</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_DirectSound|Android-x86">
+      <Configuration>ReleaseS_DirectSound</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS_DirectSound|Win32">
       <Configuration>ReleaseS_DirectSound</Configuration>
@@ -77,6 +125,10 @@
       <Configuration>ReleaseS_OpenAL</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_OpenAL|Android-x86">
+      <Configuration>ReleaseS_OpenAL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS_OpenAL|Win32">
       <Configuration>ReleaseS_OpenAL</Configuration>
       <Platform>Win32</Platform>
@@ -84,6 +136,10 @@
     <ProjectConfiguration Include="ReleaseS_SDL|Android">
       <Configuration>ReleaseS_SDL</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_SDL|Android-x86">
+      <Configuration>ReleaseS_SDL</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS_SDL|Win32">
       <Configuration>ReleaseS_SDL</Configuration>
@@ -93,6 +149,10 @@
       <Configuration>ReleaseS</Configuration>
       <Platform>Android</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS|Android-x86">
+      <Configuration>ReleaseS</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS|Win32">
       <Configuration>ReleaseS</Configuration>
       <Platform>Win32</Platform>
@@ -100,6 +160,10 @@
     <ProjectConfiguration Include="Release_All|Android">
       <Configuration>Release_All</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_All|Android-x86">
+      <Configuration>Release_All</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_All|Win32">
       <Configuration>Release_All</Configuration>
@@ -125,13 +189,29 @@
       <Configuration>Debug_OpenAL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_DirectSound|Android-x86">
+      <Configuration>Release_DirectSound</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release_DirectSound|Win32">
       <Configuration>Release_DirectSound</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_OpenAL|Android-x86">
+      <Configuration>Release_OpenAL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_SDL|Android-x86">
+      <Configuration>Release_SDL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Android">
       <Configuration>Release</Configuration>
       <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Android-x86">
+      <Configuration>Release</Configuration>
+      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -181,7 +261,15 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DirectSound|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android-x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -193,6 +281,10 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_All|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -201,11 +293,19 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenAL|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Android-x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -218,7 +318,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android-x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32'" Label="Configuration">
@@ -227,10 +333,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android-x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'" Label="Configuration">
@@ -239,7 +351,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_All|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_All|Android-x86'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_All|Win32'" Label="Configuration">
@@ -248,10 +366,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_DirectSound|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_DirectSound|Android-x86'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_DirectSound|Win32'" Label="Configuration">
@@ -260,16 +384,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenAL|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenAL|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_SDL|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_SDL|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_SDL|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Android-x86'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -281,11 +415,19 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_All|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_All|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_DirectSound|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_DirectSound|Android-x86'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -297,11 +439,19 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_SDL|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_SDL|Android-x86'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
