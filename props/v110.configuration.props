@@ -5,7 +5,7 @@
       <AdditionalDependencies>libhltypes.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Android'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Android' or '$(Platform)'=='Android-x86'">
     <Link>
       <AdditionalDependencies>-ltremor;-logg;-lhltypes;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
