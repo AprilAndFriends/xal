@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -62,6 +62,7 @@ namespace xal
 		bool stillPlaying;
 		CallbackHandler* callbackHandler;
 		unsigned char* streamBuffers[STREAM_BUFFER_COUNT]; // XAudio2 does not keep audio data alive so streamed audio has to be cached
+		int buffersSubmitted;
 
 		void _update(float k);
 

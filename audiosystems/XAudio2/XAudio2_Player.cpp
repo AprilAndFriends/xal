@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -26,7 +26,7 @@ using namespace Microsoft::WRL;
 namespace xal
 {
 	XAudio2_Player::XAudio2_Player(Sound* sound) : Player(sound), playing(false), active(false),
-		stillPlaying(false), sourceVoice(NULL)
+		stillPlaying(false), sourceVoice(NULL), buffersSubmitted(0)
 	{
 		this->callbackHandler = new XAudio2_Player::CallbackHandler(&this->active);
 		memset(&this->xa2Buffer, 0, sizeof(XAUDIO2_BUFFER));
@@ -115,7 +115,12 @@ namespace xal
 		if (this->paused)
 		{
 			this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
-			count -= this->xa2State.BuffersQueued;
+			this->buffersSubmitted = this->xa2State.BuffersQueued;
+			count -= this->buffersSubmitted;
+		}
+		else
+		{
+			this->buffersSubmitted = 0;
 		}
 		if (count > 0)
 		{
@@ -164,11 +169,22 @@ namespace xal
 			HRESULT result = this->sourceVoice->Stop();
 			if (!FAILED(result))
 			{
-				if (!this->paused)
+				if (this->paused)
+				{
+					if (this->sound->isStreamed())
+					{
+						this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
+						int processed = this->buffersSubmitted - this->xa2State.BuffersQueued;
+						this->buffersSubmitted -= processed;
+						result = processed * STREAM_BUFFER_SIZE;
+					}
+				}
+				else
 				{
 					this->sourceVoice->FlushSourceBuffers();
 					if (this->sound->isStreamed())
 					{
+						this->buffersSubmitted = 0;
 						this->buffer->rewind();
 					}
 				}
@@ -187,12 +203,13 @@ namespace xal
 	{
 		this->stillPlaying = this->active;
 		this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
-		int processed = STREAM_BUFFER_COUNT - this->xa2State.BuffersQueued;
+		int processed = this->buffersSubmitted - this->xa2State.BuffersQueued;
 		if (processed == 0)
 		{
 			this->stillPlaying = true;
 			return 0;
 		}
+		this->buffersSubmitted -= processed;
 		int count = this->_fillStreamBuffers(processed);
 		if (count > 0)
 		{
@@ -255,6 +272,7 @@ namespace xal
 			}
 			index = (index + 1) % STREAM_BUFFER_COUNT;
 		}
+		this->buffersSubmitted += count;
 	}
 
 }
