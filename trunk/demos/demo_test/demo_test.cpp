@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -40,7 +40,7 @@
 //#define _USE_RAM_SOURCES
 
 //#define _TEST_BASIC
-#define _TEST_SOUND
+//#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
 //#define _TEST_FADE_IN
