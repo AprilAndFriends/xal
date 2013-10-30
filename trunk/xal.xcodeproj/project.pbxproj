@@ -659,6 +659,7 @@
 					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
 			name = "App Store";
@@ -683,7 +684,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -715,7 +715,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -744,7 +743,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -773,7 +771,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -806,6 +803,7 @@
 					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -834,7 +832,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -865,6 +862,7 @@
 					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -889,7 +887,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
