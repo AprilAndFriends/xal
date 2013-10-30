@@ -259,6 +259,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
@@ -281,7 +282,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -309,6 +309,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
@@ -335,7 +336,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -361,6 +361,7 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/include",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 			};
@@ -383,7 +384,6 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -471,7 +471,6 @@
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
@@ -491,7 +490,6 @@
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
@@ -512,7 +510,6 @@
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xalutil;
 				SDKROOT = macosx;
