@@ -8,6 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/harray.h>
+#include <hltypes/hrdir.h>
 #include <hltypes/hresource.h>
 #include <hltypes/hstring.h>
 
@@ -27,7 +28,7 @@ namespace xal
 		this->category = category;
 		this->buffer = xal::mgr->_createBuffer(this);
 		// extracting filename without extension and prepending the prefix
-		this->name = prefix + filename.replace("\\", "/").rsplit("/", -1, false).remove_last().rsplit(".", 1, false).remove_first();
+		this->name = prefix + hresource::no_extension(hrdir::basename(filename));
 	}
 
 	Sound::~Sound()
@@ -46,7 +47,7 @@ namespace xal
 			return this->filename;
 		}
 		// It's dangerous to go alone! Take this.
-		return xal::mgr->findAudioFile(normalize_path(get_basedir(this->filename) + "/" + hresource::hread(this->filename)));
+		return xal::mgr->findAudioFile(hrdir::normalize(hrdir::basedir(this->filename) + "/" + hresource::hread(this->filename)));
 	}
 
 	int Sound::getSize()
