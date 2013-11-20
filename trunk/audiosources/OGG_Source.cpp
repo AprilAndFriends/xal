@@ -25,7 +25,7 @@
 
 namespace xal
 {
-	// small optimizations
+	// small optimizations, they are thread-safe
 	static int _section;
 #ifndef __BIG_ENDIAN__
 	static int _endianess = 0;
