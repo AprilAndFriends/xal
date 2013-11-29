@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.03
+/// @version 3.04
 /// 
 /// @section LICENSE
 /// 
@@ -59,6 +59,7 @@ namespace xal
 
 	void XAudio2_Player::_update(float k)
 	{
+		this->stillPlaying = this->active;
 		Player::_update(k);
 		if (!this->stillPlaying && this->playing)
 		{
@@ -73,8 +74,8 @@ namespace xal
 
 	unsigned int XAudio2_Player::_systemGetBufferPosition()
 	{
-		this->sourceVoice->GetState(&this->xa2State, 0);
-		return (unsigned int)(this->xa2State.SamplesPlayed * this->buffer->getChannels() * this->buffer->getBitsPerSample() * 0.125f);
+		this->sourceVoice->GetState(&this->xa2State[0], 0);
+		return (unsigned int)(this->xa2State[0].SamplesPlayed * this->buffer->getChannels() * this->buffer->getBitsPerSample() * 0.125f);
 	}
 
 	bool XAudio2_Player::_systemPreparePlay()
@@ -114,8 +115,8 @@ namespace xal
 		int count = STREAM_BUFFER_COUNT;
 		if (this->paused)
 		{
-			this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
-			this->buffersSubmitted = this->xa2State.BuffersQueued;
+			this->sourceVoice->GetState(&this->xa2State[1], XAUDIO2_VOICE_NOSAMPLESPLAYED);
+			this->buffersSubmitted = this->xa2State[1].BuffersQueued;
 			count -= this->buffersSubmitted;
 		}
 		else
@@ -173,8 +174,8 @@ namespace xal
 				{
 					if (this->sound->isStreamed())
 					{
-						this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
-						int processed = this->buffersSubmitted - this->xa2State.BuffersQueued;
+						this->sourceVoice->GetState(&this->xa2State[2], XAUDIO2_VOICE_NOSAMPLESPLAYED);
+						int processed = this->buffersSubmitted - this->xa2State[2].BuffersQueued;
 						this->buffersSubmitted -= processed;
 						result = processed * STREAM_BUFFER_SIZE;
 					}
@@ -201,12 +202,10 @@ namespace xal
 
 	int XAudio2_Player::_systemUpdateStream()
 	{
-		this->stillPlaying = this->active;
-		this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
-		int processed = this->buffersSubmitted - this->xa2State.BuffersQueued;
+		this->sourceVoice->GetState(&this->xa2State[3], XAUDIO2_VOICE_NOSAMPLESPLAYED);
+		int processed = this->buffersSubmitted - this->xa2State[3].BuffersQueued;
 		if (processed == 0)
 		{
-			this->stillPlaying = true;
 			return 0;
 		}
 		this->buffersSubmitted -= processed;
@@ -216,8 +215,8 @@ namespace xal
 			this->_submitStreamBuffers(count);
 			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped by XAudio2 so let's just bitch-slap it and get this over with
 		}
-		this->sourceVoice->GetState(&this->xa2State, XAUDIO2_VOICE_NOSAMPLESPLAYED);
-		if (this->xa2State.BuffersQueued == 0)
+		this->sourceVoice->GetState(&this->xa2State[4], XAUDIO2_VOICE_NOSAMPLESPLAYED);
+		if (this->xa2State[4].BuffersQueued == 0)
 		{
 			this->_stop();
 		}
