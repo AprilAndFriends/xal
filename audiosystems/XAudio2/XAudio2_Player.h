@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.03
+/// @version 3.04
 /// 
 /// @section LICENSE
 /// 
@@ -82,7 +82,7 @@ namespace xal
 
 	private:
 		XAUDIO2_BUFFER xa2Buffer;
-		XAUDIO2_VOICE_STATE xa2State;
+		XAUDIO2_VOICE_STATE xa2State[5]; // using different buffers for different purposes to avoid problems in threading
 
 	};
 
