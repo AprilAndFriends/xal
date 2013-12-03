@@ -206,6 +206,7 @@ namespace xal
 		int processed = this->buffersSubmitted - this->xa2State[3].BuffersQueued;
 		if (processed == 0)
 		{
+			this->stillPlaying = true; // don't remove, it prevents streamed sounds from being stopped for whatever illogical reason within XAudio2
 			return 0;
 		}
 		this->buffersSubmitted -= processed;
