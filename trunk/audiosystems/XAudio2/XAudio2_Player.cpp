@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.04
+/// @version 3.05
 /// 
 /// @section LICENSE
 /// 
@@ -156,6 +156,7 @@ namespace xal
 		{
 			this->playing = true;
 			this->stillPlaying = true;
+			this->active = true; // required, because otherwise the buffer will think it's done
 		}
 		else
 		{
