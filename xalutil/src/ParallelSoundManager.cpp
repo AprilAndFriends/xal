@@ -150,6 +150,7 @@ namespace xal
 			xal::mgr->destroyPlayer(*it);
 		}
 		this->players.clear();
+		this->soundQueue.clear();
 	}
 	
 }
