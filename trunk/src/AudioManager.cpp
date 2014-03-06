@@ -440,12 +440,10 @@ namespace xal
 	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr prefix)
 	{
 		harray<hstr> result;
-		hstr category;
 		harray<hstr> dirs = hrdir::directories(path, true);
 		foreach (hstr, it, dirs)
 		{
-			category = (*it).rsplit("/", -1, true).last();
-			result += this->_createSoundsFromPath((*it), category, prefix);
+			result += this->_createSoundsFromPath((*it), hrdir::basename(*it), prefix);
 		}
 		return result;
 	}

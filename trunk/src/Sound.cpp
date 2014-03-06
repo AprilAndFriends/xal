@@ -47,7 +47,7 @@ namespace xal
 			return this->filename;
 		}
 		// It's dangerous to go alone! Take this.
-		return xal::mgr->findAudioFile(hrdir::normalize(hrdir::basedir(this->filename) + "/" + hresource::hread(this->filename)));
+		return xal::mgr->findAudioFile(hrdir::normalize(hrdir::join_path(hrdir::basedir(this->filename), hresource::hread(this->filename), false)));
 	}
 
 	int Sound::getSize()
