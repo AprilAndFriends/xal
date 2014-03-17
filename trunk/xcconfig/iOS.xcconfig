@@ -1,1 +1,1 @@
-#include "../hltypes/xcconfig/iOS.xcconfig"
+#include "../../xcconfig/iOS.xcconfig"
