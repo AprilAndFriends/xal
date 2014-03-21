@@ -79,7 +79,7 @@ namespace xal
 			{
 				bufferPtr[i] = (short)output2[i];
 			}
-			nFrames++;
+			++nFrames;
 		}
 
 		//printf("read %d speex frames\n",nFrames);
