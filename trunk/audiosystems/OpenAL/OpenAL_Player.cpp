@@ -345,7 +345,7 @@ namespace xal
 			while (n - this->_getQueuedBuffersCount() != count && safeWait > 0)
 			{
 				hthread::sleep(1);
-				safeWait--;
+				--safeWait;
 			}
 			if (safeWait == 0) // I am so going to burn for this.
 			{
@@ -362,7 +362,7 @@ namespace xal
 			while (n - this->_getQueuedBuffersCount() != STREAM_BUFFER_COUNT - index && safeWait > 0)
 			{
 				hthread::sleep(1);
-				safeWait--;
+				--safeWait;
 			}
 			if (safeWait == 0) // iOS hacking at its prime.
 			{
@@ -379,7 +379,7 @@ namespace xal
 			while (n - this->_getQueuedBuffersCount() != count + index - STREAM_BUFFER_COUNT && safeWait > 0)
 			{
 				hthread::sleep(1);
-				safeWait--;
+				--safeWait;
 			}
 			if (safeWait == 0) // Apple makes me resort to horrible hacks like this. :(
 			{

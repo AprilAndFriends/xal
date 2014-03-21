@@ -67,7 +67,7 @@ namespace xal
 			{
 				if (!this->players[this->index]->isPlaying())
 				{
-					this->index++;
+					++this->index;
 					if (this->index < this->players.size())
 					{
 						this->players[this->index]->play();

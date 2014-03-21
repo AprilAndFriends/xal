@@ -876,7 +876,7 @@ namespace xal
 		{
 			if ((*it)->_tryClearMemory())
 			{
-				count++;
+				++count;
 			}
 		}
 		hlog::debugf(xal::logTag, "Found %d buffers for memory clearing.", count);

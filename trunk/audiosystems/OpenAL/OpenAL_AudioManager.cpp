@@ -187,7 +187,7 @@ namespace xal
 			hlog::warn(xal::logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).c_str(), this->numActiveSources));
 			return 0;
 		}
-		this->numActiveSources++;
+		++this->numActiveSources;
 #ifdef _DEBUG
 //		hlog::write(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
 #endif
@@ -196,7 +196,7 @@ namespace xal
 
 	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
-		if (sourceId != 0) this->numActiveSources--;
+		if (sourceId != 0) --this->numActiveSources;
 		alDeleteSources(1, &sourceId);
 #ifdef _DEBUG
 //		hlog::write(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
