@@ -857,7 +857,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = YES;
 			};
@@ -877,7 +876,6 @@
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = YES;
 			};
@@ -897,7 +895,6 @@
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = YES;
 			};
@@ -918,7 +915,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = YES;
 			};
@@ -937,7 +933,6 @@
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = YES;
 			};
@@ -956,7 +951,6 @@
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = xal;
 				SKIP_INSTALL = YES;
 			};
