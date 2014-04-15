@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_SOURCE_H
 #define XAL_SOURCE_H
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 
@@ -30,15 +31,15 @@ namespace xal
 		Source(chstr filename, Category* category);
 		virtual ~Source();
 
-		hstr getFilename() { return this->filename; }
-		SourceMode getMode() { return this->mode; }
-		bool isOpen() { return this->streamOpen; }
-		int getSize() { return this->size; }
-		int getChunkSize() { return this->chunkSize; }
-		int getChannels() { return this->channels; }
-		int getSamplingRate() { return this->samplingRate; }
-		int getBitsPerSample() { return this->bitsPerSample; }
-		float getDuration() { return this->duration; }
+		HL_DEFINE_GET(hstr, filename, Filename);
+		HL_DEFINE_GET(SourceMode, mode, Mode);
+		HL_DEFINE_IS(streamOpen, Open);
+		HL_DEFINE_GET(int, size, Size);
+		HL_DEFINE_GET(int, chunkSize, ChunkSize);
+		HL_DEFINE_GET(int, channels, Channels);
+		HL_DEFINE_GET(int, samplingRate, SamplingRate);
+		HL_DEFINE_GET(int, bitsPerSample, BitsPerSample);
+		HL_DEFINE_GET(float, duration, Duration);
 
 		virtual bool open();
 		virtual void close();

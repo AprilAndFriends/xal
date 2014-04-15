@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.04
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -38,13 +38,13 @@ namespace xal
 			CallbackHandler(bool* active) { this->active = active; }
 			~CallbackHandler() { }
 
-			STDMETHOD_(void, OnVoiceProcessingPassStart)(UINT32 bytesRequired) { }
-			STDMETHOD_(void, OnVoiceProcessingPassEnd)() { }
-			STDMETHOD_(void, OnStreamEnd)() { }
-			STDMETHOD_(void, OnBufferStart)(void* bufferContext) { *this->active = true; }
-			STDMETHOD_(void, OnBufferEnd)(void* bufferContext) { *this->active = false; }
-			STDMETHOD_(void, OnLoopEnd)(void* bufferContext) { }
-			STDMETHOD_(void, OnVoiceError)(void* bufferContext, HRESULT error) { }
+			inline STDMETHOD_(void, OnVoiceProcessingPassStart)(UINT32 bytesRequired) { }
+			inline STDMETHOD_(void, OnVoiceProcessingPassEnd)() { }
+			inline STDMETHOD_(void, OnStreamEnd)() { }
+			inline STDMETHOD_(void, OnBufferStart)(void* bufferContext) { *this->active = true; }
+			inline STDMETHOD_(void, OnBufferEnd)(void* bufferContext) { *this->active = false; }
+			inline STDMETHOD_(void, OnLoopEnd)(void* bufferContext) { }
+			inline STDMETHOD_(void, OnVoiceError)(void* bufferContext, HRESULT error) { }
 
 		protected:
 			bool* active;

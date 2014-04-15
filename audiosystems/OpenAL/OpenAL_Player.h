@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -32,8 +32,8 @@ namespace xal
 		OpenAL_Player(Sound* sound);
 		~OpenAL_Player();
 
-		unsigned int getSourceId() { return this->sourceId; }
-		void setSourceId(unsigned int value) { this->sourceId = value; }
+		inline unsigned int getSourceId() { return this->sourceId; }
+		inline void setSourceId(unsigned int value) { this->sourceId = value; }
 		
 		void createOpenALBuffers();
 		void destroyOpenALBuffers();

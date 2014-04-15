@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.02
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -52,7 +52,7 @@ namespace xal
 	AudioManager* mgr = NULL;
 
 	AudioManager::AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), gain(1.0f), thread(NULL), threadRunning(false)
+		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), thread(NULL), threadRunning(false)
 	{
 		this->name = systemName;
 		this->samplingRate = 44100;
@@ -158,7 +158,7 @@ namespace xal
 
 	void AudioManager::_setGlobalGain(float value)
 	{
-		this->gain = value;
+		this->globalGain = value;
 		foreach (Player*, it, this->players)
 		{
 			(*it)->_systemUpdateGain();

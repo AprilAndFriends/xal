@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_PLAYER_H
 #define XAL_PLAYER_H
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "xalExport.h"
@@ -37,7 +38,7 @@ namespace xal
 		void setGain(float value);
 		float getPitch();
 		void setPitch(float value);
-		Sound* getSound() { return this->sound; }
+		HL_DEFINE_GET(Sound*, sound, Sound);
 		hstr getName();
 		hstr getFilename();
 		hstr getRealFilename();
@@ -53,7 +54,7 @@ namespace xal
 		bool isFading();
 		bool isFadingIn();
 		bool isFadingOut();
-		bool isLooping() { return this->looping; }
+		HL_DEFINE_IS(looping, Looping);
 
 		void play(float fadeTime = 0.0f, bool looping = false);
 		void stop(float fadeTime = 0.0f);
@@ -86,17 +87,17 @@ namespace xal
 
 		float _calcGain();
 
-		virtual bool _systemIsPlaying() { return false; }
-		virtual unsigned int _systemGetBufferPosition() { return 0; }
-		virtual float _systemGetOffset() { return 0.0f; }
-		virtual void _systemSetOffset(float value) { }
-		virtual bool _systemPreparePlay() { return true; }
-		virtual void _systemPrepareBuffer() { }
-		virtual void _systemUpdateGain() { }
-		virtual void _systemUpdatePitch() { }
-		virtual void _systemPlay() { }
-		virtual int _systemStop() { return 0; }
-		virtual int _systemUpdateStream() { return 0; }
+		inline virtual bool _systemIsPlaying() { return false; }
+		inline virtual unsigned int _systemGetBufferPosition() { return 0; }
+		inline virtual float _systemGetOffset() { return 0.0f; }
+		inline virtual void _systemSetOffset(float value) { }
+		inline virtual bool _systemPreparePlay() { return true; }
+		inline virtual void _systemPrepareBuffer() { }
+		inline virtual void _systemUpdateGain() { }
+		inline virtual void _systemUpdatePitch() { }
+		inline virtual void _systemPlay() { }
+		inline virtual int _systemStop() { return 0; }
+		inline virtual int _systemUpdateStream() { return 0; }
 
 	private:
 		void _stopSound(float fadeTime = 0.0f);

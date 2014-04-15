@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -39,7 +39,7 @@ namespace xal
 		SDL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
 
-		SDL_AudioSpec getFormat() { return this->format; }
+		inline SDL_AudioSpec getFormat() { return this->format; }
 
 		void mixAudio(void* unused, unsigned char* stream, int length);
 
