@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_SOUND_H
 #define XAL_SOUND_H
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -30,11 +31,11 @@ namespace xal
 		Sound(chstr filename, Category* category, chstr prefix = "");
 		~Sound();
 
-		hstr getName() { return this->name; }
-		hstr getFilename() { return this->filename; }
-		hstr getRealFilename() { return this->realFilename; }
-		Category* getCategory() { return this->category; }
-		Buffer* getBuffer() { return this->buffer; }
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GET(hstr, filename, Filename);
+		HL_DEFINE_GET(hstr, realFilename, RealFilename);
+		HL_DEFINE_GET(Category*, category, Category);
+		HL_DEFINE_GET(Buffer*, buffer, Buffer);
 
 		int getSize();
 		int getChannels();

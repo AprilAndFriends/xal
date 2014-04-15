@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_CATEGORY_H
 #define XAL_CATEGORY_H
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -27,11 +28,10 @@ namespace xal
 		Category(chstr name, BufferMode bufferMode, SourceMode sourceMode);
 		~Category();
 		
-		hstr getName() { return this->name; }
-		float getGain() { return this->gain; }
-		void setGain(float value) { this->gain = value; }
-		BufferMode getBufferMode() { return this->bufferMode; }
-		SourceMode getSourceMode() { return this->sourceMode; }
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GETSET(float, gain, Gain);
+		HL_DEFINE_GET(BufferMode, bufferMode, BufferMode);
+		HL_DEFINE_GET(SourceMode, sourceMode, SourceMode);
 		bool isStreamed();
 		bool isMemoryManaged();
 		

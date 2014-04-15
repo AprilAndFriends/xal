@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -41,7 +41,7 @@ namespace xal
 
 		void _update(float k);
 
-		bool _systemIsPlaying() { return this->playing; }
+		inline bool _systemIsPlaying() { return this->playing; }
 		unsigned int _systemGetBufferPosition();
 		float _systemGetOffset();
 		void _systemSetOffset(float value);

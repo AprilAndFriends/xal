@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.02
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -17,6 +17,7 @@
 #define XAL_AUDIO_MANAGER_H
 
 #include <hltypes/harray.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
 #include <hltypes/hstring.h>
@@ -79,19 +80,18 @@ namespace xal
 		virtual void init();
 		void clear();
 		
-		void* getBackendId() { return this->backendId; }
-		hstr getName() { return this->name; }
-		int getSamplingRate() { return this->samplingRate; }
-		int getChannels() { return this->channels; }
-		int getBitsPerSample() { return this->bitsPerSample; }
-		bool isEnabled() { return this->enabled; }
-		bool isSuspended() { return this->suspended; }
-		float getIdlePlayerUnloadTime() { return this->idlePlayerUnloadTime; }
-		void setIdlePlayerUnloadTime(float value) { this->idlePlayerUnloadTime = value; }
-		hstr getDeviceName() { return this->deviceName; }
-		bool isThreaded() { return (this->thread != NULL); }
-		float getUpdateTime() { return this->updateTime; }
-		float getGlobalGain() { return this->gain; }
+		inline void* getBackendId() { return this->backendId; }
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GET(int, samplingRate, SamplingRate);
+		HL_DEFINE_GET(int, channels, Channels);
+		HL_DEFINE_GET(int, bitsPerSample, BitsPerSample);
+		HL_DEFINE_IS(enabled, Enabled);
+		HL_DEFINE_IS(suspended, Suspended);
+		HL_DEFINE_GETSET(float, idlePlayerUnloadTime, IdlePlayerUnloadTime);
+		HL_DEFINE_GET(hstr, deviceName, DeviceName);
+		inline bool isThreaded() { return (this->thread != NULL); }
+		HL_DEFINE_GET(float, updateTime, UpdateTime);
+		HL_DEFINE_GET(float, globalGain, GlobalGain);
 		void setGlobalGain(float value);
 		harray<Player*> getPlayers();
 
@@ -149,7 +149,7 @@ namespace xal
 		float idlePlayerUnloadTime;
 		hstr deviceName;
 		float updateTime;
-		float gain;
+		float globalGain;
 		hmap<hstr, Category*> categories;
 		harray<Player*> players;
 		harray<Player*> managedPlayers;
@@ -218,8 +218,8 @@ namespace xal
 		/// @return dataSize if no conversion was done or a positive integer for the size of the new data.
 		virtual int _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize) { return dataSize; }
 
-		virtual void _suspendSystem() { }
-		virtual void _resumeSystem() { }
+		inline virtual void _suspendSystem() { }
+		inline virtual void _resumeSystem() { }
 
 	};
 	

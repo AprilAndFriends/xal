@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_BUFFER_H
 #define XAL_BUFFER_H
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -33,10 +34,10 @@ namespace xal
 		Buffer(Sound* sound);
 		~Buffer();
 
-		chstr getFilename() { return this->filename; }
-		int getFileSize() { return this->fileSize; }
-		unsigned char* getStream() { return this->stream; }
-		Source* getSource() { return this->source; }
+		HL_DEFINE_GET(hstr, filename, Filename);
+		HL_DEFINE_GET(int, fileSize, FileSize);
+		HL_DEFINE_GET(unsigned char*, stream, Stream);
+		HL_DEFINE_GET(Source*, source, Source);
 
 		int getSize();
 		int getChannels();
