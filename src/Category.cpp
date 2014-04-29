@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -24,6 +24,14 @@ namespace xal
 
 	Category::~Category()
 	{
+	}
+
+	void Category::setGain(float value)
+	{
+		xal::mgr->_lock();
+		this->gain = value;
+		xal::mgr->_setGlobalGain(xal::mgr->globalGain); // updates all Player instances with the new category gain
+		xal::mgr->_unlock();
 	}
 
 	bool Category::isStreamed()

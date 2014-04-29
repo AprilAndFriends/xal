@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -75,9 +75,9 @@ namespace xal
 		this->readPosition = (this->readPosition + size) % STREAM_BUFFER;
 	}
 
-	void SDL_Player::_update(float k)
+	void SDL_Player::_update(float timeDelta)
 	{
-		Player::_update(k);
+		Player::_update(timeDelta);
 		// making sure a corrected size is used
 		int size = this->buffer->convertToOutputSize(this->buffer->getSize());
 		if (size > 0 && this->position >= size)

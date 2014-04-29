@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -40,9 +40,9 @@ namespace xal
 		int readPosition;
 		int writePosition;
 
-		void _update(float k);
+		void _update(float timeDelta);
 
-		bool _systemIsPlaying() { return this->playing; }
+		inline bool _systemIsPlaying() { return this->playing; }
 		float _systemGetOffset();
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();

@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -221,7 +221,7 @@ namespace xal
 		AudioManager::_suspendAudio();
 	}
 
-	void OpenAL_AudioManager::_update(float k)
+	void OpenAL_AudioManager::_update(float timeDelta)
 	{
 		if (hasiOSAudioSessionRestoreFailed())
 		{
@@ -235,7 +235,7 @@ namespace xal
 		{
 			this->_resumeAudio();
 		}
-		AudioManager::_update(k);
+		AudioManager::_update(timeDelta);
 	}
 
 	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -64,7 +64,7 @@ namespace xal
 		unsigned char* streamBuffers[STREAM_BUFFER_COUNT]; // XAudio2 does not keep audio data alive so streamed audio has to be cached
 		int buffersSubmitted;
 
-		void _update(float k);
+		void _update(float timeDelta);
 
 		bool _systemIsPlaying();
 		unsigned int _systemGetBufferPosition();

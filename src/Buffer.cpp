@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -287,9 +287,9 @@ namespace xal
 		return result;
 	}
 
-	void Buffer::_update(float k)
+	void Buffer::_update(float timeDelta)
 	{
-		this->idleTime += k;
+		this->idleTime += timeDelta;
 		if (this->idleTime > xal::mgr->getIdlePlayerUnloadTime())
 		{
 			this->_tryClearMemory();

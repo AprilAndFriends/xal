@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -79,8 +79,8 @@ namespace xal
 		float _getPitch();
 		void _setPitch(float value);
 
-		virtual void _update(float k);
-		
+		virtual void _update(float timeDelta);
+
 		void _play(float fadeTime = 0.0f, bool looping = false);
 		void _stop(float fadeTime = 0.0f);
 		void _pause(float fadeTime = 0.0f);

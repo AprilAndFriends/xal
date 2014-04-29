@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -36,7 +36,7 @@ namespace xal
 	
 	Sound* NoAudio_AudioManager::_createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
-		Category* category = this->_getCategoryByName(categoryName);
+		Category* category = this->_getCategory(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
 		if (this->sounds.has_key(sound->getName()))
 		{

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -57,10 +57,10 @@ namespace xal
 		}
 	}
 
-	void XAudio2_Player::_update(float k)
+	void XAudio2_Player::_update(float timeDelta)
 	{
 		this->stillPlaying = this->active;
-		Player::_update(k);
+		Player::_update(timeDelta);
 		if (!this->stillPlaying && this->playing)
 		{
 			this->_stop();
