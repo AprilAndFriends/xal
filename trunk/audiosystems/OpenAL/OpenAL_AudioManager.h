@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -59,7 +59,7 @@ namespace xal
 #ifdef _IOS
 		void _resumeAudio();
 		void _suspendAudio();
-		void _update(float k);
+		void _update(float timeDelta);
 		bool pendingResume; // iOS exception handling dealing with Audio Session interruptions
 #endif
 		void initOpenAL();

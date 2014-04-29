@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,8 @@ namespace xal
 		~Category();
 		
 		HL_DEFINE_GET(hstr, name, Name);
-		HL_DEFINE_GETSET(float, gain, Gain);
+		HL_DEFINE_GET(float, gain, Gain);
+		void setGain(float value);
 		HL_DEFINE_GET(BufferMode, bufferMode, BufferMode);
 		HL_DEFINE_GET(SourceMode, sourceMode, SourceMode);
 		bool isStreamed();

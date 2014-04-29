@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -39,7 +39,7 @@ namespace xal
 		int readPosition;
 		int writePosition;
 
-		void _update(float k);
+		void _update(float timeDelta);
 
 		inline bool _systemIsPlaying() { return this->playing; }
 		unsigned int _systemGetBufferPosition();

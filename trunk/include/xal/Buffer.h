@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -26,6 +26,7 @@ namespace xal
 	class Sound;
 	class Source;
 
+	/// @brief Provides a mechanism for data access without requiring to understand the underlying buffering/streaming/reading system.
 	class xalExport Buffer
 	{
 	public:
@@ -79,7 +80,7 @@ namespace xal
 		harray<Player*> boundPlayers;
 		float idleTime;
 
-		void _update(float k);
+		void _update(float timeDelta);
 		void _tryLoadData();
 		bool _tryClearMemory();
 

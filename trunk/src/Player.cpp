@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -16,9 +16,8 @@
 
 namespace xal
 {
-	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false),
-		looping(false), fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f),
-		bufferIndex(0), processedByteCount(0), idleTime(0.0f)
+	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false), looping(false), fadeSpeed(0.0f),
+		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f)
 	{
 		this->sound = sound;
 		this->buffer = sound->getBuffer();
@@ -166,7 +165,7 @@ namespace xal
 		return this->sound->getCategory();
 	}
 
-	void Player::_update(float k)
+	void Player::_update(float timeDelta)
 	{
 		if (this->_systemIsPlaying())
 		{
@@ -182,7 +181,7 @@ namespace xal
 		}
 		if (this->isFading())
 		{
-			this->fadeTime += this->fadeSpeed * k;
+			this->fadeTime += this->fadeSpeed * timeDelta;
 			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
 			{
 				this->_systemUpdateGain();

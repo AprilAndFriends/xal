@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -53,9 +53,9 @@ namespace xal
 		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 	
-	void OpenAL_Player::_update(float k)
+	void OpenAL_Player::_update(float timeDelta)
 	{
-		Player::_update(k);
+		Player::_update(timeDelta);
 		if (!this->_systemIsPlaying() && this->sourceId != 0)
 		{
 			this->_stop();
