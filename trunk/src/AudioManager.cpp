@@ -459,7 +459,7 @@ namespace xal
 			this->_unlock();
 			throw hl_exception("Audio Manager: Sound '" + soundName + "' does not exist!");
 		}
-		Sound* sound = this->sounds[name];
+		Sound* sound = this->sounds[soundName];
 		Player* player = this->_createSystemPlayer(sound);
 		this->players += player;
 		return player;
