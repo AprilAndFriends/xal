@@ -201,7 +201,6 @@
     <ClInclude Include="include\xal\Player.h" />
     <ClInclude Include="include\xal\Sound.h" />
     <ClInclude Include="include\xal\xal.h" />
-    <ClInclude Include="src\Endianess.h" />
     <ClInclude Include="include\xal\AudioManager.h" />
     <ClInclude Include="include\xal\Category.h" />
     <ClInclude Include="include\xal\xalExport.h" />

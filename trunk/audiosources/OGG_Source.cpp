@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.12
 /// 
 /// @section LICENSE
 /// 
@@ -18,20 +18,14 @@
 #include <hltypes/hresource.h>
 #include <hltypes/hstream.h>
 
-#include "Endianess.h"
 #include "AudioManager.h"
 #include "OGG_Source.h"
 #include "xal.h"
 
 namespace xal
 {
-	// small optimizations, they are thread-safe
-	static int _section;
-#ifndef __BIG_ENDIAN__
-	static int _endianess = 0;
-#else
-	static int _endianess = 1;
-#endif
+	// small optimizations, they are not thread-safe
+	static int _section = 0;
 
 	size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
@@ -137,7 +131,7 @@ namespace xal
 		int read;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, buffer, remaining, _endianess, 2, 1, &_section);
+			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
 				break;
@@ -159,7 +153,7 @@ namespace xal
 		int read;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, buffer, remaining, _endianess, 2, 1, &_section);
+			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
 				break;

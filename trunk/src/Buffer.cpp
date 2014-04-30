@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.12
 /// 
 /// @section LICENSE
 /// 
@@ -32,7 +32,7 @@ namespace xal
 		this->streamSize = 0;
 		this->dataSize = 0;
 		this->source = xal::mgr->_createSource(this->filename, sound->getCategory(), this->getFormat());
-		this->loadedData = false;
+		this->loadedMetaData = false;
 		this->size = 0;
 		this->channels = 2;
 		this->samplingRate = 44100;
@@ -70,31 +70,31 @@ namespace xal
 	
 	int Buffer::getSize()
 	{
-		this->_tryLoadData();
+		this->_tryLoadMetaData();
 		return this->size;
 	}
 
 	int Buffer::getChannels()
 	{
-		this->_tryLoadData();
+		this->_tryLoadMetaData();
 		return this->source->getChannels();
 	}
 
 	int Buffer::getSamplingRate()
 	{
-		this->_tryLoadData();
+		this->_tryLoadMetaData();
 		return this->source->getSamplingRate();
 	}
 
 	int Buffer::getBitsPerSample()
 	{
-		this->_tryLoadData();
+		this->_tryLoadMetaData();
 		return this->source->getBitsPerSample();
 	}
 
 	float Buffer::getDuration()
 	{
-		this->_tryLoadData();
+		this->_tryLoadMetaData();
 		return this->source->getDuration();
 	}
 
@@ -158,7 +158,7 @@ namespace xal
 		{
 			this->loaded = true;
 			this->source->open();
-			this->_tryLoadData();
+			this->_tryLoadMetaData();
 			if (this->stream == NULL)
 			{
 				this->dataSize = this->source->getSize();
@@ -173,7 +173,7 @@ namespace xal
 		if (!this->source->isOpen())
 		{
 			this->source->open();
-			this->_tryLoadData();
+			this->_tryLoadMetaData();
 		}
 	}
 
@@ -256,13 +256,13 @@ namespace xal
 		this->source->rewind();
 	}
 
-	int Buffer::convertToOutputSize(int size)
+	int Buffer::calcOutputSize(int size)
 	{
 		return hround((float)size * xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample() /
 			((float)this->getSamplingRate() * this->getChannels() * this->getBitsPerSample()));
 	}
 
-	int Buffer::convertToInputSize(int size)
+	int Buffer::calcInputSize(int size)
 	{
 		return hround((float)size * this->getSamplingRate() * this->getChannels() * this->getBitsPerSample() /
 			((float)xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample()));
@@ -290,15 +290,15 @@ namespace xal
 	void Buffer::_update(float timeDelta)
 	{
 		this->idleTime += timeDelta;
-		if (this->idleTime > xal::mgr->getIdlePlayerUnloadTime())
+		if (this->idleTime >= xal::mgr->getIdlePlayerUnloadTime())
 		{
 			this->_tryClearMemory();
 		}
 	}
 
-	void Buffer::_tryLoadData()
+	void Buffer::_tryLoadMetaData()
 	{
-		if (!this->loadedData)
+		if (!this->loadedMetaData)
 		{
 			bool open = this->source->isOpen();
 			if (!open)
@@ -310,7 +310,7 @@ namespace xal
 			this->samplingRate = this->source->getSamplingRate();
 			this->bitPerSample = this->source->getBitsPerSample();
 			this->duration = this->source->getDuration();
-			this->loadedData = true;
+			this->loadedMetaData = true;
 			if (!open)
 			{
 				this->source->close();
