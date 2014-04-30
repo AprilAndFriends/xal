@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.12
 /// 
 /// @section LICENSE
 /// 
@@ -47,33 +47,20 @@ namespace xal
 			this->stream->read_raw(buffer, 4); // next tag
 			tag = (char*)buffer;
 			this->stream->read_raw(buffer, 4); // size of the chunk
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
-#endif
 			memcpy(&size, buffer, 4);
 			if (tag == "fmt ")
 			{
-				/// TODO - implement hresource::read_little_endian and hresource::read_big_endian
 				// format
 				this->stream->read_raw(buffer, 2);
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-				XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
-#endif
 				memcpy(&value16, buffer, 2);
 				if (size == 16 && value16 == 1)
 				{
 					// channels
 					this->stream->read_raw(buffer, 2);
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-					XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
-#endif
 					memcpy(&value16, buffer, 2);
 					this->channels = value16;
 					// sampling rate
 					this->stream->read_raw(buffer, 4);
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-					XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
-#endif
 					memcpy(&value32, buffer, 4);
 					this->samplingRate = value32;
 					// bytes rate
@@ -82,9 +69,6 @@ namespace xal
 					this->stream->read_raw(buffer, 2);
 					// bits per sample
 					this->stream->read_raw(buffer, 2);
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-					XAL_NORMALIZE_ENDIAN(*(uint16_t*)buffer);
-#endif
 					memcpy(&value16, buffer, 2);
 					this->bitsPerSample = value16;
 					size = 0;
@@ -132,9 +116,6 @@ namespace xal
 			this->stream->read_raw(buffer, 4); // next tag
 			tag = (char*)buffer;
 			this->stream->read_raw(buffer, 4); // size of the chunk
-#ifdef __BIG_ENDIAN__ // TODO - this should be tested properly
-			XAL_NORMALIZE_ENDIAN(*(uint32_t*)buffer);
-#endif
 			memcpy(&size, buffer, 4);
 			if (tag == "data")
 			{

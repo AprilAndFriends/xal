@@ -121,9 +121,6 @@
     <ClInclude Include="audiosources\FLAC_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="src\Endianess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="audiosystems\NoAudio\NoAudio_AudioManager.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
     </ClInclude>

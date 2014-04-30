@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.12
 /// 
 /// @section LICENSE
 /// 
@@ -16,7 +16,6 @@
 #include "SDL_AudioManager.h"
 #include "SDL_Player.h"
 #include "Sound.h"
-#include "Endianess.h"
 #include "xal.h"
 
 namespace xal
@@ -79,7 +78,7 @@ namespace xal
 	{
 		Player::_update(timeDelta);
 		// making sure a corrected size is used
-		int size = this->buffer->convertToOutputSize(this->buffer->getSize());
+		int size = this->buffer->calcOutputSize(this->buffer->getSize());
 		if (size > 0 && this->position >= size)
 		{
 			if (this->looping)
@@ -113,17 +112,6 @@ namespace xal
 				{
 					memcpy(&stream[size1], data2, size2);
 				}
-#ifdef __BIG_ENDIAN__
-				short* sStream = (short*)stream;
-				for_iter (i, 0, size1)
-				{
-					XAL_NORMALIZE_ENDIAN(sStream[i]);
-				}
-				for_iter (i, 0, size2)
-				{
-					XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
-				}
-#endif				
 			}
 			else
 			{
@@ -136,30 +124,22 @@ namespace xal
 				{
 					for_iter (i, 0, size1)
 					{
-						XAL_NORMALIZE_ENDIAN(sStream[i]);
 						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData1[i]), -32768, 32767);
-						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
 					for_iter (i, 0, size2)
 					{
-						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData2[i]), -32768, 32767);
-						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 					}
 				}
 				else
 				{
 					for_iter (i, 0, size1)
 					{
-						XAL_NORMALIZE_ENDIAN(sStream[i]);
 						sStream[i] = (short)(sData1[i] * this->currentGain);
-						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
 					for_iter (i, 0, size2)
 					{
-						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 						sStream[size1 + i] = (short)(sData2[i] * this->currentGain);
-						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 					}
 				}
 			}
@@ -179,7 +159,7 @@ namespace xal
 		{
 			count = (STREAM_BUFFER - this->writePosition + this->readPosition);
 		}
-		return this->buffer->convertToInputSize(count);
+		return this->buffer->calcInputSize(count);
 	}
 
 	float SDL_Player::_systemGetOffset()
@@ -254,7 +234,7 @@ namespace xal
 		if (count > 0)
 		{
 			result = this->_fillBuffer(count * STREAM_BUFFER_SIZE);
-			result = this->buffer->convertToInputSize(result);
+			result = this->buffer->calcInputSize(result);
 		}
 		return result;
 	}
@@ -262,7 +242,7 @@ namespace xal
 	int SDL_Player::_fillBuffer(int size)
 	{
 		// making sure the buffer doesn't overflow since upsampling can cause that
-		size = this->buffer->convertToInputSize(size);
+		size = this->buffer->calcInputSize(size);
 		// load the data from the buffer
 		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
