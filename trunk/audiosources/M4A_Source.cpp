@@ -18,7 +18,6 @@
 
 #include <hltypes/hlog.h>
 
-#include "Endianess.h"
 #include "AudioManager.h"
 #include "M4A_Source.h"
 #include "xal.h"
