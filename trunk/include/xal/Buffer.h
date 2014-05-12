@@ -88,7 +88,7 @@ namespace xal
 		/// @return The byte-size of the actual data in this Buffer.
 		/// @note This is only used by some audio systems.
 		int calcInputSize(int size);
-		/// @brief Reads
+		/// @brief Reads the raw PCM data from the buffer.
 		/// @param[in] size The byte-size of the data in the audio system.
 		/// @param[out] output The buffer where to store the PCM data. It should be uninitialized. It will be set to NULL.
 		/// @return The byte-size of the read data.
