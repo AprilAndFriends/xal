@@ -111,8 +111,8 @@ namespace xal
 
 		/// @brief Creates a new audio Category.
 		/// @param[in] name Name of the Category.
-		/// @param[in] bufferMode How buffers should be handled in this Category.
-		/// @param[in] sourceMode How sources should be handled in this Category.
+		/// @param[in] bufferMode How to handle the intermediate Buffer of the Sound in this category.
+		/// @param[in] sourceMode How to handle the Source of the Sound in this category.
 		/// @return The newly created Category.
 		/// @note If the Category exists already, this call will have no effect.
 		Category* createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode);
