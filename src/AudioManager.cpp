@@ -11,6 +11,7 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
+#include <hltypes/hfile.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
@@ -852,10 +853,9 @@ namespace xal
 				return name;
 			}
 		}
-		int index = filename.rfind(".");
-		if (index >= 0)
+		hstr newFilename = hfile::no_extension(filename);
+		if (newFilename != filename)
 		{
-			hstr newFilename = filename.substr(0, index);
 			foreach (hstr, it, this->extensions)
 			{
 				name = newFilename + (*it);
