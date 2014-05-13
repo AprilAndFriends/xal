@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.12
 /// 
 /// @section LICENSE
 /// 
@@ -20,7 +20,7 @@
 namespace xal
 {
 	Source::Source(chstr filename, Category* category) : streamOpen(false), size(0), channels(2),
-		samplingRate(44100), bitsPerSample(16), duration(0.0f), chunkSize(0), stream(NULL)
+		samplingRate(44100), bitsPerSample(16), duration(0.0f), stream(NULL)
 	{
 		this->filename = filename;
 		this->mode = category->getSourceMode();
