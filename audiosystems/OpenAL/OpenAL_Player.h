@@ -50,6 +50,7 @@ namespace xal
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
 		void _systemUpdateGain();
+		void _systemUpdatePitch();
 		void _systemPlay();
 		int _systemStop();
 		int _systemUpdateStream();

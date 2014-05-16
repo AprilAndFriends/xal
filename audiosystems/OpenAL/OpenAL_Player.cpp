@@ -172,6 +172,14 @@ namespace xal
 		}
 	}
 	
+	void OpenAL_Player::_systemUpdatePitch()
+	{
+		if (this->sourceId != 0)
+		{
+			alSourcef(this->sourceId, AL_PITCH, this->pitch);
+		}
+	}
+	
 	void OpenAL_Player::_systemPlay()
 	{
 		if (this->sourceId != 0)
