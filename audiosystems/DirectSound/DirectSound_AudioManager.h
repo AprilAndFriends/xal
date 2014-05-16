@@ -21,6 +21,7 @@
 #include "xalExport.h"
 
 struct IDirectSound;
+struct _DSCAPS;
 
 namespace xal
 {
@@ -33,6 +34,7 @@ namespace xal
 	{
 	public:
 		IDirectSound* dsDevice;
+		_DSCAPS* dsCaps;
 
 		DirectSound_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~DirectSound_AudioManager();

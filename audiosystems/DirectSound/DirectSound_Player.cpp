@@ -238,7 +238,10 @@ namespace xal
 	{
 		if (this->dsBuffer != NULL)
 		{
-			this->dsBuffer->SetFrequency((DWORD)(this->pitch * this->buffer->getSamplingRate()));
+			DWORD freq = (DWORD) (this->pitch * this->buffer->getSamplingRate());
+			DWORD limit = ((DirectSound_AudioManager*)xal::mgr)->dsCaps->dwMaxSecondarySampleRate;
+			if (freq > limit) freq = limit;
+			this->dsBuffer->SetFrequency(freq);
 		}
 	}
 
