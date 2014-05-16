@@ -10,6 +10,7 @@
 #ifdef _DIRECTSOUND
 #include <dsound.h>
 
+
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
@@ -43,6 +44,19 @@ namespace xal
 			hlog::error(xal::logTag, "Could not set cooperative level!");
 			return;
 		}
+		this->dsCaps = new _DSCAPS();
+		memset(this->dsCaps, 0, sizeof(_DSCAPS));
+		this->dsCaps->dwSize = sizeof(_DSCAPS);
+		result = this->dsDevice->GetCaps(this->dsCaps);
+		if (result != DS_OK)
+		{
+			this->dsCaps->dwMaxSecondarySampleRate = 100000; // just in case. 100k is guaranteed to be always supported on all DS hardware
+			hlog::error(xal::logTag, "Failed fetching DirectSound device caps");
+		}
+		else
+		{
+			hlog::writef(xal::logTag, "DirectSound device caps: { maxSampleRate = %u }", this->dsCaps->dwMaxSecondarySampleRate);
+		}
 		this->enabled = true;
 	}
 
@@ -53,6 +67,8 @@ namespace xal
 		{
 			this->dsDevice->Release();
 			this->dsDevice = NULL;
+			delete this->dsCaps;
+			this->dsCaps = NULL;
 		}
 	}
 	
