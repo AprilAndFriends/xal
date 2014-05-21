@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -18,22 +18,45 @@
 
 #include "xalExport.h"
 
+#define XAL_AS_DISABLED "Disabled"
 #define XAL_AS_DIRECTSOUND "DirectSound"
 #define XAL_AS_OPENAL "OpenAL"
 #define XAL_AS_SDL "SDL"
 #define XAL_AS_XAUDIO2 "XAudio2"
 #define XAL_AS_AVFOUNDATION "AVFoundation"
 #define XAL_AS_COREAUDIO "CoreAudio"
-#define XAL_AS_DISABLED "Disabled"
-#define XAL_AS_DEFAULT ""
 
 namespace xal
 {
 	extern hstr logTag;
 
-	xalFnExport void init(chstr systemName, void* backendId, bool threaded = true, float updateTime = 0.01f, chstr deviceName = "");
+	/// @brief Type of the audio-system.
+	enum AudioSystemType
+	{
+		AS_DEFAULT = 0,
+		AS_DISABLED = 1,
+		AS_DIRECTSOUND = 2,
+		AS_OPENAL = 3,
+		AS_SDL = 4,
+		AS_XAUDIO2 = 5,
+		AS_AVFOUNDATION = 6,
+		AS_COREAUDIO = 7
+	};
+
+	/// @brief Initializes XAL.
+	/// @param[in] type Type of the audio-system.
+	/// @param[in] backendId Special ID needed by some audio systems.
+	/// @param[in] threaded Whether update should be handled in a separate thread.
+	/// @param[in] updateTime How much time should pass between updates when "threaded" is enabled.
+	/// @param[in] deviceName Required by some audio systems.
+	/// @note On Win32, backendId is the window handle. On Android, backendId is a pointer to the JavaVM.
+	xalFnExport void init(AudioSystemType type, void* backendId, bool threaded = true, float updateTime = 0.01f, chstr deviceName = "");
+	/// @brief Destroys XAL.
 	xalFnExport void destroy();
-	xalFnExport bool hasAudioSystem(chstr name);
+	/// @brief Checks if XAL was compiled with a given audio-system available.
+	/// @param[in] type Type of the audio-system.
+	/// @return True if XAL was compiled with a given audio-system.
+	xalFnExport bool hasAudioSystem(AudioSystemType type);
 
 }
 

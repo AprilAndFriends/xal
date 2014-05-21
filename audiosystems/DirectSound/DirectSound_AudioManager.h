@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -36,7 +36,7 @@ namespace xal
 		IDirectSound* dsDevice;
 		_DSCAPS* dsCaps;
 
-		DirectSound_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		DirectSound_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~DirectSound_AudioManager();
 
 	protected:

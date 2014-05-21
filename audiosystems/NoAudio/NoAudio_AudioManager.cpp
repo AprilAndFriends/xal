@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -17,9 +17,10 @@
 
 namespace xal
 {
-	NoAudio_AudioManager::NoAudio_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
+	NoAudio_AudioManager::NoAudio_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
+		this->name = XAL_AS_DISABLED;
 		hlog::write(xal::logTag, "Initializing NoAudio.");
 		this->enabled = false;
 	}

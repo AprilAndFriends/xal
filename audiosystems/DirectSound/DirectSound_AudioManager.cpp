@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -25,9 +25,10 @@
 
 namespace xal
 {
-	DirectSound_AudioManager::DirectSound_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
+	DirectSound_AudioManager::DirectSound_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
+		this->name = XAL_AS_DIRECTSOUND;
 		hlog::write(xal::logTag, "Initializing DirectSound.");
 		HRESULT result = DirectSoundCreate(NULL, &this->dsDevice, NULL);
 		if (FAILED(result))

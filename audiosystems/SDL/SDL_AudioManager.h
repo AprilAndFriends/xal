@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -36,7 +36,7 @@ namespace xal
 	public:
 		friend class SDL_Player;
 
-		SDL_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		SDL_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
 
 		inline SDL_AudioSpec getFormat() { return this->format; }

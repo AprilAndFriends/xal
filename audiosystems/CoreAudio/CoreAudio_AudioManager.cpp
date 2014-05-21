@@ -1,7 +1,7 @@
 /// @file
 /// @author  Ivan Vucica
 /// @author  Kresimir Spes
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -43,10 +43,10 @@ namespace xal
 	
 #define CA_INIT_ASSERTION(assertion, message) CA_INIT_ASSERTION_EX(assertion, message, /*void*/)
 	
-	CoreAudio_AudioManager::CoreAudio_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-	AudioManager(systemName, backendId, threaded, updateTime, deviceName)
-
+	CoreAudio_AudioManager::CoreAudio_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
+		this->name = XAL_AS_COREAUDIO;
 		hlog::write(logTag, "initializing CoreAudio");
 		
 		// set up threads before moving on

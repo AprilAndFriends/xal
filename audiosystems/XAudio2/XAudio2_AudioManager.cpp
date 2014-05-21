@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -22,9 +22,10 @@ using namespace Microsoft::WRL;
 
 namespace xal
 {
-	XAudio2_AudioManager::XAudio2_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName), xa2Device(NULL), xa2MasteringVoice(NULL)
+	XAudio2_AudioManager::XAudio2_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName), xa2Device(NULL), xa2MasteringVoice(NULL)
 	{
+		this->name = XAL_AS_XAUDIO2;
 		hlog::write(xal::logTag, "Initializing XAudio2.");
 		HRESULT result = XAudio2Create(&this->xa2Device, 0);
 		if (FAILED(result))
