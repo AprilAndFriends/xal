@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -39,128 +39,126 @@
 //#include "AVFoundation_AudioManager.h" // TODO: iOS maybe? probably leagacy code
 #endif
 
-
 #ifdef _WIN32
 #ifndef _WINRT
 	#ifdef _DIRECTSOUND
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DIRECTSOUND
+	#define AS_INTERNAL_DEFAULT AS_DIRECTSOUND
 	#elif defined(_SDL)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
+	#define AS_INTERNAL_DEFAULT AS_SDL
 	#elif defined(_OPENAL)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #else
 	#ifdef _XAUDIO2
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_XAUDIO2
+	#define AS_INTERNAL_DEFAULT AS_XAUDIO2
 	#else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #endif
 #elif defined(__APPLE__) && !defined(_IOS)
 	#ifdef _COREAUDIO
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
+	#define AS_INTERNAL_DEFAULT AS_COREAUDIO
 	#elif defined(_SDL)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
+	#define AS_INTERNAL_DEFAULT AS_SDL
 	#elif defined(_OPENAL)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #elif defined(__APPLE__) && defined(_IOS)
 	#ifdef _COREAUDIO
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_COREAUDIO
+	#define AS_INTERNAL_DEFAULT AS_COREAUDIO
 	#elif defined(_OPENAL)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#elif defined(_AVFOUNDATION)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_AVFOUNDATION
+	#define AS_INTERNAL_DEFAULT AS_AVFOUNDATION
 	#else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
-	//XAL_AS_AVFOUNDATION
+	//AS_AVFOUNDATION
 #elif defined(_UNIX)
 	#ifdef _SDL
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_SDL
+	#define AS_INTERNAL_DEFAULT AS_SDL
 	#elif defined(_OPENAL)
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #elif defined(_ANDROID)
 	#ifdef _OPENAL
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_OPENAL
+	#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #else
-	#define XAL_AS_INTERNAL_DEFAULT XAL_AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AS_DISABLED
 #endif
 
 namespace xal
 {
 	hstr logTag = "xal";
 
-	void init(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName)
+	void init(AudioSystemType type, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
 		hlog::write(xal::logTag, "Initializing XAL.");
-		hstr name = systemName;
-		if (name == XAL_AS_DEFAULT)
+		if (type == AS_DEFAULT)
 		{
-			name = XAL_AS_INTERNAL_DEFAULT;
+			type = AS_INTERNAL_DEFAULT;
 		}
-		if (name == XAL_AS_DISABLED)
+		if (type == AS_DISABLED)
 		{
-			xal::mgr = new NoAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 			hlog::write(xal::logTag, "Audio is disabled.");
 			return;
 		}
 #ifdef _DIRECTSOUND
-		if (name == XAL_AS_DIRECTSOUND)
+		if (type == AS_DIRECTSOUND)
 		{
-			xal::mgr = new DirectSound_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new DirectSound_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _OPENAL
-		if (name == XAL_AS_OPENAL)
+		if (type == AS_OPENAL)
 		{
-			xal::mgr = new OpenAL_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new OpenAL_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _SDL
-		if (name == XAL_AS_SDL)
+		if (type == AS_SDL)
 		{
-			xal::mgr = new SDL_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new SDL_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _XAUDIO2
-		if (name == XAL_AS_XAUDIO2)
+		if (type == AS_XAUDIO2)
 		{
-			xal::mgr = new XAudio2_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new XAudio2_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 /*
 #ifdef _IOS
-		if (name == XAL_AS_AVFOUNDATION)
+		if (type == AS_AVFOUNDATION)
 		{
-			xal::mgr = new AVFoundation_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new AVFoundation_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 */
 #ifdef _COREAUDIO
-		if (name == XAL_AS_COREAUDIO)
+		if (type == AS_COREAUDIO)
 		{
-			xal::mgr = new CoreAudio_AudioManager(name, backendId, threaded, updateTime, deviceName);
+			xal::mgr = new CoreAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 		if (xal::mgr == NULL)
 		{
-			hlog::write(xal::logTag, "Audio system does not exist: " + name);
-			xal::mgr = new NoAudio_AudioManager(XAL_AS_DISABLED, backendId, threaded, updateTime, deviceName);
-			hlog::write(xal::logTag, "Audio is disabled.");
+			hlog::warn(xal::logTag, "Could not create given audio system!");
+			xal::mgr = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
+			hlog::warn(xal::logTag, "Audio is disabled.");
 			return;
 		}
-		hlog::write(xal::logTag, "Audio system created: " + name);
+		hlog::write(xal::logTag, "Audio system created: " + xal::mgr->getName());
 		// actually starts threading
 		xal::mgr->init();
 	}
@@ -176,33 +174,33 @@ namespace xal
 		}
 	}
 	
-	bool hasAudioSystem(chstr name)
+	bool hasAudioSystem(AudioSystemType type)
 	{
 #ifdef _DIRECTSOUND
-		if (name == XAL_AS_DIRECTSOUND)
+		if (type == AS_DIRECTSOUND)
 		{
 			return true;
 		}
 #endif
 #ifdef _OPENAL
-		if (name == XAL_AS_OPENAL)
+		if (type == AS_OPENAL)
 		{
 			return true;
 		}
 #endif
 #ifdef _SDL
-		if (name == XAL_AS_SDL)
+		if (type == AS_SDL)
 		{
 			return true;
 		}
 #endif
 #ifdef _XAUDIO2
-		if (name == XAL_AS_XAUDIO2)
+		if (type == AS_XAUDIO2)
 		{
 			return true;
 		}
 #endif
-		if (name == XAL_AS_DISABLED)
+		if (type == AS_DISABLED)
 		{
 			return true;
 		}

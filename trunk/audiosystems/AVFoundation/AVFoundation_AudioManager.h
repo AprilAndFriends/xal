@@ -1,6 +1,6 @@
 /// @file
 /// @author  Ivan Vucica
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -38,7 +38,7 @@ namespace xal
 	public:
 		friend class AVFoundation_Player;
 
-		AVFoundation_AudioManager(chstr systemName, unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		AVFoundation_AudioManager(unsigned long backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~AVFoundation_AudioManager();
 		
 	protected:

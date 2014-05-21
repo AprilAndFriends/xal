@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -233,13 +233,12 @@ namespace xal
 
 	protected:
 		/// @brief Constructor.
-		/// @param[in] systemName Name of the audio system back-end.
 		/// @param[in] backendId Special ID needed by some audio systems.
 		/// @param[in] threaded Whether update should be handled in a separate thread.
 		/// @param[in] updateTime How much time should pass between updates when "threaded" is enabled.
 		/// @param[in] deviceName Required by some audio systems.
 		/// @note On Win32, backendId is the window handle. On Android, backendId is a pointer to the JavaVM.
-		AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 
 		/// @brief Name of the audio system.
 		hstr name;

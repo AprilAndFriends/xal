@@ -1,7 +1,7 @@
 /// @file
 /// @author  Ivan Vucica
 /// @author  Kresimir Spes
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -35,15 +35,12 @@
 // for audio converter
 #include <AudioToolbox/AudioToolbox.h>
 
-
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
 #include "xalExport.h"
 
-
 #define SDL_MAX_PLAYING 32
-
 
 namespace xal
 {
@@ -57,7 +54,7 @@ namespace xal
 	public:
 		friend class CoreAudio_Player;
 
-		CoreAudio_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		CoreAudio_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~CoreAudio_AudioManager();
 		OSStatus mixAudio(void                        *inRefCon,
 						  AudioUnitRenderActionFlags  *ioActionFlags,

@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -86,9 +86,10 @@ static hstr alcGetErrorString(ALCenum error)
 
 namespace xal
 {
-	OpenAL_AudioManager::OpenAL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
+	OpenAL_AudioManager::OpenAL_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
+		this->name = XAL_AS_OPENAL;
 		hlog::write(xal::logTag, "Initializing OpenAL.");
 #ifdef _ANDROID
 		__openal__JNI_OnLoad(backendId);

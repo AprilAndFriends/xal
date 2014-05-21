@@ -1,6 +1,6 @@
 /// @file
 /// @author  Ivan Vucica
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -38,9 +38,10 @@
 
 namespace xal
 {
-	AVFoundation_AudioManager::AVFoundation_AudioManager(chstr systemName, unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
+	AVFoundation_AudioManager::AVFoundation_AudioManager(unsigned long backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
+		this->name = XAL_AS_AVFOUNDATION;
 		xal::log("initializing AVFoundation");
 		this->enabled = true;
 	}

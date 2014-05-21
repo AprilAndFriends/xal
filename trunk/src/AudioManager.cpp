@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -52,10 +52,9 @@ namespace xal
 	
 	AudioManager* mgr = NULL;
 
-	AudioManager::AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
+	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), thread(NULL), threadRunning(false)
 	{
-		this->name = systemName;
 		this->samplingRate = 44100;
 		this->channels = 2;
 		this->bitsPerSample = 16;

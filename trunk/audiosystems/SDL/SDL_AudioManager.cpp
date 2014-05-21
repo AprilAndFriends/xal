@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -23,9 +23,10 @@
 
 namespace xal
 {
-	SDL_AudioManager::SDL_AudioManager(chstr systemName, void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(systemName, backendId, threaded, updateTime, deviceName)
+	SDL_AudioManager::SDL_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
+		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
+		this->name = XAL_AS_SDL;
 		hlog::write(xal::logTag, "Initializing SDL Audio.");
 		this->buffer = new unsigned char[1];
 		this->bufferSize = 1;

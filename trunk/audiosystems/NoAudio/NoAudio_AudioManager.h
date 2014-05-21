@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -28,7 +28,7 @@ namespace xal
 	class xalExport NoAudio_AudioManager : public AudioManager
 	{
 	public:
-		NoAudio_AudioManager(chstr systemName, void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
+		NoAudio_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~NoAudio_AudioManager();
 
 		hstr findAudioFile(chstr _filename);
