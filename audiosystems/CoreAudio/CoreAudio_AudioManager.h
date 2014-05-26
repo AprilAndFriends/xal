@@ -1,6 +1,4 @@
 /// @file
-/// @author  Ivan Vucica
-/// @author  Kresimir Spes
 /// @version 3.14
 /// 
 /// @section LICENSE
