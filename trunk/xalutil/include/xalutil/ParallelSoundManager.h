@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.02
 /// 
 /// @section LICENSE
 /// 
@@ -15,6 +15,7 @@
 #define XAL_PARALLELSOUNDMANAGER_H
 
 #include <hltypes/harray.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "xalUtilExport.h"
@@ -29,10 +30,8 @@ namespace xal
 		ParallelSoundManager(float fadeTime = 1.0f);
 		~ParallelSoundManager();
 		
-		float getFadeTime() { return this->fadeTime; }
-		void setFadeTime(float value) { this->fadeTime = value; }
-		harray<hstr> getSoundQueue() { return this->soundQueue; }
-		void setSoundQueue(harray<hstr> value) { this->soundQueue = value; }
+		HL_DEFINE_GETSET(float, fadeTime, FadeTime);
+		HL_DEFINE_GETSET(harray<hstr>, soundQueue, SoundQueue);
 		harray<hstr> getPlayingSounds();
 
 		void stopSoundsWithPrefix(chstr prefix);		
@@ -46,8 +45,6 @@ namespace xal
 		void stopAll();
 		void clear();
 		
-		DEPRECATED_ATTRIBUTE void addSound(chstr name) { this->queueSound(name); }
-
 	protected:
 		float fadeTime;
 		harray<Player*> players;

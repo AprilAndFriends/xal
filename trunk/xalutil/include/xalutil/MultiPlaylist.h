@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.02
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #ifndef XAL_MULTI_PLAYLIST_H
 #define XAL_MULTI_PLAYLIST_H
 
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/harray.h>
 
 #include "xalUtilExport.h"
@@ -28,7 +29,7 @@ namespace xal
 		MultiPlaylist();
 		~MultiPlaylist();
 		
-		harray<Playlist*> getPlaylists() { return this->playlists; }
+		HL_DEFINE_GET(harray<Playlist*>, playlists, Playlists);
 		bool isEnabled();
 		void setEnabled(bool value);
 		bool isPlaying();
