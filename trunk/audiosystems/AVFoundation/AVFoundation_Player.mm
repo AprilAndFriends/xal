@@ -1,5 +1,4 @@
 /// @file
-/// @author  Ivan Vucica
 /// @version 3.1
 /// 
 /// @section LICENSE

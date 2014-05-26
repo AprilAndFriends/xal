@@ -1,7 +1,4 @@
 /// @file
-/// @author  Kresimir Spes
-/// @author  Boris Mikic
-/// @author  Ivan Vucica
 /// @version 3.14
 /// 
 /// @section LICENSE
