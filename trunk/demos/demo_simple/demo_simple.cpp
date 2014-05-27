@@ -8,7 +8,7 @@
 
 #ifndef _ANDROID
 #ifndef _WINRT
-#define RESOURCE_PATH "../media/"
+#define RESOURCE_PATH "../../demos/media/"
 #else
 #define RESOURCE_PATH "media/"
 #endif
@@ -54,8 +54,8 @@ int main(Platform::Array<Platform::String^>^ args)
 #if defined(_WIN32) && !defined(_WINRT)
 	hwnd = GetConsoleWindow();
 #endif
-	// initialize XAL with platform default audio system, optional threaded update and 100 times per second
-	xal::init(XAL_AS_DEFAULT, hwnd, __XAL_THREADED, 0.01f);
+	// initialize XAL with platform default audio system, threaded update 100 times per second (every 0.01 seconds)
+	xal::init(xal::AS_DEFAULT, hwnd, __XAL_THREADED, 0.01f);
 
 	// create a category for fully loaded and decoded sounds
 	xal::mgr->createCategory(CATEGORY_NORMAL, xal::FULL, xal::DISK);

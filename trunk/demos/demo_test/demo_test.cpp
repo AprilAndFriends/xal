@@ -8,7 +8,7 @@
 
 #ifndef _ANDROID
 #ifndef _WINRT
-#define RESOURCE_PATH "../media/"
+#define RESOURCE_PATH "../../demos/media/"
 #else
 #define RESOURCE_PATH "media/"
 #endif
@@ -38,7 +38,7 @@
 //#define _USE_MEMORY_MANAGEMENT
 //#define _USE_RAM_SOURCES
 
-//#define _TEST_BASIC
+#define _TEST_BASIC
 //#define _TEST_SOUND
 //#define _TEST_MULTIPLAY
 //#define _TEST_HANDLE_STREAM
@@ -412,9 +412,9 @@ int main(Platform::Array<Platform::String^>^ args)
 	hwnd = GetConsoleWindow();
 #endif
 #ifndef _USE_THREADING
-	xal::init(XAL_AS_DEFAULT, hwnd, false);
+	xal::init(xal::AS_DEFAULT, hwnd, false);
 #else
-	xal::init(XAL_AS_DEFAULT, hwnd, true, 0.01f);
+	xal::init(xal::AS_DEFAULT, hwnd, true, 0.01f);
 #endif
 #ifdef _USE_MEMORY_MANAGEMENT
 	xal::mgr->createCategory("sound", xal::MANAGED, SOURCE_MODE);
