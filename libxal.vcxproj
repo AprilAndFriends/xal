@@ -471,19 +471,19 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="audiosources\FLAC_Source.cpp" />
-    <ClCompile Include="audiosources\SPX_Source.cpp" />
-    <ClCompile Include="audiosources\WAV_Source.cpp" />
-    <ClCompile Include="audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
-    <ClCompile Include="audiosystems\DirectSound\DirectSound_Player.cpp" />
-    <ClCompile Include="audiosystems\DirectSound\DirectSound_WAV_Source.cpp" />
-    <ClCompile Include="audiosystems\NoAudio\NoAudio_AudioManager.cpp" />
-    <ClCompile Include="audiosystems\NoAudio\NoAudio_Player.cpp" />
-    <ClCompile Include="audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
-    <ClCompile Include="audiosystems\OpenAL\OpenAL_Player.cpp" />
-    <ClCompile Include="audiosystems\SDL\SDL_AudioManager.cpp" />
-    <ClCompile Include="audiosystems\SDL\SDL_Player.cpp" />
-    <ClCompile Include="audiosources\OGG_Source.cpp" />
+    <ClCompile Include="src\audiosources\FLAC_Source.cpp" />
+    <ClCompile Include="src\audiosources\SPX_Source.cpp" />
+    <ClCompile Include="src\audiosources\WAV_Source.cpp" />
+    <ClCompile Include="src\audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
+    <ClCompile Include="src\audiosystems\DirectSound\DirectSound_Player.cpp" />
+    <ClCompile Include="src\audiosystems\DirectSound\DirectSound_WAV_Source.cpp" />
+    <ClCompile Include="src\audiosystems\NoAudio\NoAudio_AudioManager.cpp" />
+    <ClCompile Include="src\audiosystems\NoAudio\NoAudio_Player.cpp" />
+    <ClCompile Include="src\audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
+    <ClCompile Include="src\audiosystems\OpenAL\OpenAL_Player.cpp" />
+    <ClCompile Include="src\audiosystems\SDL\SDL_AudioManager.cpp" />
+    <ClCompile Include="src\audiosystems\SDL\SDL_Player.cpp" />
+    <ClCompile Include="src\audiosources\OGG_Source.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\Category.cpp" />
@@ -493,19 +493,19 @@
     <ClCompile Include="src\xal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="audiosources\FLAC_Source.h" />
-    <ClInclude Include="audiosources\SPX_Source.h" />
-    <ClInclude Include="audiosources\WAV_Source.h" />
-    <ClInclude Include="audiosystems\DirectSound\DirectSound_AudioManager.h" />
-    <ClInclude Include="audiosystems\DirectSound\DirectSound_Player.h" />
-    <ClInclude Include="audiosystems\DirectSound\DirectSound_WAV_Source.h" />
-    <ClInclude Include="audiosystems\NoAudio\NoAudio_AudioManager.h" />
-    <ClInclude Include="audiosystems\NoAudio\NoAudio_Player.h" />
-    <ClInclude Include="audiosystems\OpenAL\OpenAL_AudioManager.h" />
-    <ClInclude Include="audiosystems\OpenAL\OpenAL_Player.h" />
-    <ClInclude Include="audiosystems\SDL\SDL_AudioManager.h" />
-    <ClInclude Include="audiosystems\SDL\SDL_Player.h" />
-    <ClInclude Include="audiosources\OGG_Source.h" />
+    <ClInclude Include="src\audiosources\FLAC_Source.h" />
+    <ClInclude Include="src\audiosources\SPX_Source.h" />
+    <ClInclude Include="src\audiosources\WAV_Source.h" />
+    <ClInclude Include="src\audiosystems\DirectSound\DirectSound_AudioManager.h" />
+    <ClInclude Include="src\audiosystems\DirectSound\DirectSound_Player.h" />
+    <ClInclude Include="src\audiosystems\DirectSound\DirectSound_WAV_Source.h" />
+    <ClInclude Include="src\audiosystems\NoAudio\NoAudio_AudioManager.h" />
+    <ClInclude Include="src\audiosystems\NoAudio\NoAudio_Player.h" />
+    <ClInclude Include="src\audiosystems\OpenAL\OpenAL_AudioManager.h" />
+    <ClInclude Include="src\audiosystems\OpenAL\OpenAL_Player.h" />
+    <ClInclude Include="src\audiosystems\SDL\SDL_AudioManager.h" />
+    <ClInclude Include="src\audiosystems\SDL\SDL_Player.h" />
+    <ClInclude Include="src\audiosources\OGG_Source.h" />
     <ClInclude Include="include\xal\Buffer.h" />
     <ClInclude Include="include\xal\Source.h" />
     <ClInclude Include="include\xal\Player.h" />
