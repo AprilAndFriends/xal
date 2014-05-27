@@ -59,28 +59,28 @@
     <ClCompile Include="src\Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audiosources\OGG_Source.cpp">
+    <ClCompile Include="src\audiosources\OGG_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
-    <ClCompile Include="audiosources\SPX_Source.cpp">
+    <ClCompile Include="src\audiosources\SPX_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
-    <ClCompile Include="audiosources\WAV_Source.cpp">
+    <ClCompile Include="src\audiosources\WAV_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
-    <ClCompile Include="audiosources\FLAC_Source.cpp">
+    <ClCompile Include="src\audiosources\FLAC_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\NoAudio\NoAudio_AudioManager.cpp">
+    <ClCompile Include="src\audiosystems\NoAudio\NoAudio_AudioManager.cpp">
       <Filter>Source Files\audiosystems\NoAudio</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\NoAudio\NoAudio_Player.cpp">
+    <ClCompile Include="src\audiosystems\NoAudio\NoAudio_Player.cpp">
       <Filter>Source Files\audiosystems\NoAudio</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\XAudio2\XAudio2_AudioManager.cpp">
+    <ClCompile Include="src\audiosystems\XAudio2\XAudio2_AudioManager.cpp">
       <Filter>Source Files\audiosystems\XAudio2</Filter>
     </ClCompile>
-    <ClCompile Include="audiosystems\XAudio2\XAudio2_Player.cpp">
+    <ClCompile Include="src\audiosystems\XAudio2\XAudio2_Player.cpp">
       <Filter>Source Files\audiosystems\XAudio2</Filter>
     </ClCompile>
   </ItemGroup>
@@ -109,28 +109,28 @@
     <ClInclude Include="include\xal\Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audiosources\SPX_Source.h">
+    <ClInclude Include="src\audiosources\SPX_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="audiosources\OGG_Source.h">
+    <ClInclude Include="src\audiosources\OGG_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="audiosources\WAV_Source.h">
+    <ClInclude Include="src\audiosources\WAV_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="audiosources\FLAC_Source.h">
+    <ClInclude Include="src\audiosources\FLAC_Source.h">
       <Filter>Header Files\audiosources</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\NoAudio\NoAudio_AudioManager.h">
+    <ClInclude Include="src\audiosystems\NoAudio\NoAudio_AudioManager.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\NoAudio\NoAudio_Player.h">
+    <ClInclude Include="src\audiosystems\NoAudio\NoAudio_Player.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\XAudio2\XAudio2_AudioManager.h">
+    <ClInclude Include="src\audiosystems\XAudio2\XAudio2_AudioManager.h">
       <Filter>Header Files\audiosystems\XAudio2</Filter>
     </ClInclude>
-    <ClInclude Include="audiosystems\XAudio2\XAudio2_Player.h">
+    <ClInclude Include="src\audiosystems\XAudio2\XAudio2_Player.h">
       <Filter>Header Files\audiosystems\XAudio2</Filter>
     </ClInclude>
   </ItemGroup>
