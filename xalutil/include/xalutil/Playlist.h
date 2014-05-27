@@ -44,10 +44,10 @@ namespace xal
 		/// @return Get the current Player playing.
 		Player* getCurrentPlayer();
 		
-		/// @brief Updates the playlist state.
+		/// @brief Updates the Playlist state.
 		void update();
 		
-		/// @brief Clears all Sounds from the playlist.
+		/// @brief Clears all Sounds from the Playlist.
 		void clear();
 		/// @brief Queue a Sound at the end of the Playlist.
 		/// @param[in] name Name of the Sound.
@@ -68,9 +68,9 @@ namespace xal
 		/// @note Unpause the Playlist with play().
 		/// @see play
 		void pause(float fadeTime = 0.0f);
-		/// @brief Shuffles all playlist entries randomly.
+		/// @brief Shuffles all Playlist entries randomly.
 		void shuffle();
-		/// @brief Stops and resets the playlist to the beginning.
+		/// @brief Stops and resets the Playlist to the beginning.
 		void reset();
 		
 	protected:
