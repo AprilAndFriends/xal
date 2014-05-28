@@ -29,6 +29,7 @@ namespace xal
 {
 	OpenAL_Player::OpenAL_Player(Sound* sound) : Player(sound), sourceId(0)
 	{
+        this->pendingPitchUpdate = false;
 		this->createOpenALBuffers();
 #ifdef _MAC
 		this->macSampleOffset = -1;
@@ -177,6 +178,10 @@ namespace xal
 		{
 			alSourcef(this->sourceId, AL_PITCH, this->pitch);
 		}
+        else
+        {
+            this->pendingPitchUpdate = true;
+        }
 	}
 	
 	void OpenAL_Player::_systemPlay()
@@ -191,6 +196,11 @@ namespace xal
 				this->macSampleOffset = -1;
 			}
 #endif
+            if (this->pendingPitchUpdate)
+            {
+                this->pendingPitchUpdate = false;
+                alSourcef(this->sourceId, AL_PITCH, this->pitch);
+            }
 		}
 	}
 	
