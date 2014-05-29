@@ -15,9 +15,9 @@
   </ItemGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <CompileAs>CompileAsC</CompileAs>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>
