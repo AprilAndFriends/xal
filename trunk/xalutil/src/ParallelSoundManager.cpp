@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.02
 /// 
 /// @section LICENSE
 /// 
@@ -27,6 +27,16 @@ namespace xal
 		this->clear();
 	}
 	
+	harray<hstr> ParallelSoundManager::getPlayingSounds()
+	{
+		harray<hstr> result;
+		foreach(Player*, it, this->players)
+		{
+			result += (*it)->getName();
+		}
+		return result;
+	}
+
 	void ParallelSoundManager::stopSoundsWithPrefix(chstr prefix)
 	{
 		harray<Player*> lst;
@@ -53,15 +63,21 @@ namespace xal
 	{
 		bool found = false;
 		harray<hstr> queue;
-		foreach (Player*, it, this->players)
+		foreach(Player*, it, this->players)
 		{
 			if ((*it)->getName() == name)
 			{
 				found = true;
 			}
-			else if ((*it)->isPlaying()) queue += (*it)->getName();
+			else if ((*it)->isPlaying())
+			{
+				queue += (*it)->getName();
+			}
 		}
-		if (found) updateList(queue);
+		if (found)
+		{
+			updateList(queue);
+		}
 	}
 
 	void ParallelSoundManager::updateList()
@@ -70,22 +86,9 @@ namespace xal
 		this->soundQueue.clear();
 	}
 
-	harray<hstr> ParallelSoundManager::getPlayingSounds()
-	{
-		harray<hstr> lst;
-		
-		foreach (Player*, it, this->players)
-		{
-			lst += (*it)->getName();
-		}
-		
-		return lst;
-	}
-
 	void ParallelSoundManager::updateList(harray<hstr> names)
 	{
 		harray<Player*> removeList;
-
 		foreach (Player*, it, this->players)
 		{
 			if (names.contains((*it)->getName()))
@@ -110,8 +113,7 @@ namespace xal
 		{
 			this->players.remove(*it);
 		}
-		
-		Player* player;
+		Player* player = NULL;
 		foreach (hstr, it, names)
 		{
 			player = xal::mgr->createPlayer(*it);
@@ -128,6 +130,11 @@ namespace xal
 		}
 	}
 	
+	void ParallelSoundManager::stopAll()
+	{
+		this->clear();
+	}
+	
 	void ParallelSoundManager::pauseAll()
 	{
 		foreach (Player*, it, this->players)
@@ -135,12 +142,7 @@ namespace xal
 			(*it)->pause(this->fadeTime);
 		}
 	}
-	
-	void ParallelSoundManager::stopAll()
-	{
-		this->clear();
-	}
-	
+
 	void ParallelSoundManager::clear()
 	{
 		foreach (Player*, it, this->players)
