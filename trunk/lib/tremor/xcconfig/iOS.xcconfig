@@ -1,2 +1,2 @@
-#include "../../xcconfig/iOS.xcconfig"
+#include "../../../xcconfig/iOS.xcconfig"
 SDKROOT = iphoneos;

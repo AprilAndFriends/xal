@@ -1,1 +1,1 @@
-#include "../../xcconfig/Mac.xcconfig"
+#include "../../../xcconfig/Mac.xcconfig"
