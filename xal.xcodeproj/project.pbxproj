@@ -675,6 +675,8 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../ogg/include",
 					"${SRCROOT}/../vorbis/include",
+					"${SRCROOT}/lib/ogg/include",
+					"${SRCROOT}/lib/vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 			};
@@ -781,6 +783,8 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../ogg/include",
 					"${SRCROOT}/../vorbis/include",
+					"${SRCROOT}/lib/ogg/include",
+					"${SRCROOT}/lib/vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -826,6 +830,8 @@
 					"${SRCROOT}/../include",
 					"${SRCROOT}/../ogg/include",
 					"${SRCROOT}/../vorbis/include",
+					"${SRCROOT}/lib/ogg/include",
+					"${SRCROOT}/lib/vorbis/include",
 					"${SRCROOT}/../include/audiosources",
 				);
 			};
