@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemDefinitionGroup>
     <ClCompile>
+      <PreprocessorDefinitions Condition="'$(Platform)'=='ARM'">_WIN32_WCE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <CompileAs>CompileAsC</CompileAs>
