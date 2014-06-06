@@ -112,7 +112,7 @@ static void init(struct bs2b *bs2b)
     bs2b->a0_hi = 1.0 - G_hi * (1.0 - x);
     bs2b->a1_hi = -x;
 
-    bs2b->gain  = 1.0f / (float)(1.0 - G_hi + G_lo);
+    bs2b->gain  = 1.0 / (1.0 - G_hi + G_lo);
 } /* init */
 
 /* Exported functions.
@@ -167,8 +167,13 @@ int bs2b_is_clear(struct bs2b *bs2b)
     return 1;
 } /* bs2b_is_clear */
 
-void bs2b_cross_feed(struct bs2b *bs2b, float *sample)
+void bs2b_cross_feed(struct bs2b *bs2b, ALfp *ALsample)
 {
+	//FIXME fully convert to fixed point math
+	float sample[2];
+	sample[0] = ALfp2float(ALsample[0]);
+	sample[1] = ALfp2float(ALsample[1]);
+
     /* Lowpass filter */
     bs2b->last_sample.lo[0] = lo_filter(sample[0], bs2b->last_sample.lo[0]);
     bs2b->last_sample.lo[1] = lo_filter(sample[1], bs2b->last_sample.lo[1]);
@@ -180,8 +185,8 @@ void bs2b_cross_feed(struct bs2b *bs2b, float *sample)
     bs2b->last_sample.asis[1] = sample[1];
 
     /* Crossfeed */
-    sample[0] = (float)(bs2b->last_sample.hi[0] + bs2b->last_sample.lo[1]);
-    sample[1] = (float)(bs2b->last_sample.hi[1] + bs2b->last_sample.lo[0]);
+    sample[0] = bs2b->last_sample.hi[0] + bs2b->last_sample.lo[1];
+    sample[1] = bs2b->last_sample.hi[1] + bs2b->last_sample.lo[0];
 
     /* Bass boost cause allpass attenuation */
     sample[0] *= bs2b->gain;
@@ -198,4 +203,7 @@ void bs2b_cross_feed(struct bs2b *bs2b, float *sample)
     if (sample[1] < -1.0)
         sample[1] = -1.0;
 #endif
+
+	ALsample[0] = float2ALfp(sample[0]);
+	ALsample[1] = float2ALfp(sample[1]);
 } /* bs2b_cross_feed */

@@ -2,10 +2,31 @@
 #define CONFIG_H
 
 /* Define to the library version */
-#define ALSOFT_VERSION "1.14"
+#define ALSOFT_VERSION "1.12.854"
 
 /* Define if we have the Android backend */
-#define HAVE_ANDROID 1
+#if defined(ANDROID)
+
+// Stereo only on Android back-ends
+#define MAXCHANNELS 3
+#define STEREO_ONLY 1
+
+#define HAVE_OPENSLES 1
+
+#define HAVE_AUDIOTRACK 1
+
+// For throttling AlSource.c
+
+#ifndef MAX_SOURCES_LOW
+#define MAX_SOURCES_LOW 4
+#endif
+#ifndef MAX_SOURCES_START
+#define MAX_SOURCES_START 8
+#endif
+#ifndef MAX_SOURCES_HIGH
+#define MAX_SOURCES_HIGH 64
+#endif
+#endif
 
 /* Define if we have the ALSA backend */
 /* #cmakedefine HAVE_ALSA */
@@ -16,14 +37,11 @@
 /* Define if we have the Solaris backend */
 /* #cmakedefine HAVE_SOLARIS */
 
-/* Define if we have the SndIO backend */
-/* #cmakedefine HAVE_SNDIO */
-
-/* Define if we have the MMDevApi backend */
-/* #cmakedefine HAVE_MMDEVAPI */
-
 /* Define if we have the DSound backend */
 /* #cmakedefine HAVE_DSOUND */
+
+/* Define if we have the Wave Writer backend */
+/* #cmakedefine HAVE_WAVE */
 
 /* Define if we have the Windows Multimedia backend */
 /* #cmakedefine HAVE_WINMM */
@@ -33,15 +51,6 @@
 
 /* Define if we have the PulseAudio backend */
 /* #cmakedefine HAVE_PULSEAUDIO */
-
-/* Define if we have the CoreAudio backend */
-/* #cmakedefine HAVE_COREAUDIO */
-
-/* Define if we have the OpenSL backend */
-/* #cmakedefine HAVE_OPENSL */
-
-/* Define if we have the Wave Writer backend */
-/* #cmakedefine HAVE_WAVE */
 
 /* Define if we have dlfcn.h */
 #define HAVE_DLFCN_H 1

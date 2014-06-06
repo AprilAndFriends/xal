@@ -31,20 +31,24 @@
 #include "AL/alc.h"
 #include "alu.h"
 
-static void SetSpeakerArrangement(const char *name, ALfloat SpeakerAngle[MAXCHANNELS],
-                                  enum Channel Speaker2Chan[MAXCHANNELS], ALint chans)
+static void SetSpeakerArrangement(const char *name, ALfp SpeakerAngle[MAXCHANNELS],
+                                  Channel Speaker2Chan[MAXCHANNELS], ALint chans)
 {
+    char layout_str[256];
     char *confkey, *next;
-    char *layout_str;
     char *sep, *end;
-    enum Channel val;
-    const char *str;
+    Channel val;
     int i;
 
-    if(!ConfigValueStr(NULL, name, &str) && !ConfigValueStr(NULL, "layout", &str))
+    if(!ConfigValueExists(NULL, name))
+        name = "layout";
+
+    strncpy(layout_str, GetConfigValue(NULL, name, ""), sizeof(layout_str));
+    layout_str[sizeof(layout_str)-1] = 0;
+
+    if(!layout_str[0])
         return;
 
-    layout_str = strdup(str);
     next = confkey = layout_str;
     while(next && *next)
     {
@@ -60,10 +64,7 @@ static void SetSpeakerArrangement(const char *name, ALfloat SpeakerAngle[MAXCHAN
 
         sep = strchr(confkey, '=');
         if(!sep || confkey == sep)
-        {
-            ERR("Malformed speaker key: %s\n", confkey);
             continue;
-        }
 
         end = sep - 1;
         while(isspace(*end) && end != confkey)
@@ -88,7 +89,7 @@ static void SetSpeakerArrangement(const char *name, ALfloat SpeakerAngle[MAXCHAN
             val = SIDE_RIGHT;
         else
         {
-            ERR("Unknown speaker for %s: \"%s\"\n", name, confkey);
+            AL_PRINT("Unknown speaker for %s: \"%s\"\n", name, confkey);
             continue;
         }
 
@@ -102,15 +103,13 @@ static void SetSpeakerArrangement(const char *name, ALfloat SpeakerAngle[MAXCHAN
             {
                 long angle = strtol(sep, NULL, 10);
                 if(angle >= -180 && angle <= 180)
-                    SpeakerAngle[i] = angle * F_PI/180.0f;
+                    SpeakerAngle[i] = ALfpMult(int2ALfp(angle), float2ALfp(M_PI/180.0f));
                 else
-                    ERR("Invalid angle for speaker \"%s\": %ld\n", confkey, angle);
+                    AL_PRINT("Invalid angle for speaker \"%s\": %ld\n", confkey, angle);
                 break;
             }
         }
     }
-    free(layout_str);
-    layout_str = NULL;
 
     for(i = 0;i < chans;i++)
     {
@@ -125,8 +124,8 @@ static void SetSpeakerArrangement(const char *name, ALfloat SpeakerAngle[MAXCHAN
 
         if(min != i)
         {
-            ALfloat tmpf;
-            enum Channel tmpc;
+            ALfp tmpf;
+            Channel tmpc;
 
             tmpf = SpeakerAngle[i];
             SpeakerAngle[i] = SpeakerAngle[min];
@@ -139,101 +138,138 @@ static void SetSpeakerArrangement(const char *name, ALfloat SpeakerAngle[MAXCHAN
     }
 }
 
-static ALfloat aluLUTpos2Angle(ALint pos)
+static ALfp aluLUTpos2Angle(ALint pos)
 {
     if(pos < QUADRANT_NUM)
-        return aluAtan((ALfloat)pos / (ALfloat)(QUADRANT_NUM - pos));
+        return aluAtan(ALfpDiv(int2ALfp(pos), int2ALfp(QUADRANT_NUM - pos)));
     if(pos < 2 * QUADRANT_NUM)
-        return F_PI_2 + aluAtan((ALfloat)(pos - QUADRANT_NUM) / (ALfloat)(2 * QUADRANT_NUM - pos));
+        return (float2ALfp(M_PI_2) + aluAtan(ALfpDiv(int2ALfp(pos - QUADRANT_NUM),int2ALfp(2 * QUADRANT_NUM - pos))));
     if(pos < 3 * QUADRANT_NUM)
-        return aluAtan((ALfloat)(pos - 2 * QUADRANT_NUM) / (ALfloat)(3 * QUADRANT_NUM - pos)) - F_PI;
-    return aluAtan((ALfloat)(pos - 3 * QUADRANT_NUM) / (ALfloat)(4 * QUADRANT_NUM - pos)) - F_PI_2;
+        return (aluAtan(ALfpDiv(int2ALfp(pos - 2 * QUADRANT_NUM), int2ALfp(3 * QUADRANT_NUM - pos))) - float2ALfp(M_PI));
+    return (aluAtan(ALfpDiv(int2ALfp(pos - 3 * QUADRANT_NUM), int2ALfp(4 * QUADRANT_NUM - pos))) - float2ALfp(M_PI));
 }
 
-ALint aluCart2LUTpos(ALfloat re, ALfloat im)
+ALint aluCart2LUTpos(ALfp re, ALfp im)
 {
     ALint pos = 0;
-    ALfloat denom = aluFabs(re) + aluFabs(im);
-    if(denom > 0.0f)
-        pos = (ALint)(QUADRANT_NUM*aluFabs(im) / denom + 0.5);
+    ALfp denom = (aluFabs(re) + aluFabs(im));
+    if(denom > int2ALfp(0))
+        pos = (ALint)ALfp2int(ALfpDiv(ALfpMult(int2ALfp(QUADRANT_NUM),aluFabs(im)), (denom + float2ALfp(0.5))));
 
-    if(re < 0.0f)
+    if(re < int2ALfp(0))
         pos = 2 * QUADRANT_NUM - pos;
-    if(im < 0.0f)
+    if(im < int2ALfp(0))
         pos = LUT_NUM - pos;
     return pos%LUT_NUM;
 }
 
 ALvoid aluInitPanning(ALCdevice *Device)
 {
-    ALfloat SpeakerAngle[MAXCHANNELS];
-    enum Channel *Speaker2Chan;
-    ALfloat Alpha, Theta;
-    ALint pos;
-    ALuint s;
+    ALfp SpeakerAngle[MAXCHANNELS];
+    ALfp (*Matrix)[MAXCHANNELS];
+    Channel *Speaker2Chan;
+    ALfp Alpha, Theta;
+    ALfp *PanningLUT;
+    ALint pos, offset;
+    ALuint s, s2;
+
+    for(s = 0;s < MAXCHANNELS;s++)
+    {
+        for(s2 = 0;s2 < MAXCHANNELS;s2++)
+            Device->ChannelMatrix[s][s2] = ((s==s2) ? int2ALfp(1) : int2ALfp(0));
+    }
 
     Speaker2Chan = Device->Speaker2Chan;
+    Matrix = Device->ChannelMatrix;
     switch(Device->FmtChans)
     {
         case DevFmtMono:
+            Matrix[FRONT_LEFT][FRONT_CENTER]  = aluSqrt(float2ALfp(0.5));
+            Matrix[FRONT_RIGHT][FRONT_CENTER] = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_LEFT][FRONT_CENTER]   = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_RIGHT][FRONT_CENTER]  = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_LEFT][FRONT_CENTER]   = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_RIGHT][FRONT_CENTER]  = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][FRONT_CENTER] = int2ALfp(1);
             Device->NumChan = 1;
             Speaker2Chan[0] = FRONT_CENTER;
-            SpeakerAngle[0] = F_PI/180.0f * 0.0f;
+			SpeakerAngle[0] = int2ALfp(0);
             break;
 
         case DevFmtStereo:
+#ifdef APPORTABLE_OPTIMIZED_OUT
+            // Leave as identity matrix if Apportable-optimized
+            Matrix[FRONT_CENTER][FRONT_LEFT]  = aluSqrt(float2ALfp(0.5));
+            Matrix[FRONT_CENTER][FRONT_RIGHT] = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_LEFT][FRONT_LEFT]     = int2ALfp(1);
+            Matrix[SIDE_RIGHT][FRONT_RIGHT]   = int2ALfp(1);
+            Matrix[BACK_LEFT][FRONT_LEFT]     = int2ALfp(1);
+            Matrix[BACK_RIGHT][FRONT_RIGHT]   = int2ALfp(1);
+            Matrix[BACK_CENTER][FRONT_LEFT]   = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][FRONT_RIGHT]  = aluSqrt(float2ALfp(0.5));
+#endif
             Device->NumChan = 2;
             Speaker2Chan[0] = FRONT_LEFT;
             Speaker2Chan[1] = FRONT_RIGHT;
-            SpeakerAngle[0] = F_PI/180.0f * -90.0f;
-            SpeakerAngle[1] = F_PI/180.0f *  90.0f;
+			SpeakerAngle[0] = float2ALfp(-90.0f * M_PI/180.0f);
+            SpeakerAngle[1] = float2ALfp( 90.0f * M_PI/180.0f);
             SetSpeakerArrangement("layout_STEREO", SpeakerAngle, Speaker2Chan, Device->NumChan);
             break;
 
+#ifdef STEREO_ONLY
         case DevFmtQuad:
+        case DevFmtX51:
+        case DevFmtX61:
+        case DevFmtX71:
+            break;
+#else
+        case DevFmtQuad:
+            Matrix[FRONT_CENTER][FRONT_LEFT]  = aluSqrt(float2ALfp(0.5));
+            Matrix[FRONT_CENTER][FRONT_RIGHT] = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_LEFT][FRONT_LEFT]     = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_LEFT][BACK_LEFT]      = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_RIGHT][FRONT_RIGHT]   = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_RIGHT][BACK_RIGHT]    = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][BACK_LEFT]    = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][BACK_RIGHT]   = aluSqrt(float2ALfp(0.5));
             Device->NumChan = 4;
             Speaker2Chan[0] = BACK_LEFT;
             Speaker2Chan[1] = FRONT_LEFT;
             Speaker2Chan[2] = FRONT_RIGHT;
             Speaker2Chan[3] = BACK_RIGHT;
-            SpeakerAngle[0] = F_PI/180.0f * -135.0f;
-            SpeakerAngle[1] = F_PI/180.0f *  -45.0f;
-            SpeakerAngle[2] = F_PI/180.0f *   45.0f;
-            SpeakerAngle[3] = F_PI/180.0f *  135.0f;
+            SpeakerAngle[0] = float2ALfp(-135.0f * M_PI/180.0f);
+            SpeakerAngle[1] = float2ALfp( -45.0f * M_PI/180.0f);
+            SpeakerAngle[2] = float2ALfp(  45.0f * M_PI/180.0f);
+            SpeakerAngle[3] = float2ALfp( 135.0f * M_PI/180.0f);
             SetSpeakerArrangement("layout_QUAD", SpeakerAngle, Speaker2Chan, Device->NumChan);
             break;
 
         case DevFmtX51:
+            Matrix[SIDE_LEFT][FRONT_LEFT]   = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_LEFT][BACK_LEFT]    = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_RIGHT][FRONT_RIGHT] = aluSqrt(float2ALfp(0.5));
+            Matrix[SIDE_RIGHT][BACK_RIGHT]  = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][BACK_LEFT]  = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][BACK_RIGHT] = aluSqrt(float2ALfp(0.5));
             Device->NumChan = 5;
             Speaker2Chan[0] = BACK_LEFT;
             Speaker2Chan[1] = FRONT_LEFT;
             Speaker2Chan[2] = FRONT_CENTER;
             Speaker2Chan[3] = FRONT_RIGHT;
             Speaker2Chan[4] = BACK_RIGHT;
-            SpeakerAngle[0] = F_PI/180.0f * -110.0f;
-            SpeakerAngle[1] = F_PI/180.0f *  -30.0f;
-            SpeakerAngle[2] = F_PI/180.0f *    0.0f;
-            SpeakerAngle[3] = F_PI/180.0f *   30.0f;
-            SpeakerAngle[4] = F_PI/180.0f *  110.0f;
+            SpeakerAngle[0] = float2ALfp(-110.0f * M_PI/180.0f);
+            SpeakerAngle[1] = float2ALfp( -30.0f * M_PI/180.0f);
+            SpeakerAngle[2] = float2ALfp(   0.0f * M_PI/180.0f);
+            SpeakerAngle[3] = float2ALfp(  30.0f * M_PI/180.0f);
+            SpeakerAngle[4] = float2ALfp( 110.0f * M_PI/180.0f);
             SetSpeakerArrangement("layout_51CHN", SpeakerAngle, Speaker2Chan, Device->NumChan);
             break;
 
-        case DevFmtX51Side:
-            Device->NumChan = 5;
-            Speaker2Chan[0] = SIDE_LEFT;
-            Speaker2Chan[1] = FRONT_LEFT;
-            Speaker2Chan[2] = FRONT_CENTER;
-            Speaker2Chan[3] = FRONT_RIGHT;
-            Speaker2Chan[4] = SIDE_RIGHT;
-            SpeakerAngle[0] = F_PI/180.0f * -90.0f;
-            SpeakerAngle[1] = F_PI/180.0f * -30.0f;
-            SpeakerAngle[2] = F_PI/180.0f *   0.0f;
-            SpeakerAngle[3] = F_PI/180.0f *  30.0f;
-            SpeakerAngle[4] = F_PI/180.0f *  90.0f;
-            SetSpeakerArrangement("layout_51SIDECHN", SpeakerAngle, Speaker2Chan, Device->NumChan);
-            break;
-
         case DevFmtX61:
+            Matrix[BACK_LEFT][BACK_CENTER]  = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_LEFT][SIDE_LEFT]    = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_RIGHT][BACK_CENTER] = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_RIGHT][SIDE_RIGHT]  = aluSqrt(float2ALfp(0.5));
             Device->NumChan = 6;
             Speaker2Chan[0] = SIDE_LEFT;
             Speaker2Chan[1] = FRONT_LEFT;
@@ -241,16 +277,18 @@ ALvoid aluInitPanning(ALCdevice *Device)
             Speaker2Chan[3] = FRONT_RIGHT;
             Speaker2Chan[4] = SIDE_RIGHT;
             Speaker2Chan[5] = BACK_CENTER;
-            SpeakerAngle[0] = F_PI/180.0f * -90.0f;
-            SpeakerAngle[1] = F_PI/180.0f * -30.0f;
-            SpeakerAngle[2] = F_PI/180.0f *   0.0f;
-            SpeakerAngle[3] = F_PI/180.0f *  30.0f;
-            SpeakerAngle[4] = F_PI/180.0f *  90.0f;
-            SpeakerAngle[5] = F_PI/180.0f * 180.0f;
+            SpeakerAngle[0] = float2ALfp(-90.0f * M_PI/180.0f);
+            SpeakerAngle[1] = float2ALfp(-30.0f * M_PI/180.0f);
+            SpeakerAngle[2] = float2ALfp(  0.0f * M_PI/180.0f);
+            SpeakerAngle[3] = float2ALfp( 30.0f * M_PI/180.0f);
+            SpeakerAngle[4] = float2ALfp( 90.0f * M_PI/180.0f);
+            SpeakerAngle[5] = float2ALfp(180.0f * M_PI/180.0f);
             SetSpeakerArrangement("layout_61CHN", SpeakerAngle, Speaker2Chan, Device->NumChan);
             break;
 
         case DevFmtX71:
+            Matrix[BACK_CENTER][BACK_LEFT]  = aluSqrt(float2ALfp(0.5));
+            Matrix[BACK_CENTER][BACK_RIGHT] = aluSqrt(float2ALfp(0.5));
             Device->NumChan = 7;
             Speaker2Chan[0] = BACK_LEFT;
             Speaker2Chan[1] = SIDE_LEFT;
@@ -259,28 +297,48 @@ ALvoid aluInitPanning(ALCdevice *Device)
             Speaker2Chan[4] = FRONT_RIGHT;
             Speaker2Chan[5] = SIDE_RIGHT;
             Speaker2Chan[6] = BACK_RIGHT;
-            SpeakerAngle[0] = F_PI/180.0f * -150.0f;
-            SpeakerAngle[1] = F_PI/180.0f *  -90.0f;
-            SpeakerAngle[2] = F_PI/180.0f *  -30.0f;
-            SpeakerAngle[3] = F_PI/180.0f *    0.0f;
-            SpeakerAngle[4] = F_PI/180.0f *   30.0f;
-            SpeakerAngle[5] = F_PI/180.0f *   90.0f;
-            SpeakerAngle[6] = F_PI/180.0f *  150.0f;
+            SpeakerAngle[0] = float2ALfp(-150.0f * M_PI/180.0f);
+            SpeakerAngle[1] = float2ALfp( -90.0f * M_PI/180.0f);
+            SpeakerAngle[2] = float2ALfp( -30.0f * M_PI/180.0f);
+            SpeakerAngle[3] = float2ALfp(   0.0f * M_PI/180.0f);
+            SpeakerAngle[4] = float2ALfp(  30.0f * M_PI/180.0f);
+            SpeakerAngle[5] = float2ALfp(  90.0f * M_PI/180.0f);
+            SpeakerAngle[6] = float2ALfp( 150.0f * M_PI/180.0f);
             SetSpeakerArrangement("layout_71CHN", SpeakerAngle, Speaker2Chan, Device->NumChan);
             break;
+#endif
     }
 
+    if(GetConfigValueBool(NULL, "scalemix", 0))
+    {
+        ALfp maxout = int2ALfp(1);;
+        for(s = 0;s < MAXCHANNELS;s++)
+        {
+            ALfp out = int2ALfp(0);
+            for(s2 = 0;s2 < MAXCHANNELS;s2++)
+                out = (out + Device->ChannelMatrix[s2][s]);
+            maxout = __max(maxout, out);
+        }
+
+        maxout = ALfpDiv(int2ALfp(1),maxout);
+        for(s = 0;s < MAXCHANNELS;s++)
+        {
+            for(s2 = 0;s2 < MAXCHANNELS;s2++)
+                Device->ChannelMatrix[s2][s] = ALfpMult(Device->ChannelMatrix[s2][s],maxout);
+        }
+    }
+
+    PanningLUT = Device->PanningLUT;
     for(pos = 0; pos < LUT_NUM; pos++)
     {
-        ALfloat *PanningLUT = Device->PanningLUT[pos];
-
         /* clear all values */
+        offset = MAXCHANNELS * pos;
         for(s = 0; s < MAXCHANNELS; s++)
-            PanningLUT[s] = 0.0f;
+            PanningLUT[offset+s] = int2ALfp(0);
 
         if(Device->NumChan == 1)
         {
-            PanningLUT[Speaker2Chan[0]] = 1.0f;
+            PanningLUT[offset + Speaker2Chan[0]] = int2ALfp(1);
             continue;
         }
 
@@ -293,10 +351,10 @@ ALvoid aluInitPanning(ALCdevice *Device)
             if(Theta >= SpeakerAngle[s] && Theta < SpeakerAngle[s+1])
             {
                 /* source between speaker s and speaker s+1 */
-                Alpha = (Theta-SpeakerAngle[s]) /
-                        (SpeakerAngle[s+1]-SpeakerAngle[s]);
-                PanningLUT[Speaker2Chan[s]]   = aluSqrt(1.0f-Alpha);
-                PanningLUT[Speaker2Chan[s+1]] = aluSqrt(     Alpha);
+                Alpha = ALfpDiv(ALfpMult(float2ALfp(M_PI_2), (Theta-SpeakerAngle[s])),
+                                 (SpeakerAngle[s+1]-SpeakerAngle[s]));
+                PanningLUT[offset + Speaker2Chan[s]]   = __cos(Alpha);
+                PanningLUT[offset + Speaker2Chan[s+1]] = __sin(Alpha);
                 break;
             }
         }
@@ -304,11 +362,11 @@ ALvoid aluInitPanning(ALCdevice *Device)
         {
             /* source between last and first speaker */
             if(Theta < SpeakerAngle[0])
-                Theta += F_PI*2.0f;
-            Alpha = (Theta-SpeakerAngle[s]) /
-                    (F_PI*2.0f + SpeakerAngle[0]-SpeakerAngle[s]);
-            PanningLUT[Speaker2Chan[s]] = aluSqrt(1.0f-Alpha);
-            PanningLUT[Speaker2Chan[0]] = aluSqrt(     Alpha);
+                Theta = (Theta + float2ALfp(2.0f * M_PI));
+            Alpha = ALfpDiv(ALfpMult(float2ALfp(M_PI_2), (Theta-SpeakerAngle[s])),
+                             (float2ALfp(2.0f * M_PI) + SpeakerAngle[0]-SpeakerAngle[s]));
+            PanningLUT[offset + Speaker2Chan[s]] = __cos(Alpha);
+            PanningLUT[offset + Speaker2Chan[0]] = __sin(Alpha);
         }
     }
 }

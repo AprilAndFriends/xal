@@ -1,6 +1,8 @@
 #ifndef _ALU_H_
 #define _ALU_H_
 
+#include "config.h"
+
 #include "AL/al.h"
 #include "AL/alc.h"
 #include "AL/alext.h"
@@ -9,105 +11,49 @@
 #include <math.h>
 #ifdef HAVE_FLOAT_H
 #include <float.h>
-/* HACK: Seems cross-compiling with MinGW includes the wrong float.h, which
- * doesn't define Windows' _controlfp and related macros */
-#if defined(__MINGW32__) && !defined(_RC_CHOP)
-/* Control word masks for unMask */
-#define _MCW_EM         0x0008001F      /* Error masks */
-#define _MCW_IC         0x00040000      /* Infinity */
-#define _MCW_RC         0x00000300      /* Rounding */
-#define _MCW_PC         0x00030000      /* Precision */
-/* Control word values for unNew (use with related unMask above) */
-#define _EM_INVALID     0x00000010
-#define _EM_DENORMAL    0x00080000
-#define _EM_ZERODIVIDE  0x00000008
-#define _EM_OVERFLOW    0x00000004
-#define _EM_UNDERFLOW   0x00000002
-#define _EM_INEXACT     0x00000001
-#define _IC_AFFINE      0x00040000
-#define _IC_PROJECTIVE  0x00000000
-#define _RC_CHOP        0x00000300
-#define _RC_UP          0x00000200
-#define _RC_DOWN        0x00000100
-#define _RC_NEAR        0x00000000
-#define _PC_24          0x00020000
-#define _PC_53          0x00010000
-#define _PC_64          0x00000000
-_CRTIMP unsigned int __cdecl __MINGW_NOTHROW _controlfp (unsigned int unNew, unsigned int unMask);
-#endif
-#endif
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h>
 #endif
 
-
-#define F_PI    (3.14159265358979323846f)  /* pi */
-#define F_PI_2  (1.57079632679489661923f)  /* pi/2 */
+#ifndef M_PI
+#define M_PI           3.14159265358979323846  /* pi */
+#define M_PI_2         1.57079632679489661923  /* pi/2 */
+#endif
 
 #ifdef HAVE_POWF
-#define aluPow(x,y) (powf((x),(y)))
+#define aluPow(x,y) (float2ALfp(powf(ALfp2float(x), ALfp2float(y))))
 #else
-#define aluPow(x,y) ((ALfloat)pow((double)(x),(double)(y)))
+#define aluPow(x,y) (float2ALfp((float)pow((double)ALfp2float(x), (double)ALfp2float(y))))
 #endif
 
 #ifdef HAVE_SQRTF
-#define aluSqrt(x) (sqrtf((x)))
+#define aluSqrt(x) (float2ALfp(sqrtf(ALfp2float(x))))
 #else
-#define aluSqrt(x) ((ALfloat)sqrt((double)(x)))
-#endif
-
-#ifdef HAVE_COSF
-#define aluCos(x) (cosf((x)))
-#else
-#define aluCos(x) ((ALfloat)cos((double)(x)))
-#endif
-
-#ifdef HAVE_SINF
-#define aluSin(x) (sinf((x)))
-#else
-#define aluSin(x) ((ALfloat)sin((double)(x)))
+#define aluSqrt(x) (float2ALfp((float)sqrt((double)ALfp2float(x))))
 #endif
 
 #ifdef HAVE_ACOSF
-#define aluAcos(x) (acosf((x)))
+#define aluAcos(x) (float2ALfp(acosf(ALfp2float(x))))
 #else
-#define aluAcos(x) ((ALfloat)acos((double)(x)))
-#endif
-
-#ifdef HAVE_ASINF
-#define aluAsin(x) (asinf((x)))
-#else
-#define aluAsin(x) ((ALfloat)asin((double)(x)))
+#define aluAcos(x) (float2ALfp((float)acos((double)ALfp2float(x))))
 #endif
 
 #ifdef HAVE_ATANF
-#define aluAtan(x) (atanf((x)))
+#define aluAtan(x) (float2ALfp(atanf(ALfp2float(x))))
 #else
-#define aluAtan(x) ((ALfloat)atan((double)(x)))
-#endif
-
-#ifdef HAVE_ATAN2F
-#define aluAtan2(x,y) (atan2f((x),(y)))
-#else
-#define aluAtan2(x,y) ((ALfloat)atan2((double)(x),(double)(y)))
+#define aluAtan(x) (float2ALfp((float)atan((double)ALfp2float(x))))
 #endif
 
 #ifdef HAVE_FABSF
-#define aluFabs(x) (fabsf((x)))
+#define aluFabs(x) (float2ALfp(fabsf(ALfp2float(x))))
 #else
-#define aluFabs(x) ((ALfloat)fabs((double)(x)))
+#define aluFabs(x) (float2ALfp((float)fabs((double)ALfp2float(x))))
 #endif
 
-#ifdef HAVE_LOG10F
-#define aluLog10(x) (log10f((x)))
-#else
-#define aluLog10(x) ((ALfloat)log10((double)(x)))
+// FIXME make this better
+#if defined(max) && !defined(__max)
+#define __max(x,y) float2ALfp(max(ALfp2float(x),ALfp2float(y)))
 #endif
-
-#ifdef HAVE_FLOORF
-#define aluFloor(x) (floorf((x)))
-#else
-#define aluFloor(x) ((ALfloat)floor((double)(x)))
+#if defined(min) && !defined(__min)
+#define __min(x,y) float2ALfp(min(ALfp2float(x),ALfp2float(y)))
 #endif
 
 #define QUADRANT_NUM  128
@@ -117,26 +63,7 @@ _CRTIMP unsigned int __cdecl __MINGW_NOTHROW _controlfp (unsigned int unNew, uns
 extern "C" {
 #endif
 
-struct ALsource;
-struct ALbuffer;
-
-typedef ALvoid (*MixerFunc)(struct ALsource *self, ALCdevice *Device,
-                            const ALvoid *RESTRICT data,
-                            ALuint *DataPosInt, ALuint *DataPosFrac,
-                            ALuint OutPos, ALuint SamplesToDo,
-                            ALuint BufferSize);
-
-enum Resampler {
-    POINT_RESAMPLER = 0,
-    LINEAR_RESAMPLER,
-    CUBIC_RESAMPLER,
-
-    RESAMPLER_MAX,
-    RESAMPLER_MIN = -1,
-    RESAMPLER_DEFAULT = LINEAR_RESAMPLER
-};
-
-enum Channel {
+typedef enum {
     FRONT_LEFT = 0,
     FRONT_RIGHT,
     FRONT_CENTER,
@@ -146,19 +73,12 @@ enum Channel {
     BACK_CENTER,
     SIDE_LEFT,
     SIDE_RIGHT,
+} Channel;
 
-    MAXCHANNELS
-};
-
-enum DistanceModel {
-    InverseDistanceClamped  = AL_INVERSE_DISTANCE_CLAMPED,
-    LinearDistanceClamped   = AL_LINEAR_DISTANCE_CLAMPED,
-    ExponentDistanceClamped = AL_EXPONENT_DISTANCE_CLAMPED,
-    InverseDistance  = AL_INVERSE_DISTANCE,
-    LinearDistance   = AL_LINEAR_DISTANCE,
-    ExponentDistance = AL_EXPONENT_DISTANCE,
-    DisableDistance  = AL_NONE
-};
+#ifndef MAXCHANNELS
+#define MAXCHANNELS (SIDE_RIGHT+1)
+#error MAXCHANNELS
+#endif
 
 #define BUFFERSIZE 4096
 
@@ -166,10 +86,10 @@ enum DistanceModel {
 #define FRACTIONONE  (1<<FRACTIONBITS)
 #define FRACTIONMASK (FRACTIONONE-1)
 
-/* Size for temporary stack storage of buffer data. Must be a multiple of the
- * size of ALfloat, ie, 4. Larger values need more stack, while smaller values
- * may need more iterations. The value needs to be a sensible size, however, as
- * it constrains the max stepping value used for mixing.
+/* Size for temporary stack storage of buffer data. Larger values need more
+ * stack, while smaller values may need more iterations. The value needs to be
+ * a sensible size, however, as it constrains the max stepping value used for
+ * mixing.
  * The mixer requires being able to do two samplings per mixing loop. A 16KB
  * buffer can hold 512 sample frames for a 7.1 float buffer. With the cubic
  * resampler (which requires 3 padding sample frames), this limits the maximum
@@ -179,131 +99,38 @@ enum DistanceModel {
 #define STACK_DATA_SIZE  16384
 #endif
 
-
-static __inline ALfloat minf(ALfloat a, ALfloat b)
-{ return ((a > b) ? b : a); }
-static __inline ALfloat maxf(ALfloat a, ALfloat b)
-{ return ((a > b) ? a : b); }
-static __inline ALfloat clampf(ALfloat val, ALfloat min, ALfloat max)
-{ return minf(max, maxf(min, val)); }
-
-static __inline ALuint minu(ALuint a, ALuint b)
-{ return ((a > b) ? b : a); }
-static __inline ALuint maxu(ALuint a, ALuint b)
-{ return ((a > b) ? a : b); }
-static __inline ALuint clampu(ALuint val, ALuint min, ALuint max)
-{ return minu(max, maxu(min, val)); }
-
-static __inline ALint mini(ALint a, ALint b)
-{ return ((a > b) ? b : a); }
-static __inline ALint maxi(ALint a, ALint b)
-{ return ((a > b) ? a : b); }
-static __inline ALint clampi(ALint val, ALint min, ALint max)
-{ return mini(max, maxi(min, val)); }
-
-static __inline ALint64 mini64(ALint64 a, ALint64 b)
-{ return ((a > b) ? b : a); }
-static __inline ALint64 maxi64(ALint64 a, ALint64 b)
-{ return ((a > b) ? a : b); }
-static __inline ALint64 clampi64(ALint64 val, ALint64 min, ALint64 max)
-{ return mini64(max, maxi64(min, val)); }
-
-
-static __inline ALfloat lerp(ALfloat val1, ALfloat val2, ALfloat mu)
+//FIXME this code assumes ALfp==ALdfp
+static __inline ALdfp lerp(ALdfp val1, ALdfp val2, ALdfp mu)
 {
-    return val1 + (val2-val1)*mu;
+	ALdfp retval;
+	retval = val1 + ALfpMult((val2-val1),mu);
+	return retval;
 }
-static __inline ALfloat cubic(ALfloat val0, ALfloat val1, ALfloat val2, ALfloat val3, ALfloat mu)
+static __inline ALdfp cubic(ALdfp val0, ALdfp val1, ALdfp val2, ALdfp val3, ALdfp mu)
 {
-    ALfloat mu2 = mu*mu;
-    ALfloat a0 = -0.5f*val0 +  1.5f*val1 + -1.5f*val2 +  0.5f*val3;
-    ALfloat a1 =       val0 + -2.5f*val1 +  2.0f*val2 + -0.5f*val3;
-    ALfloat a2 = -0.5f*val0              +  0.5f*val2;
-    ALfloat a3 =                    val1;
+	ALdfp retval;
+	ALdfp mu2;mu2 = ALfpMult(mu,mu);
+	ALdfp a0;a0 = ALfpMult(float2ALfp(-0.5f),val0) + ALfpMult(float2ALfp( 1.5f),val1) + ALfpMult(float2ALfp(-1.5f),val2) + ALfpMult(float2ALfp( 0.5), val3);
+	ALdfp a1;a1 =                            val0  + ALfpMult(float2ALfp(-2.5f),val1) + ALfpMult(float2ALfp( 2.0), val2) + ALfpMult(float2ALfp(-0.5f),val3);
+	ALdfp a2;a2 = ALfpMult(float2ALfp(-0.5f),val0)                                    + ALfpMult(float2ALfp( 0.5), val2);
+	ALdfp a3;a3 =                                                               val1;
 
-    return a0*mu*mu2 + a1*mu2 + a2*mu + a3;
+    retval = ALfpMult(ALfpMult(a0,mu),mu2) + ALfpMult(a1,mu2) + ALfpMult(a2,mu) + a3;
+	return retval;
 }
 
-
-static __inline int SetMixerFPUMode(void)
-{
-#if defined(_FPU_GETCW) && defined(_FPU_SETCW)
-    fpu_control_t fpuState, newState;
-    _FPU_GETCW(fpuState);
-    newState = fpuState&~(_FPU_EXTENDED|_FPU_DOUBLE|_FPU_SINGLE |
-                          _FPU_RC_NEAREST|_FPU_RC_DOWN|_FPU_RC_UP|_FPU_RC_ZERO);
-    newState |= _FPU_SINGLE | _FPU_RC_ZERO;
-    _FPU_SETCW(newState);
-#else
-    int fpuState;
-#if defined(HAVE__CONTROLFP)
-    fpuState = _controlfp(0, 0);
-    (void)_controlfp(_RC_CHOP|_PC_24, _MCW_RC|_MCW_PC);
-#elif defined(HAVE_FESETROUND)
-    fpuState = fegetround();
-    fesetround(FE_TOWARDZERO);
-#endif
-#endif
-    return fpuState;
-}
-
-static __inline void RestoreFPUMode(int state)
-{
-#if defined(_FPU_GETCW) && defined(_FPU_SETCW)
-    fpu_control_t fpuState = state;
-    _FPU_SETCW(fpuState);
-#elif defined(HAVE__CONTROLFP)
-    _controlfp(state, _MCW_RC|_MCW_PC);
-#elif defined(HAVE_FESETROUND)
-    fesetround(state);
-#endif
-}
-
-
-static __inline void aluCrossproduct(const ALfloat *inVector1, const ALfloat *inVector2, ALfloat *outVector)
-{
-    outVector[0] = inVector1[1]*inVector2[2] - inVector1[2]*inVector2[1];
-    outVector[1] = inVector1[2]*inVector2[0] - inVector1[0]*inVector2[2];
-    outVector[2] = inVector1[0]*inVector2[1] - inVector1[1]*inVector2[0];
-}
-
-static __inline ALfloat aluDotproduct(const ALfloat *inVector1, const ALfloat *inVector2)
-{
-    return inVector1[0]*inVector2[0] + inVector1[1]*inVector2[1] +
-           inVector1[2]*inVector2[2];
-}
-
-static __inline void aluNormalize(ALfloat *inVector)
-{
-    ALfloat length, inverse_length;
-
-    length = aluSqrt(aluDotproduct(inVector, inVector));
-    if(length > 0.0f)
-    {
-        inverse_length = 1.0f/length;
-        inVector[0] *= inverse_length;
-        inVector[1] *= inverse_length;
-        inVector[2] *= inverse_length;
-    }
-}
-
+struct ALsource;
 
 ALvoid aluInitPanning(ALCdevice *Device);
-ALint aluCart2LUTpos(ALfloat re, ALfloat im);
+ALint aluCart2LUTpos(ALfp re, ALfp im);
 
 ALvoid CalcSourceParams(struct ALsource *ALSource, const ALCcontext *ALContext);
 ALvoid CalcNonAttnSourceParams(struct ALsource *ALSource, const ALCcontext *ALContext);
-
-MixerFunc SelectMixer(enum Resampler Resampler);
-MixerFunc SelectHrtfMixer(enum Resampler Resampler);
 
 ALvoid MixSource(struct ALsource *Source, ALCdevice *Device, ALuint SamplesToDo);
 
 ALvoid aluMixData(ALCdevice *device, ALvoid *buffer, ALsizei size);
 ALvoid aluHandleDisconnect(ALCdevice *device);
-
-extern ALfloat ConeScale;
-extern ALfloat ZScale;
 
 #ifdef __cplusplus
 }

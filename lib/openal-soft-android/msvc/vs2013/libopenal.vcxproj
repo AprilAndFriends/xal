@@ -31,7 +31,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\Alc\ALc.c" />
     <ClCompile Include="..\..\Alc\alcConfig.c" />
-    <ClCompile Include="..\..\Alc\alcDedicated.c" />
     <ClCompile Include="..\..\Alc\alcEcho.c" />
     <ClCompile Include="..\..\Alc\alcModulator.c" />
     <ClCompile Include="..\..\Alc\alcReverb.c" />
@@ -39,15 +38,15 @@
     <ClCompile Include="..\..\Alc\alcThread.c" />
     <ClCompile Include="..\..\Alc\ALu.c" />
     <ClCompile Include="..\..\Alc\backends\android.c" />
-    <ClCompile Include="..\..\Alc\backends\loopback.c" />
+    <ClCompile Include="..\..\Alc\backends\audiotrack.c" />
     <ClCompile Include="..\..\Alc\backends\null.c" />
+    <ClCompile Include="..\..\Alc\backends\opensles.c" />
     <ClCompile Include="..\..\Alc\bs2b.c" />
-    <ClCompile Include="..\..\Alc\helpers.c" />
-    <ClCompile Include="..\..\Alc\hrtf.c" />
     <ClCompile Include="..\..\Alc\mixer.c" />
     <ClCompile Include="..\..\Alc\panning.c" />
     <ClCompile Include="..\..\OpenAL32\alAuxEffectSlot.c" />
     <ClCompile Include="..\..\OpenAL32\alBuffer.c" />
+    <ClCompile Include="..\..\OpenAL32\alDatabuffer.c" />
     <ClCompile Include="..\..\OpenAL32\alEffect.c" />
     <ClCompile Include="..\..\OpenAL32\alError.c" />
     <ClCompile Include="..\..\OpenAL32\alExtension.c" />
@@ -58,6 +57,7 @@
     <ClCompile Include="..\..\OpenAL32\alThunk.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Alc\apportable_openal_funcs.h" />
     <ClInclude Include="..\..\include\AL\al.h" />
     <ClInclude Include="..\..\include\AL\alc.h" />
     <ClInclude Include="..\..\include\AL\alext.h" />
@@ -65,9 +65,6 @@
     <ClInclude Include="..\..\include\AL\efx-presets.h" />
     <ClInclude Include="..\..\include\AL\efx.h" />
     <ClInclude Include="..\..\include\config.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Alc\hrtf_tables.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

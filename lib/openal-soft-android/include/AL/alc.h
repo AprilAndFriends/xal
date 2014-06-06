@@ -5,11 +5,17 @@
 extern "C" {
 #endif
 
-#ifndef ALC_API
- #if defined(AL_LIBTYPE_STATIC)
-  #define ALC_API
- #elif defined(_WIN32)
+#if defined(AL_LIBTYPE_STATIC)
+ #define ALC_API
+#elif defined(_WIN32) && !defined(_XBOX)
+ #if defined(AL_BUILD_LIBRARY)
+  #define ALC_API __declspec(dllexport)
+ #else
   #define ALC_API __declspec(dllimport)
+ #endif
+#else
+ #if defined(AL_BUILD_LIBRARY) && defined(HAVE_GCC_VISIBILITY)
+  #define ALC_API __attribute__((visibility("protected")))
  #else
   #define ALC_API extern
  #endif
@@ -120,7 +126,7 @@ typedef void ALCvoid;
 /**
  * No error
  */
-#define ALC_NO_ERROR                             0
+#define ALC_NO_ERROR                             ALC_FALSE
 
 /**
  * No device
@@ -165,18 +171,9 @@ typedef void ALCvoid;
 /**
  * Capture extension
  */
-#define ALC_EXT_CAPTURE 1
 #define ALC_CAPTURE_DEVICE_SPECIFIER             0x310
 #define ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER     0x311
 #define ALC_CAPTURE_SAMPLES                      0x312
-
-
-/**
- * ALC_ENUMERATE_ALL_EXT enums
- */
-#define ALC_ENUMERATE_ALL_EXT 1
-#define ALC_DEFAULT_ALL_DEVICES_SPECIFIER        0x1012
-#define ALC_ALL_DEVICES_SPECIFIER                0x1013
 
 
 /*
@@ -271,6 +268,14 @@ typedef void           (ALC_APIENTRY *LPALCCAPTURESAMPLES)( ALCdevice *device, A
 
 #if defined(TARGET_OS_MAC) && TARGET_OS_MAC
  #pragma export off
+#endif
+
+#if defined(ANDROID)
+/*
+ * OpenAL extension for suspend/resume of audio throughout application lifecycle
+ */
+ALC_API void            ALC_APIENTRY alcSuspend( void );
+ALC_API void            ALC_APIENTRY alcResume( void );
 #endif
 
 #if defined(__cplusplus)
