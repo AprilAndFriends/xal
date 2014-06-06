@@ -25,65 +25,87 @@
 #include "alMain.h"
 #include "alThunk.h"
 
+typedef struct {
+    ALvoid *ptr;
+    ALboolean InUse;
+} ThunkEntry;
 
-static ALenum *ThunkArray;
-static ALuint  ThunkArraySize;
-static RWLock  ThunkLock;
+static ThunkEntry *g_ThunkArray;
+static ALuint      g_ThunkArraySize;
 
-void ThunkInit(void)
+static CRITICAL_SECTION g_ThunkLock;
+
+void alThunkInit(void)
 {
-    RWLockInit(&ThunkLock);
-    ThunkArraySize = 1;
-    ThunkArray = calloc(1, ThunkArraySize * sizeof(*ThunkArray));
+    InitializeCriticalSection(&g_ThunkLock);
+    g_ThunkArraySize = 1;
+    g_ThunkArray = calloc(1, g_ThunkArraySize * sizeof(ThunkEntry));
 }
 
-void ThunkExit(void)
+void alThunkExit(void)
 {
-    free(ThunkArray);
-    ThunkArray = NULL;
-    ThunkArraySize = 0;
+    free(g_ThunkArray);
+    g_ThunkArray = NULL;
+    g_ThunkArraySize = 0;
+    DeleteCriticalSection(&g_ThunkLock);
 }
 
-ALenum NewThunkEntry(ALuint *index)
+ALuint alThunkAddEntry(ALvoid *ptr)
 {
-    ALenum *NewList;
-    ALuint i;
+    ALuint index;
 
-    ReadLock(&ThunkLock);
-    for(i = 0;i < ThunkArraySize;i++)
+    EnterCriticalSection(&g_ThunkLock);
+
+    for(index = 0;index < g_ThunkArraySize;index++)
     {
-        if(ExchangeInt(&ThunkArray[i], AL_TRUE) == AL_FALSE)
+        if(g_ThunkArray[index].InUse == AL_FALSE)
+            break;
+    }
+
+    if(index == g_ThunkArraySize)
+    {
+        ThunkEntry *NewList;
+
+        NewList = realloc(g_ThunkArray, g_ThunkArraySize*2 * sizeof(ThunkEntry));
+        if(!NewList)
         {
-            ReadUnlock(&ThunkLock);
-            *index = i+1;
-            return AL_NO_ERROR;
+            LeaveCriticalSection(&g_ThunkLock);
+            AL_PRINT("Realloc failed to increase to %u enties!\n", g_ThunkArraySize*2);
+            return 0;
         }
+        memset(&NewList[g_ThunkArraySize], 0, g_ThunkArraySize*sizeof(ThunkEntry));
+        g_ThunkArraySize *= 2;
+        g_ThunkArray = NewList;
     }
-    ReadUnlock(&ThunkLock);
 
-    WriteLock(&ThunkLock);
-    NewList = realloc(ThunkArray, ThunkArraySize*2 * sizeof(*ThunkArray));
-    if(!NewList)
-    {
-        WriteUnlock(&ThunkLock);
-        ERR("Realloc failed to increase to %u enties!\n", ThunkArraySize*2);
-        return AL_OUT_OF_MEMORY;
-    }
-    memset(&NewList[ThunkArraySize], 0, ThunkArraySize*sizeof(*ThunkArray));
-    ThunkArraySize *= 2;
-    ThunkArray = NewList;
+    g_ThunkArray[index].ptr = ptr;
+    g_ThunkArray[index].InUse = AL_TRUE;
 
-    ThunkArray[i] = AL_TRUE;
-    WriteUnlock(&ThunkLock);
+    LeaveCriticalSection(&g_ThunkLock);
 
-    *index = i+1;
-    return AL_NO_ERROR;
+    return index+1;
 }
 
-void FreeThunkEntry(ALuint index)
+void alThunkRemoveEntry(ALuint index)
 {
-    ReadLock(&ThunkLock);
-    if(index > 0 && index <= ThunkArraySize)
-        ExchangeInt(&ThunkArray[index-1], AL_FALSE);
-    ReadUnlock(&ThunkLock);
+    EnterCriticalSection(&g_ThunkLock);
+
+    if(index > 0 && index <= g_ThunkArraySize)
+        g_ThunkArray[index-1].InUse = AL_FALSE;
+
+    LeaveCriticalSection(&g_ThunkLock);
+}
+
+ALvoid *alThunkLookupEntry(ALuint index)
+{
+    ALvoid *ptr = NULL;
+
+    EnterCriticalSection(&g_ThunkLock);
+
+    if(index > 0 && index <= g_ThunkArraySize)
+        ptr = g_ThunkArray[index-1].ptr;
+
+    LeaveCriticalSection(&g_ThunkLock);
+
+    return ptr;
 }

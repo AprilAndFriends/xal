@@ -24,6 +24,8 @@
 #ifndef BS2B_H
 #define BS2B_H
 
+#include "AL/al.h"
+
 /* Number of crossfeed levels */
 #define BS2B_CLEVELS           3
 
@@ -60,7 +62,7 @@ struct bs2b {
     double b1_hi;
 
     /* Global gain against overloading */
-    float gain;
+    double gain;
 
     /* Buffer of last filtered sample.
      * [0] - first channel, [1] - second channel
@@ -99,8 +101,8 @@ int bs2b_is_clear(struct bs2b *bs2b);
  * Returns crossfided samle by sample pointer.
  */
 
-/* sample poits to floats */
-void bs2b_cross_feed(struct bs2b *bs2b, float *sample);
+/* sample points to floats */
+void bs2b_cross_feed(struct bs2b *bs2b, ALfp *sample);
 
 #ifdef __cplusplus
 }    /* extern "C" */

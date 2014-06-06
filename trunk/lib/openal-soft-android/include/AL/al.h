@@ -1,15 +1,31 @@
 #ifndef AL_AL_H
 #define AL_AL_H
 
+#ifdef ANDROID
+#include <android/log.h>
+#ifndef LOGI
+#define  LOGI(...) __android_log_print(ANDROID_LOG_INFO,"OpenAL",__VA_ARGS__)
+#endif
+#ifndef LOGE
+#define  LOGE(...) __android_log_print(ANDROID_LOG_ERROR,"OpenAL",__VA_ARGS__)
+#endif
+#endif
+
 #if defined(__cplusplus)
 extern "C" {
 #endif
 
-#ifndef AL_API
- #if defined(AL_LIBTYPE_STATIC)
-  #define AL_API
- #elif defined(_WIN32)
+#if defined(AL_LIBTYPE_STATIC)
+ #define AL_API
+#elif defined(_WIN32) && !defined(_XBOX)
+ #if defined(AL_BUILD_LIBRARY)
+  #define AL_API __declspec(dllexport)
+ #else
   #define AL_API __declspec(dllimport)
+ #endif
+#else
+ #if defined(AL_BUILD_LIBRARY) && defined(HAVE_GCC_VISIBILITY)
+  #define AL_API __attribute__((visibility("protected")))
  #else
   #define AL_API extern
  #endif
@@ -76,6 +92,88 @@ typedef float ALfloat;
 
 /** 64-bit IEEE754 floating-point */
 typedef double ALdouble;
+
+#ifdef OPENAL_FIXED_POINT
+/* Apportable tries to define int64_t and int32_t if it thinks it is needed.
+ * But this is breaking in a complex project involving both pure C and C++ 
+ * something is triggering redefinition errors. The workaround seems to be just using stdint.h. 
+ */
+#include <stdint.h>
+/** Types and Macros for fixed-point math */
+#ifndef INT64_MAX
+typedef long long int64_t;
+#define INT64_MAX        9223372036854775807LL
+
+#endif
+#ifndef INT32_MAX
+typedef int int32_t;
+#define INT32_MAX        2147483647
+#endif
+
+// FIXME(apportable) make this int32_t
+typedef int64_t ALfp;
+typedef int64_t ALdfp;
+
+#define ONE (1<<OPENAL_FIXED_POINT_SHIFT)
+#define TWO (2<<OPENAL_FIXED_POINT_SHIFT)
+
+#define float2ALfp(x) ((ALfp)((x) * (1<<OPENAL_FIXED_POINT_SHIFT) + ((x)>=0 ? 0.5 : -0.5)))
+#define ALfp2float(x) ((float)(x) / (1<<OPENAL_FIXED_POINT_SHIFT))
+
+#define double2ALdfp(x) ((ALdfp)((x) * (1<<OPENAL_FIXED_POINT_SHIFT) + ((x)>=0 ? 0.5 : -0.5)))
+#define ALdfp2double(x) ((double)(x) / (1<<OPENAL_FIXED_POINT_SHIFT))
+
+#define int2ALfp(x) ((ALfp)(x) << OPENAL_FIXED_POINT_SHIFT)
+#define ALfp2int(x) ((ALint)((x) >> OPENAL_FIXED_POINT_SHIFT))
+
+#define int2ALdfp(x)  ((ALdfp)(x) << OPENAL_FIXED_POINT_SHIFT)
+#define ALdfp2int(x) ((ALint)((x) >> OPENAL_FIXED_POINT_SHIFT))
+
+#define ALfpMult(x,y) ((ALfp)((((int64_t)(x))*((int64_t)(y)))>>OPENAL_FIXED_POINT_SHIFT))
+#define ALfpDiv(x,y) ((ALfp)(((int64_t)(x) << OPENAL_FIXED_POINT_SHIFT) / (y)))
+
+#define ALdfpMult(x,y) ALfpMult(x,y)
+#define ALdfpDiv(x,y) ALfpDiv(x,y)
+
+#define __isnan(x) (0)
+#define __cos(x) (float2ALfp(cos(ALfp2float(x))))
+#define __sin(x) (float2ALfp(sin(ALfp2float(x))))
+#define __log10(x) (float2ALfp(log10(ALfp2float(x))))
+#define __atan(x) (float2ALfp(atan(ALfp2float(x))))
+
+#define toALfpConst(x) ((x)*(1<<OPENAL_FIXED_POINT_SHIFT))
+
+#else
+typedef float ALfp;
+typedef double ALdfp;
+
+#define float2ALfp(x) (x)
+#define ALfp2float(x) (x)
+
+#define double2ALdfp(x) (x)
+#define ALdfp2double(x) (x)
+
+#define int2ALfp(x) ((ALfp)(x))
+#define ALfp2int(x) ((ALint)(x))
+
+#define int2ALdfp(x)  ((ALdfp)(x))
+#define ALdfp2int(x) ((ALint)(x))
+
+#define ALfpMult(x,y) ((x)*(y))
+#define ALfpDiv(x,y) ((x)/(y))
+
+#define ALdfpMult(x,y) ALfpMult((x),(y))
+#define ALdfpDiv(x,y) ALfpDiv((x),(y))
+
+#define __isnan(x) (0)
+#define __cos(x) cos((x))
+#define __sin(x) sin((x))
+#define __log10(x) log10((x))
+#define __atan(x) atan((x))
+
+#define toALfpConst(x) (x)
+
+#endif
 
 /** void type (for opaque pointers only) */
 typedef void ALvoid;
@@ -287,7 +385,7 @@ typedef void ALvoid;
 
 
 /** Errors: No Error. */
-#define AL_NO_ERROR                               0
+#define AL_NO_ERROR                               AL_FALSE
 
 /** 
  * Invalid Name paramater passed to AL call.
@@ -354,6 +452,15 @@ typedef void ALvoid;
 #define AL_EXPONENT_DISTANCE                      0xD005
 #define AL_EXPONENT_DISTANCE_CLAMPED              0xD006
 
+/**
+ * Priority
+ *
+ * Apportable Extension.
+ * Used to prevent dynamic throttling of this source.
+ *
+ */
+#define AL_PRIORITY                               0xE001
+#define AL_PRIORITY_SLOTS                         0xE002
 /*
  * Renderer State management
  */

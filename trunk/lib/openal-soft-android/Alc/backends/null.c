@@ -27,6 +27,9 @@
 
 
 typedef struct {
+    ALvoid *buffer;
+    ALuint size;
+
     volatile int killNow;
     ALvoid *thread;
 } null_data;
@@ -40,8 +43,8 @@ static ALuint NullProc(ALvoid *ptr)
     null_data *data = (null_data*)Device->ExtraData;
     ALuint now, start;
     ALuint64 avail, done;
-    const ALuint restTime = (ALuint64)Device->UpdateSize * 1000 /
-                            Device->Frequency / 2;
+    const ALuint restTime = ((ALuint)((ALuint64)Device->UpdateSize * 1000 /
+                                      Device->Frequency)) / 2;
 
     done = 0;
     start = timeGetTime();
@@ -65,7 +68,7 @@ static ALuint NullProc(ALvoid *ptr)
 
         while(avail-done >= Device->UpdateSize)
         {
-            aluMixData(Device, NULL, Device->UpdateSize);
+            aluMixData(Device, data->buffer, Device->UpdateSize);
             done += Device->UpdateSize;
         }
     }
@@ -73,20 +76,20 @@ static ALuint NullProc(ALvoid *ptr)
     return 0;
 }
 
-static ALCenum null_open_playback(ALCdevice *device, const ALCchar *deviceName)
+static ALCboolean null_open_playback(ALCdevice *device, const ALCchar *deviceName)
 {
     null_data *data;
 
     if(!deviceName)
         deviceName = nullDevice;
     else if(strcmp(deviceName, nullDevice) != 0)
-        return ALC_INVALID_VALUE;
+        return ALC_FALSE;
 
     data = (null_data*)calloc(1, sizeof(*data));
 
     device->szDeviceName = strdup(deviceName);
     device->ExtraData = data;
-    return ALC_NO_ERROR;
+    return ALC_TRUE;
 }
 
 static void null_close_playback(ALCdevice *device)
@@ -101,11 +104,23 @@ static ALCboolean null_reset_playback(ALCdevice *device)
 {
     null_data *data = (null_data*)device->ExtraData;
 
+    data->size = device->UpdateSize * FrameSizeFromDevFmt(device->FmtChans,
+                                                          device->FmtType);
+    data->buffer = malloc(data->size);
+    if(!data->buffer)
+    {
+        AL_PRINT("buffer malloc failed\n");
+        return ALC_FALSE;
+    }
     SetDefaultWFXChannelOrder(device);
 
     data->thread = StartThread(NullProc, device);
     if(data->thread == NULL)
+    {
+        free(data->buffer);
+        data->buffer = NULL;
         return ALC_FALSE;
+    }
 
     return ALC_TRUE;
 }
@@ -122,15 +137,26 @@ static void null_stop_playback(ALCdevice *device)
     data->thread = NULL;
 
     data->killNow = 0;
+
+    free(data->buffer);
+    data->buffer = NULL;
 }
 
 
-static const BackendFuncs null_funcs = {
+static ALCboolean null_open_capture(ALCdevice *device, const ALCchar *deviceName)
+{
+    (void)device;
+    (void)deviceName;
+    return ALC_FALSE;
+}
+
+
+BackendFuncs null_funcs = {
     null_open_playback,
     null_close_playback,
     null_reset_playback,
     null_stop_playback,
-    NULL,
+    null_open_capture,
     NULL,
     NULL,
     NULL,
@@ -138,27 +164,19 @@ static const BackendFuncs null_funcs = {
     NULL
 };
 
-ALCboolean alc_null_init(BackendFuncs *func_list)
+void alc_null_init(BackendFuncs *func_list)
 {
     *func_list = null_funcs;
-    return ALC_TRUE;
 }
 
 void alc_null_deinit(void)
 {
 }
 
-void alc_null_probe(enum DevProbe type)
+void alc_null_probe(int type)
 {
-    switch(type)
-    {
-        case DEVICE_PROBE:
-            AppendDeviceList(nullDevice);
-            break;
-        case ALL_DEVICE_PROBE:
-            AppendAllDeviceList(nullDevice);
-            break;
-        case CAPTURE_DEVICE_PROBE:
-            break;
-    }
+    if(type == DEVICE_PROBE)
+        AppendDeviceList(nullDevice);
+    else if(type == ALL_DEVICE_PROBE)
+        AppendAllDeviceList(nullDevice);
 }

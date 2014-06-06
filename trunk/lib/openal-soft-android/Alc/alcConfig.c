@@ -47,11 +47,11 @@ typedef struct ConfigEntry {
 typedef struct ConfigBlock {
     char *name;
     ConfigEntry *entries;
-    unsigned int entryCount;
+    size_t entryCount;
 } ConfigBlock;
 
 static ConfigBlock *cfgBlocks;
-static unsigned int cfgCount;
+static size_t cfgCount;
 
 static char buffer[1024];
 
@@ -62,7 +62,7 @@ static void LoadConfigFromFile(FILE *f)
 
     while(fgets(buffer, sizeof(buffer), f))
     {
-        int i = 0;
+        size_t i = 0;
 
         while(isspace(buffer[i]))
             i++;
@@ -74,7 +74,6 @@ static void LoadConfigFromFile(FILE *f)
         if(buffer[0] == '[')
         {
             ConfigBlock *nextBlock;
-            unsigned int i;
 
             i = 1;
             while(buffer[i] && buffer[i] != ']')
@@ -82,7 +81,7 @@ static void LoadConfigFromFile(FILE *f)
 
             if(!buffer[i])
             {
-                 ERR("config parse error: bad line \"%s\"\n", buffer);
+                 AL_PRINT("config parse error: bad line \"%s\"\n", buffer);
                  continue;
             }
             buffer[i] = 0;
@@ -92,7 +91,7 @@ static void LoadConfigFromFile(FILE *f)
                 if(buffer[i] && !isspace(buffer[i]))
                 {
                     if(buffer[i] != '#')
-                        WARN("config warning: extra data after block: \"%s\"\n", buffer+i);
+                        AL_PRINT("config warning: extra data after block: \"%s\"\n", buffer+i);
                     break;
                 }
             } while(buffer[i]);
@@ -103,7 +102,7 @@ static void LoadConfigFromFile(FILE *f)
                 if(strcasecmp(cfgBlocks[i].name, buffer+1) == 0)
                 {
                     nextBlock = cfgBlocks+i;
-                    TRACE("found block '%s'\n", nextBlock->name);
+//                    AL_PRINT("found block '%s'\n", nextBlock->name);
                     break;
                 }
             }
@@ -113,7 +112,7 @@ static void LoadConfigFromFile(FILE *f)
                 nextBlock = realloc(cfgBlocks, (cfgCount+1)*sizeof(ConfigBlock));
                 if(!nextBlock)
                 {
-                     ERR("config parse error: error reallocating config blocks\n");
+                     AL_PRINT("config parse error: error reallocating config blocks\n");
                      continue;
                 }
                 cfgBlocks = nextBlock;
@@ -124,7 +123,7 @@ static void LoadConfigFromFile(FILE *f)
                 nextBlock->entries = NULL;
                 nextBlock->entryCount = 0;
 
-                TRACE("found new block '%s'\n", nextBlock->name);
+//                AL_PRINT("found new block '%s'\n", nextBlock->name);
             }
             curBlock = nextBlock;
             continue;
@@ -138,7 +137,7 @@ static void LoadConfigFromFile(FILE *f)
 
         if(!buffer[i] || buffer[i] == '#' || i == 0)
         {
-            ERR("config parse error: malformed option line: \"%s\"\n", buffer);
+            AL_PRINT("config parse error: malformed option line: \"%s\"\n", buffer);
             continue;
         }
 
@@ -151,7 +150,7 @@ static void LoadConfigFromFile(FILE *f)
                 i++;
             if(buffer[i] != '=')
             {
-                ERR("config parse error: option without a value: \"%s\"\n", buffer);
+                AL_PRINT("config parse error: option without a value: \"%s\"\n", buffer);
                 continue;
             }
         }
@@ -162,20 +161,20 @@ static void LoadConfigFromFile(FILE *f)
 
         /* Check if we already have this option set */
         ent = curBlock->entries;
-        while((unsigned int)(ent-curBlock->entries) < curBlock->entryCount)
+        while((size_t)(ent-curBlock->entries) < curBlock->entryCount)
         {
             if(strcasecmp(ent->key, buffer) == 0)
                 break;
             ent++;
         }
 
-        if((unsigned int)(ent-curBlock->entries) >= curBlock->entryCount)
+        if((size_t)(ent-curBlock->entries) >= curBlock->entryCount)
         {
             /* Allocate a new option entry */
             ent = realloc(curBlock->entries, (curBlock->entryCount+1)*sizeof(ConfigEntry));
             if(!ent)
             {
-                 ERR("config parse error: error reallocating config entries\n");
+                 AL_PRINT("config parse error: error reallocating config entries\n");
                  continue;
             }
             curBlock->entries = ent;
@@ -195,19 +194,18 @@ static void LoadConfigFromFile(FILE *f)
             i++;
         do {
             i--;
-        } while(i >= 0 && isspace(buffer[i]));
+        } while(isspace(buffer[i]));
         buffer[++i] = 0;
 
         free(ent->value);
         ent->value = strdup(buffer);
 
-        TRACE("found '%s' = '%s'\n", ent->key, ent->value);
+//        AL_PRINT("found '%s' = '%s'\n", ent->key, ent->value);
     }
 }
 
 void ReadALConfig(void)
 {
-    const char *str;
     FILE *f;
 
     cfgBlocks = calloc(1, sizeof(ConfigBlock));
@@ -233,9 +231,9 @@ void ReadALConfig(void)
         LoadConfigFromFile(f);
         fclose(f);
     }
-    if((str=getenv("HOME")) != NULL && *str)
+    if(getenv("HOME") && *(getenv("HOME")))
     {
-        snprintf(buffer, sizeof(buffer), "%s/.alsoftrc", str);
+        snprintf(buffer, sizeof(buffer), "%s/.alsoftrc", getenv("HOME"));
         f = fopen(buffer, "r");
         if(f)
         {
@@ -244,9 +242,9 @@ void ReadALConfig(void)
         }
     }
 #endif
-    if((str=getenv("ALSOFT_CONF")) != NULL && *str)
+    if(getenv("ALSOFT_CONF"))
     {
-        f = fopen(str, "r");
+        f = fopen(getenv("ALSOFT_CONF"), "r");
         if(f)
         {
             LoadConfigFromFile(f);
@@ -257,11 +255,11 @@ void ReadALConfig(void)
 
 void FreeALConfig(void)
 {
-    unsigned int i;
+    size_t i;
 
     for(i = 0;i < cfgCount;i++)
     {
-        unsigned int j;
+        size_t j;
         for(j = 0;j < cfgBlocks[i].entryCount;j++)
         {
            free(cfgBlocks[i].entries[j].key);
@@ -277,7 +275,7 @@ void FreeALConfig(void)
 
 const char *GetConfigValue(const char *blockName, const char *keyName, const char *def)
 {
-    unsigned int i, j;
+    size_t i, j;
 
     if(!keyName)
         return def;
@@ -294,8 +292,6 @@ const char *GetConfigValue(const char *blockName, const char *keyName, const cha
         {
             if(strcasecmp(cfgBlocks[i].entries[j].key, keyName) == 0)
             {
-                TRACE("Found %s:%s = \"%s\"\n", blockName, keyName,
-                      cfgBlocks[i].entries[j].value);
                 if(cfgBlocks[i].entries[j].value[0])
                     return cfgBlocks[i].entries[j].value;
                 return def;
@@ -303,7 +299,6 @@ const char *GetConfigValue(const char *blockName, const char *keyName, const cha
         }
     }
 
-    TRACE("Key %s:%s not found\n", blockName, keyName);
     return def;
 }
 
@@ -313,44 +308,24 @@ int ConfigValueExists(const char *blockName, const char *keyName)
     return !!val[0];
 }
 
-int ConfigValueStr(const char *blockName, const char *keyName, const char **ret)
+int GetConfigValueInt(const char *blockName, const char *keyName, int def)
 {
     const char *val = GetConfigValue(blockName, keyName, "");
-    if(!val[0]) return 0;
 
-    *ret = val;
-    return 1;
+    if(!val[0]) return def;
+    return strtol(val, NULL, 0);
 }
 
-int ConfigValueInt(const char *blockName, const char *keyName, int *ret)
+float GetConfigValueFloat(const char *blockName, const char *keyName, float def)
 {
     const char *val = GetConfigValue(blockName, keyName, "");
-    if(!val[0]) return 0;
 
-    *ret = strtol(val, NULL, 0);
-    return 1;
-}
-
-int ConfigValueUInt(const char *blockName, const char *keyName, unsigned int *ret)
-{
-    const char *val = GetConfigValue(blockName, keyName, "");
-    if(!val[0]) return 0;
-
-    *ret = strtoul(val, NULL, 0);
-    return 1;
-}
-
-int ConfigValueFloat(const char *blockName, const char *keyName, float *ret)
-{
-    const char *val = GetConfigValue(blockName, keyName, "");
-    if(!val[0]) return 0;
-
+    if(!val[0]) return def;
 #ifdef HAVE_STRTOF
-    *ret = strtof(val, NULL);
+    return strtof(val, NULL);
 #else
-    *ret = (float)strtod(val, NULL);
+    return (float)strtod(val, NULL);
 #endif
-    return 1;
 }
 
 int GetConfigValueBool(const char *blockName, const char *keyName, int def)

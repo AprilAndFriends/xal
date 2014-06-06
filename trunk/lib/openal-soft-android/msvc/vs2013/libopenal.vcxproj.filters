@@ -56,9 +56,6 @@
     <ClCompile Include="..\..\Alc\alcConfig.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Alc\alcDedicated.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Alc\alcEcho.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
@@ -77,15 +74,6 @@
     <ClCompile Include="..\..\Alc\ALu.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Alc\bs2b.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Alc\helpers.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Alc\hrtf.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Alc\mixer.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
@@ -98,7 +86,16 @@
     <ClCompile Include="..\..\Alc\backends\null.c">
       <Filter>Source Files\Alc\backends</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Alc\backends\loopback.c">
+    <ClCompile Include="..\..\OpenAL32\alDatabuffer.c">
+      <Filter>Source Files\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Alc\backends\opensles.c">
+      <Filter>Source Files\Alc\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Alc\bs2b.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Alc\backends\audiotrack.c">
       <Filter>Source Files\Alc\backends</Filter>
     </ClCompile>
   </ItemGroup>
@@ -124,10 +121,8 @@
     <ClInclude Include="..\..\include\AL\efx-presets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Alc\hrtf_tables.inc">
+    <ClInclude Include="..\..\Alc\apportable_openal_funcs.h">
       <Filter>Source Files\Alc</Filter>
-    </None>
+    </ClInclude>
   </ItemGroup>
 </Project>
