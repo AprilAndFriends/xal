@@ -2494,7 +2494,7 @@ ALC_API ALCdevice* ALC_APIENTRY alcOpenDevice(const ALCchar *deviceName)
     InitUIntMap(&device->FilterMap, ~0);
 
     //Set output format
-    device->NumUpdates = 4;
+    device->NumUpdates = 1;
     device->UpdateSize = 1024;
 
     device->Frequency = DEFAULT_OUTPUT_RATE;
@@ -2508,7 +2508,7 @@ ALC_API ALCdevice* ALC_APIENTRY alcOpenDevice(const ALCchar *deviceName)
     GetFormatFromString(fmt, &device->FmtChans, &device->FmtType);
 
     ConfigValueUInt(NULL, "periods", &device->NumUpdates);
-    if(device->NumUpdates < 2) device->NumUpdates = 4;
+    if(device->NumUpdates < 2) device->NumUpdates = 1;
 
     ConfigValueUInt(NULL, "period_size", &device->UpdateSize);
     if(device->UpdateSize == 0) device->UpdateSize = 1024;
