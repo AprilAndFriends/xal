@@ -103,7 +103,7 @@ namespace xal
 	
 	void OpenAL_AudioManager::initOpenAL()
 	{
-		ALCdevice* currentDevice = alcOpenDevice(deviceName.c_str());
+		ALCdevice* currentDevice = alcOpenDevice(this->deviceName.c_str());
 		ALenum error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
