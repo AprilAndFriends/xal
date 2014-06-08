@@ -677,7 +677,9 @@
 					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/lib/ogg/include",
 					"${SRCROOT}/lib/vorbis/include",
-					"${SRCROOT}/../include/audiosources",
+					"${SRCROOT}/../src/audiosources",
+					"${SRCROOT}/../src/audiosystems/OpenAL",
+					"${SRCROOT}/../src/audiosystems/NoAudio",
 				);
 			};
 			name = "App Store";
@@ -785,7 +787,9 @@
 					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/lib/ogg/include",
 					"${SRCROOT}/lib/vorbis/include",
-					"${SRCROOT}/../include/audiosources",
+					"${SRCROOT}/../src/audiosources",
+					"${SRCROOT}/../src/audiosystems/OpenAL",
+					"${SRCROOT}/../src/audiosystems/NoAudio",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 			};
@@ -832,7 +836,9 @@
 					"${SRCROOT}/../vorbis/include",
 					"${SRCROOT}/lib/ogg/include",
 					"${SRCROOT}/lib/vorbis/include",
-					"${SRCROOT}/../include/audiosources",
+					"${SRCROOT}/../src/audiosources",
+					"${SRCROOT}/../src/audiosystems/OpenAL",
+					"${SRCROOT}/../src/audiosystems/NoAudio",
 				);
 			};
 			name = Release;

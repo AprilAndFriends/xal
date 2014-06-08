@@ -8,12 +8,14 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// iOS specific OpenAL code
+/// iOS specific OpenAL code.
 
 #if defined(_OPENAL) && defined(_IOS)
 
 #import <AVFoundation/AVFoundation.h>
+
 #include <hltypes/hlog.h>
+
 #include "OpenAL_AudioManager.h"
 #include "xal.h"
 
