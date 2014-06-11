@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <Link>
+      <AdditionalDependencies>libhltypes.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Android' or '$(Platform)'=='Android-x86'">
+    <Link>
+      <AdditionalDependencies>-ltremor;-logg;-lhltypes;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DirectSound|Win32' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_DirectSound|Win32' or
+                                  '$(Configuration)|$(Platform)'=='Release_DirectSound|Win32' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_DirectSound|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DIRECTSOUND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Win32' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_OpenAL|Win32' or
+                                  '$(Configuration)|$(Platform)'=='Release_OpenAL|Win32' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_SDL|Win32' or
+                                  '$(Configuration)|$(Platform)'=='Release_SDL|Win32' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_SDL|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Win32' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_All|Win32' or
+                                  '$(Configuration)|$(Platform)'=='Release_All|Win32' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_All|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DIRECTSOUND;_OPENAL;_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>dsound.lib;OpenAL32.lib;SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_OpenAL|Android' or
+                                  '$(Configuration)|$(Platform)'=='Release_OpenAL|Android' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Android' or
+                                  '$(Configuration)|$(Platform)'=='Debug_OpenAL|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_OpenAL|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='Release_OpenAL|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_OpenAL|Android-x86'">
+    <ClCompile>
+      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>-lopenal;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_All|Android' or
+                                  '$(Configuration)|$(Platform)'=='Release_All|Android' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_All|Android' or
+                                  '$(Configuration)|$(Platform)'=='Debug_All|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_All|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='Release_All|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_All|Android-x86'">
+    <ClCompile>
+      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>-lopenal;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>
