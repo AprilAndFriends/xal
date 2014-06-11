@@ -14,32 +14,32 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ParallelSoundManager.cpp">
+    <ClCompile Include="..\..\src\ParallelSoundManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Playlist.cpp">
+    <ClCompile Include="..\..\src\Playlist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MultiPlaylist.cpp">
+    <ClCompile Include="..\..\src\MultiPlaylist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\xalutil\ParallelSoundManager.h">
+    <ClInclude Include="..\..\include\xalutil\ParallelSoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\xalutil\Playlist.h">
+    <ClInclude Include="..\..\include\xalutil\Playlist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\xalutil\xalUtilExport.h">
+    <ClInclude Include="..\..\include\xalutil\xalUtilExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\xalutil\MultiPlaylist.h">
+    <ClInclude Include="..\..\include\xalutil\MultiPlaylist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="fileproperties.rc">
+    <ResourceCompile Include="..\..\fileproperties.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

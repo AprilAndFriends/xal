@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\audiosystems">
+      <UniqueIdentifier>{9a4c43aa-a1fe-4e74-846c-d2d9c7ff1d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems">
+      <UniqueIdentifier>{a5d68b12-7cd6-482a-a897-31b980118b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\audiosources">
+      <UniqueIdentifier>{f2ce05a8-226a-43ed-8496-c44f1a9a62d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosources">
+      <UniqueIdentifier>{702009bc-a09b-428c-bcf0-41664c26dbf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\audiosystems\DirectSound">
+      <UniqueIdentifier>{e9c094a3-cf68-4ff0-87b2-2aa1bacb1912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\audiosystems\OpenAL">
+      <UniqueIdentifier>{58ee6ee1-b26d-4037-ae92-c5835bc291de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\audiosystems\SDL">
+      <UniqueIdentifier>{110e0a45-c7b0-43d3-b8b5-4d9cd42c8ece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems\DirectSound">
+      <UniqueIdentifier>{8b303320-1f39-46e4-9b93-4747f62acf51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems\OpenAL">
+      <UniqueIdentifier>{6061671f-99bf-435a-886b-ac4197d6269b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems\SDL">
+      <UniqueIdentifier>{b019b05c-5f5d-45c0-990d-d0c58bb47a63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8e56379e-ed92-4bfb-976f-3756a846171d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems\NoAudio">
+      <UniqueIdentifier>{682f66b1-c863-4b76-bfc5-49dffdc191ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\audiosystems\NoAudio">
+      <UniqueIdentifier>{6d09185e-ee34-45c9-a992-ea4c216beaca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\AudioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Category.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosources\OGG_Source.cpp">
+      <Filter>Source Files\audiosources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosources\SPX_Source.cpp">
+      <Filter>Source Files\audiosources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosources\WAV_Source.cpp">
+      <Filter>Source Files\audiosources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_Player.cpp">
+      <Filter>Source Files\audiosystems\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\OpenAL\OpenAL_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\OpenAL\OpenAL_Player.cpp">
+      <Filter>Source Files\audiosystems\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\SDL\SDL_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\SDL\SDL_Player.cpp">
+      <Filter>Source Files\audiosystems\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_WAV_Source.cpp">
+      <Filter>Source Files\audiosystems\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosources\FLAC_Source.cpp">
+      <Filter>Source Files\audiosources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\NoAudio\NoAudio_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\NoAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.cpp">
+      <Filter>Source Files\audiosystems\NoAudio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\xal\AudioManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\xalExport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\xal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\Category.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\Sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\xal\Source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosources\SPX_Source.h">
+      <Filter>Header Files\audiosources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosources\OGG_Source.h">
+      <Filter>Header Files\audiosources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosources\WAV_Source.h">
+      <Filter>Header Files\audiosources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_AudioManager.h">
+      <Filter>Header Files\audiosystems\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_Player.h">
+      <Filter>Header Files\audiosystems\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\OpenAL\OpenAL_AudioManager.h">
+      <Filter>Header Files\audiosystems\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\OpenAL\OpenAL_Player.h">
+      <Filter>Header Files\audiosystems\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\SDL\SDL_AudioManager.h">
+      <Filter>Header Files\audiosystems\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\SDL\SDL_Player.h">
+      <Filter>Header Files\audiosystems\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_WAV_Source.h">
+      <Filter>Header Files\audiosystems\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosources\FLAC_Source.h">
+      <Filter>Header Files\audiosources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_AudioManager.h">
+      <Filter>Header Files\audiosystems\NoAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.h">
+      <Filter>Header Files\audiosystems\NoAudio</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\fileproperties.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
