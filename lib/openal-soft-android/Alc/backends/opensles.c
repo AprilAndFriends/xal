@@ -110,7 +110,7 @@ static char *alc_opensles_get_android_model()
             androidModelField = (*env)->GetStaticFieldID(env, androidBuildClass, "MODEL", "Ljava/lang/String;");
             androidModelString = (*env)->GetStaticObjectField(env, androidBuildClass, androidModelField);
             const char *unichars = (*env)->GetStringUTFChars(env, androidModelString, NULL);
-            if (!(*env)->ExceptionOccurred(env))
+            if (!(*env)->ExceptionCheck(env))
             {
                 jsize sz = (*env)->GetStringLength(env, androidModelString);
                 androidModel = malloc(sz+1);
@@ -119,6 +119,11 @@ static char *alc_opensles_get_android_model()
                     androidModel[sz] = '\0';
                 }
             }
+			else
+			{
+				(*env)->ExceptionDescribe(env);
+				(*env)->ExceptionClear(env);
+			}
             (*env)->ReleaseStringUTFChars(env, androidModelString, unichars);
         }
         (*env)->PopLocalFrame(env, NULL);

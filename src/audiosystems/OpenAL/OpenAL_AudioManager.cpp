@@ -92,7 +92,7 @@ namespace xal
 		__openal__JNI_OnLoad(backendId);
 #endif
 		this->numActiveSources = 0;
-		initOpenAL();
+		this->initOpenAL();
 	}
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
