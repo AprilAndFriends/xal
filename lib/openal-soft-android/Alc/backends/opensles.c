@@ -78,7 +78,7 @@ static int alc_opensles_get_android_api()
     int androidApiLevel = 0;
     JNIEnv* env = NULL;
     
-    (*javaVM)->GetEnv(javaVM, (void**)&env, JNI_VERSION_1_4);
+    (*javaVM)->GetEnv(javaVM, (void**)&env, JNI_VERSION_1_6);
     androidVersionClass = (*env)->FindClass(env, "android/os/Build$VERSION");
     if (androidVersionClass)
     {
@@ -102,7 +102,7 @@ static char *alc_opensles_get_android_model()
         int androidApiLevel = 0;
         JNIEnv* env = NULL;
         
-        (*javaVM)->GetEnv(javaVM, (void**)&env, JNI_VERSION_1_4);
+        (*javaVM)->GetEnv(javaVM, (void**)&env, JNI_VERSION_1_6);
         (*env)->PushLocalFrame(env, 5);
         androidBuildClass = (*env)->FindClass(env, "android/os/Build");
         if (androidBuildClass)
