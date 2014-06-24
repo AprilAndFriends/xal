@@ -56,9 +56,6 @@
     <ClCompile Include="..\Alc\alcConfig.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
-    <ClCompile Include="..\Alc\alcDedicated.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
     <ClCompile Include="..\Alc\alcEcho.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
@@ -80,12 +77,6 @@
     <ClCompile Include="..\Alc\bs2b.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
-    <ClCompile Include="..\Alc\helpers.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Alc\hrtf.c">
-      <Filter>Source Files\Alc</Filter>
-    </ClCompile>
     <ClCompile Include="..\Alc\mixer.c">
       <Filter>Source Files\Alc</Filter>
     </ClCompile>
@@ -98,7 +89,10 @@
     <ClCompile Include="..\Alc\backends\null.c">
       <Filter>Source Files\Alc\backends</Filter>
     </ClCompile>
-    <ClCompile Include="..\Alc\backends\loopback.c">
+    <ClCompile Include="..\Alc\backends\opensles.c">
+      <Filter>Source Files\Alc\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Alc\backends\audiotrack.c">
       <Filter>Source Files\Alc\backends</Filter>
     </ClCompile>
   </ItemGroup>
