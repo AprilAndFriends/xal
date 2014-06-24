@@ -95,6 +95,9 @@
     <ClCompile Include="..\Alc\backends\audiotrack.c">
       <Filter>Source Files\Alc\backends</Filter>
     </ClCompile>
+    <ClCompile Include="alDatabuffer.c">
+      <Filter>Source Files\OpenAL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\config.h">
