@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="..\Alc\ALc.c" />
     <ClCompile Include="..\Alc\alcConfig.c" />
-    <ClCompile Include="..\Alc\alcDedicated.c" />
     <ClCompile Include="..\Alc\alcEcho.c" />
     <ClCompile Include="..\Alc\alcModulator.c" />
     <ClCompile Include="..\Alc\alcReverb.c" />
@@ -21,11 +20,10 @@
     <ClCompile Include="..\Alc\alcThread.c" />
     <ClCompile Include="..\Alc\ALu.c" />
     <ClCompile Include="..\Alc\backends\android.c" />
-    <ClCompile Include="..\Alc\backends\loopback.c" />
+    <ClCompile Include="..\Alc\backends\audiotrack.c" />
     <ClCompile Include="..\Alc\backends\null.c" />
+    <ClCompile Include="..\Alc\backends\opensles.c" />
     <ClCompile Include="..\Alc\bs2b.c" />
-    <ClCompile Include="..\Alc\helpers.c" />
-    <ClCompile Include="..\Alc\hrtf.c" />
     <ClCompile Include="..\Alc\mixer.c" />
     <ClCompile Include="..\Alc\panning.c" />
     <ClCompile Include="alAuxEffectSlot.c" />
@@ -61,7 +59,6 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <AndroidAPILevel>android-8</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android-x86'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
