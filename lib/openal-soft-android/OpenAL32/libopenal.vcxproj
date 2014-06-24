@@ -28,6 +28,7 @@
     <ClCompile Include="..\Alc\panning.c" />
     <ClCompile Include="alAuxEffectSlot.c" />
     <ClCompile Include="alBuffer.c" />
+    <ClCompile Include="alDatabuffer.c" />
     <ClCompile Include="alEffect.c" />
     <ClCompile Include="alError.c" />
     <ClCompile Include="alExtension.c" />
@@ -89,7 +90,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;../include;./Include;../Alc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>AL_BUILD_LIBRARY;AL_ALEXT_PROTOTYPES;_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;NDEBUG;_ANDROID;ANDROID;_ARM;AL_BUILD_LIBRARY;AL_ALEXT_PROTOTYPES;_STATIC_LIB</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -115,7 +116,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;../include;./Include;../Alc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>AL_BUILD_LIBRARY;AL_ALEXT_PROTOTYPES;_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;NDEBUG;_ANDROID;ANDROID;_ARM;AL_BUILD_LIBRARY;AL_ALEXT_PROTOTYPES;_STATIC_LIB</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
