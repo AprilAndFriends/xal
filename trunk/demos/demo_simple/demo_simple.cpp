@@ -58,13 +58,13 @@ int main(Platform::Array<Platform::String^>^ args)
 	xal::init(xal::AS_DEFAULT, hwnd, __XAL_THREADED, 0.01f);
 
 	// create a category for fully loaded and decoded sounds
-	xal::mgr->createCategory(CATEGORY_NORMAL, xal::FULL, xal::DISK);
+	xal::mgr->createCategory(CATEGORY_NORMAL, xal::ON_DEMAND, xal::DISK);
 	// create a category for streamed sounds
 	xal::mgr->createCategory(CATEGORY_STREAMED, xal::STREAMED, xal::DISK);
 	// create sound using a prefix (forces usage of the ogg files)
 	xal::mgr->createSound(RESOURCE_PATH SOUND_NAME_NORMAL ".ogg", CATEGORY_NORMAL);
 	// create streamed sound using no prefix (forces usage of the ogg files)
-	xal::mgr->createSound(RESOURCE_PATH"streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
+	xal::mgr->createSound(RESOURCE_PATH "streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
 	xal::Player* p;
 
 	// create a sound player for manual control
