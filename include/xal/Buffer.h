@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.12
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -103,8 +103,6 @@ namespace xal
 		BufferMode mode;
 		/// @brief Whether the underlying source was loaded.
 		bool loaded;
-		/// @brief Whether the underlying source was decoded.
-		bool decoded;
 		/// @brief Current data provided by the buffer.
 		unsigned char* stream;
 		/// @brief Size of the currently provided data.

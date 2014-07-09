@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.12
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -22,7 +22,7 @@
 
 namespace xal
 {
-	Buffer::Buffer(Sound* sound) : loaded(false), decoded(false), idleTime(0.0f)
+	Buffer::Buffer(Sound* sound) : loaded(false), idleTime(0.0f)
 	{
 		this->filename = sound->getRealFilename();
 		this->fileSize = hresource::hsize(this->filename);
