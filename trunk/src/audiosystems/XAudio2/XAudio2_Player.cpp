@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -24,6 +24,45 @@ using namespace Microsoft::WRL;
 
 namespace xal
 {
+	XAudio2_Player::CallbackHandler::CallbackHandler(bool* active)
+	{
+		this->active = active;
+	}
+
+	XAudio2_Player::CallbackHandler::~CallbackHandler()
+	{
+	}
+
+	void XAudio2_Player::CallbackHandler::OnVoiceProcessingPassStart(UINT32 bytesRequired)
+	{
+	}
+
+	void XAudio2_Player::CallbackHandler::OnVoiceProcessingPassEnd()
+	{
+	}
+
+	void XAudio2_Player::CallbackHandler::OnStreamEnd()
+	{
+	}
+
+	void XAudio2_Player::CallbackHandler::OnBufferStart(void* bufferContext)
+	{
+		*this->active = true;
+	}
+
+	void XAudio2_Player::CallbackHandler::OnBufferEnd(void* bufferContext)
+	{
+		*this->active = false;
+	}
+
+	void XAudio2_Player::CallbackHandler::OnLoopEnd(void* bufferContext)
+	{
+	}
+
+	void XAudio2_Player::CallbackHandler::OnVoiceError(void* bufferContext, HRESULT error)
+	{
+	}
+
 	XAudio2_Player::XAudio2_Player(Sound* sound) : Player(sound), playing(false), active(false),
 		stillPlaying(false), sourceVoice(NULL), buffersSubmitted(0)
 	{
@@ -183,10 +222,10 @@ namespace xal
 				else
 				{
 					this->sourceVoice->FlushSourceBuffers();
+					this->buffer->rewind();
 					if (this->sound->isStreamed())
 					{
 						this->buffersSubmitted = 0;
-						this->buffer->rewind();
 					}
 				}
 				this->playing = false;

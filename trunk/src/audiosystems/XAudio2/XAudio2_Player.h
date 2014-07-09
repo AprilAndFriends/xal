@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -34,16 +34,16 @@ namespace xal
 		class CallbackHandler : public IXAudio2VoiceCallback
 		{
 		public:
-			CallbackHandler(bool* active) { this->active = active; }
-			~CallbackHandler() { }
+			CallbackHandler(bool* active);
+			~CallbackHandler();
 
-			inline STDMETHOD_(void, OnVoiceProcessingPassStart)(UINT32 bytesRequired) { }
-			inline STDMETHOD_(void, OnVoiceProcessingPassEnd)() { }
-			inline STDMETHOD_(void, OnStreamEnd)() { }
-			inline STDMETHOD_(void, OnBufferStart)(void* bufferContext) { *this->active = true; }
-			inline STDMETHOD_(void, OnBufferEnd)(void* bufferContext) { *this->active = false; }
-			inline STDMETHOD_(void, OnLoopEnd)(void* bufferContext) { }
-			inline STDMETHOD_(void, OnVoiceError)(void* bufferContext, HRESULT error) { }
+			STDMETHOD_(void, OnVoiceProcessingPassStart)(UINT32 bytesRequired);
+			STDMETHOD_(void, OnVoiceProcessingPassEnd)();
+			STDMETHOD_(void, OnStreamEnd)();
+			STDMETHOD_(void, OnBufferStart)(void* bufferContext);
+			STDMETHOD_(void, OnBufferEnd)(void* bufferContext);
+			STDMETHOD_(void, OnLoopEnd)(void* bufferContext);
+			STDMETHOD_(void, OnVoiceError)(void* bufferContext, HRESULT error);
 
 		protected:
 			bool* active;
