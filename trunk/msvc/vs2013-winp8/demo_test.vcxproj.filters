@@ -20,9 +20,6 @@
     <Filter Include="winrt\media\assets\WideLogo">
       <UniqueIdentifier>{b13550d9-3dd8-4b26-9a29-a90d31b7897d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="winrt\media\assets\LogoBig">
-      <UniqueIdentifier>{9d3df410-95d1-4b13-9b64-57ae49abc4fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="winrt\media\assets\Splash">
       <UniqueIdentifier>{407d8cef-d128-4e2b-a1d5-a3b51a7ea90b}</UniqueIdentifier>
     </Filter>
@@ -43,25 +40,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_simple\demo_simple.cpp">
+    <ClCompile Include="..\..\demos\demo_test\demo_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="media\assets\Logo.scale-80.png">
-      <Filter>winrt\media\assets\Logo</Filter>
-    </Image>
     <Image Include="media\assets\Logo.scale-100.png">
       <Filter>winrt\media\assets\Logo</Filter>
     </Image>
     <Image Include="media\assets\Logo.scale-140.png">
       <Filter>winrt\media\assets\Logo</Filter>
     </Image>
-    <Image Include="media\assets\Logo.scale-180.png">
+    <Image Include="media\assets\Logo.scale-240.png">
       <Filter>winrt\media\assets\Logo</Filter>
-    </Image>
-    <Image Include="media\assets\WideLogo.scale-80.png">
-      <Filter>winrt\media\assets\WideLogo</Filter>
     </Image>
     <Image Include="media\assets\WideLogo.scale-100.png">
       <Filter>winrt\media\assets\WideLogo</Filter>
@@ -69,29 +60,8 @@
     <Image Include="media\assets\WideLogo.scale-140.png">
       <Filter>winrt\media\assets\WideLogo</Filter>
     </Image>
-    <Image Include="media\assets\WideLogo.scale-180.png">
+    <Image Include="media\assets\WideLogo.scale-240.png">
       <Filter>winrt\media\assets\WideLogo</Filter>
-    </Image>
-    <Image Include="media\assets\LogoBig.scale-80.png">
-      <Filter>winrt\media\assets\LogoBig</Filter>
-    </Image>
-    <Image Include="media\assets\LogoBig.scale-100.png">
-      <Filter>winrt\media\assets\LogoBig</Filter>
-    </Image>
-    <Image Include="media\assets\LogoBig.scale-140.png">
-      <Filter>winrt\media\assets\LogoBig</Filter>
-    </Image>
-    <Image Include="media\assets\LogoBig.scale-180.png">
-      <Filter>winrt\media\assets\LogoBig</Filter>
-    </Image>
-    <Image Include="media\assets\Splash.scale-100.png">
-      <Filter>winrt\media\assets\Splash</Filter>
-    </Image>
-    <Image Include="media\assets\Splash.scale-140.png">
-      <Filter>winrt\media\assets\Splash</Filter>
-    </Image>
-    <Image Include="media\assets\Splash.scale-180.png">
-      <Filter>winrt\media\assets\Splash</Filter>
     </Image>
     <Image Include="media\assets\StoreLogo.scale-100.png">
       <Filter>winrt\media\assets\StoreLogo</Filter>
@@ -99,44 +69,35 @@
     <Image Include="media\assets\StoreLogo.scale-140.png">
       <Filter>winrt\media\assets\StoreLogo</Filter>
     </Image>
-    <Image Include="media\assets\StoreLogo.scale-180.png">
+    <Image Include="media\assets\StoreLogo.scale-240.png">
       <Filter>winrt\media\assets\StoreLogo</Filter>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-80.png">
+    <Image Include="media\assets\LogoSmallP8.scale-100.png">
       <Filter>winrt\media\assets\LogoSmall</Filter>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-100.png">
+    <Image Include="media\assets\LogoSmallP8.scale-140.png">
       <Filter>winrt\media\assets\LogoSmall</Filter>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-140.png">
+    <Image Include="media\assets\LogoSmallP8.scale-240.png">
       <Filter>winrt\media\assets\LogoSmall</Filter>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-180.png">
-      <Filter>winrt\media\assets\LogoSmall</Filter>
-    </Image>
-    <Image Include="media\assets\LogoTiny.scale-80.png">
+    <Image Include="media\assets\LogoTinyP8.scale-100.png">
       <Filter>winrt\media\assets\LogoTiny</Filter>
     </Image>
-    <Image Include="media\assets\LogoTiny.scale-100.png">
+    <Image Include="media\assets\LogoTinyP8.scale-140.png">
       <Filter>winrt\media\assets\LogoTiny</Filter>
     </Image>
-    <Image Include="media\assets\LogoTiny.scale-140.png">
+    <Image Include="media\assets\LogoTinyP8.scale-240.png">
       <Filter>winrt\media\assets\LogoTiny</Filter>
     </Image>
-    <Image Include="media\assets\LogoTiny.scale-180.png">
-      <Filter>winrt\media\assets\LogoTiny</Filter>
+    <Image Include="media\assets\SplashP8.scale-100.png">
+      <Filter>winrt\media\assets\Splash</Filter>
     </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-16.png">
-      <Filter>winrt\media\assets\LogoTiny</Filter>
+    <Image Include="media\assets\SplashP8.scale-140.png">
+      <Filter>winrt\media\assets\Splash</Filter>
     </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-32.png">
-      <Filter>winrt\media\assets\LogoTiny</Filter>
-    </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-48.png">
-      <Filter>winrt\media\assets\LogoTiny</Filter>
-    </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-256.png">
-      <Filter>winrt\media\assets\LogoTiny</Filter>
+    <Image Include="media\assets\SplashP8.scale-240.png">
+      <Filter>winrt\media\assets\Splash</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -166,12 +127,12 @@
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\demos\demo_simple\TemporaryKey.pfx">
+    <None Include="..\..\demos\demo_test\TemporaryKey.pfx">
       <Filter>winrt</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="..\..\demos\demo_simple\Package.appxmanifest">
+    <AppxManifest Include="..\..\demos\demo_test\Package-winp8.appxmanifest">
       <Filter>winrt</Filter>
     </AppxManifest>
   </ItemGroup>
