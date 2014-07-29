@@ -36,6 +36,7 @@ namespace xal
 		result = this->xa2Device->CreateMasteringVoice(&this->xa2MasteringVoice, 2, 44100);
 		if (FAILED(result)) // if can't use 44.1 kHz stereo, use default
 		{
+			hlog::write(xal::logTag, "Could not create device with 2 channels and 44100 Hz, attempting defaults...");
 			result = this->xa2Device->CreateMasteringVoice(&this->xa2MasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE);
 		}
 		if (FAILED(result))
