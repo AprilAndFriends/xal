@@ -69,6 +69,21 @@
       <AdditionalDependencies>-lopenal;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenSLES|Android' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_OpenSLES|Android' or
+                                  '$(Configuration)|$(Platform)'=='Release_OpenSLES|Android' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_OpenSLES|Android' or
+                                  '$(Configuration)|$(Platform)'=='Debug_OpenSLES|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='DebugS_OpenSLES|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='Release_OpenSLES|Android-x86' or
+                                  '$(Configuration)|$(Platform)'=='ReleaseS_OpenSLES|Android-x86'">
+    <ClCompile>
+      <PreprocessorDefinitions>_OPENSLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>-lOpenSLES;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_All|Android' or
                                   '$(Configuration)|$(Platform)'=='DebugS_All|Android' or
                                   '$(Configuration)|$(Platform)'=='Release_All|Android' or
@@ -78,10 +93,10 @@
                                   '$(Configuration)|$(Platform)'=='Release_All|Android-x86' or
                                   '$(Configuration)|$(Platform)'=='ReleaseS_All|Android-x86'">
     <ClCompile>
-      <PreprocessorDefinitions>_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_OPENAL;_OPENSLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>-lopenal;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>-lopenal;-lOpenSLES;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
 </Project>

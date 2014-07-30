@@ -48,6 +48,12 @@
     <Filter Include="Header Files\audiosystems\NoAudio">
       <UniqueIdentifier>{6d09185e-ee34-45c9-a992-ea4c216beaca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\audiosystems\OpenSLES">
+      <UniqueIdentifier>{d9f6bd6b-e4b1-458e-8733-18b21aa99c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audiosystems\OpenSLES">
+      <UniqueIdentifier>{051d48c7-e9fe-4884-a225-54ce75893b4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AudioManager.cpp">
@@ -109,6 +115,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.cpp">
       <Filter>Source Files\audiosystems\NoAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\OpenSLES\OpenSLES_AudioManager.cpp">
+      <Filter>Source Files\audiosystems\OpenSLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audiosystems\OpenSLES\OpenSLES_Player.cpp">
+      <Filter>Source Files\audiosystems\OpenSLES</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +186,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\OpenSLES\OpenSLES_AudioManager.h">
+      <Filter>Header Files\audiosystems\OpenSLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audiosystems\OpenSLES\OpenSLES_Player.h">
+      <Filter>Header Files\audiosystems\OpenSLES</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

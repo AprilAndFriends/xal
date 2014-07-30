@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.14
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -245,7 +245,7 @@ namespace xal
 		int processed = this->buffersSubmitted - this->xa2State[3].BuffersQueued;
 		if (processed == 0)
 		{
-			this->stillPlaying = true; // don't remove, it prevents streamed sounds from being stopped for whatever illogical reason within XAudio2
+			this->stillPlaying = true; // don't remove, it prevents streamed sounds from being stopped
 			return 0;
 		}
 		this->buffersSubmitted -= processed;
@@ -253,7 +253,7 @@ namespace xal
 		if (count > 0)
 		{
 			this->_submitStreamBuffers(count);
-			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped by XAudio2 so let's just bitch-slap it and get this over with
+			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped so let's just bitch-slap it and get this over with
 		}
 		this->sourceVoice->GetState(&this->xa2State[4], XAUDIO2_VOICE_NOSAMPLESPLAYED);
 		if (this->xa2State[4].BuffersQueued == 0)
