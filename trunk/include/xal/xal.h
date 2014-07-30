@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.14
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -20,6 +20,7 @@
 #define XAL_AS_DISABLED "Disabled"
 #define XAL_AS_DIRECTSOUND "DirectSound"
 #define XAL_AS_OPENAL "OpenAL"
+#define XAL_AS_OPENSLES "OpenSLES"
 #define XAL_AS_SDL "SDL"
 #define XAL_AS_XAUDIO2 "XAudio2"
 #define XAL_AS_AVFOUNDATION "AVFoundation"
@@ -36,10 +37,11 @@ namespace xal
 		AS_DISABLED = 1,
 		AS_DIRECTSOUND = 2,
 		AS_OPENAL = 3,
-		AS_SDL = 4,
-		AS_XAUDIO2 = 5,
-		AS_AVFOUNDATION = 6,
-		AS_COREAUDIO = 7
+		AS_OPENSLES = 4,
+		AS_SDL = 5,
+		AS_XAUDIO2 = 6,
+		AS_AVFOUNDATION = 7,
+		AS_COREAUDIO = 8
 	};
 
 	/// @brief Initializes XAL.

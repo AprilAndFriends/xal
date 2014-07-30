@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.14
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -22,6 +22,9 @@
 #endif
 #ifdef _OPENAL
 #include "OpenAL_AudioManager.h"
+#endif
+#ifdef _OPENSLES
+#include "OpenSLES_AudioManager.h"
 #endif
 #ifdef _SDL
 #include "SDL_AudioManager.h"
@@ -85,7 +88,9 @@
 	#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #elif defined(_ANDROID)
-	#ifdef _OPENAL
+	#ifdef _OPENSLES
+	#define AS_INTERNAL_DEFAULT AS_OPENSLES
+	#elif defined(_OPENAL)
 	#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
 	#define AS_INTERNAL_DEFAULT AS_DISABLED
@@ -121,6 +126,12 @@ namespace xal
 		if (type == AS_OPENAL)
 		{
 			xal::mgr = new OpenAL_AudioManager(backendId, threaded, updateTime, deviceName);
+		}
+#endif
+#ifdef _OPENSLES
+		if (type == AS_OPENSLES)
+		{
+			xal::mgr = new OpenSLES_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _SDL
@@ -182,6 +193,12 @@ namespace xal
 #endif
 #ifdef _OPENAL
 		if (type == AS_OPENAL)
+		{
+			return true;
+		}
+#endif
+#ifdef _OPENSLES
+		if (type == AS_OPENSLES)
 		{
 			return true;
 		}

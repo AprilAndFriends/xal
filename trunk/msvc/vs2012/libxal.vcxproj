@@ -37,6 +37,18 @@
       <Configuration>DebugS_OpenAL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_OpenSLES|Android">
+      <Configuration>DebugS_OpenSLES</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_OpenSLES|Android-x86">
+      <Configuration>DebugS_OpenSLES</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS_OpenSLES|Win32">
+      <Configuration>DebugS_OpenSLES</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugS_SDL|Android">
       <Configuration>DebugS_SDL</Configuration>
       <Platform>Android</Platform>
@@ -79,6 +91,10 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_OpenAL|Android-x86">
       <Configuration>Debug_OpenAL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_OpenSLES|Android-x86">
+      <Configuration>Debug_OpenSLES</Configuration>
       <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_SDL|Android-x86">
@@ -131,6 +147,18 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS_OpenAL|Win32">
       <Configuration>ReleaseS_OpenAL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_OpenSLES|Android">
+      <Configuration>ReleaseS_OpenSLES</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_OpenSLES|Android-x86">
+      <Configuration>ReleaseS_OpenSLES</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS_OpenSLES|Win32">
+      <Configuration>ReleaseS_OpenSLES</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseS_SDL|Android">
@@ -189,6 +217,14 @@
       <Configuration>Debug_OpenAL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_OpenSLES|Android">
+      <Configuration>Debug_OpenSLES</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_OpenSLES|Win32">
+      <Configuration>Debug_OpenSLES</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release_DirectSound|Android-x86">
       <Configuration>Release_DirectSound</Configuration>
       <Platform>Android-x86</Platform>
@@ -199,6 +235,10 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_OpenAL|Android-x86">
       <Configuration>Release_OpenAL</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_OpenSLES|Android-x86">
+      <Configuration>Release_OpenSLES</Configuration>
       <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_SDL|Android-x86">
@@ -223,6 +263,14 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release_OpenAL|Win32">
       <Configuration>Release_OpenAL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_OpenSLES|Android">
+      <Configuration>Release_OpenSLES</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_OpenSLES|Win32">
+      <Configuration>Release_OpenSLES</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_SDL|Android">
@@ -297,6 +345,18 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenSLES|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenSLES|Android'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_OpenSLES|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -345,6 +405,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenAL|Android-x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenSLES|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenSLES|Android'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_OpenSLES|Android-x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_SDL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
@@ -388,6 +457,15 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenAL|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenSLES|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenSLES|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_OpenSLES|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS_SDL|Android'" Label="Configuration">
@@ -447,6 +525,18 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_OpenSLES|Android'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_OpenSLES|Android-x86'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_OpenSLES|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS_SDL|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -473,6 +563,8 @@
     <ClCompile Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.cpp" />
     <ClCompile Include="..\..\src\audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
     <ClCompile Include="..\..\src\audiosystems\OpenAL\OpenAL_Player.cpp" />
+    <ClCompile Include="..\..\src\audiosystems\OpenSLES\OpenSLES_AudioManager.cpp" />
+    <ClCompile Include="..\..\src\audiosystems\OpenSLES\OpenSLES_Player.cpp" />
     <ClCompile Include="..\..\src\audiosystems\SDL\SDL_AudioManager.cpp" />
     <ClCompile Include="..\..\src\audiosystems\SDL\SDL_Player.cpp" />
     <ClCompile Include="..\..\src\audiosources\OGG_Source.cpp" />
@@ -495,6 +587,8 @@
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.h" />
     <ClInclude Include="..\..\src\audiosystems\OpenAL\OpenAL_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\OpenAL\OpenAL_Player.h" />
+    <ClInclude Include="..\..\src\audiosystems\OpenSLES\OpenSLES_AudioManager.h" />
+    <ClInclude Include="..\..\src\audiosystems\OpenSLES\OpenSLES_Player.h" />
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_Player.h" />
     <ClInclude Include="..\..\src\audiosources\OGG_Source.h" />

@@ -4,7 +4,7 @@
     <ClCompile>
       <PreprocessorDefinitions>_FORMAT_FLAC;_FORMAT_OGG;_FORMAT_WAV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>XAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-	  <AdditionalIncludeDirectories>../../include/xal;../../src/audiosystems/OpenAL;../../src/audiosystems/SDL;../../src/audiosystems/DirectSound;../../src/audiosystems/NoAudio;../../src/audiosources;../../../hltypes/include;../../lib/ogg/include;../../lib/vorbis/include;../../lib/openal-soft-android/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+	  <AdditionalIncludeDirectories>../../include/xal;../../src/audiosystems/OpenAL;../../src/audiosystems/SDL;../../src/audiosystems/DirectSound;../../src/audiosystems/OpenSLES;../../src/audiosystems/NoAudio;../../src/audiosources;../../../hltypes/include;../../lib/ogg/include;../../lib/vorbis/include;../../lib/openal-soft-android/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
