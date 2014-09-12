@@ -48,6 +48,8 @@ namespace xal
 		unsigned int getSamplePosition();
 		Category* getCategory();
 
+		void _prepareBuffer(); // TEMP until full async loading is implemeted
+		
 		/// @return True if the Sound is playing.
 		/// @note This is false if the Sound is fading out even tough it is still "playing".
 		bool isPlaying();
