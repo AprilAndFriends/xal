@@ -15,6 +15,11 @@
 
 namespace xal
 {
+	void Player::_prepareBuffer() // TEMP until full async loading is implemeted
+	{
+		this->buffer->prepare();
+	}
+	
 	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false), looping(false), fadeSpeed(0.0f),
 		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f)
 	{
