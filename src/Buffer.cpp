@@ -144,16 +144,13 @@ namespace xal
 
 	void Buffer::prepare()
 	{
-		this->loadMutex.lock();
 		if (this->loaded)
 		{
-			this->loadMutex.unlock();
 			return;
 		}
 		if (!xal::mgr->isEnabled())
 		{
 			this->loaded = true;
-			this->loadMutex.unlock();
 			return;
 		}
 		if (!this->isStreamed())
@@ -170,7 +167,6 @@ namespace xal
 			this->source->load(this->stream);
 			this->source->close();
 			this->dataSize = xal::mgr->_convertStream(this, &this->stream, &this->streamSize, this->dataSize);
-			this->loadMutex.unlock();
 			return;
 		}
 		if (!this->source->isOpen())
@@ -178,7 +174,6 @@ namespace xal
 			this->source->open();
 			this->_tryLoadMetaData();
 		}
-		this->loadMutex.unlock();
 	}
 
 	int Buffer::load(bool looping, int size)
@@ -237,11 +232,9 @@ namespace xal
 		{
 			if (this->stream != NULL)
 			{
-				this->loadMutex.lock();
 				delete [] this->stream;
 				this->stream = NULL;
 				this->streamSize = 0;
-				this->loadMutex.unlock();
 			}
 			this->loaded = false;
 		}
@@ -331,11 +324,9 @@ namespace xal
 			hlog::debug(xal::logTag, "Clearing memory for: " + this->filename);
 			if (this->stream != NULL)
 			{
-				this->loadMutex.lock();
 				delete [] this->stream;
 				this->stream = NULL;
 				this->streamSize = 0;
-				this->loadMutex.unlock();
 			}
 			this->source->close();
 			this->loaded = false;

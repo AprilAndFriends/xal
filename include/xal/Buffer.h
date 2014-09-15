@@ -129,9 +129,6 @@ namespace xal
 		/// @brief How much time has passed since the last access of this buffer (in seconds).
 		float idleTime;
 		
-		/// TEMP until full async loading is implemented
-		hmutex loadMutex;
-
 		/// @brief Updates the Buffer.
 		/// @param[in] timeDelta Time passed since the last update.
 		void _update(float timeDelta);
