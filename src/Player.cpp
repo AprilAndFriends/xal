@@ -6,12 +6,14 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 
 #include "Buffer.h"
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
+#include "xal.h"
 
 namespace xal
 {
@@ -240,7 +242,6 @@ namespace xal
 				if (!this->paused)
 				{
 					this->looping = looping;
-					this->paused = true;
 				}
 			}
 			return;
@@ -295,6 +296,11 @@ namespace xal
 
 	void Player::_pause(float fadeTime)
 	{
+		if (!this->_systemIsPlaying() && !this->paused)
+		{
+			hlog::warn(xal::logTag, "Player cannot be paused, it's not playing: " + this->getName());
+			return;
+		}
 		this->paused = true;
 		this->_stopSound(fadeTime);
 	}
