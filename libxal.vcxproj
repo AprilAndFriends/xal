@@ -532,14 +532,6 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="lib\openal-soft-android\OpenAL32\libopenal.vcxproj">
-      <Project>{c4a17cd4-6b3c-495c-af61-961f8f86ea65}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="lib\tremor\win32\VS2012\libtremor\libtremor.vcxproj">
       <Project>{7a8e774e-dd94-43b8-8758-6f9f656cc8d2}</Project>
       <Private>false</Private>
