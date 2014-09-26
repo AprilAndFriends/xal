@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.21
 /// 
 /// @section LICENSE
 /// 
@@ -138,9 +138,21 @@ namespace xal
 	
 	bool Player::isPlaying()
 	{
-		return (!this->isFadingOut() && this->_systemIsPlaying());
+		if (this->isFadingOut())
+		{
+			return false;
+		}
+		xal::mgr->_lock();
+		bool result = this->_isPlaying();
+		xal::mgr->_unlock();
+		return result;
 	}
-	
+
+	bool Player::_isPlaying()
+	{
+		return (xal::mgr->asyncPlayers.contains(this) || this->_systemIsPlaying());
+	}
+
 	bool Player::isPaused()
 	{
 		return (this->paused && !this->isFading());
@@ -168,7 +180,7 @@ namespace xal
 
 	void Player::_update(float timeDelta)
 	{
-		if (this->_systemIsPlaying())
+		if (this->_isPlaying())
 		{
 			this->buffer->keepLoaded();
 			if (this->sound->isStreamed())
@@ -214,6 +226,13 @@ namespace xal
 		xal::mgr->_unlock();
 	}
 
+	void Player::playAsync(float fadeTime, bool looping)
+	{
+		xal::mgr->_lock();
+		this->_playAsync(fadeTime, looping);
+		xal::mgr->_unlock();
+	}
+
 	void Player::stop(float fadeTime)
 	{
 		xal::mgr->_lock();
@@ -233,6 +252,10 @@ namespace xal
 		if (!xal::mgr->isEnabled())
 		{
 			return;
+		}
+		if (xal::mgr->asyncPlayers.contains(this))
+		{
+			xal::mgr->asyncPlayers -= this;
 		}
 		if (xal::mgr->isSuspended())
 		{
@@ -255,7 +278,7 @@ namespace xal
 			this->looping = looping;
 		}
 		bool alreadyFading = this->isFading();
-		if (!alreadyFading && !this->_systemIsPlaying())
+		if (!alreadyFading && !this->_isPlaying())
 		{
 			this->buffer->prepare();
 			this->_systemPrepareBuffer();
@@ -282,8 +305,37 @@ namespace xal
 		this->paused = false;
 	}
 
+	void Player::_playAsync(float fadeTime, bool looping)
+	{
+		if (!xal::mgr->isEnabled())
+		{
+			return;
+		}
+		if (!this->paused)
+		{
+			this->looping = looping;
+		}
+		if (fadeTime > 0.0f)
+		{
+			this->fadeSpeed = 1.0f / fadeTime;
+		}
+		else
+		{
+			this->fadeTime = 1.0f;
+			this->fadeSpeed = 0.0f;
+		}
+		if (!xal::mgr->asyncPlayers.contains(this))
+		{
+			xal::mgr->asyncPlayers += this;
+		}
+	}
+
 	void Player::_stop(float fadeTime)
 	{
+		if (xal::mgr->asyncPlayers.contains(this))
+		{
+			xal::mgr->asyncPlayers -= this;
+		}
 		if (xal::mgr->isSuspended() && xal::mgr->suspendedPlayers.contains(this))
 		{
 			xal::mgr->suspendedPlayers -= this;
@@ -296,7 +348,11 @@ namespace xal
 
 	void Player::_pause(float fadeTime)
 	{
-		if (!this->_systemIsPlaying() && !this->paused)
+		if (xal::mgr->asyncPlayers.contains(this))
+		{
+			xal::mgr->asyncPlayers -= this;
+		}
+		if (!this->_isPlaying() && !this->paused)
 		{
 			hlog::warn(xal::logTag, "Player cannot be paused, it's not playing: " + this->getName());
 			return;
