@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.21
 /// 
 /// @section LICENSE
 /// 
@@ -97,10 +97,6 @@ namespace xal
 		void setGlobalGain(float value);
 		harray<Player*> getPlayers();
 
-		/// @brief Threaded update call.
-		/// @param[in] thread The Thread instance calling.
-		/// @note This is used for threaded update only and should never be called from the outside.
-		static void update(hthread* thread);
 		/// @brief Updates all audio processing.
 		/// @param[in] timeDelta Time since the call of this method in seconds.
 		/// @note timeDelta is usually the time since the last frame in games. You don't have to call this if threaded update is enabled.
@@ -171,6 +167,13 @@ namespace xal
 		/// @param[in] gain The gain of the Sound.
 		/// @note If the audio manager is suspended, this does nothing.
 		void play(chstr soundName, float fadeTime = 0.0f, bool looping = false, float gain = 1.0f);
+		/// @brief Plays a Sound in a fire-and-forget fashion asynchronously.
+		/// @param[in] soundName Name of the Sound.
+		/// @param[in] fadeTime Time how long to fade in the Sound.
+		/// @param[in] looping Whether the Sound should be looped.
+		/// @param[in] gain The gain of the Sound.
+		/// @note If the audio manager is suspended, this does nothing.
+		void playAsync(chstr soundName, float fadeTime = 0.0f, bool looping = false, float gain = 1.0f);
 		/// @brief Stops all Sound instances that were played in a fire-and-forget fashion.
 		/// @param[in] soundName Name of the Sound.
 		/// @param[in] fadeTime Time how long to fade out the Sounds.
@@ -271,6 +274,8 @@ namespace xal
 		harray<Player*> managedPlayers;
 		/// @brief List of Player instances that need to resume once the audio system exits suspension.
 		harray<Player*> suspendedPlayers;
+		/// @brief List of Player instances that have been started asynchronously.
+		harray<Player*> asyncPlayers;
 		/// @brief List of loaded Sounds.
 		hmap<hstr, Sound*> sounds;
 		/// @brief List Buffer instances.
@@ -345,6 +350,8 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _play(chstr soundName, float fadeTime, bool looping, float gain);
 		/// @note This method is not thread-safe and is for internal usage only.
+		void _playAsync(chstr soundName, float fadeTime, bool looping, float gain);
+		/// @note This method is not thread-safe and is for internal usage only.
 		void _stop(chstr soundName, float fadeTime);
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _stopFirst(chstr soundName, float fadeTime);
@@ -383,6 +390,10 @@ namespace xal
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.
 		inline virtual void _resumeSystem() { }
+
+		/// @brief Threaded update call.
+		/// @param[in] thread The Thread instance calling.
+		static void _update(hthread* thread);
 
 	};
 	

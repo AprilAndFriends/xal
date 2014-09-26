@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.21
 /// 
 /// @section LICENSE
 /// 
@@ -75,7 +75,7 @@ namespace xal
 #endif
 		if (threaded)
 		{
-			this->thread = new hthread(&AudioManager::update);
+			this->thread = new hthread(&AudioManager::_update);
 		}
 	}
 
@@ -175,7 +175,7 @@ namespace xal
 		return (this->players - this->managedPlayers);
 	}
 
-	void AudioManager::update(hthread* thread)
+	void AudioManager::_update(hthread* thread)
 	{
 		while (xal::mgr->thread != NULL && xal::mgr->threadRunning)
 		{
@@ -185,7 +185,7 @@ namespace xal
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
-	
+
 	void AudioManager::update(float timeDelta)
 	{
 		this->_lock();
@@ -204,6 +204,13 @@ namespace xal
 			{
 				(*it)->_update(timeDelta);
 			}
+			// creating a copy, because _play alters asyncPlayers
+			harray<Player*> asyncPlayers = this->asyncPlayers;
+			this->asyncPlayers.clear();
+			foreach (Player*, it, asyncPlayers)
+			{
+				(*it)->_play((*it)->fadeTime, (*it)->looping);
+			}
 			// creating a copy, because _destroyManagedPlayer alters managedPlayers
 			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
@@ -219,7 +226,7 @@ namespace xal
 			}
 		}
 	}
-	
+
 	void AudioManager::_lock()
 	{
 		if (this->isThreaded())
@@ -227,7 +234,7 @@ namespace xal
 			this->mutex.lock();
 		}
 	}
-	
+
 	void AudioManager::_unlock()
 	{
 		if (this->isThreaded())
@@ -471,12 +478,8 @@ namespace xal
 
 	void AudioManager::_destroyPlayer(Player* player)
 	{
-		player->_stop();
+		player->_stop(); // removes players from asyncPlayers and suspendedPlayers as well
 		this->players -= player;
-		if (this->suspended && this->suspendedPlayers.contains(player))
-		{
-			this->suspendedPlayers -= player;
-		}
 		delete player;
 	}
 
@@ -559,6 +562,24 @@ namespace xal
 		Player* player = this->_createManagedPlayer(soundName);
 		player->_setGain(gain);
 		player->_play(fadeTime, looping);
+	}
+
+	void AudioManager::playAsync(chstr soundName, float fadeTime, bool looping, float gain)
+	{
+		this->_lock();
+		this->_playAsync(soundName, fadeTime, looping, gain);
+		this->_unlock();
+	}
+
+	void AudioManager::_playAsync(chstr soundName, float fadeTime, bool looping, float gain)
+	{
+		if (this->suspended)
+		{
+			return;
+		}
+		Player* player = this->_createManagedPlayer(soundName);
+		player->_setGain(gain);
+		player->_playAsync(fadeTime, looping);
 	}
 
 	void AudioManager::stop(chstr soundName, float fadeTime)

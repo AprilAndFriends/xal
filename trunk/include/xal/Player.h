@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.21
 /// 
 /// @section LICENSE
 /// 
@@ -64,6 +64,11 @@ namespace xal
 		/// @param[in] looping Whether the Sound should be looped once it is done playing.
 		/// @note Ignored if the Sound is already playing. Prevents pause/stop without pausing/stopping the Sound if called during fade-out.
 		void play(float fadeTime = 0.0f, bool looping = false);
+		/// @brief Starts playing the Sound asynchronously.
+		/// @param[in] fadetime How long to fade-in the Sound.
+		/// @param[in] looping Whether the Sound should be looped once it is done playing.
+		/// @note Ignored if the Sound is already playing. Prevents pause/stop without pausing/stopping the Sound if called during fade-out.
+		void playAsync(float fadeTime = 0.0f, bool looping = false);
 		/// @brief Stops the Sound completely.
 		/// @param[in] fadetime How long to fade-out the Sound.
 		void stop(float fadeTime = 0.0f);
@@ -116,6 +121,10 @@ namespace xal
 		float _getPitch();
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _setPitch(float value);
+		/// @brief Returns whether the Sound is playing or is asynchronously queued for playing.
+		/// @retunr True if the Sound is playing or is asynchronously queued for playing.
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isPlaying();
 
 		/// @brief Updates the Player.
 		/// @param[in] timeDelta Time since the last update.
@@ -124,6 +133,8 @@ namespace xal
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _play(float fadeTime = 0.0f, bool looping = false);
+		/// @note This method is not thread-safe and is for internal usage only.
+		void _playAsync(float fadeTime = 0.0f, bool looping = false);
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _stop(float fadeTime = 0.0f);
 		/// @note This method is not thread-safe and is for internal usage only.
