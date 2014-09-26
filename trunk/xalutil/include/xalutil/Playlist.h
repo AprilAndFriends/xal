@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.02
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -57,14 +57,14 @@ namespace xal
 		void queueSounds(harray<hstr> names);
 		
 		/// @brief Starts playing the Playlist.
-		/// @param[in] fadetime How long to fade-in the Playlist.
+		/// @param[in] fadeTime How long to fade-in the Playlist.
 		/// @note Ignored if the Playlist is already playing.
 		void play(float fadeTime = 0.0f);
 		/// @brief Stops the Playlist completely.
-		/// @param[in] fadetime How long to fade-out the Playlist.
+		/// @param[in] fadeTime How long to fade-out the Playlist.
 		void stop(float fadeTime = 0.0f);
 		/// @brief Pauses the Playlist completely.
-		/// @param[in] fadetime How long to fade-out the Playlist.
+		/// @param[in] fadeTime How long to fade-out the Playlist.
 		/// @note Unpause the Playlist with play().
 		/// @see play
 		void pause(float fadeTime = 0.0f);

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -34,7 +34,7 @@ namespace xal
 		}
 		return true;
 	}
-	
+
 	void MultiPlaylist::setEnabled(bool value)
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -42,7 +42,7 @@ namespace xal
 			(*it)->setEnabled(value);
 		}
 	}
-	
+
 	bool MultiPlaylist::isPlaying()
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -54,7 +54,7 @@ namespace xal
 		}
 		return false;
 	}
-	
+
 	bool MultiPlaylist::isPaused()
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -66,7 +66,7 @@ namespace xal
 		}
 		return true;
 	}
-	
+
 	void MultiPlaylist::registerPlaylist(Playlist* playlist)
 	{
 		if (this->playlists.contains(playlist))
@@ -84,7 +84,7 @@ namespace xal
 		}
 		this->playlists -= playlist;
 	}
-		
+
 	void MultiPlaylist::clear()
 	{
 		this->stop();
@@ -94,7 +94,7 @@ namespace xal
 		}
 		this->playlists.clear();
 	}
-	
+
 	void MultiPlaylist::update()
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -102,7 +102,7 @@ namespace xal
 			(*it)->update();
 		}
 	}
-		
+
 	void MultiPlaylist::play(float fadeTime)
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -110,7 +110,7 @@ namespace xal
 			(*it)->play(fadeTime);
 		}
 	}
-	
+
 	void MultiPlaylist::stop(float fadeTime)
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -118,7 +118,7 @@ namespace xal
 			(*it)->stop(fadeTime);
 		}
 	}
-	
+
 	void MultiPlaylist::pause(float fadeTime)
 	{
 		foreach (Playlist*, it, this->playlists)
@@ -142,5 +142,5 @@ namespace xal
 			(*it)->reset();
 		}
 	}
-	
+
 }
