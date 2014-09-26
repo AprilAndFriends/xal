@@ -35,65 +35,53 @@
 #include "NoAudio_AudioManager.h"
 #include "xal.h"
 
-#ifdef _COREAUDIO
-#include "CoreAudio_AudioManager.h"
-//#include "AVFoundation_AudioManager.h" // TODO: iOS maybe? probably leagacy code
-#endif
-
 #ifdef _WIN32
 #ifndef _WINRT
 	#ifdef _DIRECTSOUND
-	#define AS_INTERNAL_DEFAULT AS_DIRECTSOUND
+		#define AS_INTERNAL_DEFAULT AS_DIRECTSOUND
 	#elif defined(_SDL)
-	#define AS_INTERNAL_DEFAULT AS_SDL
+		#define AS_INTERNAL_DEFAULT AS_SDL
 	#elif defined(_OPENAL)
-	#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #else
 	#ifdef _XAUDIO2
-	#define AS_INTERNAL_DEFAULT AS_XAUDIO2
+		#define AS_INTERNAL_DEFAULT AS_XAUDIO2
 	#else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #endif
 #elif defined(__APPLE__) && !defined(_IOS)
-	#ifdef _COREAUDIO
-	#define AS_INTERNAL_DEFAULT AS_COREAUDIO
-	#elif defined(_SDL)
-	#define AS_INTERNAL_DEFAULT AS_SDL
+	#ifdef _SDL
+		#define AS_INTERNAL_DEFAULT AS_SDL
 	#elif defined(_OPENAL)
-	#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #elif defined(__APPLE__) && defined(_IOS)
-	#ifdef _COREAUDIO
-	#define AS_INTERNAL_DEFAULT AS_COREAUDIO
-	#elif defined(_OPENAL)
-	#define AS_INTERNAL_DEFAULT AS_OPENAL
-	#elif defined(_AVFOUNDATION)
-	#define AS_INTERNAL_DEFAULT AS_AVFOUNDATION
+	#ifdef _OPENAL
+		#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
-	#endif
-	//AS_AVFOUNDATION
-#elif defined(_UNIX)
-	#ifdef _SDL
-	#define AS_INTERNAL_DEFAULT AS_SDL
-	#elif defined(_OPENAL)
-	#define AS_INTERNAL_DEFAULT AS_OPENAL
-	#else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #elif defined(_ANDROID)
 	#ifdef _OPENSLES
-	#define AS_INTERNAL_DEFAULT AS_OPENSLES
+		#define AS_INTERNAL_DEFAULT AS_OPENSLES
 	#elif defined(_OPENAL)
-	#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AS_OPENAL
 	#else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AS_DISABLED
+	#endif
+#elif defined(_UNIX)
+	#ifdef _SDL
+		#define AS_INTERNAL_DEFAULT AS_SDL
+	#elif defined(_OPENAL)
+		#define AS_INTERNAL_DEFAULT AS_OPENAL
+	#else
+		#define AS_INTERNAL_DEFAULT AS_DISABLED
 	#endif
 #else
 	#define AS_INTERNAL_DEFAULT AS_DISABLED
@@ -144,20 +132,6 @@ namespace xal
 		if (type == AS_XAUDIO2)
 		{
 			xal::mgr = new XAudio2_AudioManager(backendId, threaded, updateTime, deviceName);
-		}
-#endif
-/*
-#ifdef _IOS
-		if (type == AS_AVFOUNDATION)
-		{
-			xal::mgr = new AVFoundation_AudioManager(backendId, threaded, updateTime, deviceName);
-		}
-#endif
-*/
-#ifdef _COREAUDIO
-		if (type == AS_COREAUDIO)
-		{
-			xal::mgr = new CoreAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 		if (xal::mgr == NULL)

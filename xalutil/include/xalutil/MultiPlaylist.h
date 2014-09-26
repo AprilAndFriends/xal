@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.02
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -52,14 +52,14 @@ namespace xal
 		void clear();
 		
 		/// @brief Starts playing the MultiPlaylist.
-		/// @param[in] fadetime How long to fade-in the MultiPlaylist.
+		/// @param[in] fadeTime How long to fade-in the MultiPlaylist.
 		/// @note Ignored if the MultiPlaylist is already playing.
 		void play(float fadeTime = 0.0f);
 		/// @brief Stops the MultiPlaylist completely.
-		/// @param[in] fadetime How long to fade-out the MultiPlaylist.
+		/// @param[in] fadeTime How long to fade-out the MultiPlaylist.
 		void stop(float fadeTime = 0.0f);
 		/// @brief Pauses the MultiPlaylist completely.
-		/// @param[in] fadetime How long to fade-out the MultiPlaylist.
+		/// @param[in] fadeTime How long to fade-out the MultiPlaylist.
 		/// @note Unpause the MultiPlaylist with play().
 		/// @see play
 		void pause(float fadeTime = 0.0f);
