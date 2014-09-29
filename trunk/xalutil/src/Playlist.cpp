@@ -28,7 +28,7 @@ namespace xal
 
 	bool Playlist::isPaused()
 	{
-		return (is_in_range(this->index, 0, this->players.size()) && this->players[this->index]->isPaused());
+		return (is_between_ie(this->index, 0, this->players.size()) && this->players[this->index]->isPaused());
 	}
 	
 	harray<hstr> Playlist::getSoundNames()
