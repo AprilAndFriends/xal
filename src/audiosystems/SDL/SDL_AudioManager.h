@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -25,10 +25,10 @@
 
 namespace xal
 {
-	class Buffer;
 	class SDL_Player;
-	class Sound;
 	class Player;
+	class Sound;
+	class Source;
 
 	class xalExport SDL_AudioManager : public AudioManager
 	{
@@ -51,7 +51,7 @@ namespace xal
 
 		static void _mixAudio(void* unused, unsigned char* stream, int length);
 
-		int _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize);
+		int _convertStream(Source* source, unsigned char** stream, int *streamSize, int dataSize);
 		
 		// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
 		void _lock();

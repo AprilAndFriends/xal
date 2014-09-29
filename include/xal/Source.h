@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -31,13 +31,15 @@ namespace xal
 		/// @brief Constructor.
 		/// @param[in] filename Filename of the Source.
 		/// @param[in] category The Category where the overlying sound was registered.
-		Source(chstr filename, Category* category);
+		Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		/// @brief Destructor.
 		virtual ~Source();
 
 		HL_DEFINE_GET(hstr, filename, Filename);
-		HL_DEFINE_GET(SourceMode, mode, Mode);
+		HL_DEFINE_GET(SourceMode, sourceMode, SourceMode);
+		HL_DEFINE_GET(BufferMode, bufferMode, BufferMode);
 		HL_DEFINE_IS(streamOpen, Open);
+		HL_DEFINE_IS(decoded, Decoded);
 		HL_DEFINE_GET(int, size, Size);
 		HL_DEFINE_GET(int, channels, Channels);
 		HL_DEFINE_GET(int, samplingRate, SamplingRate);
@@ -46,7 +48,10 @@ namespace xal
 
 		/// @brief Opens the Source for reading.
 		/// @return True if Source was opened successfully.
-		virtual bool open();
+		bool open();
+		/// @brief Decodes the Source's contents.
+		/// @return True if Source was decoded successfully.
+		inline virtual bool decode();
 		/// @brief Closes the Source.
 		virtual void close();
 		/// @brief Rewinds the Source's audio data to the beginning.
@@ -65,9 +70,13 @@ namespace xal
 		/// @brief Filename of the Source.
 		hstr filename;
 		/// @brief How to handle the Source.
-		SourceMode mode;
+		SourceMode sourceMode;
+		/// @brief How to handle the overlying Buffer.
+		BufferMode bufferMode;
 		/// @brief Whether the underlying stream is open.
 		bool streamOpen;
+		/// @brief Whether the underlying stream is decoded.
+		bool decoded;
 		/// @brief Byte-size of the audio data.
 		int size;
 		/// @brief Number of channels in the audio data.

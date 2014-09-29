@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -23,15 +23,13 @@
 
 namespace xal
 {
-	class Category;
-
 	class xalExport WAV_Source : public Source
 	{
 	public:
-		WAV_Source(chstr filename, Category* category);
+		WAV_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		~WAV_Source();
 
-		bool open();
+		bool decode();
 		void rewind();
 		bool load(unsigned char* output);
 		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);

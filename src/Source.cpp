@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -12,17 +12,17 @@
 #include <hltypes/hresource.h>
 
 #include "AudioManager.h"
-#include "Category.h"
 #include "Source.h"
 #include "xal.h"
 
 namespace xal
 {
-	Source::Source(chstr filename, Category* category) : streamOpen(false), size(0), channels(2),
-		samplingRate(44100), bitsPerSample(16), duration(0.0f), stream(NULL)
+	Source::Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : streamOpen(false), decoded(false),
+		size(0), channels(2), samplingRate(44100), bitsPerSample(16), duration(0.0f), stream(NULL)
 	{
 		this->filename = filename;
-		this->mode = category->getSourceMode();
+		this->sourceMode = sourceMode;
+		this->bufferMode = bufferMode;
 	}
 
 	Source::~Source()
@@ -38,39 +38,50 @@ namespace xal
 		if (!hresource::exists(this->filename))
 		{
 			hlog::error(xal::logTag, "Unable to open: " + this->filename);
-			return false;
+			this->close();
+			return this->streamOpen;
 		}
 		if (this->stream == NULL)
 		{
 			hresource* resource = new hresource(this->filename);
-			switch (this->mode)
+			if (this->sourceMode == RAM || this->bufferMode == ASYNC)
 			{
-			case DISK:
-				this->stream = resource;
-				break;
-			case RAM:
 				this->stream = new hstream();
 				this->stream->write_raw(*resource);
 				delete resource;
 				this->stream->rewind();
-				break;
+			}
+			else // if sourceMode == DISK
+			{
+				this->stream = resource;
 			}
 		}
 		else
 		{
 			this->stream->rewind();
 		}
-		return true;
+		this->streamOpen = true;
+		return this->streamOpen;
+	}
+
+	bool Source::decode()
+	{
+		if (this->streamOpen)
+		{
+			this->decoded = true;
+		}
+		return this->decoded;
 	}
 	
 	void Source::close()
 	{
 		if (this->streamOpen)
 		{
-			if (this->mode == DISK)
+			if (this->sourceMode == DISK)
 			{
 				delete this->stream;
 				this->stream = NULL;
+				this->decoded = false;
 			}
 			this->streamOpen = false;
 		}
@@ -92,6 +103,11 @@ namespace xal
 			hlog::error(xal::logTag, "File not open: " + this->filename);
 			return false;
 		}
+		if (!this->decoded)
+		{
+			hlog::error(xal::logTag, "Stream not decoded: " + this->filename);
+			return false;
+		}
 		return true;
 	}
 	
@@ -100,6 +116,11 @@ namespace xal
 		if (!this->streamOpen)
 		{
 			hlog::error(xal::logTag, "File not open: " + this->filename);
+			return 0;
+		}
+		if (!this->decoded)
+		{
+			hlog::error(xal::logTag, "Stream not decoded: " + this->filename);
 			return 0;
 		}
 		return 1; // means that "something" was read

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.03
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -65,7 +65,7 @@ int main(Platform::Array<Platform::String^>^ args)
 	xal::mgr->createSound(RESOURCE_PATH SOUND_NAME_NORMAL ".ogg", CATEGORY_NORMAL);
 	// create streamed sound using no prefix (forces usage of the ogg files)
 	xal::mgr->createSound(RESOURCE_PATH "streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
-	xal::Player* p;
+	xal::Player* p = NULL;
 
 	// create a sound player for manual control
 	p = xal::mgr->createPlayer(SOUND_NORMAL);

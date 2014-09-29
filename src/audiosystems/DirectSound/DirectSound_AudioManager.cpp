@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -77,7 +77,7 @@ namespace xal
 		return new DirectSound_Player(sound);
 	}
 
-	Source* DirectSound_AudioManager::_createSource(chstr filename, Category* category, Format format)
+	Source* DirectSound_AudioManager::_createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format)
 	{
 		/*
 		Source* source;
@@ -85,16 +85,16 @@ namespace xal
 		{
 #ifdef _FORMAT_WAV
 		case WAV:
-			source = new DirectSound_WAV_Source(filename, category);
+			source = new DirectSound_WAV_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 		default:
-			source = AudioManager::_createSource(filename, category, format);
+			source = AudioManager::_createSource(filename, sourceMode, bufferMode, format);
 			break;
 		}
 		return source;
 		*/
-		return AudioManager::_createSource(filename, category, format);
+		return AudioManager::_createSource(filename, sourceMode, bufferMode, format);
 	}
 
 }

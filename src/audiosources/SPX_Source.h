@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -21,15 +21,13 @@
 
 namespace xal
 {
-	class Category;
-
 	class xalExport SPX_Source : public Source
 	{
 	public:
-		SPX_Source(chstr filename, Category* category);
+		SPX_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		~SPX_Source();
 
-		bool load(unsigned char* output);
+		bool decode(unsigned char* output);
 
 	};
 

@@ -570,6 +570,7 @@
     <ClCompile Include="..\..\src\audiosources\OGG_Source.cpp" />
     <ClCompile Include="..\..\src\AudioManager.cpp" />
     <ClCompile Include="..\..\src\Buffer.cpp" />
+    <ClCompile Include="..\..\src\BufferAsync.cpp" />
     <ClCompile Include="..\..\src\Category.cpp" />
     <ClCompile Include="..\..\src\Source.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
@@ -592,6 +593,7 @@
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_Player.h" />
     <ClInclude Include="..\..\src\audiosources\OGG_Source.h" />
+    <ClInclude Include="..\..\src\BufferAsync.h" />
     <ClInclude Include="..\..\include\xal\Buffer.h" />
     <ClInclude Include="..\..\include\xal\Source.h" />
     <ClInclude Include="..\..\include\xal\Player.h" />

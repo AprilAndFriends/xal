@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -19,7 +19,7 @@
 
 namespace xal
 {
-	SPX_Source::SPX_Source(chstr filename, Category* category) : Source(filename, category)
+	SPX_Source::SPX_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
 	{
 	}
 

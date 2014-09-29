@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -17,7 +17,7 @@
 
 namespace xal
 {
-	WAV_Source::WAV_Source(chstr filename, Category* category) : Source(filename, category)
+	WAV_Source::WAV_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
 	{
 	}
 
@@ -26,12 +26,15 @@ namespace xal
 		this->close();
 	}
 
-	bool WAV_Source::open()
+	bool WAV_Source::decode()
 	{
-		this->streamOpen = Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
+		}
+		if (this->decoded)
+		{
+			return true;
 		}
 		unsigned char buffer[5] = {0};
 		this->stream->read_raw(buffer, 4); // RIFF
@@ -90,7 +93,7 @@ namespace xal
 		}
 		this->duration = (float)this->size / (this->samplingRate * this->channels * this->bitsPerSample / 8);
 		this->_findData();
-		return this->streamOpen;
+		return Source::decode();
 	}
 
 	void WAV_Source::rewind()

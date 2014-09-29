@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.21
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -30,9 +30,6 @@ namespace xal
 	{
 	public:
 		friend class AudioManager;
-
-		/// @brief Destructor.
-		virtual ~Player();
 
 		float getGain();
 		void setGain(float value);
@@ -108,10 +105,16 @@ namespace xal
 		/// @brief How long this Player has been idle.
 		/// @note Used for memory cleaning.
 		float idleTime;
+		/// @brief Flag whether async playing was queued.
+		bool asyncPlayQueued;
+		/// @brief Mutex for access of async playing flag.
+		hmutex asyncPlayMutex;
 
 		/// @brief Constructor.
 		/// @param[in] sound The Sound to play.
 		Player(Sound* sound);
+		/// @brief Destructor.
+		virtual ~Player();
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		float _getGain();
@@ -125,6 +128,10 @@ namespace xal
 		/// @retunr True if the Sound is playing or is asynchronously queued for playing.
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isPlaying();
+		/// @brief Returns whether the Player is waiting to be played after an asynchronous buffer load.
+		/// @retunr True if the Player is waiting to be played after an asynchronous buffer load.
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isAsyncPlayQueued();
 
 		/// @brief Updates the Player.
 		/// @param[in] timeDelta Time since the last update.

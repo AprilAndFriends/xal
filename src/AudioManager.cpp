@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.21
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -20,6 +20,7 @@
 
 #include "AudioManager.h"
 #include "Buffer.h"
+#include "BufferAsync.h"
 #include "Category.h"
 #include "NoAudio_AudioManager.h"
 #include "Player.h"
@@ -204,13 +205,6 @@ namespace xal
 			{
 				(*it)->_update(timeDelta);
 			}
-			// creating a copy, because _play alters asyncPlayers
-			harray<Player*> asyncPlayers = this->asyncPlayers;
-			this->asyncPlayers.clear();
-			foreach (Player*, it, asyncPlayers)
-			{
-				(*it)->_play((*it)->fadeTime, (*it)->looping);
-			}
 			// creating a copy, because _destroyManagedPlayer alters managedPlayers
 			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
@@ -223,6 +217,15 @@ namespace xal
 			foreach (Buffer*, it, this->buffers)
 			{
 				(*it)->_update(timeDelta);
+			}
+			BufferAsync::update();
+			// creating a copy, because _play alters asyncPlayers
+			foreach (Player*, it, this->players)
+			{
+				if ((*it)->_isAsyncPlayQueued())
+				{
+					(*it)->_play((*it)->fadeTime, (*it)->looping);
+				}
 			}
 		}
 	}
@@ -478,7 +481,7 @@ namespace xal
 
 	void AudioManager::_destroyPlayer(Player* player)
 	{
-		player->_stop(); // removes players from asyncPlayers and suspendedPlayers as well
+		player->_stop(); // removes players from suspendedPlayers as well
 		this->players -= player;
 		delete player;
 	}
@@ -509,38 +512,38 @@ namespace xal
 		delete buffer;
 	}
 
-	Source* AudioManager::_createSource(chstr filename, Category* category, Format format)
+	Source* AudioManager::_createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format)
 	{
 		Source* source;
 		switch (format)
 		{
 #ifdef _FORMAT_FLAC
 		case FLAC:
-			source = new FLAC_Source(filename, category);
+			source = new FLAC_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 #ifdef _FORMAT_M4A
 		case M4A:
-			source = new M4A_Source(filename, category);
+			source = new M4A_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 #ifdef _FORMAT_OGG
 		case OGG:
-			source = new OGG_Source(filename, category);
+			source = new OGG_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 #ifdef _FORMAT_SPX
 		case SPX:
-			source = new SPX_Source(filename, category);
+			source = new SPX_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 #ifdef _FORMAT_WAV
 		case WAV:
-			source = new WAV_Source(filename, category);
+			source = new WAV_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 		default:
-			source = new Source(filename, category);
+			source = new Source(filename, sourceMode, bufferMode);
 			break;
 		}
 		return source;
