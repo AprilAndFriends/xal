@@ -13,6 +13,7 @@
 #ifndef XAL_PLAYER_H
 #define XAL_PLAYER_H
 
+#include <hltypes/hmutex.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
