@@ -366,7 +366,7 @@ namespace xal
 		int result = 0;
 		if (this->getFormat() != UNKNOWN)
 		{
-			Source* source = xal::mgr->_createSource(this->filename, SourceMode::DISK, BufferMode::FULL, this->getFormat());
+			Source* source = xal::mgr->_createSource(this->filename, xal::DISK, xal::FULL, this->getFormat());
 			source->open();
 			source->decode();
 			result = source->getSize();

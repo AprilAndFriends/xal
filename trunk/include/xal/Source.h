@@ -51,7 +51,7 @@ namespace xal
 		bool open();
 		/// @brief Decodes the Source's contents.
 		/// @return True if Source was decoded successfully.
-		inline virtual bool decode();
+		virtual bool decode();
 		/// @brief Closes the Source.
 		virtual void close();
 		/// @brief Rewinds the Source's audio data to the beginning.
