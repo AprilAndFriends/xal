@@ -68,6 +68,9 @@
     <ClCompile Include="..\..\src\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\BufferAsync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\Category.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -192,6 +195,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\audiosystems\OpenSLES\OpenSLES_Player.h">
       <Filter>Header Files\audiosystems\OpenSLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BufferAsync.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

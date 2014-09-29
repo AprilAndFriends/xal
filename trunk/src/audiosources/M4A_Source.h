@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -30,7 +30,7 @@ namespace xal
 	class xalExport M4A_Source : public Source
 	{
 	public:
-		M4A_Source(chstr filename, Category* category);
+		M4A_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		~M4A_Source();
 
 		bool open();

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.21
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -18,7 +18,7 @@
 namespace xal
 {
 	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false), looping(false), fadeSpeed(0.0f),
-		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f)
+		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f), asyncPlayQueued(false)
 	{
 		this->sound = sound;
 		this->buffer = sound->getBuffer();
@@ -30,6 +30,9 @@ namespace xal
 
 	Player::~Player()
 	{
+		this->asyncPlayMutex.lock();
+		this->asyncPlayQueued = false;
+		this->asyncPlayMutex.unlock();
 		if (this->buffer->isStreamed()) // this buffer was created internally
 		{
 			xal::mgr->_destroyBuffer(this->buffer);
@@ -150,7 +153,14 @@ namespace xal
 
 	bool Player::_isPlaying()
 	{
-		return (xal::mgr->asyncPlayers.contains(this) || this->_systemIsPlaying());
+		if (this->_systemIsPlaying())
+		{
+			return true;
+		}
+		this->asyncPlayMutex.lock();
+		bool result = this->asyncPlayQueued;
+		this->asyncPlayMutex.unlock();
+		return result;
 	}
 
 	bool Player::isPaused()
@@ -176,6 +186,18 @@ namespace xal
 	Category* Player::getCategory()
 	{
 		return this->sound->getCategory();
+	}
+
+	bool Player::_isAsyncPlayQueued()
+	{
+		if (!this->buffer->isLoaded())
+		{
+			return false;
+		}
+		this->asyncPlayMutex.lock();
+		bool result = this->asyncPlayQueued;
+		this->asyncPlayMutex.unlock();
+		return result;
 	}
 
 	void Player::_update(float timeDelta)
@@ -253,10 +275,6 @@ namespace xal
 		{
 			return;
 		}
-		if (xal::mgr->asyncPlayers.contains(this))
-		{
-			xal::mgr->asyncPlayers -= this;
-		}
 		if (xal::mgr->isSuspended())
 		{
 			if (!xal::mgr->suspendedPlayers.contains(this))
@@ -278,7 +296,7 @@ namespace xal
 			this->looping = looping;
 		}
 		bool alreadyFading = this->isFading();
-		if (!alreadyFading && !this->_isPlaying())
+		if (!alreadyFading && !this->_systemIsPlaying())
 		{
 			this->buffer->prepare();
 			this->_systemPrepareBuffer();
@@ -303,6 +321,9 @@ namespace xal
 			this->_systemPlay();
 		}
 		this->paused = false;
+		this->asyncPlayMutex.lock();
+		this->asyncPlayQueued = false;
+		this->asyncPlayMutex.unlock();
 	}
 
 	void Player::_playAsync(float fadeTime, bool looping)
@@ -324,18 +345,14 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		if (!xal::mgr->asyncPlayers.contains(this))
-		{
-			xal::mgr->asyncPlayers += this;
-		}
+		this->buffer->prepareAsync();
+		this->asyncPlayMutex.lock();
+		this->asyncPlayQueued = true;
+		this->asyncPlayMutex.unlock();
 	}
 
 	void Player::_stop(float fadeTime)
 	{
-		if (xal::mgr->asyncPlayers.contains(this))
-		{
-			xal::mgr->asyncPlayers -= this;
-		}
 		if (xal::mgr->isSuspended() && xal::mgr->suspendedPlayers.contains(this))
 		{
 			xal::mgr->suspendedPlayers -= this;
@@ -348,10 +365,6 @@ namespace xal
 
 	void Player::_pause(float fadeTime)
 	{
-		if (xal::mgr->asyncPlayers.contains(this))
-		{
-			xal::mgr->asyncPlayers -= this;
-		}
 		if (!this->_isPlaying() && !this->paused)
 		{
 			hlog::warn(xal::logTag, "Player cannot be paused, it's not playing: " + this->getName());
@@ -363,16 +376,19 @@ namespace xal
 
 	float Player::_calcGain()
 	{
-		float gain = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+		float result = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 		if (this->isFading())
 		{
-			gain *= this->fadeTime;
+			result *= this->fadeTime;
 		}
-		return hclamp(gain, 0.0f, 1.0f);
+		return hclamp(result, 0.0f, 1.0f);
 	}
 
 	void Player::_stopSound(float fadeTime)
 	{
+		this->asyncPlayMutex.lock();
+		this->asyncPlayQueued = false;
+		this->asyncPlayMutex.unlock();
 		if (fadeTime > 0.0f)
 		{
 			this->fadeSpeed = -1.0f / fadeTime;

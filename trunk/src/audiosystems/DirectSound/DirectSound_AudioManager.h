@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -40,7 +40,7 @@ namespace xal
 
 	protected:
 		Player* _createSystemPlayer(Sound* sound);
-		Source* _createSource(chstr filename, Category* category, Format format);
+		Source* _createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format);
 
 	};
 

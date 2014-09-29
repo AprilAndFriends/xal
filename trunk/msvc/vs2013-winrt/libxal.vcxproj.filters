@@ -50,6 +50,9 @@
     <ClCompile Include="..\..\src\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\BufferAsync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\Category.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.h">
       <Filter>Header Files\audiosystems\NoAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BufferAsync.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -97,16 +97,16 @@ namespace xal
 		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
 	}
 	
-	int SDL_AudioManager::_convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize)
+	int SDL_AudioManager::_convertStream(Source* source, unsigned char** stream, int *streamSize, int dataSize)
 	{	
 		if (*stream == NULL || *streamSize <= 0 || dataSize <= 0)
 		{
 			return dataSize;
 		}
 		SDL_AudioSpec format = this->getFormat();
-		int srcFormat = (buffer->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
-		int srcChannels = buffer->getChannels();
-		int srcSamplingRate = buffer->getSamplingRate();
+		int srcFormat = (source->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
+		int srcChannels = source->getChannels();
+		int srcSamplingRate = source->getSamplingRate();
 		if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
 		{
 			return dataSize;
@@ -116,7 +116,7 @@ namespace xal
 		int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
 		if (result <= 0)
 		{
-			hlog::error(xal::logTag, "Could not build converter: " + buffer->getFilename());
+			hlog::error(xal::logTag, "Could not build converter: " + source->getFilename());
 			return dataSize;
 		}
 		cvt.buf = (Uint8*)new unsigned char[dataSize * cvt.len_mult];
@@ -127,7 +127,7 @@ namespace xal
 		{
 			delete [] cvt.buf;
 			cvt.buf = NULL;
-			hlog::error(xal::logTag, "Could not convert audio: " + buffer->getFilename());
+			hlog::error(xal::logTag, "Could not convert audio: " + source->getFilename());
 			return dataSize;
 		}
 		if (cvt.len_cvt > 0)

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -12,7 +12,7 @@
 
 namespace xal
 {
-	FLAC_Source::FLAC_Source(chstr filename, Category* category) : Source(filename, category)
+	FLAC_Source::FLAC_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
 	{
 	}
 
@@ -21,15 +21,18 @@ namespace xal
 		this->close();
 	}
 
-	bool FLAC_Source::open()
+	bool FLAC_Source::decode()
 	{
-		this->streamOpen = Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
 		}
+		if (this->decoded)
+		{
+			return true;
+		}
 		// TODO - implement
-		return this->streamOpen;
+		return Source::decode();
 	}
 
 	void FLAC_Source::close()
@@ -39,6 +42,7 @@ namespace xal
 			this->streamOpen = false;
 			// TODO - implement
 		}
+		Source::close();
 	}
 
 	void FLAC_Source::rewind()

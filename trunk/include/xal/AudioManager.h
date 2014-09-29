@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.21
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -42,14 +42,16 @@ namespace xal
 	{
 		/// @brief Buffers data upon player creation, keeps results in memory.
 		FULL = 0,
+		/// @brief Buffers data upon player creation asynchronously, keeps results in memory.
+		ASYNC = 1,
 		/// @brief Buffers when first need arises, keeps results in memory.
-		LAZY = 1,
+		LAZY = 2,
 		/// @brief Buffers when first need arises, clears memory after a timeout.
-		MANAGED = 2,
+		MANAGED = 3,
 		/// @brief Buffers when first need arises, clears memory after usage.
-		ON_DEMAND = 3,
+		ON_DEMAND = 4,
 		/// @brief Buffers in streamed mode.
-		STREAMED = 4
+		STREAMED = 5
 	};
 
 	enum SourceMode
@@ -274,8 +276,6 @@ namespace xal
 		harray<Player*> managedPlayers;
 		/// @brief List of Player instances that need to resume once the audio system exits suspension.
 		harray<Player*> suspendedPlayers;
-		/// @brief List of Player instances that have been started asynchronously.
-		harray<Player*> asyncPlayers;
 		/// @brief List of loaded Sounds.
 		hmap<hstr, Sound*> sounds;
 		/// @brief List Buffer instances.
@@ -345,7 +345,7 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual Player* _createSystemPlayer(Sound* sound) = 0;
 		/// @note This method is not thread-safe and is for internal usage only.
-		virtual Source* _createSource(chstr filename, Category* category, Format format);
+		virtual Source* _createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format);
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _play(chstr soundName, float fadeTime, bool looping, float gain);
@@ -377,12 +377,12 @@ namespace xal
 		virtual void _resumeAudio();
 
 		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format (bit rate, channel number, sampling rate).
-		/// @param[in] buffer Buffer object that describes the data.
+		/// @param[in] source Source object that holds the data.
 		/// @param[in,out] stream The data stream buffer.
 		/// @param[in,out] streamSize The size of the stream itself.
 		/// @param[in] dataSize The size of the data within the stream.
 		/// @return dataSize if no conversion was done or a positive integer for the size of the new data.
-		virtual int _convertStream(Buffer* buffer, unsigned char** stream, int *streamSize, int dataSize) { return dataSize; }
+		virtual int _convertStream(Source* source, unsigned char** stream, int *streamSize, int dataSize) { return dataSize; }
 
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.

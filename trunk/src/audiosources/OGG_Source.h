@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -24,15 +24,13 @@
 
 namespace xal
 {
-	class Category;
-
 	class xalExport OGG_Source : public Source
 	{
 	public:
-		OGG_Source(chstr filename, Category* category);
+		OGG_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		~OGG_Source();
 
-		bool open();
+		bool decode();
 		void close();
 		void rewind();
 		bool load(unsigned char* output);
