@@ -209,7 +209,7 @@ namespace xal
 			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
 			{
-				if (!(*it)->isPlaying() && !(*it)->isFadingOut())
+				if (!(*it)->_isPlaying() && !(*it)->isFadingOut())
 				{
 					this->_destroyManagedPlayer(*it);
 				}
