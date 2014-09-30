@@ -141,12 +141,12 @@ namespace xal
 	
 	bool Player::isPlaying()
 	{
-		if (this->isFadingOut())
-		{
-			return false;
-		}
+		bool result = false;
 		xal::mgr->_lock();
-		bool result = this->_isPlaying();
+		if (!this->isFadingOut())
+		{
+			result = this->_isPlaying();
+		}
 		xal::mgr->_unlock();
 		return result;
 	}

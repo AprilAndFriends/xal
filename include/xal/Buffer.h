@@ -136,7 +136,7 @@ namespace xal
 		/// @brief Sampling rate of the Source's audio data.
 		int samplingRate;
 		/// @brief Number of bits per sample of the Source's audio data.
-		int bitPerSample;
+		int bitsPerSample;
 		/// @brief Duration of the audio data in seconds.
 		float duration;
 		/// @brief List of bound Player instances.
@@ -150,8 +150,6 @@ namespace xal
 		void _update(float timeDelta);
 		/// @brief Tries to load meta-data from the Source.
 		void _tryLoadMetaData();
-		/// @brief Tries to load meta-data from the Source in a thread-safe manner.
-		void _tryLoadMetaDataSync();
 		/// @brief Tries to free up memory.
 		/// @return True if any memory was freed.
 		bool _tryClearMemory();

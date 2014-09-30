@@ -201,9 +201,14 @@ namespace xal
 	{
 		if (this->enabled && !this->suspended)
 		{
+			BufferAsync::update();
 			foreach (Player*, it, this->players)
 			{
 				(*it)->_update(timeDelta);
+				if ((*it)->_isAsyncPlayQueued())
+				{
+					(*it)->_play((*it)->fadeTime, (*it)->looping);
+				}
 			}
 			// creating a copy, because _destroyManagedPlayer alters managedPlayers
 			harray<Player*> players = this->managedPlayers;
@@ -217,15 +222,6 @@ namespace xal
 			foreach (Buffer*, it, this->buffers)
 			{
 				(*it)->_update(timeDelta);
-			}
-			BufferAsync::update();
-			// creating a copy, because _play alters asyncPlayers
-			foreach (Player*, it, this->players)
-			{
-				if ((*it)->_isAsyncPlayQueued())
-				{
-					(*it)->_play((*it)->fadeTime, (*it)->looping);
-				}
 			}
 		}
 	}

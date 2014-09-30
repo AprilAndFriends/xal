@@ -30,7 +30,8 @@ namespace xal
 	public:
 		/// @brief Constructor.
 		/// @param[in] filename Filename of the Source.
-		/// @param[in] category The Category where the overlying sound was registered.
+		/// @param[in] sourceMode The Source's behavior mode.
+		/// @param[in] bufferMode The Buffer's behavior mode.
 		Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		/// @brief Destructor.
 		virtual ~Source();
