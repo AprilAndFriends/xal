@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -13,10 +13,8 @@
 #ifndef XAL_PLAYER_H
 #define XAL_PLAYER_H
 
-#include <hltypes/hmutex.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/hmutex.h>
 
 #include "xalExport.h"
 
@@ -32,6 +30,9 @@ namespace xal
 	{
 	public:
 		friend class AudioManager;
+
+		/// @brief Destructor.
+		virtual ~Player();
 
 		float getGain();
 		void setGain(float value);
@@ -63,11 +64,6 @@ namespace xal
 		/// @param[in] looping Whether the Sound should be looped once it is done playing.
 		/// @note Ignored if the Sound is already playing. Prevents pause/stop without pausing/stopping the Sound if called during fade-out.
 		void play(float fadeTime = 0.0f, bool looping = false);
-		/// @brief Starts playing the Sound asynchronously.
-		/// @param[in] fadetime How long to fade-in the Sound.
-		/// @param[in] looping Whether the Sound should be looped once it is done playing.
-		/// @note Ignored if the Sound is already playing. Prevents pause/stop without pausing/stopping the Sound if called during fade-out.
-		void playAsync(float fadeTime = 0.0f, bool looping = false);
 		/// @brief Stops the Sound completely.
 		/// @param[in] fadetime How long to fade-out the Sound.
 		void stop(float fadeTime = 0.0f);
@@ -107,16 +103,10 @@ namespace xal
 		/// @brief How long this Player has been idle.
 		/// @note Used for memory cleaning.
 		float idleTime;
-		/// @brief Flag whether async playing was queued.
-		bool asyncPlayQueued;
-		/// @brief Mutex for access of async playing flag.
-		hmutex asyncPlayMutex;
 
 		/// @brief Constructor.
 		/// @param[in] sound The Sound to play.
 		Player(Sound* sound);
-		/// @brief Destructor.
-		virtual ~Player();
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		float _getGain();
@@ -126,14 +116,6 @@ namespace xal
 		float _getPitch();
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _setPitch(float value);
-		/// @brief Returns whether the Sound is playing or is asynchronously queued for playing.
-		/// @retunr True if the Sound is playing or is asynchronously queued for playing.
-		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isPlaying();
-		/// @brief Returns whether the Player is waiting to be played after an asynchronous buffer load.
-		/// @retunr True if the Player is waiting to be played after an asynchronous buffer load.
-		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAsyncPlayQueued();
 
 		/// @brief Updates the Player.
 		/// @param[in] timeDelta Time since the last update.
@@ -142,8 +124,6 @@ namespace xal
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _play(float fadeTime = 0.0f, bool looping = false);
-		/// @note This method is not thread-safe and is for internal usage only.
-		void _playAsync(float fadeTime = 0.0f, bool looping = false);
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _stop(float fadeTime = 0.0f);
 		/// @note This method is not thread-safe and is for internal usage only.

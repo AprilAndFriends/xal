@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -22,8 +22,8 @@
 
 namespace xal
 {
-	M4A_Source::M4A_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) :
-		Source(filename, sourceMode, bufferMode), chunkOffset(0), audioFileID(0)
+	M4A_Source::M4A_Source(chstr filename, Category* category) : Source(filename, category),
+		chunkOffset(0), audioFileID(0)
 	{
 	}
 
@@ -32,15 +32,12 @@ namespace xal
 		this->close();
 	}
 
-	bool M4A_Source::decode()
+	bool M4A_Source::open()
 	{
+		this->streamOpen = Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
-		}
-		if (this->decoded)
-		{
-			return true;
 		}
 #ifndef _IOS
         FSRef fsref;
@@ -89,7 +86,7 @@ namespace xal
 		
 		
 		
-		return Source::decode();
+		return this->streamOpen;
 	}
 	
 	void M4A_Source::_readFileProps()
@@ -135,19 +132,20 @@ namespace xal
 		{
             ExtAudioFileDispose(this->audioFileID);
 			this->audioFileID = 0;
+			this->streamOpen = false;
 		}
-		Source::close();
+	  
 	}
 
 	void M4A_Source::rewind()
 	{
 		if (this->streamOpen)
 		{
+			
 			printf("+ rewind for %s\n", this->filename.c_str());
 			//ExtAudioFileSeek(this->audioFileID, 0);
 			this->close();
 			this->open();
-			this->decode();
 		}
 	}
 

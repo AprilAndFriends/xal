@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -26,13 +26,13 @@ namespace xal
 	// small optimizations, they are not thread-safe
 	static int _section = 0;
 
-	static size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
+	size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
 		hsbase* stream = (hsbase*)dataSource;
 		return stream->read_raw(data, size * count);
 	}
 
-	static int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
+	int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
 	{
 		hsbase::SeekMode mode = hsbase::CURRENT;
 		switch (whence)
@@ -51,17 +51,17 @@ namespace xal
 		return 0;
 	}
 
-	static int _dataClose(void* dataSource) // an empty function is required on Android as it may crash otherwise
+	int _dataClose(void* dataSource) // an empty function is required on Android as it may crash otherwise
 	{
 		return 0;
 	}
 
-	static long _dataTell(void* dataSource)
+	long _dataTell(void* dataSource)
 	{
 		return ((hsbase*)dataSource)->position();
 	}
 
-	OGG_Source::OGG_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
+	OGG_Source::OGG_Source(chstr filename, Category* category) : Source(filename, category)
 	{
 	}
 
@@ -70,15 +70,12 @@ namespace xal
 		this->close();
 	}
 
-	bool OGG_Source::decode()
+	bool OGG_Source::open()
 	{
+		this->streamOpen = Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
-		}
-		if (this->decoded)
-		{
-			return true;
 		}
 		// setting the special callbacks
 		ov_callbacks callbacks;
@@ -102,7 +99,7 @@ namespace xal
 			hlog::error(xal::logTag, "OGG: error reading data!");
 			this->close();
 		}
-		return Source::decode();
+		return this->streamOpen;
 	}
 
 	void OGG_Source::close()

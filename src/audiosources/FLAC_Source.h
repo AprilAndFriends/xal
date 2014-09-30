@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -21,13 +21,15 @@
 
 namespace xal
 {
+	class Category;
+
 	class xalExport FLAC_Source : public Source
 	{
 	public:
-		FLAC_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
+		FLAC_Source(chstr filename, Category* category);
 		~FLAC_Source();
 
-		bool decode();
+		bool open();
 		void close();
 		void rewind();
 		bool load(unsigned char* output);

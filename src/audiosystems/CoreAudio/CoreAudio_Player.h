@@ -8,11 +8,11 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Represents an implementation of the Player for SDL.
+/// Represents an implementation of the Player for CoreAudio.
 
-#ifdef _SDL
-#ifndef XAL_SDL_PLAYER_H
-#define XAL_SDL_PLAYER_H
+#if _COREAUDIO
+#ifndef XAL_COREAUDIO_PLAYER_H
+#define XAL_COREAUDIO_PLAYER_H
 
 #include "Player.h"
 #include "xalExport.h"
@@ -22,13 +22,13 @@ namespace xal
 	class Buffer;
 	class Sound;
 
-	class xalExport SDL_Player : public Player
+	class xalExport CoreAudio_Player : public Player
 	{
 	public:
-		SDL_Player(Sound* sound);
-		~SDL_Player();
+		CoreAudio_Player(Sound* sound);
+		~CoreAudio_Player();
 
-		bool mixAudio(unsigned char* stream, int length, bool first);
+		void mixAudio(unsigned char* stream, int length, bool first);
 
 	protected:
 		bool playing;
@@ -41,12 +41,11 @@ namespace xal
 		void _update(float timeDelta);
 
 		inline bool _systemIsPlaying() { return this->playing; }
-		unsigned int _systemGetBufferPosition();
 		float _systemGetOffset();
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
-		void _systemUpdateGain();
+		void _systemUpdateGain(float gain);
 		void _systemPlay();
 		int _systemStop();
 		int _systemUpdateStream();

@@ -1,24 +1,22 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 
 #include "Buffer.h"
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
-#include "xal.h"
 
 namespace xal
 {
 	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false), looping(false), fadeSpeed(0.0f),
-		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f), asyncPlayQueued(false)
+		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f)
 	{
 		this->sound = sound;
 		this->buffer = sound->getBuffer();
@@ -30,9 +28,6 @@ namespace xal
 
 	Player::~Player()
 	{
-		this->asyncPlayMutex.lock();
-		this->asyncPlayQueued = false;
-		this->asyncPlayMutex.unlock();
 		if (this->buffer->isStreamed()) // this buffer was created internally
 		{
 			xal::mgr->_destroyBuffer(this->buffer);
@@ -141,28 +136,9 @@ namespace xal
 	
 	bool Player::isPlaying()
 	{
-		bool result = false;
-		xal::mgr->_lock();
-		if (!this->isFadingOut())
-		{
-			result = this->_isPlaying();
-		}
-		xal::mgr->_unlock();
-		return result;
+		return (!this->isFadingOut() && this->_systemIsPlaying());
 	}
-
-	bool Player::_isPlaying()
-	{
-		if (this->_systemIsPlaying())
-		{
-			return true;
-		}
-		this->asyncPlayMutex.lock();
-		bool result = this->asyncPlayQueued;
-		this->asyncPlayMutex.unlock();
-		return result;
-	}
-
+	
 	bool Player::isPaused()
 	{
 		return (this->paused && !this->isFading());
@@ -188,21 +164,9 @@ namespace xal
 		return this->sound->getCategory();
 	}
 
-	bool Player::_isAsyncPlayQueued()
-	{
-		if (!this->buffer->isLoaded())
-		{
-			return false;
-		}
-		this->asyncPlayMutex.lock();
-		bool result = this->asyncPlayQueued;
-		this->asyncPlayMutex.unlock();
-		return result;
-	}
-
 	void Player::_update(float timeDelta)
 	{
-		if (this->_isPlaying())
+		if (this->_systemIsPlaying())
 		{
 			this->buffer->keepLoaded();
 			if (this->sound->isStreamed())
@@ -248,13 +212,6 @@ namespace xal
 		xal::mgr->_unlock();
 	}
 
-	void Player::playAsync(float fadeTime, bool looping)
-	{
-		xal::mgr->_lock();
-		this->_playAsync(fadeTime, looping);
-		xal::mgr->_unlock();
-	}
-
 	void Player::stop(float fadeTime)
 	{
 		xal::mgr->_lock();
@@ -283,6 +240,7 @@ namespace xal
 				if (!this->paused)
 				{
 					this->looping = looping;
+					this->paused = true;
 				}
 			}
 			return;
@@ -321,34 +279,6 @@ namespace xal
 			this->_systemPlay();
 		}
 		this->paused = false;
-		this->asyncPlayMutex.lock();
-		this->asyncPlayQueued = false;
-		this->asyncPlayMutex.unlock();
-	}
-
-	void Player::_playAsync(float fadeTime, bool looping)
-	{
-		if (!xal::mgr->isEnabled())
-		{
-			return;
-		}
-		if (!this->paused)
-		{
-			this->looping = looping;
-		}
-		if (fadeTime > 0.0f)
-		{
-			this->fadeSpeed = 1.0f / fadeTime;
-		}
-		else
-		{
-			this->fadeTime = 1.0f;
-			this->fadeSpeed = 0.0f;
-		}
-		this->buffer->prepareAsync();
-		this->asyncPlayMutex.lock();
-		this->asyncPlayQueued = true;
-		this->asyncPlayMutex.unlock();
 	}
 
 	void Player::_stop(float fadeTime)
@@ -365,30 +295,22 @@ namespace xal
 
 	void Player::_pause(float fadeTime)
 	{
-		if (!this->_isPlaying() && !this->paused)
-		{
-			hlog::warn(xal::logTag, "Player cannot be paused, it's not playing: " + this->getName());
-			return;
-		}
 		this->paused = true;
 		this->_stopSound(fadeTime);
 	}
 
 	float Player::_calcGain()
 	{
-		float result = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+		float gain = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
 		if (this->isFading())
 		{
-			result *= this->fadeTime;
+			gain *= this->fadeTime;
 		}
-		return hclamp(result, 0.0f, 1.0f);
+		return hclamp(gain, 0.0f, 1.0f);
 	}
 
 	void Player::_stopSound(float fadeTime)
 	{
-		this->asyncPlayMutex.lock();
-		this->asyncPlayQueued = false;
-		this->asyncPlayMutex.unlock();
 		if (fadeTime > 0.0f)
 		{
 			this->fadeSpeed = -1.0f / fadeTime;

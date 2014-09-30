@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -168,6 +168,10 @@ namespace xal
 		}
 		if (write1 != NULL)
 		{
+			if (stream == NULL)
+			{
+				bool value = this->_systemIsPlaying();
+			}
 			memcpy(write1, stream, length1);
 		}
 		if (write2 != NULL)

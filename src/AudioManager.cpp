@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -20,7 +20,6 @@
 
 #include "AudioManager.h"
 #include "Buffer.h"
-#include "BufferAsync.h"
 #include "Category.h"
 #include "NoAudio_AudioManager.h"
 #include "Player.h"
@@ -76,7 +75,7 @@ namespace xal
 #endif
 		if (threaded)
 		{
-			this->thread = new hthread(&AudioManager::_update);
+			this->thread = new hthread(&AudioManager::update);
 		}
 	}
 
@@ -176,7 +175,7 @@ namespace xal
 		return (this->players - this->managedPlayers);
 	}
 
-	void AudioManager::_update(hthread* thread)
+	void AudioManager::update(hthread* thread)
 	{
 		while (xal::mgr->thread != NULL && xal::mgr->threadRunning)
 		{
@@ -186,7 +185,7 @@ namespace xal
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
-
+	
 	void AudioManager::update(float timeDelta)
 	{
 		this->_lock();
@@ -201,20 +200,15 @@ namespace xal
 	{
 		if (this->enabled && !this->suspended)
 		{
-			BufferAsync::update();
 			foreach (Player*, it, this->players)
 			{
 				(*it)->_update(timeDelta);
-				if ((*it)->_isAsyncPlayQueued())
-				{
-					(*it)->_play((*it)->fadeTime, (*it)->looping);
-				}
 			}
 			// creating a copy, because _destroyManagedPlayer alters managedPlayers
 			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
 			{
-				if (!(*it)->_isPlaying() && !(*it)->isFadingOut())
+				if (!(*it)->isPlaying() && !(*it)->isFadingOut())
 				{
 					this->_destroyManagedPlayer(*it);
 				}
@@ -225,7 +219,7 @@ namespace xal
 			}
 		}
 	}
-
+	
 	void AudioManager::_lock()
 	{
 		if (this->isThreaded())
@@ -233,7 +227,7 @@ namespace xal
 			this->mutex.lock();
 		}
 	}
-
+	
 	void AudioManager::_unlock()
 	{
 		if (this->isThreaded())
@@ -477,8 +471,12 @@ namespace xal
 
 	void AudioManager::_destroyPlayer(Player* player)
 	{
-		player->_stop(); // removes players from suspendedPlayers as well
+		player->_stop();
 		this->players -= player;
+		if (this->suspended && this->suspendedPlayers.contains(player))
+		{
+			this->suspendedPlayers -= player;
+		}
 		delete player;
 	}
 
@@ -508,38 +506,38 @@ namespace xal
 		delete buffer;
 	}
 
-	Source* AudioManager::_createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format)
+	Source* AudioManager::_createSource(chstr filename, Category* category, Format format)
 	{
 		Source* source;
 		switch (format)
 		{
 #ifdef _FORMAT_FLAC
 		case FLAC:
-			source = new FLAC_Source(filename, sourceMode, bufferMode);
+			source = new FLAC_Source(filename, category);
 			break;
 #endif
 #ifdef _FORMAT_M4A
 		case M4A:
-			source = new M4A_Source(filename, sourceMode, bufferMode);
+			source = new M4A_Source(filename, category);
 			break;
 #endif
 #ifdef _FORMAT_OGG
 		case OGG:
-			source = new OGG_Source(filename, sourceMode, bufferMode);
+			source = new OGG_Source(filename, category);
 			break;
 #endif
 #ifdef _FORMAT_SPX
 		case SPX:
-			source = new SPX_Source(filename, sourceMode, bufferMode);
+			source = new SPX_Source(filename, category);
 			break;
 #endif
 #ifdef _FORMAT_WAV
 		case WAV:
-			source = new WAV_Source(filename, sourceMode, bufferMode);
+			source = new WAV_Source(filename, category);
 			break;
 #endif
 		default:
-			source = new Source(filename, sourceMode, bufferMode);
+			source = new Source(filename, category);
 			break;
 		}
 		return source;
@@ -561,24 +559,6 @@ namespace xal
 		Player* player = this->_createManagedPlayer(soundName);
 		player->_setGain(gain);
 		player->_play(fadeTime, looping);
-	}
-
-	void AudioManager::playAsync(chstr soundName, float fadeTime, bool looping, float gain)
-	{
-		this->_lock();
-		this->_playAsync(soundName, fadeTime, looping, gain);
-		this->_unlock();
-	}
-
-	void AudioManager::_playAsync(chstr soundName, float fadeTime, bool looping, float gain)
-	{
-		if (this->suspended)
-		{
-			return;
-		}
-		Player* player = this->_createManagedPlayer(soundName);
-		player->_setGain(gain);
-		player->_playAsync(fadeTime, looping);
 	}
 
 	void AudioManager::stop(chstr soundName, float fadeTime)

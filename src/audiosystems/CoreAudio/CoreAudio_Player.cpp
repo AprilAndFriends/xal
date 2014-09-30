@@ -6,31 +6,29 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#ifdef _SDL
-#include <SDL/SDL.h>
-
-#include <hltypes/hltypesUtil.h>
+#if _COREAUDIO
+#include <AudioUnit/AudioUnit.h>
 
 #include "Buffer.h"
-#include "SDL_AudioManager.h"
-#include "SDL_Player.h"
+#include "CoreAudio_AudioManager.h"
+#include "CoreAudio_Player.h"
 #include "Sound.h"
+#include "Endianess.h"
 #include "xal.h"
 
 namespace xal
 {
-	SDL_Player::SDL_Player(Sound* sound) : Player(sound), playing(false),
+	CoreAudio_Player::CoreAudio_Player(Sound* sound) : Player(sound), playing(false),
 		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
 	{
 		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
 	}
 
-	SDL_Player::~SDL_Player()
+	CoreAudio_Player::~CoreAudio_Player()
 	{
-		// AudioManager calls _stop before destruction
 	}
 
-	void SDL_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
+	void CoreAudio_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
 	{
 		if (!this->sound->isStreamed())
 		{
@@ -73,11 +71,10 @@ namespace xal
 		this->readPosition = (this->readPosition + size) % STREAM_BUFFER;
 	}
 
-	void SDL_Player::_update(float timeDelta)
+	void CoreAudio_Player::_update(float timeDelta)
 	{
 		Player::_update(timeDelta);
-		// making sure a corrected size is used
-		int size = this->buffer->calcOutputSize(this->buffer->getSize());
+		int size = this->buffer->getSize();
 		if (size > 0 && this->position >= size)
 		{
 			if (this->looping)
@@ -86,16 +83,16 @@ namespace xal
 			}
 			else if (this->playing)
 			{
-				this->_stop();
+				this->_systemStop();
 			}
 		}
 	}
 
-	bool SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
+	void CoreAudio_Player::mixAudio(unsigned char* stream, int length, bool first)
 	{
 		if (!this->playing)
 		{
-			return false;
+			return;
 		}
 		unsigned char* data1;
 		unsigned char* data2;
@@ -111,6 +108,17 @@ namespace xal
 				{
 					memcpy(&stream[size1], data2, size2);
 				}
+#ifdef __BIG_ENDIAN__
+				short* sStream = (short*)stream;
+				for (int i = 0; i < size1; i++)
+				{
+					XAL_NORMALIZE_ENDIAN(sStream[i]);
+				}
+				for (int i = 0; i < size2; i++)
+				{
+					XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
+				}
+#endif				
 			}
 			else
 			{
@@ -121,62 +129,55 @@ namespace xal
 				size2 = size2 * sizeof(unsigned char) / sizeof(short);
 				if (!first)
 				{
-					for_iter (i, 0, size1)
+					for (int i = 0; i < size1; i++)
 					{
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
 						sStream[i] = (short)hclamp((int)(sStream[i] + this->currentGain * sData1[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
-					for_iter (i, 0, size2)
+					for (int i = 0; i < size2; i++)
 					{
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 						sStream[size1 + i] = (short)hclamp((int)(sStream[size1 + i] + this->currentGain * sData2[i]), -32768, 32767);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 					}
 				}
 				else
 				{
-					for_iter (i, 0, size1)
+					for (int i = 0; i < size1; i++)
 					{
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
 						sStream[i] = (short)(sData1[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[i]);
 					}
-					for_iter (i, 0, size2)
+					for (int i = 0; i < size2; i++)
 					{
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 						sStream[size1 + i] = (short)(sData2[i] * this->currentGain);
+						XAL_NORMALIZE_ENDIAN(sStream[size1 + i]);
 					}
 				}
 			}
 			this->position += size1 + size2;
 		}
-		return true;
 	}
 
-	unsigned int SDL_Player::_systemGetBufferPosition()
-	{
-		int count = 0;
-		if (this->readPosition > this->writePosition)
-		{
-			count = (this->readPosition - this->writePosition);
-		}
-		else if (this->readPosition < this->writePosition)
-		{
-			count = (STREAM_BUFFER - this->writePosition + this->readPosition);
-		}
-		return this->buffer->calcInputSize(count);
-	}
-
-	float SDL_Player::_systemGetOffset()
+	float CoreAudio_Player::_systemGetOffset()
 	{
 		return this->offset;
 	}
 
-	void SDL_Player::_systemSetOffset(float value)
+	void CoreAudio_Player::_systemSetOffset(float value)
 	{
 		this->offset = value;
 	}
 
-	bool SDL_Player::_systemPreparePlay()
+	bool CoreAudio_Player::_systemPreparePlay()
 	{
 		return true;
 	}
 
-	void SDL_Player::_systemPrepareBuffer()
+	void CoreAudio_Player::_systemPrepareBuffer()
 	{
 		if (!this->sound->isStreamed())
 		{
@@ -187,7 +188,7 @@ namespace xal
 		{
 			this->readPosition = 0;
 			this->writePosition = 0;
-			int size = this->_fillBuffer(STREAM_BUFFER);
+			int size = this->_fillBuffer(STREAM_BUFFER_SIZE);
 			if (size < STREAM_BUFFER)
 			{
 				memset(&this->circleBuffer[size], 0, (STREAM_BUFFER - size) * sizeof(unsigned char));
@@ -195,17 +196,17 @@ namespace xal
 		}
 	}
 
-	void SDL_Player::_systemUpdateGain()
+	void CoreAudio_Player::_systemUpdateGain(float gain)
 	{
-		this->currentGain = this->_calcGain();
+		this->currentGain = gain;
 	}
 
-	void SDL_Player::_systemPlay()
+	void CoreAudio_Player::_systemPlay()
 	{
 		this->playing = true;
 	}
 
-	int SDL_Player::_systemStop()
+	int CoreAudio_Player::_systemStop()
 	{
 		this->playing = false;
 		if (!this->paused)
@@ -218,10 +219,9 @@ namespace xal
 		return 0;
 	}
 
-	int SDL_Player::_systemUpdateStream()
+	int CoreAudio_Player::_systemUpdateStream()
 	{
-		int result = 0;
-		int count = 0;
+		int count = 0, result = 0;
 		if (this->readPosition > this->writePosition)
 		{
 			count = (this->readPosition - this->writePosition) / STREAM_BUFFER_SIZE;
@@ -230,19 +230,15 @@ namespace xal
 		{
 			count = (STREAM_BUFFER - this->writePosition + this->readPosition) / STREAM_BUFFER_SIZE;
 		}
-		if (count > 0)
+		if (count >= STREAM_BUFFER_COUNT / 2)
 		{
-			result = this->_fillBuffer(count * STREAM_BUFFER_SIZE);
-			result = this->buffer->calcInputSize(result);
+			result = this->_fillBuffer(STREAM_BUFFER_SIZE);
 		}
 		return result;
 	}
 
-	int SDL_Player::_fillBuffer(int size)
+	int CoreAudio_Player::_fillBuffer(int size)
 	{
-		// making sure the buffer doesn't overflow since upsampling can cause that
-		size = this->buffer->calcInputSize(size);
-		// load the data from the buffer
 		int streamSize = this->buffer->load(this->looping, size);
 		unsigned char* stream = this->buffer->getStream();
 		if (this->writePosition + streamSize <= STREAM_BUFFER)

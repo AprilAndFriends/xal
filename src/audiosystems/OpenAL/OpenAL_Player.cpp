@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -56,7 +56,7 @@ namespace xal
 	void OpenAL_Player::_update(float timeDelta)
 	{
 		Player::_update(timeDelta);
-		if (!this->_isPlaying() && this->sourceId != 0)
+		if (!this->_systemIsPlaying() && this->sourceId != 0)
 		{
 			this->_stop();
 		}

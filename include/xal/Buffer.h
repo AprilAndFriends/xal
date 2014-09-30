@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -14,7 +14,6 @@
 #define XAL_BUFFER_H
 
 #include <hltypes/hltypesUtil.h>
-#include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -22,7 +21,6 @@
 
 namespace xal
 {
-	class BufferAsync;
 	class Player;
 	class Sound;
 	class Source;
@@ -32,7 +30,6 @@ namespace xal
 	{
 	public:
 		friend class AudioManager;
-		friend class BufferAsync;
 
 		/// @brief Constructor.
 		/// @param[in] sound Sound object for which to create the buffer.
@@ -51,10 +48,6 @@ namespace xal
 		int getBitsPerSample();
 		float getDuration();
 		Format getFormat();
-		/// @return True if the Buffer's data is loaded.
-		bool isLoaded();
-		/// @return True if the Buffer's data is queued for asynchronous loading.
-		bool isAsyncLoadQueued();
 		/// @return True if the Buffer accesses streamed data.
 		bool isStreamed();
 		/// @return True if the Buffer's data is managed.
@@ -64,9 +57,6 @@ namespace xal
 
 		/// @brief Prepares the Buffer by pre-loaded meta-data and getting Sources ready to provide audio data.
 		void prepare();
-		/// @brief Prepares the Buffer by pre-loaded meta-data and getting Sources ready to provide audio data asynchronously.
-		/// @return True if the Buffer was queued successfully.
-		bool prepareAsync();
 		/// @brief Loads audio data from the Source.
 		/// @param[in] looping Whether the data should be loaded in a looped manner.
 		/// @param[in] size The maximum number of bytes to load.
@@ -117,12 +107,6 @@ namespace xal
 		unsigned char* stream;
 		/// @brief Size of the currently provided data.
 		int streamSize;
-		/// @brief Flag for whether an asynchronous load was queued.
-		bool asyncLoadQueued;
-		/// @brief Flag for whether asynchronously loaded data should be discarded.
-		bool asyncLoadDiscarded;
-		/// @brief Mutex for access of asynchronously loaded data.
-		hmutex asyncLoadMutex;
 		/// @brief Size of all the data.
 		int dataSize;
 		/// @brief Connected Source from which data is read.
@@ -136,7 +120,7 @@ namespace xal
 		/// @brief Sampling rate of the Source's audio data.
 		int samplingRate;
 		/// @brief Number of bits per sample of the Source's audio data.
-		int bitsPerSample;
+		int bitPerSample;
 		/// @brief Duration of the audio data in seconds.
 		float duration;
 		/// @brief List of bound Player instances.
@@ -153,17 +137,6 @@ namespace xal
 		/// @brief Tries to free up memory.
 		/// @return True if any memory was freed.
 		bool _tryClearMemory();
-
-		/// @brief Loads the async data from the disk into a stream.
-		/// @return True if there is a stream ready. False if loading was canceled in the meantime.
-		bool _prepareAsyncStream();
-		/// @brief Decodes the asynchronously loaded data.
-		/// @param[in] stream The stream from which to decode the data.
-		void _decodeFromAsyncStream();
-		/// @brief Waits for the Buffer to load asynchronously.
-		/// @param[in] timeout Max time to wait.
-		/// @note A timeout value of 0.0 means indefinitely.
-		void _waitForAsyncLoad(float timeout = 0.0f);
 
 	};
 

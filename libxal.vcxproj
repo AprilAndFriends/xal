@@ -486,7 +486,6 @@
     <ClCompile Include="src\audiosources\OGG_Source.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
-    <ClCompile Include="src\BufferAsync.cpp" />
     <ClCompile Include="src\Category.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -507,7 +506,6 @@
     <ClInclude Include="src\audiosystems\SDL\SDL_AudioManager.h" />
     <ClInclude Include="src\audiosystems\SDL\SDL_Player.h" />
     <ClInclude Include="src\audiosources\OGG_Source.h" />
-    <ClInclude Include="src\BufferAsync.h" />
     <ClInclude Include="include\xal\Buffer.h" />
     <ClInclude Include="include\xal\Source.h" />
     <ClInclude Include="include\xal\Player.h" />
@@ -528,6 +526,14 @@
     </ProjectReference>
     <ProjectReference Include="lib\ogg\win32\VS2012\libogg_dynamic.vcxproj">
       <Project>{15cbfeff-7965-41f5-b4e2-21e8795c9159}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="lib\openal-soft-android\OpenAL32\libopenal.vcxproj">
+      <Project>{c4a17cd4-6b3c-495c-af61-961f8f86ea65}</Project>
       <Private>false</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
