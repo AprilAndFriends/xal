@@ -40,6 +40,12 @@
 		C9DAE8BA138103F80007882A /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
 		C9DAE8BB138103F80007882A /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
 		C9DAE8BD138103F80007882A /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
+		D1152EE019D9966F00D1511D /* BufferAsync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1152EDF19D9966F00D1511D /* BufferAsync.cpp */; };
+		D1152EE119D9966F00D1511D /* BufferAsync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1152EDF19D9966F00D1511D /* BufferAsync.cpp */; };
+		D1152EE219D9966F00D1511D /* BufferAsync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1152EDF19D9966F00D1511D /* BufferAsync.cpp */; };
+		D1152EE319D9966F00D1511D /* BufferAsync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1152EDF19D9966F00D1511D /* BufferAsync.cpp */; };
+		D1152EE519D9967A00D1511D /* BufferAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = D1152EE419D9967A00D1511D /* BufferAsync.h */; };
+		D1152EE619D9967A00D1511D /* BufferAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = D1152EE419D9967A00D1511D /* BufferAsync.h */; };
 		D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AE138103F80007882A /* AudioManager.cpp */; };
 		D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AF138103F80007882A /* Buffer.cpp */; };
 		D1981C9E140F8ADB0057C3AF /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B0138103F80007882A /* Category.cpp */; };
@@ -122,6 +128,8 @@
 		C9DAE8B2138103F80007882A /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sound.cpp; path = src/Sound.cpp; sourceTree = "<group>"; };
 		C9DAE8B3138103F80007882A /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Source.cpp; path = src/Source.cpp; sourceTree = "<group>"; };
 		C9DAE8B5138103F80007882A /* xal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xal.cpp; path = src/xal.cpp; sourceTree = "<group>"; };
+		D1152EDF19D9966F00D1511D /* BufferAsync.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferAsync.cpp; path = src/BufferAsync.cpp; sourceTree = "<group>"; };
+		D1152EE419D9967A00D1511D /* BufferAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferAsync.h; path = src/BufferAsync.h; sourceTree = "<group>"; };
 		D1681BAE18D768C60088FC68 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
 		D1681BAF18D768C60088FC68 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
 		D1981C82140F8A230057C3AF /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,6 +255,8 @@
 		7FC8063811EC941D00851062 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D1152EE419D9967A00D1511D /* BufferAsync.h */,
+				D1152EDF19D9966F00D1511D /* BufferAsync.cpp */,
 				C9DAE8AE138103F80007882A /* AudioManager.cpp */,
 				C9DAE8AF138103F80007882A /* Buffer.cpp */,
 				C9DAE8B0138103F80007882A /* Category.cpp */,
@@ -436,6 +446,7 @@
 				C9DAE8A6138103DA0007882A /* AudioManager.h in Headers */,
 				C9DAE8A7138103DA0007882A /* Buffer.h in Headers */,
 				D1B4EF68193495600095048A /* SDL_AudioManager.h in Headers */,
+				D1152EE519D9967A00D1511D /* BufferAsync.h in Headers */,
 				C9DAE8A8138103DA0007882A /* Category.h in Headers */,
 				D1B4EF571934953A0095048A /* WAV_Source.h in Headers */,
 				D1B4EF871934959A0095048A /* NoAudio_AudioManager.h in Headers */,
@@ -460,6 +471,7 @@
 				D1B4EF581934953A0095048A /* WAV_Source.h in Headers */,
 				C935CE1A150610E500AE8B67 /* Player.h in Headers */,
 				D1B4EF881934959A0095048A /* NoAudio_AudioManager.h in Headers */,
+				D1152EE619D9967A00D1511D /* BufferAsync.h in Headers */,
 				C935CE1B150610E500AE8B67 /* Sound.h in Headers */,
 				C935CE1C150610E500AE8B67 /* Source.h in Headers */,
 				C935CE1D150610E500AE8B67 /* xal.h in Headers */,
@@ -582,6 +594,7 @@
 				D1B4EF5D193495540095048A /* OGG_Source.cpp in Sources */,
 				D1B4EF891934959A0095048A /* NoAudio_Player.cpp in Sources */,
 				D1B4EF531934953A0095048A /* WAV_Source.cpp in Sources */,
+				D1152EE019D9966F00D1511D /* BufferAsync.cpp in Sources */,
 				C9DAE8BA138103F80007882A /* Sound.cpp in Sources */,
 				C9DAE8BB138103F80007882A /* Source.cpp in Sources */,
 				D1B4EF831934959A0095048A /* NoAudio_AudioManager.cpp in Sources */,
@@ -597,6 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C935CE2E150610E500AE8B67 /* AudioManager.cpp in Sources */,
+				D1152EE119D9966F00D1511D /* BufferAsync.cpp in Sources */,
 				C935CE2F150610E500AE8B67 /* Buffer.cpp in Sources */,
 				C935CE30150610E500AE8B67 /* Category.cpp in Sources */,
 				D1B4EF96193495B40095048A /* OpenAL_iOS.mm in Sources */,
@@ -625,6 +639,7 @@
 				D1B4EF8F193495B30095048A /* OpenAL_AudioManager.cpp in Sources */,
 				D1B4EF561934953A0095048A /* WAV_Source.cpp in Sources */,
 				D1B4EF861934959A0095048A /* NoAudio_AudioManager.cpp in Sources */,
+				D1152EE319D9966F00D1511D /* BufferAsync.cpp in Sources */,
 				D1981C9E140F8ADB0057C3AF /* Category.cpp in Sources */,
 				D1981C9F140F8ADB0057C3AF /* Player.cpp in Sources */,
 				D1981CA0140F8ADB0057C3AF /* Sound.cpp in Sources */,
@@ -640,6 +655,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1F27B9E177A30BE00E5C131 /* AudioManager.cpp in Sources */,
+				D1152EE219D9966F00D1511D /* BufferAsync.cpp in Sources */,
 				D1B4EF551934953A0095048A /* WAV_Source.cpp in Sources */,
 				D1B4EF5F193495540095048A /* OGG_Source.cpp in Sources */,
 				D1B4EF93193495B40095048A /* OpenAL_iOS.mm in Sources */,

@@ -16,6 +16,7 @@
 #include <hltypes/hmutex.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hmutex.h>
 
 #include "xalExport.h"
 
