@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F2192E911F081D500660245 /* ParallelSoundManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F2192E611F081D500660245 /* ParallelSoundManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F2192EA11F081D500660245 /* Playlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F2192E711F081D500660245 /* Playlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F2192EB11F081D500660245 /* xalUtilExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F2192E811F081D500660245 /* xalUtilExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F2192EE11F081DF00660245 /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
+		7F2192EF11F081DF00660245 /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
+		7F2192FB11F0820B00660245 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2192FA11F0820B00660245 /* hltypes.framework */; };
+		C9C04E8F14BAF745005BD333 /* MultiPlaylist.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9C04E9314BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
+		C9C04E9414BAF750005BD333 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
+		D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
+		D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
+		D198F946177A3159002942E3 /* ParallelSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */; };
+		D198F947177A3159002942E3 /* Playlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2192ED11F081DF00660245 /* Playlist.cpp */; };
+		D198F948177A3159002942E3 /* MultiPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */; };
+		D1CB6B6D15CA91D300B927BC /* xal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CB6B6C15CA91D300B927BC /* xal.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7F2192E611F081D500660245 /* ParallelSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParallelSoundManager.h; path = include/xalutil/ParallelSoundManager.h; sourceTree = "<group>"; };
+		7F2192E711F081D500660245 /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playlist.h; path = include/xalutil/Playlist.h; sourceTree = "<group>"; };
+		7F2192E811F081D500660245 /* xalUtilExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xalUtilExport.h; path = include/xalutil/xalUtilExport.h; sourceTree = "<group>"; };
+		7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParallelSoundManager.cpp; path = src/ParallelSoundManager.cpp; sourceTree = "<group>"; };
+		7F2192ED11F081DF00660245 /* Playlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Playlist.cpp; path = src/Playlist.cpp; sourceTree = "<group>"; };
+		7F2192FA11F0820B00660245 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* xalutil.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xalutil.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiPlaylist.h; path = include/xalutil/MultiPlaylist.h; sourceTree = "<group>"; };
+		C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MultiPlaylist.cpp; path = src/MultiPlaylist.cpp; sourceTree = "<group>"; };
+		D1681BB018D769030088FC68 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
+		D1681BB118D769030088FC68 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
+		D1981CA8140F8D4F0057C3AF /* libxalutil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxalutil.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D198F94F177A3159002942E3 /* libxalutil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxalutil.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1CB6B6C15CA91D300B927BC /* xal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = xal.framework; path = "../../__build__/products/Debug-LLVM/xal.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1CB6B6D15CA91D300B927BC /* xal.framework in Frameworks */,
+				7F2192FB11F0820B00660245 /* hltypes.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* xalutil.framework */,
+				D1981CA8140F8D4F0057C3AF /* libxalutil.a */,
+				D198F94F177A3159002942E3 /* libxalutil.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* xalutil */ = {
+			isa = PBXGroup;
+			children = (
+				D1681B9A18D767550088FC68 /* config */,
+				7F2192E511F081C200660245 /* include */,
+				7F2192E311F081BE00660245 /* src */,
+				D1981CA9140F8D4F0057C3AF /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = xalutil;
+			sourceTree = "<group>";
+		};
+		7F2192E311F081BE00660245 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C9C04E9214BAF750005BD333 /* MultiPlaylist.cpp */,
+				7F2192EC11F081DF00660245 /* ParallelSoundManager.cpp */,
+				7F2192ED11F081DF00660245 /* Playlist.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		7F2192E511F081C200660245 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C9C04E8E14BAF745005BD333 /* MultiPlaylist.h */,
+				7F2192E611F081D500660245 /* ParallelSoundManager.h */,
+				7F2192E711F081D500660245 /* Playlist.h */,
+				7F2192E811F081D500660245 /* xalUtilExport.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		D1681B9A18D767550088FC68 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				D1681BB018D769030088FC68 /* iOS.xcconfig */,
+				D1681BB118D769030088FC68 /* Mac.xcconfig */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		D1981CA9140F8D4F0057C3AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1981CB9140F8D730057C3AF /* mac */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D1981CB9140F8D730057C3AF /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				D1CB6B6C15CA91D300B927BC /* xal.framework */,
+				7F2192FA11F0820B00660245 /* hltypes.framework */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F2192E911F081D500660245 /* ParallelSoundManager.h in Headers */,
+				7F2192EA11F081D500660245 /* Playlist.h in Headers */,
+				C9C04E8F14BAF745005BD333 /* MultiPlaylist.h in Headers */,
+				7F2192EB11F081D500660245 /* xalUtilExport.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* xalutil */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */;
+			buildPhases = (
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+				8DC2EF500486A6940098B216 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xalutil;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = xalutil;
+			productReference = 8DC2EF5B0486A6940098B216 /* xalutil.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D1981CA7140F8D4F0057C3AF /* xalutil (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "xalutil (iOS)" */;
+			buildPhases = (
+				D1981CA4140F8D4F0057C3AF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "xalutil (iOS)";
+			productName = "libxalutil-ios";
+			productReference = D1981CA8140F8D4F0057C3AF /* libxalutil.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D198F944177A3159002942E3 /* xalutil (Mac) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D198F949177A3159002942E3 /* Build configuration list for PBXNativeTarget "xalutil (Mac)" */;
+			buildPhases = (
+				D198F945177A3159002942E3 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "xalutil (Mac)";
+			productName = "libxalutil-ios";
+			productReference = D198F94F177A3159002942E3 /* libxalutil.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* xalutil */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* xalutil */,
+				D198F944177A3159002942E3 /* xalutil (Mac) */,
+				D1981CA7140F8D4F0057C3AF /* xalutil (iOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F2192EE11F081DF00660245 /* ParallelSoundManager.cpp in Sources */,
+				7F2192EF11F081DF00660245 /* Playlist.cpp in Sources */,
+				C9C04E9314BAF750005BD333 /* MultiPlaylist.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1981CA4140F8D4F0057C3AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1981CBA140F8DA80057C3AF /* ParallelSoundManager.cpp in Sources */,
+				D1981CBB140F8DA80057C3AF /* Playlist.cpp in Sources */,
+				C9C04E9414BAF750005BD333 /* MultiPlaylist.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D198F945177A3159002942E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D198F946177A3159002942E3 /* ParallelSoundManager.cpp in Sources */,
+				D198F947177A3159002942E3 /* Playlist.cpp in Sources */,
+				D198F948177A3159002942E3 /* MultiPlaylist.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7F7A5588129D426F00E0ED12 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				PRODUCT_NAME = xalutil;
+			};
+			name = "App Store";
+		};
+		7F7A5589129D426F00E0ED12 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB118D769030088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "App Store";
+		};
+		C981CE87132AF3F20072B5A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = xalutil;
+			};
+			name = Debug;
+		};
+		C981CE88132AF3F20072B5A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB118D769030088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		C981CE8A132AF3FA0072B5A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../../hltypes/include",
+					"${SRCROOT}/../include",
+					"${SRCROOT}/include",
+				);
+				PRODUCT_NAME = xalutil;
+			};
+			name = Release;
+		};
+		C981CE8B132AF3FA0072B5A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB118D769030088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		D1981CB3140F8D4F0057C3AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB018D769030088FC68 /* iOS.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1981CB5140F8D4F0057C3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB018D769030088FC68 /* iOS.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D1981CB6140F8D4F0057C3AF /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB018D769030088FC68 /* iOS.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+			};
+			name = "App Store";
+		};
+		D198F94B177A3159002942E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB118D769030088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D198F94D177A3159002942E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB118D769030088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D198F94E177A3159002942E3 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BB118D769030088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				PRODUCT_NAME = xalutil;
+				SKIP_INSTALL = YES;
+			};
+			name = "App Store";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xalutil" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C981CE88132AF3F20072B5A9 /* Debug */,
+				C981CE8B132AF3FA0072B5A9 /* Release */,
+				7F7A5589129D426F00E0ED12 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C981CE87132AF3F20072B5A9 /* Debug */,
+				C981CE8A132AF3FA0072B5A9 /* Release */,
+				7F7A5588129D426F00E0ED12 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D1981CB7140F8D4F0057C3AF /* Build configuration list for PBXNativeTarget "xalutil (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1981CB3140F8D4F0057C3AF /* Debug */,
+				D1981CB5140F8D4F0057C3AF /* Release */,
+				D1981CB6140F8D4F0057C3AF /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D198F949177A3159002942E3 /* Build configuration list for PBXNativeTarget "xalutil (Mac)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D198F94B177A3159002942E3 /* Debug */,
+				D198F94D177A3159002942E3 /* Release */,
+				D198F94E177A3159002942E3 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

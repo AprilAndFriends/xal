@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="ReleaseS|Android">
+      <Configuration>ReleaseS</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS|Android-x86">
+      <Configuration>ReleaseS</Configuration>
+      <Platform>Android-x86</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7A8E774E-DD94-43B8-8758-6F9F656CC8D2}</ProjectGuid>
+    <RootNamespace>tremor</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="props\default.props" />
+  <Import Project="..\..\..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Android'">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Android-x86'">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="..\..\..\..\..\hltypes\msvc\vs2013\props-generic\build-defaults.props" />
+  <Import Project="props\configuration.props" />
+  <ItemGroup>
+    <ClCompile Include="..\..\block.c" />
+    <ClCompile Include="..\..\codebook.c" />
+    <ClCompile Include="..\..\floor0.c" />
+    <ClCompile Include="..\..\floor1.c" />
+    <ClCompile Include="..\..\info.c" />
+    <ClCompile Include="..\..\mapping0.c" />
+    <ClCompile Include="..\..\mdct.c" />
+    <ClCompile Include="..\..\registry.c" />
+    <ClCompile Include="..\..\res012.c" />
+    <ClCompile Include="..\..\sharedbook.c" />
+    <ClCompile Include="..\..\synthesis.c" />
+    <ClCompile Include="..\..\vorbisfile.c" />
+    <ClCompile Include="..\..\window.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\backends.h" />
+    <ClInclude Include="..\..\block.h" />
+    <ClInclude Include="..\..\codebook.h" />
+    <ClInclude Include="..\..\codec_internal.h" />
+    <ClInclude Include="..\..\config_types.h" />
+    <ClInclude Include="..\..\ivorbiscodec.h" />
+    <ClInclude Include="..\..\ivorbisfile.h" />
+    <ClInclude Include="..\..\lsp_lookup.h" />
+    <ClInclude Include="..\..\mdct.h" />
+    <ClInclude Include="..\..\mdct_lookup.h" />
+    <ClInclude Include="..\..\misc.h" />
+    <ClInclude Include="..\..\ogg.h" />
+    <ClInclude Include="..\..\os.h" />
+    <ClInclude Include="..\..\os_types.h" />
+    <ClInclude Include="..\..\registry.h" />
+    <ClInclude Include="..\..\window.h" />
+    <ClInclude Include="..\..\window_lookup.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ogg\msvc\vs2013\libogg.vcxproj">
+      <Project>{15cbfeff-7965-41f5-b4e2-21e8795c9159}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

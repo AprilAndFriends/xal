@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug_XAudio2' or
+                                  '$(Configuration)'=='DebugS_XAudio2' or
+                                  '$(Configuration)'=='Release_XAudio2' or
+                                  '$(Configuration)'=='ReleaseS_XAudio2' or
+                                  '$(Configuration)'=='DebugP8_XAudio2' or
+                                  '$(Configuration)'=='DebugP8S_XAudio2' or
+                                  '$(Configuration)'=='ReleaseP8_XAudio2' or
+                                  '$(Configuration)'=='ReleaseP8S_XAudio2'">
+    <ClCompile>
+      <PreprocessorDefinitions>_XAUDIO2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>
