@@ -6,7 +6,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#ifdef _ANDROID
+#if defined(_ANDROID) || defined(__APPLE__)
 #include <unistd.h>
 #endif
 
