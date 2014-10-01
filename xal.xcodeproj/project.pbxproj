@@ -53,7 +53,6 @@
 		D1981CA0140F8ADB0057C3AF /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
 		D1981CA1140F8ADB0057C3AF /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
 		D1981CA2140F8ADB0057C3AF /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
-		D1B4EF501934952D0095048A /* M4A_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF4E1934952D0095048A /* M4A_Source.cpp */; };
 		D1B4EF531934953A0095048A /* WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF511934953A0095048A /* WAV_Source.cpp */; };
 		D1B4EF541934953A0095048A /* WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF511934953A0095048A /* WAV_Source.cpp */; };
 		D1B4EF551934953A0095048A /* WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF511934953A0095048A /* WAV_Source.cpp */; };
@@ -135,8 +134,6 @@
 		D1981C82140F8A230057C3AF /* libxal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1B4EF4C193495230095048A /* FLAC_Source.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FLAC_Source.cpp; path = src/audiosources/FLAC_Source.cpp; sourceTree = "<group>"; };
 		D1B4EF4D193495230095048A /* FLAC_Source.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLAC_Source.h; path = src/audiosources/FLAC_Source.h; sourceTree = "<group>"; };
-		D1B4EF4E1934952D0095048A /* M4A_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = M4A_Source.cpp; path = src/audiosources/M4A_Source.cpp; sourceTree = "<group>"; };
-		D1B4EF4F1934952D0095048A /* M4A_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = M4A_Source.h; path = src/audiosources/M4A_Source.h; sourceTree = "<group>"; };
 		D1B4EF511934953A0095048A /* WAV_Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WAV_Source.cpp; path = src/audiosources/WAV_Source.cpp; sourceTree = "<group>"; };
 		D1B4EF521934953A0095048A /* WAV_Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAV_Source.h; path = src/audiosources/WAV_Source.h; sourceTree = "<group>"; };
 		D1B4EF59193495450095048A /* SPX_Source.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SPX_Source.cpp; path = src/audiosources/SPX_Source.cpp; sourceTree = "<group>"; };
@@ -231,15 +228,6 @@
 			name = libxal;
 			sourceTree = "<group>";
 		};
-		7F392BE1138FB6F2003B93A7 /* M4A */ = {
-			isa = PBXGroup;
-			children = (
-				D1B4EF4E1934952D0095048A /* M4A_Source.cpp */,
-				D1B4EF4F1934952D0095048A /* M4A_Source.h */,
-			);
-			name = M4A;
-			sourceTree = "<group>";
-		};
 		7F4337D513A7803200A2DB0D /* CoreAudio */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				D1B4EF4B1934951B0095048A /* FLAC */,
-				7F392BE1138FB6F2003B93A7 /* M4A */,
 				C9DAE8F6138105900007882A /* WAV */,
 				C9DAE8F5138105800007882A /* SPX */,
 				C9DAE8F41381057D0007882A /* OGG */,
@@ -520,9 +507,9 @@
 			productReference = C935CE4F150610E600AE8B67 /* xal.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D1981C81140F8A230057C3AF /* xal (iOS OpenAL vorbis m4a) */ = {
+		D1981C81140F8A230057C3AF /* xal (iOS OpenAL vorbis) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "xal (iOS OpenAL vorbis m4a)" */;
+			buildConfigurationList = D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "xal (iOS OpenAL vorbis)" */;
 			buildPhases = (
 				D1981C7E140F8A230057C3AF /* Sources */,
 			);
@@ -530,7 +517,7 @@
 			);
 			dependencies = (
 			);
-			name = "xal (iOS OpenAL vorbis m4a)";
+			name = "xal (iOS OpenAL vorbis)";
 			productName = "libxal-ios";
 			productReference = D1981C82140F8A230057C3AF /* libxal.a */;
 			productType = "com.apple.product-type.library.static";
@@ -576,7 +563,7 @@
 				8DC2EF4F0486A6940098B216 /* xal (SDL_mixer vorbis) */,
 				C935CE15150610E500AE8B67 /* xal (OpenAL vorbis) */,
 				D1F27B97177A30BE00E5C131 /* xal (Mac OpenAL vorbis) */,
-				D1981C81140F8A230057C3AF /* xal (iOS OpenAL vorbis m4a) */,
+				D1981C81140F8A230057C3AF /* xal (iOS OpenAL vorbis) */,
 			);
 		};
 /* End PBXProject section */
@@ -632,7 +619,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1981C9B140F8ADB0057C3AF /* AudioManager.cpp in Sources */,
-				D1B4EF501934952D0095048A /* M4A_Source.cpp in Sources */,
 				D1B4EF90193495B30095048A /* OpenAL_iOS.mm in Sources */,
 				D1B4EF8C1934959A0095048A /* NoAudio_Player.cpp in Sources */,
 				D1981C9D140F8ADB0057C3AF /* Buffer.cpp in Sources */,
@@ -890,7 +876,6 @@
 					_IOS,
 					_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_M4A,
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
@@ -910,7 +895,6 @@
 					_IOS,
 					_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_M4A,
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
@@ -929,7 +913,6 @@
 					_IOS,
 					_OPENAL,
 					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_M4A,
 					_FORMAT_OGG,
 					"$(inherited)",
 				);
@@ -1027,7 +1010,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "xal (iOS OpenAL vorbis m4a)" */ = {
+		D1981C91140F8A230057C3AF /* Build configuration list for PBXNativeTarget "xal (iOS OpenAL vorbis)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1981C8D140F8A230057C3AF /* Debug */,

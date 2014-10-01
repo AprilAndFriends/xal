@@ -31,9 +31,6 @@
 #ifdef _FORMAT_FLAC
 #include "FLAC_Source.h"
 #endif
-#ifdef _FORMAT_M4A
-#include "M4A_Source.h"
-#endif
 #ifdef _FORMAT_OGG
 #include "OGG_Source.h"
 #endif
@@ -61,9 +58,6 @@ namespace xal
 		this->updateTime = updateTime;
 #ifdef _FORMAT_FLAC
 		this->extensions += ".flac";
-#endif
-#ifdef _FORMAT_M4A
-		this->extensions += ".m4a";
 #endif
 #ifdef _FORMAT_OGG
 		this->extensions += ".ogg";
@@ -516,11 +510,6 @@ namespace xal
 #ifdef _FORMAT_FLAC
 		case FLAC:
 			source = new FLAC_Source(filename, sourceMode, bufferMode);
-			break;
-#endif
-#ifdef _FORMAT_M4A
-		case M4A:
-			source = new M4A_Source(filename, sourceMode, bufferMode);
 			break;
 #endif
 #ifdef _FORMAT_OGG
