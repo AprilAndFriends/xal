@@ -680,7 +680,7 @@ namespace xal
 			hlog::write(xal::logTag, "Suspending XAL.");
 			foreach (Player*, it, this->players)
 			{
-				if ((*it)->isPlaying())
+				if ((*it)->_isPlaying())
 				{
 					(*it)->_pause();
 					this->suspendedPlayers += (*it);
@@ -761,7 +761,7 @@ namespace xal
 	{
 		foreach (Player*, it, this->managedPlayers)
 		{
-			if ((*it)->getSound()->getName() == soundName && (*it)->isPlaying())
+			if ((*it)->getSound()->getName() == soundName && (*it)->_isPlaying())
 			{
 				return true;
 			}
