@@ -76,7 +76,7 @@ namespace xal
 #endif
 		if (threaded)
 		{
-			this->thread = new hthread(&AudioManager::_update);
+			this->thread = new hthread(&AudioManager::_update, "XAL update");
 		}
 	}
 

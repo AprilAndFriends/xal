@@ -26,7 +26,7 @@ namespace xal
 	int BufferAsync::loaded = 0;
 	hmutex BufferAsync::queueMutex;
 
-	hthread BufferAsync::readerThread(&BufferAsync::_read);
+	hthread BufferAsync::readerThread(&BufferAsync::_read, "APRIL async loader");
 	bool BufferAsync::readerRunning = false;
 
 	harray<hthread*> BufferAsync::decoderThreads;
@@ -160,7 +160,7 @@ namespace xal
 				size = hmin(size, cpus) - BufferAsync::decoderThreads.size();
 				for_iter (i, 0, size)
 				{
-					decoderThread = new hthread(&BufferAsync::_decode);
+					decoderThread = new hthread(&BufferAsync::_decode, "XAL async decoder");
 					BufferAsync::decoderThreads += decoderThread;
 					decoderThread->start();
 				}
