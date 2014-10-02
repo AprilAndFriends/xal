@@ -334,9 +334,9 @@ namespace xal
 		return (processed * STREAM_BUFFER_SIZE);
 	}
 	
-	void OpenSLES_Player::_submitBuffer(unsigned char* stream, int size)
+	void OpenSLES_Player::_submitBuffer(hstream& stream)
 	{
-		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, stream, size);
+		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, &stream[0], stream.size());
 		if (result != SL_RESULT_SUCCESS)
 		{
 			hlog::warn(xal::logTag, "Could not queue buffer!");
@@ -347,9 +347,9 @@ namespace xal
 	{
 		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
-		unsigned char* stream = this->buffer->getStream();
-		int currentSize;
-		for_iter(i, 0, filled)
+		hstream& stream = this->buffer->getStream();
+		int currentSize = 0;
+		for_iter (i, 0, filled)
 		{
 			currentSize = hmin(size, STREAM_BUFFER_SIZE);
 			memcpy(this->streamBuffers[this->bufferIndex], &stream[i * STREAM_BUFFER_SIZE], currentSize);

@@ -14,7 +14,7 @@
 #define XAL_SOURCE_H
 
 #include <hltypes/hltypesUtil.h>
-#include <hltypes/hsbase.h>
+#include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -40,7 +40,6 @@ namespace xal
 		HL_DEFINE_GET(SourceMode, sourceMode, SourceMode);
 		HL_DEFINE_GET(BufferMode, bufferMode, BufferMode);
 		HL_DEFINE_IS(streamOpen, Open);
-		HL_DEFINE_IS(decoded, Decoded);
 		HL_DEFINE_GET(int, size, Size);
 		HL_DEFINE_GET(int, channels, Channels);
 		HL_DEFINE_GET(int, samplingRate, SamplingRate);
@@ -49,10 +48,7 @@ namespace xal
 
 		/// @brief Opens the Source for reading.
 		/// @return True if Source was opened successfully.
-		bool open();
-		/// @brief Decodes the Source's contents.
-		/// @return True if Source was decoded successfully.
-		virtual bool decode();
+		virtual bool open();
 		/// @brief Closes the Source.
 		virtual void close();
 		/// @brief Rewinds the Source's audio data to the beginning.
@@ -60,12 +56,12 @@ namespace xal
 		/// @brief Loads all audio data.
 		/// @param[out] output Data stream where all data will be stored.
 		/// @return True if data was successfully read.
-		virtual bool load(unsigned char* output);
+		virtual bool load(hstream& output);
 		/// @brief Loads a chunk of audio data.
 		/// @param[out] output Data stream where all data will be stored.
 		/// @param[out] size Maximum byte-size of data to read.
 		/// @return Number of bytes read.
-		virtual int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
+		virtual int loadChunk(hstream& output, int size = STREAM_BUFFER_SIZE);
 		
 	protected:
 		/// @brief Filename of the Source.
@@ -76,8 +72,6 @@ namespace xal
 		BufferMode bufferMode;
 		/// @brief Whether the underlying stream is open.
 		bool streamOpen;
-		/// @brief Whether the underlying stream is decoded.
-		bool decoded;
 		/// @brief Byte-size of the audio data.
 		int size;
 		/// @brief Number of channels in the audio data.

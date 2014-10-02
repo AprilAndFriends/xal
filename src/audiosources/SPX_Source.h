@@ -27,7 +27,7 @@ namespace xal
 		SPX_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		~SPX_Source();
 
-		bool decode(unsigned char* output);
+		bool load(hstream& output);
 
 	};
 

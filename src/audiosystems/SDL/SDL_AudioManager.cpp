@@ -27,8 +27,6 @@ namespace xal
 	{
 		this->name = XAL_AS_SDL;
 		hlog::write(xal::logTag, "Initializing SDL Audio.");
-		this->buffer = new unsigned char[1];
-		this->bufferSize = 1;
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
@@ -58,7 +56,6 @@ namespace xal
 		SDL_PauseAudio(1);
 		SDL_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
-		delete [] this->buffer;
 	}
 	
 	Player* SDL_AudioManager::_createSystemPlayer(Sound* sound)
@@ -69,18 +66,16 @@ namespace xal
 	void SDL_AudioManager::mixAudio(void* unused, unsigned char* stream, int length)
 	{
 		this->_lock();
-		if (this->bufferSize != length)
+		if (this->buffer.size() < length)
 		{
-			delete [] this->buffer;
-			this->buffer = new unsigned char[length];
-			this->bufferSize = length;
+			this->buffer.clear(length); // to make sure there is enough space available
 		}
-		memset(this->buffer, 0, this->bufferSize * sizeof(unsigned char));
+		this->buffer.fill(0, length);
 		bool first = true;
 		harray<SDL_Player*> players = this->players.cast<SDL_Player*>();
 		foreach (SDL_Player*, it, players)
 		{
-			if ((*it)->mixAudio(this->buffer, this->bufferSize, first)) // returns true if playing and first audio data has been mixed into the stream
+			if ((*it)->mixAudio(this->buffer, length, first)) // returns true if playing and first audio data has been mixed into the stream
 			{
 				first = false;
 			}
@@ -88,7 +83,7 @@ namespace xal
 		// because stream mixing is done manually, there is no need to call SDL_MixAudio and memcpy is enough,
 		// the following line is here only for demonstration how it would look like with SDL_MixAudio
 		//SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
-		memcpy(stream, this->buffer, this->bufferSize);
+		memcpy(stream, &this->buffer[0], length);
 		this->_unlock();
 	}
 
@@ -97,9 +92,9 @@ namespace xal
 		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
 	}
 	
-	int SDL_AudioManager::_convertStream(Source* source, unsigned char** stream, int *streamSize, int dataSize)
+	int SDL_AudioManager::_convertStream(Source* source, hstream& stream, int dataSize)
 	{	
-		if (*stream == NULL || *streamSize <= 0 || dataSize <= 0)
+		if (stream.size() == 0 || dataSize <= 0)
 		{
 			return dataSize;
 		}
@@ -121,7 +116,11 @@ namespace xal
 		}
 		cvt.buf = (Uint8*)new unsigned char[dataSize * cvt.len_mult];
 		cvt.len = dataSize;
-		memcpy(cvt.buf, *stream, dataSize * sizeof(unsigned char));
+		result = stream.read_raw(cvt.buf, cvt.len);
+		if (result > 0)
+		{
+			stream.seek(-result);
+		}
 		result = SDL_ConvertAudio(&cvt);
 		if (result != 0)
 		{
@@ -132,13 +131,15 @@ namespace xal
 		}
 		if (cvt.len_cvt > 0)
 		{
-			if (cvt.len_cvt > *streamSize)
+			if (cvt.len_cvt > stream.size())
 			{
-				delete [] *stream;
-				*streamSize = cvt.len_cvt;
-				*stream = new unsigned char[*streamSize];
+				stream.set_capacity(stream.position() + cvt.len_cvt);
 			}
-			memcpy(*stream, cvt.buf, cvt.len_cvt * sizeof(unsigned char));
+			int written = stream.write_raw(cvt.buf, cvt.len_cvt);
+			if (written > 0)
+			{
+				stream.seek(-written);
+			}
 		}
 		delete [] cvt.buf;
 		cvt.buf = NULL;

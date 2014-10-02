@@ -23,7 +23,7 @@
 
 namespace xal
 {
-	// small optimizations, they are not thread-safe
+	// small optimization, it's not thread-safe, but since it's not used anywhere, it doesn't matter
 	static int _section = 0;
 
 	static size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
@@ -70,15 +70,12 @@ namespace xal
 		this->close();
 	}
 
-	bool OGG_Source::decode()
+	bool OGG_Source::open()
 	{
+		Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
-		}
-		if (this->decoded)
-		{
-			return true;
 		}
 		// setting the special callbacks
 		ov_callbacks callbacks;
@@ -102,7 +99,7 @@ namespace xal
 			hlog::error(xal::logTag, "OGG: error reading data!");
 			this->close();
 		}
-		return Source::decode();
+		return this->streamOpen;
 	}
 
 	void OGG_Source::close()
@@ -122,20 +119,22 @@ namespace xal
 		}
 	}
 
-	bool OGG_Source::load(unsigned char* output)
+	bool OGG_Source::load(hstream& output)
 	{
 		if (!Source::load(output))
 		{
 			return false;
 		}
 		unsigned long remaining = this->size;
-		char* buffer = (char*)output;
-		int read;
+		output.prepare_manual_write_raw(remaining);
+		char* buffer = (char*)&output[0];
+		int read = 0;
 		while (remaining > 0)
 		{
 			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
+				memset(buffer, 0, remaining);
 				break;
 			}
 			remaining -= read;
@@ -144,20 +143,22 @@ namespace xal
 		return true;
 	}
 
-	int OGG_Source::loadChunk(unsigned char* output, int size)
+	int OGG_Source::loadChunk(hstream& output, int size)
 	{
 		if (Source::loadChunk(output, size) == 0)
 		{
 			return 0;
 		}
 		int remaining = size;
-		char* buffer = (char*)output;
-		int read;
+		output.prepare_manual_write_raw(remaining);
+		char* buffer = (char*)&output[0];
+		int read = 0;
 		while (remaining > 0)
 		{
 			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
+				memset(buffer, 0, remaining);
 				break;
 			}
 			remaining -= read;

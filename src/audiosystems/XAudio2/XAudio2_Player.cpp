@@ -146,7 +146,7 @@ namespace xal
 		{
 			if (!this->paused)
 			{
-				this->_submitBuffer(this->buffer->getStream(), this->buffer->getSize());
+				this->_submitBuffer(this->buffer->getStream());
 			}
 			return;
 		}
@@ -263,10 +263,10 @@ namespace xal
 		return (processed * STREAM_BUFFER_SIZE);
 	}
 
-	void XAudio2_Player::_submitBuffer(unsigned char* stream, int size)
+	void XAudio2_Player::_submitBuffer(hstream& stream)
 	{
-		this->xa2Buffer.AudioBytes = size;
-		this->xa2Buffer.pAudioData = stream;
+		this->xa2Buffer.AudioBytes = stream.size();
+		this->xa2Buffer.pAudioData = &stream[0];
 		this->xa2Buffer.LoopCount = (this->looping ? XAUDIO2_LOOP_INFINITE : 0);
 		HRESULT result = this->sourceVoice->SubmitSourceBuffer(&this->xa2Buffer);
 		if (FAILED(result))
@@ -279,7 +279,7 @@ namespace xal
 	{
 		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
-		unsigned char* stream = this->buffer->getStream();
+		hstream& stream = this->buffer->getStream();
 		int currentSize;
 		for_iter (i, 0, filled)
 		{

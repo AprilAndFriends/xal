@@ -308,14 +308,14 @@ namespace xal
 	int OpenAL_Player::_fillBuffers(int index, int count)
 	{
 		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
+		hstream& stream = this->buffer->getStream();
 		if (!this->sound->isStreamed())
 		{
 			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
-				this->buffer->getStream(), size, this->buffer->getSamplingRate());
+				&stream[0], size, this->buffer->getSamplingRate());
 			return 1;
 		}
 		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
-		unsigned char* stream = this->buffer->getStream();
 		unsigned int format = (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16);
 		int samplingRate = this->buffer->getSamplingRate();
 		for_iter (i, 0, filled)

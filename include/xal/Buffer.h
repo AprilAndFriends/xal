@@ -42,7 +42,7 @@ namespace xal
 
 		HL_DEFINE_GET(hstr, filename, Filename);
 		HL_DEFINE_GET(int, fileSize, FileSize);
-		HL_DEFINE_GET(unsigned char*, stream, Stream);
+		inline hstream& getStream() { return this->stream; }
 		HL_DEFINE_GET(Source*, source, Source);
 
 		int getSize();
@@ -98,11 +98,10 @@ namespace xal
 		/// @note This is only used by some audio systems.
 		int calcInputSize(int size);
 		/// @brief Reads the raw PCM data from the buffer.
-		/// @param[in] size The byte-size of the data in the audio system.
-		/// @param[out] output The buffer where to store the PCM data. It should be uninitialized. It will be set to NULL.
+		/// @param[out] output The data stream where to store the PCM data.
 		/// @return The byte-size of the read data.
 		/// @note If the Source does not provide data as PCM, it will always be converted to PCM.
-		int readPcmData(unsigned char** output);
+		int readPcmData(hstream& output);
 
 	protected:
 		/// @brief Filename of the source.
@@ -114,9 +113,7 @@ namespace xal
 		/// @brief Whether the underlying source was loaded.
 		bool loaded;
 		/// @brief Current data provided by the buffer.
-		unsigned char* stream;
-		/// @brief Size of the currently provided data.
-		int streamSize;
+		hstream stream;
 		/// @brief Flag for whether an asynchronous load was queued.
 		bool asyncLoadQueued;
 		/// @brief Flag for whether asynchronously loaded data should be discarded.

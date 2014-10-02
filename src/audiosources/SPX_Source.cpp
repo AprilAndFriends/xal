@@ -28,9 +28,9 @@ namespace xal
 		this->close();
 	}
 
-	bool SPX_Source::load(unsigned char* output)
+	bool SPX_Source::load(hstream& output)
 	{
-		if (!Source::load(output, size))
+		if (!Source::load(output))
 		{
 			return false;
 		}
