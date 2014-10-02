@@ -17,11 +17,6 @@
 #include "Buffer.h"
 #include "DirectSound_Player.h"
 #include "DirectSound_AudioManager.h"
-/*
-#ifdef _FORMAT_WAV
-#include "DirectSound_WAV_Source.h"
-#endif
-*/
 #include "Sound.h"
 #include "xal.h"
 
@@ -83,25 +78,13 @@ namespace xal
 			return true;
 		}
 		WAVEFORMATEX wavefmt;
-		/*
-#ifdef _FORMAT_WAV
-		DirectSound_WAV_Source* wavSource = dynamic_cast<DirectSound_WAV_Source*>(this->buffer->getSource());
-		if (wavSource != NULL)
-		{
-			wavefmt = wavSource->getWavefmt();
-		}
-		else
-#endif
-		*/
-		{
-			wavefmt.cbSize = 0;
-			wavefmt.nChannels = this->buffer->getChannels();
-			wavefmt.nSamplesPerSec = this->buffer->getSamplingRate();
-			wavefmt.wBitsPerSample = this->buffer->getBitsPerSample();
-			wavefmt.wFormatTag = WAVE_FORMAT_PCM;
-			wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8; // standard calculation of WAV PCM data
-			wavefmt.nAvgBytesPerSec = wavefmt.nSamplesPerSec * wavefmt.nBlockAlign; // standard calculation of WAV PCM data
-		}
+		wavefmt.cbSize = 0;
+		wavefmt.nChannels = this->buffer->getChannels();
+		wavefmt.nSamplesPerSec = this->buffer->getSamplingRate();
+		wavefmt.wBitsPerSample = this->buffer->getBitsPerSample();
+		wavefmt.wFormatTag = WAVE_FORMAT_PCM;
+		wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8; // standard calculation of WAV PCM data
+		wavefmt.nAvgBytesPerSec = wavefmt.nSamplesPerSec * wavefmt.nBlockAlign; // standard calculation of WAV PCM data
 		DSBUFFERDESC bufferDesc;
 		memset(&bufferDesc, 0, sizeof(DSBUFFERDESC));
 		bufferDesc.dwSize = sizeof(DSBUFFERDESC);

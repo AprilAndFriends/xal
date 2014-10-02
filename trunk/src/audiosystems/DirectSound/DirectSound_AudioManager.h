@@ -40,7 +40,6 @@ namespace xal
 
 	protected:
 		Player* _createSystemPlayer(Sound* sound);
-		Source* _createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format);
 
 	};
 
