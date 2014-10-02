@@ -107,9 +107,6 @@
     <ClCompile Include="..\..\src\audiosystems\SDL\SDL_Player.cpp">
       <Filter>Source Files\audiosystems\SDL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_WAV_Source.cpp">
-      <Filter>Source Files\audiosystems\DirectSound</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\audiosources\FLAC_Source.cpp">
       <Filter>Source Files\audiosources</Filter>
     </ClCompile>
@@ -177,9 +174,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_Player.h">
       <Filter>Header Files\audiosystems\SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_WAV_Source.h">
-      <Filter>Header Files\audiosystems\DirectSound</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\audiosources\FLAC_Source.h">
       <Filter>Header Files\audiosources</Filter>

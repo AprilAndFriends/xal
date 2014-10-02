@@ -558,7 +558,6 @@
     <ClCompile Include="..\..\src\audiosources\WAV_Source.cpp" />
     <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_AudioManager.cpp" />
     <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_Player.cpp" />
-    <ClCompile Include="..\..\src\audiosystems\DirectSound\DirectSound_WAV_Source.cpp" />
     <ClCompile Include="..\..\src\audiosystems\NoAudio\NoAudio_AudioManager.cpp" />
     <ClCompile Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.cpp" />
     <ClCompile Include="..\..\src\audiosystems\OpenAL\OpenAL_AudioManager.cpp" />
@@ -583,7 +582,6 @@
     <ClInclude Include="..\..\src\audiosources\WAV_Source.h" />
     <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_Player.h" />
-    <ClInclude Include="..\..\src\audiosystems\DirectSound\DirectSound_WAV_Source.h" />
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.h" />
     <ClInclude Include="..\..\src\audiosystems\OpenAL\OpenAL_AudioManager.h" />

@@ -15,11 +15,6 @@
 
 #include "DirectSound_AudioManager.h"
 #include "DirectSound_Player.h"
-/*
-#ifdef _FORMAT_WAV
-#include "DirectSound_WAV_Source.h"
-#endif
-*/
 #include "xal.h"
 
 namespace xal
@@ -75,26 +70,6 @@ namespace xal
 	Player* DirectSound_AudioManager::_createSystemPlayer(Sound* sound)
 	{
 		return new DirectSound_Player(sound);
-	}
-
-	Source* DirectSound_AudioManager::_createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format)
-	{
-		/*
-		Source* source;
-		switch (format)
-		{
-#ifdef _FORMAT_WAV
-		case WAV:
-			source = new DirectSound_WAV_Source(filename, sourceMode, bufferMode);
-			break;
-#endif
-		default:
-			source = AudioManager::_createSource(filename, sourceMode, bufferMode, format);
-			break;
-		}
-		return source;
-		*/
-		return AudioManager::_createSource(filename, sourceMode, bufferMode, format);
 	}
 
 }
