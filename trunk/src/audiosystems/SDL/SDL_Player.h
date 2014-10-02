@@ -28,7 +28,7 @@ namespace xal
 		SDL_Player(Sound* sound);
 		~SDL_Player();
 
-		bool mixAudio(unsigned char* stream, int length, bool first);
+		bool mixAudio(hstream& stream, int size, bool first);
 
 	protected:
 		bool playing;

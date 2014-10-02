@@ -29,10 +29,10 @@ namespace xal
 		WAV_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode);
 		~WAV_Source();
 
-		bool decode();
+		bool open();
 		void rewind();
-		bool load(unsigned char* output);
-		int loadChunk(unsigned char* output, int size = STREAM_BUFFER_SIZE);
+		bool load(hstream& output);
+		int loadChunk(hstream& output, int size = STREAM_BUFFER_SIZE);
 
 	protected:
 		void _findData();

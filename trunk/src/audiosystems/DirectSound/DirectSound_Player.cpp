@@ -121,7 +121,8 @@ namespace xal
 	{
 		if (!this->sound->isStreamed())
 		{
-			this->_copyBuffer(this->buffer->getStream(), this->buffer->getSize());
+			hstream& stream = this->buffer->getStream();
+			this->_copyBuffer(stream, stream.size());
 			return;
 		}
 		int count = STREAM_BUFFER_COUNT;
@@ -149,7 +150,7 @@ namespace xal
 		}
 	}
 
-	void DirectSound_Player::_copyBuffer(unsigned char* stream, int size, int count)
+	void DirectSound_Player::_copyBuffer(hstream& stream, int size, int count)
 	{
 		void* write1 = NULL;
 		void* write2 = NULL;
@@ -168,7 +169,7 @@ namespace xal
 		}
 		if (write1 != NULL)
 		{
-			memcpy(write1, stream, length1);
+			memcpy(write1, &stream[0], length1);
 		}
 		if (write2 != NULL)
 		{
@@ -233,10 +234,9 @@ namespace xal
 	{
 		if (this->dsBuffer != NULL)
 		{
-			DWORD freq = (DWORD) (this->pitch * this->buffer->getSamplingRate());
+			DWORD freq = (DWORD)(this->pitch * this->buffer->getSamplingRate());
 			DWORD limit = ((DirectSound_AudioManager*)xal::mgr)->dsCaps->dwMaxSecondarySampleRate;
-			if (freq > limit) freq = limit;
-			this->dsBuffer->SetFrequency(freq);
+			this->dsBuffer->SetFrequency(hmin(freq, limit));
 		}
 	}
 

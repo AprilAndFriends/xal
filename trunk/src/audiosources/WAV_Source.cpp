@@ -26,15 +26,11 @@ namespace xal
 		this->close();
 	}
 
-	bool WAV_Source::decode()
+	bool WAV_Source::open()
 	{
 		if (!this->streamOpen)
 		{
 			return false;
-		}
-		if (this->decoded)
-		{
-			return true;
 		}
 		unsigned char buffer[5] = {0};
 		this->stream->read_raw(buffer, 4); // RIFF
@@ -93,7 +89,7 @@ namespace xal
 		}
 		this->duration = (float)this->size / (this->samplingRate * this->channels * this->bitsPerSample / 8);
 		this->_findData();
-		return Source::decode();
+		return this->streamOpen;
 	}
 
 	void WAV_Source::rewind()
@@ -130,23 +126,33 @@ namespace xal
 		}
 	}
 
-	bool WAV_Source::load(unsigned char* output)
+	bool WAV_Source::load(hstream& output)
 	{
 		if (Source::load(output) == 0)
 		{
 			return false;
 		}
-		this->stream->read_raw(output, this->size);
-		return true;
+		int written = output.write_raw(this->stream, this->size);
+		if (written > 0)
+		{
+			output.seek(-written);
+			return true;
+		}
+		return false;
 	}
 
-	int WAV_Source::loadChunk(unsigned char* output, int size)
+	int WAV_Source::loadChunk(hstream& output, int size)
 	{
 		if (Source::loadChunk(output, size) == 0)
 		{
 			return 0;
 		}
-		return this->stream->read_raw(output, size);
+		int written = output.write_raw(this->stream, size);
+		if (written > 0)
+		{
+			output.seek(-written);
+		}
+		return written;
 	}
 
 }

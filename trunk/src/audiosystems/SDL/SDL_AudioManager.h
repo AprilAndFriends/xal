@@ -16,6 +16,7 @@
 
 #include <SDL/SDL.h>
 
+#include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
@@ -44,14 +45,13 @@ namespace xal
 
 	protected:
 		SDL_AudioSpec format;
-		unsigned char* buffer;
-		int bufferSize;
+		hstream buffer;
 
 		Player* _createSystemPlayer(Sound* sound);
 
 		static void _mixAudio(void* unused, unsigned char* stream, int length);
 
-		int _convertStream(Source* source, unsigned char** stream, int *streamSize, int dataSize);
+		int _convertStream(Source* source, hstream& stream, int dataSize);
 		
 		// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
 		void _lock();

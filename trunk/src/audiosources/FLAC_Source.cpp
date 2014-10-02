@@ -21,18 +21,15 @@ namespace xal
 		this->close();
 	}
 
-	bool FLAC_Source::decode()
+	bool FLAC_Source::open()
 	{
+		Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
 		}
-		if (this->decoded)
-		{
-			return true;
-		}
 		// TODO - implement
-		return Source::decode();
+		return this->streamOpen;
 	}
 
 	void FLAC_Source::close()
@@ -53,7 +50,7 @@ namespace xal
 		}
 	}
 
-	bool FLAC_Source::load(unsigned char* output)
+	bool FLAC_Source::load(hstream& output)
 	{
 		if (!Source::load(output))
 		{
@@ -63,7 +60,7 @@ namespace xal
 		return true;
 	}
 
-	int FLAC_Source::loadChunk(unsigned char* output, int size)
+	int FLAC_Source::loadChunk(hstream& output, int size)
 	{
 		if (Source::loadChunk(output, size) == 0)
 		{

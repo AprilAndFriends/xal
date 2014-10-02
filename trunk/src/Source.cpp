@@ -17,7 +17,7 @@
 
 namespace xal
 {
-	Source::Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : streamOpen(false), decoded(false),
+	Source::Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : streamOpen(false),
 		size(0), channels(2), samplingRate(44100), bitsPerSample(16), duration(0.0f), stream(NULL)
 	{
 		this->filename = filename;
@@ -64,15 +64,6 @@ namespace xal
 		return this->streamOpen;
 	}
 
-	bool Source::decode()
-	{
-		if (this->streamOpen)
-		{
-			this->decoded = true;
-		}
-		return this->decoded;
-	}
-	
 	void Source::close()
 	{
 		if (this->streamOpen)
@@ -81,7 +72,6 @@ namespace xal
 			{
 				delete this->stream;
 				this->stream = NULL;
-				this->decoded = false;
 			}
 			this->streamOpen = false;
 		}
@@ -95,7 +85,7 @@ namespace xal
 		}
 	}
 	
-	bool Source::load(unsigned char* output)
+	bool Source::load(hstream& output)
 	{
 		hlog::write(xal::logTag, "Loading file: " + this->filename);
 		if (!this->streamOpen)
@@ -103,24 +93,14 @@ namespace xal
 			hlog::error(xal::logTag, "File not open: " + this->filename);
 			return false;
 		}
-		if (!this->decoded)
-		{
-			hlog::error(xal::logTag, "Stream not decoded: " + this->filename);
-			return false;
-		}
 		return true;
 	}
 	
-	int Source::loadChunk(unsigned char* output, int count)
+	int Source::loadChunk(hstream& output, int size)
 	{
 		if (!this->streamOpen)
 		{
 			hlog::error(xal::logTag, "File not open: " + this->filename);
-			return 0;
-		}
-		if (!this->decoded)
-		{
-			hlog::error(xal::logTag, "Stream not decoded: " + this->filename);
 			return 0;
 		}
 		return 1; // means that "something" was read

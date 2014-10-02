@@ -43,14 +43,14 @@ namespace xal
 				*size2 = 0;
 				return;
 			}
-			unsigned char* stream = this->buffer->getStream();
-			*data1 = &stream[this->readPosition];
+			hstream& stream = this->buffer->getStream();
+			*data1 = (unsigned char*)&stream[this->readPosition];
 			*size1 = hmin(hmin(streamSize, streamSize - this->readPosition), size);
 			*data2 = NULL;
 			*size2 = 0;
 			if (this->looping && this->readPosition + size > streamSize)
 			{
-				*data2 = stream;
+				*data2 = (unsigned char*)&stream[0];
 				*size2 = size - *size1;
 				this->readPosition = (this->readPosition + size) % streamSize;
 			}
@@ -91,30 +91,30 @@ namespace xal
 		}
 	}
 
-	bool SDL_Player::mixAudio(unsigned char* stream, int length, bool first)
+	bool SDL_Player::mixAudio(hstream& stream, int size, bool first)
 	{
 		if (!this->playing)
 		{
 			return false;
 		}
-		unsigned char* data1;
-		unsigned char* data2;
-		int size1;
-		int size2;
-		this->_getData(length, &data1, &size1, &data2, &size2);
+		unsigned char* data1 = NULL;
+		int size1 = 0;
+		unsigned char* data2 = NULL;
+		int size2 = 0;
+		this->_getData(size, &data1, &size1, &data2, &size2); // ironically this is very similar to how DirectSound does things internally
 		if (size1 > 0)
 		{
 			if (first && this->currentGain == 1.0f)
 			{
-				memcpy(stream, data1, size1);
+				memcpy((void*)&stream[0], data1, size1);
 				if (size2 > 0)
 				{
-					memcpy(&stream[size1], data2, size2);
+					memcpy((void*)&stream[size1], data2, size2);
 				}
 			}
 			else
 			{
-				short* sStream = (short*)stream;
+				short* sStream = (short*)&stream[0];
 				short* sData1 = (short*)data1;
 				short* sData2 = (short*)data2;
 				size1 = size1 * sizeof(unsigned char) / sizeof(short);
@@ -244,16 +244,16 @@ namespace xal
 		size = this->buffer->calcInputSize(size);
 		// load the data from the buffer
 		int streamSize = this->buffer->load(this->looping, size);
-		unsigned char* stream = this->buffer->getStream();
+		hstream& stream = this->buffer->getStream();
 		if (this->writePosition + streamSize <= STREAM_BUFFER)
 		{
-			memcpy(&this->circleBuffer[this->writePosition], stream, streamSize * sizeof(unsigned char));
+			memcpy(&this->circleBuffer[this->writePosition], &stream[0], streamSize * sizeof(unsigned char));
 		}
 		else
 		{
 			int remaining = STREAM_BUFFER - this->writePosition;
-			memcpy(&this->circleBuffer[this->writePosition], stream, remaining * sizeof(unsigned char));
-			memcpy(this->circleBuffer, stream, (streamSize - remaining) * sizeof(unsigned char));
+			memcpy(&this->circleBuffer[this->writePosition], &stream[0], remaining * sizeof(unsigned char));
+			memcpy(this->circleBuffer, &stream[0], (streamSize - remaining) * sizeof(unsigned char));
 		}
 		this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
 		if (!this->looping && streamSize < size) // fill with silence if source is at the end

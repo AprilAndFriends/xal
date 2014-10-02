@@ -84,7 +84,7 @@ namespace xal
 		return this->buffer->isStreamed();
 	}
 
-	int Sound::readPcmData(unsigned char** output)
+	int Sound::readPcmData(hstream& output)
 	{
 		return Buffer(this).readPcmData(output);
 	}

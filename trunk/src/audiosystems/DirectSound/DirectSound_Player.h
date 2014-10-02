@@ -49,7 +49,7 @@ namespace xal
 
 		int _getProcessedBuffersCount();
 		int _fillBuffers(int index, int count);
-		void _copyBuffer(unsigned char* stream, int size, int count = 1);
+		void _copyBuffer(hstream& stream, int size, int count = 1);
 		void _copySilence(int size, int count = 1);
 
 	};

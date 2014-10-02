@@ -30,8 +30,6 @@ namespace xal
 		Category* category = sound->getCategory();
 		this->mode = category->getBufferMode();
 		this->loaded = false;
-		this->stream = NULL;
-		this->streamSize = 0;
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;
 		this->dataSize = 0;
@@ -73,11 +71,6 @@ namespace xal
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;
 		this->loaded = false;
-		if (this->stream != NULL)
-		{
-			delete [] this->stream;
-			this->stream = NULL;
-		}
 		this->asyncLoadMutex.unlock();
 		delete this->source;
 	}
@@ -209,17 +202,11 @@ namespace xal
 		{
 			this->loaded = true;
 			this->source->open();
-			this->source->decode();
-			this->_tryLoadMetaData();
-			if (this->stream == NULL)
-			{
-				this->dataSize = this->source->getSize();
-				this->streamSize = this->dataSize;
-				this->stream = new unsigned char[this->streamSize];
-			}
+			this->dataSize = this->source->getSize();
+			this->stream.clear(this->dataSize);
 			this->source->load(this->stream);
 			this->source->close();
-			this->dataSize = xal::mgr->_convertStream(this->source, &this->stream, &this->streamSize, this->dataSize);
+			this->dataSize = xal::mgr->_convertStream(this->source, this->stream, this->dataSize);
 			this->asyncLoadMutex.unlock();
 			return;
 		}
@@ -228,7 +215,6 @@ namespace xal
 		if (!this->source->isOpen())
 		{
 			this->source->open();
-			this->source->decode();
 			this->_tryLoadMetaData();
 		}
 	}
@@ -268,20 +254,17 @@ namespace xal
 		this->asyncLoadMutex.lock();
 		if (this->isStreamed() && this->source->isOpen())
 		{
-			if (this->stream == NULL)
-			{
-				this->dataSize = STREAM_BUFFER;
-				this->streamSize = this->dataSize;
-				this->stream = new unsigned char[this->streamSize];
-			}
+			this->dataSize = STREAM_BUFFER;
+			this->stream.clear(this->dataSize);
 			this->dataSize = this->source->loadChunk(this->stream, size);
 			size -= this->dataSize;
 			if (size > 0)
 			{
+				this->stream.seek(this->dataSize);
 				if (!looping)
 				{
 					// fill rest of buffer with silence so systems that depends on buffered chunks don't get messed up
-					memset(&this->stream[this->dataSize], 0, size * sizeof(unsigned char));
+					this->stream.fill(0, size);
 				}
 				else
 				{
@@ -289,13 +272,15 @@ namespace xal
 					while (size > 0)
 					{
 						this->source->rewind();
-						read = this->source->loadChunk(&this->stream[this->dataSize], size);
+						read = this->source->loadChunk(this->stream, size);
 						size -= read;
 						this->dataSize += read;
+						this->stream.seek(read);
 					}
 				}
+				this->stream.seek(0, hstream::START);
 			}
-			this->dataSize = xal::mgr->_convertStream(this->source, &this->stream, &this->streamSize, this->dataSize);
+			this->dataSize = xal::mgr->_convertStream(this->source, this->stream, this->dataSize);
 		}
 		this->asyncLoadMutex.unlock();
 		return this->dataSize;
@@ -315,12 +300,7 @@ namespace xal
 		this->asyncLoadMutex.lock();
 		if (this->boundPlayers.size() == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
 		{
-			if (this->stream != NULL)
-			{
-				delete [] this->stream;
-				this->stream = NULL;
-				this->streamSize = 0;
-			}
+			this->stream.clear(1L);
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = true;
 			this->loaded = false;
@@ -357,22 +337,19 @@ namespace xal
 			((float)xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample()));
 	}
 
-	int Buffer::readPcmData(unsigned char** output)
+	int Buffer::readPcmData(hstream& output)
 	{
 		// no mutex locking, because a separate source is used
-		*output = NULL;
 		int result = 0;
 		if (this->getFormat() != UNKNOWN)
 		{
 			Source* source = xal::mgr->_createSource(this->filename, xal::DISK, xal::FULL, this->getFormat());
 			source->open();
-			source->decode();
 			result = source->getSize();
 			if (result > 0)
 			{
-				*output = new unsigned char[result];
-				source->load(*output);
-				result = xal::mgr->_convertStream(source, output, &result, result);
+				source->load(output);
+				result = xal::mgr->_convertStream(source, output, result);
 			}
 			source->close();
 			delete source;
@@ -398,10 +375,6 @@ namespace xal
 			{
 				this->source->open();
 			}
-			if (!this->source->isDecoded())
-			{
-				this->source->decode();
-			}
 			this->size = this->source->getSize();
 			this->channels = this->source->getChannels();
 			this->samplingRate = this->source->getSamplingRate();
@@ -422,12 +395,7 @@ namespace xal
 		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == STREAMED))
 		{
 			hlog::debug(xal::logTag, "Clearing memory for: " + this->filename);
-			if (this->stream != NULL)
-			{
-				delete [] this->stream;
-				this->stream = NULL;
-				this->streamSize = 0;
-			}
+			this->stream.clear(1L);
 			this->source->close();
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = true;
@@ -471,16 +439,11 @@ namespace xal
 			this->asyncLoadMutex.unlock();
 			return;
 		}
-		this->source->decode();
 		this->_tryLoadMetaData();
-		if (this->stream == NULL)
-		{
-			this->dataSize = this->source->getSize();
-			this->streamSize = this->dataSize;
-			this->stream = new unsigned char[this->streamSize];
-		}
+		this->dataSize = this->source->getSize();
+		this->stream.clear(this->dataSize);
 		this->source->load(this->stream);
-		dataSize = xal::mgr->_convertStream(this->source, &this->stream, &this->streamSize, this->dataSize);
+		this->dataSize = xal::mgr->_convertStream(this->source, this->stream, this->dataSize);
 		this->source->close();
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;

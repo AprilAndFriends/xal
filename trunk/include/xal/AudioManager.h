@@ -17,6 +17,7 @@
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
+#include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hthread.h>
 
@@ -379,10 +380,9 @@ namespace xal
 		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format (bit rate, channel number, sampling rate).
 		/// @param[in] source Source object that holds the data.
 		/// @param[in,out] stream The data stream buffer.
-		/// @param[in,out] streamSize The size of the stream itself.
 		/// @param[in] dataSize The size of the data within the stream.
 		/// @return dataSize if no conversion was done or a positive integer for the size of the new data.
-		virtual int _convertStream(Source* source, unsigned char** stream, int *streamSize, int dataSize) { return dataSize; }
+		virtual int _convertStream(Source* source, hstream& stream, int dataSize) { return dataSize; }
 
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.

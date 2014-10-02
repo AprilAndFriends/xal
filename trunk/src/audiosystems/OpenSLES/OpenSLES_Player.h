@@ -59,7 +59,7 @@ namespace xal
 		int _systemStop();
 		int _systemUpdateStream();
 
-		void _submitBuffer(unsigned char* stream, int size);
+		void _submitBuffer(hstream& stream);
 		int _fillStreamBuffers(int count);
 		void _submitStreamBuffers(int count);
 
