@@ -211,7 +211,7 @@ namespace xal
 		{
 			if (!this->paused)
 			{
-				this->_submitBuffer(this->buffer->getStream(), this->buffer->getSize());
+				this->_submitBuffer(this->buffer->getStream());
 			}
 			return;
 		}
