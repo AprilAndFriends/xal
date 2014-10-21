@@ -238,7 +238,7 @@ namespace xal
 
 	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		hlog::write(xal::logTag, "Suspending OpenAL Context.");
 		gAudioSuspended = this->isSuspended();
 		if (!gAudioSuspended)
@@ -247,16 +247,16 @@ namespace xal
 		}
 		alcSuspendContext(this->context);
 		alcMakeContextCurrent(NULL);
-		this->_unlock();
 	}
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
 		static int reset = -1;
 		ALCenum err = ALC_NO_ERROR;
+		hmutex::ScopeLock lock;
 		if (!hasiOSAudioSessionRestoreFailed())
 		{
-			this->_lock(); // don't lock because at this point we're already locked
+			lock.acquire(&this->mutex); // otherwise don't lock because at this point we're already locked
 		}
 		hlog::write(xal::logTag, "Resuming OpenAL Context.");
 		if (reset == -1) // only check once, for performance reasons.
@@ -293,7 +293,7 @@ namespace xal
 		}
 		if (!hasiOSAudioSessionRestoreFailed())
 		{
-			this->_unlock();
+			lock.release();
 		}
 		if (err != ALC_NO_ERROR)
 		{

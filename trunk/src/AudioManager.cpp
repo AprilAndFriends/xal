@@ -84,12 +84,11 @@ namespace xal
 
 	void AudioManager::init()
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		if (this->enabled && this->thread != NULL)
 		{
 			this->_startThreading();
 		}
-		this->_unlock();
 	}
 
 	void AudioManager::_startThreading()
@@ -101,9 +100,8 @@ namespace xal
 
 	void AudioManager::clear()
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_clear();
-		this->_unlock();
 	}
 	
 	void AudioManager::_clear()
@@ -112,9 +110,8 @@ namespace xal
 		{
 			hlog::write(xal::logTag, "Stopping audio update thread.");
 			this->threadRunning = false;
-			this->_unlock();
+			hmutex::ScopeLock lock(&this->mutex);
 			this->thread->join();
-			this->_lock();
 		}
 		if (this->thread != NULL)
 		{
@@ -143,9 +140,8 @@ namespace xal
 
 	void AudioManager::setGlobalGain(float value)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_setGlobalGain(value);
-		this->_unlock();
 	}
 
 	void AudioManager::_setGlobalGain(float value)
@@ -159,10 +155,8 @@ namespace xal
 
 	harray<Player*> AudioManager::getPlayers()
 	{
-		this->_lock();
-		harray<Player*> players = this->_getPlayers();
-		this->_unlock();
-		return players;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_getPlayers();
 	}
 
 	harray<Player*> AudioManager::_getPlayers()
@@ -172,23 +166,23 @@ namespace xal
 
 	void AudioManager::_update(hthread* thread)
 	{
+		hmutex::ScopeLock lock;
 		while (xal::mgr->thread != NULL && xal::mgr->threadRunning)
 		{
-			xal::mgr->_lock();
+			lock.acquire(&xal::mgr->mutex);
 			xal::mgr->_update(xal::mgr->updateTime);
-			xal::mgr->_unlock();
+			lock.release();
 			hthread::sleep(xal::mgr->updateTime * 1000);
 		}
 	}
 
 	void AudioManager::update(float timeDelta)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		if (!this->isThreaded())
 		{
 			this->_update(timeDelta);
 		}
-		this->_unlock();
 	}
 
 	void AudioManager::_update(float timeDelta)
@@ -220,28 +214,10 @@ namespace xal
 		}
 	}
 
-	void AudioManager::_lock()
-	{
-		if (this->isThreaded())
-		{
-			this->mutex.lock();
-		}
-	}
-
-	void AudioManager::_unlock()
-	{
-		if (this->isThreaded())
-		{
-			this->mutex.unlock();
-		}
-	}
-
 	Category* AudioManager::createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode)
 	{
-		this->_lock();
-		Category* category = this->_createCategory(name, bufferMode, sourceMode);
-		this->_unlock();
-		return category;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_createCategory(name, bufferMode, sourceMode);
 	}
 
 	Category* AudioManager::_createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode)
@@ -255,17 +231,14 @@ namespace xal
 
 	Category* AudioManager::getCategory(chstr name)
 	{
-		this->_lock();
-		Category* category = this->_getCategory(name);
-		this->_unlock();
-		return category;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_getCategory(name);
 	}
 
 	Category* AudioManager::_getCategory(chstr name)
 	{
 		if (!this->categories.has_key(name))
 		{
-			this->_unlock();
 			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
 		return this->categories[name];
@@ -278,10 +251,8 @@ namespace xal
 
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
 	{
-		this->_lock();
-		Sound* sound = this->_createSound(filename, categoryName, prefix);
-		this->_unlock();
-		return sound;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_createSound(filename, categoryName, prefix);
 	}
 
 	Sound* AudioManager::_createSound(chstr filename, chstr categoryName, chstr prefix)
@@ -299,17 +270,14 @@ namespace xal
 
 	Sound* AudioManager::getSound(chstr name)
 	{
-		this->_lock();
-		Sound* sound = this->_getSound(name);
-		this->_unlock();
-		return sound;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_getSound(name);
 	}
 
 	Sound* AudioManager::_getSound(chstr name)
 	{
 		if (!this->sounds.has_key(name))
 		{
-			this->_unlock();
 			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		return this->sounds[name];
@@ -317,9 +285,8 @@ namespace xal
 
 	void AudioManager::destroySound(Sound* sound)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_destroySound(sound);
-		this->_unlock();
 	}
 	
 	void AudioManager::_destroySound(Sound* sound)
@@ -338,9 +305,8 @@ namespace xal
 	
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_destroySoundsWithPrefix(prefix);
-		this->_unlock();
 	}
 
 	void AudioManager::_destroySoundsWithPrefix(chstr prefix)
@@ -387,17 +353,14 @@ namespace xal
 		}
 		if (manualSoundNames.size() > 0)
 		{
-			this->_unlock();
 			throw hl_exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.join(", "));
 		}
 	}
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr prefix)
 	{
-		this->_lock();
-		harray<hstr> result = this->_createSoundsFromPath(path, prefix);
-		this->_unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_createSoundsFromPath(path, prefix);
 	}
 
 	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr prefix)
@@ -413,10 +376,8 @@ namespace xal
 
 	harray<hstr> AudioManager::createSoundsFromPath(chstr path, chstr categoryName, chstr prefix)
 	{
-		this->_lock();
-		harray<hstr> result = this->_createSoundsFromPath(path, categoryName, prefix);
-		this->_unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_createSoundsFromPath(path, categoryName, prefix);
 	}
 
 	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr categoryName, chstr prefix)
@@ -443,17 +404,14 @@ namespace xal
 	
 	Player* AudioManager::createPlayer(chstr soundName)
 	{
-		this->_lock();
-		Player* player = this->_createPlayer(soundName);
-		this->_unlock();
-		return player;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_createPlayer(soundName);
 	}
 
 	Player* AudioManager::_createPlayer(chstr soundName)
 	{
 		if (!this->sounds.has_key(soundName))
 		{
-			this->_unlock();
 			throw hl_exception("Audio Manager: Sound '" + soundName + "' does not exist!");
 		}
 		Sound* sound = this->sounds[soundName];
@@ -464,9 +422,8 @@ namespace xal
 
 	void AudioManager::destroyPlayer(Player* player)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_destroyPlayer(player);
-		this->_unlock();
 	}
 
 	void AudioManager::_destroyPlayer(Player* player)
@@ -536,9 +493,8 @@ namespace xal
 
 	void AudioManager::play(chstr soundName, float fadeTime, bool looping, float gain)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_play(soundName, fadeTime, looping, gain);
-		this->_unlock();
 	}
 
 	void AudioManager::_play(chstr soundName, float fadeTime, bool looping, float gain)
@@ -554,9 +510,8 @@ namespace xal
 
 	void AudioManager::playAsync(chstr soundName, float fadeTime, bool looping, float gain)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_playAsync(soundName, fadeTime, looping, gain);
-		this->_unlock();
 	}
 
 	void AudioManager::_playAsync(chstr soundName, float fadeTime, bool looping, float gain)
@@ -572,9 +527,8 @@ namespace xal
 
 	void AudioManager::stop(chstr soundName, float fadeTime)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_stop(soundName, fadeTime);
-		this->_unlock();
 	}
 
 	void AudioManager::_stop(chstr soundName, float fadeTime)
@@ -605,9 +559,8 @@ namespace xal
 
 	void AudioManager::stopFirst(chstr name, float fadeTime)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_stopFirst(name, fadeTime);
-		this->_unlock();
 	}
 
 	void AudioManager::_stopFirst(chstr soundName, float fadeTime)
@@ -631,9 +584,8 @@ namespace xal
 
 	void AudioManager::stopAll(float fadeTime)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_stopAll(fadeTime);
-		this->_unlock();
 	}
 	
 	void AudioManager::_stopAll(float fadeTime)
@@ -657,9 +609,8 @@ namespace xal
 	
 	void AudioManager::suspendAudio()
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_suspendAudio();
-		this->_unlock();
 	}
 	
 	void AudioManager::_suspendAudio()
@@ -686,9 +637,8 @@ namespace xal
 	
 	void AudioManager::resumeAudio()
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_resumeAudio();
-		this->_unlock();
 	}
 	
 	void AudioManager::_resumeAudio()
@@ -708,9 +658,8 @@ namespace xal
 	
 	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_stopCategory(categoryName, fadeTime);
-		this->_unlock();
 	}
 	
 	void AudioManager::_stopCategory(chstr categoryName, float fadeTime)
@@ -740,10 +689,8 @@ namespace xal
 	
 	bool AudioManager::isAnyPlaying(chstr soundName)
 	{
-		this->_lock();
-		bool result = this->_isAnyPlaying(soundName);
-		this->_unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_isAnyPlaying(soundName);
 	}
 
 	bool AudioManager::_isAnyPlaying(chstr soundName)
@@ -760,10 +707,8 @@ namespace xal
 
 	bool AudioManager::isAnyFading(chstr soundName)
 	{
-		this->_lock();
-		bool result = this->_isAnyFading(soundName);
-		this->_unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_isAnyFading(soundName);
 	}
 
 	bool AudioManager::_isAnyFading(chstr soundName)
@@ -780,10 +725,8 @@ namespace xal
 
 	bool AudioManager::isAnyFadingIn(chstr soundName)
 	{
-		this->_lock();
-		bool result = this->_isAnyFadingIn(soundName);
-		this->_unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_isAnyFadingIn(soundName);
 	}
 
 	bool AudioManager::_isAnyFadingIn(chstr soundName)
@@ -800,10 +743,8 @@ namespace xal
 
 	bool AudioManager::isAnyFadingOut(chstr soundName)
 	{
-		this->_lock();
-		bool result = this->_isAnyFadingOut(soundName);
-		this->_unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_isAnyFadingOut(soundName);
 	}
 
 	bool AudioManager::_isAnyFadingOut(chstr soundName)
@@ -820,9 +761,8 @@ namespace xal
 
 	void AudioManager::clearMemory()
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		this->_clearMemory();
-		this->_unlock();
 	}
 
 	void AudioManager::_clearMemory()
