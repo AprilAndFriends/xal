@@ -89,7 +89,7 @@ namespace xal
 			if (index > BufferAsync::loaded) // if not already at the front
 			{
 				BufferAsync::buffers.remove_at(index);
-				BufferAsync::buffers.insert_at(loaded, buffer);
+				BufferAsync::buffers.insert_at(BufferAsync::loaded, buffer);
 			}
 		}
 		else if (index > 0) // if data was already loaded in RAM, but not decoded and not already at the front
