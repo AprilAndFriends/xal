@@ -53,10 +53,6 @@ namespace xal
 
 		int _convertStream(Source* source, hstream& stream, int dataSize);
 		
-		// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
-		void _lock();
-		void _unlock();
-
 	};
 
 }

@@ -65,7 +65,7 @@ namespace xal
 
 	void SDL_AudioManager::mixAudio(void* unused, unsigned char* stream, int length)
 	{
-		this->_lock();
+		hmutex::ScopeLock lock(&this->mutex);
 		if (this->buffer.size() < length)
 		{
 			this->buffer.clear(length); // to make sure there is enough space available
@@ -84,7 +84,6 @@ namespace xal
 		// the following line is here only for demonstration how it would look like with SDL_MixAudio
 		//SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
 		memcpy(stream, &this->buffer[0], length);
-		this->_unlock();
 	}
 
 	void SDL_AudioManager::_mixAudio(void* unused, unsigned char* stream, int length)
@@ -146,16 +145,5 @@ namespace xal
 		return cvt.len_cvt;
 	}
 	
-	// SDL requires software mixing so the mutex locking has to be done even when there is no threaded update
-	void SDL_AudioManager::_lock()
-	{
-		this->mutex.lock();
-	}
-	
-	void SDL_AudioManager::_unlock()
-	{
-		this->mutex.unlock();
-	}
-
 }
 #endif

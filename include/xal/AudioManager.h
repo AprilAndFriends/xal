@@ -302,10 +302,6 @@ namespace xal
 		
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual void _update(float timeDelta);
-		/// @brief Locks the mutex for thread synchronization.
-		virtual void _lock();
-		/// @brief Unlocks the mutex for thread synchronization.
-		virtual void _unlock();
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		Category* _createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode);
