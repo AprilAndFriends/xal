@@ -26,7 +26,7 @@ namespace xal
 	int BufferAsync::loaded = 0;
 	hmutex BufferAsync::queueMutex;
 
-	hthread BufferAsync::readerThread(&BufferAsync::_read, "APRIL async loader");
+	hthread BufferAsync::readerThread(&BufferAsync::_read, "XAL async loader");
 	bool BufferAsync::readerRunning = false;
 
 	harray<hthread*> BufferAsync::decoderThreads;
@@ -63,41 +63,41 @@ namespace xal
 #endif
 		}
 		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
-		if (!BufferAsync::buffers.contains(buffer))
+		if (BufferAsync::buffers.contains(buffer))
 		{
-			BufferAsync::buffers += buffer;
-			if (!BufferAsync::readerRunning)
-			{
-				BufferAsync::readerRunning = true;
-				BufferAsync::readerThread.start();
-			}
-			return true;
+			return false;
 		}
-		return false;
+		BufferAsync::buffers += buffer;
+		if (!BufferAsync::readerRunning)
+		{
+			BufferAsync::readerRunning = true;
+			BufferAsync::readerThread.start();
+		}
+		return true;
 	}
 
 	bool BufferAsync::prioritizeLoad(Buffer* buffer)
 	{
 		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
-		if (BufferAsync::buffers.contains(buffer))
+		if (!BufferAsync::buffers.contains(buffer))
 		{
-			int index = BufferAsync::buffers.index_of(buffer);
-			if (index >= BufferAsync::loaded) // if not loaded from disk yet
-			{
-				if (index > BufferAsync::loaded) // if not already at the front
-				{
-					BufferAsync::buffers.remove_at(index);
-					BufferAsync::buffers.insert_at(loaded, buffer);
-				}
-			}
-			else if (index > 0) // if data was already loaded in RAM, but not decoded and not already at the front
+			return false;
+		}
+		int index = BufferAsync::buffers.index_of(buffer);
+		if (index >= BufferAsync::loaded) // if not loaded from disk yet
+		{
+			if (index > BufferAsync::loaded) // if not already at the front
 			{
 				BufferAsync::buffers.remove_at(index);
-				BufferAsync::buffers.push_first(buffer);
+				BufferAsync::buffers.insert_at(loaded, buffer);
 			}
-			return true;
 		}
-		return false;
+		else if (index > 0) // if data was already loaded in RAM, but not decoded and not already at the front
+		{
+			BufferAsync::buffers.remove_at(index);
+			BufferAsync::buffers.push_first(buffer);
+		}
+		return true;
 	}
 
 	bool BufferAsync::isRunning()
@@ -111,6 +111,7 @@ namespace xal
 		Buffer* buffer = NULL;
 		bool streamLoaded = true;
 		hthread* decoderThread = NULL;
+		int index = 0;
 		int size = 0;
 		bool running = true;
 		hmutex::ScopeLock lock;
@@ -119,14 +120,14 @@ namespace xal
 			running = false;
 			// check for new queued textures
 			lock.acquire(&BufferAsync::queueMutex);
-			if (BufferAsync::buffers.size() > loaded)
+			if (BufferAsync::buffers.size() > BufferAsync::loaded)
 			{
 				running = true;
-				buffer = BufferAsync::buffers[loaded];
+				buffer = BufferAsync::buffers[BufferAsync::loaded];
 				lock.release();
 				streamLoaded = buffer->_prepareAsyncStream();
 				lock.acquire(&BufferAsync::queueMutex);
-				int index = BufferAsync::buffers.index_of(buffer); // it's possible that the queue was rearranged in the meantime
+				index = BufferAsync::buffers.index_of(buffer); // it's possible that the queue was rearranged in the meantime
 				if (streamLoaded)
 				{
 					if (index >= BufferAsync::loaded)
@@ -138,7 +139,7 @@ namespace xal
 							BufferAsync::buffers.insert_at(BufferAsync::loaded, buffer);
 						}
 					}
-					++loaded;
+					++BufferAsync::loaded;
 				}
 				else // it was canceled
 				{
@@ -179,18 +180,15 @@ namespace xal
 
 	void BufferAsync::_decode(hthread* thread)
 	{
-		hmutex::ScopeLock lock;
-		while (true)
+		Buffer* buffer = NULL;
+		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
+		while (BufferAsync::loaded > 0)
 		{
-			lock.acquire(&BufferAsync::queueMutex);
-			if (BufferAsync::loaded == 0)
-			{
-				break;
-			}
-			Buffer* buffer = BufferAsync::buffers.remove_first();
+			buffer = BufferAsync::buffers.remove_first();
 			--BufferAsync::loaded;
 			lock.release();
 			buffer->_decodeFromAsyncStream();
+			lock.acquire(&BufferAsync::queueMutex);
 		}
 	}
 
