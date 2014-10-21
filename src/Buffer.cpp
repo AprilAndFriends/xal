@@ -67,51 +67,45 @@ namespace xal
 
 	Buffer::~Buffer()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;
 		this->loaded = false;
-		this->asyncLoadMutex.unlock();
 		delete this->source;
 	}
 	
 	int Buffer::getSize()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->_tryLoadMetaData();
-		this->asyncLoadMutex.unlock();
 		return this->size;
 	}
 
 	int Buffer::getChannels()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->_tryLoadMetaData();
-		this->asyncLoadMutex.unlock();
 		return this->channels;
 	}
 
 	int Buffer::getSamplingRate()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->_tryLoadMetaData();
-		this->asyncLoadMutex.unlock();
 		return this->samplingRate;
 	}
 
 	int Buffer::getBitsPerSample()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->_tryLoadMetaData();
-		this->asyncLoadMutex.unlock();
 		return this->bitsPerSample;
 	}
 
 	float Buffer::getDuration()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->_tryLoadMetaData();
-		this->asyncLoadMutex.unlock();
 		return this->duration;
 	}
 
@@ -152,18 +146,14 @@ namespace xal
 
 	bool Buffer::isLoaded()
 	{
-		this->asyncLoadMutex.lock();
-		bool result = this->loaded;
-		this->asyncLoadMutex.unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
+		return this->loaded;
 	}
 
 	bool Buffer::isAsyncLoadQueued()
 	{
-		this->asyncLoadMutex.lock();
-		bool result = this->asyncLoadQueued;
-		this->asyncLoadMutex.unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
+		return this->asyncLoadQueued;
 	}
 
 	bool Buffer::isStreamed()
@@ -178,24 +168,21 @@ namespace xal
 
 	void Buffer::prepare()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->asyncLoadDiscarded = false; // a possible previous unload call must be canceled
 		if (!xal::mgr->isEnabled() || this->loaded)
 		{
 			this->asyncLoadQueued = false;
 			this->loaded = true;
-			this->asyncLoadMutex.unlock();
 			return;
 		}
 		if (this->asyncLoadQueued)
 		{
 			if (!this->loaded)
 			{
-				this->asyncLoadMutex.unlock();
+				lock.release();
 				this->_waitForAsyncLoad();
-				this->asyncLoadMutex.lock();
 			}
-			this->asyncLoadMutex.unlock();
 			return;
 		}
 		if (!this->isStreamed())
@@ -207,10 +194,9 @@ namespace xal
 			this->source->load(this->stream);
 			this->source->close();
 			this->dataSize = xal::mgr->_convertStream(this->source, this->stream, this->dataSize);
-			this->asyncLoadMutex.unlock();
 			return;
 		}
-		this->asyncLoadMutex.unlock();
+		lock.release();
 		// streamed sounds cannot be loaded asynchronously and hence require no mutex locking
 		if (!this->source->isOpen())
 		{
@@ -221,17 +207,15 @@ namespace xal
 
 	bool Buffer::prepareAsync()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (!xal::mgr->isEnabled() || this->loaded)
 		{
 			this->loaded = true;
-			this->asyncLoadMutex.unlock();
 			return false;
 		}
 		if (this->isStreamed())
 		{
 			hlog::warn(xal::logTag, "Streamed sound cannot be loaded asynchronously: " + this->getFilename());
-			this->asyncLoadMutex.unlock();
 			return false;
 		}
 		this->asyncLoadDiscarded = false;
@@ -239,9 +223,7 @@ namespace xal
 		{
 			this->asyncLoadQueued = BufferAsync::queueLoad(this);
 		}
-		bool result = this->asyncLoadQueued; // this->asyncLoadQueued CAN change between the two lines below and cause problems hence this temporary result variable
-		this->asyncLoadMutex.unlock();
-		return result;
+		return this->asyncLoadQueued;
 	}
 
 	int Buffer::load(bool looping, int size)
@@ -251,7 +233,7 @@ namespace xal
 		{
 			return 0;
 		}
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (this->isStreamed() && this->source->isOpen())
 		{
 			this->dataSize = STREAM_BUFFER;
@@ -282,7 +264,6 @@ namespace xal
 			}
 			this->dataSize = xal::mgr->_convertStream(this->source, this->stream, this->dataSize);
 		}
-		this->asyncLoadMutex.unlock();
 		return this->dataSize;
 	}
 
@@ -297,7 +278,7 @@ namespace xal
 		{
 			this->boundPlayers /= player;
 		}
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (this->boundPlayers.size() == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
 		{
 			this->stream.clear(1L);
@@ -312,7 +293,6 @@ namespace xal
 			this->asyncLoadDiscarded = true;
 			this->loaded = false;
 		}
-		this->asyncLoadMutex.unlock();
 	}
 
 	void Buffer::keepLoaded()
@@ -390,8 +370,7 @@ namespace xal
 
 	bool Buffer::_tryClearMemory()
 	{
-		bool result = false;
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == STREAMED))
 		{
 			hlog::debug(xal::logTag, "Clearing memory for: " + this->filename);
@@ -400,43 +379,38 @@ namespace xal
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = true;
 			this->loaded = false;
-			result = true;
+			return true;
 		}
-		this->asyncLoadMutex.unlock();
-		return result;
+		return false;
 	}
 
 	bool Buffer::_prepareAsyncStream()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (!this->asyncLoadQueued || this->asyncLoadDiscarded)
 		{
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = false;
-			this->asyncLoadMutex.unlock();
 			return false;
 		}
 		this->source->open();
-		bool result = true;
 		if (!this->source->isOpen())
 		{
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = false;
-			result = false;
+			return false;
 		}
-		this->asyncLoadMutex.unlock();
-		return result;
+		return true;
 	}
 
 	void Buffer::_decodeFromAsyncStream()
 	{
-		this->asyncLoadMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (!this->asyncLoadQueued || this->asyncLoadDiscarded || this->loaded)
 		{
 			this->source->close();
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = false;
-			this->asyncLoadMutex.unlock();
 			return;
 		}
 		this->_tryLoadMetaData();
@@ -448,16 +422,16 @@ namespace xal
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;
 		this->loaded = true;
-		this->asyncLoadMutex.unlock();
 	}
 
 	void Buffer::_waitForAsyncLoad(float timeout)
 	{
 		BufferAsync::prioritizeLoad(this);
 		float time = timeout;
+		hmutex::ScopeLock lock;
 		while (time > 0.0f || timeout <= 0.0f)
 		{
-			this->asyncLoadMutex.lock();
+			lock.acquire(&this->asyncLoadMutex);
 			if (this->loaded || this->asyncLoadDiscarded)
 			{
 				if (this->asyncLoadDiscarded)
@@ -466,10 +440,9 @@ namespace xal
 				}
 				this->asyncLoadQueued = false;
 				this->asyncLoadDiscarded = false;
-				this->asyncLoadMutex.unlock();
 				break;
 			}
-			this->asyncLoadMutex.unlock();
+			lock.release();
 			hthread::sleep(0.1f);
 			time -= 0.0001f;
 			BufferAsync::update();

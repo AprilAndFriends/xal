@@ -35,7 +35,7 @@ namespace xal
 
 	void BufferAsync::update()
 	{
-		BufferAsync::queueMutex.lock();
+		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
 		if (BufferAsync::readerRunning && !BufferAsync::readerThread.isRunning())
 		{
 			BufferAsync::readerThread.join();
@@ -46,7 +46,6 @@ namespace xal
 			BufferAsync::readerRunning = true;
 			BufferAsync::readerThread.start();
 		}
-		BufferAsync::queueMutex.unlock();
 	}
 
 	bool BufferAsync::queueLoad(Buffer* buffer)
@@ -63,8 +62,7 @@ namespace xal
 			cpus = sysconf(_SC_NPROCESSORS_CONF);
 #endif
 		}
-		bool result = false;
-		BufferAsync::queueMutex.lock();
+		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
 		if (!BufferAsync::buffers.contains(buffer))
 		{
 			BufferAsync::buffers += buffer;
@@ -73,16 +71,14 @@ namespace xal
 				BufferAsync::readerRunning = true;
 				BufferAsync::readerThread.start();
 			}
-			result = true;
+			return true;
 		}
-		BufferAsync::queueMutex.unlock();
-		return result;
+		return false;
 	}
 
 	bool BufferAsync::prioritizeLoad(Buffer* buffer)
 	{
-		bool result = false;
-		BufferAsync::queueMutex.lock();
+		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
 		if (BufferAsync::buffers.contains(buffer))
 		{
 			int index = BufferAsync::buffers.index_of(buffer);
@@ -99,18 +95,15 @@ namespace xal
 				BufferAsync::buffers.remove_at(index);
 				BufferAsync::buffers.push_first(buffer);
 			}
-			result = true;
+			return true;
 		}
-		BufferAsync::queueMutex.unlock();
-		return result;
+		return false;
 	}
 
 	bool BufferAsync::isRunning()
 	{
-		BufferAsync::queueMutex.lock();
-		bool result = BufferAsync::readerRunning;
-		BufferAsync::queueMutex.unlock();
-		return result;
+		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
+		return BufferAsync::readerRunning;
 	}
 
 	void BufferAsync::_read(hthread* thread)
@@ -120,18 +113,19 @@ namespace xal
 		hthread* decoderThread = NULL;
 		int size = 0;
 		bool running = true;
+		hmutex::ScopeLock lock;
 		while (running)
 		{
 			running = false;
 			// check for new queued textures
-			BufferAsync::queueMutex.lock();
+			lock.acquire(&BufferAsync::queueMutex);
 			if (BufferAsync::buffers.size() > loaded)
 			{
 				running = true;
 				buffer = BufferAsync::buffers[loaded];
-				BufferAsync::queueMutex.unlock();
+				lock.release();
 				streamLoaded = buffer->_prepareAsyncStream();
-				BufferAsync::queueMutex.lock();
+				lock.acquire(&BufferAsync::queueMutex);
 				int index = BufferAsync::buffers.index_of(buffer); // it's possible that the queue was rearranged in the meantime
 				if (streamLoaded)
 				{
@@ -152,7 +146,7 @@ namespace xal
 				}
 			}
 			size = BufferAsync::loaded;
-			BufferAsync::queueMutex.unlock();
+			lock.release();
 			// create new worker threads if needed
 			if (size > 0)
 			{
@@ -185,17 +179,17 @@ namespace xal
 
 	void BufferAsync::_decode(hthread* thread)
 	{
+		hmutex::ScopeLock lock;
 		while (true)
 		{
-			BufferAsync::queueMutex.lock();
+			lock.acquire(&BufferAsync::queueMutex);
 			if (BufferAsync::loaded == 0)
 			{
-				BufferAsync::queueMutex.unlock();
 				break;
 			}
 			Buffer* buffer = BufferAsync::buffers.remove_first();
 			--BufferAsync::loaded;
-			BufferAsync::queueMutex.unlock();
+			lock.release();
 			buffer->_decodeFromAsyncStream();
 		}
 	}

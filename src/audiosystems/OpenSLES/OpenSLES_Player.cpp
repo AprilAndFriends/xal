@@ -55,9 +55,8 @@ namespace xal
 			OpenSLES_Player* player = (OpenSLES_Player*)context;
 			if (player->sound->isStreamed())
 			{
-				player->mutex.lock();
+				Mutex::ScopeLock lock(&player->mutex);
 				++player->_buffersProcessed;
-				player->mutex.unlock();
 			}
 			else
 			{
@@ -383,10 +382,9 @@ namespace xal
 
 	int OpenSLES_Player::_getLastProcessedBuffersCount()
 	{
-		this->mutex.lock();
+		Mutex::ScopeLock lock(&this->mutex);
 		int value = this->_buffersProcessed;
 		this->_buffersProcessed = 0;
-		this->mutex.unlock();
 		return value;
 	}
 

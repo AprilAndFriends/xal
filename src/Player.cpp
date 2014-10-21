@@ -30,9 +30,8 @@ namespace xal
 
 	Player::~Player()
 	{
-		this->asyncPlayMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncPlayMutex);
 		this->asyncPlayQueued = false;
-		this->asyncPlayMutex.unlock();
 		if (this->buffer->isStreamed()) // this buffer was created internally
 		{
 			xal::mgr->_destroyBuffer(this->buffer);
@@ -157,10 +156,8 @@ namespace xal
 		{
 			return true;
 		}
-		this->asyncPlayMutex.lock();
-		bool result = this->asyncPlayQueued;
-		this->asyncPlayMutex.unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->asyncPlayMutex);
+		return this->asyncPlayQueued;
 	}
 
 	bool Player::isPaused()
@@ -194,10 +191,8 @@ namespace xal
 		{
 			return false;
 		}
-		this->asyncPlayMutex.lock();
-		bool result = this->asyncPlayQueued;
-		this->asyncPlayMutex.unlock();
-		return result;
+		hmutex::ScopeLock lock(&this->asyncPlayMutex);
+		return this->asyncPlayQueued;
 	}
 
 	void Player::_update(float timeDelta)
@@ -321,9 +316,8 @@ namespace xal
 			this->_systemPlay();
 		}
 		this->paused = false;
-		this->asyncPlayMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncPlayMutex);
 		this->asyncPlayQueued = false;
-		this->asyncPlayMutex.unlock();
 	}
 
 	void Player::_playAsync(float fadeTime, bool looping)
@@ -346,9 +340,8 @@ namespace xal
 			this->fadeSpeed = 0.0f;
 		}
 		this->buffer->prepareAsync();
-		this->asyncPlayMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncPlayMutex);
 		this->asyncPlayQueued = true;
-		this->asyncPlayMutex.unlock();
 	}
 
 	void Player::_stop(float fadeTime)
@@ -386,9 +379,9 @@ namespace xal
 
 	void Player::_stopSound(float fadeTime)
 	{
-		this->asyncPlayMutex.lock();
+		hmutex::ScopeLock lock(&this->asyncPlayMutex);
 		this->asyncPlayQueued = false;
-		this->asyncPlayMutex.unlock();
+		lock.release();
 		if (fadeTime > 0.0f)
 		{
 			this->fadeSpeed = -1.0f / fadeTime;
