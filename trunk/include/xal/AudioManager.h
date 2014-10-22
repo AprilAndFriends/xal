@@ -297,8 +297,6 @@ namespace xal
 
 		/// @note Starts the thread for threaded update.
 		void _startThreading();
-		/// @note This method is not thread-safe and is for internal usage only.
-		void _clear();
 		
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual void _update(float timeDelta);
