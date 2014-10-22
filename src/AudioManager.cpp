@@ -101,17 +101,13 @@ namespace xal
 	void AudioManager::clear()
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		this->_clear();
-	}
-	
-	void AudioManager::_clear()
-	{
 		if (this->threadRunning)
 		{
 			hlog::write(xal::logTag, "Stopping audio update thread.");
 			this->threadRunning = false;
-			hmutex::ScopeLock lock(&this->mutex);
+			lock.release();
 			this->thread->join();
+			lock.acquire(&this->mutex);
 		}
 		if (this->thread != NULL)
 		{
@@ -119,25 +115,25 @@ namespace xal
 			this->thread = NULL;
 		}
 		this->_update(0.0f);
-		foreach (Player*, it, this->players)
+		foreach(Player*, it, this->players)
 		{
 			(*it)->_stop();
 			delete (*it);
 		}
 		this->players.clear();
 		this->managedPlayers.clear();
-		foreach_m (Sound*, it, this->sounds)
+		foreach_m(Sound*, it, this->sounds)
 		{
 			delete it->second;
 		}
 		this->sounds.clear();
-		foreach_m (Category*, it, this->categories)
+		foreach_m(Category*, it, this->categories)
 		{
 			delete it->second;
 		}
 		this->categories.clear();
 	}
-
+	
 	void AudioManager::setGlobalGain(float value)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
