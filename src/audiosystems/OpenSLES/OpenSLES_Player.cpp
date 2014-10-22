@@ -12,6 +12,7 @@
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 
+#include <hltypes/hmutex.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
@@ -55,7 +56,7 @@ namespace xal
 			OpenSLES_Player* player = (OpenSLES_Player*)context;
 			if (player->sound->isStreamed())
 			{
-				Mutex::ScopeLock lock(&player->mutex);
+				hmutex::ScopeLock lock(&player->mutex);
 				++player->_buffersProcessed;
 			}
 			else
@@ -382,7 +383,7 @@ namespace xal
 
 	int OpenSLES_Player::_getLastProcessedBuffersCount()
 	{
-		Mutex::ScopeLock lock(&this->mutex);
+		hmutex::ScopeLock lock(&this->mutex);
 		int value = this->_buffersProcessed;
 		this->_buffersProcessed = 0;
 		return value;
