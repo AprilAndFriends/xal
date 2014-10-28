@@ -99,6 +99,7 @@ namespace xal
 		HL_DEFINE_GET(float, globalGain, GlobalGain);
 		void setGlobalGain(float value);
 		harray<Player*> getPlayers();
+		hmap<hstr, Sound*> getSounds();
 
 		/// @brief Updates all audio processing.
 		/// @param[in] timeDelta Time since the call of this method in seconds.
@@ -294,6 +295,8 @@ namespace xal
 		void _setGlobalGain(float value);
 		/// @note This method is not thread-safe and is for internal usage only.
 		harray<Player*> _getPlayers();
+		/// @note This method is not thread-safe and is for internal usage only.
+		hmap<hstr, Sound*> _getSounds();
 
 		/// @note Starts the thread for threaded update.
 		void _startThreading();

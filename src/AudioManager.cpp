@@ -160,6 +160,17 @@ namespace xal
 		return (this->players - this->managedPlayers);
 	}
 
+	hmap<hstr, Sound*> AudioManager::getSounds()
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_getSounds();
+	}
+
+	hmap<hstr, Sound*> AudioManager::_getSounds()
+	{
+		return this->sounds;
+	}
+
 	void AudioManager::_update(hthread* thread)
 	{
 		hmutex::ScopeLock lock;
