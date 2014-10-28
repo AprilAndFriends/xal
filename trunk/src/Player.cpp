@@ -9,6 +9,7 @@
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 
+#include "Source.h"
 #include "Buffer.h"
 #include "Category.h"
 #include "Player.h"
@@ -128,7 +129,24 @@ namespace xal
 	{
 		return this->buffer->getSize();
 	}
-	
+
+	int Player::getBufferSize()
+	{
+		if (this->buffer->isStreamed())
+		{
+			return this->buffer->getStream().size();
+		}
+		else
+		{
+			return this->buffer->getSize();
+		}
+	}
+
+	int Player::getSourceSize()
+	{
+		return this->buffer->getSource()->getRamSize();
+	}
+
 	bool Player::isPlaying()
 	{
 		hmutex::ScopeLock lock(&xal::mgr->mutex);

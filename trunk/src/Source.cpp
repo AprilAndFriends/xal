@@ -33,6 +33,15 @@ namespace xal
 		}
 	}
 
+	int Source::getRamSize()
+	{
+		if (this->sourceMode == RAM && this->stream != NULL)
+		{
+			return this->stream->size();
+		}
+		return 0;
+	}
+
 	bool Source::open()
 	{
 		if (!hresource::exists(this->filename))

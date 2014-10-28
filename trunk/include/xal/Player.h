@@ -43,6 +43,8 @@ namespace xal
 		hstr getRealFilename();
 		float getDuration();
 		int getSize();
+		int getBufferSize();
+		int getSourceSize();
 		float getTimePosition();
 		unsigned int getSamplePosition();
 		Category* getCategory();

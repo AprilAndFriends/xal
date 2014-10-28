@@ -54,6 +54,11 @@ namespace xal
 		return this->buffer->getSize();
 	}
 
+	int Sound::getSourceSize()
+	{
+		return this->buffer->getSource()->getRamSize();
+	}
+
 	int Sound::getChannels()
 	{
 		return this->buffer->getChannels();
@@ -82,6 +87,11 @@ namespace xal
 	bool Sound::isStreamed()
 	{
 		return this->buffer->isStreamed();
+	}
+
+	bool Sound::isLoaded()
+	{
+		return this->buffer->isLoaded();
 	}
 
 	int Sound::readPcmData(hstream& output)

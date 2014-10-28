@@ -44,6 +44,8 @@ namespace xal
 
 		/// @return Byte-size of the audio data.
 		int getSize();
+		/// @return source byte size
+		int getSourceSize();
 		/// @return Number of channels in the audio data.
 		int getChannels();
 		/// @return Sampling rate of the audio data.
@@ -56,6 +58,8 @@ namespace xal
 		Format getFormat();
 		/// @return True if the Sounds's Buffer accesses streamed data.
 		bool isStreamed();
+		/// @return True if the Sounds's Buffer is loaded.
+		bool isLoaded();
 
 		/// @brief Reads the raw PCM data from the buffer.
 		/// @param[out] output The data stream where to store the PCM data.
@@ -73,7 +77,7 @@ namespace xal
 		hstr realFilename;
 		/// @brief Category to which the Sound is assigned.
 		Category* category;
-		/// @brief Buffer instance that handles
+		/// @brief Buffer instance that handles decoded data.
 		Buffer* buffer;
 
 		/// @return Finds the linked filename from an XLN file.

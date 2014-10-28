@@ -45,6 +45,7 @@ namespace xal
 		HL_DEFINE_GET(int, samplingRate, SamplingRate);
 		HL_DEFINE_GET(int, bitsPerSample, BitsPerSample);
 		HL_DEFINE_GET(float, duration, Duration);
+		int getRamSize();
 
 		/// @brief Opens the Source for reading.
 		/// @return True if Source was opened successfully.
