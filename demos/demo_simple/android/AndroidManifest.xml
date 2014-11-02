@@ -4,7 +4,7 @@
 		android:versionCode="3000"
 		android:versionName="3.0.0">
 		
-	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>
+	<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="21"/>
 	<uses-feature android:glEsVersion="0x00010001"/>
 	<uses-feature android:name="android.hardware.screen.landscape"/>
 	
