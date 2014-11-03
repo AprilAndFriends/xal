@@ -310,6 +310,7 @@ namespace xal
 			this->fadeSpeed = 0.0f;
 		}
 		this->_systemUpdateGain();
+		this->_systemUpdatePitch();
 		if (!alreadyFading)
 		{
 			this->_systemPlay();
