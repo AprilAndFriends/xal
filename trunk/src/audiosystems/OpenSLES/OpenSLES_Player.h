@@ -42,10 +42,9 @@ namespace xal
 		SLPlayItf player;
 		SLVolumeItf playerVolume;
 		SLAndroidSimpleBufferQueueItf playerBufferQueue;
+		SLAndroidSimpleBufferQueueState playerBufferQueueState;
 		unsigned char* streamBuffers[STREAM_BUFFER_COUNT]; // OpenSLES does not keep audio data alive so streamed audio has to be cached
 		int buffersSubmitted;
-		int _buffersProcessed;
-		hmutex mutex;
 
 		void _update(float timeDelta);
 
@@ -63,7 +62,7 @@ namespace xal
 		int _fillStreamBuffers(int count);
 		void _submitStreamBuffers(int count);
 
-		int _getLastProcessedBuffersCount();
+		int _getProcessedBuffersCount();
 
 		static void _playCallback(SLPlayItf player, void* context, SLuint32 event);
 
