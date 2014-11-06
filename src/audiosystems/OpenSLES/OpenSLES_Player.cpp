@@ -54,12 +54,7 @@ namespace xal
 		if (event & SL_PLAYEVENT_HEADATEND)
 		{
 			OpenSLES_Player* player = (OpenSLES_Player*)context;
-			if (player->sound->isStreamed())
-			{
-				hmutex::ScopeLock lock(&player->mutex);
-				++player->_buffersProcessed;
-			}
-			else
+			if (!player->sound->isStreamed())
 			{
 				player->active = false;
 			}
@@ -260,7 +255,6 @@ namespace xal
 	
 	void OpenSLES_Player::_systemPlay()
 	{
-		this->_getLastProcessedBuffersCount();
 		SLresult result = __CPP_WRAP_ARGS(this->player, SetPlayState, SL_PLAYSTATE_PLAYING);
 		if (result == SL_RESULT_SUCCESS)
 		{
@@ -286,7 +280,7 @@ namespace xal
 				{
 					if (this->sound->isStreamed())
 					{
-						int processed = this->_getLastProcessedBuffersCount();
+						int processed = this->_getProcessedBuffersCount();
 						this->buffersSubmitted -= processed;
 						result = processed * STREAM_BUFFER_SIZE;
 					}
@@ -297,7 +291,6 @@ namespace xal
 					__CPP_WRAP(this->playerBufferQueue, Clear);
 					if (this->sound->isStreamed())
 					{
-						this->_getLastProcessedBuffersCount(); // to reset the processed buffers count to 0
 						this->buffersSubmitted = 0;
 					}
 				}
@@ -314,7 +307,7 @@ namespace xal
 	
 	int OpenSLES_Player::_systemUpdateStream()
 	{
-		int processed = this->_getLastProcessedBuffersCount();
+		int processed = this->_getProcessedBuffersCount();
 		if (processed == 0)
 		{
 			this->stillPlaying = true; // don't remove, it prevents streamed sounds from being stopped
@@ -381,12 +374,14 @@ namespace xal
 		this->buffersSubmitted += queued;
 	}
 
-	int OpenSLES_Player::_getLastProcessedBuffersCount()
+	int OpenSLES_Player::_getProcessedBuffersCount()
 	{
-		hmutex::ScopeLock lock(&this->mutex);
-		int value = this->_buffersProcessed;
-		this->_buffersProcessed = 0;
-		return value;
+		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, GetState, &this->playerBufferQueueState);
+		if (result != SL_RESULT_SUCCESS)
+		{
+			return 0;
+		}
+		return (this->buffersSubmitted - this->playerBufferQueueState.count);
 	}
 
 }
