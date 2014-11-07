@@ -33,8 +33,8 @@ namespace xal
 	class xalExport XAudio2_AudioManager : public AudioManager
 	{
 	public:
-        IXAudio2* xa2Device;
-        IXAudio2MasteringVoice* xa2MasteringVoice;
+		IXAudio2* xa2Device;
+		IXAudio2MasteringVoice* xa2MasteringVoice;
 
 		XAudio2_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~XAudio2_AudioManager();
