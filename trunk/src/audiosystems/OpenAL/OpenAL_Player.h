@@ -64,7 +64,7 @@ namespace xal
 #ifdef _MAC
 		float macSampleOffset;
 #endif
-        bool pendingPitchUpdate;
+		bool pendingPitchUpdate;
 	};
 
 }
