@@ -44,6 +44,7 @@ namespace xal
 		HL_DEFINE_GET(int, fileSize, FileSize);
 		inline hstream& getStream() { return this->stream; }
 		HL_DEFINE_GET(Source*, source, Source);
+		HL_DEFINE_GET(float, idleTime, IdleTime);
 
 		int getSize();
 		int getChannels();
