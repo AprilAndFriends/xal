@@ -52,7 +52,8 @@ namespace xal
 		}
 		if (this->stream == NULL)
 		{
-			hresource* resource = new hresource(this->filename);
+			hresource* resource = new hresource;
+			resource->open(this->filename);
 			if (this->sourceMode == RAM || this->bufferMode == ASYNC)
 			{
 				this->stream = new hstream();
