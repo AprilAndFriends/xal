@@ -12,7 +12,7 @@
 			android:icon="@drawable/icon">
 		<activity android:name=".DemoSimple"
 				android:label="Demo Simple"
-				android:screenOrientation="landscape"
+				android:screenOrientation="sensorLandscape"
 				android:launchMode="singleTask">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
