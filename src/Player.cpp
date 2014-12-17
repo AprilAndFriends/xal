@@ -94,7 +94,7 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&xal::mgr->mutex);
 		unsigned int position = this->_systemGetBufferPosition();
-		if (this->sound->isStreamed())
+		if (this->sound->isStreamed() && this->_systemNeedsStreamedBufferPositionCorrection())
 		{
 			// corrects position by using number of processed bytes (circular)
 			position = (position + (STREAM_BUFFER_COUNT - this->bufferIndex) * STREAM_BUFFER_SIZE) % STREAM_BUFFER;

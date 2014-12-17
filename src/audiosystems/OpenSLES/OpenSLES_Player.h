@@ -50,6 +50,7 @@ namespace xal
 
 		bool _systemIsPlaying();
 		unsigned int _systemGetBufferPosition();
+		bool _systemNeedsStreamedBufferPositionCorrection();
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
 		void _systemUpdateGain();
