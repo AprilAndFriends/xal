@@ -160,6 +160,9 @@ namespace xal
 		/// @brief Position of the playback buffer.
 		/// @note This is implemented by the audio-system.
 		inline virtual unsigned int _systemGetBufferPosition() { return 0; }
+		/// @brief Whether this implementation needs to correct the streamed buffer position.
+		/// @note This is implemented by the audio-system.
+		inline virtual bool _systemNeedsStreamedBufferPositionCorrection() { return true; }
 		/// @brief Offset within the buffer.
 		/// @note This is implemented by the audio-system.
 		inline virtual float _systemGetOffset() { return 0.0f; }

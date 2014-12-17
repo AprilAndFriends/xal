@@ -79,10 +79,13 @@ namespace xal
 	
 	OpenSLES_Player::~OpenSLES_Player()
 	{
-		for_iter (i, 0, STREAM_BUFFER_COUNT)
+		if (this->streamBuffers[0] != NULL)
 		{
-			delete [] this->streamBuffers[i];
-			this->streamBuffers[i] = NULL;
+			for_iter (i, 0, STREAM_BUFFER_COUNT)
+			{
+				delete[] this->streamBuffers[i];
+				this->streamBuffers[i] = NULL;
+			}
 		}
 		if (this->playerObject != NULL)
 		{
@@ -108,12 +111,18 @@ namespace xal
 	unsigned int OpenSLES_Player::_systemGetBufferPosition()
 	{
 		int bytes = 0;
-		SLresult result = __CPP_WRAP_ARGS(this->player, GetMarkerPosition, (SLmillisecond*)&bytes);
-		if (result != SL_RESULT_SUCCESS)
+		SLmillisecond milliseconds = 0;
+		SLresult result = __CPP_WRAP_ARGS(this->player, GetPosition, (SLmillisecond*)&milliseconds);
+		if (result == SL_RESULT_SUCCESS)
 		{
-			bytes = 0;
+			bytes = milliseconds * this->buffer->getSamplingRate() * (this->buffer->getBitsPerSample() / 8) * this->buffer->getChannels() / 1000;
 		}
 		return bytes;
+	}
+
+	bool OpenSLES_Player::_systemNeedsStreamedBufferPositionCorrection()
+	{
+		return false;
 	}
 	
 	bool OpenSLES_Player::_systemPreparePlay()
@@ -159,7 +168,7 @@ namespace xal
 		{
 			return false;
 		}
-		format.containerSize = (bitsPerSample + 7) / 8 * 8; // assuming all bits-per-sample formats are byte-aligned which not be the right way to do things
+		format.containerSize = (bitsPerSample + 7) / 8 * 8; // assuming all bits-per-sample formats are byte-aligned which may not be the right way to do things
 		if (format.numChannels == 1)
 		{
 			format.channelMask = SL_SPEAKER_FRONT_CENTER;
@@ -195,8 +204,6 @@ namespace xal
 		CHECK_ERROR("Could not register callback!");
 		result = __CPP_WRAP_ARGS(this->player, SetCallbackEventsMask, SL_PLAYEVENT_HEADATEND);
 		CHECK_ERROR("Could not set callback mask!");
-		//__CPP_WRAP_ARGS(this->player, SetPositionUpdatePeriod, 1);
-		//(*this->player)->SetPositionUpdatePeriod
 		return true;
 	}
 	
@@ -258,7 +265,7 @@ namespace xal
 		SLresult result = __CPP_WRAP_ARGS(this->player, SetPlayState, SL_PLAYSTATE_PLAYING);
 		if (result == SL_RESULT_SUCCESS)
 		{
-			__CPP_WRAP_ARGS(this->player, SetMarkerPosition, 0); // required to avoid a constant warning by OpenSLES when using GetMarkerPosition()
+			//__CPP_WRAP_ARGS(this->player, SetMarkerPosition, 0); // required to avoid a constant warning by OpenSLES when using GetMarkerPosition()
 			this->playing = true;
 			this->stillPlaying = true;
 			this->active = true; // required, because otherwise the buffer will think it's done
@@ -282,11 +289,11 @@ namespace xal
 					{
 						int processed = this->_getProcessedBuffersCount();
 						this->buffersSubmitted -= processed;
-						result = processed * STREAM_BUFFER_SIZE;
 					}
 				}
 				else
 				{
+					this->bufferIndex = 0;
 					this->buffer->rewind();
 					__CPP_WRAP(this->playerBufferQueue, Clear);
 					if (this->sound->isStreamed())
@@ -324,7 +331,7 @@ namespace xal
 		{
 			this->_stop();
 		}
-		return (processed * STREAM_BUFFER_SIZE);
+		return 0;
 	}
 	
 	void OpenSLES_Player::_submitBuffer(hstream& stream)
