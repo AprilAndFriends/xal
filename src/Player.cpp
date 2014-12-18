@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.32
 /// 
 /// @section LICENSE
 /// 
@@ -203,7 +203,11 @@ namespace xal
 		if (this->_isPlaying())
 		{
 			this->buffer->keepLoaded();
-			if (this->sound->isStreamed())
+			if (!this->sound->isStreamed())
+			{
+				this->_systemUpdateNormal();
+			}
+			else
 			{
 				this->processedByteCount += this->_systemUpdateStream();
 			}

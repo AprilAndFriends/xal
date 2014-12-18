@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.32
 /// 
 /// @section LICENSE
 /// 
@@ -189,6 +189,9 @@ namespace xal
 		/// @return How many bytes have been played since the last update.
 		/// @note This is implemented by the audio-system.
 		inline virtual int _systemStop() { return 0; }
+		/// @brief Updates non-streaming processing in non-streamed Sounds.
+		/// @note This is implemented by the audio-system.
+		inline virtual void _systemUpdateNormal() { }
 		/// @brief Updates streaming processing in streamed Sounds.
 		/// @return How many bytes have been played since the last update.
 		/// @note This is implemented by the audio-system.

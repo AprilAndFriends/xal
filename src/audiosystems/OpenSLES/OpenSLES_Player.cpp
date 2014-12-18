@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.32
 /// 
 /// @section LICENSE
 /// 
@@ -24,6 +24,8 @@
 #include "OpenSLES_Player.h"
 #include "Sound.h"
 #include "xal.h"
+
+#define NORMAL_BUFFER_COUNT 2
 
 #define OPENSLES_MANAGER ((OpenSLES_AudioManager*)xal::mgr)
 
@@ -70,7 +72,7 @@ namespace xal
 		}
 		if (this->sound->isStreamed())
 		{
-			for_iter(i, 0, STREAM_BUFFER_COUNT)
+			for_iter (i, 0, STREAM_BUFFER_COUNT)
 			{
 				this->streamBuffers[i] = new unsigned char[STREAM_BUFFER_SIZE];
 			}
@@ -116,6 +118,10 @@ namespace xal
 		if (result == SL_RESULT_SUCCESS)
 		{
 			bytes = milliseconds * this->buffer->getSamplingRate() * (this->buffer->getBitsPerSample() / 8) * this->buffer->getChannels() / 1000;
+			if (!this->sound->isStreamed() && this->looping)
+			{
+				bytes %= this->buffer->getSize();
+			}
 		}
 		return bytes;
 	}
@@ -134,7 +140,7 @@ namespace xal
 		// input / source
 		SLDataLocator_AndroidSimpleBufferQueue inLocator;
 		inLocator.locatorType = SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE;
-		inLocator.numBuffers = (!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT);
+		inLocator.numBuffers = (!this->sound->isStreamed() ? NORMAL_BUFFER_COUNT : STREAM_BUFFER_COUNT);
 		SLDataFormat_PCM format;
 		format.formatType = SL_DATAFORMAT_PCM;
 		format.numChannels = this->buffer->getChannels();
@@ -211,7 +217,24 @@ namespace xal
 	{
 		if (!this->sound->isStreamed())
 		{
-			if (!this->paused)
+			if (!this->looping)
+			{
+				if (!this->paused)
+				{
+					this->_submitBuffer(this->buffer->getStream());
+				}
+				return;
+			}
+			int count = NORMAL_BUFFER_COUNT;
+			if (this->paused)
+			{
+				count -= this->buffersSubmitted;
+			}
+			else
+			{
+				this->buffersSubmitted = 0;
+			}
+			for_iter (i, 0, count)
 			{
 				this->_submitBuffer(this->buffer->getStream());
 			}
@@ -252,12 +275,41 @@ namespace xal
 	
 	void OpenSLES_Player::_systemUpdatePitch()
 	{
-		static bool checked = false;
-		if (!checked)
+		static bool _supported = true;
+		if (_supported)
 		{
 			hlog::warn(xal::logTag, "Pitch change is not supported in this implementation! This message is only logged once.");
+			_supported = false;
 		}
-		checked = true;
+		// even though there is no crash, it doesn't seem possible to play a sound when obtaining a playback interface so this code is disabled for now
+		/*
+		if (this->playerPlaybackRate != NULL)
+		{
+			static bool _supported = true;
+			if (_supported)
+			{
+				SLpermille rateMin = 0;
+				SLpermille rateMax = 0x7FFF; // max short
+				SLpermille rateStep = 0;
+				SLuint32 capabilities = 0;
+				SLresult result = __CPP_WRAP_ARGS(this->playerPlaybackRate, GetRateRange, 0, &rateMin, &rateMax, &rateStep, &capabilities);
+				if (result != SL_RESULT_SUCCESS)
+				{
+					hlog::warn(xal::logTag, "Pitch change is not supported on this device! This message is only logged once.");
+					_supported = false;
+					return;
+				}
+				SLpermille value = (SLpermille)hclamp(this->pitch * 1000, (float)rateMin, (float)rateMax);
+				value = ((value - rateMin) / rateStep) * rateStep + rateMin; // correcting value to use "step" properly
+				result = __CPP_WRAP_ARGS(this->playerPlaybackRate, SetRate, value);
+				if (result != SL_RESULT_SUCCESS)
+				{
+					hlog::warn(xal::logTag, "Pitch change is not supported on this device! This message is only logged once.");
+					_supported = false;
+				}
+			}
+		}
+		//*/
 	}
 	
 	void OpenSLES_Player::_systemPlay()
@@ -265,7 +317,6 @@ namespace xal
 		SLresult result = __CPP_WRAP_ARGS(this->player, SetPlayState, SL_PLAYSTATE_PLAYING);
 		if (result == SL_RESULT_SUCCESS)
 		{
-			//__CPP_WRAP_ARGS(this->player, SetMarkerPosition, 0); // required to avoid a constant warning by OpenSLES when using GetMarkerPosition()
 			this->playing = true;
 			this->stillPlaying = true;
 			this->active = true; // required, because otherwise the buffer will think it's done
@@ -285,21 +336,14 @@ namespace xal
 			{
 				if (this->paused)
 				{
-					if (this->sound->isStreamed())
-					{
-						int processed = this->_getProcessedBuffersCount();
-						this->buffersSubmitted -= processed;
-					}
+					this->buffersSubmitted -= this->_getProcessedBuffersCount();
 				}
 				else
 				{
 					this->bufferIndex = 0;
 					this->buffer->rewind();
 					__CPP_WRAP(this->playerBufferQueue, Clear);
-					if (this->sound->isStreamed())
-					{
-						this->buffersSubmitted = 0;
-					}
+					this->buffersSubmitted = 0;
 				}
 				this->playing = false;
 				this->stillPlaying = false;
@@ -312,6 +356,24 @@ namespace xal
 		return 0;
 	}
 	
+	void OpenSLES_Player::_systemUpdateNormal()
+	{
+		if (this->looping)
+		{
+			int processed = this->_getProcessedBuffersCount();
+			this->buffersSubmitted -= processed;
+			for_iter (i, 0, processed)
+			{
+				this->_submitBuffer(this->buffer->getStream());
+			}
+			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped so let's just bitch-slap it and get this over with
+			if (this->buffersSubmitted == 0)
+			{
+				this->_stop();
+			}
+		}
+	}
+
 	int OpenSLES_Player::_systemUpdateStream()
 	{
 		int processed = this->_getProcessedBuffersCount();
@@ -333,11 +395,15 @@ namespace xal
 		}
 		return 0;
 	}
-	
+
 	void OpenSLES_Player::_submitBuffer(hstream& stream)
 	{
 		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, &stream[0], stream.size());
-		if (result != SL_RESULT_SUCCESS)
+		if (result == SL_RESULT_SUCCESS)
+		{
+			++this->buffersSubmitted;
+		}
+		else
 		{
 			hlog::warn(xal::logTag, "Could not queue buffer!");
 		}

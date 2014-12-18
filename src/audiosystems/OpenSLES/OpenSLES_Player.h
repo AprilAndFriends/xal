@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.32
 /// 
 /// @section LICENSE
 /// 
@@ -26,6 +26,7 @@ namespace xal
 	class Sound;
 	class OpenSLES_AudioManager;
 
+	/// @note In this audio-system looping non-streamed sounds are implemented behave very similarly to streamed sounds due to certain constraints in the backend.
 	class xalExport OpenSLES_Player : public Player
 	{
 	public:
@@ -57,6 +58,7 @@ namespace xal
 		void _systemUpdatePitch();
 		void _systemPlay();
 		int _systemStop();
+		void _systemUpdateNormal();
 		int _systemUpdateStream();
 
 		void _submitBuffer(hstream& stream);
