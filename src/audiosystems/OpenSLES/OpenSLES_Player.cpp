@@ -117,7 +117,8 @@ namespace xal
 		SLresult result = __CPP_WRAP_ARGS(this->player, GetPosition, (SLmillisecond*)&milliseconds);
 		if (result == SL_RESULT_SUCCESS)
 		{
-			bytes = milliseconds * this->buffer->getSamplingRate() * (this->buffer->getBitsPerSample() / 8) * this->buffer->getChannels() / 1000;
+			// first comes "* 0.001", because it can cause an int overflow otherwise
+			bytes = (int)(milliseconds * 0.001f * this->buffer->getSamplingRate() * (this->buffer->getBitsPerSample() / 8) * this->buffer->getChannels());
 			if (!this->sound->isStreamed() && this->looping)
 			{
 				bytes %= this->buffer->getSize();
