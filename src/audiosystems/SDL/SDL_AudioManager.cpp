@@ -123,7 +123,7 @@ namespace xal
 		result = SDL_ConvertAudio(&cvt);
 		if (result != 0)
 		{
-			delete [] cvt.buf;
+			delete[] cvt.buf;
 			cvt.buf = NULL;
 			hlog::error(xal::logTag, "Could not convert audio: " + source->getFilename());
 			return dataSize;
@@ -140,7 +140,7 @@ namespace xal
 				stream.seek(-written);
 			}
 		}
-		delete [] cvt.buf;
+		delete[] cvt.buf;
 		cvt.buf = NULL;
 		return cvt.len_cvt;
 	}
