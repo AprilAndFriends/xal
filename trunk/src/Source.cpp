@@ -37,7 +37,7 @@ namespace xal
 	{
 		if (this->sourceMode == RAM && this->stream != NULL)
 		{
-			return this->stream->size();
+			return (int)this->stream->size();
 		}
 		return 0;
 	}

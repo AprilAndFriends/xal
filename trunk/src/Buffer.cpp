@@ -26,7 +26,7 @@ namespace xal
 	Buffer::Buffer(Sound* sound)
 	{
 		this->filename = sound->getRealFilename();
-		this->fileSize = hresource::hsize(this->filename);
+		this->fileSize = (int)hresource::hsize(this->filename);
 		Category* category = sound->getCategory();
 		this->mode = category->getBufferMode();
 		this->loaded = false;

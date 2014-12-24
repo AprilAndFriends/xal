@@ -7,7 +7,7 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #ifdef _SDL
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
