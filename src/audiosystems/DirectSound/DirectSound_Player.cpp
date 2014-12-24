@@ -105,7 +105,7 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			hstream& stream = this->buffer->getStream();
-			this->_copyBuffer(stream, stream.size());
+			this->_copyBuffer(stream, (int)stream.size());
 			return;
 		}
 		int count = STREAM_BUFFER_COUNT;

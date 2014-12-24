@@ -58,7 +58,7 @@ namespace xal
 
 	static long _dataTell(void* dataSource)
 	{
-		return ((hsbase*)dataSource)->position();
+		return (long)((hsbase*)dataSource)->position();
 	}
 
 	OGG_Source::OGG_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)

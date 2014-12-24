@@ -134,7 +134,7 @@ namespace xal
 	{
 		if (this->buffer->isStreamed())
 		{
-			return this->buffer->getStream().size();
+			return (int)this->buffer->getStream().size();
 		}
 		else
 		{
