@@ -246,7 +246,7 @@ namespace xal
 	{
 		if (!this->categories.has_key(name))
 		{
-			throw hl_exception("Audio Manager: Category '" + name + "' does not exist!");
+			throw Exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
 		return this->categories[name];
 	}
@@ -285,7 +285,7 @@ namespace xal
 	{
 		if (!this->sounds.has_key(name))
 		{
-			throw hl_exception("Audio Manager: Sound '" + name + "' does not exist!");
+			throw Exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		return this->sounds[name];
 	}
@@ -360,7 +360,7 @@ namespace xal
 		}
 		if (manualSoundNames.size() > 0)
 		{
-			throw hl_exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.join(", "));
+			throw Exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.join(", "));
 		}
 	}
 
@@ -419,7 +419,7 @@ namespace xal
 	{
 		if (!this->sounds.has_key(soundName))
 		{
-			throw hl_exception("Audio Manager: Sound '" + soundName + "' does not exist!");
+			throw Exception("Audio Manager: Sound '" + soundName + "' does not exist!");
 		}
 		Sound* sound = this->sounds[soundName];
 		Player* player = this->_createSystemPlayer(sound);
