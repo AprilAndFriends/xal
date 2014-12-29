@@ -147,7 +147,7 @@ namespace xal
 		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
-			hlog::error(xal::logTag, "Cannot lock buffer for: " + this->sound->getRealFilename());
+			hlog::error(xal::logTag, "Cannot lock buffer for: " + this->sound->getFilename());
 			return;
 		}
 		if (write1 != NULL)
@@ -180,7 +180,7 @@ namespace xal
 		HRESULT result = this->dsBuffer->Lock(lockOffset, size * count, &write1, &length1, &write2, &length2, 0);
 		if (FAILED(result))
 		{
-			hlog::error(xal::logTag, "Cannot lock buffer for: " + this->sound->getRealFilename());
+			hlog::error(xal::logTag, "Cannot lock buffer for: " + this->sound->getFilename());
 			return;
 		}
 		if (write1 != NULL)

@@ -40,7 +40,6 @@ namespace xal
 		HL_DEFINE_GET(Sound*, sound, Sound);
 		hstr getName();
 		hstr getFilename();
-		hstr getRealFilename();
 		float getDuration();
 		int getSize();
 		int getBufferSize();
