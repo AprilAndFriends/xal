@@ -38,7 +38,6 @@ namespace xal
 
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(hstr, filename, Filename);
-		HL_DEFINE_GET(hstr, realFilename, RealFilename);
 		HL_DEFINE_GET(Category*, category, Category);
 		HL_DEFINE_GET(Buffer*, buffer, Buffer);
 
@@ -72,17 +71,10 @@ namespace xal
 		hstr name;
 		/// @brief Logical filename of the Sound.
 		hstr filename;
-		/// @brief Actual filename of the Sound.
-		/// @note This member includes the path as well as file extension.
-		hstr realFilename;
 		/// @brief Category to which the Sound is assigned.
 		Category* category;
 		/// @brief Buffer instance that handles decoded data.
 		Buffer* buffer;
-
-		/// @return Finds the linked filename from an XLN file.
-		/// @note TODO - will be possibly removed in the future
-		hstr _findLinkedFile();
 
 	};
 

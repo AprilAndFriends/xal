@@ -23,7 +23,6 @@ namespace xal
 	Sound::Sound(chstr filename, Category* category, chstr prefix)
 	{
 		this->filename = filename;
-		this->realFilename = this->_findLinkedFile();
 		this->category = category;
 		this->buffer = xal::mgr->_createBuffer(this);
 		// extracting filename without extension and prepending the prefix
@@ -35,20 +34,6 @@ namespace xal
 		xal::mgr->_destroyBuffer(this->buffer);
 	}
 	
-	hstr Sound::_findLinkedFile()
-	{
-		if (!this->filename.ends_with(".xln"))
-		{
-			return this->filename;
-		}
-		if (!hresource::exists(this->filename))
-		{
-			return this->filename;
-		}
-		// It's dangerous to go alone! Take this.
-		return xal::mgr->findAudioFile(hrdir::normalize(hrdir::join_path(hrdir::basedir(this->filename), hresource::hread(this->filename), false)));
-	}
-
 	int Sound::getSize()
 	{
 		return this->buffer->getSize();

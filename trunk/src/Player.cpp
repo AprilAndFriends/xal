@@ -115,11 +115,6 @@ namespace xal
 		return this->sound->getFilename();
 	}
 
-	hstr Player::getRealFilename()
-	{
-		return this->sound->getRealFilename();
-	}
-
 	float Player::getDuration()
 	{
 		return this->buffer->getDuration();
