@@ -62,9 +62,8 @@ namespace xal
 
 		/// @brief Reads the raw PCM data from the buffer.
 		/// @param[out] output The data stream where to store the PCM data.
-		/// @return The byte-size of the read data.
 		/// @note If the underlying Source does not provide data as PCM, it will always be converted to PCM.
-		int readPcmData(hstream& output);
+		void readPcmData(hstream& output);
 
 	protected:
 		/// @brief Name of the Sound.

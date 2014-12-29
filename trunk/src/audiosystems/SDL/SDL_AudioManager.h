@@ -51,7 +51,7 @@ namespace xal
 
 		static void _mixAudio(void* unused, unsigned char* stream, int length);
 
-		int _convertStream(Source* source, hstream& stream, int dataSize);
+		void _convertStream(Source* source, hstream& stream);
 		
 	};
 

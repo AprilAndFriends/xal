@@ -100,9 +100,8 @@ namespace xal
 		int calcInputSize(int size);
 		/// @brief Reads the raw PCM data from the buffer.
 		/// @param[out] output The data stream where to store the PCM data.
-		/// @return The byte-size of the read data.
 		/// @note If the Source does not provide data as PCM, it will always be converted to PCM.
-		int readPcmData(hstream& output);
+		void readPcmData(hstream& output);
 
 	protected:
 		/// @brief Filename of the source.
@@ -121,8 +120,6 @@ namespace xal
 		bool asyncLoadDiscarded;
 		/// @brief Mutex for access of asynchronously loaded data.
 		hmutex asyncLoadMutex;
-		/// @brief Size of all the data.
-		int dataSize;
 		/// @brief Connected Source from which data is read.
 		Source* source;
 		/// @brief Whether meta-data has been loaded.

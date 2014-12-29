@@ -79,9 +79,9 @@ namespace xal
 		return this->buffer->isLoaded();
 	}
 
-	int Sound::readPcmData(hstream& output)
+	void Sound::readPcmData(hstream& output)
 	{
-		return Buffer(this).readPcmData(output);
+		Buffer(this).readPcmData(output);
 	}
 
 }

@@ -377,9 +377,7 @@ namespace xal
 		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format (bit rate, channel number, sampling rate).
 		/// @param[in] source Source object that holds the data.
 		/// @param[in,out] stream The data stream buffer.
-		/// @param[in] dataSize The size of the data within the stream.
-		/// @return dataSize if no conversion was done or a positive integer for the size of the new data.
-		virtual int _convertStream(Source* source, hstream& stream, int dataSize) { return dataSize; }
+		virtual void _convertStream(Source* source, hstream& stream) { }
 
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.
