@@ -91,11 +91,11 @@ namespace xal
 		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
 	}
 	
-	int SDL_AudioManager::_convertStream(Source* source, hstream& stream, int dataSize)
+	void SDL_AudioManager::_convertStream(Source* source, hstream& stream)
 	{	
-		if (stream.size() == 0 || dataSize <= 0)
+		if (stream.size() == 0)
 		{
-			return dataSize;
+			return;
 		}
 		SDL_AudioSpec format = this->getFormat();
 		int srcFormat = (source->getBitsPerSample() == 16 ? AUDIO_S16 : AUDIO_S8);
@@ -103,7 +103,7 @@ namespace xal
 		int srcSamplingRate = source->getSamplingRate();
 		if (srcFormat == format.format && srcChannels == format.channels && srcSamplingRate == format.freq)
 		{
-			return dataSize;
+			return;
 		}
 		SDL_AudioCVT cvt;
 		cvt.buf = NULL;
@@ -111,10 +111,10 @@ namespace xal
 		if (result <= 0)
 		{
 			hlog::error(xal::logTag, "Could not build converter: " + source->getFilename());
-			return dataSize;
+			return;
 		}
-		cvt.buf = (Uint8*)new unsigned char[dataSize * cvt.len_mult];
-		cvt.len = dataSize;
+		cvt.buf = (Uint8*)new unsigned char[(int)stream.size() * cvt.len_mult];
+		cvt.len = stream.size();
 		result = stream.read_raw(cvt.buf, cvt.len);
 		if (result > 0)
 		{
@@ -126,13 +126,13 @@ namespace xal
 			delete[] cvt.buf;
 			cvt.buf = NULL;
 			hlog::error(xal::logTag, "Could not convert audio: " + source->getFilename());
-			return dataSize;
+			return;
 		}
 		if (cvt.len_cvt > 0)
 		{
 			if (cvt.len_cvt > stream.size())
 			{
-				stream.set_capacity(stream.position() + cvt.len_cvt);
+				stream.set_capacity((int)stream.position() + cvt.len_cvt);
 			}
 			int written = stream.write_raw(cvt.buf, cvt.len_cvt);
 			if (written > 0)
@@ -142,7 +142,7 @@ namespace xal
 		}
 		delete[] cvt.buf;
 		cvt.buf = NULL;
-		return cvt.len_cvt;
+		return;
 	}
 	
 }
