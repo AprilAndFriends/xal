@@ -376,7 +376,7 @@ namespace xal
 		harray<hstr> dirs = hrdir::directories(path, true);
 		foreach (hstr, it, dirs)
 		{
-			result += this->_createSoundsFromPath((*it), hrdir::basename(*it), prefix);
+			result += this->_createSoundsFromPath((*it), hrdir::baseName(*it), prefix);
 		}
 		return result;
 	}
