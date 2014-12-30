@@ -57,7 +57,7 @@ namespace xal
 			if (this->sourceMode == RAM || this->bufferMode == ASYNC)
 			{
 				this->stream = new hstream();
-				this->stream->write_raw(*resource);
+				this->stream->writeRaw(*resource);
 				delete resource;
 				this->stream->rewind();
 			}

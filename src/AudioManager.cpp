@@ -805,7 +805,7 @@ namespace xal
 				return name;
 			}
 		}
-		hstr newFilename = hfile::no_extension(filename);
+		hstr newFilename = hfile::withoutExtension(filename);
 		if (newFilename != filename)
 		{
 			foreach (hstr, it, this->extensions)
