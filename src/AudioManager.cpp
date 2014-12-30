@@ -229,7 +229,7 @@ namespace xal
 
 	Category* AudioManager::_createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode)
 	{
-		if (!this->categories.has_key(name))
+		if (!this->categories.hasKey(name))
 		{
 			this->categories[name] = new Category(name, bufferMode, sourceMode);
 		}
@@ -244,7 +244,7 @@ namespace xal
 
 	Category* AudioManager::_getCategory(chstr name)
 	{
-		if (!this->categories.has_key(name))
+		if (!this->categories.hasKey(name))
 		{
 			throw Exception("Audio Manager: Category '" + name + "' does not exist!");
 		}
@@ -253,7 +253,7 @@ namespace xal
 
 	bool AudioManager::hasCategory(chstr category)
 	{
-		return this->categories.has_key(category);
+		return this->categories.hasKey(category);
 	}
 
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
@@ -266,7 +266,7 @@ namespace xal
 	{
 		Category* category = this->_getCategory(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
-		if (sound->getFormat() == UNKNOWN || this->sounds.has_key(sound->getName()))
+		if (sound->getFormat() == UNKNOWN || this->sounds.hasKey(sound->getName()))
 		{
 			delete sound;
 			return NULL;
@@ -283,7 +283,7 @@ namespace xal
 
 	Sound* AudioManager::_getSound(chstr name)
 	{
-		if (!this->sounds.has_key(name))
+		if (!this->sounds.hasKey(name))
 		{
 			throw Exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
@@ -354,7 +354,7 @@ namespace xal
 			}
 			if (!manual)
 			{
-				this->sounds.remove_value(*it);
+				this->sounds.removeValue(*it);
 				delete (*it);
 			}
 		}
@@ -406,7 +406,7 @@ namespace xal
 
 	bool AudioManager::hasSound(chstr name)
 	{
-		return this->sounds.has_key(name);
+		return this->sounds.hasKey(name);
 	}
 	
 	Player* AudioManager::createPlayer(chstr soundName)
@@ -417,7 +417,7 @@ namespace xal
 
 	Player* AudioManager::_createPlayer(chstr soundName)
 	{
-		if (!this->sounds.has_key(soundName))
+		if (!this->sounds.hasKey(soundName))
 		{
 			throw Exception("Audio Manager: Sound '" + soundName + "' does not exist!");
 		}

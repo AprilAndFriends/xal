@@ -38,7 +38,7 @@ namespace xal
 	{
 		Category* category = this->_getCategory(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
-		if (this->sounds.has_key(sound->getName()))
+		if (this->sounds.hasKey(sound->getName()))
 		{
 			delete sound;
 			return NULL;
