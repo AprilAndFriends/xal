@@ -26,7 +26,7 @@ namespace xal
 		this->category = category;
 		this->buffer = xal::mgr->_createBuffer(this);
 		// extracting filename without extension and prepending the prefix
-		this->name = prefix + hresource::no_extension(hrdir::basename(filename));
+		this->name = prefix + hresource::no_extension(hrdir::baseName(filename));
 	}
 
 	Sound::~Sound()
