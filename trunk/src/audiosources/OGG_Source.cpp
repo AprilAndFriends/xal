@@ -29,7 +29,7 @@ namespace xal
 	static size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
 		hsbase* stream = (hsbase*)dataSource;
-		return stream->read_raw(data, size * count);
+		return stream->readRaw(data, size * count);
 	}
 
 	static int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
@@ -126,7 +126,7 @@ namespace xal
 			return false;
 		}
 		unsigned long remaining = this->size;
-		output.prepare_manual_write_raw(remaining);
+		output.prepareManualWriteRaw(remaining);
 		char* buffer = (char*)&output[0];
 		int read = 0;
 		while (remaining > 0)
@@ -150,7 +150,7 @@ namespace xal
 			return 0;
 		}
 		int remaining = size;
-		output.prepare_manual_write_raw(remaining);
+		output.prepareManualWriteRaw(remaining);
 		char* buffer = (char*)&output[0];
 		int read = 0;
 		while (remaining > 0)

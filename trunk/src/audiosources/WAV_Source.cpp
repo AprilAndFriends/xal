@@ -33,40 +33,40 @@ namespace xal
 			return false;
 		}
 		unsigned char buffer[5] = {0};
-		this->stream->read_raw(buffer, 4); // RIFF
-		this->stream->read_raw(buffer, 4); // file size
-		this->stream->read_raw(buffer, 4); // WAVE
+		this->stream->readRaw(buffer, 4); // RIFF
+		this->stream->readRaw(buffer, 4); // file size
+		this->stream->readRaw(buffer, 4); // WAVE
 		hstr tag;
 		int size = 0;
 		short value16;
 		int value32;
 		while (!this->stream->eof())
 		{
-			this->stream->read_raw(buffer, 4); // next tag
+			this->stream->readRaw(buffer, 4); // next tag
 			tag = (char*)buffer;
-			this->stream->read_raw(buffer, 4); // size of the chunk
+			this->stream->readRaw(buffer, 4); // size of the chunk
 			memcpy(&size, buffer, 4);
 			if (tag == "fmt ")
 			{
 				// format
-				this->stream->read_raw(buffer, 2);
+				this->stream->readRaw(buffer, 2);
 				memcpy(&value16, buffer, 2);
 				if (size == 16 && value16 == 1)
 				{
 					// channels
-					this->stream->read_raw(buffer, 2);
+					this->stream->readRaw(buffer, 2);
 					memcpy(&value16, buffer, 2);
 					this->channels = value16;
 					// sampling rate
-					this->stream->read_raw(buffer, 4);
+					this->stream->readRaw(buffer, 4);
 					memcpy(&value32, buffer, 4);
 					this->samplingRate = value32;
 					// bytes rate
-					this->stream->read_raw(buffer, 4);
+					this->stream->readRaw(buffer, 4);
 					// blockalign
-					this->stream->read_raw(buffer, 2);
+					this->stream->readRaw(buffer, 2);
 					// bits per sample
-					this->stream->read_raw(buffer, 2);
+					this->stream->readRaw(buffer, 2);
 					memcpy(&value16, buffer, 2);
 					this->bitsPerSample = value16;
 					size = 0;
@@ -104,16 +104,16 @@ namespace xal
 	{
 		this->stream->rewind();
 		unsigned char buffer[5] = {0};
-		this->stream->read_raw(buffer, 4); // RIFF
-		this->stream->read_raw(buffer, 4); // file size
-		this->stream->read_raw(buffer, 4); // WAVE
+		this->stream->readRaw(buffer, 4); // RIFF
+		this->stream->readRaw(buffer, 4); // file size
+		this->stream->readRaw(buffer, 4); // WAVE
 		hstr tag;
 		int size = 0;
 		while (!this->stream->eof())
 		{
-			this->stream->read_raw(buffer, 4); // next tag
+			this->stream->readRaw(buffer, 4); // next tag
 			tag = (char*)buffer;
-			this->stream->read_raw(buffer, 4); // size of the chunk
+			this->stream->readRaw(buffer, 4); // size of the chunk
 			memcpy(&size, buffer, 4);
 			if (tag == "data")
 			{
@@ -132,7 +132,7 @@ namespace xal
 		{
 			return false;
 		}
-		int written = output.write_raw(this->stream, this->size);
+		int written = output.writeRaw(this->stream, this->size);
 		if (written > 0)
 		{
 			output.seek(-written);
@@ -147,7 +147,7 @@ namespace xal
 		{
 			return 0;
 		}
-		int written = output.write_raw(this->stream, size);
+		int written = output.writeRaw(this->stream, size);
 		if (written > 0)
 		{
 			output.seek(-written);
