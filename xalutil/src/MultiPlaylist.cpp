@@ -6,8 +6,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include <hltypes/exception.h>
 #include <hltypes/harray.h>
+#include <hltypes/hexception.h>
 
 #include "MultiPlaylist.h"
 #include "Playlist.h"
