@@ -115,7 +115,7 @@ namespace xal
 		}
 		cvt.buf = (Uint8*)new unsigned char[(int)stream.size() * cvt.len_mult];
 		cvt.len = stream.size();
-		result = stream.read_raw(cvt.buf, cvt.len);
+		result = stream.readRaw(cvt.buf, cvt.len);
 		if (result > 0)
 		{
 			stream.seek(-result);
@@ -134,7 +134,7 @@ namespace xal
 			{
 				stream.set_capacity((int)stream.position() + cvt.len_cvt);
 			}
-			int written = stream.write_raw(cvt.buf, cvt.len_cvt);
+			int written = stream.writeRaw(cvt.buf, cvt.len_cvt);
 			if (written > 0)
 			{
 				stream.seek(-written);
