@@ -57,9 +57,9 @@ namespace xal
 			GetNativeSystemInfo(&w32info);
 			cpus = w32info.dwNumberOfProcessors;
 #elif defined(__APPLE__) // not sure why, but for Apple hardware the ONLN one is used (possibly some hardware may have locked available cores)
-			cpus = sysconf(_SC_NPROCESSORS_ONLN);
+			cpus = (int)sysconf(_SC_NPROCESSORS_ONLN);
 #else // on Android and other Unix it's better to use CONF since they are more flexible than Apple's hardware and might switch cores on/off dynamically
-			cpus = sysconf(_SC_NPROCESSORS_CONF);
+			cpus = (int)sysconf(_SC_NPROCESSORS_CONF);
 #endif
 		}
 		hmutex::ScopeLock lock(&BufferAsync::queueMutex);

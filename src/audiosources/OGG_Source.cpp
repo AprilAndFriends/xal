@@ -29,7 +29,7 @@ namespace xal
 	static size_t _dataRead(void* data, size_t size, size_t count, void* dataSource)
 	{
 		hsbase* stream = (hsbase*)dataSource;
-		return stream->readRaw(data, size * count);
+		return stream->readRaw(data, (int)(size * count));
 	}
 
 	static int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
@@ -86,8 +86,8 @@ namespace xal
 		if (ov_open_callbacks((void*)this->stream, &this->oggStream, NULL, 0, callbacks) == 0)
 		{
 			vorbis_info* info = ov_info(&this->oggStream, -1);
-			this->channels = info->channels;
-			this->samplingRate = info->rate;
+			this->channels = (int)info->channels;
+			this->samplingRate = (int)info->rate;
 			this->bitsPerSample = 16; // always 16 bit data
 			int logicalSamples = (int)ov_pcm_total(&this->oggStream, -1);
 			this->size = logicalSamples * this->channels * this->bitsPerSample / 8;
@@ -126,12 +126,12 @@ namespace xal
 			return false;
 		}
 		unsigned long remaining = this->size;
-		output.prepareManualWriteRaw(remaining);
+		output.prepareManualWriteRaw((int)remaining);
 		char* buffer = (char*)&output[0];
 		int read = 0;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
+			read = (int)ov_read(&this->oggStream, buffer, (int)remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
 				memset(buffer, 0, remaining);
@@ -155,7 +155,7 @@ namespace xal
 		int read = 0;
 		while (remaining > 0)
 		{
-			read = ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
+			read = (int)ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
 				memset(buffer, 0, remaining);
