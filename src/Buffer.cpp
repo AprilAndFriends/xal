@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -242,8 +242,12 @@ namespace xal
 				this->stream.seek(read);
 				if (!looping)
 				{
-					// fill rest of buffer with silence so systems that depends on buffered chunks don't get messed up
-					this->stream.fill(0, size);
+					// if stream isn't empty, fill the rest with silence so systems that depend on same-sized chunks don't get messed up
+					if (this->stream.size() > 0)
+					{
+						this->stream.fill(0, size);
+						this->stream.truncate(read);
+					}
 				}
 				else
 				{
@@ -251,6 +255,10 @@ namespace xal
 					{
 						this->source->rewind();
 						read = this->source->loadChunk(this->stream, size);
+						if (read == 0) // to prevent an infinite loop
+						{
+							break;
+						}
 						size -= read;
 						this->stream.seek(read);
 					}

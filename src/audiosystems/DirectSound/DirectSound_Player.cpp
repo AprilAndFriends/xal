@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -255,7 +255,7 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			else if (!this->paused)
+			if (!this->paused)
 			{
 				this->_systemSetOffset(0); // reset buffer position 0 on stop
 			}
@@ -287,10 +287,12 @@ namespace xal
 		{
 			count = STREAM_BUFFER_COUNT - this->bufferQueued;
 			this->_copySilence(STREAM_BUFFER_SIZE, count);
+			this->bufferCount -= count; // full silence buffers are a safe-guard, not really filled buffers
 		}
 		if (this->bufferCount == 0)
 		{
 			this->_stop();
+			processed = 0;
 		}
 		return (processed * STREAM_BUFFER_SIZE);
 	}
