@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -158,13 +158,14 @@ namespace xal
 			read = (int)ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
-				memset(buffer, 0, remaining);
 				break;
 			}
 			remaining -= read;
 			buffer += read;
 		}
-		return (size - remaining);
+		int result = (size - remaining);
+		output.truncate((int64_t)result); // if there wasn't enough data to fill the entire ouput buffer
+		return result;
 	}
 
 }

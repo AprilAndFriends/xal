@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -281,6 +281,7 @@ namespace xal
 		if (this->_getQueuedBuffersCount() == 0)
 		{
 			this->_stop();
+			processed = 0;
 		}
 		return (processed * STREAM_BUFFER_SIZE);
 	}

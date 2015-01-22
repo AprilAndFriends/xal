@@ -66,7 +66,7 @@ int main(Platform::Array<Platform::String^>^ args)
 	// create streamed sound using no prefix (forces usage of the ogg files)
 	xal::mgr->createSound(RESOURCE_PATH "streamable/" SOUND_NAME_STREAMED ".ogg", CATEGORY_STREAMED, PREFIX);
 	xal::Player* p = NULL;
-
+	
 	// create a sound player for manual control
 	p = xal::mgr->createPlayer(SOUND_NORMAL);
 	// play the sound
@@ -75,9 +75,9 @@ int main(Platform::Array<Platform::String^>^ args)
 	p->setPitch(0.5f);
 	while (p->isPlaying())
 	{
+		hlog::writef("", "    - " SOUND_NORMAL " - samples: %d - time: %f", p->getSamplePosition(), p->getTimePosition());
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
-		hlog::writef("", "    - " SOUND_NORMAL " - samples: %d - time: %f", p->getSamplePosition(), p->getTimePosition());
 	}
 	hlog::write("", "- finished " SOUND_NORMAL);
 	// destroy the player
@@ -90,9 +90,9 @@ int main(Platform::Array<Platform::String^>^ args)
 	p->play();
 	while (p->isPlaying())
 	{
+		hlog::writef("", "    - " SOUND_STREAMED " - samples: %d - time: %f", p->getSamplePosition(), p->getTimePosition());
 		hthread::sleep(100);
 		xal::mgr->update(0.1f);
-		hlog::writef("", "    - " SOUND_STREAMED " - samples: %d - time: %f", p->getSamplePosition(), p->getTimePosition());
 	}
 	hlog::write("", "- finished " SOUND_STREAMED);
 	// destroy the player
