@@ -287,7 +287,6 @@ namespace xal
 		{
 			count = STREAM_BUFFER_COUNT - this->bufferQueued;
 			this->_copySilence(STREAM_BUFFER_SIZE, count);
-			this->bufferCount -= count; // full silence buffers are a safe-guard, not really filled buffers
 		}
 		if (this->bufferCount == 0)
 		{
