@@ -48,7 +48,7 @@ namespace xal
 		int size;
 		unsigned char* stream = output;
 
-		//fin = fopen(this->fileName.c_str(), "rb");
+		//fin = fopen(this->fileName.cStr(), "rb");
 		int offset = 0;
 		memcpy(&size, &output[offset], sizeof(int));
 		offset += sizeof(int);

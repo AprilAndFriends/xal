@@ -324,7 +324,7 @@ namespace xal
 		harray<Sound*> destroySounds;
 		foreach (hstr, it, keys)
 		{
-			if ((*it).starts_with(prefix))
+			if ((*it).startsWith(prefix))
 			{
 				destroySounds += this->sounds[*it];
 			}

@@ -111,31 +111,31 @@ namespace xal
 	Format Buffer::getFormat()
 	{
 #ifdef _FORMAT_FLAC
-		if (this->filename.ends_with(".flac"))
+		if (this->filename.endsWith(".flac"))
 		{
 			return FLAC;
 		}
 #endif
 #ifdef _FORMAT_M4A
-		if (this->filename.ends_with(".m4a"))
+		if (this->filename.endsWith(".m4a"))
 		{
 			return M4A;
 		}
 #endif
 #ifdef _FORMAT_OGG
-		if (this->filename.ends_with(".ogg"))
+		if (this->filename.endsWith(".ogg"))
 		{
 			return OGG;
 		}
 #endif
 #ifdef _FORMAT_SPX
-		if (this->filename.ends_with(".spx"))
+		if (this->filename.endsWith(".spx"))
 		{
 			return SPX;
 		}
 #endif
 #ifdef _FORMAT_WAV
-		if (this->filename.ends_with(".wav"))
+		if (this->filename.endsWith(".wav"))
 		{
 			return WAV;
 		}

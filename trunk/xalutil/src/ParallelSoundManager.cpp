@@ -42,7 +42,7 @@ namespace xal
 		harray<Player*> lst;
 		foreach (Player*, it, this->players)
 		{
-			if ((*it)->getName().starts_with(prefix))
+			if ((*it)->getName().startsWith(prefix))
 			{
 				xal::mgr->destroyPlayer(*it);
 				lst += *it;
