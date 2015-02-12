@@ -103,7 +103,7 @@ namespace xal
 	
 	void OpenAL_AudioManager::initOpenAL()
 	{
-		ALCdevice* currentDevice = alcOpenDevice(this->deviceName.c_str());
+		ALCdevice* currentDevice = alcOpenDevice(this->deviceName.cStr());
 		ALenum error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
@@ -182,7 +182,7 @@ namespace xal
 		ALenum error = alGetError();
 		if (error != AL_NO_ERROR)
 		{
-			hlog::warn(xal::logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).c_str(), this->numActiveSources));
+			hlog::warn(xal::logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).cStr(), this->numActiveSources));
 			return 0;
 		}
 		++this->numActiveSources;

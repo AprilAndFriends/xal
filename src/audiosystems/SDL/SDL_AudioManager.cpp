@@ -132,7 +132,7 @@ namespace xal
 		{
 			if (cvt.len_cvt > stream.size())
 			{
-				stream.set_capacity((int)stream.position() + cvt.len_cvt);
+				stream.setCapacity((int)stream.position() + cvt.len_cvt);
 			}
 			int written = stream.writeRaw(cvt.buf, cvt.len_cvt);
 			if (written > 0)
