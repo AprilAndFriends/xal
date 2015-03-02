@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -18,7 +18,7 @@
 #include "Sound.h"
 #include "xal.h"
 
-#define AUDIO_DEVICE ((XAudio2_AudioManager*)xal::mgr)->xa2Device
+#define AUDIO_DEVICE ((XAudio2_AudioManager*)xal::manager)->xa2Device
 
 using namespace Microsoft::WRL;
 

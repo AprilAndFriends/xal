@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.33
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -90,7 +90,7 @@ namespace xal
 		bufferDesc.dwFlags = (DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GLOBALFOCUS);
 		bufferDesc.dwBufferBytes = (!this->sound->isStreamed() ? this->buffer->getSize() : STREAM_BUFFER);
 		bufferDesc.lpwfxFormat = &wavefmt;
-		HRESULT result = ((DirectSound_AudioManager*)xal::mgr)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
+		HRESULT result = ((DirectSound_AudioManager*)xal::manager)->dsDevice->CreateSoundBuffer(&bufferDesc, &this->dsBuffer, NULL);
 		if (FAILED(result))
 		{
 			this->dsBuffer = NULL;
@@ -217,7 +217,7 @@ namespace xal
 		if (this->dsBuffer != NULL)
 		{
 			DWORD freq = (DWORD)(this->pitch * this->buffer->getSamplingRate());
-			DWORD limit = ((DirectSound_AudioManager*)xal::mgr)->dsCaps->dwMaxSecondarySampleRate;
+			DWORD limit = ((DirectSound_AudioManager*)xal::manager)->dsCaps->dwMaxSecondarySampleRate;
 			this->dsBuffer->SetFrequency(hmin(freq, limit));
 		}
 	}

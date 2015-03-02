@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -392,7 +392,8 @@ namespace xal
 
 	};
 	
-	xalExport extern xal::AudioManager* mgr;
+	xalExport extern xal::AudioManager* manager;
+	DEPRECATED_ATTRIBUTE xalExport extern xal::AudioManager* mgr;
 
 }
 

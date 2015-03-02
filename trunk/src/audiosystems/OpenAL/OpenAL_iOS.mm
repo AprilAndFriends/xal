@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -41,7 +41,7 @@ bool restoreiOSAudioSession()
 			hlog::writef(xal::logTag, "Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
 		return 0;
 	}
-	if (((xal::OpenAL_AudioManager*) xal::mgr)->resumeOpenALContext())
+	if (((xal::OpenAL_AudioManager*) xal::manager)->resumeOpenALContext())
 	{
 		if (restoreAttempts > 0)
 		{
@@ -59,7 +59,7 @@ void suspendiOSAudioSession()
 {
 	[[AVAudioSession sharedInstance] setActive:NO error:NULL];
 	active = false;
-	((xal::OpenAL_AudioManager*) xal::mgr)->suspendOpenALContext();
+	((xal::OpenAL_AudioManager*) xal::manager)->suspendOpenALContext();
 }
 
 bool hasiOSAudioSessionRestoreFailed()

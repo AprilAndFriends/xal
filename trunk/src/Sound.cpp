@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -24,14 +24,14 @@ namespace xal
 	{
 		this->filename = filename;
 		this->category = category;
-		this->buffer = xal::mgr->_createBuffer(this);
+		this->buffer = xal::manager->_createBuffer(this);
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + hresource::withoutExtension(hrdir::baseName(filename));
 	}
 
 	Sound::~Sound()
 	{
-		xal::mgr->_destroyBuffer(this->buffer);
+		xal::manager->_destroyBuffer(this->buffer);
 	}
 	
 	int Sound::getSize()

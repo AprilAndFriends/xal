@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -45,7 +45,8 @@ namespace xal
 {
 	extern void (*gLogFunction)(chstr);
 	
-	AudioManager* mgr = NULL;
+	AudioManager* manager = NULL;
+	AudioManager* mgr = NULL; // DEPRECATED
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), thread(NULL), threadRunning(false)
@@ -174,12 +175,12 @@ namespace xal
 	void AudioManager::_update(hthread* thread)
 	{
 		hmutex::ScopeLock lock;
-		while (xal::mgr->thread != NULL && xal::mgr->threadRunning)
+		while (xal::manager->thread != NULL && xal::manager->threadRunning)
 		{
-			lock.acquire(&xal::mgr->mutex);
-			xal::mgr->_update(xal::mgr->updateTime);
+			lock.acquire(&xal::manager->mutex);
+			xal::manager->_update(xal::manager->updateTime);
 			lock.release();
-			hthread::sleep(xal::mgr->updateTime * 1000);
+			hthread::sleep(xal::manager->updateTime * 1000);
 		}
 	}
 

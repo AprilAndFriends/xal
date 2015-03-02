@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.32
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -27,7 +27,7 @@
 
 #define NORMAL_BUFFER_COUNT 2
 
-#define OPENSLES_MANAGER ((OpenSLES_AudioManager*)xal::mgr)
+#define OPENSLES_MANAGER ((OpenSLES_AudioManager*)xal::manager)
 
 // this is just here to improve readability of code
 #define CHECK_ERROR(message) \

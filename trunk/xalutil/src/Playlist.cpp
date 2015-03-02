@@ -89,7 +89,7 @@ namespace xal
 		this->stop();
 		foreach (Player*, it, this->players)
 		{
-			xal::mgr->destroyPlayer(*it);
+			xal::manager->destroyPlayer(*it);
 		}
 		this->players.clear();
 		this->index = -1;
@@ -97,7 +97,7 @@ namespace xal
 	
 	void Playlist::queueSound(chstr name)
 	{
-		this->players += xal::mgr->createPlayer(name);
+		this->players += xal::manager->createPlayer(name);
 		this->index = hmax(this->index, 0);
 	}
 	
@@ -105,7 +105,7 @@ namespace xal
 	{
 		foreach (hstr, it, names)
 		{
-			this->players += xal::mgr->createPlayer(*it);
+			this->players += xal::manager->createPlayer(*it);
 		}
 		this->index = hmax(this->index, 0);
 	}
