@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.33
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -133,7 +133,7 @@ namespace xal
 	{
 		if (this->sourceId == 0)
 		{
-			this->sourceId = ((OpenAL_AudioManager*)xal::mgr)->_allocateSourceId();
+			this->sourceId = ((OpenAL_AudioManager*)xal::manager)->_allocateSourceId();
 		}
 		return (this->sourceId != 0);
 	}
@@ -233,7 +233,7 @@ namespace xal
 					this->buffer->rewind();
 				}
 			}
-			((OpenAL_AudioManager*)xal::mgr)->_releaseSourceId(this->sourceId);
+			((OpenAL_AudioManager*)xal::manager)->_releaseSourceId(this->sourceId);
 			this->sourceId = 0;
 		}
 		return result;

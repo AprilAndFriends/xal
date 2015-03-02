@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.33
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -32,7 +32,7 @@ namespace xal
 		this->loaded = false;
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;
-		this->source = xal::mgr->_createSource(this->filename, category->getSourceMode(), this->mode, this->getFormat());
+		this->source = xal::manager->_createSource(this->filename, category->getSourceMode(), this->mode, this->getFormat());
 		this->loadedMetaData = false;
 		this->size = 0;
 		this->channels = 2;
@@ -40,7 +40,7 @@ namespace xal
 		this->bitsPerSample = 16;
 		this->duration = 0.0f;
 		this->idleTime = 0.0f;
-		if (xal::mgr->isEnabled() && this->getFormat() != UNKNOWN)
+		if (xal::manager->isEnabled() && this->getFormat() != UNKNOWN)
 		{
 			switch (this->mode)
 			{
@@ -169,7 +169,7 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->asyncLoadDiscarded = false; // a possible previous unload call must be canceled
-		if (!xal::mgr->isEnabled() || this->loaded)
+		if (!xal::manager->isEnabled() || this->loaded)
 		{
 			this->asyncLoadQueued = false;
 			this->loaded = true;
@@ -191,7 +191,7 @@ namespace xal
 			this->stream.clear(this->source->getSize());
 			this->source->load(this->stream);
 			this->source->close();
-			xal::mgr->_convertStream(this->source, this->stream);
+			xal::manager->_convertStream(this->source, this->stream);
 			return;
 		}
 		lock.release();
@@ -206,7 +206,7 @@ namespace xal
 	bool Buffer::prepareAsync()
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (!xal::mgr->isEnabled() || this->loaded)
+		if (!xal::manager->isEnabled() || this->loaded)
 		{
 			this->loaded = true;
 			return false;
@@ -227,7 +227,7 @@ namespace xal
 	int Buffer::load(bool looping, int size)
 	{
 		this->keepLoaded();
-		if (!xal::mgr->isEnabled())
+		if (!xal::manager->isEnabled())
 		{
 			return 0;
 		}
@@ -265,7 +265,7 @@ namespace xal
 				}
 				this->stream.rewind();
 			}
-			xal::mgr->_convertStream(this->source, this->stream);
+			xal::manager->_convertStream(this->source, this->stream);
 		}
 		return (int)this->stream.size();
 	}
@@ -310,14 +310,14 @@ namespace xal
 
 	int Buffer::calcOutputSize(int size)
 	{
-		return hround((float)size * xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample() /
+		return hround((float)size * xal::manager->getSamplingRate() * xal::manager->getChannels() * xal::manager->getBitsPerSample() /
 			((float)this->getSamplingRate() * this->getChannels() * this->getBitsPerSample()));
 	}
 
 	int Buffer::calcInputSize(int size)
 	{
 		return hround((float)size * this->getSamplingRate() * this->getChannels() * this->getBitsPerSample() /
-			((float)xal::mgr->getSamplingRate() * xal::mgr->getChannels() * xal::mgr->getBitsPerSample()));
+			((float)xal::manager->getSamplingRate() * xal::manager->getChannels() * xal::manager->getBitsPerSample()));
 	}
 
 	void Buffer::readPcmData(hstream& output)
@@ -325,12 +325,12 @@ namespace xal
 		// no mutex locking, because a separate source is used
 		if (this->getFormat() != UNKNOWN)
 		{
-			Source* source = xal::mgr->_createSource(this->filename, xal::DISK, xal::FULL, this->getFormat());
+			Source* source = xal::manager->_createSource(this->filename, xal::DISK, xal::FULL, this->getFormat());
 			source->open();
 			if (source->getSize() > 0)
 			{
 				source->load(output);
-				xal::mgr->_convertStream(source, output);
+				xal::manager->_convertStream(source, output);
 			}
 			source->close();
 			delete source;
@@ -340,7 +340,7 @@ namespace xal
 	void Buffer::_update(float timeDelta)
 	{
 		this->idleTime += timeDelta;
-		if (this->idleTime >= xal::mgr->getIdlePlayerUnloadTime())
+		if (this->idleTime >= xal::manager->getIdlePlayerUnloadTime())
 		{
 			this->_tryClearMemory();
 		}
@@ -416,7 +416,7 @@ namespace xal
 		this->_tryLoadMetaData();
 		this->stream.clear(this->source->getSize());
 		this->source->load(this->stream);
-		xal::mgr->_convertStream(this->source, this->stream);
+		xal::manager->_convertStream(this->source, this->stream);
 		this->source->close();
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;

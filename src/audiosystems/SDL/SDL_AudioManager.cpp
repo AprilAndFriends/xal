@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -88,7 +88,7 @@ namespace xal
 
 	void SDL_AudioManager::_mixAudio(void* unused, unsigned char* stream, int length)
 	{
-		((SDL_AudioManager*)xal::mgr)->mixAudio(unused, stream, length);
+		((SDL_AudioManager*)xal::manager)->mixAudio(unused, stream, length);
 	}
 	
 	void SDL_AudioManager::_convertStream(Source* source, hstream& stream)

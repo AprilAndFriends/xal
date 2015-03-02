@@ -44,7 +44,7 @@ namespace xal
 		{
 			if ((*it)->getName().startsWith(prefix))
 			{
-				xal::mgr->destroyPlayer(*it);
+				xal::manager->destroyPlayer(*it);
 				lst += *it;
 			}
 		}
@@ -105,7 +105,7 @@ namespace xal
 			}
 			else
 			{
-				xal::mgr->destroyPlayer(*it);
+				xal::manager->destroyPlayer(*it);
 				removeList += *it;
 			}
 		}
@@ -116,7 +116,7 @@ namespace xal
 		Player* player = NULL;
 		foreach (hstr, it, names)
 		{
-			player = xal::mgr->createPlayer(*it);
+			player = xal::manager->createPlayer(*it);
 			player->play(this->fadeTime, true);
 			this->players += player;
 		}
@@ -147,7 +147,7 @@ namespace xal
 	{
 		foreach (Player*, it, this->players)
 		{
-			xal::mgr->destroyPlayer(*it);
+			xal::manager->destroyPlayer(*it);
 		}
 		this->players.clear();
 		this->soundQueue.clear();

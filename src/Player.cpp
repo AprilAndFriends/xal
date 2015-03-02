@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.32
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -25,7 +25,7 @@ namespace xal
 		this->buffer = sound->getBuffer();
 		if (this->buffer->isStreamed()) // streamed buffers cannot be shared
 		{
-			this->buffer = xal::mgr->_createBuffer(this->sound);
+			this->buffer = xal::manager->_createBuffer(this->sound);
 		}
 	}
 
@@ -35,13 +35,13 @@ namespace xal
 		this->asyncPlayQueued = false;
 		if (this->buffer->isStreamed()) // this buffer was created internally
 		{
-			xal::mgr->_destroyBuffer(this->buffer);
+			xal::manager->_destroyBuffer(this->buffer);
 		}
 	}
 
 	float Player::getGain()
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		return this->_getGain();
 	}
 
@@ -52,7 +52,7 @@ namespace xal
 
 	void Player::setGain(float value)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->_setGain(value);
 	}
 
@@ -64,7 +64,7 @@ namespace xal
 
 	float Player::getPitch()
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		return this->_getPitch();
 	}
 
@@ -75,7 +75,7 @@ namespace xal
 
 	void Player::setPitch(float value)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->_setPitch(value);
 	}
 
@@ -92,7 +92,7 @@ namespace xal
 
 	unsigned int Player::getSamplePosition()
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		unsigned int position = this->_systemGetBufferPosition();
 		if (this->sound->isStreamed() && this->_systemNeedsStreamedBufferPositionCorrection())
 		{
@@ -144,7 +144,7 @@ namespace xal
 
 	bool Player::isPlaying()
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		return (!this->isFadingOut() && this->_isPlaying());
 	}
 
@@ -240,39 +240,39 @@ namespace xal
 
 	void Player::play(float fadeTime, bool looping)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->_play(fadeTime, looping);
 	}
 
 	void Player::playAsync(float fadeTime, bool looping)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->_playAsync(fadeTime, looping);
 	}
 
 	void Player::stop(float fadeTime)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->_stop(fadeTime);
 	}
 
 	void Player::pause(float fadeTime)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->_pause(fadeTime);
 	}
 	
 	void Player::_play(float fadeTime, bool looping)
 	{
-		if (!xal::mgr->isEnabled())
+		if (!xal::manager->isEnabled())
 		{
 			return;
 		}
-		if (xal::mgr->isSuspended())
+		if (xal::manager->isSuspended())
 		{
-			if (!xal::mgr->suspendedPlayers.contains(this))
+			if (!xal::manager->suspendedPlayers.contains(this))
 			{
-				xal::mgr->suspendedPlayers += this;
+				xal::manager->suspendedPlayers += this;
 				if (!this->paused)
 				{
 					this->looping = looping;
@@ -321,7 +321,7 @@ namespace xal
 
 	void Player::_playAsync(float fadeTime, bool looping)
 	{
-		if (!xal::mgr->isEnabled())
+		if (!xal::manager->isEnabled())
 		{
 			return;
 		}
@@ -345,9 +345,9 @@ namespace xal
 
 	void Player::_stop(float fadeTime)
 	{
-		if (xal::mgr->isSuspended() && xal::mgr->suspendedPlayers.contains(this))
+		if (xal::manager->isSuspended() && xal::manager->suspendedPlayers.contains(this))
 		{
-			xal::mgr->suspendedPlayers -= this;
+			xal::manager->suspendedPlayers -= this;
 		}
 		this->paused = false;
 		this->_stopSound(fadeTime);
@@ -368,7 +368,7 @@ namespace xal
 
 	float Player::_calcGain()
 	{
-		float result = this->gain * this->sound->getCategory()->getGain() * xal::mgr->getGlobalGain();
+		float result = this->gain * this->sound->getCategory()->getGain() * xal::manager->getGlobalGain();
 		if (this->isFading())
 		{
 			result *= this->fadeTime;

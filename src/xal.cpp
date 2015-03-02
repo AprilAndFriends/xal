@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -100,59 +100,63 @@ namespace xal
 		}
 		if (type == AS_DISABLED)
 		{
-			xal::mgr = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 			hlog::write(xal::logTag, "Audio is disabled.");
 			return;
 		}
 #ifdef _DIRECTSOUND
 		if (type == AS_DIRECTSOUND)
 		{
-			xal::mgr = new DirectSound_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new DirectSound_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _OPENAL
 		if (type == AS_OPENAL)
 		{
-			xal::mgr = new OpenAL_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new OpenAL_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _OPENSLES
 		if (type == AS_OPENSLES)
 		{
-			xal::mgr = new OpenSLES_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new OpenSLES_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _SDL
 		if (type == AS_SDL)
 		{
-			xal::mgr = new SDL_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new SDL_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _XAUDIO2
 		if (type == AS_XAUDIO2)
 		{
-			xal::mgr = new XAudio2_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new XAudio2_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
-		if (xal::mgr == NULL)
+		if (xal::manager == NULL)
 		{
 			hlog::warn(xal::logTag, "Could not create given audio system!");
-			xal::mgr = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
+			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 			hlog::warn(xal::logTag, "Audio is disabled.");
 			return;
 		}
-		hlog::write(xal::logTag, "Audio system created: " + xal::mgr->getName());
+		hlog::write(xal::logTag, "Audio system created: " + xal::manager->getName());
+#pragma warning(disable : 4996) // DEPRECATED
+		xal::mgr = xal::manager; // DEPRECATED
 		// actually starts threading
-		xal::mgr->init();
+		xal::manager->init();
 	}
 	
 	void destroy()
 	{
-		if (xal::mgr != NULL)
+		if (xal::manager != NULL)
 		{
 			hlog::write(xal::logTag, "Destroying XAL.");
-			xal::mgr->clear();
-			delete xal::mgr;
+			xal::manager->clear();
+			delete xal::manager;
+			xal::manager = NULL;
+#pragma warning(disable : 4996) // DEPRECATED
 			xal::mgr = NULL;
 		}
 	}

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -27,9 +27,9 @@ namespace xal
 
 	void Category::setGain(float value)
 	{
-		hmutex::ScopeLock lock(&xal::mgr->mutex);
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		this->gain = value;
-		xal::mgr->_setGlobalGain(xal::mgr->globalGain); // updates all Player instances with the new category gain
+		xal::manager->_setGlobalGain(xal::manager->globalGain); // updates all Player instances with the new category gain
 	}
 
 	bool Category::isStreamed()
