@@ -5,7 +5,6 @@
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
-
 #include <hltypes/harray.h>
 #include <hltypes/hexception.h>
 #include <hltypes/hfile.h>
@@ -46,7 +45,6 @@ namespace xal
 	extern void (*gLogFunction)(chstr);
 	
 	AudioManager* manager = NULL;
-	AudioManager* mgr = NULL; // DEPRECATED
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), thread(NULL), threadRunning(false)

@@ -393,8 +393,6 @@ namespace xal
 	};
 	
 	xalExport extern xal::AudioManager* manager;
-	DEPRECATED_ATTRIBUTE xalExport extern xal::AudioManager* mgr;
-
 }
 
 #endif
