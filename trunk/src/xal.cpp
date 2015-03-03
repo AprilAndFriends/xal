@@ -142,8 +142,6 @@ namespace xal
 			return;
 		}
 		hlog::write(xal::logTag, "Audio system created: " + xal::manager->getName());
-#pragma warning(disable : 4996) // DEPRECATED
-		xal::mgr = xal::manager; // DEPRECATED
 		// actually starts threading
 		xal::manager->init();
 	}
@@ -156,8 +154,6 @@ namespace xal
 			xal::manager->clear();
 			delete xal::manager;
 			xal::manager = NULL;
-#pragma warning(disable : 4996) // DEPRECATED
-			xal::mgr = NULL;
 		}
 	}
 	
