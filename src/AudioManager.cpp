@@ -359,7 +359,7 @@ namespace xal
 		}
 		if (manualSoundNames.size() > 0)
 		{
-			throw Exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.join(", "));
+			throw Exception("Audio Manager: Following sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + manualSoundNames.joined(", "));
 		}
 	}
 

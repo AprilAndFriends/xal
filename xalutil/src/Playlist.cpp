@@ -154,7 +154,7 @@ namespace xal
 			this->players.randomize();
 			if (player != NULL)
 			{
-				this->index = this->players.index_of(player);
+				this->index = this->players.indexOf(player);
 			}
 		}
 	}

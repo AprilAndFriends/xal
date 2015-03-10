@@ -83,19 +83,19 @@ namespace xal
 		{
 			return false;
 		}
-		int index = BufferAsync::buffers.index_of(buffer);
+		int index = BufferAsync::buffers.indexOf(buffer);
 		if (index >= BufferAsync::loaded) // if not loaded from disk yet
 		{
 			if (index > BufferAsync::loaded) // if not already at the front
 			{
-				BufferAsync::buffers.remove_at(index);
-				BufferAsync::buffers.insert_at(BufferAsync::loaded, buffer);
+				BufferAsync::buffers.removeAt(index);
+				BufferAsync::buffers.insertAt(BufferAsync::loaded, buffer);
 			}
 		}
 		else if (index > 0) // if data was already loaded in RAM, but not decoded and not already at the front
 		{
-			BufferAsync::buffers.remove_at(index);
-			BufferAsync::buffers.push_first(buffer);
+			BufferAsync::buffers.removeAt(index);
+			BufferAsync::buffers.addFirst(buffer);
 		}
 		return true;
 	}
@@ -127,7 +127,7 @@ namespace xal
 				lock.release();
 				streamLoaded = buffer->_prepareAsyncStream();
 				lock.acquire(&BufferAsync::queueMutex);
-				index = BufferAsync::buffers.index_of(buffer); // it's possible that the queue was rearranged in the meantime
+				index = BufferAsync::buffers.indexOf(buffer); // it's possible that the queue was rearranged in the meantime
 				if (streamLoaded)
 				{
 					if (index >= BufferAsync::loaded)
@@ -135,15 +135,15 @@ namespace xal
 						if (index > BufferAsync::loaded) // if texture was moved towards the back of the queue
 						{
 							// put it back to the current decoder position
-							BufferAsync::buffers.remove_at(index);
-							BufferAsync::buffers.insert_at(BufferAsync::loaded, buffer);
+							BufferAsync::buffers.removeAt(index);
+							BufferAsync::buffers.insertAt(BufferAsync::loaded, buffer);
 						}
 					}
 					++BufferAsync::loaded;
 				}
 				else // it was canceled
 				{
-					BufferAsync::buffers.remove_at(index);
+					BufferAsync::buffers.removeAt(index);
 				}
 			}
 			size = BufferAsync::loaded;
@@ -168,7 +168,7 @@ namespace xal
 				{
 					if (!BufferAsync::decoderThreads[i]->isRunning())
 					{
-						decoderThread = BufferAsync::decoderThreads.remove_at(i);
+						decoderThread = BufferAsync::decoderThreads.removeAt(i);
 						decoderThread->join();
 						delete decoderThread;
 						--i;
@@ -184,7 +184,7 @@ namespace xal
 		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
 		while (BufferAsync::loaded > 0)
 		{
-			buffer = BufferAsync::buffers.remove_first();
+			buffer = BufferAsync::buffers.removeFirst();
 			--BufferAsync::loaded;
 			lock.release();
 			buffer->_decodeFromAsyncStream();
