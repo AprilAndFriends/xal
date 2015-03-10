@@ -91,7 +91,7 @@ namespace xal
 		harray<Player*> removeList;
 		foreach (Player*, it, this->players)
 		{
-			if (names.contains((*it)->getName()))
+			if (names.has((*it)->getName()))
 			{
 				names -= (*it)->getName();
 				if (!(*it)->isPlaying())

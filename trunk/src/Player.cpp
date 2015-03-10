@@ -270,7 +270,7 @@ namespace xal
 		}
 		if (xal::manager->isSuspended())
 		{
-			if (!xal::manager->suspendedPlayers.contains(this))
+			if (!xal::manager->suspendedPlayers.has(this))
 			{
 				xal::manager->suspendedPlayers += this;
 				if (!this->paused)
@@ -345,7 +345,7 @@ namespace xal
 
 	void Player::_stop(float fadeTime)
 	{
-		if (xal::manager->isSuspended() && xal::manager->suspendedPlayers.contains(this))
+		if (xal::manager->isSuspended() && xal::manager->suspendedPlayers.has(this))
 		{
 			xal::manager->suspendedPlayers -= this;
 		}
