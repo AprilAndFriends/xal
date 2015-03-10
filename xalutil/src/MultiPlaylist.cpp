@@ -69,7 +69,7 @@ namespace xal
 
 	void MultiPlaylist::registerPlaylist(Playlist* playlist)
 	{
-		if (this->playlists.contains(playlist))
+		if (this->playlists.has(playlist))
 		{
 			throw Exception("Playlist was already registered!");
 		}
@@ -78,7 +78,7 @@ namespace xal
 
 	void MultiPlaylist::unregisterPlaylist(Playlist* playlist)
 	{
-		if (!this->playlists.contains(playlist))
+		if (!this->playlists.has(playlist))
 		{
 			throw Exception("Playlist has not been registered!");
 		}

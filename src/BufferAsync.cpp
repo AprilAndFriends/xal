@@ -63,7 +63,7 @@ namespace xal
 #endif
 		}
 		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
-		if (BufferAsync::buffers.contains(buffer))
+		if (BufferAsync::buffers.has(buffer))
 		{
 			return false;
 		}
@@ -79,7 +79,7 @@ namespace xal
 	bool BufferAsync::prioritizeLoad(Buffer* buffer)
 	{
 		hmutex::ScopeLock lock(&BufferAsync::queueMutex);
-		if (!BufferAsync::buffers.contains(buffer))
+		if (!BufferAsync::buffers.has(buffer))
 		{
 			return false;
 		}
