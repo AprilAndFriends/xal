@@ -252,8 +252,8 @@ namespace xal
 		else
 		{
 			int remaining = STREAM_BUFFER - this->writePosition;
-			memcpy(&this->circleBuffer[this->writePosition], (unsigned char*)stream, remaining * sizeof(unsigned char));
-			memcpy(this->circleBuffer, (unsigned char*)stream, (streamSize - remaining) * sizeof(unsigned char));
+			memcpy(&this->circleBuffer[this->writePosition], &stream[0], remaining * sizeof(unsigned char));
+			memcpy(this->circleBuffer, &stream[remaining], (streamSize - remaining) * sizeof(unsigned char));
 		}
 		this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
 		if (!this->looping && streamSize < size) // fill with silence if source is at the end
