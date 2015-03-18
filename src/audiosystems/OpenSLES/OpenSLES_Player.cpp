@@ -399,7 +399,7 @@ namespace xal
 
 	void OpenSLES_Player::_submitBuffer(hstream& stream)
 	{
-		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, &stream[0], stream.size());
+		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, (unsigned char*)stream, stream.size());
 		if (result == SL_RESULT_SUCCESS)
 		{
 			++this->buffersSubmitted;

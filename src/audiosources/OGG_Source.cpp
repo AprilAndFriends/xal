@@ -127,7 +127,7 @@ namespace xal
 		}
 		unsigned long remaining = this->size;
 		output.prepareManualWriteRaw((int)remaining);
-		char* buffer = (char*)&output[0];
+		char* buffer = (char*)output;
 		int read = 0;
 		while (remaining > 0)
 		{
@@ -151,7 +151,7 @@ namespace xal
 		}
 		int remaining = size;
 		output.prepareManualWriteRaw(remaining);
-		char* buffer = (char*)&output[0];
+		char* buffer = (char*)output;
 		int read = 0;
 		while (remaining > 0)
 		{

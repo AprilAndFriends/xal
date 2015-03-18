@@ -266,7 +266,7 @@ namespace xal
 	void XAudio2_Player::_submitBuffer(hstream& stream)
 	{
 		this->xa2Buffer.AudioBytes = (UINT32)stream.size();
-		this->xa2Buffer.pAudioData = &stream[0];
+		this->xa2Buffer.pAudioData = (unsigned char*)stream;
 		this->xa2Buffer.LoopCount = (this->looping ? XAUDIO2_LOOP_INFINITE : 0);
 		HRESULT result = this->sourceVoice->SubmitSourceBuffer(&this->xa2Buffer);
 		if (FAILED(result))

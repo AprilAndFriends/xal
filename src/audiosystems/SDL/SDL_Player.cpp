@@ -50,7 +50,7 @@ namespace xal
 			*size2 = 0;
 			if (this->looping && this->readPosition + size > streamSize)
 			{
-				*data2 = (unsigned char*)&stream[0];
+				*data2 = (unsigned char*)stream;
 				*size2 = size - *size1;
 				this->readPosition = (this->readPosition + size) % streamSize;
 			}
@@ -106,7 +106,7 @@ namespace xal
 		{
 			if (first && this->currentGain == 1.0f)
 			{
-				memcpy((void*)&stream[0], data1, size1);
+				memcpy((unsigned char*)stream, data1, size1);
 				if (size2 > 0)
 				{
 					memcpy((void*)&stream[size1], data2, size2);
@@ -114,7 +114,7 @@ namespace xal
 			}
 			else
 			{
-				short* sStream = (short*)&stream[0];
+				short* sStream = (short*)(unsigned char*)stream;
 				short* sData1 = (short*)data1;
 				short* sData2 = (short*)data2;
 				size1 = size1 * sizeof(unsigned char) / sizeof(short);
@@ -247,13 +247,13 @@ namespace xal
 		hstream& stream = this->buffer->getStream();
 		if (this->writePosition + streamSize <= STREAM_BUFFER)
 		{
-			memcpy(&this->circleBuffer[this->writePosition], &stream[0], streamSize * sizeof(unsigned char));
+			memcpy(&this->circleBuffer[this->writePosition], (unsigned char*)stream, streamSize * sizeof(unsigned char));
 		}
 		else
 		{
 			int remaining = STREAM_BUFFER - this->writePosition;
-			memcpy(&this->circleBuffer[this->writePosition], &stream[0], remaining * sizeof(unsigned char));
-			memcpy(this->circleBuffer, &stream[0], (streamSize - remaining) * sizeof(unsigned char));
+			memcpy(&this->circleBuffer[this->writePosition], (unsigned char*)stream, remaining * sizeof(unsigned char));
+			memcpy(this->circleBuffer, (unsigned char*)stream, (streamSize - remaining) * sizeof(unsigned char));
 		}
 		this->writePosition = (this->writePosition + streamSize) % STREAM_BUFFER;
 		if (!this->looping && streamSize < size) // fill with silence if source is at the end
