@@ -83,7 +83,7 @@ namespace xal
 		// because stream mixing is done manually, there is no need to call SDL_MixAudio and memcpy is enough,
 		// the following line is here only for demonstration how it would look like with SDL_MixAudio
 		//SDL_MixAudio(stream, this->buffer, this->bufferSize, SDL_MIX_MAXVOLUME);
-		memcpy(stream, &this->buffer[0], length);
+		memcpy(stream, (unsigned char*)this->buffer, length);
 	}
 
 	void SDL_AudioManager::_mixAudio(void* unused, unsigned char* stream, int length)

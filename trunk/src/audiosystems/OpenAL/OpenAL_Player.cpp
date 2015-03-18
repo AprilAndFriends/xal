@@ -313,7 +313,7 @@ namespace xal
 		if (!this->sound->isStreamed())
 		{
 			alBufferData(this->bufferIds[index], (this->buffer->getChannels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16),
-				&stream[0], size, this->buffer->getSamplingRate());
+				(unsigned char*)stream, size, this->buffer->getSamplingRate());
 			return 1;
 		}
 		int filled = (size + STREAM_BUFFER_SIZE - 1) / STREAM_BUFFER_SIZE;
