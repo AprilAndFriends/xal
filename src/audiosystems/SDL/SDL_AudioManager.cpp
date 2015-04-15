@@ -7,7 +7,7 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #ifdef _SDL
-//#include <SDL/SDL.h>
+#include <SDL/SDL.h>
 
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
@@ -114,7 +114,7 @@ namespace xal
 			return;
 		}
 		cvt.buf = (Uint8*)new unsigned char[(int)stream.size() * cvt.len_mult];
-		cvt.len = stream.size();
+		cvt.len = (int)stream.size();
 		result = stream.readRaw(cvt.buf, cvt.len);
 		if (result > 0)
 		{

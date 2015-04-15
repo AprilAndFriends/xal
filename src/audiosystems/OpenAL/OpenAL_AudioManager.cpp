@@ -194,8 +194,11 @@ namespace xal
 
 	void OpenAL_AudioManager::_releaseSourceId(unsigned int sourceId)
 	{
-		if (sourceId != 0) --this->numActiveSources;
-		alDeleteSources(1, &sourceId);
+		if (sourceId != 0)
+		{
+			--this->numActiveSources;
+			alDeleteSources(1, &sourceId);
+		}
 #ifdef _DEBUG
 //		hlog::write(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
 #endif

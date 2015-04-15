@@ -81,17 +81,17 @@ namespace xal
 	
 	OpenSLES_Player::~OpenSLES_Player()
 	{
-		if (this->streamBuffers[0] != NULL)
+		if (this->playerObject != NULL)
 		{
-			for_iter (i, 0, STREAM_BUFFER_COUNT)
+			__CPP_WRAP(this->playerObject, Destroy);
+		}
+		for_iter (i, 0, STREAM_BUFFER_COUNT)
+		{
+			if (this->streamBuffers[i] != NULL)
 			{
 				delete[] this->streamBuffers[i];
 				this->streamBuffers[i] = NULL;
 			}
-		}
-		if (this->playerObject != NULL)
-		{
-			__CPP_WRAP(this->playerObject, Destroy);
 		}
 	}
 	
@@ -399,7 +399,7 @@ namespace xal
 
 	void OpenSLES_Player::_submitBuffer(hstream& stream)
 	{
-		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, (unsigned char*)stream, stream.size());
+		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, (unsigned char*)stream, (int)stream.size());
 		if (result == SL_RESULT_SUCCESS)
 		{
 			++this->buffersSubmitted;
