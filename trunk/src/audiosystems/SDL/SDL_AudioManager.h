@@ -14,7 +14,7 @@
 #ifndef XAL_SDL_AUDIO_MANAGER_H
 #define XAL_SDL_AUDIO_MANAGER_H
 
-//#include <SDL/SDL.h>
+#include <SDL/SDL.h>
 
 #include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
