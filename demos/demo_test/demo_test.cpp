@@ -12,6 +12,8 @@
 #else
 #define RESOURCE_PATH "media/"
 #endif
+#elif defined(__APPLE__)
+#define RESOURCE_PATH "media/"
 #else
 #define RESOURCE_PATH "./"
 #endif
