@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.41
 /// 
 /// @section LICENSE
 /// 
@@ -28,10 +28,18 @@ namespace xal
 
 	bool WAV_Source::open()
 	{
+		Source::open();
 		if (!this->streamOpen)
 		{
 			return false;
 		}
+		// data will be reloaded, clearing it here
+		this->channels = 0;
+		this->samplingRate = 0;
+		this->bitsPerSample = 0;
+		this->size = 0;
+		this->duration = 0.0f;
+		// data loading
 		unsigned char buffer[5] = {0};
 		this->stream->readRaw(buffer, 4); // RIFF
 		this->stream->readRaw(buffer, 4); // file size
@@ -132,7 +140,7 @@ namespace xal
 		{
 			return false;
 		}
-		int written = output.writeRaw(this->stream, this->size);
+		int written = output.writeRaw(*this->stream, this->size);
 		if (written > 0)
 		{
 			output.seek(-written);
