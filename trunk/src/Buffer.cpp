@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.41
 /// 
 /// @section LICENSE
 /// 
@@ -284,7 +284,7 @@ namespace xal
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (this->boundPlayers.size() == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
 		{
-			this->stream.clear(1L);
+			this->stream.clear(1);
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = true;
 			this->loaded = false;
