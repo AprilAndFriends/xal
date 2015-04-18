@@ -114,19 +114,19 @@ namespace xal
 			this->thread = NULL;
 		}
 		this->_update(0.0f);
-		foreach(Player*, it, this->players)
+		foreach (Player*, it, this->players)
 		{
 			(*it)->_stop();
 			delete (*it);
 		}
 		this->players.clear();
 		this->managedPlayers.clear();
-		foreach_m(Sound*, it, this->sounds)
+		foreach_m (Sound*, it, this->sounds)
 		{
 			delete it->second;
 		}
 		this->sounds.clear();
-		foreach_m(Category*, it, this->categories)
+		foreach_m (Category*, it, this->categories)
 		{
 			delete it->second;
 		}
