@@ -30,7 +30,7 @@ namespace xal
 	harray<hstr> ParallelSoundManager::getPlayingSounds()
 	{
 		harray<hstr> result;
-		foreach(Player*, it, this->players)
+		foreach (Player*, it, this->players)
 		{
 			result += (*it)->getName();
 		}
@@ -63,7 +63,7 @@ namespace xal
 	{
 		bool found = false;
 		harray<hstr> queue;
-		foreach(Player*, it, this->players)
+		foreach (Player*, it, this->players)
 		{
 			if ((*it)->getName() == name)
 			{
