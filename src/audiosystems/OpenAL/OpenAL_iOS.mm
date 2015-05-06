@@ -108,21 +108,55 @@ bool hasiOSAudioSessionRestoreFailed()
 
 @implementation OpenALAudioSessionDelegate
 
+- (void)handleInterruption:(NSNotification*)notification
+{
+#if  __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+	NSDictionary *interuptionDict = notification.userInfo;
+	// get the AVAudioSessionInterruptionTypeKey enum from the dictionary
+	NSInteger interuptionType = [[interuptionDict     valueForKey:AVAudioSessionInterruptionTypeKey] integerValue];
+ NSNumber* seccondReason = [[notification userInfo] objectForKey:@"AVAudioSessionInterruptionOptionKey"] ;
+	// decide what to do based on interruption type here...
+	switch (interuptionType)
+	{
+		case AVAudioSessionInterruptionTypeBegan:
+			hlog::write(xal::logTag, "iOS audio interruption began.");
+			suspendiOSAudioSession();
+			break;
+		case AVAudioSessionInterruptionTypeEnded:
+			hlog::write(xal::logTag, "iOS audio interruption ended.");
+			break;
+	}
+	switch ([seccondReason integerValue])
+	{
+		case AVAudioSessionInterruptionOptionShouldResume:
+			hlog::write(xal::logTag, "resuming audio playback");
+			if (!restoreiOSAudioSession())
+			{
+				hlog::writef(xal::logTag, "Error resuming Audio session, try again later.");
+			}
+			break;
+		default:
+			hlog::write(xal::logTag, "iOS audio interruption ended, but iOS says playback shouldn't be resumed yet.");
+			break;
+	}
+	
+}
+#else
 - (void)beginInterruption
 {
-	hlog::writef(xal::logTag, "iOS audio interruption began.");
+	hlog::write(xal::logTag, "iOS audio interruption began.");
 	suspendiOSAudioSession();
 }
 
 - (void)endInterruption
 {
-	hlog::writef(xal::logTag, "iOS audio interruption ended.");
+	hlog::write(xal::logTag, "iOS audio interruption ended.");
 	if (!restoreiOSAudioSession())
 	{
 		hlog::writef(xal::logTag, "Error resuming Audio session, try again later.");
 	}
 }
-
+#endif
 @end
 
 static OpenALAudioSessionDelegate* _audio_delegate = 0;
@@ -135,7 +169,14 @@ bool OpenAL_iOS_isAudioSessionActive()
 void OpenAL_iOS_init()
 {
 	_audio_delegate = [OpenALAudioSessionDelegate alloc];
+#if  __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+	[[NSNotificationCenter defaultCenter] addObserver: _audio_delegate
+											 selector: @selector(handleInterruption:)
+												 name: AVAudioSessionInterruptionNotification
+											   object: [AVAudioSession sharedInstance]];
+#else
 	[[AVAudioSession sharedInstance] setDelegate:_audio_delegate];
+#endif
 }
 
 void OpenAL_iOS_destroy()
