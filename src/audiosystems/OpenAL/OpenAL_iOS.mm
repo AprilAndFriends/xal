@@ -13,6 +13,7 @@
 #if defined(_OPENAL) && defined(_IOS)
 
 #import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
 
 #include <hltypes/hlog.h>
 
@@ -27,6 +28,38 @@ static int restoreAttempts = 0;
 // reference article: http://benbritten.com/2009/02/02/restarting-openal-after-application-interruption-on-the-iphone/
 // modifed to use newer iOS apis then the ones in the article and added exceptions for problematic devices
 // such as iPhone3GS
+
+@interface xaliOSAppDelegate : NSObject
+
+@end
+
+@implementation xaliOSAppDelegate
+
++ (void)load
+{
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+}
+
++ (void)didFinishLaunching:(NSNotification *)notification
+{
+	if ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] == NSOrderedAscending)
+	{
+		// less than iOS 5.0 - workarround for an apple bug where the audio sesion get's interrupted while using AVAssetReader and similar
+		AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+		[audioSession setActive: NO error: nil];
+		[audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+		
+		// Modifying Playback Mixing Behavior, allow playing music in other apps
+		UInt32 allowMixing = true;
+		AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(allowMixing), &allowMixing);
+		[audioSession setActive: YES error: nil];
+	}
+	else
+	{
+		[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:NULL];
+	}
+}
+@end
 
 bool restoreiOSAudioSession()
 {
