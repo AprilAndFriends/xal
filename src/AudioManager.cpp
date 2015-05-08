@@ -92,7 +92,7 @@ namespace xal
 
 	void AudioManager::_startThreading()
 	{
-		hlog::write(xal::logTag, "Starting audio update thread.");
+		hlog::write(logTag, "Starting audio update thread.");
 		this->threadRunning = true;
 		this->thread->start();
 	}
@@ -102,7 +102,7 @@ namespace xal
 		hmutex::ScopeLock lock(&this->mutex);
 		if (this->threadRunning)
 		{
-			hlog::write(xal::logTag, "Stopping audio update thread.");
+			hlog::write(logTag, "Stopping audio update thread.");
 			this->threadRunning = false;
 			lock.release();
 			this->thread->join();
@@ -301,7 +301,7 @@ namespace xal
 		{
 			if (it->second == sound)
 			{
-				hlog::write(xal::logTag, "Destroying sound: " + it->first);
+				hlog::write(logTag, "Destroying sound: " + it->first);
 				delete it->second;
 				this->sounds.erase(it);
 				break;
@@ -317,7 +317,7 @@ namespace xal
 
 	void AudioManager::_destroySoundsWithPrefix(chstr prefix)
 	{
-		hlog::write(xal::logTag, "Destroying sounds with prefix: " + prefix);
+		hlog::write(logTag, "Destroying sounds with prefix: " + prefix);
 		harray<hstr> keys = this->sounds.keys();
 		// creating a copy, because _destroyManagedPlayer alters managedPlayers
 		harray<Sound*> destroySounds;
@@ -623,7 +623,7 @@ namespace xal
 	{
 		if (!this->suspended)
 		{
-			hlog::write(xal::logTag, "Suspending XAL.");
+			hlog::write(logTag, "Suspending XAL.");
 			foreach (Player*, it, this->players)
 			{
 				if ((*it)->_isPlaying())
@@ -651,7 +651,7 @@ namespace xal
 	{
 		if (this->suspended)
 		{
-			hlog::write(xal::logTag, "Resuming XAL.");
+			hlog::write(logTag, "Resuming XAL.");
 			this->suspended = false;
 			this->_resumeSystem();
 			foreach (Player*, it, this->suspendedPlayers)
@@ -781,7 +781,7 @@ namespace xal
 				++count;
 			}
 		}
-		hlog::debugf(xal::logTag, "Found %d buffers for memory clearing.", count);
+		hlog::debugf(logTag, "Found %d buffers for memory clearing.", count);
 	}
 
 	void AudioManager::addAudioExtension(chstr extension)

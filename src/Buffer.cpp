@@ -213,7 +213,7 @@ namespace xal
 		}
 		if (this->isStreamed())
 		{
-			hlog::warn(xal::logTag, "Streamed sound cannot be loaded asynchronously: " + this->getFilename());
+			hlog::warn(logTag, "Streamed sound cannot be loaded asynchronously: " + this->getFilename());
 			return false;
 		}
 		this->asyncLoadDiscarded = false;
@@ -373,7 +373,7 @@ namespace xal
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == STREAMED))
 		{
-			hlog::debug(xal::logTag, "Clearing memory for: " + this->filename);
+			hlog::debug(logTag, "Clearing memory for: " + this->filename);
 			this->stream.clear(1L);
 			this->source->close();
 			this->asyncLoadQueued = false;

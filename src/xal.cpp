@@ -93,7 +93,7 @@ namespace xal
 
 	void init(AudioSystemType type, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
-		hlog::write(xal::logTag, "Initializing XAL.");
+		hlog::write(logTag, "Initializing XAL.");
 		if (type == AS_DEFAULT)
 		{
 			type = AS_INTERNAL_DEFAULT;
@@ -101,7 +101,7 @@ namespace xal
 		if (type == AS_DISABLED)
 		{
 			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
-			hlog::write(xal::logTag, "Audio is disabled.");
+			hlog::write(logTag, "Audio is disabled.");
 			return;
 		}
 #ifdef _DIRECTSOUND
@@ -136,12 +136,12 @@ namespace xal
 #endif
 		if (xal::manager == NULL)
 		{
-			hlog::warn(xal::logTag, "Could not create given audio system!");
+			hlog::warn(logTag, "Could not create given audio system!");
 			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
-			hlog::warn(xal::logTag, "Audio is disabled.");
+			hlog::warn(logTag, "Audio is disabled.");
 			return;
 		}
-		hlog::write(xal::logTag, "Audio system created: " + xal::manager->getName());
+		hlog::write(logTag, "Audio system created: " + xal::manager->getName());
 		// actually starts threading
 		xal::manager->init();
 	}
@@ -150,7 +150,7 @@ namespace xal
 	{
 		if (xal::manager != NULL)
 		{
-			hlog::write(xal::logTag, "Destroying XAL.");
+			hlog::write(logTag, "Destroying XAL.");
 			xal::manager->clear();
 			delete xal::manager;
 			xal::manager = NULL;

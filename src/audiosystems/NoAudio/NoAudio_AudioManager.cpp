@@ -20,13 +20,13 @@ namespace xal
 		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
 		this->name = XAL_AS_DISABLED;
-		hlog::write(xal::logTag, "Initializing NoAudio.");
+		hlog::write(logTag, "Initializing NoAudio.");
 		this->enabled = false;
 	}
 
 	NoAudio_AudioManager::~NoAudio_AudioManager()
 	{
-		hlog::write(xal::logTag, "Destroying NoAudio.");
+		hlog::write(logTag, "Destroying NoAudio.");
 	}
 	
 	hstr NoAudio_AudioManager::findAudioFile(chstr _filename)

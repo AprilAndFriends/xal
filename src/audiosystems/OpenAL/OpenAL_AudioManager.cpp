@@ -87,7 +87,7 @@ namespace xal
 		AudioManager(backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
 		this->name = XAL_AS_OPENAL;
-		hlog::write(xal::logTag, "Initializing OpenAL.");
+		hlog::write(logTag, "Initializing OpenAL.");
 #ifdef _ANDROID
 		__openal__JNI_OnLoad(backendId);
 #endif
@@ -97,7 +97,7 @@ namespace xal
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
-		hlog::write(xal::logTag, "Destroying OpenAL.");
+		hlog::write(logTag, "Destroying OpenAL.");
 		destroyOpenAL();
 	}
 	
@@ -107,11 +107,11 @@ namespace xal
 		ALenum error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not create device!, " + alcGetErrorString(error));
+			hlog::error(logTag, "Could not create device!, " + alcGetErrorString(error));
 			return;
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
-		hlog::write(xal::logTag, "Audio device: " + this->deviceName);
+		hlog::write(logTag, "Audio device: " + this->deviceName);
 		
 #ifdef _IOS
 		// iOS generates only 4 stereo sources by default, so lets override that
@@ -123,14 +123,14 @@ namespace xal
 		error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not create context!, " + alcGetErrorString(error));
+			hlog::error(logTag, "Could not create context!, " + alcGetErrorString(error));
 			return;
 		}
 		alcMakeContextCurrent(currentContext);
 		error = alcGetError(currentDevice);
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::error(xal::logTag, "Could not set context as current!, " + alcGetErrorString(error));
+			hlog::error(logTag, "Could not set context as current!, " + alcGetErrorString(error));
 			return;
 		}
 		this->device = currentDevice;
@@ -157,7 +157,7 @@ namespace xal
 	
 	void OpenAL_AudioManager::resetOpenAL()
 	{
-		hlog::write(xal::logTag, "Restarting OpenAL.");
+		hlog::write(logTag, "Restarting OpenAL.");
 		foreach (Player*, it, this->players)
 		{
 			((OpenAL_Player*)*it)->destroyOpenALBuffers();
@@ -182,7 +182,7 @@ namespace xal
 		ALenum error = alGetError();
 		if (error != AL_NO_ERROR)
 		{
-			hlog::warn(xal::logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).cStr(), this->numActiveSources));
+			hlog::warn(logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).cStr(), this->numActiveSources));
 			return 0;
 		}
 		++this->numActiveSources;
@@ -242,7 +242,7 @@ namespace xal
 	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		hlog::write(xal::logTag, "Suspending OpenAL Context.");
+		hlog::write(logTag, "Suspending OpenAL Context.");
 		gAudioSuspended = this->isSuspended();
 		if (!gAudioSuspended)
 		{
@@ -261,7 +261,7 @@ namespace xal
 		{
 			lock.acquire(&this->mutex); // otherwise don't lock because at this point we're already locked
 		}
-		hlog::write(xal::logTag, "Resuming OpenAL Context.");
+		hlog::write(logTag, "Resuming OpenAL Context.");
 		if (reset == -1) // only check once, for performance reasons.
 		{
 			size_t size = 255;
@@ -300,7 +300,7 @@ namespace xal
 		}
 		if (err != ALC_NO_ERROR)
 		{
-			hlog::write(xal::logTag, "Failed resuming OpenAL Context, will try again later. error: " + alcGetErrorString(err));
+			hlog::write(logTag, "Failed resuming OpenAL Context, will try again later. error: " + alcGetErrorString(err));
 			return false;
 		}
 		return true;
@@ -308,12 +308,12 @@ namespace xal
 #else
 	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack
 	{
-		hlog::debug(xal::logTag, "Not iOS, suspendOpenALContext call ignored.");
+		hlog::debug(logTag, "Not iOS, suspendOpenALContext call ignored.");
 	}
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
-		hlog::debug(xal::logTag, "Not iOS, resumeOpenALContext ignored.");
+		hlog::debug(logTag, "Not iOS, resumeOpenALContext ignored.");
 		return true;
 	}
 #endif

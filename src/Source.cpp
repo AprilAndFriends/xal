@@ -46,7 +46,7 @@ namespace xal
 	{
 		if (!hresource::exists(this->filename))
 		{
-			hlog::error(xal::logTag, "Unable to open: " + this->filename);
+			hlog::error(logTag, "Unable to open: " + this->filename);
 			this->close();
 			return this->streamOpen;
 		}
@@ -97,10 +97,10 @@ namespace xal
 	
 	bool Source::load(hstream& output)
 	{
-		hlog::write(xal::logTag, "Loading file: " + this->filename);
+		hlog::write(logTag, "Loading file: " + this->filename);
 		if (!this->streamOpen)
 		{
-			hlog::error(xal::logTag, "File not open: " + this->filename);
+			hlog::error(logTag, "File not open: " + this->filename);
 			return false;
 		}
 		return true;
@@ -110,7 +110,7 @@ namespace xal
 	{
 		if (!this->streamOpen)
 		{
-			hlog::error(xal::logTag, "File not open: " + this->filename);
+			hlog::error(logTag, "File not open: " + this->filename);
 			return 0;
 		}
 		return 1; // means that "something" was read

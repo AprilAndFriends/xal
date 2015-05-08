@@ -25,25 +25,25 @@ namespace xal
 		AudioManager(backendId, threaded, updateTime, deviceName), xa2Device(NULL), xa2MasteringVoice(NULL)
 	{
 		this->name = XAL_AS_XAUDIO2;
-		hlog::write(xal::logTag, "Initializing XAudio2.");
+		hlog::write(logTag, "Initializing XAudio2.");
 		HRESULT result = XAudio2Create(&this->xa2Device, 0);
 		if (FAILED(result))
 		{
 			this->xa2Device = NULL;
-			hlog::error(xal::logTag, "Could not create device!");
+			hlog::error(logTag, "Could not create device!");
 			return;
 		}
 		result = this->xa2Device->CreateMasteringVoice(&this->xa2MasteringVoice, 2, 44100);
 		if (FAILED(result)) // if can't use 44.1 kHz stereo, use default
 		{
-			hlog::write(xal::logTag, "Could not create device with 2 channels and 44100 Hz, attempting defaults...");
+			hlog::write(logTag, "Could not create device with 2 channels and 44100 Hz, attempting defaults...");
 			result = this->xa2Device->CreateMasteringVoice(&this->xa2MasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE);
 		}
 		if (FAILED(result))
 		{
 			this->xa2Device->Release();
 			this->xa2Device = NULL;
-			hlog::error(xal::logTag, "Could not create mastering voice!");
+			hlog::error(logTag, "Could not create mastering voice!");
 			return;
 		}
 		result = this->xa2Device->StartEngine();
@@ -53,7 +53,7 @@ namespace xal
 			this->xa2MasteringVoice = NULL;
 			this->xa2Device->Release();
 			this->xa2Device = NULL;
-			hlog::error(xal::logTag, "Could not start engine!");
+			hlog::error(logTag, "Could not start engine!");
 			return;
 		}
 		this->enabled = true;
@@ -61,7 +61,7 @@ namespace xal
 
 	XAudio2_AudioManager::~XAudio2_AudioManager()
 	{
-		hlog::write(xal::logTag, "Destroying XAudio2.");
+		hlog::write(logTag, "Destroying XAudio2.");
 		this->xa2Device->StopEngine();
 		if (this->xa2MasteringVoice != NULL)
 		{
@@ -82,7 +82,7 @@ namespace xal
 		HRESULT result = this->xa2Device->StartEngine();
 		if (FAILED(result))
 		{
-			hlog::error(xal::logTag, "Could not restart engine!");
+			hlog::error(logTag, "Could not restart engine!");
 		}
 		AudioManager::resumeAudio();
 	}

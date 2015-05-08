@@ -198,7 +198,7 @@ namespace xal
 		}
 		else
 		{
-			hlog::warn(xal::logTag, "Could not start: " + this->sound->getFilename());
+			hlog::warn(logTag, "Could not start: " + this->sound->getFilename());
 		}
 	}
 
@@ -233,7 +233,7 @@ namespace xal
 			}
 			else
 			{
-				hlog::warn(xal::logTag, "Could not stop: " + this->sound->getFilename());
+				hlog::warn(logTag, "Could not stop: " + this->sound->getFilename());
 			}
 		}
 		return 0;
@@ -271,7 +271,7 @@ namespace xal
 		HRESULT result = this->sourceVoice->SubmitSourceBuffer(&this->xa2Buffer);
 		if (FAILED(result))
 		{
-			hlog::warn(xal::logTag, "Could not submit source buffer!");
+			hlog::warn(logTag, "Could not submit source buffer!");
 		}
 	}
 
@@ -307,7 +307,7 @@ namespace xal
 			result = this->sourceVoice->SubmitSourceBuffer(&this->xa2Buffer);
 			if (FAILED(result))
 			{
-				hlog::warn(xal::logTag, "Could not submit streamed source buffer!");
+				hlog::warn(logTag, "Could not submit streamed source buffer!");
 			}
 			index = (index + 1) % STREAM_BUFFER_COUNT;
 		}
