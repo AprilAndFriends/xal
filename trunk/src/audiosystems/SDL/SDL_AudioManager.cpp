@@ -26,11 +26,11 @@ namespace xal
 		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
 		this->name = XAL_AS_SDL;
-		hlog::write(xal::logTag, "Initializing SDL Audio.");
+		hlog::write(logTag, "Initializing SDL Audio.");
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
-			hlog::errorf(xal::logTag, "Unable to initialize SDL: %s", SDL_GetError());
+			hlog::errorf(logTag, "Unable to initialize SDL: %s", SDL_GetError());
 			return;
 		}
 		this->format.freq = this->samplingRate;
@@ -43,7 +43,7 @@ namespace xal
 		result = SDL_OpenAudio(&this->format, NULL);
 		if (result < 0)
 		{
-			hlog::errorf(xal::logTag, "Unable to initialize SDL: %s", SDL_GetError());
+			hlog::errorf(logTag, "Unable to initialize SDL: %s", SDL_GetError());
 			return;
 		}
 		SDL_PauseAudio(0);
@@ -52,7 +52,7 @@ namespace xal
 
 	SDL_AudioManager::~SDL_AudioManager()
 	{
-		hlog::write(xal::logTag, "Destroying SDL Audio.");
+		hlog::write(logTag, "Destroying SDL Audio.");
 		SDL_PauseAudio(1);
 		SDL_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -110,7 +110,7 @@ namespace xal
 		int result = SDL_BuildAudioCVT(&cvt, srcFormat, srcChannels, srcSamplingRate, format.format, format.channels, format.freq);
 		if (result <= 0)
 		{
-			hlog::error(xal::logTag, "Could not build converter: " + source->getFilename());
+			hlog::error(logTag, "Could not build converter: " + source->getFilename());
 			return;
 		}
 		cvt.buf = (Uint8*)new unsigned char[(int)stream.size() * cvt.len_mult];
@@ -125,7 +125,7 @@ namespace xal
 		{
 			delete[] cvt.buf;
 			cvt.buf = NULL;
-			hlog::error(xal::logTag, "Could not convert audio: " + source->getFilename());
+			hlog::error(logTag, "Could not convert audio: " + source->getFilename());
 			return;
 		}
 		if (cvt.len_cvt > 0)

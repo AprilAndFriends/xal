@@ -96,7 +96,7 @@ namespace xal
 		}
 		else
 		{
-			hlog::error(xal::logTag, "OGG: error reading data!");
+			hlog::error(logTag, "OGG: error reading data!");
 			this->close();
 		}
 		return this->streamOpen;

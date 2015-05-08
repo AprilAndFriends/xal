@@ -359,7 +359,7 @@ namespace xal
 	{
 		if (!this->_isPlaying() && !this->paused)
 		{
-			hlog::warn(xal::logTag, "Player cannot be paused, it's not playing: " + this->getName());
+			hlog::warn(logTag, "Player cannot be paused, it's not playing: " + this->getName());
 			return;
 		}
 		this->paused = true;

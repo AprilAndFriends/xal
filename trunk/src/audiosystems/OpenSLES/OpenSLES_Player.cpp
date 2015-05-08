@@ -33,7 +33,7 @@
 #define CHECK_ERROR(message) \
 	if (result != SL_RESULT_SUCCESS) \
 	{ \
-		hlog::error(xal::logTag, message); \
+		hlog::error(logTag, message); \
 		this->player = NULL; \
 		this->playerVolume = NULL; \
 		this->playerBufferQueue = NULL; \
@@ -279,7 +279,7 @@ namespace xal
 		static bool _supported = true;
 		if (_supported)
 		{
-			hlog::warn(xal::logTag, "Pitch change is not supported in this implementation! This message is only logged once.");
+			hlog::warn(logTag, "Pitch change is not supported in this implementation! This message is only logged once.");
 			_supported = false;
 		}
 		// even though there is no crash, it doesn't seem possible to play a sound when obtaining a playback interface so this code is disabled for now
@@ -296,7 +296,7 @@ namespace xal
 				SLresult result = __CPP_WRAP_ARGS(this->playerPlaybackRate, GetRateRange, 0, &rateMin, &rateMax, &rateStep, &capabilities);
 				if (result != SL_RESULT_SUCCESS)
 				{
-					hlog::warn(xal::logTag, "Pitch change is not supported on this device! This message is only logged once.");
+					hlog::warn(logTag, "Pitch change is not supported on this device! This message is only logged once.");
 					_supported = false;
 					return;
 				}
@@ -305,7 +305,7 @@ namespace xal
 				result = __CPP_WRAP_ARGS(this->playerPlaybackRate, SetRate, value);
 				if (result != SL_RESULT_SUCCESS)
 				{
-					hlog::warn(xal::logTag, "Pitch change is not supported on this device! This message is only logged once.");
+					hlog::warn(logTag, "Pitch change is not supported on this device! This message is only logged once.");
 					_supported = false;
 				}
 			}
@@ -324,7 +324,7 @@ namespace xal
 		}
 		else
 		{
-			hlog::warn(xal::logTag, "Could not start: " + this->sound->getFilename());
+			hlog::warn(logTag, "Could not start: " + this->sound->getFilename());
 		}
 	}
 	
@@ -351,7 +351,7 @@ namespace xal
 			}
 			else
 			{
-				hlog::warn(xal::logTag, "Could not stop: " + this->sound->getFilename());
+				hlog::warn(logTag, "Could not stop: " + this->sound->getFilename());
 			}
 		}
 		return 0;
@@ -406,7 +406,7 @@ namespace xal
 		}
 		else
 		{
-			hlog::warn(xal::logTag, "Could not queue buffer!");
+			hlog::warn(logTag, "Could not queue buffer!");
 		}
 	}
 
@@ -439,7 +439,7 @@ namespace xal
 			SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, this->streamBuffers[index], STREAM_BUFFER_SIZE);
 			if (result != SL_RESULT_SUCCESS)
 			{
-				hlog::warn(xal::logTag, "Could not queue streamed buffer!");
+				hlog::warn(logTag, "Could not queue streamed buffer!");
 				break;
 			}
 			++queued;

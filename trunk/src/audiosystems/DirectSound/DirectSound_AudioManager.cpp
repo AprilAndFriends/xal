@@ -23,12 +23,12 @@ namespace xal
 		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
 		this->name = XAL_AS_DIRECTSOUND;
-		hlog::write(xal::logTag, "Initializing DirectSound.");
+		hlog::write(logTag, "Initializing DirectSound.");
 		HRESULT result = DirectSoundCreate(NULL, &this->dsDevice, NULL);
 		if (FAILED(result))
 		{
 			this->dsDevice = NULL;
-			hlog::error(xal::logTag, "Could not create device!");
+			hlog::error(logTag, "Could not create device!");
 			return;
 		}
 		result = this->dsDevice->SetCooperativeLevel((HWND)backendId, DSSCL_NORMAL);
@@ -36,7 +36,7 @@ namespace xal
 		{
 			this->dsDevice->Release();
 			this->dsDevice = NULL;
-			hlog::error(xal::logTag, "Could not set cooperative level!");
+			hlog::error(logTag, "Could not set cooperative level!");
 			return;
 		}
 		this->dsCaps = new _DSCAPS();
@@ -46,18 +46,18 @@ namespace xal
 		if (result != DS_OK)
 		{
 			this->dsCaps->dwMaxSecondarySampleRate = 100000; // just in case. 100k is guaranteed to be always supported on all DS hardware
-			hlog::error(xal::logTag, "Failed fetching DirectSound device caps");
+			hlog::error(logTag, "Failed fetching DirectSound device caps");
 		}
 		else
 		{
-			hlog::writef(xal::logTag, "DirectSound device caps: { maxSampleRate = %u }", this->dsCaps->dwMaxSecondarySampleRate);
+			hlog::writef(logTag, "DirectSound device caps: { maxSampleRate = %u }", this->dsCaps->dwMaxSecondarySampleRate);
 		}
 		this->enabled = true;
 	}
 
 	DirectSound_AudioManager::~DirectSound_AudioManager()
 	{
-		hlog::write(xal::logTag, "Destroying DirectSound.");
+		hlog::write(logTag, "Destroying DirectSound.");
 		if (this->dsDevice != NULL)
 		{
 			this->dsDevice->Release();

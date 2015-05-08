@@ -35,19 +35,19 @@ namespace xal
 		AudioManager(backendId, threaded, updateTime, deviceName), engineObject(NULL), engine(NULL), outputMixObject(NULL)
 	{
 		this->name = XAL_AS_OPENSLES;
-		hlog::write(xal::logTag, "Initializing OpenSLES.");
+		hlog::write(logTag, "Initializing OpenSLES.");
 		SLresult result;
 		// creating engine
 		result = slCreateEngine(&this->engineObject, 0, NULL, 0, NULL, NULL);
 		if (result != SL_RESULT_SUCCESS)
 		{
-			hlog::error(xal::logTag, "Could not create engine object!");
+			hlog::error(logTag, "Could not create engine object!");
 			return;
 		}
 		result = __CPP_WRAP_ARGS(this->engineObject, Realize, SL_BOOLEAN_FALSE);
 		if (result != SL_RESULT_SUCCESS)
 		{
-			hlog::error(xal::logTag, "Could not realize engine object!");
+			hlog::error(logTag, "Could not realize engine object!");
 			__CPP_WRAP(this->engineObject, Destroy);
 			this->engineObject = NULL;
 			return;
@@ -55,7 +55,7 @@ namespace xal
 		result = __CPP_WRAP_ARGS(this->engineObject, GetInterface, SL_IID_ENGINE, &this->engine);
 		if (result != SL_RESULT_SUCCESS)
 		{
-			hlog::error(xal::logTag, "Could not get engine interface!");
+			hlog::error(logTag, "Could not get engine interface!");
 			__CPP_WRAP(this->engineObject, Destroy);
 			this->engineObject = NULL;
 			return;
@@ -64,13 +64,13 @@ namespace xal
 		result = __CPP_WRAP_ARGS(this->engine, CreateOutputMix, &this->outputMixObject, 0, NULL, NULL);
 		if (result != SL_RESULT_SUCCESS)
 		{
-			hlog::error(xal::logTag, "Could not create output mix object!");
+			hlog::error(logTag, "Could not create output mix object!");
 			return;
 		}
 		result = __CPP_WRAP_ARGS(this->outputMixObject, Realize, SL_BOOLEAN_FALSE);
 		if (result != SL_RESULT_SUCCESS)
 		{
-			hlog::error(xal::logTag, "Could not realize output mix object!");
+			hlog::error(logTag, "Could not realize output mix object!");
 			__CPP_WRAP(this->outputMixObject, Destroy);
 			return;
 		}
@@ -79,7 +79,7 @@ namespace xal
 
 	OpenSLES_AudioManager::~OpenSLES_AudioManager()
 	{
-		hlog::write(xal::logTag, "Destroying OpenSLES.");
+		hlog::write(logTag, "Destroying OpenSLES.");
 		if (this->outputMixObject != NULL)
 		{
 			__CPP_WRAP(this->outputMixObject, Destroy);
