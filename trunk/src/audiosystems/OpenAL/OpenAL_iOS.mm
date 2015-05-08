@@ -71,14 +71,14 @@ bool restoreiOSAudioSession()
 		restoreSessionFailed = true;
 		restoreAttempts++;
 		if (restoreAttempts % 20 == 0)
-			hlog::writef(logTag, "Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
+			hlog::writef(xal::logTag, "Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
 		return 0;
 	}
 	if (((xal::OpenAL_AudioManager*) xal::manager)->resumeOpenALContext())
 	{
 		if (restoreAttempts > 0)
 		{
-			hlog::writef(logTag, "Succeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
+			hlog::writef(xal::logTag, "Succeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
 		}
 		active = true;
 		restoreSessionFailed = false;
@@ -119,24 +119,24 @@ bool hasiOSAudioSessionRestoreFailed()
 	switch (interuptionType)
 	{
 		case AVAudioSessionInterruptionTypeBegan:
-			hlog::write(logTag, "iOS audio interruption began.");
+			hlog::write(xal::logTag, "iOS audio interruption began.");
 			suspendiOSAudioSession();
 			break;
 		case AVAudioSessionInterruptionTypeEnded:
-			hlog::write(logTag, "iOS audio interruption ended.");
+			hlog::write(xal::logTag, "iOS audio interruption ended.");
 			break;
 	}
 	switch ([seccondReason integerValue])
 	{
 		case AVAudioSessionInterruptionOptionShouldResume:
-			hlog::write(logTag, "resuming audio playback");
+			hlog::write(xal::logTag, "resuming audio playback");
 			if (!restoreiOSAudioSession())
 			{
-				hlog::writef(logTag, "Error resuming Audio session, try again later.");
+				hlog::writef(xal::logTag, "Error resuming Audio session, try again later.");
 			}
 			break;
 		default:
-			hlog::write(logTag, "iOS audio interruption ended, but iOS says playback shouldn't be resumed yet.");
+			hlog::write(xal::logTag, "iOS audio interruption ended, but iOS says playback shouldn't be resumed yet.");
 			break;
 	}
 	
