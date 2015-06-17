@@ -172,14 +172,15 @@ namespace xal
 
 	void AudioManager::_update(hthread* thread)
 	{
-		hmutex::ScopeLock lock;
+		hmutex::ScopeLock lock(&xal::manager->mutex);
 		while (xal::manager->thread != NULL && xal::manager->threadRunning)
 		{
-			lock.acquire(&xal::manager->mutex);
 			xal::manager->_update(xal::manager->updateTime);
 			lock.release();
 			hthread::sleep(xal::manager->updateTime * 1000);
+			lock.acquire(&xal::manager->mutex);
 		}
+		lock.release();
 	}
 
 	void AudioManager::update(float timeDelta)
