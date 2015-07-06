@@ -17,6 +17,11 @@
 
 namespace xal
 {
+	static hstr _map_getNames(Player* player)
+	{
+		return player->getName();
+	}
+
 	ParallelSoundManager::ParallelSoundManager(float fadeTime)
 	{
 		this->fadeTime = fadeTime;
@@ -29,29 +34,21 @@ namespace xal
 	
 	harray<hstr> ParallelSoundManager::getPlayingSounds()
 	{
-		harray<hstr> result;
-		foreach (Player*, it, this->players)
-		{
-			result += (*it)->getName();
-		}
-		return result;
+		return this->players.mapped(&_map_getNames);
 	}
 
 	void ParallelSoundManager::stopSoundsWithPrefix(chstr prefix)
 	{
-		harray<Player*> lst;
+		harray<Player*> removeList;
 		foreach (Player*, it, this->players)
 		{
 			if ((*it)->getName().startsWith(prefix))
 			{
 				xal::manager->destroyPlayer(*it);
-				lst += *it;
+				removeList += *it;
 			}
 		}
-		foreach (Player*, it, lst)
-		{
-			this->players.remove(*it);
-		}
+		this->players -= removeList;
 	}
 	
 	void ParallelSoundManager::queueSound(chstr name)
@@ -76,7 +73,7 @@ namespace xal
 		}
 		if (found)
 		{
-			updateList(queue);
+			this->updateList(queue);
 		}
 	}
 
@@ -109,10 +106,7 @@ namespace xal
 				removeList += *it;
 			}
 		}
-		foreach (Player*, it, removeList)
-		{
-			this->players.remove(*it);
-		}
+		this->players -= removeList;
 		Player* player = NULL;
 		foreach (hstr, it, names)
 		{
