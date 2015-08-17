@@ -196,7 +196,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "xalutil" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -281,6 +281,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.googlecode.lib${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
@@ -320,6 +321,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.googlecode.lib${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
@@ -353,6 +355,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.googlecode.lib${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = xalutil;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
