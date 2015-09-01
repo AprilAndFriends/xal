@@ -10,9 +10,11 @@
 #include <unistd.h>
 #endif
 
+#define __HL_INCLUDE_PLATFORM_HEADERS
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
+#include <hltypes/hplatform.h>
 #include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 
