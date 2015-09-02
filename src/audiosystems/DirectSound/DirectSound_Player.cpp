@@ -9,6 +9,7 @@
 #ifdef _DIRECTSOUND
 #include <dsound.h>
 
+#define __HL_INCLUDE_PLATFORM_HEADERS
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hplatform.h>

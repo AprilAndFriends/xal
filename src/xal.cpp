@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 
+#define __HL_INCLUDE_PLATFORM_HEADERS
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hplatform.h>

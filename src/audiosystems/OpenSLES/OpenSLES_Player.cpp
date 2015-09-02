@@ -12,6 +12,7 @@
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 
+#define __HL_INCLUDE_PLATFORM_HEADERS
 #include <hltypes/hmutex.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hplatform.h>
