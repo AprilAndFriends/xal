@@ -554,7 +554,7 @@ namespace xal
 		}
 		else
 		{
-			foreach (Player*, it, players)
+			foreach (Player*, it, this->managedPlayers)
 			{
 				if ((*it)->getSound()->getName() == soundName)
 				{
