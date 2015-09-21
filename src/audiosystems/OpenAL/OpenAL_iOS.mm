@@ -50,8 +50,13 @@ static int restoreAttempts = 0;
 		[audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
 		
 		// Modifying Playback Mixing Behavior, allow playing music in other apps
-		UInt32 allowMixing = true;
-		AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(allowMixing), &allowMixing);
+		NSError *setCategoryError = nil;
+		if (![audioSession setCategory:AVAudioSessionCategoryPlayback
+					  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+							error:&setCategoryError])
+		{
+			hlog::writef(xal::logTag, "Error setting up AVAudioSession playback category");
+		}
 		[audioSession setActive: YES error: nil];
 	}
 	else
