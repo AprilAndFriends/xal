@@ -7,6 +7,7 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 #include <xal/AudioManager.h>
@@ -61,20 +62,20 @@ namespace xal
 			}
 			if (this->repeatAll)
 			{
-				if (!this->players[this->index]->isPlaying())
+				if (!this->players[this->index]->isAsyncPlayQueued() && !this->players[this->index]->isPlaying())
 				{
 					this->index = (this->index + 1) % this->players.size();
-					this->players[this->index]->play(0.0f, (this->players.size() == 1));
+					this->players[this->index]->playAsync(0.0f, (this->players.size() == 1));
 				}
 			}
 			else if (this->index < this->players.size())
 			{
-				if (!this->players[this->index]->isPlaying())
+				if (!this->players[this->index]->isAsyncPlayQueued() && !this->players[this->index]->isPlaying())
 				{
 					++this->index;
 					if (this->index < this->players.size())
 					{
-						this->players[this->index]->play();
+						this->players[this->index]->playAsync();
 					}
 					else
 					{
@@ -123,7 +124,7 @@ namespace xal
 			this->index = 0;
 		}
 		bool looping = (this->players.size() == 1 && this->repeatAll);
-		this->players[this->index]->play(fadeTime, looping);
+		this->players[this->index]->playAsync(fadeTime, looping);
 		if (this->enabled)
 		{
 			this->playing = true;

@@ -5,6 +5,7 @@
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
+
 #include <hltypes/harray.h>
 #include <hltypes/hexception.h>
 #include <hltypes/hfile.h>
@@ -209,7 +210,7 @@ namespace xal
 			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
 			{
-				if (!(*it)->_isPlaying() && !(*it)->isFadingOut())
+				if (!(*it)->_isAsyncPlayQueued() && !(*it)->_isPlaying() && !(*it)->isFadingOut())
 				{
 					this->_destroyManagedPlayer(*it);
 				}

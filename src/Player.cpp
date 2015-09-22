@@ -18,8 +18,9 @@
 
 namespace xal
 {
-	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false), looping(false), fadeSpeed(0.0f),
-		fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0), idleTime(0.0f), asyncPlayQueued(false)
+	Player::Player(Sound* sound) : gain(1.0f), pitch(1.0f), paused(false), looping(false),
+		fadeSpeed(0.0f), fadeTime(0.0f), offset(0.0f), bufferIndex(0), processedByteCount(0),
+		idleTime(0.0f), asyncPlayQueued(false)
 	{
 		this->sound = sound;
 		this->buffer = sound->getBuffer();
@@ -131,10 +132,7 @@ namespace xal
 		{
 			return (int)this->buffer->getStream().size();
 		}
-		else
-		{
-			return this->buffer->getSize();
-		}
+		return this->buffer->getSize();
 	}
 
 	int Player::getSourceSize()
@@ -183,9 +181,15 @@ namespace xal
 		return this->sound->getCategory();
 	}
 
+	bool Player::isAsyncPlayQueued()
+	{
+		hmutex::ScopeLock lock(&xal::manager->mutex);
+		return this->_isAsyncPlayQueued();
+	}
+
 	bool Player::_isAsyncPlayQueued()
 	{
-		if (!this->buffer->isLoaded())
+		if (!this->buffer->isStreamed() && !this->buffer->isLoaded())
 		{
 			return false;
 		}
@@ -202,7 +206,7 @@ namespace xal
 			{
 				this->_systemUpdateNormal();
 			}
-			else
+			else if (!this->_isAsyncPlayQueued())
 			{
 				this->processedByteCount += this->_systemUpdateStream();
 			}
@@ -338,9 +342,13 @@ namespace xal
 			this->fadeTime = 1.0f;
 			this->fadeSpeed = 0.0f;
 		}
-		this->buffer->prepareAsync();
+		if (!this->buffer->isStreamed())
+		{
+			this->buffer->prepareAsync();
+		}
 		hmutex::ScopeLock lock(&this->asyncPlayMutex);
 		this->asyncPlayQueued = true;
+		hlog::errorf("OK", "ASYNC 1 %d %s", this->asyncPlayQueued, this->getName().cStr());
 	}
 
 	void Player::_stop(float fadeTime)

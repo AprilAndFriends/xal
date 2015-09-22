@@ -51,11 +51,16 @@ namespace xal
 		/// @return True if the Sound is playing.
 		/// @note This is false if the Sound is fading out even tough it is still "playing".
 		bool isPlaying();
+		/// @return True if the Sound is queued to play asynchronously.
+		bool isAsyncPlayQueued();
 		/// @return True if the Sound is paused.
 		/// @note This is only true if the Sound isn't playing at all (and not fading).
 		bool isPaused();
+		/// @return True if the Sound is fading in or out.
 		bool isFading();
+		/// @return True if the Sound is fading in.
 		bool isFadingIn();
+		/// @return True if the Sound is fading out.
 		bool isFadingOut();
 		HL_DEFINE_IS(looping, Looping);
 
@@ -127,12 +132,8 @@ namespace xal
 		float _getPitch();
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _setPitch(float value);
-		/// @brief Returns whether the Sound is playing or is asynchronously queued for playing.
-		/// @retunr True if the Sound is playing or is asynchronously queued for playing.
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isPlaying();
-		/// @brief Returns whether the Player is waiting to be played after an asynchronous buffer load.
-		/// @retunr True if the Player is waiting to be played after an asynchronous buffer load.
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isAsyncPlayQueued();
 
