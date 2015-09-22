@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -143,7 +143,7 @@ namespace xal
 	bool Player::isPlaying()
 	{
 		hmutex::ScopeLock lock(&xal::manager->mutex);
-		return (!this->isFadingOut() && this->_isPlaying());
+		return (!this->_isFadingOut() && this->_isPlaying());
 	}
 
 	bool Player::_isPlaying()
@@ -158,20 +158,44 @@ namespace xal
 
 	bool Player::isPaused()
 	{
-		return (this->paused && !this->isFading());
+		hmutex::ScopeLock lock(&xal::manager->mutex);
+		return this->_isPaused();
+	}
+
+	bool Player::_isPaused()
+	{
+		return (this->paused && !this->_isFading());
 	}
 	
 	bool Player::isFading()
+	{
+		hmutex::ScopeLock lock(&xal::manager->mutex);
+		return this->_isFading();
+	}
+
+	bool Player::_isFading()
 	{
 		return (this->fadeSpeed != 0.0f);
 	}
 
 	bool Player::isFadingIn()
 	{
+		hmutex::ScopeLock lock(&xal::manager->mutex);
+		return this->_isFadingIn();
+	}
+
+	bool Player::_isFadingIn()
+	{
 		return (this->fadeSpeed > 0.0f);
 	}
 
 	bool Player::isFadingOut()
+	{
+		hmutex::ScopeLock lock(&xal::manager->mutex);
+		return this->_isFadingOut();
+	}
+
+	bool Player::_isFadingOut()
 	{
 		return (this->fadeSpeed < 0.0f);
 	}
@@ -206,7 +230,7 @@ namespace xal
 			{
 				this->_systemUpdateNormal();
 			}
-			else if (!this->_isAsyncPlayQueued())
+			else if (!this->_isAsyncPlayQueued()) // would cause the sound to stop
 			{
 				this->processedByteCount += this->_systemUpdateStream();
 			}
@@ -215,7 +239,7 @@ namespace xal
 		{
 			this->buffer->keepLoaded();
 		}
-		if (this->isFading())
+		if (this->_isFading())
 		{
 			this->fadeTime += this->fadeSpeed * timeDelta;
 			if (this->fadeTime >= 1.0f && this->fadeSpeed > 0.0f)
@@ -292,7 +316,7 @@ namespace xal
 		{
 			this->looping = looping;
 		}
-		bool alreadyFading = this->isFading();
+		bool alreadyFading = this->_isFading();
 		if (!alreadyFading && !this->_systemIsPlaying())
 		{
 			this->buffer->prepare();
@@ -348,7 +372,6 @@ namespace xal
 		}
 		hmutex::ScopeLock lock(&this->asyncPlayMutex);
 		this->asyncPlayQueued = true;
-		hlog::errorf("OK", "ASYNC 1 %d %s", this->asyncPlayQueued, this->getName().cStr());
 	}
 
 	void Player::_stop(float fadeTime)
@@ -377,7 +400,7 @@ namespace xal
 	float Player::_calcGain()
 	{
 		float result = this->gain * this->sound->getCategory()->getGain() * xal::manager->getGlobalGain();
-		if (this->isFading())
+		if (this->_isFading())
 		{
 			result *= this->fadeTime;
 		}

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -210,7 +210,7 @@ namespace xal
 			harray<Player*> players = this->managedPlayers;
 			foreach (Player*, it, players)
 			{
-				if (!(*it)->_isAsyncPlayQueued() && !(*it)->_isPlaying() && !(*it)->isFadingOut())
+				if (!(*it)->_isAsyncPlayQueued() && !(*it)->_isPlaying() && !(*it)->_isFadingOut())
 				{
 					this->_destroyManagedPlayer(*it);
 				}
@@ -633,7 +633,7 @@ namespace xal
 					(*it)->_pause();
 					this->suspendedPlayers += (*it);
 				}
-				else if ((*it)->isFadingOut())
+				else if ((*it)->_isFadingOut())
 				{
 					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
 				}
@@ -723,7 +723,7 @@ namespace xal
 	{
 		foreach (Player*, it, this->managedPlayers)
 		{
-			if ((*it)->getSound()->getName() == soundName && (*it)->isFading())
+			if ((*it)->getSound()->getName() == soundName && (*it)->_isFading())
 			{
 				return true;
 			}
@@ -741,7 +741,7 @@ namespace xal
 	{
 		foreach (Player*, it, this->managedPlayers)
 		{
-			if ((*it)->getSound()->getName() == soundName && (*it)->isFadingIn())
+			if ((*it)->getSound()->getName() == soundName && (*it)->_isFadingIn())
 			{
 				return true;
 			}
@@ -759,7 +759,7 @@ namespace xal
 	{
 		foreach (Player*, it, this->managedPlayers)
 		{
-			if ((*it)->getSound()->getName() == soundName && (*it)->isFadingOut())
+			if ((*it)->getSound()->getName() == soundName && (*it)->_isFadingOut())
 			{
 				return true;
 			}

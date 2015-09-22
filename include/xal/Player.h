@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -134,6 +134,14 @@ namespace xal
 		void _setPitch(float value);
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isPlaying();
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isPaused();
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isFading();
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isFadingIn();
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isFadingOut();
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isAsyncPlayQueued();
 

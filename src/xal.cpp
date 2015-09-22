@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -93,7 +93,7 @@ namespace xal
 {
 	hstr logTag = "xal";
 
-	static hversion version(3, 4, 0);
+	static hversion version(3, 5, 0);
 
 	void init(AudioSystemType type, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
