@@ -13,6 +13,7 @@
 #include <hltypes/hlog.h>
 #include <hltypes/hplatform.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #endif
@@ -92,9 +93,11 @@ namespace xal
 {
 	hstr logTag = "xal";
 
+	static hversion version(3, 4, 0);
+
 	void init(AudioSystemType type, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
-		hlog::write(logTag, "Initializing XAL.");
+		hlog::write(logTag, "Initializing XAL: " + version.toString());
 		if (type == AS_DEFAULT)
 		{
 			type = AS_INTERNAL_DEFAULT;
