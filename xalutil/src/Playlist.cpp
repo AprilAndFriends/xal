@@ -124,10 +124,10 @@ namespace xal
 			this->index = 0;
 		}
 		bool looping = (this->players.size() == 1 && this->repeatAll);
-		this->players[this->index]->playAsync(fadeTime, looping);
+		this->playing = true;
 		if (this->enabled)
 		{
-			this->playing = true;
+			this->players[this->index]->playAsync(fadeTime, looping);
 		}
 	}
 	
