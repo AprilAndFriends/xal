@@ -62,20 +62,20 @@ namespace xal
 			}
 			if (this->repeatAll)
 			{
-				if (!this->players[this->index]->isAsyncPlayQueued() && !this->players[this->index]->isPlaying())
+				if (!this->players[this->index]->isPlaying())
 				{
 					this->index = (this->index + 1) % this->players.size();
-					this->players[this->index]->playAsync(0.0f, (this->players.size() == 1));
+					this->players[this->index]->play(0.0f, (this->players.size() == 1));
 				}
 			}
 			else if (this->index < this->players.size())
 			{
-				if (!this->players[this->index]->isAsyncPlayQueued() && !this->players[this->index]->isPlaying())
+				if (!this->players[this->index]->isPlaying())
 				{
 					++this->index;
 					if (this->index < this->players.size())
 					{
-						this->players[this->index]->playAsync();
+						this->players[this->index]->play();
 					}
 					else
 					{
@@ -127,7 +127,7 @@ namespace xal
 		this->playing = true;
 		if (this->enabled)
 		{
-			this->players[this->index]->playAsync(fadeTime, looping);
+			this->players[this->index]->play(fadeTime, looping);
 		}
 	}
 	
