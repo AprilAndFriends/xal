@@ -552,7 +552,6 @@
 			baseConfigurationReference = D1681B9218D764B20088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				OTHER_LDFLAGS = "";
@@ -587,7 +586,6 @@
 			baseConfigurationReference = D1681B9218D764B20088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				OTHER_LDFLAGS = "";
@@ -619,7 +617,6 @@
 			baseConfigurationReference = D1681B9218D764B20088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				OTHER_LDFLAGS = "";
