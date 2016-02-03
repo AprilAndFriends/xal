@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugS_All|Android">
       <Configuration>DebugS_All</Configuration>
@@ -591,15 +591,16 @@
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\SDL\SDL_Player.h" />
     <ClInclude Include="..\..\src\audiosources\OGG_Source.h" />
+    <ClInclude Include="..\..\src\Buffer.h" />
     <ClInclude Include="..\..\src\BufferAsync.h" />
-    <ClInclude Include="..\..\include\xal\Buffer.h" />
-    <ClInclude Include="..\..\include\xal\Source.h" />
     <ClInclude Include="..\..\include\xal\Player.h" />
     <ClInclude Include="..\..\include\xal\Sound.h" />
     <ClInclude Include="..\..\include\xal\xal.h" />
     <ClInclude Include="..\..\include\xal\AudioManager.h" />
     <ClInclude Include="..\..\include\xal\Category.h" />
     <ClInclude Include="..\..\include\xal\xalExport.h" />
+    <ClInclude Include="..\..\src\Source.h" />
+    <ClInclude Include="..\..\src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">

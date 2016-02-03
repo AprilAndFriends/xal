@@ -19,6 +19,7 @@
 #include <hltypes/hplatform.h>
 
 #include "Player.h"
+#include "Utility.h"
 #include "xalExport.h"
 
 using namespace Microsoft::WRL;

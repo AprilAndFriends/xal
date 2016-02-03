@@ -133,9 +133,6 @@
     <ClInclude Include="..\..\include\xal\xal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\xal\Buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\xal\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -143,9 +140,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\xal\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\xal\Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\audiosources\SPX_Source.h">
@@ -191,6 +185,15 @@
       <Filter>Header Files\audiosystems\OpenSLES</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\BufferAsync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

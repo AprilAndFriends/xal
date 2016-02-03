@@ -9,7 +9,6 @@
 #ifdef _DIRECTSOUND
 #include <dsound.h>
 
-
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 

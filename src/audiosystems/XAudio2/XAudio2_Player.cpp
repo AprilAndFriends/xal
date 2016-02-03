@@ -16,6 +16,7 @@
 #include "XAudio2_Player.h"
 #include "XAudio2_AudioManager.h"
 #include "Sound.h"
+#include "Utility.h"
 #include "xal.h"
 
 #define AUDIO_DEVICE ((XAudio2_AudioManager*)xal::manager)->xa2Device

@@ -18,6 +18,7 @@
 #include <SLES/OpenSLES_Android.h>
 
 #include "Player.h"
+#include "Utility.h"
 #include "xalExport.h"
 
 namespace xal

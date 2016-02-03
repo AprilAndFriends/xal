@@ -14,6 +14,7 @@
 #include "Category.h"
 #include "Player.h"
 #include "Sound.h"
+#include "Utility.h"
 #include "xal.h"
 
 namespace xal
@@ -23,7 +24,7 @@ namespace xal
 		idleTime(0.0f), asyncPlayQueued(false)
 	{
 		this->sound = sound;
-		this->buffer = sound->getBuffer();
+		this->buffer = sound->buffer;
 		if (this->buffer->isStreamed()) // streamed buffers cannot be shared
 		{
 			this->buffer = xal::manager->_createBuffer(this->sound);

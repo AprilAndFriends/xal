@@ -136,15 +136,16 @@
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_AudioManager.h" />
     <ClInclude Include="..\..\src\audiosystems\NoAudio\NoAudio_Player.h" />
     <ClInclude Include="..\..\src\audiosources\OGG_Source.h" />
+    <ClInclude Include="..\..\src\Buffer.h" />
     <ClInclude Include="..\..\src\BufferAsync.h" />
-    <ClInclude Include="..\..\include\xal\Buffer.h" />
-    <ClInclude Include="..\..\include\xal\Source.h" />
     <ClInclude Include="..\..\include\xal\Player.h" />
     <ClInclude Include="..\..\include\xal\Sound.h" />
     <ClInclude Include="..\..\include\xal\xal.h" />
     <ClInclude Include="..\..\include\xal\AudioManager.h" />
     <ClInclude Include="..\..\include\xal\Category.h" />
     <ClInclude Include="..\..\include\xal\xalExport.h" />
+    <ClInclude Include="..\..\src\Source.h" />
+    <ClInclude Include="..\..\src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">

@@ -33,19 +33,33 @@ namespace xal
 	public:
 		friend class AudioManager;
 
+		/// @return Gets gain at which the Sound is played.
 		float getGain();
+		/// @return Sets gain at which the Sound is played.
 		void setGain(float value);
+		/// @return Gets pitch multiplier.
 		float getPitch();
+		/// @return Sets pitch multiplier.
 		void setPitch(float value);
+		/// @return Gets associated Sound object.
 		HL_DEFINE_GET(Sound*, sound, Sound);
+		/// @return Gets name of the Sound.
 		hstr getName();
+		/// @return Gets filename of the Sound.
 		hstr getFilename();
+		/// @return Gets duration of the Sound.
 		float getDuration();
+		/// @return Gets byte-size of the Sound.
 		int getSize();
+		/// @return Gets buffer-size in bytes of the Sound.
 		int getBufferSize();
+		/// @return Gets byte-size of the Sound's source file.
 		int getSourceSize();
+		/// @return Gets time position of the playback.
 		float getTimePosition();
+		/// @return Gets sample position of the playback.
 		unsigned int getSamplePosition();
+		/// @return Gets Sound's category.
 		Category* getCategory();
 		
 		/// @return True if the Sound is playing.
@@ -62,23 +76,24 @@ namespace xal
 		bool isFadingIn();
 		/// @return True if the Sound is fading out.
 		bool isFadingOut();
+		/// @return True if the Sound is looping.
 		HL_DEFINE_IS(looping, Looping);
 
 		/// @brief Starts playing the Sound.
-		/// @param[in] fadetime How long to fade-in the Sound.
+		/// @param[in] fadeTime How long to fade-in the Sound.
 		/// @param[in] looping Whether the Sound should be looped once it is done playing.
 		/// @note Ignored if the Sound is already playing. Prevents pause/stop without pausing/stopping the Sound if called during fade-out.
 		void play(float fadeTime = 0.0f, bool looping = false);
 		/// @brief Starts playing the Sound asynchronously.
-		/// @param[in] fadetime How long to fade-in the Sound.
+		/// @param[in] fadeTime How long to fade-in the Sound.
 		/// @param[in] looping Whether the Sound should be looped once it is done playing.
 		/// @note Ignored if the Sound is already playing. Prevents pause/stop without pausing/stopping the Sound if called during fade-out.
 		void playAsync(float fadeTime = 0.0f, bool looping = false);
 		/// @brief Stops the Sound completely.
-		/// @param[in] fadetime How long to fade-out the Sound.
+		/// @param[in] fadeTime How long to fade-out the Sound.
 		void stop(float fadeTime = 0.0f);
 		/// @brief Pauses the Sound completely.
-		/// @param[in] fadetime How long to fade-out the Sound.
+		/// @param[in] fadeTime How long to fade-out the Sound.
 		/// @note Unpause the Sound with play().
 		/// @see play
 		void pause(float fadeTime = 0.0f);

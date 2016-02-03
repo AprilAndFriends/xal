@@ -23,6 +23,7 @@
 #include "OpenAL_AudioManager.h"
 #include "OpenAL_Player.h"
 #include "Sound.h"
+#include "Utility.h"
 #include "xal.h"
 
 namespace xal

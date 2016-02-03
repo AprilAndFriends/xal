@@ -21,6 +21,7 @@
 
 namespace xal
 {
+	class Player;
 	class Buffer;
 	class Category;
 
@@ -28,6 +29,8 @@ namespace xal
 	class xalExport Sound
 	{
 	public:
+		friend class Player;
+
 		/// @brief Constructor.
 		/// @param[in] filename Filename of the Sound.
 		/// @param[in] category The Category where to register this Sound.
@@ -36,10 +39,12 @@ namespace xal
 		/// @brief Destructor.
 		~Sound();
 
+		/// @brief Gets name.
 		HL_DEFINE_GET(hstr, name, Name);
+		/// @brief Gets filename.
 		HL_DEFINE_GET(hstr, filename, Filename);
+		/// @brief Gets the Category.
 		HL_DEFINE_GET(Category*, category, Category);
-		HL_DEFINE_GET(Buffer*, buffer, Buffer);
 
 		/// @return Byte-size of the audio data.
 		int getSize();

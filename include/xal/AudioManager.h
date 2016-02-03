@@ -23,22 +23,24 @@
 
 #include "xalExport.h"
 
-#define STREAM_BUFFER_COUNT 8 // greater or equal to 2
-#define STREAM_BUFFER_SIZE 32768 // equal to any power of 2
-#define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
-
 namespace xal
 {
+	/// @brief Defines supported audio formats.
 	enum Format
 	{
+		/// @brief FLAC.
 		FLAC,
+		/// @brief M4A.
 		M4A,
+		/// @brief OGG.
 		OGG,
-		SPX, // not supported yet
+		/// @brief WAV.
 		WAV,
+		/// @brief Unknown format, usually indicates errors.
 		UNKNOWN
 	};
 
+	/// @brief Defines when buffers should be created and how they should be handled.
 	enum BufferMode
 	{
 		/// @brief Buffers data upon player creation, keeps results in memory.
@@ -55,6 +57,7 @@ namespace xal
 		STREAMED = 5
 	};
 
+	/// @brief Defines how audio sources should be handled.
 	enum SourceMode
 	{
 		/// @brief Leaves data on permanent storage device.
@@ -85,20 +88,35 @@ namespace xal
 		/// @brief Uninitializes implementation-specific functionality.
 		void clear();
 		
+		/// @return Gets system backend ID.
 		inline void* getBackendId() { return this->backendId; }
+		/// @return Gets name.
 		HL_DEFINE_GET(hstr, name, Name);
+		/// @return Gets sampling rate.
 		HL_DEFINE_GET(int, samplingRate, SamplingRate);
+		/// @return Gets channels.
 		HL_DEFINE_GET(int, channels, Channels);
+		/// @return Gets bits-per-sample value.
 		HL_DEFINE_GET(int, bitsPerSample, BitsPerSample);
+		/// @return Gets enabled-state.
 		HL_DEFINE_IS(enabled, Enabled);
+		/// @return Gets suspension-state.
 		HL_DEFINE_IS(suspended, Suspended);
+		/// @return Gets/sets the time how long Player instances should keep data loaded while idling.
 		HL_DEFINE_GETSET(float, idlePlayerUnloadTime, IdlePlayerUnloadTime);
+		/// @return Gets the device name.
 		HL_DEFINE_GET(hstr, deviceName, DeviceName);
+		/// @return Returns true if update is done in a separate thread.
 		inline bool isThreaded() { return (this->thread != NULL); }
+		/// @return Gets the time interval between updates.
 		HL_DEFINE_GET(float, updateTime, UpdateTime);
+		/// @return Gets the global gain.
 		HL_DEFINE_GET(float, globalGain, GlobalGain);
+		/// @return Sets the global gain.
 		void setGlobalGain(float value);
+		/// @return Gets a list of all currently existing Player instances.
 		harray<Player*> getPlayers();
+		/// @return Gets a map of all loaded Sound instance.
 		hmap<hstr, Sound*> getSounds();
 
 		/// @brief Updates all audio processing.
@@ -133,7 +151,7 @@ namespace xal
 		/// @return The Sound with the given name.
 		Sound* getSound(chstr name);
 		/// @brief Destroys a Sound.
-		/// @param[in] name Name of the Sound.
+		/// @param[in] sound The Sound instance.
 		void destroySound(Sound* sound);
 		/// @brief Destroys all Sounds that have the given prefix in their name.
 		/// @param[in] prefix Prefix for Sound names to destroy.
@@ -328,7 +346,7 @@ namespace xal
 		void _destroyPlayer(Player* player);
 
 		/// @brief Creates an internally managed Player.
-		/// @param[in] soundName Name of the Sound.
+		/// @param[in] name Name of the Sound.
 		/// @return The newly created Player.
 		Player* _createManagedPlayer(chstr name);
 		/// @brief Destroys an internally managed Player.
@@ -392,7 +410,9 @@ namespace xal
 
 	};
 	
+	/// @brief The AudioManager instance.
 	xalExport extern xal::AudioManager* manager;
+
 }
 
 #endif

@@ -19,6 +19,7 @@
 #include "DirectSound_Player.h"
 #include "DirectSound_AudioManager.h"
 #include "Sound.h"
+#include "Utility.h"
 #include "xal.h"
 
 namespace xal

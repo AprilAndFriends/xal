@@ -33,10 +33,15 @@ namespace xal
 		/// @brief Destructor.
 		~Category();
 		
+		/// @brief Gets name.
 		HL_DEFINE_GET(hstr, name, Name);
+		/// @brief Gets gain.
 		HL_DEFINE_GET(float, gain, Gain);
+		/// @brief Sets gain.
 		void setGain(float value);
+		/// @brief Gets the buffer-handling mode.
 		HL_DEFINE_GET(BufferMode, bufferMode, BufferMode);
+		/// @brief Gets the source-handling mode.
 		HL_DEFINE_GET(SourceMode, sourceMode, SourceMode);
 		/// @return True if Sounds in this Category are streamed.
 		bool isStreamed();

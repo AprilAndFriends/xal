@@ -18,6 +18,7 @@
 #include <hltypes/hstring.h>
 
 #include "AudioManager.h"
+#include "Utility.h"
 #include "xalExport.h"
 
 namespace xal

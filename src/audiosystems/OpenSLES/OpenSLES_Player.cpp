@@ -24,6 +24,7 @@
 #include "OpenSLES_AudioManager.h"
 #include "OpenSLES_Player.h"
 #include "Sound.h"
+#include "Utility.h"
 #include "xal.h"
 
 #define NORMAL_BUFFER_COUNT 2

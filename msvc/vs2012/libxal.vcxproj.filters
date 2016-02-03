@@ -49,10 +49,10 @@
       <UniqueIdentifier>{6d09185e-ee34-45c9-a992-ea4c216beaca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\audiosystems\OpenSLES">
-      <UniqueIdentifier>{d9f6bd6b-e4b1-458e-8733-18b21aa99c86}</UniqueIdentifier>
+      <UniqueIdentifier>{b466d655-ee6f-4672-b616-79bc858f004f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\audiosystems\OpenSLES">
-      <UniqueIdentifier>{051d48c7-e9fe-4884-a225-54ce75893b4a}</UniqueIdentifier>
+      <UniqueIdentifier>{68b004e1-e832-4aca-87f3-d471a3a607e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +133,6 @@
     <ClInclude Include="..\..\include\xal\xal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\xal\Buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\xal\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -143,9 +140,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\xal\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\xal\Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\audiosources\SPX_Source.h">
@@ -191,6 +185,15 @@
       <Filter>Header Files\audiosystems\OpenSLES</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\BufferAsync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
