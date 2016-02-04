@@ -136,6 +136,11 @@ namespace xal
 		return this->buffer->getSize();
 	}
 
+	float Player::getBufferIdleTime()
+	{
+		return this->buffer->getIdleTime();
+	}
+	
 	int Player::getSourceSize()
 	{
 		return this->buffer->getSource()->getRamSize();

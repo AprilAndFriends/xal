@@ -53,6 +53,8 @@ namespace xal
 		int getSize();
 		/// @return Gets buffer-size in bytes of the Sound.
 		int getBufferSize();
+		/// @return Gets Buffer's idle time
+		float getBufferIdleTime();
 		/// @return Gets byte-size of the Sound's source file.
 		int getSourceSize();
 		/// @return Gets time position of the playback.

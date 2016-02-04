@@ -68,6 +68,11 @@ namespace xal
 	{
 		return this->buffer->getFormat();
 	}
+	
+	float Sound::getBufferIdleTime()
+	{
+		return this->buffer->getIdleTime();
+	}
 
 	bool Sound::isStreamed()
 	{
