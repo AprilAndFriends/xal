@@ -160,6 +160,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a784d1f42822cfae084a1e45b93bb7f02"><param name="Name" value="getBackendId"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a1ec3d10605ee86389e0301832f011b0a"><param name="Name" value="getBitsPerSample"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a43c145039273adeadbd14179c96a4ac6"><param name="Name" value="getBufferIdleTime"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a43c145039273adeadbd14179c96a4ac6"><param name="Name" value="xal::Player"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a8502599b4a6e677bcb85043e1cf2a639"><param name="Name" value="xal::Sound"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#add857566b7fe5079d2c89e24de133e58"><param name="Name" value="getBufferSize"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a6cb87744d8de1c60fcb27e94192835cc"><param name="Name" value="getCategory"></OBJECT>
   <UL>
@@ -484,6 +489,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a26f4c07e0f0f12f625a880e3792fcd2d"><param name="Name" value="fadeSpeed"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a8dd870b791872e4eda33bb6f15c387ca"><param name="Name" value="fadeTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#aed2be3e4fa0dded98c1c2826391cfe53"><param name="Name" value="gain"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a43c145039273adeadbd14179c96a4ac6"><param name="Name" value="getBufferIdleTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#add857566b7fe5079d2c89e24de133e58"><param name="Name" value="getBufferSize"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a1ed99e4cd2ea6a2105d0d4375312aa6b"><param name="Name" value="getCategory"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a3989eb76cb390b33343d2e43a85a6fb6"><param name="Name" value="getDuration"></OBJECT>
@@ -525,6 +531,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a9f25c6a78d30036d7b49c8e832e7cbfe"><param name="Name" value="category"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a5dbe88cd033308de56028faa33796cdb"><param name="Name" value="filename"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a1ec3d10605ee86389e0301832f011b0a"><param name="Name" value="getBitsPerSample"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a8502599b4a6e677bcb85043e1cf2a639"><param name="Name" value="getBufferIdleTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#ad25b2753230d56d782986985efc9b3c9"><param name="Name" value="getChannels"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#af75559e10540d00fae88cc5ece430c3b"><param name="Name" value="getDuration"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a95baf833e08d66c1665df3a9fceac489"><param name="Name" value="getFormat"></OBJECT>

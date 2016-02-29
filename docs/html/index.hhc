@@ -172,6 +172,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="_systemUpdatePitch"><param name="Local" value="classxal_1_1_player.html#a809fd9a3b68c60f7c05001e15eff64db"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="_systemUpdateStream"><param name="Local" value="classxal_1_1_player.html#a7549371db8e21fa9f7023aa7a660e9d9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="_update"><param name="Local" value="classxal_1_1_player.html#a4998ee2f84839ce10c30f91b5b2f7003"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getBufferIdleTime"><param name="Local" value="classxal_1_1_player.html#a43c145039273adeadbd14179c96a4ac6"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getBufferSize"><param name="Local" value="classxal_1_1_player.html#add857566b7fe5079d2c89e24de133e58"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getCategory"><param name="Local" value="classxal_1_1_player.html#a1ed99e4cd2ea6a2105d0d4375312aa6b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getDuration"><param name="Local" value="classxal_1_1_player.html#a3989eb76cb390b33343d2e43a85a6fb6"><param name="ImageNumber" value="11"></OBJECT>
@@ -218,6 +219,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="Sound"><param name="Local" value="classxal_1_1_sound.html#aa9406cface2089a15a37facec7a889d3"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="~Sound"><param name="Local" value="classxal_1_1_sound.html#a13f88df0755b7db841b13d35563263a3"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getBitsPerSample"><param name="Local" value="classxal_1_1_sound.html#a1ec3d10605ee86389e0301832f011b0a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="getBufferIdleTime"><param name="Local" value="classxal_1_1_sound.html#a8502599b4a6e677bcb85043e1cf2a639"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getChannels"><param name="Local" value="classxal_1_1_sound.html#ad25b2753230d56d782986985efc9b3c9"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getDuration"><param name="Local" value="classxal_1_1_sound.html#af75559e10540d00fae88cc5ece430c3b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="getFormat"><param name="Local" value="classxal_1_1_sound.html#a95baf833e08d66c1665df3a9fceac489"><param name="ImageNumber" value="11"></OBJECT>
@@ -469,6 +471,7 @@
             <LI><OBJECT type="text/sitemap"><param name="Name" value="_systemUpdatePitch"><param name="Local" value="classxal_1_1_player.html#a809fd9a3b68c60f7c05001e15eff64db"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="_systemUpdateStream"><param name="Local" value="classxal_1_1_player.html#a7549371db8e21fa9f7023aa7a660e9d9"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="_update"><param name="Local" value="classxal_1_1_player.html#a4998ee2f84839ce10c30f91b5b2f7003"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="getBufferIdleTime"><param name="Local" value="classxal_1_1_player.html#a43c145039273adeadbd14179c96a4ac6"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getBufferSize"><param name="Local" value="classxal_1_1_player.html#add857566b7fe5079d2c89e24de133e58"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getCategory"><param name="Local" value="classxal_1_1_player.html#a1ed99e4cd2ea6a2105d0d4375312aa6b"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getDuration"><param name="Local" value="classxal_1_1_player.html#a3989eb76cb390b33343d2e43a85a6fb6"><param name="ImageNumber" value="11"></OBJECT>
@@ -518,6 +521,7 @@
             <LI><OBJECT type="text/sitemap"><param name="Name" value="Sound"><param name="Local" value="classxal_1_1_sound.html#aa9406cface2089a15a37facec7a889d3"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="~Sound"><param name="Local" value="classxal_1_1_sound.html#a13f88df0755b7db841b13d35563263a3"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getBitsPerSample"><param name="Local" value="classxal_1_1_sound.html#a1ec3d10605ee86389e0301832f011b0a"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="getBufferIdleTime"><param name="Local" value="classxal_1_1_sound.html#a8502599b4a6e677bcb85043e1cf2a639"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getChannels"><param name="Local" value="classxal_1_1_sound.html#ad25b2753230d56d782986985efc9b3c9"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getDuration"><param name="Local" value="classxal_1_1_sound.html#af75559e10540d00fae88cc5ece430c3b"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="getFormat"><param name="Local" value="classxal_1_1_sound.html#a95baf833e08d66c1665df3a9fceac489"><param name="ImageNumber" value="11"></OBJECT>
