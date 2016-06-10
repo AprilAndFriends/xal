@@ -1,0 +1,48 @@
+[OPTIONS]
+Compatibility=1.1
+Full-text search=Yes
+Contents file=index.hhc
+Default Window=main
+Default topic=index.html
+Index file=index.hhk
+Language=0x409 English (United States)
+Title=Extensible Audio Library Utility
+
+[WINDOWS]
+main="Extensible Audio Library Utility","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
+
+[FILES]
+_multi_playlist_8h_source.html
+_parallel_sound_manager_8h_source.html
+_playlist_8h_source.html
+_multi_playlist_8h.html
+_parallel_sound_manager_8h.html
+_playlist_8h.html
+classxal_1_1_multi_playlist.html
+classxal_1_1_multi_playlist-members.html
+classxal_1_1_parallel_sound_manager.html
+classxal_1_1_parallel_sound_manager-members.html
+classxal_1_1_playlist.html
+classxal_1_1_playlist-members.html
+dir_d44c64559bbebec7f509842c48db8b23.html
+dir_47b9d3a37f4ddef6ff7a2ea07eb7ad66.html
+index.html
+annotated.html
+classes.html
+functions.html
+functions_func.html
+functions_vars.html
+files.html
+tab_a.png
+tab_b.png
+tab_h.png
+tab_s.png
+nav_h.png
+nav_f.png
+bc_s.png
+doxygen.png
+closed.png
+open.png
+bdwn.png
+sync_on.png
+sync_off.png
