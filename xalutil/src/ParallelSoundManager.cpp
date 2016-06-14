@@ -17,11 +17,6 @@
 
 namespace xal
 {
-	static hstr _map_getNames(Player* player)
-	{
-		return player->getName();
-	}
-
 	ParallelSoundManager::ParallelSoundManager(float fadeTime)
 	{
 		this->fadeTime = fadeTime;
@@ -34,7 +29,8 @@ namespace xal
 	
 	harray<hstr> ParallelSoundManager::getPlayingSounds()
 	{
-		return this->players.mapped(&_map_getNames);
+		HL_LAMBDA_CLASS(_soundNames, hstr, ((Player* const& player) { return player->getName(); }));
+		return this->players.mapped(&_soundNames::lambda);
 	}
 
 	void ParallelSoundManager::stopSoundsWithPrefix(chstr prefix)

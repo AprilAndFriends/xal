@@ -14,21 +14,6 @@
 
 namespace xal
 {
-	static bool _filter_isEnabled(Playlist* playlist)
-	{
-		return playlist->isEnabled();
-	}
-
-	static bool _filter_isPlaying(Playlist* playlist)
-	{
-		return playlist->isPlaying();
-	}
-
-	static bool _filter_isPaused(Playlist* playlist)
-	{
-		return playlist->isPaused();
-	}
-
 	MultiPlaylist::MultiPlaylist()
 	{
 	}
@@ -40,7 +25,8 @@ namespace xal
 
 	bool MultiPlaylist::isEnabled()
 	{
-		return this->playlists.matchesAll(&_filter_isEnabled);
+		HL_LAMBDA_CLASS(_isEnabled, bool, ((Playlist* const& playlist) { return playlist->isEnabled(); }));
+		return this->playlists.matchesAll(&_isEnabled::lambda);
 	}
 
 	void MultiPlaylist::setEnabled(bool value)
@@ -53,12 +39,14 @@ namespace xal
 
 	bool MultiPlaylist::isPlaying()
 	{
-		return this->playlists.matchesAny(&_filter_isPlaying);
+		HL_LAMBDA_CLASS(_isPlaying, bool, ((Playlist* const& playlist) { return playlist->isPlaying(); }));
+		return this->playlists.matchesAll(&_isPlaying::lambda);
 	}
 
 	bool MultiPlaylist::isPaused()
 	{
-		return this->playlists.matchesAll(&_filter_isPaused);
+		HL_LAMBDA_CLASS(_isPaused, bool, ((Playlist* const& playlist) { return playlist->isPaused(); }));
+		return this->playlists.matchesAll(&_isPaused::lambda);
 	}
 
 	void MultiPlaylist::registerPlaylist(Playlist* playlist)

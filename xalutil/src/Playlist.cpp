@@ -17,16 +17,6 @@
 
 namespace xal
 {
-	static hstr _map_getNames(Player* player)
-	{
-		return player->getName();
-	}
-
-	static xal::Player* _map_createPlayer(hstr name)
-	{
-		return xal::manager->createPlayer(name);
-	}
-
 	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false), index(-1)
 	{
 		this->repeatAll = repeatAll;
@@ -44,7 +34,8 @@ namespace xal
 	
 	harray<hstr> Playlist::getSoundNames()
 	{
-		return this->players.mapped(&_map_getNames);
+		HL_LAMBDA_CLASS(_soundNames, hstr, ((Player* const& player) { return player->getName(); }));
+		return this->players.mapped(&_soundNames::lambda);
 	}
 
 	Player* Playlist::getCurrentPlayer()
@@ -109,7 +100,8 @@ namespace xal
 	
 	void Playlist::queueSounds(harray<hstr> names)
 	{
-		this->players += names.mapped(&_map_createPlayer);
+		HL_LAMBDA_CLASS(_createPlayers, xal::Player*, ((hstr const& name) { return xal::manager->createPlayer(name); }));
+		this->players += names.mapped(&_createPlayers::lambda);
 		this->index = hmax(this->index, 0);
 	}
 	
