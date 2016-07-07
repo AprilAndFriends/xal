@@ -25,7 +25,7 @@ namespace xal
 	{
 	}
 
-	bool NoAudio_Player::_systemIsPlaying()
+	bool NoAudio_Player::_systemIsPlaying() const
 	{
 		return this->playing;
 	}

@@ -36,7 +36,7 @@ namespace xal
 		HL_DEFINE_GETSET(float, fadeTime, FadeTime);
 		HL_DEFINE_GETSET(harray<hstr>, soundQueue, SoundQueue);
 		/// @return All currently playing Sound names.
-		harray<hstr> getPlayingSounds();
+		harray<hstr> getPlayingSounds() const;
 
 		/// @brief Stops all sounds that have a certain prefix in their name.
 		/// @param[in] prefix The prefix for the Sounds.

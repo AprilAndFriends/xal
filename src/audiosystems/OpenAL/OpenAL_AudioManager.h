@@ -45,6 +45,7 @@ namespace xal
 
 		void suspendOpenALContext();
 		bool resumeOpenALContext();
+
 	protected:
 		ALCdevice* device;
 		ALCcontext* context;
@@ -57,6 +58,7 @@ namespace xal
 		void _resumeAudio();
 		void _suspendAudio();
 		void _update(float timeDelta);
+
 		bool pendingResume; // iOS exception handling dealing with Audio Session interruptions
 #endif
 		void initOpenAL();

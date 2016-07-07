@@ -107,12 +107,12 @@ namespace xal
 		}
 	}
 
-	bool OpenSLES_Player::_systemIsPlaying()
+	bool OpenSLES_Player::_systemIsPlaying() const
 	{
 		return this->playing;
 	}
 
-	unsigned int OpenSLES_Player::_systemGetBufferPosition()
+	unsigned int OpenSLES_Player::_systemGetBufferPosition() const
 	{
 		int bytes = 0;
 		SLmillisecond milliseconds = 0;
@@ -129,11 +129,6 @@ namespace xal
 		return bytes;
 	}
 
-	bool OpenSLES_Player::_systemNeedsStreamedBufferPositionCorrection()
-	{
-		return false;
-	}
-	
 	bool OpenSLES_Player::_systemPreparePlay()
 	{
 		if (this->playerObject != NULL)

@@ -38,7 +38,7 @@ namespace xal
 		}
 	}
 
-	bool DirectSound_Player::_systemIsPlaying()
+	bool DirectSound_Player::_systemIsPlaying() const
 	{
 		if (this->dsBuffer == NULL)
 		{
@@ -49,7 +49,7 @@ namespace xal
 		return ((status & DSBSTATUS_PLAYING) != 0);
 	}
 
-	unsigned int DirectSound_Player::_systemGetBufferPosition()
+	unsigned int DirectSound_Player::_systemGetBufferPosition() const
 	{
 		unsigned long position = 0;
 		if (this->dsBuffer != NULL)
@@ -59,7 +59,7 @@ namespace xal
 		return (unsigned int)position;
 	}
 
-	float DirectSound_Player::_systemGetOffset()
+	float DirectSound_Player::_systemGetOffset() const
 	{
 		return (float)this->_systemGetBufferPosition();
 	}

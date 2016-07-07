@@ -155,7 +155,7 @@ namespace xal
 		return this->_getPlayers();
 	}
 
-	harray<Player*> AudioManager::_getPlayers()
+	harray<Player*> AudioManager::_getPlayers() const
 	{
 		return (this->players - this->managedPlayers);
 	}
@@ -166,7 +166,7 @@ namespace xal
 		return this->_getSounds();
 	}
 
-	hmap<hstr, Sound*> AudioManager::_getSounds()
+	hmap<hstr, Sound*> AudioManager::_getSounds() const
 	{
 		return this->sounds;
 	}
@@ -252,7 +252,7 @@ namespace xal
 		return this->categories[name];
 	}
 
-	bool AudioManager::hasCategory(chstr category)
+	bool AudioManager::hasCategory(chstr category) const
 	{
 		return this->categories.hasKey(category);
 	}
@@ -405,7 +405,7 @@ namespace xal
 		return result;
 	}
 
-	bool AudioManager::hasSound(chstr name)
+	bool AudioManager::hasSound(chstr name) const
 	{
 		return this->sounds.hasKey(name);
 	}
@@ -701,9 +701,9 @@ namespace xal
 		return this->_isAnyPlaying(soundName);
 	}
 
-	bool AudioManager::_isAnyPlaying(chstr soundName)
+	bool AudioManager::_isAnyPlaying(chstr soundName) const
 	{
-		foreach (Player*, it, this->managedPlayers)
+		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isPlaying())
 			{
@@ -719,9 +719,9 @@ namespace xal
 		return this->_isAnyFading(soundName);
 	}
 
-	bool AudioManager::_isAnyFading(chstr soundName)
+	bool AudioManager::_isAnyFading(chstr soundName) const
 	{
-		foreach (Player*, it, this->managedPlayers)
+		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isFading())
 			{
@@ -737,9 +737,9 @@ namespace xal
 		return this->_isAnyFadingIn(soundName);
 	}
 
-	bool AudioManager::_isAnyFadingIn(chstr soundName)
+	bool AudioManager::_isAnyFadingIn(chstr soundName) const
 	{
-		foreach (Player*, it, this->managedPlayers)
+		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isFadingIn())
 			{
@@ -755,9 +755,9 @@ namespace xal
 		return this->_isAnyFadingOut(soundName);
 	}
 
-	bool AudioManager::_isAnyFadingOut(chstr soundName)
+	bool AudioManager::_isAnyFadingOut(chstr soundName) const
 	{
-		foreach (Player*, it, this->managedPlayers)
+		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isFadingOut())
 			{
@@ -791,14 +791,14 @@ namespace xal
 		this->extensions += extension;
 	}
 
-	hstr AudioManager::findAudioFile(chstr filename)
+	hstr AudioManager::findAudioFile(chstr filename) const
 	{
 		if (hresource::exists(filename))
 		{
 			return filename;
 		}
 		hstr name;
-		foreach (hstr, it, this->extensions)
+		foreachc (hstr, it, this->extensions)
 		{
 			name = filename + (*it);
 			if (hresource::exists(name))
@@ -809,7 +809,7 @@ namespace xal
 		hstr newFilename = hfile::withoutExtension(filename);
 		if (newFilename != filename)
 		{
-			foreach (hstr, it, this->extensions)
+			foreachc (hstr, it, this->extensions)
 			{
 				name = newFilename + (*it);
 				if (hresource::exists(name))

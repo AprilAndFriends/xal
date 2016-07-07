@@ -89,7 +89,7 @@ namespace xal
 		void clear();
 		
 		/// @return Gets system backend ID.
-		inline void* getBackendId() { return this->backendId; }
+		inline void* getBackendId() const { return this->backendId; }
 		/// @return Gets name.
 		HL_DEFINE_GET(hstr, name, Name);
 		/// @return Gets sampling rate.
@@ -107,7 +107,7 @@ namespace xal
 		/// @return Gets the device name.
 		HL_DEFINE_GET(hstr, deviceName, DeviceName);
 		/// @return Returns true if update is done in a separate thread.
-		inline bool isThreaded() { return (this->thread != NULL); }
+		inline bool isThreaded() const { return (this->thread != NULL); }
 		/// @return Gets the time interval between updates.
 		HL_DEFINE_GET(float, updateTime, UpdateTime);
 		/// @return Gets the global gain.
@@ -138,7 +138,7 @@ namespace xal
 		/// @brief Checks whether a Category exists.
 		/// @param[in] name Name of the Category.
 		/// @return True if the Category exists.
-		bool hasCategory(chstr name);
+		bool hasCategory(chstr name) const;
 		
 		/// @brief Creates a new Sound within a Category.
 		/// @param[in] filename Filename of the Sound.
@@ -180,7 +180,7 @@ namespace xal
 		/// @brief Checks whether a Sound exists.
 		/// @param[in] name Name of the Sound.
 		/// @brief True if a Sound exists.
-		bool hasSound(chstr name);
+		bool hasSound(chstr name) const;
 
 		/// @brief Plays a Sound in a fire-and-forget fashion.
 		/// @param[in] soundName Name of the Sound.
@@ -251,7 +251,7 @@ namespace xal
 		/// @brief Finds an actual audio filename.
 		/// @param[in] filename Reference filename for the audio file.
 		/// @return The actual audio filename.
-		virtual hstr findAudioFile(chstr filename);
+		virtual hstr findAudioFile(chstr filename) const;
 
 	protected:
 		/// @brief Constructor.
@@ -312,9 +312,9 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _setGlobalGain(float value);
 		/// @note This method is not thread-safe and is for internal usage only.
-		harray<Player*> _getPlayers();
+		harray<Player*> _getPlayers() const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		hmap<hstr, Sound*> _getSounds();
+		hmap<hstr, Sound*> _getSounds() const;
 
 		/// @note Starts the thread for threaded update.
 		void _startThreading();
@@ -376,13 +376,13 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _stopCategory(chstr categoryName, float fadeTime);
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyPlaying(chstr soundName);
+		bool _isAnyPlaying(chstr soundName) const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyFading(chstr soundName);
+		bool _isAnyFading(chstr soundName) const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyFadingIn(chstr soundName);
+		bool _isAnyFadingIn(chstr soundName) const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyFadingOut(chstr soundName);
+		bool _isAnyFadingOut(chstr soundName) const;
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _clearMemory();

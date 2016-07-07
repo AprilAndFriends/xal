@@ -147,7 +147,7 @@ namespace xal
 		return true;
 	}
 
-	unsigned int SDL_Player::_systemGetBufferPosition()
+	unsigned int SDL_Player::_systemGetBufferPosition() const
 	{
 		int count = 0;
 		if (this->readPosition > this->writePosition)
@@ -161,7 +161,7 @@ namespace xal
 		return this->buffer->calcInputSize(count);
 	}
 
-	float SDL_Player::_systemGetOffset()
+	float SDL_Player::_systemGetOffset() const
 	{
 		return this->offset;
 	}

@@ -44,9 +44,9 @@ namespace xal
 		/// @return Gets associated Sound object.
 		HL_DEFINE_GET(Sound*, sound, Sound);
 		/// @return Gets name of the Sound.
-		hstr getName();
+		hstr getName() const;
 		/// @return Gets filename of the Sound.
-		hstr getFilename();
+		hstr getFilename() const;
 		/// @return Gets duration of the Sound.
 		float getDuration();
 		/// @return Gets byte-size of the Sound.
@@ -62,7 +62,7 @@ namespace xal
 		/// @return Gets sample position of the playback.
 		unsigned int getSamplePosition();
 		/// @return Gets Sound's category.
-		Category* getCategory();
+		Category* getCategory() const;
 		
 		/// @return True if the Sound is playing.
 		/// @note This is false if the Sound is fading out even tough it is still "playing".
@@ -142,23 +142,23 @@ namespace xal
 		virtual ~Player();
 
 		/// @note This method is not thread-safe and is for internal usage only.
-		float _getGain();
+		float _getGain() const;
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _setGain(float value);
 		/// @note This method is not thread-safe and is for internal usage only.
-		float _getPitch();
+		float _getPitch() const;
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _setPitch(float value);
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isPlaying();
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isPaused();
+		bool _isPaused() const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isFading();
+		bool _isFading() const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isFadingIn();
+		bool _isFadingIn() const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isFadingOut();
+		bool _isFadingOut() const;
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isAsyncPlayQueued();
 
@@ -177,20 +177,20 @@ namespace xal
 		void _pause(float fadeTime = 0.0f);
 
 		/// @return The current gain for the Sound depending on global gain, category gain and Player gain.
-		float _calcGain();
+		float _calcGain() const;
 
 		/// @brief Whether the Sound is actually playing.
 		/// @note This is implemented by the audio-system.
-		inline virtual bool _systemIsPlaying() { return false; }
+		inline virtual bool _systemIsPlaying() const { return false; }
 		/// @brief Position of the playback buffer.
 		/// @note This is implemented by the audio-system.
-		inline virtual unsigned int _systemGetBufferPosition() { return 0; }
+		inline virtual unsigned int _systemGetBufferPosition() const { return 0; }
 		/// @brief Whether this implementation needs to correct the streamed buffer position.
 		/// @note This is implemented by the audio-system.
-		inline virtual bool _systemNeedsStreamedBufferPositionCorrection() { return true; }
+		inline virtual bool _systemNeedsStreamedBufferPositionCorrection() const { return true; }
 		/// @brief Offset within the buffer.
 		/// @note This is implemented by the audio-system.
-		inline virtual float _systemGetOffset() { return 0.0f; }
+		inline virtual float _systemGetOffset() const { return 0.0f; }
 		/// @brief Sets offset within the buffer.
 		/// @note This is implemented by the audio-system.
 		inline virtual void _systemSetOffset(float value) { }

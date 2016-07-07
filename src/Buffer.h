@@ -48,11 +48,11 @@ namespace xal
 		int getSamplingRate();
 		int getBitsPerSample();
 		float getDuration();
-		Format getFormat();
+		Format getFormat() const;
 		bool isLoaded();
 		bool isAsyncLoadQueued();
-		bool isStreamed();
-		bool isMemoryManaged();
+		bool isStreamed() const;
+		bool isMemoryManaged() const;
 		// TODO
 		//bool setOffset(int value);
 

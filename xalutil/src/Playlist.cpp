@@ -27,18 +27,18 @@ namespace xal
 		this->clear();
 	}
 
-	bool Playlist::isPaused()
+	bool Playlist::isPaused() const
 	{
 		return (hbetweenIE(this->index, 0, this->players.size()) && this->players[this->index]->isPaused());
 	}
 	
-	harray<hstr> Playlist::getSoundNames()
+	harray<hstr> Playlist::getSoundNames() const
 	{
 		HL_LAMBDA_CLASS(_soundNames, hstr, ((Player* const& player) { return player->getName(); }));
 		return this->players.mapped(&_soundNames::lambda);
 	}
 
-	Player* Playlist::getCurrentPlayer()
+	Player* Playlist::getCurrentPlayer() const
 	{
 		return (this->isPlaying() ? this->players[this->index] : NULL);
 	}

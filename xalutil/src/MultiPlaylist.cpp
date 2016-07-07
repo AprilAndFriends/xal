@@ -23,7 +23,7 @@ namespace xal
 		this->clear();
 	}
 
-	bool MultiPlaylist::isEnabled()
+	bool MultiPlaylist::isEnabled() const
 	{
 		HL_LAMBDA_CLASS(_isEnabled, bool, ((Playlist* const& playlist) { return playlist->isEnabled(); }));
 		return this->playlists.matchesAll(&_isEnabled::lambda);
@@ -37,13 +37,13 @@ namespace xal
 		}
 	}
 
-	bool MultiPlaylist::isPlaying()
+	bool MultiPlaylist::isPlaying() const
 	{
 		HL_LAMBDA_CLASS(_isPlaying, bool, ((Playlist* const& playlist) { return playlist->isPlaying(); }));
 		return this->playlists.matchesAll(&_isPlaying::lambda);
 	}
 
-	bool MultiPlaylist::isPaused()
+	bool MultiPlaylist::isPaused() const
 	{
 		HL_LAMBDA_CLASS(_isPaused, bool, ((Playlist* const& playlist) { return playlist->isPaused(); }));
 		return this->playlists.matchesAll(&_isPaused::lambda);

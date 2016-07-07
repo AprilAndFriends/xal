@@ -44,9 +44,9 @@ namespace xal
 		/// @brief Gets the source-handling mode.
 		HL_DEFINE_GET(SourceMode, sourceMode, SourceMode);
 		/// @return True if Sounds in this Category are streamed.
-		bool isStreamed();
+		bool isStreamed() const;
 		/// @return True if Sounds in this Category have their data managed by the system.
-		bool isMemoryManaged();
+		bool isMemoryManaged() const;
 		
 	protected:
 		/// @brief Category name.

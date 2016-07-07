@@ -35,9 +35,9 @@ namespace xal
 		int bufferCount;
 		int bufferQueued;
 
-		bool _systemIsPlaying();
-		unsigned int _systemGetBufferPosition();
-		float _systemGetOffset();
+		bool _systemIsPlaying() const;
+		unsigned int _systemGetBufferPosition() const;
+		float _systemGetOffset() const;
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();

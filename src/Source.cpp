@@ -33,7 +33,7 @@ namespace xal
 		}
 	}
 
-	int Source::getRamSize()
+	int Source::getRamSize() const
 	{
 		if (this->sourceMode == RAM && this->stream != NULL)
 		{

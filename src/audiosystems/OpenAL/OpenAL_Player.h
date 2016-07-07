@@ -32,20 +32,21 @@ namespace xal
 		OpenAL_Player(Sound* sound);
 		~OpenAL_Player();
 
-		inline unsigned int getSourceId() { return this->sourceId; }
+		inline unsigned int getSourceId() const { return this->sourceId; }
 		inline void setSourceId(unsigned int value) { this->sourceId = value; }
 		
 		void createOpenALBuffers();
 		void destroyOpenALBuffers();
+
 	protected:
 		unsigned int sourceId;
 		unsigned int bufferIds[STREAM_BUFFER_COUNT];
 
 		void _update(float timeDelta);
 
-		bool _systemIsPlaying();
-		unsigned int _systemGetBufferPosition();
-		float _systemGetOffset();
+		bool _systemIsPlaying() const;
+		unsigned int _systemGetBufferPosition() const;
+		float _systemGetOffset() const;
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
@@ -55,8 +56,8 @@ namespace xal
 		int _systemStop();
 		int _systemUpdateStream();
 
-		int _getQueuedBuffersCount();
-		int _getProcessedBuffersCount();
+		int _getQueuedBuffersCount() const;
+		int _getProcessedBuffersCount() const;
 		int _fillBuffers(int index, int count);
 		void _queueBuffers(int index, int count);
 		void _queueBuffers();
@@ -66,6 +67,7 @@ namespace xal
 		float macSampleOffset;
 #endif
 		bool pendingPitchUpdate;
+
 	};
 
 }

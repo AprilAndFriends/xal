@@ -64,7 +64,7 @@ namespace xal
 		return this->buffer->getDuration();
 	}
 
-	Format Sound::getFormat()
+	Format Sound::getFormat() const
 	{
 		return this->buffer->getFormat();
 	}
@@ -74,7 +74,7 @@ namespace xal
 		return this->buffer->getIdleTime();
 	}
 
-	bool Sound::isStreamed()
+	bool Sound::isStreamed() const
 	{
 		return this->buffer->isStreamed();
 	}

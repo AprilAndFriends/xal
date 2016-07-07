@@ -63,7 +63,7 @@ namespace xal
 		}
 	}
 	
-	bool OpenAL_Player::_systemIsPlaying()
+	bool OpenAL_Player::_systemIsPlaying() const
 	{
 		if (this->sourceId == 0)
 		{
@@ -78,7 +78,7 @@ namespace xal
 		return (state == AL_PLAYING);
 	}
 	
-	unsigned int OpenAL_Player::_systemGetBufferPosition()
+	unsigned int OpenAL_Player::_systemGetBufferPosition() const
 	{
 		int bytes = 0;
 		if (this->sourceId != 0)
@@ -92,7 +92,7 @@ namespace xal
 		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
 	}
 	
-	float OpenAL_Player::_systemGetOffset()
+	float OpenAL_Player::_systemGetOffset() const
 	{
 		float offset = 0.0f;
 		if (this->sourceId != 0)
@@ -287,7 +287,7 @@ namespace xal
 		return (processed * STREAM_BUFFER_SIZE);
 	}
 	
-	int OpenAL_Player::_getQueuedBuffersCount()
+	int OpenAL_Player::_getQueuedBuffersCount() const
 	{
 		int queued = 0;
 		if (this->sourceId)
@@ -297,7 +297,7 @@ namespace xal
 		return queued;
 	}
 	
-	int OpenAL_Player::_getProcessedBuffersCount()
+	int OpenAL_Player::_getProcessedBuffersCount() const
 	{
 		int processed = 0;
 		if (this->sourceId)

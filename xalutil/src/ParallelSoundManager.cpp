@@ -27,7 +27,7 @@ namespace xal
 		this->clear();
 	}
 	
-	harray<hstr> ParallelSoundManager::getPlayingSounds()
+	harray<hstr> ParallelSoundManager::getPlayingSounds() const
 	{
 		HL_LAMBDA_CLASS(_soundNames, hstr, ((Player* const& player) { return player->getName(); }));
 		return this->players.mapped(&_soundNames::lambda);

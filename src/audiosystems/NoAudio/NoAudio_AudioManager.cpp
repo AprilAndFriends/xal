@@ -29,7 +29,7 @@ namespace xal
 		hlog::write(logTag, "Destroying NoAudio.");
 	}
 	
-	hstr NoAudio_AudioManager::findAudioFile(chstr _filename)
+	hstr NoAudio_AudioManager::findAudioFile(chstr _filename) const
 	{
 		return "";
 	}

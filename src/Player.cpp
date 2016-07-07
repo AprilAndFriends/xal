@@ -47,7 +47,7 @@ namespace xal
 		return this->_getGain();
 	}
 
-	float Player::_getGain()
+	float Player::_getGain() const
 	{
 		return this->gain;
 	}
@@ -70,7 +70,7 @@ namespace xal
 		return this->_getPitch();
 	}
 
-	float Player::_getPitch()
+	float Player::_getPitch() const
 	{
 		return this->pitch;
 	}
@@ -107,12 +107,12 @@ namespace xal
 		return (unsigned int)(position / (this->buffer->getChannels() * this->buffer->getBitsPerSample() * 0.125f));
 	}
 
-	hstr Player::getName()
+	hstr Player::getName() const
 	{
 		return this->sound->getName();
 	}
 
-	hstr Player::getFilename()
+	hstr Player::getFilename() const
 	{
 		return this->sound->getFilename();
 	}
@@ -168,7 +168,7 @@ namespace xal
 		return this->_isPaused();
 	}
 
-	bool Player::_isPaused()
+	bool Player::_isPaused() const
 	{
 		return (this->paused && !this->_isFading());
 	}
@@ -179,7 +179,7 @@ namespace xal
 		return this->_isFading();
 	}
 
-	bool Player::_isFading()
+	bool Player::_isFading() const
 	{
 		return (this->fadeSpeed != 0.0f);
 	}
@@ -190,7 +190,7 @@ namespace xal
 		return this->_isFadingIn();
 	}
 
-	bool Player::_isFadingIn()
+	bool Player::_isFadingIn() const
 	{
 		return (this->fadeSpeed > 0.0f);
 	}
@@ -201,12 +201,12 @@ namespace xal
 		return this->_isFadingOut();
 	}
 
-	bool Player::_isFadingOut()
+	bool Player::_isFadingOut() const
 	{
 		return (this->fadeSpeed < 0.0f);
 	}
 	
-	Category* Player::getCategory()
+	Category* Player::getCategory() const
 	{
 		return this->sound->getCategory();
 	}
@@ -403,7 +403,7 @@ namespace xal
 		this->_stopSound(fadeTime);
 	}
 
-	float Player::_calcGain()
+	float Player::_calcGain() const
 	{
 		float result = this->gain * this->sound->getCategory()->getGain() * xal::manager->getGlobalGain();
 		if (this->_isFading())

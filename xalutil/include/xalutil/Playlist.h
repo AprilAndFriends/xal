@@ -38,11 +38,11 @@ namespace xal
 		HL_DEFINE_ISSET(repeatAll, RepeatAll);
 		HL_DEFINE_GET(harray<Player*>, players, Players);
 		/// @return True if the Playlist is paused.
-		bool isPaused();
+		bool isPaused() const;
 		/// @return Get all queued Sound names.
-		harray<hstr> getSoundNames();
+		harray<hstr> getSoundNames() const;
 		/// @return Get the current Player playing.
-		Player* getCurrentPlayer();
+		Player* getCurrentPlayer() const;
 		
 		/// @brief Updates the Playlist state.
 		void update();

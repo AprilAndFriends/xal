@@ -30,7 +30,7 @@ namespace xal
 	protected:
 		bool playing;
 
-		bool _systemIsPlaying();
+		bool _systemIsPlaying() const;
 		void _systemPlay();
 		int _systemStop();
 

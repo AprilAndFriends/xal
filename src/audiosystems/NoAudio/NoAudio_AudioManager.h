@@ -30,7 +30,7 @@ namespace xal
 		NoAudio_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~NoAudio_AudioManager();
 
-		hstr findAudioFile(chstr _filename);
+		hstr findAudioFile(chstr _filename) const;
 
 	protected:
 		Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);

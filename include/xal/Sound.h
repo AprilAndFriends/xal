@@ -59,11 +59,11 @@ namespace xal
 		/// @return Length of the audio data in seconds.
 		float getDuration();
 		/// @return File format of the underlying audio file.
-		Format getFormat();
+		Format getFormat() const;
 		/// @return Gets Buffer's idle time
 		float getBufferIdleTime();
 		/// @return True if the Sounds's Buffer accesses streamed data.
-		bool isStreamed();
+		bool isStreamed() const;
 		/// @return True if the Sounds's Buffer is loaded.
 		bool isLoaded();
 
@@ -71,6 +71,7 @@ namespace xal
 		/// @param[out] output The data stream where to store the PCM data.
 		/// @note If the underlying Source does not provide data as PCM, it will always be converted to PCM.
 		void readPcmData(hstream& output);
+
 	protected:
 		/// @brief Name of the Sound.
 		hstr name;

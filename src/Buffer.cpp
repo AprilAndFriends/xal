@@ -108,7 +108,7 @@ namespace xal
 		return this->duration;
 	}
 
-	Format Buffer::getFormat()
+	Format Buffer::getFormat() const
 	{
 #ifdef _FORMAT_FLAC
 		if (this->filename.endsWith(".flac"))
@@ -155,12 +155,12 @@ namespace xal
 		return this->asyncLoadQueued;
 	}
 
-	bool Buffer::isStreamed()
+	bool Buffer::isStreamed() const
 	{
 		return (this->mode == STREAMED);
 	}
 
-	bool Buffer::isMemoryManaged()
+	bool Buffer::isMemoryManaged() const
 	{
 		return (this->mode == MANAGED);
 	}

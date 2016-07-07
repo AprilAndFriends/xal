@@ -39,7 +39,7 @@ namespace xal
 		SDL_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~SDL_AudioManager();
 
-		inline SDL_AudioSpec getFormat() { return this->format; }
+		inline SDL_AudioSpec getFormat() const { return this->format; }
 
 		void mixAudio(void* unused, unsigned char* stream, int length);
 

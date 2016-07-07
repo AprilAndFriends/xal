@@ -40,7 +40,7 @@ namespace xal
 		HL_DEFINE_GET(int, samplingRate, SamplingRate);
 		HL_DEFINE_GET(int, bitsPerSample, BitsPerSample);
 		HL_DEFINE_GET(float, duration, Duration);
-		int getRamSize();
+		int getRamSize() const;
 
 		virtual bool open();
 		virtual void close();

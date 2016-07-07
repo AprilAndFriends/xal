@@ -50,9 +50,9 @@ namespace xal
 
 		void _update(float timeDelta);
 
-		bool _systemIsPlaying();
-		unsigned int _systemGetBufferPosition();
-		bool _systemNeedsStreamedBufferPositionCorrection();
+		bool _systemIsPlaying() const;
+		unsigned int _systemGetBufferPosition() const;
+		bool _systemNeedsStreamedBufferPositionCorrection() const { return false; }
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();
 		void _systemUpdateGain();

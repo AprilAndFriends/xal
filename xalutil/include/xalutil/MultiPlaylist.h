@@ -33,14 +33,14 @@ namespace xal
 		
 		HL_DEFINE_GET(harray<Playlist*>, playlists, Playlists);
 		/// @return True if the MultiPlaylist is enabled.
-		bool isEnabled();
+		bool isEnabled() const;
 		/// @brief Enables or disables the MultiPlaylist.
 		/// @param[in] value True or false.
 		void setEnabled(bool value);
 		/// @return True if the MultiPlaylist is playing.
-		bool isPlaying();
+		bool isPlaying() const;
 		/// @return True if the MultiPlaylist is paused.
-		bool isPaused();
+		bool isPaused() const;
 
 		void registerPlaylist(Playlist* playlist);
 		void unregisterPlaylist(Playlist* playlist);

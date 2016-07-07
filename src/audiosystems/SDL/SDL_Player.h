@@ -40,9 +40,9 @@ namespace xal
 
 		void _update(float timeDelta);
 
-		inline bool _systemIsPlaying() { return this->playing; }
-		unsigned int _systemGetBufferPosition();
-		float _systemGetOffset();
+		inline bool _systemIsPlaying() const { return this->playing; }
+		unsigned int _systemGetBufferPosition() const;
+		float _systemGetOffset() const;
 		void _systemSetOffset(float value);
 		bool _systemPreparePlay();
 		void _systemPrepareBuffer();

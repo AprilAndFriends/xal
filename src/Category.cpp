@@ -32,12 +32,12 @@ namespace xal
 		xal::manager->_setGlobalGain(xal::manager->globalGain); // updates all Player instances with the new category gain
 	}
 
-	bool Category::isStreamed()
+	bool Category::isStreamed() const
 	{
 		return (this->bufferMode == STREAMED);
 	}
 
-	bool Category::isMemoryManaged()
+	bool Category::isMemoryManaged() const
 	{
 		return (this->bufferMode == MANAGED);
 	}
