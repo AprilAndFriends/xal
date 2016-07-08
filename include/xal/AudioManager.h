@@ -399,10 +399,10 @@ namespace xal
 
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.
-		inline virtual void _suspendSystem() { }
+		virtual inline void _suspendSystem() { }
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.
-		inline virtual void _resumeSystem() { }
+		virtual inline void _resumeSystem() { }
 
 		/// @brief Threaded update call.
 		/// @param[in] thread The Thread instance calling.

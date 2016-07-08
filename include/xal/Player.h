@@ -181,46 +181,46 @@ namespace xal
 
 		/// @brief Whether the Sound is actually playing.
 		/// @note This is implemented by the audio-system.
-		inline virtual bool _systemIsPlaying() const { return false; }
+		virtual inline bool _systemIsPlaying() const { return false; }
 		/// @brief Position of the playback buffer.
 		/// @note This is implemented by the audio-system.
-		inline virtual unsigned int _systemGetBufferPosition() const { return 0; }
+		virtual inline unsigned int _systemGetBufferPosition() const { return 0; }
 		/// @brief Whether this implementation needs to correct the streamed buffer position.
 		/// @note This is implemented by the audio-system.
-		inline virtual bool _systemNeedsStreamedBufferPositionCorrection() const { return true; }
+		virtual inline bool _systemNeedsStreamedBufferPositionCorrection() const { return true; }
 		/// @brief Offset within the buffer.
 		/// @note This is implemented by the audio-system.
-		inline virtual float _systemGetOffset() const { return 0.0f; }
+		virtual inline float _systemGetOffset() const { return 0.0f; }
 		/// @brief Sets offset within the buffer.
 		/// @note This is implemented by the audio-system.
-		inline virtual void _systemSetOffset(float value) { }
+		virtual inline void _systemSetOffset(float value) { }
 		/// @brief Prepares the Player for playback.
 		/// @return True if successful.
 		/// @note This is implemented by the audio-system.
-		inline virtual bool _systemPreparePlay() { return true; }
+		virtual inline bool _systemPreparePlay() { return true; }
 		/// @brief Prepares the underlying Buffer for playback.
 		/// @note This is implemented by the audio-system.
-		inline virtual void _systemPrepareBuffer() { }
+		virtual inline void _systemPrepareBuffer() { }
 		/// @brief Updates the current gain of the Player in the audio-system.
 		/// @note This is implemented by the audio-system.
-		inline virtual void _systemUpdateGain() { }
+		virtual inline void _systemUpdateGain() { }
 		/// @brief Updates the current pitch of the Player in the audio-system.
 		/// @note This is implemented by the audio-system.
-		inline virtual void _systemUpdatePitch() { }
+		virtual inline void _systemUpdatePitch() { }
 		/// @brief Starts playback in the audio-system.
 		/// @note This is implemented by the audio-system.
-		inline virtual void _systemPlay() { }
+		virtual inline void _systemPlay() { }
 		/// @brief Stops playback in the audio-system.
 		/// @return How many bytes have been played since the last update.
 		/// @note This is implemented by the audio-system.
-		inline virtual int _systemStop() { return 0; }
+		virtual inline int _systemStop() { return 0; }
 		/// @brief Updates non-streaming processing in non-streamed Sounds.
 		/// @note This is implemented by the audio-system.
-		inline virtual void _systemUpdateNormal() { }
+		virtual inline void _systemUpdateNormal() { }
 		/// @brief Updates streaming processing in streamed Sounds.
 		/// @return How many bytes have been played since the last update.
 		/// @note This is implemented by the audio-system.
-		inline virtual int _systemUpdateStream() { return 0; }
+		virtual inline int _systemUpdateStream() { return 0; }
 
 	private:
 		/// @brief Internal implementation for actually stopping the playback.
