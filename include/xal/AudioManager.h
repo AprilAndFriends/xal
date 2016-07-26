@@ -150,6 +150,10 @@ namespace xal
 		/// @param[in] name Name of the Sound.
 		/// @return The Sound with the given name.
 		Sound* getSound(chstr name);
+		/// @brief Checks whether a Sound exists.
+		/// @param[in] name Name of the Sound.
+		/// @brief True if a Sound exists.
+		bool hasSound(chstr name) const;
 		/// @brief Destroys a Sound.
 		/// @param[in] sound The Sound instance.
 		void destroySound(Sound* sound);
@@ -177,10 +181,6 @@ namespace xal
 		/// @brief Destroys a Player.
 		/// @param[in] player The player to destroy.
 		void destroyPlayer(Player* player);
-		/// @brief Checks whether a Sound exists.
-		/// @param[in] name Name of the Sound.
-		/// @brief True if a Sound exists.
-		bool hasSound(chstr name) const;
 
 		/// @brief Plays a Sound in a fire-and-forget fashion.
 		/// @param[in] soundName Name of the Sound.
