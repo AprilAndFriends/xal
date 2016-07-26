@@ -14,6 +14,7 @@
 #define XAL_AUDIO_MANAGER_H
 
 #include <hltypes/harray.h>
+#include <hltypes/henum.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hmutex.h>
@@ -25,46 +26,62 @@
 
 namespace xal
 {
+	/// @class Format
 	/// @brief Defines supported audio formats.
-	enum Format
-	{
-		/// @brief FLAC.
-		FLAC,
-		/// @brief M4A.
-		M4A,
-		/// @brief OGG.
-		OGG,
-		/// @brief WAV.
-		WAV,
+	HL_ENUM_CLASS_PREFIX_DECLARE(xalExport, Format,
+	(
+		/// @var static const Format Format::FLAC
+		/// @brief Free Lossless Audio Codec.
+		HL_ENUM_DECLARE(Format, FLAC);
+		/// @var static const Format Format::M4A
+		/// @brief MPEG 4 Advanced Audio Coding.
+		HL_ENUM_DECLARE(Format, M4A);
+		/// @var static const Format Format::OGG
+		/// @brief OGG by Xiph.Org Foundation.
+		HL_ENUM_DECLARE(Format, OGG);
+		/// @var static const Format Format::WAV
+		/// @brief Waveform Audio File Format.
+		HL_ENUM_DECLARE(Format, WAV);
+		/// @var static const Format Format::FLAC
 		/// @brief Unknown format, usually indicates errors.
-		UNKNOWN
-	};
+		HL_ENUM_DECLARE(Format, Unknown);
+	));
 
+	/// @class BufferMode
 	/// @brief Defines when buffers should be created and how they should be handled.
-	enum BufferMode
-	{
+	HL_ENUM_CLASS_PREFIX_DECLARE(xalExport, BufferMode,
+	(
+		/// @var static const BufferMode BufferMode::Full
 		/// @brief Buffers data upon player creation, keeps results in memory.
-		FULL = 0,
+		HL_ENUM_DECLARE(BufferMode, Full);
+		/// @var static const BufferMode BufferMode::Async
 		/// @brief Buffers data upon player creation asynchronously, keeps results in memory.
-		ASYNC = 1,
+		HL_ENUM_DECLARE(BufferMode, Async);
+		/// @var static const BufferMode BufferMode::Lazy
 		/// @brief Buffers when first need arises, keeps results in memory.
-		LAZY = 2,
+		HL_ENUM_DECLARE(BufferMode, Lazy);
+		/// @var static const BufferMode BufferMode::Managed
 		/// @brief Buffers when first need arises, clears memory after a timeout.
-		MANAGED = 3,
+		HL_ENUM_DECLARE(BufferMode, Managed);
+		/// @var static const BufferMode BufferMode::OnDemand
 		/// @brief Buffers when first need arises, clears memory after usage.
-		ON_DEMAND = 4,
+		HL_ENUM_DECLARE(BufferMode, OnDemand);
+		/// @var static const BufferMode BufferMode::Streamed
 		/// @brief Buffers in streamed mode.
-		STREAMED = 5
-	};
+		HL_ENUM_DECLARE(BufferMode, Streamed);
+	));
 
+	/// @class SourceMode
 	/// @brief Defines how audio sources should be handled.
-	enum SourceMode
-	{
+	HL_ENUM_CLASS_PREFIX_DECLARE(xalExport, SourceMode,
+	(
+		/// @var static const SourceMode SourceMode::Disk
 		/// @brief Leaves data on permanent storage device.
-		DISK = 0,
+		HL_ENUM_DECLARE(SourceMode, Disk);
+		/// @var static const SourceMode SourceMode::Ram
 		/// @brief Copies data to RAM buffer and accesses it from there.
-		RAM = 1
-	};
+		HL_ENUM_DECLARE(SourceMode, Ram);
+	));
 
 	class Buffer;
 	class Category;

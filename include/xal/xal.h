@@ -13,6 +13,7 @@
 #ifndef XAL_H
 #define XAL_H
 
+#include <hltypes/henum.h>
 #include <hltypes/hstring.h>
 
 #include "xalExport.h"
@@ -35,25 +36,32 @@ namespace xal
 	/// @brief Used for logging display.
 	extern hstr logTag;
 
-	/// @brief Type of the audio-system.
-	enum AudioSystemType
-	{
-		/// @brief OS-default audio system.
+	/// @class AudioSystemType
+	/// @brief Defines how audio sources should be handled.
+	HL_ENUM_CLASS_PREFIX_DECLARE(xalExport, AudioSystemType,
+	(
+		/// @var static const AudioSystemType AudioSystemType::Default
 		/// @note The OS-default can be different depending on how XAL was compiled.
-		AS_DEFAULT = 0,
+		HL_ENUM_DECLARE(AudioSystemType, Default);
+		/// @var static const AudioSystemType AudioSystemType::Disabled
 		/// @brief No audio.
-		AS_DISABLED = 1,
+		HL_ENUM_DECLARE(AudioSystemType, Disabled);
+		/// @var static const AudioSystemType AudioSystemType::DirectSound
 		/// @brief Use DirectSound.
-		AS_DIRECTSOUND = 2,
+		HL_ENUM_DECLARE(AudioSystemType, DirectSound);
+		/// @var static const AudioSystemType AudioSystemType::OpenAL
 		/// @brief Use OpenAL.
-		AS_OPENAL = 3,
+		HL_ENUM_DECLARE(AudioSystemType, OpenAL);
+		/// @var static const AudioSystemType AudioSystemType::OpenSLES
 		/// @brief Use OpenSLES.
-		AS_OPENSLES = 4,
+		HL_ENUM_DECLARE(AudioSystemType, OpenSLES);
+		/// @var static const AudioSystemType AudioSystemType::SDL
 		/// @brief Use SDL audio.
-		AS_SDL = 5,
+		HL_ENUM_DECLARE(AudioSystemType, SDL);
+		/// @var static const AudioSystemType AudioSystemType::XAudio2
 		/// @brief Use XAudio2.
-		AS_XAUDIO2 = 6
-	};
+		HL_ENUM_DECLARE(AudioSystemType, XAudio2);
+	));
 
 	/// @brief Initializes XAL.
 	/// @param[in] type Type of the audio-system.

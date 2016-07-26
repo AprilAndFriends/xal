@@ -45,6 +45,31 @@ namespace xal
 {
 	extern void (*gLogFunction)(chstr);
 	
+	HL_ENUM_CLASS_DEFINE(Format,
+	(
+		HL_ENUM_DEFINE(Format, FLAC);
+		HL_ENUM_DEFINE(Format, M4A);
+		HL_ENUM_DEFINE(Format, OGG);
+		HL_ENUM_DEFINE(Format, WAV);
+		HL_ENUM_DEFINE(Format, Unknown);
+	));
+
+	HL_ENUM_CLASS_DEFINE(BufferMode,
+	(
+		HL_ENUM_DEFINE(BufferMode, Full);
+		HL_ENUM_DEFINE(BufferMode, Async);
+		HL_ENUM_DEFINE(BufferMode, Lazy);
+		HL_ENUM_DEFINE(BufferMode, Managed);
+		HL_ENUM_DEFINE(BufferMode, OnDemand);
+		HL_ENUM_DEFINE(BufferMode, Streamed);
+	));
+
+	HL_ENUM_CLASS_DEFINE(SourceMode,
+	(
+		HL_ENUM_DEFINE(SourceMode, Disk);
+		HL_ENUM_DEFINE(SourceMode, Ram);
+	));
+
 	AudioManager* manager = NULL;
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
@@ -267,7 +292,7 @@ namespace xal
 	{
 		Category* category = this->_getCategory(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
-		if (sound->getFormat() == UNKNOWN || this->sounds.hasKey(sound->getName()))
+		if (sound->getFormat() == Format::Unknown || this->sounds.hasKey(sound->getName()))
 		{
 			delete sound;
 			return NULL;
@@ -390,7 +415,7 @@ namespace xal
 
 	harray<hstr> AudioManager::_createSoundsFromPath(chstr path, chstr categoryName, chstr prefix)
 	{
-		this->_createCategory(categoryName, FULL, DISK);
+		this->_createCategory(categoryName, BufferMode::Full, SourceMode::Disk);
 		harray<hstr> result;
 		harray<hstr> files = hrdir::files(path, true);
 		Sound* sound;
@@ -469,34 +494,31 @@ namespace xal
 
 	Source* AudioManager::_createSource(chstr filename, SourceMode sourceMode, BufferMode bufferMode, Format format)
 	{
-		Source* source;
-		switch (format)
-		{
 #ifdef _FORMAT_FLAC
-		case FLAC:
-			source = new FLAC_Source(filename, sourceMode, bufferMode);
-			break;
+		if (format == Format::FLAC)
+		{
+			return new FLAC_Source(filename, sourceMode, bufferMode);
+		}
 #endif
 #ifdef _FORMAT_OGG
-		case OGG:
-			source = new OGG_Source(filename, sourceMode, bufferMode);
-			break;
+		if (format == Format::OGG)
+		{
+			return new OGG_Source(filename, sourceMode, bufferMode);
+		}
 #endif
 #ifdef _FORMAT_SPX
-		case SPX:
-			source = new SPX_Source(filename, sourceMode, bufferMode);
-			break;
+		if (format == Format::SPX)
+		{
+			return new SPX_Source(filename, sourceMode, bufferMode);
+		}
 #endif
 #ifdef _FORMAT_WAV
-		case WAV:
-			source = new WAV_Source(filename, sourceMode, bufferMode);
-			break;
-#endif
-		default:
-			source = new Source(filename, sourceMode, bufferMode);
-			break;
+		if (format == Format::WAV)
+		{
+			return new WAV_Source(filename, sourceMode, bufferMode);
 		}
-		return source;
+#endif
+		return new Source(filename, sourceMode, bufferMode);;
 	}
 
 	void AudioManager::play(chstr soundName, float fadeTime, bool looping, float gain)

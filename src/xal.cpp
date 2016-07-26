@@ -40,53 +40,53 @@
 #ifdef _WIN32
 #ifndef _WINRT
 	#ifdef _DIRECTSOUND
-		#define AS_INTERNAL_DEFAULT AS_DIRECTSOUND
+		#define AS_INTERNAL_DEFAULT AudioSystemType::DirectSound
 	#elif defined(_SDL)
-		#define AS_INTERNAL_DEFAULT AS_SDL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::SDL
 	#elif defined(_OPENAL)
-		#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenAL
 	#else
-		#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
 #else
 	#ifdef _XAUDIO2
-		#define AS_INTERNAL_DEFAULT AS_XAUDIO2
+		#define AS_INTERNAL_DEFAULT AudioSystemType::XAudio2
 	#else
-		#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
 #endif
 #elif defined(__APPLE__) && !defined(_IOS)
 	#ifdef _SDL
-		#define AS_INTERNAL_DEFAULT AS_SDL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::SDL
 	#elif defined(_OPENAL)
-		#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenAL
 	#else
-		#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
 #elif defined(__APPLE__) && defined(_IOS)
 	#ifdef _OPENAL
-		#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenAL
 	#else
-		#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
 #elif defined(_ANDROID)
 	#ifdef _OPENSLES
-		#define AS_INTERNAL_DEFAULT AS_OPENSLES
+		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenSLES
 	#elif defined(_OPENAL)
-		#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenAL
 	#else
-		#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
 #elif defined(_UNIX)
 	#ifdef _SDL
-		#define AS_INTERNAL_DEFAULT AS_SDL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::SDL
 	#elif defined(_OPENAL)
-		#define AS_INTERNAL_DEFAULT AS_OPENAL
+		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenAL
 	#else
-		#define AS_INTERNAL_DEFAULT AS_DISABLED
+		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
 #else
-	#define AS_INTERNAL_DEFAULT AS_DISABLED
+	#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 #endif
 
 namespace xal
@@ -95,45 +95,56 @@ namespace xal
 
 	static hversion version(3, 5, 0);
 
+	HL_ENUM_CLASS_DEFINE(AudioSystemType,
+	(
+		HL_ENUM_DEFINE(AudioSystemType, Default);
+		HL_ENUM_DEFINE(AudioSystemType, Disabled);
+		HL_ENUM_DEFINE(AudioSystemType, DirectSound);
+		HL_ENUM_DEFINE(AudioSystemType, OpenAL);
+		HL_ENUM_DEFINE(AudioSystemType, OpenSLES);
+		HL_ENUM_DEFINE(AudioSystemType, SDL);
+		HL_ENUM_DEFINE(AudioSystemType, XAudio2);
+	));
+
 	void init(AudioSystemType type, void* backendId, bool threaded, float updateTime, chstr deviceName)
 	{
 		hlog::write(logTag, "Initializing XAL: " + version.toString());
-		if (type == AS_DEFAULT)
+		if (type == AudioSystemType::Default)
 		{
 			type = AS_INTERNAL_DEFAULT;
 		}
-		if (type == AS_DISABLED)
+		if (type == AudioSystemType::Disabled)
 		{
 			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 			hlog::write(logTag, "Audio is disabled.");
 			return;
 		}
 #ifdef _DIRECTSOUND
-		if (type == AS_DIRECTSOUND)
+		if (type == AudioSystemType::DirectSound)
 		{
 			xal::manager = new DirectSound_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _OPENAL
-		if (type == AS_OPENAL)
+		if (type == AudioSystemType::OpenAL)
 		{
 			xal::manager = new OpenAL_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _OPENSLES
-		if (type == AS_OPENSLES)
+		if (type == AudioSystemType::OpenSLES)
 		{
 			xal::manager = new OpenSLES_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _SDL
-		if (type == AS_SDL)
+		if (type == AudioSystemType::SDL)
 		{
 			xal::manager = new SDL_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
 #endif
 #ifdef _XAUDIO2
-		if (type == AS_XAUDIO2)
+		if (type == AudioSystemType::XAudio2)
 		{
 			xal::manager = new XAudio2_AudioManager(backendId, threaded, updateTime, deviceName);
 		}
@@ -164,36 +175,36 @@ namespace xal
 	bool hasAudioSystem(AudioSystemType type)
 	{
 #ifdef _DIRECTSOUND
-		if (type == AS_DIRECTSOUND)
+		if (type == AudioSystemType::DirectSound)
 		{
 			return true;
 		}
 #endif
 #ifdef _OPENAL
-		if (type == AS_OPENAL)
+		if (type == AudioSystemType::OpenAL)
 		{
 			return true;
 		}
 #endif
 #ifdef _OPENSLES
-		if (type == AS_OPENSLES)
+		if (type == AudioSystemType::OpenSLES)
 		{
 			return true;
 		}
 #endif
 #ifdef _SDL
-		if (type == AS_SDL)
+		if (type == AudioSystemType::SDL)
 		{
 			return true;
 		}
 #endif
 #ifdef _XAUDIO2
-		if (type == AS_XAUDIO2)
+		if (type == AudioSystemType::XAudio2)
 		{
 			return true;
 		}
 #endif
-		if (type == AS_DISABLED)
+		if (type == AudioSystemType::Disabled)
 		{
 			return true;
 		}

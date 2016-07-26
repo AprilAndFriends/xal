@@ -35,7 +35,7 @@ namespace xal
 
 	int Source::getRamSize() const
 	{
-		if (this->sourceMode == RAM && this->stream != NULL)
+		if (this->sourceMode == SourceMode::Ram && this->stream != NULL)
 		{
 			return (int)this->stream->size();
 		}
@@ -54,7 +54,7 @@ namespace xal
 		{
 			hresource* resource = new hresource;
 			resource->open(this->filename);
-			if (this->sourceMode == RAM || this->bufferMode == ASYNC)
+			if (this->sourceMode == SourceMode::Ram || this->bufferMode == BufferMode::Async)
 			{
 				this->stream = new hstream();
 				this->stream->writeRaw(*resource);
@@ -78,7 +78,7 @@ namespace xal
 	{
 		if (this->streamOpen)
 		{
-			if (this->sourceMode == DISK)
+			if (this->sourceMode == SourceMode::Disk)
 			{
 				delete this->stream;
 				this->stream = NULL;

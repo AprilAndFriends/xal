@@ -40,26 +40,15 @@ namespace xal
 		this->bitsPerSample = 16;
 		this->duration = 0.0f;
 		this->idleTime = 0.0f;
-		if (xal::manager->isEnabled() && this->getFormat() != UNKNOWN)
+		if (xal::manager->isEnabled() && this->getFormat() != Format::Unknown)
 		{
-			switch (this->mode)
+			if (this->mode == BufferMode::Full)
 			{
-			case FULL:
 				this->prepare();
-				break;
-			case ASYNC:
+			}
+			else if (this->mode == BufferMode::Async)
+			{
 				this->prepareAsync();
-				break;
-			case LAZY:
-				break;
-			case MANAGED:
-				break;
-			case ON_DEMAND:
-				break;
-			case STREAMED:
-				break;
-			default:
-				break;
 			}
 		}
 	}
@@ -113,34 +102,34 @@ namespace xal
 #ifdef _FORMAT_FLAC
 		if (this->filename.endsWith(".flac"))
 		{
-			return FLAC;
+			return Format::FLAC;
 		}
 #endif
 #ifdef _FORMAT_M4A
 		if (this->filename.endsWith(".m4a"))
 		{
-			return M4A;
+			return Format::M4A;
 		}
 #endif
 #ifdef _FORMAT_OGG
 		if (this->filename.endsWith(".ogg"))
 		{
-			return OGG;
+			return Format::OGG;
 		}
 #endif
 #ifdef _FORMAT_SPX
 		if (this->filename.endsWith(".spx"))
 		{
-			return SPX;
+			return Format::SPX;
 		}
 #endif
 #ifdef _FORMAT_WAV
 		if (this->filename.endsWith(".wav"))
 		{
-			return WAV;
+			return Format::WAV;
 		}
 #endif
-		return UNKNOWN;
+		return Format::Unknown;
 	}
 
 	bool Buffer::isLoaded()
@@ -157,12 +146,12 @@ namespace xal
 
 	bool Buffer::isStreamed() const
 	{
-		return (this->mode == STREAMED);
+		return (this->mode == BufferMode::Streamed);
 	}
 
 	bool Buffer::isMemoryManaged() const
 	{
-		return (this->mode == MANAGED);
+		return (this->mode == BufferMode::Managed);
 	}
 
 	void Buffer::prepare()
@@ -282,14 +271,14 @@ namespace xal
 			this->boundPlayers /= player;
 		}
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (this->boundPlayers.size() == 0 && this->mode == xal::ON_DEMAND || this->mode == xal::STREAMED)
+		if (this->boundPlayers.size() == 0 && this->mode == BufferMode::OnDemand || this->mode == BufferMode::Streamed)
 		{
 			this->stream.clear(1);
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = true;
 			this->loaded = false;
 		}
-		if (this->boundPlayers.size() == 0 && this->mode == xal::STREAMED)
+		if (this->boundPlayers.size() == 0 && this->mode == BufferMode::Streamed)
 		{
 			this->source->close();
 			this->asyncLoadQueued = false;
@@ -323,9 +312,9 @@ namespace xal
 	void Buffer::readPcmData(hstream& output)
 	{
 		// no mutex locking, because a separate source is used
-		if (this->getFormat() != UNKNOWN)
+		if (this->getFormat() != Format::Unknown)
 		{
-			Source* source = xal::manager->_createSource(this->filename, xal::DISK, xal::FULL, this->getFormat());
+			Source* source = xal::manager->_createSource(this->filename, SourceMode::Disk, BufferMode::Full, this->getFormat());
 			source->open();
 			if (source->getSize() > 0)
 			{
@@ -371,7 +360,7 @@ namespace xal
 	bool Buffer::_tryClearMemory()
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == STREAMED))
+		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == BufferMode::Streamed))
 		{
 			hlog::debug(logTag, "Clearing memory for: " + this->filename);
 			this->stream.clear(1L);

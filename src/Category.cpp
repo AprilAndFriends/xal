@@ -34,12 +34,12 @@ namespace xal
 
 	bool Category::isStreamed() const
 	{
-		return (this->bufferMode == STREAMED);
+		return (this->bufferMode == BufferMode::Streamed);
 	}
 
 	bool Category::isMemoryManaged() const
 	{
-		return (this->bufferMode == MANAGED);
+		return (this->bufferMode == BufferMode::Managed);
 	}
 
 }

@@ -48,13 +48,13 @@
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">AudioManager.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;hltypes/harray.h&gt;</code><br />
+<code>#include &lt;hltypes/henum.h&gt;</code><br />
 <code>#include &lt;hltypes/hltypesUtil.h&gt;</code><br />
 <code>#include &lt;hltypes/hmap.h&gt;</code><br />
 <code>#include &lt;hltypes/hmutex.h&gt;</code><br />
@@ -67,40 +67,18 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_format.html">xal::Format</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines supported audio formats.  <a href="classxal_1_1_format.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_buffer_mode.html">xal::BufferMode</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines when buffers should be created and how they should be handled.  <a href="classxal_1_1_buffer_mode.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_source_mode.html">xal::SourceMode</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines how audio sources should be handled.  <a href="classxal_1_1_source_mode.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_audio_manager.html">xal::AudioManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides generic functionality regarding audio management.  <a href="classxal_1_1_audio_manager.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a2218aa205831f4fc2c8d56e26ef6a7ad"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7ad">xal::Format</a> { <br />
-&#160;&#160;<a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7adaa31a0bc2d2b6e96c733f9de35788dea8">xal::FLAC</a>, 
-<a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7ada500264d70e3e06e18b05939b3b9142aa">xal::M4A</a>, 
-<a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7ada8af50b36f6405dcf7805f15d3d983c1e">xal::OGG</a>, 
-<a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7ada252b8890e4cefce76b836372c49d841a">xal::WAV</a>, 
-<br />
-&#160;&#160;<a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7adaaf68e6a764b26d38ac4a00cdc5a1a710">xal::UNKNOWN</a>
-<br />
- }<tr class="memdesc:a2218aa205831f4fc2c8d56e26ef6a7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines supported audio formats.  <a href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7ad">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a2218aa205831f4fc2c8d56e26ef6a7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9720055ae3fb8774edccf271f464b83"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83">xal::BufferMode</a> { <br />
-&#160;&#160;<a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83a427abf042c54cded5a6e5c167a0e3765">xal::FULL</a> = 0, 
-<a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83a58e23f36145fe128a5ff04ba40400a7b">xal::ASYNC</a> = 1, 
-<a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83a5f2674c2eabc37fe5885cb24f8bf51f8">xal::LAZY</a> = 2, 
-<a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83abb546866d18becb63b7290682a27c494">xal::MANAGED</a> = 3, 
-<br />
-&#160;&#160;<a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83a37d4217d9c0ab0f231b1aee028f18969">xal::ON_DEMAND</a> = 4, 
-<a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83af4f46aef56898ef6eda4cf7c1e9d4027">xal::STREAMED</a> = 5
-<br />
- }<tr class="memdesc:ad9720055ae3fb8774edccf271f464b83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines when buffers should be created and how they should be handled.  <a href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:ad9720055ae3fb8774edccf271f464b83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6506007379a370b00a17164e7f33f30c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_manager_8h.html#a6506007379a370b00a17164e7f33f30c">xal::SourceMode</a> { <a class="el" href="_audio_manager_8h.html#a6506007379a370b00a17164e7f33f30cac2a289a80cb92fa5b718e0458dc2a611">xal::DISK</a> = 0, 
-<a class="el" href="_audio_manager_8h.html#a6506007379a370b00a17164e7f33f30ca9b19d25feef4ad5774c06c7e0700ba8c">xal::RAM</a> = 1
- }<tr class="memdesc:a6506007379a370b00a17164e7f33f30c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines how audio sources should be handled.  <a href="_audio_manager_8h.html#a6506007379a370b00a17164e7f33f30c">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a6506007379a370b00a17164e7f33f30c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -117,95 +95,7 @@ LICENSE</h1>
 <h1><a class="anchor" id="DESCRIPTION"></a>
 DESCRIPTION</h1>
 <p>Provides an interface for the audio manager. </p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="file_ad9720055ae3fb8774edccf271f464b83"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="_audio_manager_8h.html#ad9720055ae3fb8774edccf271f464b83">xal::BufferMode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Defines when buffers should be created and how they should be handled. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ad9720055ae3fb8774edccf271f464b83a427abf042c54cded5a6e5c167a0e3765"></a>FULL&#160;</td><td class="fielddoc">
-<p>Buffers data upon player creation, keeps results in memory. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ad9720055ae3fb8774edccf271f464b83a58e23f36145fe128a5ff04ba40400a7b"></a>ASYNC&#160;</td><td class="fielddoc">
-<p>Buffers data upon player creation asynchronously, keeps results in memory. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ad9720055ae3fb8774edccf271f464b83a5f2674c2eabc37fe5885cb24f8bf51f8"></a>LAZY&#160;</td><td class="fielddoc">
-<p>Buffers when first need arises, keeps results in memory. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ad9720055ae3fb8774edccf271f464b83abb546866d18becb63b7290682a27c494"></a>MANAGED&#160;</td><td class="fielddoc">
-<p>Buffers when first need arises, clears memory after a timeout. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ad9720055ae3fb8774edccf271f464b83a37d4217d9c0ab0f231b1aee028f18969"></a>ON_DEMAND&#160;</td><td class="fielddoc">
-<p>Buffers when first need arises, clears memory after usage. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ad9720055ae3fb8774edccf271f464b83af4f46aef56898ef6eda4cf7c1e9d4027"></a>STREAMED&#160;</td><td class="fielddoc">
-<p>Buffers in streamed mode. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="file_a2218aa205831f4fc2c8d56e26ef6a7ad"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="_audio_manager_8h.html#a2218aa205831f4fc2c8d56e26ef6a7ad">xal::Format</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Defines supported audio formats. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a2218aa205831f4fc2c8d56e26ef6a7adaa31a0bc2d2b6e96c733f9de35788dea8"></a>FLAC&#160;</td><td class="fielddoc">
-<p>FLAC. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a2218aa205831f4fc2c8d56e26ef6a7ada500264d70e3e06e18b05939b3b9142aa"></a>M4A&#160;</td><td class="fielddoc">
-<p>M4A. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a2218aa205831f4fc2c8d56e26ef6a7ada8af50b36f6405dcf7805f15d3d983c1e"></a>OGG&#160;</td><td class="fielddoc">
-<p>OGG. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a2218aa205831f4fc2c8d56e26ef6a7ada252b8890e4cefce76b836372c49d841a"></a>WAV&#160;</td><td class="fielddoc">
-<p>WAV. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a2218aa205831f4fc2c8d56e26ef6a7adaaf68e6a764b26d38ac4a00cdc5a1a710"></a>UNKNOWN&#160;</td><td class="fielddoc">
-<p>Unknown format, usually indicates errors. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="file_a6506007379a370b00a17164e7f33f30c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="_audio_manager_8h.html#a6506007379a370b00a17164e7f33f30c">xal::SourceMode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Defines how audio sources should be handled. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a6506007379a370b00a17164e7f33f30cac2a289a80cb92fa5b718e0458dc2a611"></a>DISK&#160;</td><td class="fielddoc">
-<p>Leaves data on permanent storage device. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a6506007379a370b00a17164e7f33f30ca9b19d25feef4ad5774c06c7e0700ba8c"></a>RAM&#160;</td><td class="fielddoc">
-<p>Copies data to RAM buffer and accesses it from there. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
