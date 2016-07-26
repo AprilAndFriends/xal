@@ -116,7 +116,7 @@ namespace xal
 		void setGlobalGain(float value);
 		/// @return Gets a list of all currently existing Player instances.
 		harray<Player*> getPlayers();
-		/// @return Gets a map of all loaded Sound instance.
+		/// @return Gets a map of all loaded Sound instances.
 		hmap<hstr, Sound*> getSounds();
 
 		/// @brief Updates all audio processing.
