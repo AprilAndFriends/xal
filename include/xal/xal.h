@@ -34,7 +34,7 @@
 namespace xal
 {
 	/// @brief Used for logging display.
-	extern hstr logTag;
+	xalExport extern hstr logTag;
 
 	/// @class AudioSystemType
 	/// @brief Defines how audio sources should be handled.
