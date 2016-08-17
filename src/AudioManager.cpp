@@ -518,7 +518,7 @@ namespace xal
 			return new WAV_Source(filename, sourceMode, bufferMode);
 		}
 #endif
-		return new Source(filename, sourceMode, bufferMode);;
+		return new Source(filename, sourceMode, bufferMode);
 	}
 
 	void AudioManager::play(chstr soundName, float fadeTime, bool looping, float gain)
