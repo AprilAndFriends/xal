@@ -362,7 +362,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D1681BB018D769030088FC68 /* iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_IOS,
@@ -378,7 +377,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D1681BB018D769030088FC68 /* iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_IOS,
@@ -394,7 +392,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D1681BB018D769030088FC68 /* iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_IOS,
