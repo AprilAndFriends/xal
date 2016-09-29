@@ -12,12 +12,13 @@
 #include <hltypes/hstring.h>
 #include <xal/AudioManager.h>
 #include <xal/Player.h>
+#include <xal/xal.h>
 
 #include "Playlist.h"
 
 namespace xal
 {
-	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false), index(-1)
+	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false), firstLoop(true), index(-1)
 	{
 		this->repeatAll = repeatAll;
 	}
@@ -25,6 +26,18 @@ namespace xal
 	Playlist::~Playlist()
 	{
 		this->clear();
+	}
+
+	void Playlist::setEnabled(bool value)
+	{
+		if (this->enabled != value)
+		{
+			this->enabled = value;
+			if (this->enabled && this->playing)
+			{
+				this->players[this->index]->play(0.0f, (this->players.size() == 1 && this->repeatAll));
+			}
+		}
 	}
 
 	bool Playlist::isPaused() const
@@ -45,39 +58,61 @@ namespace xal
 	
 	void Playlist::update()
 	{
-		if (this->enabled)
+		if (!this->enabled || this->players.size() == 0 || !this->playing || this->index < 0)
 		{
-			if (this->players.size() == 0 || !this->playing || this->index < 0)
+			return;
+		}
+		if (this->repeatAll)
+		{
+			if (!this->players[this->index]->isPlaying())
 			{
-				return;
-			}
-			if (this->repeatAll)
-			{
-				if (!this->players[this->index]->isPlaying())
+				if (this->index == this->players.size() - 1)
 				{
-					this->index = (this->index + 1) % this->players.size();
+					this->firstLoop = false;
+				}
+				this->index = (this->index + 1) % this->players.size();
+				bool foundLoopedPlayer = true;
+				if (!this->firstLoop)
+				{
+					foundLoopedPlayer = false;
+					for_iter (i, 0, this->players.size())
+					{
+						if (!this->onlyOncePlayers.has(this->players[this->index]))
+						{
+							foundLoopedPlayer = true;
+							break;
+						}
+						this->index = (this->index + 1) % this->players.size();
+					}
+				}
+				if (foundLoopedPlayer)
+				{
 					this->players[this->index]->play(0.0f, (this->players.size() == 1));
 				}
-			}
-			else if (this->index < this->players.size())
-			{
-				if (!this->players[this->index]->isPlaying())
+				else
 				{
-					++this->index;
-					if (this->index < this->players.size())
-					{
-						this->players[this->index]->play();
-					}
-					else
-					{
-						this->playing = false;
-					}
+					this->playing = false;
 				}
 			}
-			else
+		}
+		else if (this->index < this->players.size())
+		{
+			if (!this->players[this->index]->isPlaying())
 			{
-				this->playing = false;
+				++this->index;
+				if (this->index < this->players.size())
+				{
+					this->players[this->index]->play();
+				}
+				else
+				{
+					this->playing = false;
+				}
 			}
+		}
+		else
+		{
+			this->playing = false;
 		}
 	}
 	
@@ -89,12 +124,18 @@ namespace xal
 			xal::manager->destroyPlayer(*it);
 		}
 		this->players.clear();
+		this->onlyOncePlayers.clear();
 		this->index = -1;
 	}
 	
-	void Playlist::queueSound(chstr name)
+	void Playlist::queueSound(chstr name, bool onlyOnce)
 	{
-		this->players += xal::manager->createPlayer(name);
+		xal::Player* player = xal::manager->createPlayer(name);
+		this->players += player;
+		if (onlyOnce)
+		{
+			this->onlyOncePlayers += player;
+		}
 		this->index = hmax(this->index, 0);
 	}
 	
@@ -111,7 +152,12 @@ namespace xal
 		{
 			return;
 		}
-		if (this->index >= this->players.size())
+		this->firstLoop = true;
+		if (this->onlyOncePlayers.has(this->players))
+		{
+			hlog::warnf(xal::logTag, "Playlist '%s' has all players set as only-once. It's safer to disable repeatAll in the playlist.", this->getSoundNames().joined(',').cStr());
+		}
+		if (!hbetweenIE(this->index, 0, this->players.size()))
 		{
 			this->index = 0;
 		}

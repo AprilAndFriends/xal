@@ -33,7 +33,8 @@ namespace xal
 		/// @brief Destructor.
 		~Playlist();
 		
-		HL_DEFINE_ISSET(enabled, Enabled);
+		HL_DEFINE_IS(enabled, Enabled);
+		void setEnabled(bool value);
 		HL_DEFINE_IS(playing, Playing);
 		HL_DEFINE_ISSET(repeatAll, RepeatAll);
 		HL_DEFINE_GET(harray<Player*>, players, Players);
@@ -51,7 +52,8 @@ namespace xal
 		void clear();
 		/// @brief Queue a Sound at the end of the Playlist.
 		/// @param[in] name Name of the Sound.
-		void queueSound(chstr name);
+		/// @param[in] onlyOnce Play this sound only one time if the list repeats.
+		void queueSound(chstr name, bool onlyOnce = false);
 		/// @brief Queue an array of Sounds at the end of the Playlist.
 		/// @param[in] names Array of Sound names.
 		void queueSounds(harray<hstr> names);
@@ -80,10 +82,14 @@ namespace xal
 		bool playing;
 		/// @brief Whether the Playlist is looped.
 		bool repeatAll;
+		/// @brief Whether the Playlist is being looped the first time.
+		bool firstLoop;
 		/// @brief Index of the currently playing Player.
 		int index;
 		/// @brief Array of Players.
 		harray<Player*> players;
+		/// @brief Array of Players that should play only once.
+		harray<Player*> onlyOncePlayers;
 
 	};
 	
