@@ -55,7 +55,7 @@ namespace xal
 
 	void OpenSLES_Player::_playCallback(SLPlayItf player, void* context, SLuint32 event)
 	{
-		if (event & SL_PLAYEVENT_HEADATEND)
+		if ((event & SL_PLAYEVENT_HEADATEND) != 0)
 		{
 			OpenSLES_Player* player = (OpenSLES_Player*)context;
 			if (!player->sound->isStreamed())
@@ -219,40 +219,40 @@ namespace xal
 			{
 				if (!this->paused)
 				{
-					this->_submitBuffer(this->buffer->getStream());
+					this->_enqueueBuffer(this->buffer->getStream());
 				}
 				return;
 			}
 			int count = NORMAL_BUFFER_COUNT;
 			if (this->paused)
 			{
-				count -= this->buffersSubmitted;
+				count -= this->buffersEnqueued;
 			}
 			else
 			{
-				this->buffersSubmitted = 0;
+				this->buffersEnqueued = 0;
 			}
 			for_iter (i, 0, count)
 			{
-				this->_submitBuffer(this->buffer->getStream());
+				this->_enqueueBuffer(this->buffer->getStream());
 			}
 			return;
 		}
 		int count = STREAM_BUFFER_COUNT;
 		if (this->paused)
 		{
-			count -= this->buffersSubmitted;
+			count -= this->buffersEnqueued;
 		}
 		else
 		{
-			this->buffersSubmitted = 0;
+			this->buffersEnqueued = 0;
 		}
 		if (count > 0)
 		{
 			count = this->_fillStreamBuffers(count);
 			if (count > 0)
 			{
-				this->_submitStreamBuffers(count);
+				this->_enqueueStreamBuffers(count);
 			}
 		}
 	}
@@ -334,14 +334,14 @@ namespace xal
 			{
 				if (this->paused)
 				{
-					this->buffersSubmitted -= this->_getProcessedBuffersCount();
+					this->buffersEnqueued -= this->_getProcessedBuffersCount();
 				}
 				else
 				{
 					this->bufferIndex = 0;
 					this->buffer->rewind();
 					__CPP_WRAP(this->playerBufferQueue, Clear);
-					this->buffersSubmitted = 0;
+					this->buffersEnqueued = 0;
 				}
 				this->playing = false;
 				this->stillPlaying = false;
@@ -359,13 +359,16 @@ namespace xal
 		if (this->looping)
 		{
 			int processed = this->_getProcessedBuffersCount();
-			this->buffersSubmitted -= processed;
-			for_iter (i, 0, processed)
+			if (processed > 0)
 			{
-				this->_submitBuffer(this->buffer->getStream());
+				this->buffersEnqueued -= processed;
+				for_iter (i, 0, processed)
+				{
+					this->_enqueueBuffer(this->buffer->getStream());
+				}
 			}
-			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped so let's just bitch-slap it and get this over with
-			if (this->buffersSubmitted == 0)
+			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped, but this flag is required in the update loop
+			if (this->buffersEnqueued == 0)
 			{
 				this->_stop();
 			}
@@ -374,36 +377,41 @@ namespace xal
 
 	int OpenSLES_Player::_systemUpdateStream()
 	{
+		if (this->buffersEnqueued == 0)
+		{
+			this->_stop();
+			return 0;
+		}
 		int processed = this->_getProcessedBuffersCount();
 		if (processed == 0)
 		{
 			this->stillPlaying = true; // don't remove, it prevents streamed sounds from being stopped
 			return 0;
 		}
-		this->buffersSubmitted -= processed;
+		this->buffersEnqueued -= processed;
 		int count = this->_fillStreamBuffers(processed);
 		if (count > 0)
 		{
-			this->_submitStreamBuffers(count);
-			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped so let's just bitch-slap it and get this over with
+			this->_enqueueStreamBuffers(count);
+			this->stillPlaying = true; // in case underrun happened, sound is regarded as stopped, but this flag is required in the update loop
 		}
-		if (this->buffersSubmitted == 0)
+		if (this->buffersEnqueued == 0)
 		{
 			this->_stop();
 		}
-		return 0;
+		return 0; // because _systemGetBufferPosition() works on this platform properly and doesn't need this
 	}
 
-	void OpenSLES_Player::_submitBuffer(hstream& stream)
+	void OpenSLES_Player::_enqueueBuffer(hstream& stream)
 	{
 		SLresult result = __CPP_WRAP_ARGS(this->playerBufferQueue, Enqueue, (unsigned char*)stream, (int)stream.size());
 		if (result == SL_RESULT_SUCCESS)
 		{
-			++this->buffersSubmitted;
+			++this->buffersEnqueued;
 		}
 		else
 		{
-			hlog::warn(logTag, "Could not queue buffer!");
+			hlog::warn(logTag, "Could not enqueue buffer!");
 		}
 	}
 
@@ -427,7 +435,7 @@ namespace xal
 		return filled;
 	}
 
-	void OpenSLES_Player::_submitStreamBuffers(int count)
+	void OpenSLES_Player::_enqueueStreamBuffers(int count)
 	{
 		int queued = 0;
 		int index = (this->bufferIndex + STREAM_BUFFER_COUNT - count) % STREAM_BUFFER_COUNT;
@@ -442,7 +450,7 @@ namespace xal
 			++queued;
 			index = (index + 1) % STREAM_BUFFER_COUNT;
 		}
-		this->buffersSubmitted += queued;
+		this->buffersEnqueued += queued;
 	}
 
 	int OpenSLES_Player::_getProcessedBuffersCount()
@@ -452,7 +460,7 @@ namespace xal
 		{
 			return 0;
 		}
-		return (this->buffersSubmitted - this->playerBufferQueueState.count);
+		return (this->buffersEnqueued - this->playerBufferQueueState.count);
 	}
 
 }

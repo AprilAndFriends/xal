@@ -27,7 +27,8 @@ namespace xal
 	class Sound;
 	class OpenSLES_AudioManager;
 
-	/// @note In this audio-system looping non-streamed sounds are implemented behave very similarly to streamed sounds due to certain constraints in the backend.
+	/// @note In this audio-system looping non-streamed sounds are implemented behave very similarly to
+	/// streamed sounds due to certain constraints in the backend. Also, unqueueing buffers happens automatically.
 	class xalExport OpenSLES_Player : public Player
 	{
 	public:
@@ -46,7 +47,7 @@ namespace xal
 		SLAndroidSimpleBufferQueueItf playerBufferQueue;
 		SLAndroidSimpleBufferQueueState playerBufferQueueState;
 		unsigned char* streamBuffers[STREAM_BUFFER_COUNT]; // OpenSLES does not keep audio data alive so streamed audio has to be cached
-		int buffersSubmitted;
+		int buffersEnqueued;
 
 		void _update(float timeDelta);
 
@@ -62,9 +63,9 @@ namespace xal
 		void _systemUpdateNormal();
 		int _systemUpdateStream();
 
-		void _submitBuffer(hstream& stream);
+		void _enqueueBuffer(hstream& stream);
 		int _fillStreamBuffers(int count);
-		void _submitStreamBuffers(int count);
+		void _enqueueStreamBuffers(int count);
 
 		int _getProcessedBuffersCount();
 
