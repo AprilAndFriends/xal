@@ -66,7 +66,7 @@ namespace xal
 	}
 
 	OpenSLES_Player::OpenSLES_Player(Sound* sound) : Player(sound), playing(false), active(false), stillPlaying(false),
-		playerObject(NULL), player(NULL), playerVolume(NULL), playerBufferQueue(NULL)
+		playerObject(NULL), player(NULL), playerVolume(NULL), playerBufferQueue(NULL), buffersEnqueued(0)
 	{
 		for_iter (i, 0, STREAM_BUFFER_COUNT)
 		{
@@ -79,6 +79,7 @@ namespace xal
 				this->streamBuffers[i] = new unsigned char[STREAM_BUFFER_SIZE];
 			}
 		}
+		memset(&this->playerBufferQueueState, 0, sizeof(SLAndroidSimpleBufferQueueState));
 	}
 	
 	OpenSLES_Player::~OpenSLES_Player()
@@ -142,7 +143,7 @@ namespace xal
 		SLDataFormat_PCM format;
 		format.formatType = SL_DATAFORMAT_PCM;
 		format.numChannels = this->buffer->getChannels();
-		format.samplesPerSec = this->buffer->getSamplingRate() * 1000; // in mHz, this parameter is misnamed for some reason
+		format.samplesPerSec = this->buffer->getSamplingRate() * 1000; // in mHz, this parameter is misnamed
 		int bitsPerSample = this->buffer->getBitsPerSample();
 		if (bitsPerSample == 8)
 		{

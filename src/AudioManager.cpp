@@ -438,16 +438,18 @@ namespace xal
 	Player* AudioManager::createPlayer(chstr soundName)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		return this->_createPlayer(soundName);
+		Player* player = this->_createPlayer(soundName);
+		hlog::writef(logTag, "Creating player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
+		return player;
 	}
 
-	Player* AudioManager::_createPlayer(chstr soundName)
+	Player* AudioManager::_createPlayer(chstr name)
 	{
-		if (!this->sounds.hasKey(soundName))
+		if (!this->sounds.hasKey(name))
 		{
-			throw Exception("Audio Manager: Sound '" + soundName + "' does not exist!");
+			throw Exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
-		Sound* sound = this->sounds[soundName];
+		Sound* sound = this->sounds[name];
 		Player* player = this->_createSystemPlayer(sound);
 		this->players += player;
 		return player;
@@ -457,6 +459,7 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->mutex);
 		this->_destroyPlayer(player);
+		hlog::writef(logTag, "Destroying player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 	}
 
 	void AudioManager::_destroyPlayer(Player* player)
@@ -470,6 +473,7 @@ namespace xal
 	{
 		Player* player = this->_createPlayer(name);
 		this->managedPlayers += player;
+		hlog::writef(logTag, "Creating managed player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 		return player;
 	}
 
@@ -477,6 +481,7 @@ namespace xal
 	{
 		this->managedPlayers -= player;
 		this->_destroyPlayer(player);
+		hlog::writef(logTag, "Destroying managed player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 	}
 
 	Buffer* AudioManager::_createBuffer(Sound* sound)
