@@ -330,26 +330,45 @@ namespace xal
 	{
 		if (this->playing)
 		{
-			SLresult result = __CPP_WRAP_ARGS(this->player, SetPlayState, this->paused ? SL_PLAYSTATE_PAUSED : SL_PLAYSTATE_STOPPED);
-			if (result == SL_RESULT_SUCCESS)
+			if (this->paused)
 			{
-				if (this->paused)
+				SLresult result = __CPP_WRAP_ARGS(this->player, SetPlayState, SL_PLAYSTATE_PAUSED);
+				if (result == SL_RESULT_SUCCESS)
 				{
 					this->buffersEnqueued -= this->_getProcessedBuffersCount();
+					this->playing = false;
+					this->stillPlaying = false;
+					this->active = false;
 				}
 				else
+				{
+					hlog::warn(logTag, "Could not pause: " + this->sound->getFilename());
+					this->paused = false;
+				}
+			}
+			else
+			{
+				SLresult result = __CPP_WRAP_ARGS(this->player, SetPlayState, SL_PLAYSTATE_STOPPED);
+				if (result == SL_RESULT_SUCCESS)
 				{
 					this->bufferIndex = 0;
 					this->buffer->rewind();
 					__CPP_WRAP(this->playerBufferQueue, Clear);
 					this->buffersEnqueued = 0;
+					this->playing = false;
+					this->stillPlaying = false;
+					this->active = false;
+					// destroy system stuff
+					this->player = NULL;
+					this->playerVolume = NULL;
+					this->playerBufferQueue = NULL;
+					__CPP_WRAP(this->playerObject, Destroy);
+					this->playerObject = NULL;
 				}
-				this->playing = false;
-				this->stillPlaying = false;
-			}
-			else
-			{
-				hlog::warn(logTag, "Could not stop: " + this->sound->getFilename());
+				else
+				{
+					hlog::warn(logTag, "Could not stop: " + this->sound->getFilename());
+				}
 			}
 		}
 		return 0;

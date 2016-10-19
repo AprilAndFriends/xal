@@ -18,7 +18,7 @@
 	#define STREAM_BUFFER_SIZE 32768 // equal to any power of 2
 #else // Android has to be more restrictive about audio streaming due to various memory problems
 	#define STREAM_BUFFER_COUNT 4 // greater or equal to 2
-	#define STREAM_BUFFER_SIZE 4096 // equal to any power of 2
+	#define STREAM_BUFFER_SIZE 16384 // equal to any power of 2
 #endif
 #define STREAM_BUFFER (STREAM_BUFFER_COUNT * STREAM_BUFFER_SIZE)
 
