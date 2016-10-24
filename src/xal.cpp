@@ -117,6 +117,8 @@ namespace xal
 		{
 			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 			hlog::write(logTag, "Audio is disabled.");
+			// threading is required for data clean-up
+			xal::manager->init();
 			return;
 		}
 #ifdef _DIRECTSOUND
@@ -154,6 +156,8 @@ namespace xal
 			hlog::warn(logTag, "Could not create given audio system!");
 			xal::manager = new NoAudio_AudioManager(backendId, threaded, updateTime, deviceName);
 			hlog::warn(logTag, "Audio is disabled.");
+			// threading is required for data clean-up
+			xal::manager->init();
 			return;
 		}
 		hlog::write(logTag, "Audio system created: " + xal::manager->getName());

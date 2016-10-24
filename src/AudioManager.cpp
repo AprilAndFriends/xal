@@ -110,7 +110,7 @@ namespace xal
 	void AudioManager::init()
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		if (this->enabled && this->thread != NULL)
+		if (this->thread != NULL)
 		{
 			this->_startThreading();
 		}
@@ -220,7 +220,7 @@ namespace xal
 
 	void AudioManager::_update(float timeDelta)
 	{
-		if (this->enabled && !this->suspended)
+		if (!this->suspended)
 		{
 			BufferAsync::update();
 			foreach (Player*, it, this->players)
