@@ -182,7 +182,7 @@ namespace xal
 		ALenum error = alGetError();
 		if (error != AL_NO_ERROR)
 		{
-			hlog::warn(logTag, hsprintf("Unable to allocate audio source! error = %s, numActiveSources = %d",alGetErrorString(error).cStr(), this->numActiveSources));
+			hlog::warnf(logTag, "Unable to allocate audio source! error = %s, numActiveSources = %d", alGetErrorString(error).cStr(), this->numActiveSources);
 			return 0;
 		}
 		++this->numActiveSources;

@@ -328,7 +328,7 @@ namespace xal
 	
 	int OpenSLES_Player::_systemStop()
 	{
-		if (this->playing)
+		if (this->playing && this->player != NULL)
 		{
 			if (this->paused)
 			{
