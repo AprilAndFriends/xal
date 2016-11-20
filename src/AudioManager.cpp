@@ -439,7 +439,6 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->mutex);
 		Player* player = this->_createPlayer(soundName);
-		hlog::writef(logTag, "Creating player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 		return player;
 	}
 
@@ -459,7 +458,6 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->mutex);
 		this->_destroyPlayer(player);
-		hlog::writef(logTag, "Destroying player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 	}
 
 	void AudioManager::_destroyPlayer(Player* player)
@@ -473,7 +471,6 @@ namespace xal
 	{
 		Player* player = this->_createPlayer(name);
 		this->managedPlayers += player;
-		hlog::writef(logTag, "Creating managed player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 		return player;
 	}
 
@@ -481,7 +478,6 @@ namespace xal
 	{
 		this->managedPlayers -= player;
 		this->_destroyPlayer(player);
-		hlog::writef(logTag, "Destroying managed player... (current: %d, managed: %d)", this->players.size(), this->managedPlayers.size());
 	}
 
 	Buffer* AudioManager::_createBuffer(Sound* sound)
