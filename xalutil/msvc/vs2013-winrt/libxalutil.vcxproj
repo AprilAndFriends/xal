@@ -64,7 +64,7 @@
     <ProjectReference Include="..\..\..\..\hltypes\msvc\vs2013-winrt\libhltypes.vcxproj">
       <Project>{e4d373bf-e227-48b9-99e6-84987e8674ec}</Project>
       <Private>false</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -72,7 +72,7 @@
     <ProjectReference Include="..\..\..\msvc\vs2013-winrt\libxal.vcxproj">
       <Project>{6b6c070b-7dd7-41b9-8dd7-12afbf0f6c08}</Project>
       <Private>false</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
