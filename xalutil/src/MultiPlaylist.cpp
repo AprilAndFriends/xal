@@ -23,6 +23,32 @@ namespace xal
 		this->clear();
 	}
 
+	float MultiPlaylist::getGain() const
+	{
+		return (this->playlists.size() > 0 ? this->playlists.first()->getGain() : 1.0f);
+	}
+
+	void MultiPlaylist::setGain(float value)
+	{
+		foreach (Playlist*, it, this->playlists)
+		{
+			(*it)->setGain(value);
+		}
+	}
+
+	float MultiPlaylist::getPitch() const
+	{
+		return (this->playlists.size() > 0 ? this->playlists.first()->getPitch() : 1.0f);
+	}
+
+	void MultiPlaylist::setPitch(float value)
+	{
+		foreach (Playlist*, it, this->playlists)
+		{
+			(*it)->setPitch(value);
+		}
+	}
+
 	bool MultiPlaylist::isEnabled() const
 	{
 		HL_LAMBDA_CLASS(_isEnabled, bool, ((Playlist* const& playlist) { return playlist->isEnabled(); }));

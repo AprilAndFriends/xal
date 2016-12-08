@@ -31,7 +31,16 @@ namespace xal
 		/// @brief Destructor.
 		~MultiPlaylist();
 		
+		/// @return Gets the Playlists.
 		HL_DEFINE_GET(harray<Playlist*>, playlists, Playlists);
+		/// @return Gets gain at which the MultiPlaylist is played.
+		float getGain() const;
+		/// @return Sets gain at which the MultiPlaylist is played.
+		void setGain(float value);
+		/// @return Gets pitch multiplier.
+		float getPitch() const;
+		/// @return Sets pitch multiplier.
+		void setPitch(float value);
 		/// @return True if the MultiPlaylist is enabled.
 		bool isEnabled() const;
 		/// @brief Enables or disables the MultiPlaylist.
@@ -42,7 +51,11 @@ namespace xal
 		/// @return True if the MultiPlaylist is paused.
 		bool isPaused() const;
 
+		/// @brief Registers the Playlist for playing.
+		/// @param[in] playlist The Playlist.
 		void registerPlaylist(Playlist* playlist);
+		/// @brief Unregisters the Playlist.
+		/// @param[in] playlist The Playlist.
 		void unregisterPlaylist(Playlist* playlist);
 
 		/// @brief Updates the MultiPlaylist state.

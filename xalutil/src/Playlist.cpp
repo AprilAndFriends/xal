@@ -18,7 +18,7 @@
 
 namespace xal
 {
-	Playlist::Playlist(bool repeatAll) : enabled(true), playing(false), firstLoop(true), index(-1)
+	Playlist::Playlist(bool repeatAll) : gain(1.0f), pitch(1.0f), enabled(true), playing(false), firstLoop(true), index(-1)
 	{
 		this->repeatAll = repeatAll;
 	}
@@ -26,6 +26,24 @@ namespace xal
 	Playlist::~Playlist()
 	{
 		this->clear();
+	}
+
+	void Playlist::setGain(float value)
+	{
+		if (this->gain != value)
+		{
+			this->gain = value;
+			this->_updateParameters();
+		}
+	}
+
+	void Playlist::setPitch(float value)
+	{
+		if (this->pitch != value)
+		{
+			this->pitch = value;
+			this->_updateParameters();
+		}
 	}
 
 	void Playlist::setEnabled(bool value)
@@ -36,6 +54,7 @@ namespace xal
 			if (this->enabled && this->playing)
 			{
 				this->players[this->index]->play(0.0f, (this->players.size() == 1 && this->repeatAll));
+				this->_updateParameters();
 			}
 		}
 	}
@@ -114,8 +133,19 @@ namespace xal
 		{
 			this->playing = false;
 		}
+		this->_updateParameters();
 	}
 	
+	void Playlist::_updateParameters()
+	{
+		if (!this->enabled || this->players.size() == 0 || !this->playing || this->index < 0)
+		{
+			return;
+		}
+		this->players[this->index]->setGain(this->gain);
+		this->players[this->index]->setPitch(this->pitch);
+	}
+
 	void Playlist::clear()
 	{
 		this->stop();

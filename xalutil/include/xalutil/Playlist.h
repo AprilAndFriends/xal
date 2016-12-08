@@ -28,15 +28,27 @@ namespace xal
 	{
 	public:
 		/// @brief Constructor.
-		/// @param[in] repeatAll Whether the loop the Playlist.
+		/// @param[in] repeatAll Whether to loop the Playlist.
 		Playlist(bool repeatAll = true);
 		/// @brief Destructor.
 		~Playlist();
 		
+		/// @return Gets gain at which the Playlist is played.
+		HL_DEFINE_GET(float, gain, Gain);
+		/// @return Sets gain at which the Playlist is played.
+		void setGain(float value);
+		/// @return Gets pitch multiplier.
+		HL_DEFINE_GET(float, pitch, Pitch);
+		/// @return Sets pitch multiplier.
+		void setPitch(float value);
+		/// @return Gets whether the Playlist is enabled.
 		HL_DEFINE_IS(enabled, Enabled);
+		/// @return Sets whether the Playlist is enabled.
 		void setEnabled(bool value);
+		/// @return True if the Playlist is playing.
 		HL_DEFINE_IS(playing, Playing);
 		HL_DEFINE_ISSET(repeatAll, RepeatAll);
+		/// @return Gets the players.
 		HL_DEFINE_GET(harray<Player*>, players, Players);
 		/// @return True if the Playlist is paused.
 		bool isPaused() const;
@@ -76,6 +88,11 @@ namespace xal
 		void reset();
 		
 	protected:
+		/// @brief The gain at which the Sound is played.
+		/// @note In general "gain" is not the same as "volume".
+		float gain;
+		/// @brief The pitch multiplier.
+		float pitch;
 		/// @brief Whether the Playlist is enabled.
 		bool enabled;
 		/// @brief Whether the Playlist is playing.
@@ -90,6 +107,9 @@ namespace xal
 		harray<Player*> players;
 		/// @brief Array of Players that should play only once.
 		harray<Player*> onlyOncePlayers;
+
+		/// @brief Special update for gain and pitch.
+		void _updateParameters();
 
 	};
 	
