@@ -138,8 +138,8 @@ namespace xal
 	{
 		void* write1 = NULL;
 		void* write2 = NULL;
-		unsigned long length1;
-		unsigned long length2;
+		unsigned long length1 = 0;
+		unsigned long length2 = 0;
 		int lockOffset = 0;
 		if (this->sound->isStreamed())
 		{
@@ -228,7 +228,7 @@ namespace xal
 	{
 		if (this->dsBuffer != NULL)
 		{
-			this->dsBuffer->Play(0, 0, ((this->looping || this->sound->isStreamed()) ? DSBPLAY_LOOPING : 0));
+			this->dsBuffer->Play(0, 0, (this->looping || this->sound->isStreamed() ? DSBPLAY_LOOPING : 0));
 		}
 	}
 
