@@ -15,6 +15,7 @@
 #define XAL_SDL_PLAYER_H
 
 #include "Player.h"
+#include "Utility.h"
 #include "xalExport.h"
 
 namespace xal

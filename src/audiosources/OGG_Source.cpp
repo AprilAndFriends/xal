@@ -125,13 +125,13 @@ namespace xal
 		{
 			return false;
 		}
-		unsigned long remaining = this->size;
-		output.prepareManualWriteRaw((int)remaining);
-		char* buffer = (char*)output;
+		int remaining = this->size;
+		output.prepareManualWriteRaw(remaining);
+		char* buffer = (char*)&output[output.position()];
 		int read = 0;
 		while (remaining > 0)
 		{
-			read = (int)ov_read(&this->oggStream, buffer, (int)remaining, 0, 2, 1, &_section);
+			read = (int)ov_read(&this->oggStream, buffer, remaining, 0, 2, 1, &_section);
 			if (read == 0)
 			{
 				memset(buffer, 0, remaining);
@@ -151,7 +151,7 @@ namespace xal
 		}
 		int remaining = size;
 		output.prepareManualWriteRaw(remaining);
-		char* buffer = (char*)output;
+		char* buffer = (char*)&output[output.position()];
 		int read = 0;
 		while (remaining > 0)
 		{
@@ -164,7 +164,10 @@ namespace xal
 			buffer += read;
 		}
 		int result = (size - remaining);
-		output.truncate((int64_t)result); // if there wasn't enough data to fill the entire ouput buffer
+		if (remaining > 0)
+		{
+			output.truncate(output.position() + (int64_t)result); // if there wasn't enough data to fill the entire ouput buffer
+		}
 		return result;
 	}
 
