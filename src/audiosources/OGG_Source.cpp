@@ -127,7 +127,7 @@ namespace xal
 		}
 		int remaining = this->size;
 		output.prepareManualWriteRaw(remaining);
-		char* buffer = (char*)&output[output.position()];
+		char* buffer = (char*)&output[(int)output.position()];
 		int read = 0;
 		while (remaining > 0)
 		{
@@ -151,7 +151,7 @@ namespace xal
 		}
 		int remaining = size;
 		output.prepareManualWriteRaw(remaining);
-		char* buffer = (char*)&output[output.position()];
+		char* buffer = (char*)&output[(int)output.position()];
 		int read = 0;
 		while (remaining > 0)
 		{
