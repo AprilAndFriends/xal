@@ -239,6 +239,11 @@ namespace xal
 			else if (!this->_isAsyncPlayQueued()) // would cause the sound to stop
 			{
 				this->processedByteCount += this->_systemUpdateStream();
+				int soundSize = this->sound->getSize();
+				if (soundSize > 0 && this->looping && this->processedByteCount >= soundSize)
+				{
+					this->processedByteCount %= soundSize;
+				}
 			}
 		}
 		else if (this->paused)
@@ -425,6 +430,11 @@ namespace xal
 		}
 		this->offset = this->_systemGetOffset();
 		this->processedByteCount += this->_systemStop();
+		int soundSize = this->sound->getSize();
+		if (soundSize > 0 && this->sound->isStreamed() && this->looping && this->processedByteCount >= soundSize)
+		{
+			this->processedByteCount %= soundSize;
+		}
 		this->buffer->unbind(this, this->paused);
 		this->fadeTime = 0.0f;
 		this->fadeSpeed = 0.0f;
