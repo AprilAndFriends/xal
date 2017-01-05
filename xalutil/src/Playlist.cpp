@@ -138,7 +138,7 @@ namespace xal
 	
 	void Playlist::_updateParameters()
 	{
-		if (!this->enabled || this->players.size() == 0 || !this->playing || this->index < 0)
+		if (!this->enabled || this->players.size() == 0 || this->index < 0)
 		{
 			return;
 		}
@@ -195,8 +195,8 @@ namespace xal
 		this->playing = true;
 		if (this->enabled)
 		{
-			this->players[this->index]->play(fadeTime, looping);
 			this->_updateParameters();
+			this->players[this->index]->play(fadeTime, looping);
 		}
 	}
 	
