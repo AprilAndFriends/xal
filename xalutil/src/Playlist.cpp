@@ -196,6 +196,7 @@ namespace xal
 		if (this->enabled)
 		{
 			this->players[this->index]->play(fadeTime, looping);
+			this->_updateParameters();
 		}
 	}
 	
