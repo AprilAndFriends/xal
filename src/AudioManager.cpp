@@ -651,14 +651,14 @@ namespace xal
 			hlog::write(logTag, "Suspending XAL.");
 			foreach (Player*, it, this->players)
 			{
-				if ((*it)->_isPlaying())
+				if ((*it)->_isFadingOut())
+				{
+					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
+				}
+				else if ((*it)->_isPlaying())
 				{
 					(*it)->_pause();
 					this->suspendedPlayers += (*it);
-				}
-				else if ((*it)->_isFadingOut())
-				{
-					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
 				}
 			}
 			this->_suspendSystem();
