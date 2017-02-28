@@ -29,9 +29,9 @@
 		D176B29D1562F1AF00E26F82 /* floor1.c in Sources */ = {isa = PBXBuildFile; fileRef = D176B26C1562F1AF00E26F82 /* floor1.c */; };
 		D176B29E1562F1AF00E26F82 /* info.c in Sources */ = {isa = PBXBuildFile; fileRef = D176B26D1562F1AF00E26F82 /* info.c */; };
 		D176B29F1562F1AF00E26F82 /* info.c in Sources */ = {isa = PBXBuildFile; fileRef = D176B26D1562F1AF00E26F82 /* info.c */; };
-		D176B2A21562F1AF00E26F82 /* ivorbiscodec.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B26F1562F1AF00E26F82 /* ivorbiscodec.h */; };
+		D176B2A21562F1AF00E26F82 /* ivorbiscodec.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B26F1562F1AF00E26F82 /* ivorbiscodec.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D176B2A31562F1AF00E26F82 /* ivorbiscodec.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B26F1562F1AF00E26F82 /* ivorbiscodec.h */; };
-		D176B2A61562F1AF00E26F82 /* ivorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B2711562F1AF00E26F82 /* ivorbisfile.h */; };
+		D176B2A61562F1AF00E26F82 /* ivorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B2711562F1AF00E26F82 /* ivorbisfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D176B2A71562F1AF00E26F82 /* ivorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B2711562F1AF00E26F82 /* ivorbisfile.h */; };
 		D176B2A81562F1AF00E26F82 /* lsp_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B2721562F1AF00E26F82 /* lsp_lookup.h */; };
 		D176B2A91562F1AF00E26F82 /* lsp_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = D176B2721562F1AF00E26F82 /* lsp_lookup.h */; };
@@ -200,14 +200,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D176B2A21562F1AF00E26F82 /* ivorbiscodec.h in Headers */,
+				D176B2A61562F1AF00E26F82 /* ivorbisfile.h in Headers */,
 				D176B2861562F1AF00E26F82 /* asm_arm.h in Headers */,
 				D176B2891562F1AF00E26F82 /* backends.h in Headers */,
 				D176B28D1562F1AF00E26F82 /* block.h in Headers */,
 				D176B2921562F1AF00E26F82 /* codebook.h in Headers */,
 				D176B2941562F1AF00E26F82 /* codec_internal.h in Headers */,
 				D176B2961562F1AF00E26F82 /* config_types.h in Headers */,
-				D176B2A21562F1AF00E26F82 /* ivorbiscodec.h in Headers */,
-				D176B2A61562F1AF00E26F82 /* ivorbisfile.h in Headers */,
 				D176B2A81562F1AF00E26F82 /* lsp_lookup.h in Headers */,
 				D176B2AD1562F1AF00E26F82 /* mdct_lookup.h in Headers */,
 				D176B2B11562F1AF00E26F82 /* mdct.h in Headers */,
@@ -367,23 +367,8 @@
 		7F7A5614129D436D00E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../ogg/include",
 					.,
@@ -410,24 +395,9 @@
 		C9160585132AE60400914FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../ogg/include",
 					.,
@@ -445,6 +415,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = tremor;
@@ -456,23 +428,8 @@
 		C9160587132AE61000914FFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../ogg/include",
 					.,
@@ -503,6 +460,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/libtremor_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				PRODUCT_NAME = tremor;
 				SKIP_INSTALL = YES;
