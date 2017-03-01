@@ -34,17 +34,17 @@ namespace xal
 
 	static int _dataSeek(void* dataSource, ogg_int64_t offset, int whence)
 	{
-		hsbase::SeekMode mode = hsbase::CURRENT;
+		hsbase::SeekMode mode = hseek::Current;
 		switch (whence)
 		{
 		case SEEK_CUR:
-			mode = hsbase::CURRENT;
+			mode = hseek::Current;
 			break;
 		case SEEK_SET:
-			mode = hsbase::START;
+			mode = hseek::Start;
 			break;
 		case SEEK_END:
-			mode = hsbase::END;
+			mode = hseek::End;
 			break;
 		}
 		((hsbase*)dataSource)->seek((long)offset, mode);
