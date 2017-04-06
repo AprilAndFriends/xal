@@ -22,13 +22,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#acf6cc9008669e8f4073d8df759804a69"><param name="Name" value="_destroySoundsWithPrefix"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a3aff2347297198f3c5fe92c241d18838"><param name="Name" value="_getCategory"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a3dfabf1b9775ade7051d1b46664ea5d2"><param name="Name" value="_getGain"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a698305819a728eef3fe19898fffb97cb"><param name="Name" value="_getInstances"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a698305819a728eef3fe19898fffb97cb"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a37f091c91a4ea9a4ca0f1c4df0fda82e"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a4395a0fbfc4c7576b244f23370650c8e"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a2a2bbbf46a08a04a7ab43d07ea7d6cc9"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a71d55c72ad16a859dca64e5f85aac362"><param name="Name" value="_getPitch"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a367972e916237d9a2f4bfcb984586f62"><param name="Name" value="_getPlayers"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#afe9a13952ad476c6d26802fc21c162ee"><param name="Name" value="_getSound"></OBJECT>
@@ -89,16 +82,19 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a4998ee2f84839ce10c30f91b5b2f7003"><param name="Name" value="xal::Player"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a2c75fcd2d945d5e3488b50592749b915"><param name="Name" value="addAudioExtension"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ab007801107dfe623b541120a004aa6da"><param name="Name" value="Async"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#abc4c8c4621a2f5c69bb8fd784043e0aa"><param name="Name" value="asyncPlayMutex"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a58f34ea1f035e6159630467bca4fe9af"><param name="Name" value="asyncPlayQueued"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html"><param name="Name" value="AudioManager.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html#ac43caf6894cdb196b51c364e2b999f31"><param name="Name" value="HL_ENUM_CLASS_PREFIX_DECLARE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html#ab232638db70c21cdc72579ac111f9cef"><param name="Name" value="manager"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aa706312170819ccf90de0ed293925757"><param name="Name" value="AudioManager"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aa706312170819ccf90de0ed293925757"><param name="Name" value="xal::AudioManager"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a85edaa7e5c3ae68dabadd5373890591e"><param name="Name" value="xal::Player"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ae4ec85c9269990c9be9adbc14284df59"><param name="Name" value="AudioSystemType"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_audio_system_type.html"><param name="Name" value="AudioSystemType"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a82a1512581988f7296b9d959c5143452"><param name="Name" value="backendId"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ae58dfc7ef7b32eb66c80205620b604f7"><param name="Name" value="bitsPerSample"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a5ba04a2bf0ca34a0f845cd759950664d"><param name="Name" value="Buffer"></OBJECT>
@@ -108,7 +104,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#ac58e5a9f88b5db136d907943f41b2a7d"><param name="Name" value="xal::Sound"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a661c90fbbeafa63f9e3d3cd981095700"><param name="Name" value="bufferIndex"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a0eeae59ab2e6c0c707f19b337aa87e49"><param name="Name" value="BufferMode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_buffer_mode.html"><param name="Name" value="BufferMode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0"><param name="Name" value="bufferMode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ac4cbad7c6d440adec70fefab17626d54"><param name="Name" value="buffers"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aeed2e88afffa915cca8a3fc88be1733a"><param name="Name" value="categories"></OBJECT>
@@ -125,56 +121,22 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a8de124eee60863e63177cbc9da201c9e"><param name="Name" value="createPlayer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#adbcd09ac11cdae32718f74047289bffa"><param name="Name" value="createSound"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a9f8b713491a7153b54628a79a106a9b5"><param name="Name" value="createSoundsFromPath"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ad1b418f4c515f4ab14e5e85ec55d95ce"><param name="Name" value="Default"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#ac9e8ce038e21d375e54a9ae11dc565b5"><param name="Name" value="destroy"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aaada20f365cecb6b838f78f3209f7387"><param name="Name" value="destroyPlayer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aafbd67821a5bfe4ad39b7624e8e45470"><param name="Name" value="destroySound"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a11f73198662c34963e57ce1be8485c51"><param name="Name" value="destroySoundsWithPrefix"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aabd66e3bef3040fd05b8206e49281521"><param name="Name" value="deviceName"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a3efb14e984ed2a6067af63abb5168f36"><param name="Name" value="DirectSound"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a736b6c7874240f44d387fec39f5c5b11"><param name="Name" value="Disabled"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a2506fd43832544f99143d9e2cf31b590"><param name="Name" value="Disk"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a381a8cb65c4d7b706ceb5f72a87c8f0a"><param name="Name" value="enabled"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ac2aad1a83dadea613f489e8919b64f63"><param name="Name" value="extensions"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a26f4c07e0f0f12f625a880e3792fcd2d"><param name="Name" value="fadeSpeed"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a8dd870b791872e4eda33bb6f15c387ca"><param name="Name" value="fadeTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a5dbe88cd033308de56028faa33796cdb"><param name="Name" value="filename"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aceec442cae5397e15c2c8995a749c4e9"><param name="Name" value="findAudioFile"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a1c3773efce298b42d42e06abdbcea32f"><param name="Name" value="FLAC"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a14964840452fa6257b393e0a551fd338"><param name="Name" value="Format"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aed1fef8e74edbc977f498ec88cb3fe3d"><param name="Name" value="fromInt"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aed1fef8e74edbc977f498ec88cb3fe3d"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a806494fbe2035e75539f767b42b82aa6"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a911f1723ab27414761c21c21965bd78b"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a5953838f1e969d6b801176e2cb271225"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a4531db88da0df365ba765a717d8bdd82"><param name="Name" value="fromName"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a4531db88da0df365ba765a717d8bdd82"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a8ca126badc512a46e2f89bb50677a08f"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#af87db7a904ad5bdddcfd23d0240109f3"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac8a28e189c5b88eae00fde2a13283ed5"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a16c21067e62d594b6b306974ad96d5ad"><param name="Name" value="fromUint"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a16c21067e62d594b6b306974ad96d5ad"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a00b308663970fc6943baf8d625e6ac97"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#aa59668457c69fbd9dd9fbabddbafc66d"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac00cb6d46961d029930dd7a5c56ba16e"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a5470a9aaf1916b63bdb128c2b8a062bf"><param name="Name" value="Full"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_format.html"><param name="Name" value="Format"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#a5f1a21a0b813ca6982101c590fdda555"><param name="Name" value="gain"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#a5f1a21a0b813ca6982101c590fdda555"><param name="Name" value="xal::Category"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#aed2be3e4fa0dded98c1c2826391cfe53"><param name="Name" value="xal::Player"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ad8202e3b9e38ea04be8e67da69919bb3"><param name="Name" value="getAsMap"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ad8202e3b9e38ea04be8e67da69919bb3"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a629de482ce5ffcfe9173cf41382714f3"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a19f1db935a15a7bd4f79bd8446e3445a"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a5c7895cd96ece97f245e2e9785843ef5"><param name="Name" value="xal::SourceMode"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a707f58d2b0b4ec02ca6188e8ee0e284a"><param name="Name" value="getBackendId"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a1ec3d10605ee86389e0301832f011b0a"><param name="Name" value="getBitsPerSample"></OBJECT>
@@ -216,31 +178,10 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a049b18a7b1f92f9dbcc1b29f275d030d"><param name="Name" value="xal::Sound"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#aafe3d2795b8d070ac36fd47ab40411a0"><param name="Name" value="getTimePosition"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a7494d7fad3cf3c888ededb72bb345e55"><param name="Name" value="getValues"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a7494d7fad3cf3c888ededb72bb345e55"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a130d3f3ba657ee61e5d41a7ea7d88375"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a1a420cf1561e3a9e8229c8b022e0223b"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac0a95f10de06e24f3499ed44f5e0d736"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a1c91b8b5f91e58369fd624af46126055"><param name="Name" value="globalGain"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a5b854902c56cc9f2deb63a568d304c55"><param name="Name" value="hasAudioSystem"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#afd4840a58305009105b0d544a60a4c78"><param name="Name" value="hasCategory"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a5007c64bc36bad0bc578cdae3ca4fee0"><param name="Name" value="hasSound"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a4967f0283bf243d781cdb4f568ea2d68"><param name="Name" value="hasValue"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a4967f0283bf243d781cdb4f568ea2d68"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a0aa7f1c71191ffe86bb7eb41c5851753"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a00d5a3d4fe7ecab7893fcb20b754dc8d"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a7966a79b633cbe2cd1c8b3b145585d91"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#abf9f7e6240c4cf60f1f0bb35e0d6b76c"><param name="Name" value="hasValueFor"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#abf9f7e6240c4cf60f1f0bb35e0d6b76c"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a5ffc657681e2116a4f814f3dd15d471f"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ac8d54426daa6d78e2aab1a787314ef6d"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#af433a2f66a1a61bba00a9d95056ae61b"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a799627a4b165844ef99ce59fb9078b52"><param name="Name" value="HL_DEFINE_GET"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a799627a4b165844ef99ce59fb9078b52"><param name="Name" value="xal::AudioManager"></OBJECT>
@@ -253,6 +194,11 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a95c6d2d21f3e2a2541391b76d44b26fc"><param name="Name" value="xal::AudioManager"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a6fa002716ae1260b02dcff7a30049853"><param name="Name" value="xal::Player"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html#ac43caf6894cdb196b51c364e2b999f31"><param name="Name" value="HL_ENUM_CLASS_PREFIX_DECLARE"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html#ac43caf6894cdb196b51c364e2b999f31"><param name="Name" value="AudioManager.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a2f713c7ebfd62ec4a214b9682db049b6"><param name="Name" value="xal.h"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a1dedf9dee167e4dff13853823962f4b8"><param name="Name" value="idlePlayerUnloadTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a9f2e98ed521e70011aebe0cbad117a68"><param name="Name" value="idleTime"></OBJECT>
@@ -279,11 +225,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a706feb65c5aef846be8626d9fbd5166d"><param name="Name" value="xal::Sound"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#adff2bb5170e6975b8f72fff8bb823581"><param name="Name" value="isThreaded"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#aaeb6680efedcdbf760f841fb6cf61967"><param name="Name" value="Lazy"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a9824af317e9a873103780e341eae3b29"><param name="Name" value="logTag"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a5fb2161deadfd89d6523bcc1cbad4dc6"><param name="Name" value="looping"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a4a9ab3b12b9707ed98aa61ede605b26b"><param name="Name" value="M4A"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a70c04ced23b6d38beb1dc8caaa78ae57"><param name="Name" value="Managed"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a231f79efd2ba5f055fb393b30201d8b4"><param name="Name" value="managedPlayers"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html#ab232638db70c21cdc72579ac111f9cef"><param name="Name" value="manager"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ab4dbae63b6664fbf4680ddd21e656ff2"><param name="Name" value="mutex"></OBJECT>
@@ -293,60 +236,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#af699567f8623c96f96a9f307042df5cc"><param name="Name" value="xal::Category"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#ae2bc29c81a0697ed0f2caad0e45e108b"><param name="Name" value="xal::Sound"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a6f60be062111b48d672cf9934e1e17b3"><param name="Name" value="next"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a6f60be062111b48d672cf9934e1e17b3"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a007f3b039327b1d7ee31c53c3c7bd519"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ac019449e9fd5e440d08e69b761e56940"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac0c977b069979fd7e961c18160254838"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a043c9735461974b5b5bb9c3496eed6fa"><param name="Name" value="offset"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a241436f2e2b7dcb890c74148d72489b6"><param name="Name" value="OGG"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a5fda21fcdd207a492c586147126371a8"><param name="Name" value="OnDemand"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#abe3fdf014b62e78296157c83be48d1a0"><param name="Name" value="OpenAL"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a814907fa06848f16a63b43a83409c85f"><param name="Name" value="OpenSLES"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#acacf7c21bc18e7be155a4544a04b44e5"><param name="Name" value="operator!="></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#acacf7c21bc18e7be155a4544a04b44e5"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ac27095be0bb73fd7089a825582a262b0"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a591d9b3bc7506c9db091d5076c4280d9"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a210a19fc24c0d0b4d8bba692fb72f1f5"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a5ea93578943601fde7ad70585a1f08e4"><param name="Name" value="operator<="></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a5ea93578943601fde7ad70585a1f08e4"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a2fcaed6fa691824309df827d68b1af87"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#af4eac524c75d68ca3c4adb1aa2bef866"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a22454649e695506d9614fc3bc3e8a768"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ab03fab3ecd9db86c5c3b8e7cf97f006b"><param name="Name" value="operator<"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ab03fab3ecd9db86c5c3b8e7cf97f006b"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a269c358998480b08bdefe5a38a850bbb"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a46402f71fb02d4804425300d52b31922"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a869fc8159fe157f35acd3695eda93c37"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aeb5cd0284adee0876e86faea3897fd72"><param name="Name" value="operator=="></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aeb5cd0284adee0876e86faea3897fd72"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ae7da2ecb3548d51259723eba6b39d454"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a5a3c58b34a6271435ea733c6d54fdcfb"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#afac5f60ab8c00fddc13c34ae6f4d3f14"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a604d51e14f84fa9745dcccc922ee6a60"><param name="Name" value="operator>="></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a604d51e14f84fa9745dcccc922ee6a60"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ac60b899783f67410da4754c7b71502dd"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#af9968bef4af62671e7a513da4f9190a5"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#aa81d7541fe9c8a10863e79b2bc4c9621"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a0eb90bbe594a2a41aa0d31b83263de35"><param name="Name" value="operator>"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a0eb90bbe594a2a41aa0d31b83263de35"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a9ebcfce2166c01c4a5e9408b9cae2124"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a2461ae2d8ac0bb98f281a699b52d1d97"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a039331cfd9870c1e4d5e12adae2438ca"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a643fc3384144438e65a1a11391b8a323"><param name="Name" value="pause"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a072c249561b512f88eb9ddef44eb5038"><param name="Name" value="paused"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a19de7a8ebdee57cbaa8bf338185e1119"><param name="Name" value="pitch"></OBJECT>
@@ -367,19 +257,10 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a7f4241aa9ecc051c75f779af132a52ed"><param name="Name" value="xal::Sound"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a5049816682a9f91dc114b5bd4e3cd5b4"><param name="Name" value="players"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ab4625727f125536e16da21b1bed29f9c"><param name="Name" value="previous"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ab4625727f125536e16da21b1bed29f9c"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a054a1d295570d8f516d6d1f6f7fbe165"><param name="Name" value="xal::BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a696e8fc16e80d762f4b709f192fb0c76"><param name="Name" value="xal::Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a0fb2d49cdfbcf21939439bda9de1e8f1"><param name="Name" value="xal::SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a30951704129b16889eca9749529fb68a"><param name="Name" value="processedByteCount"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a8419c02dbdc33884b24f964babbe0bbb"><param name="Name" value="Ram"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a977ba5bb7f399aba42a419751a4666ed"><param name="Name" value="readPcmData"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aaff31ca0587d92a7002b6c519eb1fe4f"><param name="Name" value="resumeAudio"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a55010c6e8889606713c8f31620842a62"><param name="Name" value="samplingRate"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aaaebb8dcc4a2a42c08ae3fad5ae5ca92"><param name="Name" value="SDL"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#a6bd11649569508277a1b12f62f4c8fac"><param name="Name" value="setGain"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#a6bd11649569508277a1b12f62f4c8fac"><param name="Name" value="xal::Category"></OBJECT>
@@ -391,8 +272,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#abfcf8e8e577aa71e0c8e54845390ebff"><param name="Name" value="sound"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#aa9406cface2089a15a37facec7a889d3"><param name="Name" value="Sound"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#af8aeb6ecd68dbf4c41428017e375abff"><param name="Name" value="sounds"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_source_mode.html"><param name="Name" value="SourceMode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5"><param name="Name" value="sourceMode"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ade8369f885ee96ee7351e6da86b09a05"><param name="Name" value="SourceMode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a79cd2f933081d26d39629449fc2b3e71"><param name="Name" value="stop"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a79cd2f933081d26d39629449fc2b3e71"><param name="Name" value="xal::AudioManager"></OBJECT>
@@ -401,21 +282,19 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a90f81d321ff22446ad87f90b7d51427e"><param name="Name" value="stopAll"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aa812559a51a642be0d71551e5dc90daf"><param name="Name" value="stopCategory"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a061131d17603c4a0f33501f70a48277d"><param name="Name" value="stopFirst"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#afb1cc5ccbb3ede956fc493bf3287cdce"><param name="Name" value="Streamed"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a38f45d1ec12022b5605a6c60093ed7af"><param name="Name" value="suspendAudio"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a3db85add8e5876ddb1ba218b84691cb0"><param name="Name" value="suspended"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a989f7705df5b49a5283f09689dd02e3d"><param name="Name" value="suspendedPlayers"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ab5295ced51c0071bca33c774024f47b2"><param name="Name" value="thread"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a23e9ab23491ab71b744925805a3e2518"><param name="Name" value="threaded"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a1e9ef8fcaa277084c4d85d84821e87ec"><param name="Name" value="threadRunning"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ab2c7d9e1bf09a6d3ca6aac483535b812"><param name="Name" value="Unknown"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#aae4b76b4231664e6d0356462418ecffc"><param name="Name" value="update"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#abcd3c6ff7ab9b7cf1d78d426bf3ac8ac"><param name="Name" value="updateTime"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ae3f4a41f83f948f18adc0cc1204c6a57"><param name="Name" value="WAV"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html"><param name="Name" value="xal.h"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#ac9e8ce038e21d375e54a9ae11dc565b5"><param name="Name" value="destroy"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a5b854902c56cc9f2deb63a568d304c55"><param name="Name" value="hasAudioSystem"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a2f713c7ebfd62ec4a214b9682db049b6"><param name="Name" value="HL_ENUM_CLASS_PREFIX_DECLARE"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#ac0433893a83f9826726d8ada67e4e304"><param name="Name" value="init"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a9824af317e9a873103780e341eae3b29"><param name="Name" value="logTag"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a7437e422bd03b28441906da2fd4b957c"><param name="Name" value="XAL_AS_DIRECTSOUND"></OBJECT>
@@ -529,59 +408,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#abcd3c6ff7ab9b7cf1d78d426bf3ac8ac"><param name="Name" value="updateTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ac49c69ea8fafba7b8d84949bdcb0b952"><param name="Name" value="~AudioManager"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html"><param name="Name" value="xal::AudioSystemType"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a698305819a728eef3fe19898fffb97cb"><param name="Name" value="_getInstances"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ae4ec85c9269990c9be9adbc14284df59"><param name="Name" value="AudioSystemType"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ad1b418f4c515f4ab14e5e85ec55d95ce"><param name="Name" value="Default"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a3efb14e984ed2a6067af63abb5168f36"><param name="Name" value="DirectSound"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a736b6c7874240f44d387fec39f5c5b11"><param name="Name" value="Disabled"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aed1fef8e74edbc977f498ec88cb3fe3d"><param name="Name" value="fromInt"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a4531db88da0df365ba765a717d8bdd82"><param name="Name" value="fromName"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a16c21067e62d594b6b306974ad96d5ad"><param name="Name" value="fromUint"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ad8202e3b9e38ea04be8e67da69919bb3"><param name="Name" value="getAsMap"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a7494d7fad3cf3c888ededb72bb345e55"><param name="Name" value="getValues"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a4967f0283bf243d781cdb4f568ea2d68"><param name="Name" value="hasValue"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#abf9f7e6240c4cf60f1f0bb35e0d6b76c"><param name="Name" value="hasValueFor"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a6f60be062111b48d672cf9934e1e17b3"><param name="Name" value="next"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#abe3fdf014b62e78296157c83be48d1a0"><param name="Name" value="OpenAL"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a814907fa06848f16a63b43a83409c85f"><param name="Name" value="OpenSLES"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#acacf7c21bc18e7be155a4544a04b44e5"><param name="Name" value="operator!="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ab03fab3ecd9db86c5c3b8e7cf97f006b"><param name="Name" value="operator<"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a5ea93578943601fde7ad70585a1f08e4"><param name="Name" value="operator<="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aeb5cd0284adee0876e86faea3897fd72"><param name="Name" value="operator=="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a0eb90bbe594a2a41aa0d31b83263de35"><param name="Name" value="operator>"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a604d51e14f84fa9745dcccc922ee6a60"><param name="Name" value="operator>="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#ab4625727f125536e16da21b1bed29f9c"><param name="Name" value="previous"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#aaaebb8dcc4a2a42c08ae3fad5ae5ca92"><param name="Name" value="SDL"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a5df9d172da5d11b2f8bce29eeb2bf861"><param name="Name" value="XAudio2"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html"><param name="Name" value="xal::BufferMode"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a37f091c91a4ea9a4ca0f1c4df0fda82e"><param name="Name" value="_getInstances"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ab007801107dfe623b541120a004aa6da"><param name="Name" value="Async"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a0eeae59ab2e6c0c707f19b337aa87e49"><param name="Name" value="BufferMode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a806494fbe2035e75539f767b42b82aa6"><param name="Name" value="fromInt"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a8ca126badc512a46e2f89bb50677a08f"><param name="Name" value="fromName"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a00b308663970fc6943baf8d625e6ac97"><param name="Name" value="fromUint"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a5470a9aaf1916b63bdb128c2b8a062bf"><param name="Name" value="Full"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a629de482ce5ffcfe9173cf41382714f3"><param name="Name" value="getAsMap"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a130d3f3ba657ee61e5d41a7ea7d88375"><param name="Name" value="getValues"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a0aa7f1c71191ffe86bb7eb41c5851753"><param name="Name" value="hasValue"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a5ffc657681e2116a4f814f3dd15d471f"><param name="Name" value="hasValueFor"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#aaeb6680efedcdbf760f841fb6cf61967"><param name="Name" value="Lazy"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a70c04ced23b6d38beb1dc8caaa78ae57"><param name="Name" value="Managed"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a007f3b039327b1d7ee31c53c3c7bd519"><param name="Name" value="next"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a5fda21fcdd207a492c586147126371a8"><param name="Name" value="OnDemand"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ac27095be0bb73fd7089a825582a262b0"><param name="Name" value="operator!="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a269c358998480b08bdefe5a38a850bbb"><param name="Name" value="operator<"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a2fcaed6fa691824309df827d68b1af87"><param name="Name" value="operator<="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ae7da2ecb3548d51259723eba6b39d454"><param name="Name" value="operator=="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a9ebcfce2166c01c4a5e9408b9cae2124"><param name="Name" value="operator>"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#ac60b899783f67410da4754c7b71502dd"><param name="Name" value="operator>="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a054a1d295570d8f516d6d1f6f7fbe165"><param name="Name" value="previous"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#afb1cc5ccbb3ede956fc493bf3287cdce"><param name="Name" value="Streamed"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html"><param name="Name" value="xal::Category"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0"><param name="Name" value="bufferMode"></OBJECT>
@@ -594,31 +420,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#a6bd11649569508277a1b12f62f4c8fac"><param name="Name" value="setGain"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5"><param name="Name" value="sourceMode"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#afc2acd5b60487957c9b5efdb9f12f109"><param name="Name" value="~Category"></OBJECT>
-  </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html"><param name="Name" value="xal::Format"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a4395a0fbfc4c7576b244f23370650c8e"><param name="Name" value="_getInstances"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a1c3773efce298b42d42e06abdbcea32f"><param name="Name" value="FLAC"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a14964840452fa6257b393e0a551fd338"><param name="Name" value="Format"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a911f1723ab27414761c21c21965bd78b"><param name="Name" value="fromInt"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#af87db7a904ad5bdddcfd23d0240109f3"><param name="Name" value="fromName"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#aa59668457c69fbd9dd9fbabddbafc66d"><param name="Name" value="fromUint"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a19f1db935a15a7bd4f79bd8446e3445a"><param name="Name" value="getAsMap"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a1a420cf1561e3a9e8229c8b022e0223b"><param name="Name" value="getValues"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a00d5a3d4fe7ecab7893fcb20b754dc8d"><param name="Name" value="hasValue"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ac8d54426daa6d78e2aab1a787314ef6d"><param name="Name" value="hasValueFor"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a4a9ab3b12b9707ed98aa61ede605b26b"><param name="Name" value="M4A"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ac019449e9fd5e440d08e69b761e56940"><param name="Name" value="next"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a241436f2e2b7dcb890c74148d72489b6"><param name="Name" value="OGG"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a591d9b3bc7506c9db091d5076c4280d9"><param name="Name" value="operator!="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a46402f71fb02d4804425300d52b31922"><param name="Name" value="operator<"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#af4eac524c75d68ca3c4adb1aa2bef866"><param name="Name" value="operator<="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a5a3c58b34a6271435ea733c6d54fdcfb"><param name="Name" value="operator=="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a2461ae2d8ac0bb98f281a699b52d1d97"><param name="Name" value="operator>"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#af9968bef4af62671e7a513da4f9190a5"><param name="Name" value="operator>="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a696e8fc16e80d762f4b709f192fb0c76"><param name="Name" value="previous"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ab2c7d9e1bf09a6d3ca6aac483535b812"><param name="Name" value="Unknown"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ae3f4a41f83f948f18adc0cc1204c6a57"><param name="Name" value="WAV"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html"><param name="Name" value="xal::Player"></OBJECT>
   <UL>
@@ -717,35 +518,12 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#aa9406cface2089a15a37facec7a889d3"><param name="Name" value="Sound"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_sound.html#a13f88df0755b7db841b13d35563263a3"><param name="Name" value="~Sound"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html"><param name="Name" value="xal::SourceMode"></OBJECT>
-  <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a2a2bbbf46a08a04a7ab43d07ea7d6cc9"><param name="Name" value="_getInstances"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a2506fd43832544f99143d9e2cf31b590"><param name="Name" value="Disk"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a5953838f1e969d6b801176e2cb271225"><param name="Name" value="fromInt"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac8a28e189c5b88eae00fde2a13283ed5"><param name="Name" value="fromName"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac00cb6d46961d029930dd7a5c56ba16e"><param name="Name" value="fromUint"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a5c7895cd96ece97f245e2e9785843ef5"><param name="Name" value="getAsMap"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac0a95f10de06e24f3499ed44f5e0d736"><param name="Name" value="getValues"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a7966a79b633cbe2cd1c8b3b145585d91"><param name="Name" value="hasValue"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#af433a2f66a1a61bba00a9d95056ae61b"><param name="Name" value="hasValueFor"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ac0c977b069979fd7e961c18160254838"><param name="Name" value="next"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a210a19fc24c0d0b4d8bba692fb72f1f5"><param name="Name" value="operator!="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a869fc8159fe157f35acd3695eda93c37"><param name="Name" value="operator<"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a22454649e695506d9614fc3bc3e8a768"><param name="Name" value="operator<="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#afac5f60ab8c00fddc13c34ae6f4d3f14"><param name="Name" value="operator=="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a039331cfd9870c1e4d5e12adae2438ca"><param name="Name" value="operator>"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#aa81d7541fe9c8a10863e79b2bc4c9621"><param name="Name" value="operator>="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a0fb2d49cdfbcf21939439bda9de1e8f1"><param name="Name" value="previous"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#a8419c02dbdc33884b24f964babbe0bbb"><param name="Name" value="Ram"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_source_mode.html#ade8369f885ee96ee7351e6da86b09a05"><param name="Name" value="SourceMode"></OBJECT>
-  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a7437e422bd03b28441906da2fd4b957c"><param name="Name" value="XAL_AS_DIRECTSOUND"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a54d7288ad654ad6d1c7f78c5371490fd"><param name="Name" value="XAL_AS_DISABLED"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a45c7b0972c4266273336eec28448f6a8"><param name="Name" value="XAL_AS_OPENAL"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#acbba536415cc8f4b0aa456ca96912c38"><param name="Name" value="XAL_AS_OPENSLES"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#aaab1408eadb78e6d12fa0a9710a70a7c"><param name="Name" value="XAL_AS_SDL"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="xal_8h.html#a0048855083fc6b7d2f78636885a57d59"><param name="Name" value="XAL_AS_XAUDIO2"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_system_type.html#a5df9d172da5d11b2f8bce29eeb2bf861"><param name="Name" value="XAudio2"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ac49c69ea8fafba7b8d84949bdcb0b952"><param name="Name" value="~AudioManager"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_category.html#afc2acd5b60487957c9b5efdb9f12f109"><param name="Name" value="~Category"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#a42fb799d070600ad31a33fe5f6f17c06"><param name="Name" value="~Player"></OBJECT>
