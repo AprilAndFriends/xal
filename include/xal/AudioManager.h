@@ -128,13 +128,17 @@ namespace xal
 		/// @return Gets the time interval between updates.
 		HL_DEFINE_GET(float, updateTime, UpdateTime);
 		/// @return Gets the global gain.
-		HL_DEFINE_GET(float, globalGain, GlobalGain);
+		float getGlobalGain();
 		/// @return Sets the global gain.
 		void setGlobalGain(float value);
+		/// @return Gets the global gain fade target.
+		float getGlobalGainFadeTarget();
 		/// @return Gets a list of all currently existing Player instances.
 		harray<Player*> getPlayers();
 		/// @return Gets a map of all loaded Sound instances.
 		hmap<hstr, Sound*> getSounds();
+		/// @return True if global gain is fading
+		bool isGlobalGainFading();
 
 		/// @brief Updates all audio processing.
 		/// @param[in] timeDelta Time since the call of this method in seconds.
@@ -155,7 +159,7 @@ namespace xal
 		/// @brief Checks whether a Category exists.
 		/// @param[in] name Name of the Category.
 		/// @return True if the Category exists.
-		bool hasCategory(chstr name) const;
+		bool hasCategory(chstr name);
 		
 		/// @brief Creates a new Sound within a Category.
 		/// @param[in] filename Filename of the Sound.
@@ -170,7 +174,7 @@ namespace xal
 		/// @brief Checks whether a Sound exists.
 		/// @param[in] name Name of the Sound.
 		/// @brief True if a Sound exists.
-		bool hasSound(chstr name) const;
+		bool hasSound(chstr name);
 		/// @brief Destroys a Sound.
 		/// @param[in] sound The Sound instance.
 		void destroySound(Sound* sound);
@@ -251,10 +255,14 @@ namespace xal
 		/// @note This method only checks managed Sounds that were played in a fire-and-forget fashion.
 		bool isAnyFadingOut(chstr soundName);
 
+		/// @brief Fades the global gain to another value.
+		/// @param[in] globalGainTarget The value to which the global gain should be changed.
+		/// @param[in] fadeTime Time how long the global gain fade should take.
+		void fadeGlobalGain(float globalGainTarget, float fadeTime = 1.0f);
+
 		/// @brief Frees up unused memory.
 		/// @note This can be useful if the operating system is low on memory.
 		void clearMemory();
-
 		/// @brief Suspends the entire audio processing.
 		/// @note This is useful when the app goes out of focus. It does nothing if the system has already been suspended.
 		void suspendAudio();
@@ -271,14 +279,6 @@ namespace xal
 		virtual hstr findAudioFile(chstr filename) const;
 
 	protected:
-		/// @brief Constructor.
-		/// @param[in] backendId Special ID needed by some audio systems.
-		/// @param[in] threaded Whether update should be handled in a separate thread.
-		/// @param[in] updateTime How much time should pass between updates when "threaded" is enabled.
-		/// @param[in] deviceName Required by some audio systems.
-		/// @note On Win32, backendId is the window handle. On Android, backendId is a pointer to the JavaVM.
-		AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
-
 		/// @brief Name of the audio system.
 		hstr name;
 		/// @brief Back-end ID.
@@ -304,6 +304,12 @@ namespace xal
 		float updateTime;
 		/// @brief Global gain.
 		float globalGain;
+		/// @brief Global gain fade target.
+		float globalGainFadeTarget;
+		/// @brief Global gain fade speed.
+		float globalGainFadeSpeed;
+		/// @brief Global gain fade time.
+		float globalGainFadeTime;
 		/// @brief List of registered audio categories.
 		hmap<hstr, Category*> categories;
 		/// @brief Currently existing Player instances.
@@ -324,18 +330,32 @@ namespace xal
 		/// @brief Whether the threaded update is running.
 		bool threadRunning;
 		/// @brief Mutex for data access when threaded updating is used.
-		hmutex mutex; // a mute ex would be nice
+		hmutex mutex;
 
-		/// @note This method is not thread-safe and is for internal usage only.
-		void _setGlobalGain(float value);
-		/// @note This method is not thread-safe and is for internal usage only.
-		harray<Player*> _getPlayers() const;
-		/// @note This method is not thread-safe and is for internal usage only.
-		hmap<hstr, Sound*> _getSounds() const;
+		/// @brief Constructor.
+		/// @param[in] backendId Special ID needed by some audio systems.
+		/// @param[in] threaded Whether update should be handled in a separate thread.
+		/// @param[in] updateTime How much time should pass between updates when "threaded" is enabled.
+		/// @param[in] deviceName Required by some audio systems.
+		/// @note On Win32, backendId is the window handle. On Android, backendId is a pointer to the JavaVM. On iOS backendId is a pointer to the UIViewController.
+		AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 
 		/// @note Starts the thread for threaded update.
 		void _startThreading();
 		
+		/// @note This method is not thread-safe and is for internal usage only.
+		float _getGlobalGain() const;
+		/// @note This method is not thread-safe and is for internal usage only.
+		void _setGlobalGain(float value);
+		/// @note This method is not thread-safe and is for internal usage only.
+		float _getGlobalGainFadeTarget() const;
+		/// @note This method is not thread-safe and is for internal usage only.
+		harray<Player*> _getPlayers() const;
+		/// @note This method is not thread-safe and is for internal usage only.
+		hmap<hstr, Sound*> _getSounds() const;
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isGlobalGainFading() const;
+
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual void _update(float timeDelta);
 
@@ -343,11 +363,15 @@ namespace xal
 		Category* _createCategory(chstr name, BufferMode bufferMode, SourceMode sourceMode);
 		/// @note This method is not thread-safe and is for internal usage only.
 		Category* _getCategory(chstr name);
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _hasCategory(chstr name) const;
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
 		/// @note This method is not thread-safe and is for internal usage only.
 		Sound* _getSound(chstr name);
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _hasSound(chstr name) const;
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _destroySound(Sound* sound);
 		/// @note This method is not thread-safe and is for internal usage only.
@@ -402,8 +426,10 @@ namespace xal
 		bool _isAnyFadingOut(chstr soundName) const;
 
 		/// @note This method is not thread-safe and is for internal usage only.
-		void _clearMemory();
+		void _fadeGlobalGain(float globalGainTarget, float fadeTime);
 
+		/// @note This method is not thread-safe and is for internal usage only.
+		void _clearMemory();
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual void _suspendAudio();
 		/// @note This method is not thread-safe and is for internal usage only.

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>C++ Geometry Types: xal::Category Class Reference</title>
+<title>Extensible Audio Library: xal::Category Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,9 +17,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">C++ Geometry Types
+   <div id="projectname">Extensible Audio Library
    </div>
-   <div id="projectbrief">This library provides commonly used geometry types and methods for easier and better coding.</div>
+   <div id="projectbrief">This library provides a unified interface for handling audio.</div>
   </td>
  </tr>
  </tbody>
@@ -38,6 +38,7 @@
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -49,7 +50,9 @@
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classxal_1_1_category-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">xal::Category Class Reference</div>  </div>
@@ -63,7 +66,7 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adb3843fc6b813cb2559ba562b71b7844"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#adb3843fc6b813cb2559ba562b71b7844">Category</a> (chstr <a class="el" href="classxal_1_1_category.html#af699567f8623c96f96a9f307042df5cc">name</a>, <a class="el" href="class_buffer_mode.html">BufferMode</a> <a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a>, <a class="el" href="class_source_mode.html">SourceMode</a> <a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a>)</td></tr>
+<tr class="memitem:adb3843fc6b813cb2559ba562b71b7844"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#adb3843fc6b813cb2559ba562b71b7844">Category</a> (chstr <a class="el" href="classxal_1_1_category.html#af699567f8623c96f96a9f307042df5cc">name</a>, <a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a> <a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a>, <a class="el" href="classxal_1_1_source_mode.html">SourceMode</a> <a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a>)</td></tr>
 <tr class="memdesc:adb3843fc6b813cb2559ba562b71b7844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#adb3843fc6b813cb2559ba562b71b7844">More...</a><br /></td></tr>
 <tr class="separator:adb3843fc6b813cb2559ba562b71b7844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc2acd5b60487957c9b5efdb9f12f109"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc2acd5b60487957c9b5efdb9f12f109"></a>
@@ -74,26 +77,43 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a7e3a601fbb380025330eba6c70fd1b8a">HL_DEFINE_GET</a> (hstr, <a class="el" href="classxal_1_1_category.html#af699567f8623c96f96a9f307042df5cc">name</a>, Name)</td></tr>
 <tr class="memdesc:a7e3a601fbb380025330eba6c70fd1b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets name. <br /></td></tr>
 <tr class="separator:a7e3a601fbb380025330eba6c70fd1b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0772a767c09391bc018e3ad12ee63910"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0772a767c09391bc018e3ad12ee63910"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a0772a767c09391bc018e3ad12ee63910">HL_DEFINE_GET</a> (float, <a class="el" href="classxal_1_1_category.html#a5f1a21a0b813ca6982101c590fdda555">gain</a>, Gain)</td></tr>
-<tr class="memdesc:a0772a767c09391bc018e3ad12ee63910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets gain. <br /></td></tr>
-<tr class="separator:a0772a767c09391bc018e3ad12ee63910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e4467543ecd8e35f9b7ae0583af91bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e4467543ecd8e35f9b7ae0583af91bc"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a1e4467543ecd8e35f9b7ae0583af91bc">getGain</a> ()</td></tr>
+<tr class="memdesc:a1e4467543ecd8e35f9b7ae0583af91bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets gain. <br /></td></tr>
+<tr class="separator:a1e4467543ecd8e35f9b7ae0583af91bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bd11649569508277a1b12f62f4c8fac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bd11649569508277a1b12f62f4c8fac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a6bd11649569508277a1b12f62f4c8fac">setGain</a> (float value)</td></tr>
 <tr class="memdesc:a6bd11649569508277a1b12f62f4c8fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets gain. <br /></td></tr>
 <tr class="separator:a6bd11649569508277a1b12f62f4c8fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f252eb79b43ae6ee771e110ea867826"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f252eb79b43ae6ee771e110ea867826"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a1f252eb79b43ae6ee771e110ea867826">HL_DEFINE_GET</a> (<a class="el" href="class_buffer_mode.html">BufferMode</a>, <a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a>, <a class="el" href="class_buffer_mode.html">BufferMode</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a1f252eb79b43ae6ee771e110ea867826">HL_DEFINE_GET</a> (<a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>, <a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a>, <a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>)</td></tr>
 <tr class="memdesc:a1f252eb79b43ae6ee771e110ea867826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the buffer-handling mode. <br /></td></tr>
 <tr class="separator:a1f252eb79b43ae6ee771e110ea867826"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71f4269aade37ed08ac72548f1c96102"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71f4269aade37ed08ac72548f1c96102"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a71f4269aade37ed08ac72548f1c96102">HL_DEFINE_GET</a> (<a class="el" href="class_source_mode.html">SourceMode</a>, <a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a>, <a class="el" href="class_source_mode.html">SourceMode</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a71f4269aade37ed08ac72548f1c96102">HL_DEFINE_GET</a> (<a class="el" href="classxal_1_1_source_mode.html">SourceMode</a>, <a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a>, <a class="el" href="classxal_1_1_source_mode.html">SourceMode</a>)</td></tr>
 <tr class="memdesc:a71f4269aade37ed08ac72548f1c96102"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the source-handling mode. <br /></td></tr>
 <tr class="separator:a71f4269aade37ed08ac72548f1c96102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dbcdd2c190e26df7a403a8b0eea4415"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a3dbcdd2c190e26df7a403a8b0eea4415">isGainFading</a> ()</td></tr>
+<tr class="separator:a3dbcdd2c190e26df7a403a8b0eea4415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fda48f4086e1fb4cadc11dfb162eca6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a1fda48f4086e1fb4cadc11dfb162eca6">isStreamed</a> () const </td></tr>
 <tr class="separator:a1fda48f4086e1fb4cadc11dfb162eca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5d4216bce5d3f0eab11db9493785557"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#ab5d4216bce5d3f0eab11db9493785557">isMemoryManaged</a> () const </td></tr>
 <tr class="separator:ab5d4216bce5d3f0eab11db9493785557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61317c26955dd763a1ff77b1ed1184e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a61317c26955dd763a1ff77b1ed1184e4">fadeGain</a> (float gainTarget, float fadeTime=1.0f)</td></tr>
+<tr class="memdesc:a61317c26955dd763a1ff77b1ed1184e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fades the gain to another value.  <a href="#a61317c26955dd763a1ff77b1ed1184e4">More...</a><br /></td></tr>
+<tr class="separator:a61317c26955dd763a1ff77b1ed1184e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a00040cd5a9ad315e6401c1e6ccd333f7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a00040cd5a9ad315e6401c1e6ccd333f7">_getGain</a> () const </td></tr>
+<tr class="separator:a00040cd5a9ad315e6401c1e6ccd333f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea9822f357a8267318a45865794171a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#aea9822f357a8267318a45865794171a9">_setGain</a> (float value)</td></tr>
+<tr class="separator:aea9822f357a8267318a45865794171a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80b5c8630a40327529bce623bc8666a8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a80b5c8630a40327529bce623bc8666a8">_isGainFading</a> () const </td></tr>
+<tr class="separator:a80b5c8630a40327529bce623bc8666a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a851ecd5f456e6b8de6fafd323400d176"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a851ecd5f456e6b8de6fafd323400d176">_update</a> (float timeDelta)</td></tr>
+<tr class="memdesc:a851ecd5f456e6b8de6fafd323400d176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the <a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a>.  <a href="#a851ecd5f456e6b8de6fafd323400d176">More...</a><br /></td></tr>
+<tr class="separator:a851ecd5f456e6b8de6fafd323400d176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -105,14 +125,35 @@ hstr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a5f1a21a0b813ca6982101c590fdda555">gain</a></td></tr>
 <tr class="memdesc:a5f1a21a0b813ca6982101c590fdda555"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a> gain. <br /></td></tr>
 <tr class="separator:a5f1a21a0b813ca6982101c590fdda555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e904df5d5953c3aae292ef2d417160"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25e904df5d5953c3aae292ef2d417160"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a25e904df5d5953c3aae292ef2d417160">gainFadeTarget</a></td></tr>
+<tr class="memdesc:a25e904df5d5953c3aae292ef2d417160"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a> gain fade target. <br /></td></tr>
+<tr class="separator:a25e904df5d5953c3aae292ef2d417160"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37fc01091478d69a6b5ed5475d39b210"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37fc01091478d69a6b5ed5475d39b210"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#a37fc01091478d69a6b5ed5475d39b210">gainFadeSpeed</a></td></tr>
+<tr class="memdesc:a37fc01091478d69a6b5ed5475d39b210"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a> gain fade speed. <br /></td></tr>
+<tr class="separator:a37fc01091478d69a6b5ed5475d39b210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa09d3adc4317a57c4076ecfa421adf5e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa09d3adc4317a57c4076ecfa421adf5e"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#aa09d3adc4317a57c4076ecfa421adf5e">gainFadeTime</a></td></tr>
+<tr class="memdesc:aa09d3adc4317a57c4076ecfa421adf5e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a> gain fade time. <br /></td></tr>
+<tr class="separator:aa09d3adc4317a57c4076ecfa421adf5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad83537b981f0efab5a78a637a3c6bfa0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad83537b981f0efab5a78a637a3c6bfa0"></a>
-<a class="el" href="class_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a></td></tr>
+<a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a></td></tr>
 <tr class="memdesc:ad83537b981f0efab5a78a637a3c6bfa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">How to handle the intermediate Buffer of the <a class="el" href="classxal_1_1_sound.html" title="Provides audio data definition. ">Sound</a>. <br /></td></tr>
 <tr class="separator:ad83537b981f0efab5a78a637a3c6bfa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefac1d3a8f210d998e0d24d8cee57dc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aefac1d3a8f210d998e0d24d8cee57dc5"></a>
-<a class="el" href="class_source_mode.html">SourceMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a></td></tr>
+<a class="el" href="classxal_1_1_source_mode.html">SourceMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a></td></tr>
 <tr class="memdesc:aefac1d3a8f210d998e0d24d8cee57dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">sourceMode How to handle the Source of the <a class="el" href="classxal_1_1_sound.html" title="Provides audio data definition. ">Sound</a>. <br /></td></tr>
 <tr class="separator:aefac1d3a8f210d998e0d24d8cee57dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a85edaa7e5c3ae68dabadd5373890591e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85edaa7e5c3ae68dabadd5373890591e"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>AudioManager</b></td></tr>
+<tr class="separator:a85edaa7e5c3ae68dabadd5373890591e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f4241aa9ecc051c75f779af132a52ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f4241aa9ecc051c75f779af132a52ed"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>Player</b></td></tr>
+<tr class="separator:a7f4241aa9ecc051c75f779af132a52ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines an audio category which makes audio file organization easier. </p>
@@ -130,13 +171,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_buffer_mode.html">BufferMode</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td>
           <td class="paramname"><em>bufferMode</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_source_mode.html">SourceMode</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classxal_1_1_source_mode.html">SourceMode</a>&#160;</td>
           <td class="paramname"><em>sourceMode</em>&#160;</td>
         </tr>
         <tr>
@@ -160,6 +201,163 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a00040cd5a9ad315e6401c1e6ccd333f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float xal::Category::_getGain </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This method is not thread-safe and is for internal usage only. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a80b5c8630a40327529bce623bc8666a8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xal::Category::_isGainFading </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This method is not thread-safe and is for internal usage only. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aea9822f357a8267318a45865794171a9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xal::Category::_setGain </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This method is not thread-safe and is for internal usage only. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a851ecd5f456e6b8de6fafd323400d176"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xal::Category::_update </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>timeDelta</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the <a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeDelta</td><td>Time since the last update. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is not thread-safe and is for internal usage only. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a61317c26955dd763a1ff77b1ed1184e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xal::Category::fadeGain </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>gainTarget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>fadeTime</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fades the gain to another value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gainTarget</td><td>The value to which the gain should be changed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fadeTime</td><td>Time how long the gain fade should take. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3dbcdd2c190e26df7a403a8b0eea4415"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xal::Category::isGainFading </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>True if gain is fading. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab5d4216bce5d3f0eab11db9493785557"></a>
 <div class="memitem">
 <div class="memproto">

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>C++ Geometry Types: include/xal/AudioManager.h File Reference</title>
+<title>Extensible Audio Library: include/xal/AudioManager.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,9 +17,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">C++ Geometry Types
+   <div id="projectname">Extensible Audio Library
    </div>
-   <div id="projectbrief">This library provides commonly used geometry types and methods for easier and better coding.</div>
+   <div id="projectbrief">This library provides a unified interface for handling audio.</div>
   </td>
  </tr>
  </tbody>
@@ -48,7 +48,6 @@
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">AudioManager.h File Reference</div>  </div>
@@ -68,21 +67,18 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_format.html">xal::Format</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines supported audio formats.  <a href="classxal_1_1_format.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_buffer_mode.html">xal::BufferMode</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines when buffers should be created and how they should be handled.  <a href="classxal_1_1_buffer_mode.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_source_mode.html">xal::SourceMode</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines how audio sources should be handled.  <a href="classxal_1_1_source_mode.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_audio_manager.html">xal::AudioManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides generic functionality regarding audio management.  <a href="classxal_1_1_audio_manager.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ac43caf6894cdb196b51c364e2b999f31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac43caf6894cdb196b51c364e2b999f31"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>xal::HL_ENUM_CLASS_PREFIX_DECLARE</b> (xalExport, <a class="el" href="class_format.html">Format</a>,(HL_ENUM_DECLARE(<a class="el" href="class_format.html">Format</a>, FLAC);HL_ENUM_DECLARE(<a class="el" href="class_format.html">Format</a>, M4A);HL_ENUM_DECLARE(<a class="el" href="class_format.html">Format</a>, OGG);HL_ENUM_DECLARE(<a class="el" href="class_format.html">Format</a>, WAV);HL_ENUM_DECLARE(<a class="el" href="class_format.html">Format</a>, Unknown);))</td></tr>
-<tr class="separator:ac43caf6894cdb196b51c364e2b999f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abce30717e26b839ea121444b3766e3b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abce30717e26b839ea121444b3766e3b5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>xal::HL_ENUM_CLASS_PREFIX_DECLARE</b> (xalExport, <a class="el" href="class_buffer_mode.html">BufferMode</a>,(HL_ENUM_DECLARE(<a class="el" href="class_buffer_mode.html">BufferMode</a>, Full);HL_ENUM_DECLARE(<a class="el" href="class_buffer_mode.html">BufferMode</a>, Async);HL_ENUM_DECLARE(<a class="el" href="class_buffer_mode.html">BufferMode</a>, Lazy);HL_ENUM_DECLARE(<a class="el" href="class_buffer_mode.html">BufferMode</a>, Managed);HL_ENUM_DECLARE(<a class="el" href="class_buffer_mode.html">BufferMode</a>, OnDemand);HL_ENUM_DECLARE(<a class="el" href="class_buffer_mode.html">BufferMode</a>, Streamed);))</td></tr>
-<tr class="separator:abce30717e26b839ea121444b3766e3b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd18466954510baa0ff1a8270436b14d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd18466954510baa0ff1a8270436b14d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>xal::HL_ENUM_CLASS_PREFIX_DECLARE</b> (xalExport, <a class="el" href="class_source_mode.html">SourceMode</a>,(HL_ENUM_DECLARE(<a class="el" href="class_source_mode.html">SourceMode</a>, Disk);HL_ENUM_DECLARE(<a class="el" href="class_source_mode.html">SourceMode</a>, Ram);))</td></tr>
-<tr class="separator:afd18466954510baa0ff1a8270436b14d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>

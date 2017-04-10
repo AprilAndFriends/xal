@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>C++ Geometry Types: Class Members - Functions</title>
+<title>Extensible Audio Library: Class Members - Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,9 +17,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">C++ Geometry Types
+   <div id="projectname">Extensible Audio Library
    </div>
-   <div id="projectbrief">This library provides commonly used geometry types and methods for easier and better coding.</div>
+   <div id="projectbrief">This library provides a unified interface for handling audio.</div>
   </td>
  </tr>
  </tbody>
@@ -38,6 +38,7 @@
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -118,11 +119,21 @@
 <li>_destroySoundsWithPrefix()
 : <a class="el" href="classxal_1_1_audio_manager.html#acf6cc9008669e8f4073d8df759804a69">xal::AudioManager</a>
 </li>
+<li>_fadeGlobalGain()
+: <a class="el" href="classxal_1_1_audio_manager.html#a8dc5119b61db9ceb984e02aaa91f5bb8">xal::AudioManager</a>
+</li>
 <li>_getCategory()
 : <a class="el" href="classxal_1_1_audio_manager.html#a3aff2347297198f3c5fe92c241d18838">xal::AudioManager</a>
 </li>
 <li>_getGain()
-: <a class="el" href="classxal_1_1_player.html#a3dfabf1b9775ade7051d1b46664ea5d2">xal::Player</a>
+: <a class="el" href="classxal_1_1_category.html#a00040cd5a9ad315e6401c1e6ccd333f7">xal::Category</a>
+, <a class="el" href="classxal_1_1_player.html#a3dfabf1b9775ade7051d1b46664ea5d2">xal::Player</a>
+</li>
+<li>_getGlobalGain()
+: <a class="el" href="classxal_1_1_audio_manager.html#a4f02cf86d7f71e32bbf36f2b4cc0a926">xal::AudioManager</a>
+</li>
+<li>_getGlobalGainFadeTarget()
+: <a class="el" href="classxal_1_1_audio_manager.html#ae43bfc98e6f69e5f6a56af77d79a0e00">xal::AudioManager</a>
 </li>
 <li>_getPitch()
 : <a class="el" href="classxal_1_1_player.html#a71d55c72ad16a859dca64e5f85aac362">xal::Player</a>
@@ -135,6 +146,12 @@
 </li>
 <li>_getSounds()
 : <a class="el" href="classxal_1_1_audio_manager.html#ae76caab21f7370d43a39dcd6b11be05a">xal::AudioManager</a>
+</li>
+<li>_hasCategory()
+: <a class="el" href="classxal_1_1_audio_manager.html#a2ff91908bc5ad25233e688dedfe4dd77">xal::AudioManager</a>
+</li>
+<li>_hasSound()
+: <a class="el" href="classxal_1_1_audio_manager.html#aaa3853cc569696cc6ab79862bbfbee40">xal::AudioManager</a>
 </li>
 <li>_isAnyFading()
 : <a class="el" href="classxal_1_1_audio_manager.html#acb00fb794a97d7c09eb0038da6e8cede">xal::AudioManager</a>
@@ -160,6 +177,12 @@
 <li>_isFadingOut()
 : <a class="el" href="classxal_1_1_player.html#a106f5d8380c9b27c0bb3ade161a8cd20">xal::Player</a>
 </li>
+<li>_isGainFading()
+: <a class="el" href="classxal_1_1_category.html#a80b5c8630a40327529bce623bc8666a8">xal::Category</a>
+</li>
+<li>_isGlobalGainFading()
+: <a class="el" href="classxal_1_1_audio_manager.html#a4bf149be527fd0257704e0e07062c813">xal::AudioManager</a>
+</li>
 <li>_isPaused()
 : <a class="el" href="classxal_1_1_player.html#afa3f29741ff422f025ce37d4cc68b0e6">xal::Player</a>
 </li>
@@ -184,7 +207,8 @@
 : <a class="el" href="classxal_1_1_audio_manager.html#ac95d22979b80f40c882cdd6014670ff9">xal::AudioManager</a>
 </li>
 <li>_setGain()
-: <a class="el" href="classxal_1_1_player.html#ae3d968fa4577360ad46706317a568953">xal::Player</a>
+: <a class="el" href="classxal_1_1_category.html#aea9822f357a8267318a45865794171a9">xal::Category</a>
+, <a class="el" href="classxal_1_1_player.html#ae3d968fa4577360ad46706317a568953">xal::Player</a>
 </li>
 <li>_setGlobalGain()
 : <a class="el" href="classxal_1_1_audio_manager.html#a4d24a89d92b8d2c9da2c1cec94a9df17">xal::AudioManager</a>
@@ -254,7 +278,8 @@
 : <a class="el" href="classxal_1_1_player.html#a7549371db8e21fa9f7023aa7a660e9d9">xal::Player</a>
 </li>
 <li>_update()
-: <a class="el" href="classxal_1_1_audio_manager.html#adcd177dd43aca1c097c3508d60bc95cb">xal::AudioManager</a>
+: <a class="el" href="classxal_1_1_audio_manager.html#aaac6cf31fb6e626e7a3ec1ce9c78d268">xal::AudioManager</a>
+, <a class="el" href="classxal_1_1_category.html#a851ecd5f456e6b8de6fafd323400d176">xal::Category</a>
 , <a class="el" href="classxal_1_1_player.html#a4998ee2f84839ce10c30f91b5b2f7003">xal::Player</a>
 </li>
 </ul>
@@ -309,6 +334,12 @@
 
 
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>fadeGain()
+: <a class="el" href="classxal_1_1_category.html#a61317c26955dd763a1ff77b1ed1184e4">xal::Category</a>
+</li>
+<li>fadeGlobalGain()
+: <a class="el" href="classxal_1_1_audio_manager.html#a2238b57578bc66fe05df72876429bc62">xal::AudioManager</a>
+</li>
 <li>findAudioFile()
 : <a class="el" href="classxal_1_1_audio_manager.html#aceec442cae5397e15c2c8995a749c4e9">xal::AudioManager</a>
 </li>
@@ -347,7 +378,14 @@
 : <a class="el" href="classxal_1_1_sound.html#aeb6b9f0023a26013db7d074c8fd4e3d9">xal::Sound</a>
 </li>
 <li>getGain()
-: <a class="el" href="classxal_1_1_player.html#aa4400358c9c037917b687adb7cafd451">xal::Player</a>
+: <a class="el" href="classxal_1_1_category.html#a1e4467543ecd8e35f9b7ae0583af91bc">xal::Category</a>
+, <a class="el" href="classxal_1_1_player.html#aa4400358c9c037917b687adb7cafd451">xal::Player</a>
+</li>
+<li>getGlobalGain()
+: <a class="el" href="classxal_1_1_audio_manager.html#acab2455ca01288d5274c4ff9f70b7300">xal::AudioManager</a>
+</li>
+<li>getGlobalGainFadeTarget()
+: <a class="el" href="classxal_1_1_audio_manager.html#a2fa6c926c1fdaff9b471de303abfb36d">xal::AudioManager</a>
 </li>
 <li>getName()
 : <a class="el" href="classxal_1_1_player.html#a6b5410b9ab4f6a4b74d727f868a4e99c">xal::Player</a>
@@ -386,16 +424,16 @@
 
 <h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>hasCategory()
-: <a class="el" href="classxal_1_1_audio_manager.html#afd4840a58305009105b0d544a60a4c78">xal::AudioManager</a>
+: <a class="el" href="classxal_1_1_audio_manager.html#a8fb69e91fdc1e6485f1c02e0fdc40cac">xal::AudioManager</a>
 </li>
 <li>hasSound()
-: <a class="el" href="classxal_1_1_audio_manager.html#a5007c64bc36bad0bc578cdae3ca4fee0">xal::AudioManager</a>
+: <a class="el" href="classxal_1_1_audio_manager.html#a07c8ed4ea67962598e8b517f13f325a5">xal::AudioManager</a>
 </li>
 <li>HL_DEFINE_GET()
 : <a class="el" href="classxal_1_1_audio_manager.html#ae26cf0ea47237cde6d71b78436387c50">xal::AudioManager</a>
 , <a class="el" href="classxal_1_1_category.html#a7e3a601fbb380025330eba6c70fd1b8a">xal::Category</a>
 , <a class="el" href="classxal_1_1_player.html#a67ab6356182a024bb6a911e4ec6189ea">xal::Player</a>
-, <a class="el" href="classxal_1_1_sound.html#a6bdbe4b0e2dbd61e4808ef9e35766bd5">xal::Sound</a>
+, <a class="el" href="classxal_1_1_sound.html#aed7a8fb512260671e1486c5f2a215ed6">xal::Sound</a>
 </li>
 <li>HL_DEFINE_GETSET()
 : <a class="el" href="classxal_1_1_audio_manager.html#aca0f12415ff83d9af7dd43e3b1aa76e3">xal::AudioManager</a>
@@ -434,6 +472,12 @@
 </li>
 <li>isFadingOut()
 : <a class="el" href="classxal_1_1_player.html#a97ad2460eed9812c24379a22fdc06a84">xal::Player</a>
+</li>
+<li>isGainFading()
+: <a class="el" href="classxal_1_1_category.html#a3dbcdd2c190e26df7a403a8b0eea4415">xal::Category</a>
+</li>
+<li>isGlobalGainFading()
+: <a class="el" href="classxal_1_1_audio_manager.html#a67fb1449ec81331e6f03dd130448721b">xal::AudioManager</a>
 </li>
 <li>isLoaded()
 : <a class="el" href="classxal_1_1_sound.html#ae92efe44d1de8aa36b6b854badb95986">xal::Sound</a>

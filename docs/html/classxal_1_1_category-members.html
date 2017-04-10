@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>C++ Geometry Types: Member List</title>
+<title>Extensible Audio Library: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,9 +17,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">C++ Geometry Types
+   <div id="projectname">Extensible Audio Library
    </div>
-   <div id="projectbrief">This library provides commonly used geometry types and methods for easier and better coding.</div>
+   <div id="projectbrief">This library provides a unified interface for handling audio.</div>
   </td>
  </tr>
  </tbody>
@@ -38,6 +38,7 @@
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -54,19 +55,30 @@
 
 <p>This is the complete list of members for <a class="el" href="classxal_1_1_category.html">xal::Category</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#adb3843fc6b813cb2559ba562b71b7844">Category</a>(chstr name, BufferMode bufferMode, SourceMode sourceMode)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a00040cd5a9ad315e6401c1e6ccd333f7">_getGain</a>() const </td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a80b5c8630a40327529bce623bc8666a8">_isGainFading</a>() const </td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#aea9822f357a8267318a45865794171a9">_setGain</a>(float value)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a851ecd5f456e6b8de6fafd323400d176">_update</a>(float timeDelta)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>AudioManager</b> (defined in <a class="el" href="classxal_1_1_category.html">xal::Category</a>)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#ad83537b981f0efab5a78a637a3c6bfa0">bufferMode</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#adb3843fc6b813cb2559ba562b71b7844">Category</a>(chstr name, BufferMode bufferMode, SourceMode sourceMode)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a61317c26955dd763a1ff77b1ed1184e4">fadeGain</a>(float gainTarget, float fadeTime=1.0f)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a5f1a21a0b813ca6982101c590fdda555">gain</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a37fc01091478d69a6b5ed5475d39b210">gainFadeSpeed</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a25e904df5d5953c3aae292ef2d417160">gainFadeTarget</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#aa09d3adc4317a57c4076ecfa421adf5e">gainFadeTime</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a1e4467543ecd8e35f9b7ae0583af91bc">getGain</a>()</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a7e3a601fbb380025330eba6c70fd1b8a">HL_DEFINE_GET</a>(hstr, name, Name)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a0772a767c09391bc018e3ad12ee63910">HL_DEFINE_GET</a>(float, gain, Gain)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a1f252eb79b43ae6ee771e110ea867826">HL_DEFINE_GET</a>(BufferMode, bufferMode, BufferMode)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a71f4269aade37ed08ac72548f1c96102">HL_DEFINE_GET</a>(SourceMode, sourceMode, SourceMode)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a1f252eb79b43ae6ee771e110ea867826">HL_DEFINE_GET</a>(BufferMode, bufferMode, BufferMode)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a71f4269aade37ed08ac72548f1c96102">HL_DEFINE_GET</a>(SourceMode, sourceMode, SourceMode)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a3dbcdd2c190e26df7a403a8b0eea4415">isGainFading</a>()</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#ab5d4216bce5d3f0eab11db9493785557">isMemoryManaged</a>() const </td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a1fda48f4086e1fb4cadc11dfb162eca6">isStreamed</a>() const </td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#af699567f8623c96f96a9f307042df5cc">name</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#a6bd11649569508277a1b12f62f4c8fac">setGain</a>(float value)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#afc2acd5b60487957c9b5efdb9f12f109">~Category</a>()</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Player</b> (defined in <a class="el" href="classxal_1_1_category.html">xal::Category</a>)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#a6bd11649569508277a1b12f62f4c8fac">setGain</a>(float value)</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classxal_1_1_category.html#aefac1d3a8f210d998e0d24d8cee57dc5">sourceMode</a></td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classxal_1_1_category.html#afc2acd5b60487957c9b5efdb9f12f109">~Category</a>()</td><td class="entry"><a class="el" href="classxal_1_1_category.html">xal::Category</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

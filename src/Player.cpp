@@ -410,7 +410,7 @@ namespace xal
 
 	float Player::_calcGain() const
 	{
-		float result = this->gain * this->sound->getCategory()->getGain() * xal::manager->getGlobalGain();
+		float result = this->gain * this->sound->getCategory()->_getGain() * xal::manager->_getGlobalGain();
 		if (this->_isFading())
 		{
 			result *= this->fadeTime;

@@ -6,10 +6,10 @@ Default Window=main
 Default topic=index.html
 Index file=index.hhk
 Language=0x409 English (United States)
-Title=C++ Geometry Types
+Title=Extensible Audio Library
 
 [WINDOWS]
-main="C++ Geometry Types","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
+main="Extensible Audio Library","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
 
 [FILES]
 _audio_manager_8h_source.html
@@ -22,23 +22,28 @@ _category_8h.html
 _player_8h.html
 _sound_8h.html
 xal_8h.html
-class_audio_system_type.html
-class_buffer_mode.html
-class_format.html
-class_source_mode.html
 classxal_1_1_audio_manager.html
 classxal_1_1_audio_manager-members.html
+classxal_1_1_audio_system_type.html
+classxal_1_1_audio_system_type-members.html
+classxal_1_1_buffer_mode.html
+classxal_1_1_buffer_mode-members.html
 classxal_1_1_category.html
 classxal_1_1_category-members.html
+classxal_1_1_format.html
+classxal_1_1_format-members.html
 classxal_1_1_player.html
 classxal_1_1_player-members.html
 classxal_1_1_sound.html
 classxal_1_1_sound-members.html
+classxal_1_1_source_mode.html
+classxal_1_1_source_mode-members.html
 dir_d44c64559bbebec7f509842c48db8b23.html
 dir_e45cf6bbfe08c45c651790e05d668743.html
 index.html
 annotated.html
 classes.html
+hierarchy.html
 functions.html
 functions_a.html
 functions_b.html
@@ -58,6 +63,8 @@ functions_r.html
 functions_s.html
 functions_t.html
 functions_u.html
+functions_w.html
+functions_x.html
 functions_0x7e.html
 functions_func.html
 functions_vars.html
@@ -77,3 +84,7 @@ open.png
 bdwn.png
 sync_on.png
 sync_off.png
+classxal_1_1_audio_system_type.png
+classxal_1_1_buffer_mode.png
+classxal_1_1_format.png
+classxal_1_1_source_mode.png

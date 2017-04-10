@@ -73,7 +73,8 @@ namespace xal
 	AudioManager* manager = NULL;
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), thread(NULL), threadRunning(false)
+		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), globalGainFadeTarget(-1.0f),
+		globalGainFadeSpeed(-1.0f), globalGainFadeTime(0.0f), thread(NULL), threadRunning(false)
 	{
 		this->samplingRate = 44100;
 		this->channels = 2;
@@ -158,7 +159,34 @@ namespace xal
 		}
 		this->categories.clear();
 	}
+
+	float AudioManager::getGlobalGain()
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_getGlobalGain();
+	}
 	
+	float AudioManager::_getGlobalGain() const
+	{
+		float result = this->globalGain;
+		if (this->_isGlobalGainFading())
+		{
+			result += (this->globalGainFadeTarget - this->globalGain) * this->globalGainFadeTime;
+		}
+		return result;
+	}
+
+	float AudioManager::getGlobalGainFadeTarget()
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_getGlobalGainFadeTarget();
+	}
+
+	float AudioManager::_getGlobalGainFadeTarget() const
+	{
+		return this->globalGainFadeTarget;
+	}
+
 	void AudioManager::setGlobalGain(float value)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
@@ -168,6 +196,9 @@ namespace xal
 	void AudioManager::_setGlobalGain(float value)
 	{
 		this->globalGain = value;
+		this->globalGainFadeTarget = -1.0f;
+		this->globalGainFadeSpeed = -1.0f;
+		this->globalGainFadeTime = 0.0f;
 		foreach (Player*, it, this->players)
 		{
 			(*it)->_systemUpdateGain();
@@ -196,6 +227,17 @@ namespace xal
 		return this->sounds;
 	}
 
+	bool AudioManager::isGlobalGainFading()
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_isGlobalGainFading();
+	}
+
+	bool AudioManager::_isGlobalGainFading() const
+	{
+		return (this->globalGainFadeTarget >= 0.0f && this->globalGainFadeSpeed > 0.0f);
+	}
+
 	void AudioManager::_update(hthread* thread)
 	{
 		hmutex::ScopeLock lock(&xal::manager->mutex);
@@ -222,9 +264,40 @@ namespace xal
 	{
 		if (!this->suspended)
 		{
+			// first the async buffer update
 			BufferAsync::update();
+			// update fading
+			bool gainFading = false;
+			if (timeDelta > 0.0f)
+			{
+				if (this->_isGlobalGainFading())
+				{
+					gainFading = true;
+					this->globalGainFadeTime += this->globalGainFadeSpeed * timeDelta;
+					if (this->globalGainFadeTime >= 1.0f)
+					{
+						this->globalGain = this->globalGainFadeTarget;
+						this->globalGainFadeTarget = -1.0f;
+						this->globalGainFadeSpeed = -1.0f;
+						this->globalGainFadeTime = 0.0f;
+					}
+				}
+				foreach_m (Category*, it, this->categories)
+				{
+					if (it->second->_isGainFading())
+					{
+						gainFading = true;
+						it->second->_update(timeDelta);
+					}
+				}
+			}
+			// player update
 			foreach (Player*, it, this->players)
 			{
+				if (gainFading && !(*it)->_isFading()) // because if _isFading() is true, _systemUpdateGain() will be called internally by _update()
+				{
+					(*it)->_systemUpdateGain();
+				}
 				(*it)->_update(timeDelta);
 				if ((*it)->_isAsyncPlayQueued())
 				{
@@ -277,9 +350,15 @@ namespace xal
 		return this->categories[name];
 	}
 
-	bool AudioManager::hasCategory(chstr category) const
+	bool AudioManager::hasCategory(chstr name)
 	{
-		return this->categories.hasKey(category);
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_hasCategory(name);
+	}
+
+	bool AudioManager::_hasCategory(chstr name) const
+	{
+		return this->categories.hasKey(name);
 	}
 
 	Sound* AudioManager::createSound(chstr filename, chstr categoryName, chstr prefix)
@@ -314,6 +393,17 @@ namespace xal
 			throw Exception("Audio Manager: Sound '" + name + "' does not exist!");
 		}
 		return this->sounds[name];
+	}
+
+	bool AudioManager::hasSound(chstr name)
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_hasSound(name);
+	}
+
+	bool AudioManager::_hasSound(chstr name) const
+	{
+		return this->sounds.hasKey(name);
 	}
 
 	void AudioManager::destroySound(Sound* sound)
@@ -430,11 +520,6 @@ namespace xal
 		return result;
 	}
 
-	bool AudioManager::hasSound(chstr name) const
-	{
-		return this->sounds.hasKey(name);
-	}
-	
 	Player* AudioManager::createPlayer(chstr soundName)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
@@ -638,55 +723,6 @@ namespace xal
 		}
 	}
 	
-	void AudioManager::suspendAudio()
-	{
-		hmutex::ScopeLock lock(&this->mutex);
-		this->_suspendAudio();
-	}
-	
-	void AudioManager::_suspendAudio()
-	{
-		if (!this->suspended)
-		{
-			hlog::write(logTag, "Suspending XAL.");
-			foreach (Player*, it, this->players)
-			{
-				if ((*it)->_isFadingOut())
-				{
-					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
-				}
-				else if ((*it)->_isPlaying())
-				{
-					(*it)->_pause();
-					this->suspendedPlayers += (*it);
-				}
-			}
-			this->_suspendSystem();
-			this->suspended = true;
-		}
-	}
-	
-	void AudioManager::resumeAudio()
-	{
-		hmutex::ScopeLock lock(&this->mutex);
-		this->_resumeAudio();
-	}
-	
-	void AudioManager::_resumeAudio()
-	{
-		if (this->suspended)
-		{
-			hlog::write(logTag, "Resuming XAL.");
-			this->suspended = false;
-			this->_resumeSystem();
-			foreach (Player*, it, this->suspendedPlayers)
-			{
-				(*it)->_play();
-			}
-			this->suspendedPlayers.clear();
-		}
-	}
-	
 	void AudioManager::stopCategory(chstr categoryName, float fadeTime)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
@@ -790,6 +826,22 @@ namespace xal
 		return false;
 	}
 
+	void AudioManager::fadeGlobalGain(float globalGainTarget, float fadeTime)
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		this->_fadeGlobalGain(globalGainTarget, fadeTime);
+	}
+
+	void AudioManager::_fadeGlobalGain(float globalGainTarget, float fadeTime)
+	{
+		if (fadeTime > 0.0f)
+		{
+			this->globalGainFadeTarget = hclamp(globalGainTarget, 0.0f, 1.0f);
+			this->globalGainFadeTime = 0.0f;
+			this->globalGainFadeSpeed = 1.0f / fadeTime;
+		}
+	}
+
 	void AudioManager::clearMemory()
 	{
 		hmutex::ScopeLock lock(&this->mutex);
@@ -809,6 +861,55 @@ namespace xal
 		hlog::debugf(logTag, "Found %d buffers for memory clearing.", count);
 	}
 
+	void AudioManager::suspendAudio()
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		this->_suspendAudio();
+	}
+	
+	void AudioManager::_suspendAudio()
+	{
+		if (!this->suspended)
+		{
+			hlog::write(logTag, "Suspending XAL.");
+			foreach (Player*, it, this->players)
+			{
+				if ((*it)->_isFadingOut())
+				{
+					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
+				}
+				else if ((*it)->_isPlaying())
+				{
+					(*it)->_pause();
+					this->suspendedPlayers += (*it);
+				}
+			}
+			this->_suspendSystem();
+			this->suspended = true;
+		}
+	}
+	
+	void AudioManager::resumeAudio()
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		this->_resumeAudio();
+	}
+	
+	void AudioManager::_resumeAudio()
+	{
+		if (this->suspended)
+		{
+			hlog::write(logTag, "Resuming XAL.");
+			this->suspended = false;
+			this->_resumeSystem();
+			foreach (Player*, it, this->suspendedPlayers)
+			{
+				(*it)->_play();
+			}
+			this->suspendedPlayers.clear();
+		}
+	}
+	
 	void AudioManager::addAudioExtension(chstr extension)
 	{
 		this->extensions += extension;

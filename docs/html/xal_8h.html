@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>C++ Geometry Types: include/xal/xal.h File Reference</title>
+<title>Extensible Audio Library: include/xal/xal.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,9 +17,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">C++ Geometry Types
+   <div id="projectname">Extensible Audio Library
    </div>
-   <div id="projectbrief">This library provides commonly used geometry types and methods for easier and better coding.</div>
+   <div id="projectbrief">This library provides a unified interface for handling audio.</div>
   </td>
  </tr>
  </tbody>
@@ -47,6 +47,7 @@
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -60,6 +61,12 @@
 </div>
 <p><a href="xal_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_audio_system_type.html">xal::AudioSystemType</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines how audio sources should be handled.  <a href="classxal_1_1_audio_system_type.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a54d7288ad654ad6d1c7f78c5371490fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54d7288ad654ad6d1c7f78c5371490fd"></a>
@@ -89,17 +96,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2f713c7ebfd62ec4a214b9682db049b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f713c7ebfd62ec4a214b9682db049b6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>xal::HL_ENUM_CLASS_PREFIX_DECLARE</b> (xalExport, <a class="el" href="class_audio_system_type.html">AudioSystemType</a>,(HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, Default);HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, Disabled);HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, DirectSound);HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, OpenAL);HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, OpenSLES);HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, SDL);HL_ENUM_DECLARE(<a class="el" href="class_audio_system_type.html">AudioSystemType</a>, XAudio2);))</td></tr>
-<tr class="separator:a2f713c7ebfd62ec4a214b9682db049b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0433893a83f9826726d8ada67e4e304"><td class="memItemLeft" align="right" valign="top">xalFnExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xal_8h.html#ac0433893a83f9826726d8ada67e4e304">xal::init</a> (<a class="el" href="class_audio_system_type.html">AudioSystemType</a> type, void *backendId, bool threaded=true, float updateTime=0.01f, chstr deviceName=&quot;&quot;)</td></tr>
+<tr class="memitem:ac0433893a83f9826726d8ada67e4e304"><td class="memItemLeft" align="right" valign="top">xalFnExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xal_8h.html#ac0433893a83f9826726d8ada67e4e304">xal::init</a> (AudioSystemType type, void *backendId, bool threaded=true, float updateTime=0.01f, chstr deviceName=&quot;&quot;)</td></tr>
 <tr class="memdesc:ac0433893a83f9826726d8ada67e4e304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes XAL.  <a href="xal_8h.html#ac0433893a83f9826726d8ada67e4e304">More...</a><br /></td></tr>
 <tr class="separator:ac0433893a83f9826726d8ada67e4e304"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9e8ce038e21d375e54a9ae11dc565b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9e8ce038e21d375e54a9ae11dc565b5"></a>
 xalFnExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xal_8h.html#ac9e8ce038e21d375e54a9ae11dc565b5">xal::destroy</a> ()</td></tr>
 <tr class="memdesc:ac9e8ce038e21d375e54a9ae11dc565b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys XAL. <br /></td></tr>
 <tr class="separator:ac9e8ce038e21d375e54a9ae11dc565b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b854902c56cc9f2deb63a568d304c55"><td class="memItemLeft" align="right" valign="top">xalFnExport bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xal_8h.html#a5b854902c56cc9f2deb63a568d304c55">xal::hasAudioSystem</a> (<a class="el" href="class_audio_system_type.html">AudioSystemType</a> type)</td></tr>
+<tr class="memitem:a5b854902c56cc9f2deb63a568d304c55"><td class="memItemLeft" align="right" valign="top">xalFnExport bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xal_8h.html#a5b854902c56cc9f2deb63a568d304c55">xal::hasAudioSystem</a> (AudioSystemType type)</td></tr>
 <tr class="memdesc:a5b854902c56cc9f2deb63a568d304c55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if XAL was compiled with a given audio-system available.  <a href="xal_8h.html#a5b854902c56cc9f2deb63a568d304c55">More...</a><br /></td></tr>
 <tr class="separator:a5b854902c56cc9f2deb63a568d304c55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -126,7 +130,7 @@ DESCRIPTION</h1>
         <tr>
           <td class="memname">xalFnExport bool xal::hasAudioSystem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_audio_system_type.html">AudioSystemType</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classxal_1_1_audio_system_type.html">AudioSystemType</a>&#160;</td>
           <td class="paramname"><em>type</em></td><td>)</td>
           <td></td>
         </tr>
@@ -151,7 +155,7 @@ DESCRIPTION</h1>
         <tr>
           <td class="memname">xalFnExport void xal::init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_audio_system_type.html">AudioSystemType</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classxal_1_1_audio_system_type.html">AudioSystemType</a>&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>

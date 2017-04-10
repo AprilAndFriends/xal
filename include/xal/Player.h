@@ -32,6 +32,7 @@ namespace xal
 	{
 	public:
 		friend class AudioManager;
+		friend class Category;
 
 		/// @return Gets gain at which the Sound is played.
 		float getGain();
