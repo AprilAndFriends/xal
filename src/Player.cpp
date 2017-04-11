@@ -9,6 +9,7 @@
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 
+#include "AudioManager.h"
 #include "Source.h"
 #include "Buffer.h"
 #include "Category.h"
