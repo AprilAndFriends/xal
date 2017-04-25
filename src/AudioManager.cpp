@@ -919,12 +919,12 @@ namespace xal
 	{
 		if (hresource::exists(filename))
 		{
-			return filename;
+			return hdbase::systemize(filename);
 		}
 		hstr name;
 		foreachc (hstr, it, this->extensions)
 		{
-			name = filename + (*it);
+			name = hdbase::systemize(filename + (*it));
 			if (hresource::exists(name))
 			{
 				return name;
@@ -935,7 +935,7 @@ namespace xal
 		{
 			foreachc (hstr, it, this->extensions)
 			{
-				name = newFilename + (*it);
+				name = hdbase::systemize(newFilename + (*it));
 				if (hresource::exists(name))
 				{
 					return name;
