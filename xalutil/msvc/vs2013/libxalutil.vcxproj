@@ -54,6 +54,7 @@
     <ProjectGuid>{B3E8DF67-FEE1-4660-902C-3D31D1F0735F}</ProjectGuid>
     <RootNamespace>xalutil</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\..\hltypes\msvc\vs2013\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />

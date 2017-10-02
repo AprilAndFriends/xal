@@ -294,6 +294,7 @@
     <ProjectGuid>{6B6C070B-7DD7-41B9-8DD7-12AFBF0F6C08}</ProjectGuid>
     <RootNamespace>xal</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\hltypes\msvc\vs2015\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\hltypes\msvc\vs2015\props-generic\platform-$(Platform).props" />

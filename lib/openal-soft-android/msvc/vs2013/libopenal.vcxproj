@@ -14,6 +14,7 @@
     <ProjectGuid>{C4A17CD4-6B3C-495C-AF61-961F8F86EA65}</ProjectGuid>
     <RootNamespace>openal</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\..\..\hltypes\msvc\vs2013\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />

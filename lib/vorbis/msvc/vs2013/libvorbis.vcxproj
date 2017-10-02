@@ -22,6 +22,7 @@
     <ProjectGuid>{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}</ProjectGuid>
     <RootNamespace>vorbis</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\..\..\hltypes\msvc\vs2013\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />

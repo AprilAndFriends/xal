@@ -54,6 +54,7 @@
     <ProjectGuid>{15CBFEFF-7965-41F5-B4E2-21E8795C9159}</ProjectGuid>
     <RootNamespace>ogg</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\..\..\hltypes\msvc\vs2015\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\..\..\hltypes\msvc\vs2015\props-generic\platform-$(Platform).props" />
