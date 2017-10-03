@@ -54,6 +54,7 @@
     <ProjectGuid>{4F1CA1B9-AB81-4B23-9A26-DEA67B983744}</ProjectGuid>
     <RootNamespace>demo_test</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\hltypes\msvc\vs2013\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props-demos\default.props" />
   <Import Project="..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />
