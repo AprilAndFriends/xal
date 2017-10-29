@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -38,6 +38,19 @@ namespace xal
 	{
 		Category* category = this->_getCategory(categoryName);
 		Sound* sound = new Sound(filename, category, prefix);
+		if (this->sounds.hasKey(sound->getName()))
+		{
+			delete sound;
+			return NULL;
+		}
+		this->sounds[sound->getName()] = sound;
+		return sound;
+	}
+
+	Sound* NoAudio_AudioManager::_createSound(chstr name, chstr categoryName, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample)
+	{
+		Category* category = this->_getCategory(categoryName);
+		Sound* sound = new Sound(name, category, data, size, channels, samplingRate, bitsPerSample);
 		if (this->sounds.hasKey(sound->getName()))
 		{
 			delete sound;

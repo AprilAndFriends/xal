@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -36,6 +36,15 @@ namespace xal
 		/// @param[in] category The Category where to register this Sound.
 		/// @param[in] prefix Used to differentiate between Sounds that have the same filename (e.g. by using a directory path as prefix).
 		Sound(chstr filename, Category* category, chstr prefix = "");
+		/// @brief Constructor.
+		/// @param[in] name Filename of the Sound.
+		/// @param[in] category The Category where to register this Sound.
+		/// @param[in] data Raw audio data.
+		/// @param[in] size Raw audio data byte size.
+		/// @param[in] channels Number of channels.
+		/// @param[in] samplingRate Sampling rate.
+		/// @param[in] bitsPerSample Bits per sample.
+		Sound(chstr name, Category* category, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample);
 		/// @brief Destructor.
 		~Sound();
 
@@ -48,7 +57,7 @@ namespace xal
 
 		/// @return Byte-size of the audio data.
 		int getSize();
-		/// @return source byte size
+		/// @return Source byte size.
 		int getSourceSize();
 		/// @return Number of channels in the audio data.
 		int getChannels();

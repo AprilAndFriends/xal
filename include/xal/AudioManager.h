@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -42,6 +42,9 @@ namespace xal
 		/// @var static const Format Format::WAV
 		/// @brief Waveform Audio File Format.
 		HL_ENUM_DECLARE(Format, WAV);
+		/// @var static const Format Format::RAW
+		/// @brief Raw audio data Format.
+		HL_ENUM_DECLARE(Format, Memory);
 		/// @var static const Format Format::FLAC
 		/// @brief Unknown format, usually indicates errors.
 		HL_ENUM_DECLARE(Format, Unknown);
@@ -167,6 +170,16 @@ namespace xal
 		/// @param[in] prefix Used to differentiate between Sounds that have the same filename (e.g. by using a directory path as prefix).
 		/// @return The newly created Sound.
 		Sound* createSound(chstr filename, chstr categoryName, chstr prefix = "");
+		/// @brief Creates a new Sound within a Category form raw data.
+		/// @param[in] name Name of the new Sound.
+		/// @param[in] categoryName Name of the Category where to register the new Sound.
+		/// @param[in] data Raw audio data.
+		/// @param[in] size Raw audio data byte size.
+		/// @param[in] channels Number of channels.
+		/// @param[in] samplingRate Sampling rate.
+		/// @param[in] bitsPerSample Bits per sample.
+		/// @return The newly created Sound.
+		Sound* createSound(chstr name, chstr categoryName, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample);
 		/// @brief Gets the Sound with the given name.
 		/// @param[in] name Name of the Sound.
 		/// @return The Sound with the given name.
@@ -369,6 +382,8 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
 		/// @note This method is not thread-safe and is for internal usage only.
+		virtual Sound* _createSound(chstr name, chstr categoryName, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample);
+		/// @note This method is not thread-safe and is for internal usage only.
 		Sound* _getSound(chstr name);
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _hasSound(chstr name) const;
@@ -396,6 +411,8 @@ namespace xal
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		Buffer* _createBuffer(Sound* sound);
+		/// @note This method is not thread-safe and is for internal usage only.
+		Buffer* _createBuffer(Category* category, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample);
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _destroyBuffer(Buffer* buffer);
 

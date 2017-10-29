@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -43,6 +43,8 @@
 
 namespace xal
 {
+
+
 	extern void (*gLogFunction)(chstr);
 	
 	HL_ENUM_CLASS_DEFINE(Format,
@@ -51,6 +53,7 @@ namespace xal
 		HL_ENUM_DEFINE(Format, M4A);
 		HL_ENUM_DEFINE(Format, OGG);
 		HL_ENUM_DEFINE(Format, WAV);
+		HL_ENUM_DEFINE(Format, Memory);
 		HL_ENUM_DEFINE(Format, Unknown);
 	));
 
@@ -380,6 +383,25 @@ namespace xal
 		return sound;
 	}
 
+	Sound* AudioManager::createSound(chstr name, chstr categoryName, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample)
+	{
+		hmutex::ScopeLock lock(&this->mutex);
+		return this->_createSound(name, categoryName, data, size, channels, samplingRate, bitsPerSample);
+	}
+
+	Sound* AudioManager::_createSound(chstr name, chstr categoryName, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample)
+	{
+		Category* category = this->_getCategory(categoryName);
+		Sound* sound = new Sound(name, category, data, size, channels, samplingRate, bitsPerSample);
+		if (sound->getFormat() == Format::Unknown || this->sounds.hasKey(sound->getName()))
+		{
+			delete sound;
+			return NULL;
+		}
+		this->sounds[sound->getName()] = sound;
+		return sound;
+	}
+
 	Sound* AudioManager::getSound(chstr name)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
@@ -568,6 +590,13 @@ namespace xal
 	Buffer* AudioManager::_createBuffer(Sound* sound)
 	{
 		Buffer* buffer = new Buffer(sound);
+		this->buffers += buffer;
+		return buffer;
+	}
+
+	Buffer* AudioManager::_createBuffer(Category* category, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample)
+	{
+		Buffer* buffer = new Buffer(category, data, size, channels, samplingRate, bitsPerSample);
 		this->buffers += buffer;
 		return buffer;
 	}

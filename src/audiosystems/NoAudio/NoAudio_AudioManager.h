@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -33,7 +33,8 @@ namespace xal
 		hstr findAudioFile(chstr _filename) const;
 
 	protected:
-		Sound* _createSound(chstr filename, chstr categoryName, chstr prefix);
+		Sound* _createSound(chstr filename, chstr categoryName, chstr prefix = "");
+		Sound* _createSound(chstr name, chstr categoryName, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample);
 		Player* _createSystemPlayer(Sound* sound);
 
 	};

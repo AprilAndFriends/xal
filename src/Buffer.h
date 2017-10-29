@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -28,13 +28,14 @@ namespace xal
 	class Sound;
 	class Source;
 
-	class xalExport Buffer
+	class Buffer
 	{
 	public:
 		friend class AudioManager;
 		friend class BufferAsync;
 
 		Buffer(Sound* sound);
+		Buffer(Category* category, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample);
 		~Buffer();
 
 		HL_DEFINE_GET(hstr, filename, Filename);

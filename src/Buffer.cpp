@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -53,13 +53,34 @@ namespace xal
 		}
 	}
 
+	Buffer::Buffer(Category* category, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample)
+	{
+		this->stream.writeRaw(data, size);
+		this->fileSize = size;
+		this->mode = BufferMode::Full;
+		this->loaded = true;
+		this->asyncLoadQueued = false;
+		this->asyncLoadDiscarded = false;
+		this->source = NULL;
+		this->loadedMetaData = true;
+		this->size = size;
+		this->channels = channels;
+		this->samplingRate = samplingRate;
+		this->bitsPerSample = bitsPerSample / 8;
+		this->duration = (float)size / (samplingRate * channels * bitsPerSample / 8);
+		this->idleTime = 0.0f;
+	}
+
 	Buffer::~Buffer()
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->asyncLoadQueued = false;
 		this->asyncLoadDiscarded = false;
 		this->loaded = false;
-		delete this->source;
+		if (this->source != NULL)
+		{
+			delete this->source;
+		}
 	}
 	
 	int Buffer::getSize()
@@ -99,6 +120,10 @@ namespace xal
 
 	Format Buffer::getFormat() const
 	{
+		if (this->filename == "" && this->source == NULL)
+		{
+			return Format::Memory;
+		}
 #ifdef _FORMAT_FLAC
 		if (this->filename.endsWith(".flac"))
 		{
@@ -158,7 +183,7 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		this->asyncLoadDiscarded = false; // a possible previous unload call must be canceled
-		if (!xal::manager->isEnabled() || this->loaded)
+		if (!xal::manager->isEnabled() || this->loaded || this->source == NULL)
 		{
 			this->asyncLoadQueued = false;
 			this->loaded = true;
@@ -221,7 +246,7 @@ namespace xal
 			return 0;
 		}
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (this->isStreamed() && this->source->isOpen())
+		if (this->isStreamed() && this->source != NULL && this->source->isOpen())
 		{
 			this->stream.clear(STREAM_BUFFER);
 			int read = this->source->loadChunk(this->stream, size);
@@ -280,7 +305,10 @@ namespace xal
 		}
 		if (this->boundPlayers.size() == 0 && this->mode == BufferMode::Streamed)
 		{
-			this->source->close();
+			if (this->source != NULL)
+			{
+				this->source->close();
+			}
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = true;
 			this->loaded = false;
@@ -294,7 +322,14 @@ namespace xal
 
 	void Buffer::rewind()
 	{
-		this->source->rewind();
+		if (this->source != NULL)
+		{
+			this->source->rewind();
+		}
+		else
+		{
+			this->stream.rewind();
+		}
 	}
 
 	int Buffer::calcOutputSize(int size)
@@ -337,7 +372,7 @@ namespace xal
 
 	void Buffer::_tryLoadMetaData()
 	{
-		if (!this->loadedMetaData)
+		if (!this->loadedMetaData && this->source != NULL)
 		{
 			bool open = this->source->isOpen();
 			if (!open)
@@ -360,7 +395,7 @@ namespace xal
 	bool Buffer::_tryClearMemory()
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && (this->loaded || this->mode == BufferMode::Streamed))
+		if (this->isMemoryManaged() && this->boundPlayers.size() == 0 && this->source != NULL && (this->loaded || this->mode == BufferMode::Streamed))
 		{
 			hlog::debug(logTag, "Clearing memory for: " + this->filename);
 			this->stream.clear(1L);
@@ -376,7 +411,7 @@ namespace xal
 	bool Buffer::_prepareAsyncStream()
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (!this->asyncLoadQueued || this->asyncLoadDiscarded)
+		if (!this->asyncLoadQueued || this->asyncLoadDiscarded || this->source == NULL)
 		{
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = false;
@@ -395,7 +430,7 @@ namespace xal
 	void Buffer::_decodeFromAsyncStream()
 	{
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
-		if (!this->asyncLoadQueued || this->asyncLoadDiscarded || this->loaded)
+		if (!this->asyncLoadQueued || this->asyncLoadDiscarded || this->loaded || this->source == NULL)
 		{
 			this->source->close();
 			this->asyncLoadQueued = false;

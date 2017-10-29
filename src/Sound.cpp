@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -27,6 +27,15 @@ namespace xal
 		this->buffer = xal::manager->_createBuffer(this);
 		// extracting filename without extension and prepending the prefix
 		this->name = prefix + hresource::withoutExtension(hrdir::baseName(filename));
+	}
+
+	Sound::Sound(chstr name, Category* category, unsigned char* data, int size, int channels, int samplingRate, int bitsPerSample)
+	{
+		this->filename = "";
+		this->category = category;
+		this->buffer = xal::manager->_createBuffer(category, data, size, channels, samplingRate, bitsPerSample);
+		// extracting filename without extension and prepending the prefix
+		this->name = name;
 	}
 
 	Sound::~Sound()
