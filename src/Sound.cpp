@@ -50,7 +50,12 @@ namespace xal
 
 	int Sound::getSourceSize()
 	{
-		return this->buffer->getSource()->getRamSize();
+		Source* source = this->buffer->getSource();
+		if (source == NULL)
+		{
+			return 0;
+		}
+		return source->getRamSize();
 	}
 
 	int Sound::getChannels()
