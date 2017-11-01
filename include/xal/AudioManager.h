@@ -452,17 +452,24 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual void _resumeAudio();
 
-		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format (bit rate, channel number, sampling rate).
+		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format.
 		/// @param[in] source Source object that holds the data.
 		/// @param[in,out] stream The data stream buffer.
-		virtual void _convertStream(Source* source, hstream& stream) { }
+		void _convertStream(Source* source, hstream& stream);
+		/// @brief Depending on the audio manager implementation, this method may convert audio data to the appropriate format.
+		/// @param[in] logicalName Logical name of the data stream.
+		/// @param[in] channels Number of channels.
+		/// @param[in] samplingRate Sampling rate.
+		/// @param[in] bitsPerSample Bits per sample.
+		/// @param[in,out] stream The data stream buffer.
+		virtual void _convertStream(chstr logicalName, int channels, int samplingRate, int bitsPerSample, hstream& stream);
 
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.
-		virtual inline void _suspendSystem() { }
+		virtual void _suspendSystem();
 		/// @brief Special additional processing for suspension, required for some implementations.
 		/// @note This method is not thread-safe and is for internal usage only.
-		virtual inline void _resumeSystem() { }
+		virtual void _resumeSystem();
 
 		/// @brief Threaded update call.
 		/// @param[in] thread The Thread instance calling.

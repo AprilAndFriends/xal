@@ -36,6 +36,8 @@ namespace xal
 		this->buffer = xal::manager->_createBuffer(category, data, size, channels, samplingRate, bitsPerSample);
 		// extracting filename without extension and prepending the prefix
 		this->name = name;
+		// calling this here, because otherwise it would have to be called in the constructor of Buffer
+		xal::manager->_convertStream("manual sound in category '" + name + "'", channels, samplingRate, bitsPerSample, this->buffer->getStream());
 	}
 
 	Sound::~Sound()

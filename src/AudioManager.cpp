@@ -43,10 +43,6 @@
 
 namespace xal
 {
-
-
-	extern void (*gLogFunction)(chstr);
-	
 	HL_ENUM_CLASS_DEFINE(Format,
 	(
 		HL_ENUM_DEFINE(Format, FLAC);
@@ -917,13 +913,13 @@ namespace xal
 			this->suspended = true;
 		}
 	}
-	
+
 	void AudioManager::resumeAudio()
 	{
 		hmutex::ScopeLock lock(&this->mutex);
 		this->_resumeAudio();
 	}
-	
+
 	void AudioManager::_resumeAudio()
 	{
 		if (this->suspended)
@@ -938,7 +934,24 @@ namespace xal
 			this->suspendedPlayers.clear();
 		}
 	}
-	
+
+	void AudioManager::_convertStream(Source* source, hstream& stream)
+	{
+		this->_convertStream(source->getFilename(), source->getChannels(), source->getSamplingRate(), source->getBitsPerSample(), stream);
+	}
+
+	void AudioManager::_convertStream(chstr logicalName, int channels, int samplingRate, int bitsPerSample, hstream& stream)
+	{
+	}
+
+	void AudioManager::_suspendSystem()
+	{
+	}
+
+	void AudioManager::_resumeSystem()
+	{
+	}
+
 	void AudioManager::addAudioExtension(chstr extension)
 	{
 		this->extensions += extension;

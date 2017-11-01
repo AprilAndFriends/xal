@@ -6,7 +6,7 @@
 <UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_player.html#aa2b932cc3ae887ea514b8c654c64f922"><param name="Name" value="_calcGain"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a1c949837387c95e6a43178336c878b51"><param name="Name" value="_clearMemory"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ade7ed38b5bfe6f957c3e978dfb937c09"><param name="Name" value="_convertStream"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a2e307583b0da881aa30060a0e72504c1"><param name="Name" value="_convertStream"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a0bb09b00165859707c772d75b6fbc61b"><param name="Name" value="_createBuffer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#af7bffc4c87966268297761d17b0ce6e8"><param name="Name" value="_createCategory"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#af8ee8646d9b0762a994a0ad63fc231b5"><param name="Name" value="_createManagedPlayer"></OBJECT>
@@ -327,6 +327,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_buffer_mode.html#a70c04ced23b6d38beb1dc8caaa78ae57"><param name="Name" value="Managed"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a231f79efd2ba5f055fb393b30201d8b4"><param name="Name" value="managedPlayers"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_audio_manager_8h.html#ab232638db70c21cdc72579ac111f9cef"><param name="Name" value="manager"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#aba2cc394acc771bfc7f0e2b22794697b"><param name="Name" value="Memory"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ab4dbae63b6664fbf4680ddd21e656ff2"><param name="Name" value="mutex"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a66020746b9b0d9a287d76747cc933ebd"><param name="Name" value="name"></OBJECT>
   <UL>
@@ -470,7 +471,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html"><param name="Name" value="xal::AudioManager"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a1c949837387c95e6a43178336c878b51"><param name="Name" value="_clearMemory"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#ade7ed38b5bfe6f957c3e978dfb937c09"><param name="Name" value="_convertStream"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a2e307583b0da881aa30060a0e72504c1"><param name="Name" value="_convertStream"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#a0bb09b00165859707c772d75b6fbc61b"><param name="Name" value="_createBuffer"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#af7bffc4c87966268297761d17b0ce6e8"><param name="Name" value="_createCategory"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_audio_manager.html#af8ee8646d9b0762a994a0ad63fc231b5"><param name="Name" value="_createManagedPlayer"></OBJECT>
@@ -678,6 +679,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a00d5a3d4fe7ecab7893fcb20b754dc8d"><param name="Name" value="hasValue"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ac8d54426daa6d78e2aab1a787314ef6d"><param name="Name" value="hasValueFor"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a4a9ab3b12b9707ed98aa61ede605b26b"><param name="Name" value="M4A"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#aba2cc394acc771bfc7f0e2b22794697b"><param name="Name" value="Memory"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#ac019449e9fd5e440d08e69b761e56940"><param name="Name" value="next"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a241436f2e2b7dcb890c74148d72489b6"><param name="Name" value="OGG"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classxal_1_1_format.html#a591d9b3bc7506c9db091d5076c4280d9"><param name="Name" value="operator!="></OBJECT>

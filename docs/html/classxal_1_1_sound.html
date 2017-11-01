@@ -68,6 +68,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa9406cface2089a15a37facec7a889d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_sound.html#aa9406cface2089a15a37facec7a889d3">Sound</a> (chstr <a class="el" href="classxal_1_1_sound.html#a5dbe88cd033308de56028faa33796cdb">filename</a>, <a class="el" href="classxal_1_1_category.html">Category</a> *<a class="el" href="classxal_1_1_sound.html#a9f25c6a78d30036d7b49c8e832e7cbfe">category</a>, chstr prefix=&quot;&quot;)</td></tr>
 <tr class="memdesc:aa9406cface2089a15a37facec7a889d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa9406cface2089a15a37facec7a889d3">More...</a><br /></td></tr>
 <tr class="separator:aa9406cface2089a15a37facec7a889d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51d8c75cb956dc7771f26e40d5497adb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_sound.html#a51d8c75cb956dc7771f26e40d5497adb">Sound</a> (chstr <a class="el" href="classxal_1_1_sound.html#ae2bc29c81a0697ed0f2caad0e45e108b">name</a>, <a class="el" href="classxal_1_1_category.html">Category</a> *<a class="el" href="classxal_1_1_sound.html#a9f25c6a78d30036d7b49c8e832e7cbfe">category</a>, unsigned char *data, int size, int channels, int samplingRate, int bitsPerSample)</td></tr>
+<tr class="memdesc:a51d8c75cb956dc7771f26e40d5497adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a51d8c75cb956dc7771f26e40d5497adb">More...</a><br /></td></tr>
+<tr class="separator:a51d8c75cb956dc7771f26e40d5497adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13f88df0755b7db841b13d35563263a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13f88df0755b7db841b13d35563263a3"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxal_1_1_sound.html#a13f88df0755b7db841b13d35563263a3">~Sound</a> ()</td></tr>
 <tr class="memdesc:a13f88df0755b7db841b13d35563263a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -172,6 +175,76 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Player</b></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>Filename of the <a class="el" href="classxal_1_1_sound.html" title="Provides audio data definition. ">Sound</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">category</td><td>The <a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a> where to register this <a class="el" href="classxal_1_1_sound.html" title="Provides audio data definition. ">Sound</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">prefix</td><td>Used to differentiate between Sounds that have the same filename (e.g. by using a directory path as prefix). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a51d8c75cb956dc7771f26e40d5497adb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xal::Sound::Sound </td>
+          <td>(</td>
+          <td class="paramtype">chstr&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxal_1_1_category.html">Category</a> *&#160;</td>
+          <td class="paramname"><em>category</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>samplingRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>bitsPerSample</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Filename of the <a class="el" href="classxal_1_1_sound.html" title="Provides audio data definition. ">Sound</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">category</td><td>The <a class="el" href="classxal_1_1_category.html" title="Defines an audio category which makes audio file organization easier. ">Category</a> where to register this <a class="el" href="classxal_1_1_sound.html" title="Provides audio data definition. ">Sound</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Raw audio data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Raw audio data byte size. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">channels</td><td>Number of channels. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">samplingRate</td><td>Sampling rate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bitsPerSample</td><td>Bits per sample. </td></tr>
   </table>
   </dd>
 </dl>
@@ -303,7 +376,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Player</b></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>source byte size </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Source byte size. </dd></dl>
 
 </div>
 </div>
