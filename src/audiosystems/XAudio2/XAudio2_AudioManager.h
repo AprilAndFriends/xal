@@ -39,15 +39,14 @@ namespace xal
 		XAudio2_AudioManager(void* backendId, bool threaded = false, float updateTime = 0.01f, chstr deviceName = "");
 		~XAudio2_AudioManager();
 
-		void suspendAudio();
-		void resumeAudio();
-
 	protected:
 		Player* _createSystemPlayer(Sound* sound);
+
+		void _suspendSystem();
+		void _resumeSystem();
 
 	};
 
 }
-
 #endif
 #endif

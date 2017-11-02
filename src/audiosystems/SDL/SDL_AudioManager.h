@@ -56,6 +56,5 @@ namespace xal
 	};
 
 }
-
 #endif
 #endif

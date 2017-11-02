@@ -98,7 +98,7 @@ namespace xal
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
 		hlog::write(logTag, "Destroying OpenAL.");
-		destroyOpenAL();
+		this->destroyOpenAL();
 	}
 	
 	void OpenAL_AudioManager::initOpenAL()
@@ -162,8 +162,8 @@ namespace xal
 		{
 			((OpenAL_Player*)*it)->destroyOpenALBuffers();
 		}
-		destroyOpenAL();
-		initOpenAL();
+		this->destroyOpenAL();
+		this->initOpenAL();
 		foreach (Player*, it, this->players)
 		{
 			((OpenAL_Player*)*it)->createOpenALBuffers();
@@ -205,6 +205,12 @@ namespace xal
 	}
 	
 #ifdef _IOS
+	void OpenAL_AudioManager::_suspendAudio()
+	{
+		this->pendingResume = false;
+		AudioManager::_suspendAudio();
+	}
+
 	void OpenAL_AudioManager::_resumeAudio()
 	{
 		if (!OpenAL_iOS_isAudioSessionActive())
@@ -214,12 +220,6 @@ namespace xal
 		}
 		AudioManager::_resumeAudio();
 		this->pendingResume = false;
-	}
-	
-	void OpenAL_AudioManager::_suspendAudio()
-	{
-		this->pendingResume = false;
-		AudioManager::_suspendAudio();
 	}
 
 	void OpenAL_AudioManager::_update(float timeDelta)
@@ -276,7 +276,7 @@ namespace xal
 		}
 		if (reset)
 		{
-			resetOpenAL();
+			this->resetOpenAL();
 		}
 		else
 		{

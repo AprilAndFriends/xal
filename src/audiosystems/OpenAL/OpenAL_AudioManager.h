@@ -50,16 +50,17 @@ namespace xal
 		ALCdevice* device;
 		ALCcontext* context;
 		int numActiveSources;
+#ifdef _IOS // iOS exception handling dealing with Audio Session interruptions
+		bool pendingResume;
+#endif
 
 		Player* _createSystemPlayer(Sound* sound);
 		unsigned int _allocateSourceId();
 		void _releaseSourceId(unsigned int sourceId);
-#ifdef _IOS
-		void _resumeAudio();
+#ifdef _IOS // iOS exception handling dealing with Audio Session interruptions
 		void _suspendAudio();
+		void _resumeAudio();
 		void _update(float timeDelta);
-
-		bool pendingResume; // iOS exception handling dealing with Audio Session interruptions
 #endif
 		void initOpenAL();
 		void destroyOpenAL();
@@ -68,6 +69,5 @@ namespace xal
 	};
 	
 }
-
 #endif
 #endif

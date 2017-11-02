@@ -71,20 +71,20 @@ namespace xal
 		_HL_TRY_RELEASE(this->xa2Device);
 	}
 	
-	void XAudio2_AudioManager::suspendAudio()
+	void XAudio2_AudioManager::_suspendSystem()
 	{
-		AudioManager::suspendAudio();
+		AudioManager::_suspendSystem();
 		this->xa2Device->StopEngine();
 	}
 
-	void XAudio2_AudioManager::resumeAudio()
+	void XAudio2_AudioManager::_resumeSystem()
 	{
 		HRESULT result = this->xa2Device->StartEngine();
 		if (FAILED(result))
 		{
 			hlog::error(logTag, "Could not restart engine!");
 		}
-		AudioManager::resumeAudio();
+		AudioManager::_resumeSystem();
 	}
 
 	Player* XAudio2_AudioManager::_createSystemPlayer(Sound* sound)
