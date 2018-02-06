@@ -66,7 +66,7 @@ namespace xal
 		this->size = size;
 		this->channels = channels;
 		this->samplingRate = samplingRate;
-		this->bitsPerSample = bitsPerSample / 8;
+		this->bitsPerSample = bitsPerSample;
 		this->duration = (float)size / (samplingRate * channels * bitsPerSample / 8);
 		this->idleTime = 0.0f;
 	}
