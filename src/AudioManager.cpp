@@ -432,16 +432,24 @@ namespace xal
 	
 	void AudioManager::_destroySound(Sound* sound)
 	{
-		foreach_m (Sound*, it, this->sounds)
+		harray<Player*> managedPlayers = this->managedPlayers; // making a copy, because this->managedPlayers will change
+		foreach (Player*, it, managedPlayers)
 		{
-			if (it->second == sound)
+			if ((*it)->getSound() == sound)
 			{
-				hlog::write(logTag, "Destroying sound: " + it->first);
-				delete it->second;
-				this->sounds.erase(it);
-				break;
+				this->_destroyManagedPlayer(*it);
 			}
 		}
+		foreach (Player*, it, this->players)
+		{
+			if ((*it)->getSound() == sound)
+			{
+				throw Exception("Audio Manager: Sounds cannot be destroyed (there are one or more manually created players that haven't been destroyed): " + sound->getName());
+			}
+		}
+		hlog::write(logTag, "Destroying sound: " + sound->getName());
+		this->sounds.removeKey(sound->getName());
+		delete sound;
 	}
 	
 	void AudioManager::destroySoundsWithPrefix(chstr prefix)
@@ -468,7 +476,7 @@ namespace xal
 		bool manual;
 		foreach (Sound*, it, destroySounds)
 		{
-			managedPlayers = this->managedPlayers;
+			managedPlayers = this->managedPlayers; // making a copy, because this->managedPlayers will change
 			foreach (Player*, it2, managedPlayers)
 			{
 				if ((*it2)->getSound() == (*it))
