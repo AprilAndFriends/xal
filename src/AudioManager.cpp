@@ -73,7 +73,7 @@ namespace xal
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), globalGainFadeTarget(-1.0f),
-		globalGainFadeSpeed(-1.0f), globalGainFadeTime(0.0f), thread(NULL), threadRunning(false)
+		globalGainFadeSpeed(-1.0f), globalGainFadeTime(0.0f), suspendResumeFadeTime(0.25f), thread(NULL), threadRunning(false)
 	{
 		this->samplingRate = 44100;
 		this->channels = 2;
@@ -244,7 +244,7 @@ namespace xal
 		{
 			xal::manager->_update(xal::manager->updateTime);
 			lock.release();
-			hthread::sleep(xal::manager->updateTime * 1000);
+			hthread::sleep(xal::manager->updateTime * 1000.0f);
 			lock.acquire(&xal::manager->mutex);
 		}
 		lock.release();
@@ -314,6 +314,15 @@ namespace xal
 			}
 			foreach (Buffer*, it, this->buffers)
 			{
+				(*it)->_update(timeDelta);
+			}
+		}
+		else if (this->suspendResumeFadeTime > 0.0f && this->thread != NULL)
+		{
+			// fade update when suspending
+			foreach (Player*, it, this->players)
+			{
+				(*it)->_systemUpdateGain();
 				(*it)->_update(timeDelta);
 			}
 		}
@@ -905,15 +914,20 @@ namespace xal
 		if (!this->suspended)
 		{
 			hlog::write(logTag, "Suspending XAL.");
+			float fadeTime = 0.0f;
+			if (this->thread != NULL) // only allow when update thread is not on main thread which can actually properly update this value
+			{
+				fadeTime = this->suspendResumeFadeTime;
+			}
 			foreach (Player*, it, this->players)
 			{
 				if ((*it)->_isFadingOut())
 				{
-					(*it)->paused ? (*it)->_pause() : (*it)->_stop();
+					(*it)->paused ? (*it)->_pause(fadeTime) : (*it)->_stop(fadeTime);
 				}
 				else if ((*it)->_isPlaying())
 				{
-					(*it)->_pause();
+					(*it)->_pause(fadeTime);
 					this->suspendedPlayers += (*it);
 				}
 			}
@@ -935,9 +949,14 @@ namespace xal
 			hlog::write(logTag, "Resuming XAL.");
 			this->suspended = false;
 			this->_resumeSystem();
+			float fadeTime = 0.0f;
+			if (this->thread != NULL) // only allow when update thread is not on main thread which can actually properly update this value
+			{
+				fadeTime = this->suspendResumeFadeTime;
+			}
 			foreach (Player*, it, this->suspendedPlayers)
 			{
-				(*it)->_play();
+				(*it)->_play(fadeTime);
 			}
 			this->suspendedPlayers.clear();
 		}

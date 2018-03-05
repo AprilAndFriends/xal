@@ -136,11 +136,13 @@ namespace xal
 		void setGlobalGain(float value);
 		/// @return Gets the global gain fade target.
 		float getGlobalGainFadeTarget();
+		/// @brief Gets and sets the suspend gain fade speed.
+		HL_DEFINE_GETSET(float, suspendResumeFadeTime, SuspendResumeFadeTime);
 		/// @return Gets a list of all currently existing Player instances.
 		harray<Player*> getPlayers();
 		/// @return Gets a map of all loaded Sound instances.
 		hmap<hstr, Sound*> getSounds();
-		/// @return True if global gain is fading
+		/// @return True if global gain is fading.
 		bool isGlobalGainFading();
 
 		/// @brief Updates all audio processing.
@@ -323,6 +325,8 @@ namespace xal
 		float globalGainFadeSpeed;
 		/// @brief Global gain fade time.
 		float globalGainFadeTime;
+		/// @brief Fade time when suspending and resuming audio system.
+		float suspendResumeFadeTime;
 		/// @brief List of registered audio categories.
 		hmap<hstr, Category*> categories;
 		/// @brief Currently existing Player instances.
