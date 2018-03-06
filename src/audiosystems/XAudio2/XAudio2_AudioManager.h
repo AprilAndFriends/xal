@@ -40,7 +40,11 @@ namespace xal
 		~XAudio2_AudioManager();
 
 	protected:
+		bool stopped;
+
 		Player* _createSystemPlayer(Sound* sound);
+
+		void _update(float timeDelta);
 
 		void _suspendSystem();
 		void _resumeSystem();

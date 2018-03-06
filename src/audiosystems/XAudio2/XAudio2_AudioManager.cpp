@@ -22,7 +22,7 @@ using namespace Microsoft::WRL;
 namespace xal
 {
 	XAudio2_AudioManager::XAudio2_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(backendId, threaded, updateTime, deviceName), xa2Device(NULL), xa2MasteringVoice(NULL)
+		AudioManager(backendId, threaded, updateTime, deviceName), xa2Device(NULL), xa2MasteringVoice(NULL), stopped(false)
 	{
 		this->name = XAL_AS_XAUDIO2;
 		hlog::write(logTag, "Initializing XAudio2.");
@@ -70,19 +70,40 @@ namespace xal
 		}
 		_HL_TRY_RELEASE(this->xa2Device);
 	}
+
+	void XAudio2_AudioManager::_update(float timeDelta)
+	{
+		AudioManager::_update(timeDelta);
+		if (this->suspended && !this->stopped && !this->_isAnyFading())
+		{
+			hlog::write(logTag, "Stopping engine.");
+			this->xa2Device->StopEngine();
+			this->stopped = true;
+		}
+	}
 	
 	void XAudio2_AudioManager::_suspendSystem()
 	{
 		AudioManager::_suspendSystem();
-		this->xa2Device->StopEngine();
+		if (!this->stopped && !this->_isAnyFading())
+		{
+			hlog::write(logTag, "Stopping engine.");
+			this->xa2Device->StopEngine();
+			this->stopped = true;
+		}
 	}
 
 	void XAudio2_AudioManager::_resumeSystem()
 	{
-		HRESULT result = this->xa2Device->StartEngine();
-		if (FAILED(result))
+		if (this->stopped)
 		{
-			hlog::error(logTag, "Could not restart engine!");
+			hlog::write(logTag, "Starting engine.");
+			HRESULT result = this->xa2Device->StartEngine();
+			if (FAILED(result))
+			{
+				hlog::error(logTag, "Could not restart engine!");
+			}
+			this->stopped = false;
 		}
 		AudioManager::_resumeSystem();
 	}

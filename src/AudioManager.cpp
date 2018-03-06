@@ -73,7 +73,7 @@ namespace xal
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), globalGainFadeTarget(-1.0f),
-		globalGainFadeSpeed(-1.0f), globalGainFadeTime(0.0f), suspendResumeFadeTime(0.25f), thread(NULL), threadRunning(false)
+		globalGainFadeSpeed(-1.0f), globalGainFadeTime(0.0f), suspendResumeFadeTime(0.5f), thread(NULL), threadRunning(false)
 	{
 		this->samplingRate = 44100;
 		this->channels = 2;
@@ -235,6 +235,12 @@ namespace xal
 	bool AudioManager::_isGlobalGainFading() const
 	{
 		return (this->globalGainFadeTarget >= 0.0f && this->globalGainFadeSpeed > 0.0f);
+	}
+
+	bool AudioManager::_isAnyFading() const
+	{
+		HL_LAMBDA_CLASS(_playerFadingOut, bool, ((Player* const& player) { return player->_isFading(); }));
+		return this->players.matchesAny(&_playerFadingOut::lambda);
 	}
 
 	void AudioManager::_update(hthread* thread)

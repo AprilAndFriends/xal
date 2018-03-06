@@ -372,6 +372,8 @@ namespace xal
 		hmap<hstr, Sound*> _getSounds() const;
 		/// @note This method is not thread-safe and is for internal usage only.
 		bool _isGlobalGainFading() const;
+		/// @note This method is not thread-safe and is for internal usage only.
+		bool _isAnyFading() const;
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		virtual void _update(float timeDelta);
