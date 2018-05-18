@@ -14,7 +14,7 @@ file(
 
 add_library(ogg STATIC ${CppSrc})
 
-include_directories(AFTER "../..")
+include_directories(AFTER "../../include")
 
 add_definitions(
 	-DLIBOGG_EXPORTS

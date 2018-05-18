@@ -30,6 +30,8 @@ include_directories(AFTER "../../../ogg/include")
 
 add_definitions(
 	-D_ARM_ASSEM_
+	-Wno-unused-const-variable
+	-Wno-unused-variable
 )
 
 target_link_libraries(

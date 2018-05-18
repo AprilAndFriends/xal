@@ -2,5 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../lib" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../../demos/demo_test" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../../demos/media" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../../lib/ogg/android-studio/lib" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../../lib/tremor/android-studio/lib" vcs="svn" />
   </component>
 </project>
