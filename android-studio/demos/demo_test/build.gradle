@@ -1,0 +1,30 @@
+apply plugin: "com.android.application"
+apply from: "../../../../hltypes/android-studio/generic/default.gradle"
+apply from: "../../../../hltypes/android-studio/generic/native.gradle"
+apply from: "../../../../hltypes/android-studio/generic/cpp.gradle"
+
+android {
+	defaultConfig {
+		applicationId "com.xal.demoTest"
+		versionCode 3600
+		versionName "3.6.0"
+	}
+	externalNativeBuild {
+		cmake {
+			path "CMakeLists.txt"
+		}
+	}
+	sourceSets {
+		main {
+			assets.srcDirs = ["../../../demos/media"]
+		}
+	}
+}
+
+dependencies {
+	implementation project(":hltypes")
+	implementation project(":ogg")
+	implementation project(":tremor")
+	implementation project(":xal")
+	implementation fileTree(include: ["*.jar"], dir: "libs")
+}

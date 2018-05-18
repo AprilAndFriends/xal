@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../lib/april.iml" filepath="$PROJECT_DIR$/../lib/april.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../aprilpix/android-studio/lib/aprilpix.iml" filepath="$PROJECT_DIR$/../../aprilpix/android-studio/lib/aprilpix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_3d/demo_3d.iml" filepath="$PROJECT_DIR$/demo_3d/demo_3d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_advanced/demo_advanced.iml" filepath="$PROJECT_DIR$/demo_advanced/demo_advanced.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_helloworld/demo_helloworld.iml" filepath="$PROJECT_DIR$/demo_helloworld/demo_helloworld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_motion/demo_motion.iml" filepath="$PROJECT_DIR$/demo_motion/demo_motion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_pix/demo_pix.iml" filepath="$PROJECT_DIR$/demo_pix/demo_pix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_simple/demo_simple.iml" filepath="$PROJECT_DIR$/demo_simple/demo_simple.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo_tictactoe/demo_tictactoe.iml" filepath="$PROJECT_DIR$/demo_tictactoe/demo_tictactoe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demos.iml" filepath="$PROJECT_DIR$/demos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../gtypes/android-studio/lib/gtypes.iml" filepath="$PROJECT_DIR$/../../../gtypes/android-studio/lib/gtypes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../hltypes/android-studio/lib/hltypes.iml" filepath="$PROJECT_DIR$/../../../hltypes/android-studio/lib/hltypes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../lib/jpeg/android-studio/lib/jpeg.iml" filepath="$PROJECT_DIR$/../../lib/jpeg/android-studio/lib/jpeg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../lib/png/android-studio/lib/png.iml" filepath="$PROJECT_DIR$/../../lib/png/android-studio/lib/png.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../lib/webp/android-studio/lib/webp.iml" filepath="$PROJECT_DIR$/../../lib/webp/android-studio/lib/webp.iml" />
+    </modules>
+  </component>
+</project>

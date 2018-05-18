@@ -1,0 +1,11 @@
+include(":ogg")
+include(":tremor")
+include(":hltypes")
+include(":xal")
+include(":demo_simple")
+include(":demo_test")
+
+project(":ogg").projectDir = file("../../lib/ogg/android-studio/lib")
+project(":tremor").projectDir = file("../../lib/tremor/android-studio/lib")
+project(":hltypes").projectDir = file("../../../hltypes/android-studio/lib")
+project(":xal").projectDir = file("../lib")
