@@ -19,8 +19,8 @@ include_directories(AFTER "../../src/audiosystems/OpenSLES")
 include_directories(AFTER "../../src/audiosystems/NoAudio")
 include_directories(AFTER "../../src/audiosources")
 include_directories(AFTER "../../../hltypes/include")
-include_directories(AFTER "../../lib/ogg/include")
 include_directories(AFTER "../../lib/vorbis/include")
+include_directories(AFTER "../../lib/ogg/include")
 
 add_definitions(
 	-DXAL_EXPORTS

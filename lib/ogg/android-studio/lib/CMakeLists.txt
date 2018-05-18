@@ -8,8 +8,8 @@ include("../../../../../hltypes/android-studio/generic/cmake-preprocessors.txt")
 # defining manually so source files don't need to be changed
 file(
 	GLOB CppSrc
-	"../../bitwise.c"
-	"../../framing.c"
+	"../../src/bitwise.c"
+	"../../src/framing.c"
 )
 
 add_library(ogg STATIC ${CppSrc})

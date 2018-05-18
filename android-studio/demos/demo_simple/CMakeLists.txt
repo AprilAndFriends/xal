@@ -17,20 +17,20 @@ include_directories(AFTER "../../../../hltypes/include")
 
 add_subdirectory("../../lib" xal)
 add_subdirectory("../../../../hltypes/android-studio/lib" hltypes)
-add_subdirectory("../../../lib/ogg/android-studio/lib" ogg)
 add_subdirectory("../../../lib/tremor/android-studio/lib" tremor)
+add_subdirectory("../../../lib/ogg/android-studio/lib" ogg)
 
 target_link_libraries(
 	demo_simple
 	xal
 	hltypes
-	ogg
 	tremor
+	ogg
 	${liblog}
 	${libz}
 	${libc}
 	${libdl}
 	${libandroid}
 	${libGLESv2}
-	${libSLES}
+	${libOpenSLES}
 )

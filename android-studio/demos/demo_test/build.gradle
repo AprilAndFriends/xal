@@ -22,9 +22,13 @@ android {
 }
 
 dependencies {
-	implementation project(":hltypes")
+	implementation project(":png")
+	implementation project(":jpeg")
 	implementation project(":ogg")
 	implementation project(":tremor")
+	implementation project(":hltypes")
+	implementation project(":gtypes")
+	implementation project(":april")
 	implementation project(":xal")
 	implementation fileTree(include: ["*.jar"], dir: "libs")
 }
