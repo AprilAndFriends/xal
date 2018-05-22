@@ -203,8 +203,12 @@ namespace xal
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
+		//this->pendingResume = true;
+		return false;
+		/*
 		hmutex::ScopeLock lock(&this->mutex); // otherwise don't lock because at this point we're already locked
 		return this->_resumeOpenALContext();
+		*/
 	}
 
 #ifdef _IOS

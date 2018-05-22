@@ -142,7 +142,7 @@ bool hasiOSAudioSessionRestoreFailed()
 	switch ([seccondReason integerValue])
 	{
 	case AVAudioSessionInterruptionOptionShouldResume:
-		hlog::write(xal::logTag, "resuming audio playback");
+		hlog::write(xal::logTag, "Trying to restore audio session now.");
 		if (!restoreiOSAudioSession())
 		{
 			hlog::writef(xal::logTag, "Error resuming Audio session, try again later.");
