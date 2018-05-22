@@ -51,6 +51,7 @@ bool tryActivateAudioSession()
 {
 	NSError* error = nil;
 	[[AVAudioSession sharedInstance] setActive:YES error:&error];
+	alGetError(); // needs to clear the error variable
 	if (error != nil)
 	{
 		restoreSessionFailed = true;

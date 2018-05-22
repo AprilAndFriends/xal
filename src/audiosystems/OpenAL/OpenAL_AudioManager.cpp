@@ -47,7 +47,6 @@ bool OpenAL_iOS_isAudioSessionActive();
 bool restoreiOSAudioSession();
 bool _restoreiOSAudioSession();
 bool hasiOSAudioSessionRestoreFailed();
-static bool gAudioSuspended = false; // iOS specific hack as well
 #endif
 
 #define _CASE_STRING(x) case x: return #x;
@@ -113,7 +112,6 @@ namespace xal
 		}
 		this->deviceName = alcGetString(currentDevice, ALC_DEVICE_SPECIFIER);
 		hlog::write(logTag, "Audio device: " + this->deviceName);
-		
 #ifdef _IOS
 		// iOS generates only 4 stereo sources by default, so lets override that
 		ALCint params[5] = {ALC_STEREO_SOURCES, 16, ALC_MONO_SOURCES, 16, 0};
@@ -203,12 +201,8 @@ namespace xal
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
-		//this->pendingResume = true;
-		return false;
-		/*
 		hmutex::ScopeLock lock(&this->mutex); // otherwise don't lock because at this point we're already locked
 		return this->_resumeOpenALContext();
-		*/
 	}
 
 #ifdef _IOS
@@ -244,14 +238,11 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->mutex);
 		hlog::write(logTag, "Suspending OpenAL Context.");
+		// all sounds must released their source IDs immediately to avoid issues with audio system state corruption
+		float suspendResumeFadeTime = this->suspendResumeFadeTime;
+		this->suspendResumeFadeTime = 0.0f;
 		AudioManager::_suspendAudio();
-		/*
-		gAudioSuspended = this->isSuspended();
-		if (!gAudioSuspended)
-		{
-			this->_suspendAudio();
-		}
-		*/
+		this->suspendResumeFadeTime = suspendResumeFadeTime;
 		alcMakeContextCurrent(NULL);
 		alcSuspendContext(this->context);
 	}
@@ -261,24 +252,15 @@ namespace xal
 		ALCenum error = ALC_NO_ERROR;
 		hlog::write(logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
-		bool resumed = false;
 		this->pendingResume = true;
 		if ((error = alcGetError(this->device)) == ALC_NO_ERROR)
 		{
 			alcProcessContext(this->context);
-			if ((error = alcGetError(this->device)) == ALC_NO_ERROR)// && !gAudioSuspended)
+			if ((error = alcGetError(this->device)) == ALC_NO_ERROR)
 			{
 				this->_resumeAudio();
 			}
 		}
-		//if (/*!gAudioSuspended && */!resumed)
-		/*
-		if (!gAudioSuspended && !resumed)
-		{
-			this->_resumeAudio();
-			//this->_resumeAudio();
-		}
-		*/
 		if (error != ALC_NO_ERROR)
 		{
 			hlog::write(logTag, "Failed resuming OpenAL Context, will try again later: " + alcGetErrorString(error));
