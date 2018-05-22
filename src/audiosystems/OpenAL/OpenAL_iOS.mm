@@ -47,13 +47,13 @@ static int restoreAttempts = 0;
 }
 @end
 
-bool restoreiOSAudioSession()
+bool tryActivateAudioSession()
 {
-	restoreSessionFailed = true;
 	NSError* error = nil;
 	[[AVAudioSession sharedInstance] setActive:YES error:&error];
 	if (error != nil)
 	{
+		restoreSessionFailed = true;
 		++restoreAttempts;
 		if (restoreAttempts % 20 == 0)
 		{
@@ -61,43 +61,43 @@ bool restoreiOSAudioSession()
 		}
 		return false;
 	}
+	return true;
+}
+
+void finishRestore()
+{
+	if (restoreAttempts > 0)
+	{
+		hlog::writef(xal::logTag, "Succeeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
+	}
+	active = true;
+	restoreSessionFailed = false;
+	restoreAttempts = 0;
+}
+
+bool restoreiOSAudioSession() // mutexed version
+{
+	if (!tryActivateAudioSession())
+	{
+		return false;
+	}
 	if (((xal::OpenAL_AudioManager*)xal::manager)->resumeOpenALContext())
 	{
-		if (restoreAttempts > 0)
-		{
-			hlog::writef(xal::logTag, "Succeeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
-		}
-		active = true;
-		restoreSessionFailed = false;
-		restoreAttempts = 0;
+		finishRestore();
 		return true;
 	}
 	return false;
 }
 
-bool _restoreiOSAudioSession()
+bool _restoreiOSAudioSession() // unmutexed version to avoid deadlocks
 {
-	restoreSessionFailed = true;
-	NSError* error = nil;
-	[[AVAudioSession sharedInstance] setActive:YES error:&error];
-	if (error != nil)
+	if (!tryActivateAudioSession())
 	{
-		++restoreAttempts;
-		if (restoreAttempts % 20 == 0)
-		{
-			hlog::writef(xal::logTag, "Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
-		}
 		return false;
 	}
 	if (((xal::OpenAL_AudioManager*)xal::manager)->_resumeOpenALContext())
 	{
-		if (restoreAttempts > 0)
-		{
-			hlog::writef(xal::logTag, "Succeeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
-		}
-		active = true;
-		restoreSessionFailed = false;
-		restoreAttempts = 0;
+		finishRestore();
 		return true;
 	}
 	return false;

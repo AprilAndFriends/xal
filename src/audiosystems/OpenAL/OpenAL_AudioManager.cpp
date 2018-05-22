@@ -258,7 +258,7 @@ namespace xal
 		hlog::write(logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
 		bool resumed = false;
-		//this->pendingResume = true;
+		this->pendingResume = true;
 		if ((error = alcGetError(this->device)) == ALC_NO_ERROR)
 		{
 			alcProcessContext(this->context);
