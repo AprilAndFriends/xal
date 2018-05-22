@@ -49,11 +49,11 @@ static int restoreAttempts = 0;
 
 bool restoreiOSAudioSession()
 {
+	restoreSessionFailed = true;
 	NSError* error = nil;
 	[[AVAudioSession sharedInstance] setActive:YES error:&error];
 	if (error != nil)
 	{
-		restoreSessionFailed = true;
 		++restoreAttempts;
 		if (restoreAttempts % 20 == 0)
 		{

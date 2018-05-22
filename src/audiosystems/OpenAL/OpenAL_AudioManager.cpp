@@ -200,11 +200,16 @@ namespace xal
 		//hlog::debug(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
 	}
 	
+	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
+	{
+		hmutex::ScopeLock lock(&this->mutex); // otherwise don't lock because at this point we're already locked
+		return this->_resumeOpenALContext();
+	}
+
 #ifdef _IOS
 	void OpenAL_AudioManager::_suspendAudio()
 	{
 		this->pendingResume = false;
-		AudioManager::_suspendAudio();
 	}
 
 	void OpenAL_AudioManager::_resumeAudio()
@@ -220,16 +225,16 @@ namespace xal
 
 	void OpenAL_AudioManager::_update(float timeDelta)
 	{
-		if (hasiOSAudioSessionRestoreFailed())
-		{
-			if (!restoreiOSAudioSession())
-			{
-				hthread::sleep(50.0f);
-				return;
-			}
-		}
 		if (this->pendingResume)
 		{
+			if (hasiOSAudioSessionRestoreFailed())
+			{
+				if (!restoreiOSAudioSession())
+				{
+					hthread::sleep(50.0f);
+					return;
+				}
+			}
 			this->_resumeAudio();
 		}
 		AudioManager::_update(timeDelta);
@@ -239,43 +244,39 @@ namespace xal
 	{
 		hmutex::ScopeLock lock(&this->mutex);
 		hlog::write(logTag, "Suspending OpenAL Context.");
+		AudioManager::_suspendAudio();
+		/*
 		gAudioSuspended = this->isSuspended();
 		if (!gAudioSuspended)
 		{
 			this->_suspendAudio();
 		}
+		*/
 		alcMakeContextCurrent(NULL);
 		alcSuspendContext(this->context);
 	}
 	
-	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
+	bool OpenAL_AudioManager::_resumeOpenALContext() // iOS specific hack
 	{
 		ALCenum error = ALC_NO_ERROR;
 		hmutex::ScopeLock lock;
-		bool restoreFailed = hasiOSAudioSessionRestoreFailed();
-		if (!restoreFailed)
-		{
-			lock.acquire(&this->mutex); // otherwise don't lock because at this point we're already locked
-		}
 		hlog::write(logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
 		bool resumed = false;
 		if ((error = alcGetError(this->device)) == ALC_NO_ERROR)
 		{
 			alcProcessContext(this->context);
-			if ((error = alcGetError(this->device)) == ALC_NO_ERROR && !gAudioSuspended)
+			if ((error = alcGetError(this->device)) == ALC_NO_ERROR)// && !gAudioSuspended)
 			{
-				this->_resumeAudio();
+				AudioManager::_resumeAudio();
+				//this->_resumeAudio();
 				resumed = true;
 			}
 		}
-		if (!gAudioSuspended && !resumed)
+		if (/*!gAudioSuspended && */!resumed)
 		{
-			this->_resumeAudio();
-		}
-		if (!restoreFailed)
-		{
-			lock.release();
+			AudioManager::_resumeAudio();
+			//this->_resumeAudio();
 		}
 		if (error != ALC_NO_ERROR)
 		{
@@ -290,7 +291,7 @@ namespace xal
 		hlog::debug(logTag, "Not iOS, suspendOpenALContext() ignored.");
 	}
 	
-	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
+	bool OpenAL_AudioManager::_resumeOpenALContext() // iOS specific hack
 	{
 		hlog::debug(logTag, "Not iOS, resumeOpenALContext() ignored.");
 		return true;
