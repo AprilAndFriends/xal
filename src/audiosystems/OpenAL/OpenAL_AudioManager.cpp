@@ -186,9 +186,7 @@ namespace xal
 			return 0;
 		}
 		++this->numActiveSources;
-#ifdef _DEBUG
-//		hlog::write(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
-#endif
+		//hlog::debug(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
 		return id;
 	}
 
@@ -199,9 +197,7 @@ namespace xal
 			--this->numActiveSources;
 			alDeleteSources(1, &sourceId);
 		}
-#ifdef _DEBUG
-//		hlog::write(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
-#endif
+		//hlog::debug(logTag, hsprintf("Released source: %d, currently active sources: %d", sourceId, this->numActiveSources));
 	}
 	
 #ifdef _IOS
@@ -228,7 +224,7 @@ namespace xal
 		{
 			if (!restoreiOSAudioSession())
 			{
-				hthread::sleep(50);
+				hthread::sleep(50.0f);
 				return;
 			}
 		}
@@ -254,53 +250,34 @@ namespace xal
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
-		static int reset = -1;
-		ALCenum err = ALC_NO_ERROR;
+		ALCenum error = ALC_NO_ERROR;
 		hmutex::ScopeLock lock;
-		if (!hasiOSAudioSessionRestoreFailed())
+		bool restoreFailed = hasiOSAudioSessionRestoreFailed();
+		if (!restoreFailed)
 		{
 			lock.acquire(&this->mutex); // otherwise don't lock because at this point we're already locked
 		}
 		hlog::write(logTag, "Resuming OpenAL Context.");
-		if (reset == -1) // only check once, for performance reasons.
+		alcMakeContextCurrent(this->context);
+		if ((error = alcGetError(this->device)) == ALC_NO_ERROR)
 		{
-			size_t size = 255;
-			char cname[256] = {'\0'};
-			sysctlbyname("hw.machine", cname, &size, NULL, 0);
-			hstr name = cname;
-			// So far, only iPhone3GS (iPhone2,1) has problems restoring OpenAL context
-			// so instead of a restoration, a reset is used (destroy and re-init OpenAL)
-			// if another device with similar problems is found in the future, it should
-			// be added to the code below. --kspes @ March 13th, 2013
-			reset = (name == "iPhone2,1" ? 1 : 0);
-		}
-		if (reset)
-		{
-			this->resetOpenAL();
-		}
-		else
-		{
-			alcMakeContextCurrent(this->context);
-			if ((err = alcGetError(this->device)) == ALC_NO_ERROR)
+			alcProcessContext(this->context);
+			if ((error = alcGetError(this->device)) == ALC_NO_ERROR && !gAudioSuspended)
 			{
-				alcProcessContext(this->context);
-				if ((err = alcGetError(this->device)) == ALC_NO_ERROR && !gAudioSuspended)
-				{
-					this->_resumeAudio();
-				}
+				this->_resumeAudio();
 			}
 		}
 		if (!gAudioSuspended)
 		{
 			this->_resumeAudio();
 		}
-		if (!hasiOSAudioSessionRestoreFailed())
+		if (!restoreFailed)
 		{
 			lock.release();
 		}
-		if (err != ALC_NO_ERROR)
+		if (error != ALC_NO_ERROR)
 		{
-			hlog::write(logTag, "Failed resuming OpenAL Context, will try again later. error: " + alcGetErrorString(err));
+			hlog::write(logTag, "Failed resuming OpenAL Context, will try again later: " + alcGetErrorString(err));
 			return false;
 		}
 		return true;
@@ -308,12 +285,12 @@ namespace xal
 #else
 	void OpenAL_AudioManager::suspendOpenALContext() // iOS specific hack
 	{
-		hlog::debug(logTag, "Not iOS, suspendOpenALContext call ignored.");
+		hlog::debug(logTag, "Not iOS, suspendOpenALContext() ignored.");
 	}
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
 	{
-		hlog::debug(logTag, "Not iOS, resumeOpenALContext ignored.");
+		hlog::debug(logTag, "Not iOS, resumeOpenALContext() ignored.");
 		return true;
 	}
 #endif
