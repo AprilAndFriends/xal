@@ -41,7 +41,7 @@ static int restoreAttempts = 0;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
 }
 
-+ (void)didFinishLaunching:(NSNotification *)notification
++ (void)didFinishLaunching:(NSNotification*)notification
 {
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:NULL];
 }
