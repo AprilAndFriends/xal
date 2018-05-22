@@ -75,6 +75,34 @@ bool restoreiOSAudioSession()
 	return false;
 }
 
+bool _restoreiOSAudioSession()
+{
+	restoreSessionFailed = true;
+	NSError* error = nil;
+	[[AVAudioSession sharedInstance] setActive:YES error:&error];
+	if (error != nil)
+	{
+		++restoreAttempts;
+		if (restoreAttempts % 20 == 0)
+		{
+			hlog::writef(xal::logTag, "Failed restoring iOS Audio Session after %d attempts. Will keep trying...", restoreAttempts);
+		}
+		return false;
+	}
+	if (((xal::OpenAL_AudioManager*)xal::manager)->_resumeOpenALContext())
+	{
+		if (restoreAttempts > 0)
+		{
+			hlog::writef(xal::logTag, "Succeeded restoring iOS Audio Session after %d attempts.", restoreAttempts);
+		}
+		active = true;
+		restoreSessionFailed = false;
+		restoreAttempts = 0;
+		return true;
+	}
+	return false;
+}
+
 void suspendiOSAudioSession()
 {
 	[[AVAudioSession sharedInstance] setActive:NO error:NULL];

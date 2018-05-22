@@ -66,8 +66,6 @@ namespace xal
 		void destroyOpenAL();
 		void resetOpenAL();
 		
-		bool _resumeOpenALContext();
-
 	};
 	
 }
