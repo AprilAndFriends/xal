@@ -45,7 +45,7 @@ void OpenAL_iOS_init();
 void OpenAL_iOS_destroy();
 bool OpenAL_iOS_isAudioSessionActive();
 bool restoreiOSAudioSession();
-bool _restoreiOSAudioSession()
+bool _restoreiOSAudioSession();
 bool hasiOSAudioSessionRestoreFailed();
 static bool gAudioSuspended = false; // iOS specific hack as well
 #endif
