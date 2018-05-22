@@ -244,8 +244,8 @@ namespace xal
 		{
 			this->_suspendAudio();
 		}
-		alcSuspendContext(this->context);
 		alcMakeContextCurrent(NULL);
+		alcSuspendContext(this->context);
 	}
 	
 	bool OpenAL_AudioManager::resumeOpenALContext() // iOS specific hack
@@ -259,15 +259,17 @@ namespace xal
 		}
 		hlog::write(logTag, "Resuming OpenAL Context.");
 		alcMakeContextCurrent(this->context);
+		bool resumed = false;
 		if ((error = alcGetError(this->device)) == ALC_NO_ERROR)
 		{
 			alcProcessContext(this->context);
 			if ((error = alcGetError(this->device)) == ALC_NO_ERROR && !gAudioSuspended)
 			{
 				this->_resumeAudio();
+				resumed = true;
 			}
 		}
-		if (!gAudioSuspended)
+		if (!gAudioSuspended && !resumed)
 		{
 			this->_resumeAudio();
 		}
