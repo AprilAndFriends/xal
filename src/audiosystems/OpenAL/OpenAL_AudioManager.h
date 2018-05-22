@@ -45,6 +45,7 @@ namespace xal
 
 		void suspendOpenALContext();
 		bool resumeOpenALContext();
+		bool _resumeOpenALContext();
 
 	protected:
 		ALCdevice* device;
