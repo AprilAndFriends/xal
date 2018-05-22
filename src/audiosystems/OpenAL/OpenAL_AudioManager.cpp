@@ -277,7 +277,7 @@ namespace xal
 		}
 		if (error != ALC_NO_ERROR)
 		{
-			hlog::write(logTag, "Failed resuming OpenAL Context, will try again later: " + alcGetErrorString(err));
+			hlog::write(logTag, "Failed resuming OpenAL Context, will try again later: " + alcGetErrorString(error));
 			return false;
 		}
 		return true;
