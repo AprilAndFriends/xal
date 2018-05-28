@@ -121,7 +121,7 @@ void _test_multiplay(xal::Player* player)
 	xal::manager->play(S_BARK);
 	hthread::sleep(100);
 	xal::manager->play(S_BARK);
-	while (xal::manager->isAnyPlaying(S_BARK))
+	while (xal::manager->getPlayingCount(S_BARK) > 0)
 	{
 		hthread::sleep(100);
 		xal::manager->update(0.1f);
@@ -132,7 +132,7 @@ void _test_multiplay(xal::Player* player)
 	hthread::sleep(200);
 	xal::manager->play(S_WIND);
 	int count = 0;
-	while (xal::manager->isAnyPlaying(S_WIND))
+	while (xal::manager->getPlayingCount(S_WIND) > 0)
 	{
 		hlog::writef("", "- wind stop iteration: %d", count);
 		for_iter (i, 0, 5)
@@ -149,7 +149,7 @@ void _test_multiplay(xal::Player* player)
 	hthread::sleep(200);
 	xal::manager->play(S_WIND);
 	count = 0;
-	while (xal::manager->isAnyPlaying(S_WIND))
+	while (xal::manager->getPlayingCount(S_WIND) > 0)
 	{
 		hlog::writef("", "- wind stopFirst iteration: %d", count);
 		for_iter (i, 0, 5)
@@ -345,7 +345,7 @@ void _test_sources(xal::Player* player)
 		xal::manager->play(S_BARK);
 		hthread::sleep(20);
 	}
-	while (xal::manager->isAnyPlaying(S_BARK))
+	while (xal::manager->getPlayingCount(S_BARK) > 0)
 	{
 		hthread::sleep(100);
 		xal::manager->update(0.1f);

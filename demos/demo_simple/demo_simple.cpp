@@ -106,7 +106,7 @@ int main(Platform::Array<Platform::String^>^ args)
 	// fire & forget, no control over the sound
 	xal::manager->play(SOUND_NORMAL);
 	hlog::write("", "- starting " SOUND_NORMAL);
-	while (xal::manager->isAnyPlaying(SOUND_NORMAL))
+	while (xal::manager->getPlayingCount(SOUND_NORMAL) > 0)
 	{
 		hthread::sleep(100);
 		xal::manager->update(0.1f);
