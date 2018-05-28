@@ -208,6 +208,7 @@ namespace xal
 #ifdef _IOS
 	void OpenAL_AudioManager::_suspendAudio()
 	{
+		AudioManager::_suspendAudio();
 		this->pendingResume = false;
 	}
 
