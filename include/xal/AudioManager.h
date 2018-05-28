@@ -249,26 +249,26 @@ namespace xal
 		/// @param[in] fadeTime Time how long to fade out the Sounds.
 		/// @note This method also stops manually created Players.
 		void stopCategory(chstr categoryName, float fadeTime = 0.0f);
-		/// @brief Checks if a Sound is playing.
+		/// @brief Gets the number of Sound instances playing.
 		/// @param[in] soundName Name of the Sound.
-		/// @return True if there is any Sound playing.
+		/// @return Number of Sound instances playing.
 		/// @note This method only checks managed Sounds that were played in a fire-and-forget fashion.
-		bool isAnyPlaying(chstr soundName);
-		/// @brief Checks if a Sound is fading.
+		int getPlayingCount(chstr soundName);
+		/// @brief Gets the number of Sound instances fading.
 		/// @param[in] soundName Name of the Sound.
-		/// @return True if there is any Sound fading.
+		/// @return Number of Sound instances fading.
 		/// @note This method only checks managed Sounds that were played in a fire-and-forget fashion.
-		bool isAnyFading(chstr soundName);
-		/// @brief Checks if a Sound is fading in.
+		int getFadingCount(chstr soundName);
+		/// @brief Gets the number of Sound instances playing.
 		/// @param[in] soundName Name of the Sound.
-		/// @return True if there is any Sound fading in.
+		/// @return Number of Sound instances fading in.
 		/// @note This method only checks managed Sounds that were played in a fire-and-forget fashion.
-		bool isAnyFadingIn(chstr soundName);
-		/// @brief Checks if a Sound is fading out.
+		int getFadingInCount(chstr soundName);
+		/// @brief Gets the number of Sound instances playing.
 		/// @param[in] soundName Name of the Sound.
-		/// @return True if there is any Sound fading out.
+		/// @return Number of Sound instances fading out.
 		/// @note This method only checks managed Sounds that were played in a fire-and-forget fashion.
-		bool isAnyFadingOut(chstr soundName);
+		int getFadingOutCount(chstr soundName);
 
 		/// @brief Fades the global gain to another value.
 		/// @param[in] globalGainTarget The value to which the global gain should be changed.
@@ -292,6 +292,17 @@ namespace xal
 		/// @param[in] filename Reference filename for the audio file.
 		/// @return The actual audio filename.
 		virtual hstr findAudioFile(chstr filename) const;
+
+#ifndef _DOXYGEN_SHOULD_SKIP_THIS
+		HL_DEPRECATED("Deprecated API. Use AudioManager::getPlayingCount() instead.")
+		bool isAnyPlaying(chstr soundName) { return (this->getPlayingCount(soundName) > 0); }
+		HL_DEPRECATED("Deprecated API. Use AudioManager::getFadingCount() instead.")
+		bool isAnyFading(chstr soundName) { return (this->getFadingCount(soundName) > 0); }
+		HL_DEPRECATED("Deprecated API. Use AudioManager::getFadingInCount() instead.")
+		bool isAnyFadingIn(chstr soundName) { return (this->getFadingInCount(soundName) > 0); }
+		HL_DEPRECATED("Deprecated API. Use AudioManager::getFadingOutCount() instead.")
+		bool isAnyFadingOut(chstr soundName) { return (this->getFadingOutCount(soundName) > 0); }
+#endif
 
 	protected:
 		/// @brief Name of the audio system.
@@ -440,13 +451,13 @@ namespace xal
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _stopCategory(chstr categoryName, float fadeTime);
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyPlaying(chstr soundName) const;
+		int _getPlayingCount(chstr soundName) const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyFading(chstr soundName) const;
+		int _getFadingCount(chstr soundName) const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyFadingIn(chstr soundName) const;
+		int _getFadingInCount(chstr soundName) const;
 		/// @note This method is not thread-safe and is for internal usage only.
-		bool _isAnyFadingOut(chstr soundName) const;
+		int _getFadingOutCount(chstr soundName) const;
 
 		/// @note This method is not thread-safe and is for internal usage only.
 		void _fadeGlobalGain(float globalGainTarget, float fadeTime);

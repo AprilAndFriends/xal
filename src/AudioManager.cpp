@@ -801,77 +801,81 @@ namespace xal
 			}
 		}
 	}
-	
-	bool AudioManager::isAnyPlaying(chstr soundName)
+
+	int AudioManager::getPlayingCount(chstr soundName)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		return this->_isAnyPlaying(soundName);
+		return this->_getPlayingCount(soundName);
 	}
 
-	bool AudioManager::_isAnyPlaying(chstr soundName) const
+	int AudioManager::_getPlayingCount(chstr soundName) const
 	{
+		int result = 0;
 		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isPlaying())
 			{
-				return true;
+				++result;
 			}
 		}
-		return false;
+		return result;
 	}
 
-	bool AudioManager::isAnyFading(chstr soundName)
+	int AudioManager::getFadingCount(chstr soundName)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		return this->_isAnyFading(soundName);
+		return this->_getFadingCount(soundName);
 	}
 
-	bool AudioManager::_isAnyFading(chstr soundName) const
+	int AudioManager::_getFadingCount(chstr soundName) const
 	{
+		int result = 0;
 		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isFading())
 			{
-				return true;
+				++result;
 			}
 		}
-		return false;
+		return result;
 	}
 
-	bool AudioManager::isAnyFadingIn(chstr soundName)
+	int AudioManager::getFadingInCount(chstr soundName)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		return this->_isAnyFadingIn(soundName);
+		return this->_getFadingInCount(soundName);
 	}
 
-	bool AudioManager::_isAnyFadingIn(chstr soundName) const
+	int AudioManager::_getFadingInCount(chstr soundName) const
 	{
+		int result = 0;
 		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isFadingIn())
 			{
-				return true;
+				++result;
 			}
 		}
-		return false;
+		return result;
 	}
 
-	bool AudioManager::isAnyFadingOut(chstr soundName)
+	int AudioManager::getFadingOutCount(chstr soundName)
 	{
 		hmutex::ScopeLock lock(&this->mutex);
-		return this->_isAnyFadingOut(soundName);
+		return this->_getFadingOutCount(soundName);
 	}
 
-	bool AudioManager::_isAnyFadingOut(chstr soundName) const
+	int AudioManager::_getFadingOutCount(chstr soundName) const
 	{
+		int result = 0;
 		foreachc (Player*, it, this->managedPlayers)
 		{
 			if ((*it)->getSound()->getName() == soundName && (*it)->_isFadingOut())
 			{
-				return true;
+				++result;
 			}
 		}
-		return false;
+		return result;
 	}
 
 	void AudioManager::fadeGlobalGain(float globalGainTarget, float fadeTime)
