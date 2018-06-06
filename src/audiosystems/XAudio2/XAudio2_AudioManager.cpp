@@ -24,8 +24,8 @@ namespace xal
 	XAudio2_AudioManager::XAudio2_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(backendId, threaded, updateTime, deviceName), xa2Device(NULL), xa2MasteringVoice(NULL), stopped(false)
 	{
-		this->name = XAL_AS_XAUDIO2;
-		hlog::write(logTag, "Initializing XAudio2.");
+		this->name = AudioSystemType::XAudio2.getName();
+		hlog::write(logTag, "Initializing " + this->name + ".");
 		HRESULT result = XAudio2Create(&this->xa2Device, 0);
 		if (FAILED(result))
 		{
@@ -61,7 +61,7 @@ namespace xal
 
 	XAudio2_AudioManager::~XAudio2_AudioManager()
 	{
-		hlog::write(logTag, "Destroying XAudio2.");
+		hlog::write(logTag, "Destroying " + this->name + ".");
 		this->xa2Device->StopEngine();
 		if (this->xa2MasteringVoice != NULL)
 		{

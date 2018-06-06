@@ -19,14 +19,14 @@ namespace xal
 	NoAudio_AudioManager::NoAudio_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
-		this->name = XAL_AS_DISABLED;
-		hlog::write(logTag, "Initializing NoAudio.");
+		this->name = AudioSystemType::Disabled.getName();
+		hlog::write(logTag, "Initializing " + this->name + ".");
 		this->enabled = false;
 	}
 
 	NoAudio_AudioManager::~NoAudio_AudioManager()
 	{
-		hlog::write(logTag, "Destroying NoAudio.");
+		hlog::write(logTag, "Destroying " + this->name + ".");
 	}
 	
 	hstr NoAudio_AudioManager::findAudioFile(chstr _filename) const

@@ -21,8 +21,8 @@ namespace xal
 	DirectSound_AudioManager::DirectSound_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
-		this->name = XAL_AS_DIRECTSOUND;
-		hlog::write(logTag, "Initializing DirectSound.");
+		this->name = AudioSystemType::DirectSound.getName();
+		hlog::write(logTag, "Initializing " + this->name + ".");
 		HRESULT result = DirectSoundCreate(NULL, &this->dsDevice, NULL);
 		if (FAILED(result))
 		{
@@ -56,7 +56,7 @@ namespace xal
 
 	DirectSound_AudioManager::~DirectSound_AudioManager()
 	{
-		hlog::write(logTag, "Destroying DirectSound.");
+		hlog::write(logTag, "Destroying " + this->name + ".");
 		if (this->dsDevice != NULL)
 		{
 			this->dsDevice->Release();

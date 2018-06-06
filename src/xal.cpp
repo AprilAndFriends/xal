@@ -98,11 +98,11 @@ namespace xal
 	HL_ENUM_CLASS_DEFINE(AudioSystemType,
 	(
 		HL_ENUM_DEFINE(AudioSystemType, Default);
-		HL_ENUM_DEFINE(AudioSystemType, Disabled);
+		HL_ENUM_DEFINE_NAME(AudioSystemType, Disabled, "No-Audio");
 		HL_ENUM_DEFINE(AudioSystemType, DirectSound);
 		HL_ENUM_DEFINE(AudioSystemType, OpenAL);
 		HL_ENUM_DEFINE(AudioSystemType, OpenSLES);
-		HL_ENUM_DEFINE(AudioSystemType, SDL);
+		HL_ENUM_DEFINE_NAME(AudioSystemType, SDL, "SDL-Audio");
 		HL_ENUM_DEFINE(AudioSystemType, XAudio2);
 	));
 

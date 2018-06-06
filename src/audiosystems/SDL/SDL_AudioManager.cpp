@@ -25,8 +25,8 @@ namespace xal
 	SDL_AudioManager::SDL_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(backendId, threaded, updateTime, deviceName)
 	{
-		this->name = XAL_AS_SDL;
-		hlog::write(logTag, "Initializing SDL Audio.");
+		this->name = AudioSystemType::SDL.getName();
+		hlog::write(logTag, "Initializing " + this->name + ".");
 		int result = SDL_InitSubSystem(SDL_INIT_AUDIO);
 		if (result != 0)
 		{
@@ -52,7 +52,7 @@ namespace xal
 
 	SDL_AudioManager::~SDL_AudioManager()
 	{
-		hlog::write(logTag, "Destroying SDL Audio.");
+		hlog::write(logTag, "Destroying " + this->name + ".");
 		SDL_PauseAudio(1);
 		SDL_CloseAudio();
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);

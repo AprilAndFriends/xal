@@ -34,8 +34,8 @@ namespace xal
 	OpenSLES_AudioManager::OpenSLES_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(backendId, threaded, updateTime, deviceName), engineObject(NULL), engine(NULL), outputMixObject(NULL)
 	{
-		this->name = XAL_AS_OPENSLES;
-		hlog::write(logTag, "Initializing OpenSLES.");
+		this->name = AudioSystemType::OpenSLES.getName();
+		hlog::write(logTag, "Initializing " + this->name + ".");
 		SLresult result;
 		// creating engine
 		result = slCreateEngine(&this->engineObject, 0, NULL, 0, NULL, NULL);

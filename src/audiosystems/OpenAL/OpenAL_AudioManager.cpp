@@ -86,8 +86,8 @@ namespace xal
 	OpenAL_AudioManager::OpenAL_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
 		AudioManager(backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
 	{
-		this->name = XAL_AS_OPENAL;
-		hlog::write(logTag, "Initializing OpenAL.");
+		this->name = AudioSystemType::OpenAL.getName();
+		hlog::write(logTag, "Initializing " + this->name + ".");
 #ifdef _ANDROID
 		__openal__JNI_OnLoad(backendId);
 #endif
@@ -97,7 +97,7 @@ namespace xal
 
 	OpenAL_AudioManager::~OpenAL_AudioManager()
 	{
-		hlog::write(logTag, "Destroying OpenAL.");
+		hlog::write(logTag, "Destroying " + this->name + ".");
 		this->destroyOpenAL();
 	}
 	

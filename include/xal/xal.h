@@ -18,19 +18,6 @@
 
 #include "xalExport.h"
 
-/// @brief Name of "No Audio" audiosystem.
-#define XAL_AS_DISABLED "Disabled"
-/// @brief Name of DirectSound audiosystem.
-#define XAL_AS_DIRECTSOUND "DirectSound"
-/// @brief Name of OpenAL audiosystem.
-#define XAL_AS_OPENAL "OpenAL"
-/// @brief Name of OpenSLES audiosystem.
-#define XAL_AS_OPENSLES "OpenSLES"
-/// @brief Name of SDL audiosystem.
-#define XAL_AS_SDL "SDL"
-/// @brief Name of XAudio2 audiosystem.
-#define XAL_AS_XAUDIO2 "XAudio2"
-
 namespace xal
 {
 	/// @brief Used for logging display.
