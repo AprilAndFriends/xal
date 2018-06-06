@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.6
+/// @version 4.0
 /// 
 /// @section LICENSE
 /// 
@@ -93,7 +93,7 @@ namespace xal
 {
 	hstr logTag = "xal";
 
-	static hversion version(3, 6, 0);
+	static hversion version(4, 0, 0);
 
 	HL_ENUM_CLASS_DEFINE(AudioSystemType,
 	(
