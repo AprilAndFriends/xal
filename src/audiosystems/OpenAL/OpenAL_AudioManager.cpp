@@ -114,7 +114,7 @@ namespace xal
 		hlog::write(logTag, "Audio device: " + this->deviceName);
 #ifdef _IOS
 		// iOS generates only 4 stereo sources by default, so lets override that
-		ALCint params[5] = {ALC_STEREO_SOURCES, 16, ALC_MONO_SOURCES, 16, 0};
+		ALCint params[5] = {ALC_STEREO_SOURCES, 32, ALC_MONO_SOURCES, 32, 0};
 		ALCcontext* currentContext = alcCreateContext(currentDevice, params);
 #else
 		ALCcontext* currentContext = alcCreateContext(currentDevice, NULL);

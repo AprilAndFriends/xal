@@ -32,16 +32,7 @@ namespace xal
 		CoreAudio_Player(Sound* sound);
 		~CoreAudio_Player();
 
-		inline unsigned int getSourceId() const { return this->sourceId; }
-		inline void setSourceId(unsigned int value) { this->sourceId = value; }
-		
-		void createCoreAudioBuffers();
-		void destroyCoreAudioBuffers();
-
 	protected:
-		unsigned int sourceId;
-		unsigned int bufferIds[STREAM_BUFFER_COUNT];
-
 		void _update(float timeDelta);
 
 		bool _systemIsPlaying() const;
@@ -63,7 +54,6 @@ namespace xal
 		void _queueBuffers();
 		void _unqueueBuffers(int index, int count);
 		void _unqueueBuffers();
-		bool pendingPitchUpdate;
 
 	};
 

@@ -7,12 +7,6 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #ifdef _COREAUDIO
-#include <stdio.h>
-#include <string.h>
-
-#include <TargetConditionals.h>
-#include <CoreAudio/al.h>
-
 #include "AudioManager.h"
 #include "Buffer.h"
 #include "Category.h"
@@ -24,40 +18,29 @@
 
 namespace xal
 {
-	CoreAudio_Player::CoreAudio_Player(Sound* sound) : Player(sound), sourceId(0)
+	CoreAudio_Player::CoreAudio_Player(Sound* sound) : Player(sound)
 	{
-		this->pendingPitchUpdate = false;
-		this->createCoreAudioBuffers();
 	}
 	
 	CoreAudio_Player::~CoreAudio_Player()
 	{
-		// AudioManager calls _stop before destruction
-		this->destroyCoreAudioBuffers();
-	}
-	
-	void CoreAudio_Player::createCoreAudioBuffers()
-	{
-		memset(this->bufferIds, 0, STREAM_BUFFER_COUNT * sizeof(unsigned int));
-		alGenBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
-	}
-
-	void CoreAudio_Player::destroyCoreAudioBuffers()
-	{
-		alDeleteBuffers((!this->sound->isStreamed() ? 1 : STREAM_BUFFER_COUNT), this->bufferIds);
 	}
 	
 	void CoreAudio_Player::_update(float timeDelta)
 	{
 		Player::_update(timeDelta);
+		/*
 		if (!this->_isPlaying() && this->sourceId != 0)
 		{
 			this->_stop();
 		}
+		 */
 	}
 	
 	bool CoreAudio_Player::_systemIsPlaying() const
 	{
+		return false;
+		/*
 		if (this->sourceId == 0)
 		{
 			return false;
@@ -69,10 +52,13 @@ namespace xal
 		int state;
 		alGetSourcei(this->sourceId, AL_SOURCE_STATE, &state);
 		return (state == AL_PLAYING);
+		*/
 	}
 	
 	unsigned int CoreAudio_Player::_systemGetBufferPosition() const
 	{
+		return 0;
+		/*
 		int bytes = 0;
 		if (this->sourceId != 0)
 		{
@@ -83,20 +69,25 @@ namespace xal
 			return bytes;
 		}
 		return ((bytes + this->bufferIndex * STREAM_BUFFER_SIZE) % STREAM_BUFFER);
+		*/
 	}
 	
 	float CoreAudio_Player::_systemGetOffset() const
 	{
+		return 0.0f;
+		/*
 		float offset = 0.0f;
 		if (this->sourceId != 0)
 		{
 			alGetSourcef(this->sourceId, AL_SAMPLE_OFFSET, &offset);
 		}
 		return offset;
+		*/
 	}
 	
 	void CoreAudio_Player::_systemSetOffset(float value)
 	{
+		/*
 		if (this->sourceId != 0 && !this->sound->isStreamed()) // Hack for iOS and Mac because apple has a bug in CoreAudio and setting offset when buffers are queued messes up stuff and causes crashes.
 		{
 #ifdef _MAC
@@ -117,19 +108,24 @@ namespace xal
 			alSourcef(this->sourceId, AL_SAMPLE_OFFSET, value);
 #endif
 		}
+		*/
 	}
 	
 	bool CoreAudio_Player::_systemPreparePlay()
 	{
+		return false;
+		/*
 		if (this->sourceId == 0)
 		{
 			this->sourceId = ((CoreAudio_AudioManager*)xal::manager)->_allocateSourceId();
 		}
 		return (this->sourceId != 0);
+		*/
 	}
 	
 	void CoreAudio_Player::_systemPrepareBuffer()
 	{
+		/*
 		// making sure all buffer data is loaded before accessing anything
 		if (!this->sound->isStreamed())
 		{
@@ -152,18 +148,22 @@ namespace xal
 				}
 			}
 		}
+		 */
 	}
 	
 	void CoreAudio_Player::_systemUpdateGain()
 	{
+		/*
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_GAIN, this->_calcGain());
 		}
+		 */
 	}
 	
 	void CoreAudio_Player::_systemUpdatePitch()
 	{
+		/*
 		if (this->sourceId != 0)
 		{
 			alSourcef(this->sourceId, AL_PITCH, this->pitch);
@@ -172,10 +172,12 @@ namespace xal
 		{
 			this->pendingPitchUpdate = true;
 		}
+		*/
 	}
 	
 	void CoreAudio_Player::_systemPlay()
 	{
+		/*
 		if (this->sourceId != 0)
 		{
 			alSourcePlay(this->sourceId);
@@ -192,10 +194,13 @@ namespace xal
 				alSourcef(this->sourceId, AL_PITCH, this->pitch);
 			}
 		}
+		*/
 	}
 	
 	int CoreAudio_Player::_systemStop()
 	{
+		return 0;
+		/*
 		int result = 0;
 		if (this->sourceId != 0)
 		{
@@ -227,10 +232,13 @@ namespace xal
 			this->sourceId = 0;
 		}
 		return result;
+		 */
 	}
 	
 	int CoreAudio_Player::_systemUpdateStream()
 	{
+		return 0;
+		/*
 		int queued = this->_getQueuedBuffersCount();
 		if (queued == 0)
 		{
@@ -274,30 +282,39 @@ namespace xal
 			processed = 0;
 		}
 		return (processed * STREAM_BUFFER_SIZE);
+		*/
 	}
 	
 	int CoreAudio_Player::_getQueuedBuffersCount() const
 	{
+		return 0;
+		/*
 		int queued = 0;
 		if (this->sourceId)
 		{
 			alGetSourcei(this->sourceId, AL_BUFFERS_QUEUED, &queued);
 		}
 		return queued;
+		 */
 	}
 	
 	int CoreAudio_Player::_getProcessedBuffersCount() const
 	{
+		return 0;
+		/*
 		int processed = 0;
 		if (this->sourceId)
 		{
 			alGetSourcei(this->sourceId, AL_BUFFERS_PROCESSED, &processed);
 		}
 		return processed;
+		*/
 	}
 	
 	int CoreAudio_Player::_fillBuffers(int index, int count)
 	{
+		return 0;
+		/*
 		int size = this->buffer->load(this->looping, count * STREAM_BUFFER_SIZE);
 		hstream& stream = this->buffer->getStream();
 		if (!this->sound->isStreamed())
@@ -316,10 +333,12 @@ namespace xal
 			size -= STREAM_BUFFER_SIZE;
 		}
 		return filled;
+		*/
 	}
 	
 	void CoreAudio_Player::_queueBuffers(int index, int count)
 	{
+		/*
 		if (index + count <= STREAM_BUFFER_COUNT)
 		{
 			alSourceQueueBuffers(this->sourceId, count, &this->bufferIds[index]);
@@ -329,19 +348,23 @@ namespace xal
 			alSourceQueueBuffers(this->sourceId, STREAM_BUFFER_COUNT - index, &this->bufferIds[index]);
 			alSourceQueueBuffers(this->sourceId, count + index - STREAM_BUFFER_COUNT, this->bufferIds);
 		}
+		*/
 	}
  	
 	void CoreAudio_Player::_queueBuffers()
 	{
+		/*
 		int queued = this->_getQueuedBuffersCount();
 		if (queued < STREAM_BUFFER_COUNT)
 		{
 			this->_queueBuffers(this->bufferIndex, STREAM_BUFFER_COUNT - queued);
 		}
+		*/
 	}
  	
 	void CoreAudio_Player::_unqueueBuffers(int index, int count)
 	{
+		/*
 		int n = this->_getQueuedBuffersCount();
 		int safeWait = 50;
 		if (index + count <= STREAM_BUFFER_COUNT)
@@ -389,15 +412,18 @@ namespace xal
 				alSourcei(this->sourceId, AL_BUFFER, AL_NONE);
 			}
 		}
+		*/
 	}
 	
 	void CoreAudio_Player::_unqueueBuffers()
 	{
+		/*
 		int queued = this->_getQueuedBuffersCount();
 		if (queued > 0)
 		{
 			this->_unqueueBuffers((this->bufferIndex + STREAM_BUFFER_COUNT - queued) % STREAM_BUFFER_COUNT, queued);
 		}
+		*/
 	}
 	
 }

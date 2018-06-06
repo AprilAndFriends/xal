@@ -20,6 +20,8 @@
 
 /// @brief Name of "No Audio" audiosystem.
 #define XAL_AS_DISABLED "Disabled"
+/// @brief Name of CoreAudio audiosystem.
+#define XAL_AS_COREAUDIO "CoreAudio"
 /// @brief Name of DirectSound audiosystem.
 #define XAL_AS_DIRECTSOUND "DirectSound"
 /// @brief Name of OpenAL audiosystem.
@@ -43,6 +45,9 @@ namespace xal
 		/// @var static const AudioSystemType AudioSystemType::Default
 		/// @note The OS-default can be different depending on how XAL was compiled.
 		HL_ENUM_DECLARE(AudioSystemType, Default);
+	 	/// @var static const AudioSystemType AudioSystemType::CoreAudio
+	 	/// @brief Use CoreAudio.
+	 	HL_ENUM_DECLARE(AudioSystemType, CoreAudio);
 		/// @var static const AudioSystemType AudioSystemType::Disabled
 		/// @brief No audio.
 		HL_ENUM_DECLARE(AudioSystemType, Disabled);
