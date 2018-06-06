@@ -178,11 +178,14 @@ namespace xal
 	{
 		unsigned int id = 0;
 		alGenSources(1, &id);
-		ALenum error = alGetError();
-		if (error != AL_NO_ERROR)
+		if (id == 0)
 		{
-			hlog::warnf(logTag, "Unable to allocate audio source! error = %s, numActiveSources = %d", alGetErrorString(error).cStr(), this->numActiveSources);
-			return 0;
+			ALenum error = alGetError();
+			if (error != AL_NO_ERROR)
+			{
+				hlog::warnf(logTag, "Unable to allocate audio source! error = %s, numActiveSources = %d", alGetErrorString(error).cStr(), this->numActiveSources);
+				return 0;
+			}
 		}
 		++this->numActiveSources;
 		//hlog::debug(logTag, hsprintf("Allocated source: %d, currently active sources: %d", id, this->numActiveSources));
