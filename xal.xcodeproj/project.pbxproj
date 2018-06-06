@@ -7,21 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1BD859A320C7C1FE00312442 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AE138103F80007882A /* AudioManager.cpp */; };
-		1BD859A520C7C1FE00312442 /* NoAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF811934959A0095048A /* NoAudio_Player.cpp */; };
-		1BD859A620C7C1FE00312442 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8AF138103F80007882A /* Buffer.cpp */; };
-		1BD859A820C7C1FE00312442 /* WAV_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF511934953A0095048A /* WAV_Source.cpp */; };
-		1BD859A920C7C1FE00312442 /* NoAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF7F1934959A0095048A /* NoAudio_AudioManager.cpp */; };
-		1BD859AA20C7C1FE00312442 /* BufferAsync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1152EDF19D9966F00D1511D /* BufferAsync.cpp */; };
-		1BD859AB20C7C1FE00312442 /* Category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B0138103F80007882A /* Category.cpp */; };
-		1BD859AC20C7C1FE00312442 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B1138103F80007882A /* Player.cpp */; };
-		1BD859AD20C7C1FE00312442 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B2138103F80007882A /* Sound.cpp */; };
-		1BD859AE20C7C1FE00312442 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B3138103F80007882A /* Source.cpp */; };
-		1BD859B020C7C1FE00312442 /* xal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DAE8B5138103F80007882A /* xal.cpp */; };
-		1BD859B120C7C1FE00312442 /* OGG_Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF5B193495540095048A /* OGG_Source.cpp */; };
-		1BD859B720C7C24100312442 /* CoreAudio_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF7B193495900095048A /* CoreAudio_AudioManager.cpp */; };
-		1BD859B820C7C24500312442 /* CoreAudio_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF7D193495900095048A /* CoreAudio_Player.cpp */; };
-		1BD859B920C7C26200312442 /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6B1934956A0095048A /* OpenAL_AudioManager.cpp */; };
 		7FC8068111EC96EF00851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8068011EC96EF00851062 /* hltypes.framework */; };
 		B4214E441C622B3E0059E7F2 /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B4214E411C622B3E0059E7F2 /* Buffer.h */; };
 		B4214E451C622B3E0059E7F2 /* Source.h in Headers */ = {isa = PBXBuildFile; fileRef = B4214E421C622B3E0059E7F2 /* Source.h */; };
@@ -101,8 +86,11 @@
 		D1B4EF92193495B40095048A /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6B1934956A0095048A /* OpenAL_AudioManager.cpp */; };
 		D1B4EF93193495B40095048A /* OpenAL_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6D1934956A0095048A /* OpenAL_iOS.mm */; };
 		D1B4EF94193495B40095048A /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6E1934956A0095048A /* OpenAL_Player.cpp */; };
+		D1B4EF95193495B40095048A /* OpenAL_AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6B1934956A0095048A /* OpenAL_AudioManager.cpp */; };
 		D1B4EF96193495B40095048A /* OpenAL_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6D1934956A0095048A /* OpenAL_iOS.mm */; };
 		D1B4EF97193495B40095048A /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6E1934956A0095048A /* OpenAL_Player.cpp */; };
+		D1B4EF99193495B40095048A /* OpenAL_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6D1934956A0095048A /* OpenAL_iOS.mm */; };
+		D1B4EF9A193495B40095048A /* OpenAL_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B4EF6E1934956A0095048A /* OpenAL_Player.cpp */; };
 		D1CC19A715599B9B0028EDD3 /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A415599B9B0028EDD3 /* Ogg.framework */; };
 		D1CC19A815599B9B0028EDD3 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A515599B9B0028EDD3 /* SDL.framework */; };
 		D1CC19A915599B9B0028EDD3 /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CC19A615599B9B0028EDD3 /* Vorbis.framework */; };
@@ -118,7 +106,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1BD859B620C7C1FE00312442 /* libxal (iOS CoreAudio vorbis).a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libxal (iOS CoreAudio vorbis).a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC8068011EC96EF00851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* xal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,7 +210,6 @@
 				D1981C82140F8A230057C3AF /* libxal.a */,
 				C935CE4F150610E600AE8B67 /* xal.framework */,
 				D1F27BAD177A30BE00E5C131 /* libxal.a */,
-				1BD859B620C7C1FE00312442 /* libxal (iOS CoreAudio vorbis).a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -485,21 +471,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1BD859A120C7C1FE00312442 /* xal (iOS CoreAudio vorbis) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1BD859B220C7C1FE00312442 /* Build configuration list for PBXNativeTarget "xal (iOS CoreAudio vorbis)" */;
-			buildPhases = (
-				1BD859A220C7C1FE00312442 /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "xal (iOS CoreAudio vorbis)";
-			productName = "libxal-ios";
-			productReference = 1BD859B620C7C1FE00312442 /* libxal (iOS CoreAudio vorbis).a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		8DC2EF4F0486A6940098B216 /* xal (SDL_mixer vorbis) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xal (SDL_mixer vorbis)" */;
@@ -593,39 +564,18 @@
 				C935CE15150610E500AE8B67 /* xal (OpenAL vorbis) */,
 				D1F27B97177A30BE00E5C131 /* xal (Mac OpenAL vorbis) */,
 				D1981C81140F8A230057C3AF /* xal (iOS OpenAL vorbis) */,
-				1BD859A120C7C1FE00312442 /* xal (iOS CoreAudio vorbis) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1BD859A220C7C1FE00312442 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1BD859A320C7C1FE00312442 /* AudioManager.cpp in Sources */,
-				1BD859B720C7C24100312442 /* CoreAudio_AudioManager.cpp in Sources */,
-				1BD859A520C7C1FE00312442 /* NoAudio_Player.cpp in Sources */,
-				1BD859A620C7C1FE00312442 /* Buffer.cpp in Sources */,
-				1BD859A820C7C1FE00312442 /* WAV_Source.cpp in Sources */,
-				1BD859A920C7C1FE00312442 /* NoAudio_AudioManager.cpp in Sources */,
-				1BD859B820C7C24500312442 /* CoreAudio_Player.cpp in Sources */,
-				1BD859AA20C7C1FE00312442 /* BufferAsync.cpp in Sources */,
-				1BD859AB20C7C1FE00312442 /* Category.cpp in Sources */,
-				1BD859AC20C7C1FE00312442 /* Player.cpp in Sources */,
-				1BD859AD20C7C1FE00312442 /* Sound.cpp in Sources */,
-				1BD859AE20C7C1FE00312442 /* Source.cpp in Sources */,
-				1BD859B020C7C1FE00312442 /* xal.cpp in Sources */,
-				1BD859B120C7C1FE00312442 /* OGG_Source.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8DC2EF540486A6940098B216 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C9DAE8B6138103F80007882A /* AudioManager.cpp in Sources */,
 				C9DAE8B7138103F80007882A /* Buffer.cpp in Sources */,
+				D1B4EF99193495B40095048A /* OpenAL_iOS.mm in Sources */,
 				C9DAE8B8138103F80007882A /* Category.cpp in Sources */,
 				C9DAE8B9138103F80007882A /* Player.cpp in Sources */,
 				D1B4EF5D193495540095048A /* OGG_Source.cpp in Sources */,
@@ -636,6 +586,7 @@
 				C9DAE8BB138103F80007882A /* Source.cpp in Sources */,
 				D1B4EF831934959A0095048A /* NoAudio_AudioManager.cpp in Sources */,
 				D1B4EF67193495600095048A /* SDL_AudioManager.cpp in Sources */,
+				D1B4EF9A193495B40095048A /* OpenAL_Player.cpp in Sources */,
 				C9DAE8BD138103F80007882A /* xal.cpp in Sources */,
 				D1B4EF69193495600095048A /* SDL_Player.cpp in Sources */,
 			);
@@ -658,8 +609,8 @@
 				D1B4EF841934959A0095048A /* NoAudio_AudioManager.cpp in Sources */,
 				D1B4EF8A1934959A0095048A /* NoAudio_Player.cpp in Sources */,
 				C935CE34150610E500AE8B67 /* xal.cpp in Sources */,
+				D1B4EF95193495B40095048A /* OpenAL_AudioManager.cpp in Sources */,
 				D1B4EF97193495B40095048A /* OpenAL_Player.cpp in Sources */,
-				1BD859B920C7C26200312442 /* OpenAL_AudioManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,54 +661,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1BD859B320C7C1FE00312442 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1681BAE18D768C60088FC68 /* iOS.xcconfig */;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					_COREAUDIO,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		1BD859B420C7C1FE00312442 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1681BAE18D768C60088FC68 /* iOS.xcconfig */;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					_COREAUDIO,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		1BD859B520C7C1FE00312442 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1681BAE18D768C60088FC68 /* iOS.xcconfig */;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_IOS,
-					_COREAUDIO,
-					"OV_EXCLUDE_STATIC_CALLBACKS=1",
-					_FORMAT_OGG,
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = "App Store";
-		};
 		7F7A5574129D425800E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1109,16 +1012,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1BD859B220C7C1FE00312442 /* Build configuration list for PBXNativeTarget "xal (iOS CoreAudio vorbis)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1BD859B320C7C1FE00312442 /* Debug */,
-				1BD859B420C7C1FE00312442 /* Release */,
-				1BD859B520C7C1FE00312442 /* App Store */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "xal (SDL_mixer vorbis)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

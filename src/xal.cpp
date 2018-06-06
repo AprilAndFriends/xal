@@ -19,9 +19,6 @@
 #endif
 
 #include "AudioManager.h"
-#ifdef _COREAUDIO
-#include "CoreAudio_AudioManager.h"
-#endif
 #ifdef _DIRECTSOUND
 #include "DirectSound_AudioManager.h"
 #endif
@@ -69,8 +66,6 @@
 #elif defined(__APPLE__) && defined(_IOS)
 	#ifdef _OPENAL
 		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenAL
-	#elif defined(_COREAUDIO)
-		#define AS_INTERNAL_DEFAULT AudioSystemType::CoreAudio
 	#else
 		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
@@ -103,7 +98,6 @@ namespace xal
 	HL_ENUM_CLASS_DEFINE(AudioSystemType,
 	(
 		HL_ENUM_DEFINE(AudioSystemType, Default);
-	 	HL_ENUM_DEFINE(AudioSystemType, CoreAudio);
 		HL_ENUM_DEFINE(AudioSystemType, Disabled);
 		HL_ENUM_DEFINE(AudioSystemType, DirectSound);
 		HL_ENUM_DEFINE(AudioSystemType, OpenAL);
@@ -127,12 +121,6 @@ namespace xal
 			xal::manager->init();
 			return;
 		}
-#ifdef _COREAUDIO
-		if (type == AudioSystemType::CoreAudio)
-		{
-			xal::manager = new CoreAudio_AudioManager(backendId, threaded, updateTime, deviceName);
-		}
-#endif
 #ifdef _DIRECTSOUND
 		if (type == AudioSystemType::DirectSound)
 		{
@@ -190,12 +178,6 @@ namespace xal
 	
 	bool hasAudioSystem(AudioSystemType type)
 	{
-#ifdef _COREAUDIO
-		if (type == AudioSystemType::CoreAudio)
-		{
-			return true;
-		}
-#endif
 #ifdef _DIRECTSOUND
 		if (type == AudioSystemType::DirectSound)
 		{
