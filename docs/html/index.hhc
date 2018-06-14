@@ -737,12 +737,6 @@
             <LI><OBJECT type="text/sitemap"><param name="Name" value="operator&gt;="><param name="Local" value="classxal_1_1_audio_system_type.html#a28e73c346e5e1d60f01a531ddebd4bd0"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="previous"><param name="Local" value="classxal_1_1_audio_system_type.html#ab4625727f125536e16da21b1bed29f9c"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="XAL_AS_DIRECTSOUND"><param name="Local" value="xal_8h.html#a7437e422bd03b28441906da2fd4b957c"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="XAL_AS_DISABLED"><param name="Local" value="xal_8h.html#a54d7288ad654ad6d1c7f78c5371490fd"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="XAL_AS_OPENAL"><param name="Local" value="xal_8h.html#a45c7b0972c4266273336eec28448f6a8"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="XAL_AS_OPENSLES"><param name="Local" value="xal_8h.html#acbba536415cc8f4b0aa456ca96912c38"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="XAL_AS_SDL"><param name="Local" value="xal_8h.html#aaab1408eadb78e6d12fa0a9710a70a7c"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="XAL_AS_XAUDIO2"><param name="Local" value="xal_8h.html#a0048855083fc6b7d2f78636885a57d59"><param name="ImageNumber" value="11"></OBJECT>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="destroy"><param name="Local" value="xal_8h.html#ac9e8ce038e21d375e54a9ae11dc565b5"><param name="ImageNumber" value="11"></OBJECT>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="hasAudioSystem"><param name="Local" value="xal_8h.html#a5b854902c56cc9f2deb63a568d304c55"><param name="ImageNumber" value="11"></OBJECT>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="init"><param name="Local" value="xal_8h.html#ac0433893a83f9826726d8ada67e4e304"><param name="ImageNumber" value="11"></OBJECT>
@@ -750,11 +744,6 @@
           </UL>
         </UL>
       </UL>
-    </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Name" value="File Members"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
-    <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="All"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="Macros"><param name="Local" value="globals_defs.html"><param name="ImageNumber" value="11"></OBJECT>
     </UL>
   </UL>
 </UL>
