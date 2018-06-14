@@ -3,7 +3,7 @@
 		package="com.xal.demoSimple">
 		
 	<application android:label="Demo Simple"
-			android:icon="@drawable/icon"
+			android:icon="@mipmap/icon"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		<activity android:name=".Main"
 				android:label="Demo Simple"

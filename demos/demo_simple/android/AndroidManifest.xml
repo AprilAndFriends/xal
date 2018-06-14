@@ -9,7 +9,7 @@
 	<uses-feature android:name="android.hardware.screen.landscape"/>
 	
 	<application android:label="Demo Simple"
-			android:icon="@drawable/icon">
+			android:icon="@mipmap/icon">
 		<activity android:name=".DemoSimple"
 				android:label="Demo Simple"
 				android:screenOrientation="sensorLandscape"
