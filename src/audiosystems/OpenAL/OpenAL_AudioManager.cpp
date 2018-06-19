@@ -36,7 +36,7 @@
 #include "Sound.h"
 #include "xal.h"
 
-#ifdef _ANDROID
+#ifdef __ANDROID__
 extern "C" int __openal__JNI_OnLoad(void* vm);
 #elif defined(_IOS)
 #include <sys/sysctl.h>
@@ -88,7 +88,7 @@ namespace xal
 	{
 		this->name = AudioSystemType::OpenAL.getName();
 		hlog::write(logTag, "Initializing " + this->name + ".");
-#ifdef _ANDROID
+#ifdef __ANDROID__
 		__openal__JNI_OnLoad(backendId);
 #endif
 		this->numActiveSources = 0;

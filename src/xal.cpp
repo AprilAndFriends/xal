@@ -69,7 +69,7 @@
 	#else
 		#define AS_INTERNAL_DEFAULT AudioSystemType::Disabled
 	#endif
-#elif defined(_ANDROID)
+#elif defined(__ANDROID__)
 	#ifdef _OPENSLES
 		#define AS_INTERNAL_DEFAULT AudioSystemType::OpenSLES
 	#elif defined(_OPENAL)

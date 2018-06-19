@@ -13,7 +13,7 @@
 #ifndef XAL_UTILITY_H
 #define XAL_UTILITY_H
 
-#ifndef _ANDROID
+#ifndef __ANDROID__
 	#define STREAM_BUFFER_COUNT 8 // greater or equal to 2
 	#define STREAM_BUFFER_SIZE 32768 // equal to any power of 2
 #else // Android has to be more restrictive about audio streaming due to various memory problems
