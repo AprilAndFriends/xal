@@ -65,8 +65,16 @@ namespace xal
 		}
 	}
 
-	OpenSLES_Player::OpenSLES_Player(Sound* sound) : Player(sound), playing(false), active(false), stillPlaying(false),
-		playerObject(NULL), player(NULL), playerVolume(NULL), playerBufferQueue(NULL), buffersEnqueued(0)
+	OpenSLES_Player::OpenSLES_Player(Sound* sound) :
+		Player(sound),
+		playing(false),
+		active(false),
+		stillPlaying(false),
+		playerObject(NULL),
+		player(NULL),
+		playerVolume(NULL),
+		playerBufferQueue(NULL),
+		buffersEnqueued(0)
 	{
 		for_iter (i, 0, STREAM_BUFFER_COUNT)
 		{

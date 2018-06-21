@@ -19,7 +19,8 @@
 
 namespace xal
 {
-	SPX_Source::SPX_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
+	SPX_Source::SPX_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) :
+		Source(filename, sourceMode, bufferMode)
 	{
 	}
 

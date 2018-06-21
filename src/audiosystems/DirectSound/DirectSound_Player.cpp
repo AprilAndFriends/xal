@@ -24,7 +24,11 @@
 
 namespace xal
 {
-	DirectSound_Player::DirectSound_Player(Sound* sound) : Player(sound), dsBuffer(NULL), bufferCount(0), bufferQueued(0)
+	DirectSound_Player::DirectSound_Player(Sound* sound) :
+		Player(sound),
+		dsBuffer(NULL),
+		bufferCount(0),
+		bufferQueued(0)
 	{
 	}
 

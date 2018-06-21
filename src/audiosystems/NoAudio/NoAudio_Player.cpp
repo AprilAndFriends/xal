@@ -17,7 +17,9 @@
 
 namespace xal
 {
-	NoAudio_Player::NoAudio_Player(Sound* sound) : Player(sound), playing(false)
+	NoAudio_Player::NoAudio_Player(Sound* sound) :
+		Player(sound),
+		playing(false)
 	{
 	}
 

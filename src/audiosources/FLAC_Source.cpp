@@ -12,7 +12,8 @@
 
 namespace xal
 {
-	FLAC_Source::FLAC_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
+	FLAC_Source::FLAC_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) :
+		Source(filename, sourceMode, bufferMode)
 	{
 	}
 

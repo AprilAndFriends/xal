@@ -84,7 +84,9 @@ static hstr alcGetErrorString(ALCenum error)
 namespace xal
 {
 	OpenAL_AudioManager::OpenAL_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(backendId, threaded, updateTime, deviceName), device(NULL), context(NULL)
+		AudioManager(backendId, threaded, updateTime, deviceName),
+		device(NULL),
+		context(NULL)
 	{
 		this->name = AudioSystemType::OpenAL.getName();
 		hlog::write(logTag, "Initializing " + this->name + ".");

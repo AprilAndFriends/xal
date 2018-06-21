@@ -17,7 +17,8 @@
 
 namespace xal
 {
-	WAV_Source::WAV_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
+	WAV_Source::WAV_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) :
+		Source(filename, sourceMode, bufferMode)
 	{
 	}
 

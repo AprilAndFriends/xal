@@ -17,8 +17,14 @@
 
 namespace xal
 {
-	Source::Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : streamOpen(false),
-		size(0), channels(2), samplingRate(44100), bitsPerSample(16), duration(0.0f), stream(NULL)
+	Source::Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) :
+		streamOpen(false),
+		size(0),
+		channels(2),
+		samplingRate(44100),
+		bitsPerSample(16),
+		duration(0.0f),
+		stream(NULL)
 	{
 		this->filename = filename;
 		this->sourceMode = sourceMode;

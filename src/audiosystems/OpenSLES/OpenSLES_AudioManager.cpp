@@ -32,7 +32,10 @@
 namespace xal
 {
 	OpenSLES_AudioManager::OpenSLES_AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		AudioManager(backendId, threaded, updateTime, deviceName), engineObject(NULL), engine(NULL), outputMixObject(NULL)
+		AudioManager(backendId, threaded, updateTime, deviceName),
+		engineObject(NULL),
+		engine(NULL),
+		outputMixObject(NULL)
 	{
 		this->name = AudioSystemType::OpenSLES.getName();
 		hlog::write(logTag, "Initializing " + this->name + ".");

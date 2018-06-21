@@ -18,7 +18,13 @@
 
 namespace xal
 {
-	Playlist::Playlist(bool repeatAll) : gain(1.0f), pitch(1.0f), enabled(true), playing(false), firstLoop(true), index(-1)
+	Playlist::Playlist(bool repeatAll) :
+		gain(1.0f),
+		pitch(1.0f),
+		enabled(true),
+		playing(false),
+		firstLoop(true),
+		index(-1)
 	{
 		this->repeatAll = repeatAll;
 	}

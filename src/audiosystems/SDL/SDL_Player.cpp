@@ -19,8 +19,13 @@
 
 namespace xal
 {
-	SDL_Player::SDL_Player(Sound* sound) : Player(sound), playing(false),
-		position(0), currentGain(1.0f), readPosition(0), writePosition(0)
+	SDL_Player::SDL_Player(Sound* sound) :
+		Player(sound),
+		playing(false),
+		position(0),
+		currentGain(1.0f),
+		readPosition(0),
+		writePosition(0)
 	{
 		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
 	}

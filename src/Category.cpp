@@ -15,8 +15,11 @@
 
 namespace xal
 {
-	Category::Category(chstr name, BufferMode bufferMode, SourceMode sourceMode) : gain(1.0f),
-		gainFadeTarget(-1.0f), gainFadeSpeed(-1.0f), gainFadeTime(0.0f)
+	Category::Category(chstr name, BufferMode bufferMode, SourceMode sourceMode) :
+		gain(1.0f),
+		gainFadeTarget(-1.0f),
+		gainFadeSpeed(-1.0f),
+		gainFadeTime(0.0f)
 	{
 		this->name = name;
 		this->bufferMode = bufferMode;

@@ -61,7 +61,8 @@ namespace xal
 		return (long)((hsbase*)dataSource)->position();
 	}
 
-	OGG_Source::OGG_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) : Source(filename, sourceMode, bufferMode)
+	OGG_Source::OGG_Source(chstr filename, SourceMode sourceMode, BufferMode bufferMode) :
+		Source(filename, sourceMode, bufferMode)
 	{
 	}
 

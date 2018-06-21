@@ -28,7 +28,9 @@
 
 namespace xal
 {
-	OpenAL_Player::OpenAL_Player(Sound* sound) : Player(sound), sourceId(0)
+	OpenAL_Player::OpenAL_Player(Sound* sound) :
+		Player(sound),
+		sourceId(0)
 	{
 		this->pendingPitchUpdate = false;
 		this->createOpenALBuffers();

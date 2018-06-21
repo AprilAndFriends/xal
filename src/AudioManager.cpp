@@ -72,8 +72,16 @@ namespace xal
 	AudioManager* manager = NULL;
 
 	AudioManager::AudioManager(void* backendId, bool threaded, float updateTime, chstr deviceName) :
-		enabled(false), suspended(false), idlePlayerUnloadTime(60.0f), globalGain(1.0f), globalGainFadeTarget(-1.0f),
-		globalGainFadeSpeed(-1.0f), globalGainFadeTime(0.0f), suspendResumeFadeTime(0.5f), thread(NULL), threadRunning(false)
+		enabled(false),
+		suspended(false),
+		idlePlayerUnloadTime(60.0f),
+		globalGain(1.0f),
+		globalGainFadeTarget(-1.0f),
+		globalGainFadeSpeed(-1.0f),
+		globalGainFadeTime(0.0f),
+		suspendResumeFadeTime(0.5f),
+		thread(NULL),
+		threadRunning(false)
 	{
 		this->samplingRate = 44100;
 		this->channels = 2;
