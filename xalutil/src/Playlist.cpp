@@ -132,6 +132,7 @@ namespace xal
 				else
 				{
 					this->playing = false;
+					this->index = -1;
 				}
 			}
 		}
@@ -144,7 +145,7 @@ namespace xal
 	
 	void Playlist::_updateParameters()
 	{
-		if (!this->enabled || this->players.size() == 0 || this->index < 0)
+		if (!this->enabled || this->players.size() == 0 || this->index < 0 || this->index >= this->players.size())
 		{
 			return;
 		}
