@@ -5,7 +5,6 @@
       <PreprocessorDefinitions>AL_BUILD_LIBRARY;AL_ALEXT_PROTOTYPES;_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../../include;../../OpenAL32;../../OpenAL32/Include;../../Alc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>

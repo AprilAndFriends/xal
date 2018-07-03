@@ -6,7 +6,6 @@
       <PreprocessorDefinitions>XAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../../include/xal;../../src/audiosystems/XAudio2;../../src/audiosystems/NoAudio;../../src/audiosources;../../../hltypes/include;../../lib/ogg/include;../../lib/vorbis/include;../../lib/openal-soft-android/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>
