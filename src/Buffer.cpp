@@ -432,7 +432,10 @@ namespace xal
 		hmutex::ScopeLock lock(&this->asyncLoadMutex);
 		if (!this->asyncLoadQueued || this->asyncLoadDiscarded || this->loaded || this->source == NULL)
 		{
-			this->source->close();
+			if (this->source != NULL)
+			{
+				this->source->close();
+			}
 			this->asyncLoadQueued = false;
 			this->asyncLoadDiscarded = false;
 			return;
