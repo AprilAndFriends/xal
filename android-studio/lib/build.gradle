@@ -16,8 +16,8 @@ android {
 }
 
 dependencies {
-	implementation project(":hltypes")
-	implementation project(":tremor")
 	implementation project(":ogg")
+	implementation project(":tremor")
+	implementation project(":hltypes")
 	implementation fileTree(include: ["*.jar"], dir: "libs")
 }
