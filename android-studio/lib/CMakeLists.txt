@@ -14,7 +14,6 @@ file(
 add_library(xal STATIC ${CppSrc})
 
 include_directories(AFTER "../../include/xal")
-include_directories(AFTER "../../src")
 include_directories(AFTER "../../src/audiosystems/OpenSLES")
 include_directories(AFTER "../../src/audiosystems/NoAudio")
 include_directories(AFTER "../../src/audiosources")

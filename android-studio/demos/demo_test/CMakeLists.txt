@@ -12,7 +12,6 @@ file(
 
 add_library(demo_test SHARED ${CppSrc})
 
-include_directories(AFTER "../../../include")
 include_directories(AFTER "../../../../hltypes/include")
 
 add_subdirectory("../../lib" xal)

@@ -25,7 +25,6 @@ file(
 
 add_library(tremor STATIC ${CppSrc})
 
-include_directories(AFTER "../..")
 include_directories(AFTER "../../../ogg/include")
 
 add_definitions(

@@ -14,9 +14,7 @@ file(
 add_library(xalutil STATIC ${CppSrc})
 
 include_directories(AFTER "../../../../hltypes/include")
-include_directories(AFTER "../../../include")
 include_directories(AFTER "../../include/xalutil")
-include_directories(AFTER "../../src")
 
 add_definitions(
 	-DXALUTIL_EXPORTS
