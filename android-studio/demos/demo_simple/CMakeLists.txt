@@ -33,11 +33,6 @@ target_link_libraries(
 	ogg
 	jpeg
 	png
-	${liblog}
-	${libz}
-	${libc}
-	${libdl}
-	${libandroid}
-	${libGLESv2}
+	${SYSTEM_LIBS}
 	${libOpenSLES}
 )
