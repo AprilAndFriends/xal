@@ -30,5 +30,5 @@ dependencies {
 	implementation project(":gtypes")
 	implementation project(":april")
 	implementation project(":xal")
-	implementation fileTree(include: ["*.jar"], dir: "libs")
+	api fileTree(include: ["*.jar"], dir: "libs")
 }
