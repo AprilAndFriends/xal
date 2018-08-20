@@ -74,12 +74,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:add474891b1337ea0cc591866703dd203"><td class="memItemLeft" align="right" valign="top"><a id="add474891b1337ea0cc591866703dd203"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>BufferMode</b> (chstr name, unsigned int value)</td></tr>
 <tr class="separator:add474891b1337ea0cc591866703dd203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a007f3b039327b1d7ee31c53c3c7bd519"><td class="memItemLeft" align="right" valign="top"><a id="a007f3b039327b1d7ee31c53c3c7bd519"></a>
-<a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> ()</td></tr>
-<tr class="separator:a007f3b039327b1d7ee31c53c3c7bd519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a054a1d295570d8f516d6d1f6f7fbe165"><td class="memItemLeft" align="right" valign="top"><a id="a054a1d295570d8f516d6d1f6f7fbe165"></a>
-<a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>previous</b> ()</td></tr>
-<tr class="separator:a054a1d295570d8f516d6d1f6f7fbe165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3435fa505be39fe46ba2f56ec3862862"><td class="memItemLeft" align="right" valign="top"><a id="a3435fa505be39fe46ba2f56ec3862862"></a>
+<a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> () const</td></tr>
+<tr class="separator:a3435fa505be39fe46ba2f56ec3862862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad218816073c7fd59c5b81e8d100ba1c0"><td class="memItemLeft" align="right" valign="top"><a id="ad218816073c7fd59c5b81e8d100ba1c0"></a>
+<a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>previous</b> () const</td></tr>
+<tr class="separator:ad218816073c7fd59c5b81e8d100ba1c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae48740204bb7a42da774a183a9198485"><td class="memItemLeft" align="right" valign="top"><a id="ae48740204bb7a42da774a183a9198485"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a> &amp;other) const</td></tr>
 <tr class="separator:ae48740204bb7a42da774a183a9198485"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,6 +101,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a149df5f72ffbac29403b347e0ada6d4e"><td class="memItemLeft" align="right" valign="top"><a id="a149df5f72ffbac29403b347e0ada6d4e"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>getCount</b> ()</td></tr>
+<tr class="separator:a149df5f72ffbac29403b347e0ada6d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a130d3f3ba657ee61e5d41a7ea7d88375"><td class="memItemLeft" align="right" valign="top"><a id="a130d3f3ba657ee61e5d41a7ea7d88375"></a>
+static hltypes::Array&lt; <a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getValues</b> ()</td></tr>
+<tr class="separator:a130d3f3ba657ee61e5d41a7ea7d88375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04ab0e91235b3b70ef738f8bbf1d5bc0"><td class="memItemLeft" align="right" valign="top"><a id="a04ab0e91235b3b70ef738f8bbf1d5bc0"></a>
+static hstr&#160;</td><td class="memItemRight" valign="bottom"><b>getEnumName</b> ()</td></tr>
+<tr class="separator:a04ab0e91235b3b70ef738f8bbf1d5bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a629de482ce5ffcfe9173cf41382714f3"><td class="memItemLeft" align="right" valign="top"><a id="a629de482ce5ffcfe9173cf41382714f3"></a>
+static hltypes::Map&lt; unsigned int, hstr &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAsMap</b> ()</td></tr>
+<tr class="separator:a629de482ce5ffcfe9173cf41382714f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a806494fbe2035e75539f767b42b82aa6"><td class="memItemLeft" align="right" valign="top"><a id="a806494fbe2035e75539f767b42b82aa6"></a>
 static <a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fromInt</b> (int value)</td></tr>
 <tr class="separator:a806494fbe2035e75539f767b42b82aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,15 +131,6 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasValueFor</b
 <tr class="memitem:a876ef5d46efaefa916813cbe2f3f8a44"><td class="memItemLeft" align="right" valign="top"><a id="a876ef5d46efaefa916813cbe2f3f8a44"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasValueFor</b> (unsigned int value)</td></tr>
 <tr class="separator:a876ef5d46efaefa916813cbe2f3f8a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a130d3f3ba657ee61e5d41a7ea7d88375"><td class="memItemLeft" align="right" valign="top"><a id="a130d3f3ba657ee61e5d41a7ea7d88375"></a>
-static hltypes::Array&lt; <a class="el" href="classxal_1_1_buffer_mode.html">BufferMode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getValues</b> ()</td></tr>
-<tr class="separator:a130d3f3ba657ee61e5d41a7ea7d88375"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04ab0e91235b3b70ef738f8bbf1d5bc0"><td class="memItemLeft" align="right" valign="top"><a id="a04ab0e91235b3b70ef738f8bbf1d5bc0"></a>
-static hstr&#160;</td><td class="memItemRight" valign="bottom"><b>getEnumName</b> ()</td></tr>
-<tr class="separator:a04ab0e91235b3b70ef738f8bbf1d5bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a629de482ce5ffcfe9173cf41382714f3"><td class="memItemLeft" align="right" valign="top"><a id="a629de482ce5ffcfe9173cf41382714f3"></a>
-static hltypes::Map&lt; unsigned int, hstr &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAsMap</b> ()</td></tr>
-<tr class="separator:a629de482ce5ffcfe9173cf41382714f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
