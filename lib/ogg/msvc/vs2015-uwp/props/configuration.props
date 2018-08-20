@@ -4,7 +4,6 @@
     <ClCompile>
       <FavorSizeOrSpeed Condition="'$(WholeProgramOptimization)'=='true'">Speed</FavorSizeOrSpeed>
       <StringPooling>true</StringPooling>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
       <CompileAs>CompileAsC</CompileAs>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
