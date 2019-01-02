@@ -19,5 +19,4 @@ dependencies {
 	implementation project(":ogg")
 	implementation project(":tremor")
 	implementation project(":hltypes")
-	api fileTree(include: ["*.jar"], dir: "libs")
 }
