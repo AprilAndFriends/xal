@@ -26,10 +26,6 @@ namespace xal
 		this->sourceMode = sourceMode;
 	}
 
-	Category::~Category()
-	{
-	}
-
 	float Category::getGain()
 	{
 		hmutex::ScopeLock lock(&xal::manager->mutex);

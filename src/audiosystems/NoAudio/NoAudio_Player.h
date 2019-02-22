@@ -25,7 +25,6 @@ namespace xal
 	{
 	public:
 		NoAudio_Player(Sound* sound);
-		~NoAudio_Player();
 
 	protected:
 		bool playing;

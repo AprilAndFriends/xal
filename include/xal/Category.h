@@ -36,8 +36,6 @@ namespace xal
 		/// @param[in] bufferMode How to handle the intermediate Buffer of the Sound.
 		/// @param[in] sourceMode How to handle the Source of the Sound.
 		Category(chstr name, BufferMode bufferMode, SourceMode sourceMode);
-		/// @brief Destructor.
-		~Category();
 		
 		/// @brief Gets name.
 		HL_DEFINE_GET(hstr, name, Name);

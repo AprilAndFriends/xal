@@ -27,7 +27,6 @@ namespace xal
 	{
 	public:
 		SDL_Player(Sound* sound);
-		~SDL_Player();
 
 		bool mixAudio(hstream& stream, int size, bool first);
 

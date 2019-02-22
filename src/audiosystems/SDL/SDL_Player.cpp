@@ -30,11 +30,6 @@ namespace xal
 		memset(this->circleBuffer, 0, STREAM_BUFFER * sizeof(unsigned char));
 	}
 
-	SDL_Player::~SDL_Player()
-	{
-		// AudioManager calls _stop before destruction
-	}
-
 	void SDL_Player::_getData(int size, unsigned char** data1, int* size1, unsigned char** data2, int* size2)
 	{
 		if (!this->sound->isStreamed())
