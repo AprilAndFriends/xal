@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
 		package="com.xal.demoSimple">
 		
 	<application android:label="Demo Simple"
 			android:icon="@mipmap/icon"
+			tools:replace="android:theme"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		<activity android:name=".Main"
 				android:label="Demo Simple"
