@@ -6,15 +6,9 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+  <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Android' or '$(Platform)'=='Android-x86'">
-    <Link>
-      <PreprocessorDefinitions Condition="'$(Platform)'=='Android'">_ARM_ASSEM_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalDependencies>-lhltypes;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
 </Project>
